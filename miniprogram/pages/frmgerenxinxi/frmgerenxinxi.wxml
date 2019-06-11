@@ -1,0 +1,102 @@
+<view class="backgroundColor"></view>
+
+<view class="account row-box">
+
+  <image src="{{userInfo.avatarUrl}}"></image>
+
+  <view>
+    <text class="nickName">{{
+    finduser
+    }}</text>
+    <text wx:if="{{doctor}}">代码: {{ userInfo.bind_account.ysdm }}</text>
+    <block wx:else>
+      <text wx:if="{{userInfo.bind_account.zxyy_id }}">天天好心情</text>
+
+    </block>
+
+  </view>
+
+  <button class="get-user-info" open-type="getUserInfo" bindgetuserinfo="settingAccount">s</button>
+
+</view>
+
+
+<!-- 四格分栏 -->
+<view class="row-box clearfix four-list-icon">
+
+
+  <block wx:if="{{!doctor}}">
+
+    <view bindtap="navgiate" data-page="askList/askList?type=PatAlive" data-pro="put">
+      <icon class="iconfont icon-xiaoxi color5"></icon>
+      <text>改密码</text>
+    </view>
+    <view bindtap="navgiate" data-page="askList/askList?type=PatClose" data-pro="put">
+      <icon class="iconfont icon-xiaoxi color4"></icon>
+      <text>录数据</text>
+    </view>
+
+
+    <view bindtap="navgiate" data-page="family/family" data-pro="put">
+      <icon class="iconfont icon-chengyuan color7"></icon>
+
+      <text>退出登录</text>
+
+    </view>
+
+  </block>
+
+</view>
+
+
+
+<view class="row-box row-list clearfix">
+
+  <view>
+    <navigator url='../upload/page/page'>
+      <icon class="iconfont icon-zongjie"></icon>
+      <text>所属机构:-</text>
+      <text>{{listAll[0].jigoudaima}}</text>
+      <!-- <icon class="iconfont icon-fangxiangyou"></icon> -->
+    </navigator>
+  </view>
+
+  <view>
+    <navigator url='../upload/page/page'>
+      <icon class="iconfont icon-chufang"></icon>
+      <text>管理员： </text>
+      <text>{{listAll[0].AdminIS}}</text>
+      <!-- <icon class="iconfont icon-fangxiangyou"></icon> -->
+    </navigator>
+  </view>
+
+
+  <block wx:if="{{!doctor}}">
+
+    <view>
+      <navigator url='../upload/page/page'>
+        <icon class="iconfont icon-yaodian"></icon>
+        <text>账号设置： </text>
+        <text>{{listAll[0].Btype}}</text>
+        <!-- <icon class="iconfont icon-fangxiangyou"></icon> -->
+      </navigator>
+    </view>
+
+  </block>
+
+
+</view>
+
+
+
+<!-- 版本 其他 栏 -->
+<view class="row-box row-list clearfix">
+
+  <view bindtap="printVersion">
+    <icon class="iconfont icon-banben"></icon>
+    <text>版本号: {{version}}</text>
+  </view>
+
+</view>
+
+<msg data="{{toast}}"></msg>

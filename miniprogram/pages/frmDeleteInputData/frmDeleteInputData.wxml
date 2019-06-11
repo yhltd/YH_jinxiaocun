@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<import src="../components/toast/toast.wxml"></import>
+
+<view class="container_new">
+
+  <!-- outer view -->
+  <text>开始时间</text>
+  <view class="content-wrapper">
+    <!-- date -->
+    <view class="date-selection-wrapper">
+      <image src="cloud://yhltd-lzok7.7968-yhltd-lzok7/SY_LHDataAnalysis/alarm.png" class="absolute-center-Y img-small-icon"></image>
+      <picker class="date-picker" mode="date" value="{{selectedDate}}" end="{{endDate}}" bindchange="changeDate">
+        <view class="selected-date">
+          {{selectedDate}}
+        </view>
+      </picker>
+      <image src="cloud://yhltd-lzok7.7968-yhltd-lzok7/SY_LHDataAnalysis/right_dot.png" class="absolute-center-Y img-small-icon img-right-20"></image>
+    </view>
+  </view>
+
+
+  <text>结束时间</text>
+  <view class="content-wrapper">
+    <!-- date -->
+    <view class="date-selection-wrapper">
+      <image src="cloud://yhltd-lzok7.7968-yhltd-lzok7/SY_LHDataAnalysis/alarm.png" class="absolute-center-Y img-small-icon"></image>
+      <picker class="date-picker" mode="date" value="{{selectedEndDate}}" end="{{endDate}}" bindchange="changeDate_end">
+        <view class="selected-date">
+          {{selectedEndDate}}
+        </view>
+      </picker>
+      <image src="cloud://yhltd-lzok7.7968-yhltd-lzok7/SY_LHDataAnalysis/right_dot.png" class="absolute-center-Y img-small-icon img-right-20"></image>
+    </view>
+  </view>
+  <view class="default-btn" bindtap="checkSchedule">立即删除</view>
+<!-- <view class="default-btn" bindtap="del">立即删除2</view> -->
+
+  <template is="toast" data="{{...toast}}"></template>
+</view>

@@ -1,0 +1,15 @@
+<!--pages/shouye/shouye.wxml-->
+
+
+
+     <!-- 分割线 -->
+  <!-- <view class="divLine"></view> -->
+<!-- <view style="background-image: url('https://7968-yhltd-lzok7-1259185633.tcb.qcloud.la/SY_LHDataAnalysis/all2.png?sign=2ec9b3e226ad8bdfe0b8803fa848e4de&t=1557303416'); min-height:98%; background-size: 100% 100%;"> -->
+ <!-- 功能区 -->
+<view class="outer">
+  <view data-index="{{item.index}}" bindtap="remove" wx:for="{{list}}" wx:for-item="item" class="contain" wx:key="">
+    <image class="image" src="{{item.url}}"></image>
+    <view class="fon-30">{{item.text}}</view>
+  </view>
+</view>
+<!-- </view> -->

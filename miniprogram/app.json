@@ -1,6 +1,27 @@
 {
   "pages": [
-    "pages/index/index",
+      "pages/login/login",
+    "pages/shouye/shouye",
+      "pages/index/index",
+     "pages/time/time",
+     "pages/remittance/remittance",
+     "pages/procurement/procurement",
+"pages/Tosell/Tosell",
+"pages/Levellocation/Levellocation",
+"pages/Location/Location",
+"pages/contract/contract",
+"pages/collection/collection",
+"pages/dayin/dayin",
+
+    "pages/frmgerenxinxi/frmgerenxinxi",
+    "pages/frmDeleteInputData/frmDeleteInputData",
+    "pages/frmbasedata/frmbasedata",
+    "pages/frmadminindex/frmadminindex",
+
+
+   "pages/shuju/shuju",
+   "pages/shezhi/shezhi",
+  
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -13,8 +34,35 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "云合进销存",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#707070",
+    "selectedColor": "#1afa29",
+    "borderStyle": "white",
+    "backgroundColor": "#eeeeee",
+    "list": [
+      {
+        "iconPath": "images/shouye.png",
+        "selectedIconPath": "images/shouyelv.png",
+        "pagePath": "pages/shouye/shouye",
+        "text": "首页"
+      },
+      {
+        "iconPath": "images/xinxi.png",
+        "selectedIconPath": "images/xinxilv.png",
+        "pagePath": "pages/shuju/shuju",
+        "text": "库存"
+      },
+    
+      {
+        "iconPath": "images/yonghu.png",
+        "selectedIconPath": "images/yonghulv.png",
+        "pagePath": "pages/shezhi/shezhi",
+        "text": "设置"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }
