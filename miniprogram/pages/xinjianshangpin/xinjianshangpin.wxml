@@ -1,0 +1,19 @@
+<!--pages/xinjianshangpin/xinjianshangpin.wxml-->
+<view class='xinjianshangpin'> 新建商品</view>
+
+<button class='shangchuan' bindtap='chooseImage'>  
+选择图片
+</button>
+
+<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item"  >
+<view  class='xinjian'> {{item.txet}}
+
+<input type="number" data-id="{{item.index}}" bindinput="input"></input>
+</view>
+
+<view class='divline'> </view>
+
+
+</block>
+
+<button class='querenxinjian' bindtap='querenxinjian'>确认新建</button>

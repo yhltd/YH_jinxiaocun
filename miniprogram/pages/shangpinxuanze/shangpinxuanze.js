@@ -1,4 +1,4 @@
-// pages/time/time.js
+// pages/shangpinxuanze/shangpinxuanze.js
 Page({
 
   /**
@@ -11,7 +11,24 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
+    var that=this
+    var all=[]
+    var _openid = "o1tYZ42DXusfK42hRYB6i_Blm89A"
+    const db = wx.cloud.database();
+    db.collection('Yh_JinXiaoCun_chanpin').where({
+     _openid:_openid
+    })
+    .get({
+      success: res => {
+
+        console.log(res.data)
+        that.setData({
+           all:res.data
+                    })
+
+      }
+      })
 
   },
 
@@ -63,11 +80,9 @@ Page({
   onShareAppMessage: function () {
 
   },
-
-  xuanshangpin:function(){
-wx.navigateTo({
-  url: '/pages/shangpinxuanze/shangpinxuanze',
-})
+  jiahao1:function(){
+    wx.navigateTo({
+      url: '/pages/xinjianshangpin/xinjianshangpin',
+    })
   }
-
 })

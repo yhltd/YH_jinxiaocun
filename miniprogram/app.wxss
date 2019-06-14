@@ -694,3 +694,40 @@ input {
   min-height:100%;
    background-size: 100% 100%;
 }
+.qian{
+width: 10px;
+height: 10px;
+
+}
+.jiage{
+height: 100%;
+width: 60%;
+display: flex;
+justify-content: left;
+align-items : center;
+background-color: #FFE4C4;
+color: red;
+float: left
+}
+.queren{
+height: 100%;
+width: 40%;
+display:flex;
+justify-content:center;
+align-items:center;
+color: rgb(255, 255, 255);
+background-color: rgb(104, 140, 248);
+float: right 
+}
+.tabber{
+  height: 100%;
+  width: 100%
+}
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  position: fixed;
+  width: 100%;
+ height: 10%
+}

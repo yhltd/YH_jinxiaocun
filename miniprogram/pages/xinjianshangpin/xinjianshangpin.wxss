@@ -1,0 +1,40 @@
+/* pages/xinjianshangpin/xinjianshangpin.wxss */
+.xinjianshangpin{
+width: 100%;
+height: 70px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #F0F8FF;
+color: #0000FF
+}
+.xinjian{
+  width: 100%;
+  height: 40px;
+display: flex;
+
+align-items: center;
+}
+.querenxinjian{
+background-color:  #0000FF;
+color: #ffffff;
+ width: 80%;
+  margin-top: 20rpx;
+  border-radius: 98rpx; 
+}
+.divline{
+    background:#e0e3Da;
+  width:100%;
+  height: 5rpx
+}
+.xinjianneirong{
+  display: flex;
+flex-direction: column
+}
+.shangchuan{
+background-color:  rgb(4, 241, 24);
+color: #ffffff;
+ width: 50%;
+  
+  border-radius: 68rpx;
+}

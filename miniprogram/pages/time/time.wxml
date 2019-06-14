@@ -1,2 +1,14 @@
 <!--pages/time/time.wxml-->
-<text>pages/time/time.wxml</text>
+<import src="/pages/template/tabber.wxml" />
+<template is="tabbar" data="{{tabbar}}" />
+
+<view class='kongbai'></view>
+<view class='divline'></view>
+
+<view  class='xuan' bindtap='xuanshangpin'> 
+<image class='jiahao'  src='/images/jiahao.png'></image>
+<text decode="emsp">&emsp;&emsp;选商品</text>
+  </view>
+
+<view class='divline'></view>
+

@@ -12,7 +12,8 @@
 "pages/contract/contract",
 "pages/collection/collection",
 "pages/dayin/dayin",
-
+"pages/xinjianshangpin/xinjianshangpin",
+"pages/shangpinxuanze/shangpinxuanze",
     "pages/frmgerenxinxi/frmgerenxinxi",
     "pages/frmDeleteInputData/frmDeleteInputData",
     "pages/frmbasedata/frmbasedata",
@@ -33,9 +34,10 @@
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
+    
+    "navigationBarBackgroundColor": "#1E90FF",
     "navigationBarTitleText": "云合进销存",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "color": "#707070",
