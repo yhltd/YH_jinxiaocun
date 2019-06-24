@@ -17,7 +17,7 @@ App({
     },
     openid:"",
     appid: 'wxf3c03c2a0c59d299', //填写微信小程序appid
-    secret: '691ce55bfc793a9aa352291877afffb4',//填写微信小程序secret
+    secret: '8dc02d24aada51fb37721a2d8fcea8ee',//填写微信小程序secret
     imageInfopath: "cloud://yhltd-lzok7.7968-yhltd-lzok7/tupian/",
     cookie: "",
     nickName: "",
