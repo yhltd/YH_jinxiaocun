@@ -12,7 +12,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+   const db = wx.cloud.database()
+   var app = getApp();
+    db.collection("Yh_JinXiaoCun_mingxi").where({
+      _openid: "o1tYZ42DXusfK42hRYB6i_Blm89A"
+    }).get({
+      success:res=>{
+        that.setData({
+          szzhi:res.data
+        })
+      }
+    })
   },
 
   /**

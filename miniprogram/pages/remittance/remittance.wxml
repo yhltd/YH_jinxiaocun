@@ -1,2 +1,33 @@
-<!--pages/remittance/remittance.wxml-->
-<text>pages/remittance/remittance.wxml</text>
+<import src="/pages/template/tabber.wxml" />
+<template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
+<view class="XzkhMain">
+  <view class='xzkh'>
+    客户
+    <view class='xzkhWwb'>
+      <text class="Xzkhtext">请选择客户</text> 
+      <text class='xzkhA'>选择</text>
+    </view>
+    <view class="xsp" bindtap='XzspClick'>
+      <view class="qxz">
+        <image src="../../images/jiahao.png" class="jia"></image>
+        <text class='xsp-text'>选商品</text>
+      </view>
+    </view>
+  </view>
+
+
+
+  <view class=' main'> 
+  <view class='list'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
+    <view class='shangpin'>
+        <image class="shangpin-img" src="{{szzhi[i].bigImg}}"></image>
+         <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].value0}}</text>\n售价：{{szzhi[i].value1}}\n进价：{{szzhi[i].value2}}\n类别：{{szzhi[i].value3}}\n备注：{{szzhi[i].value4}}</text>
+    </view>
+       <view class='shangpin-jin'  data-id="{{i}}" >
+            <view class='shangpin-input'  >数量：{{szsl[i]}}</view>
+            <view class='shangpin-input'>价格：{{szje[i]}}</view>  
+        </view>
+  </view>
+</view>
+
+</view>

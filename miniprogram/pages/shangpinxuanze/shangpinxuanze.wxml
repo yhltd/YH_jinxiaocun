@@ -1,21 +1,21 @@
 <!--pages/shangpinxuanze/shangpinxuanze.wxml-->
 <import src="/pages/template/tabber.wxml" />
-<template is="tabbar" data="{{tabbar}}" />
+<import src = "/pages/template/jg.wxml"/>
+<template is ="jg"  data ="{{jghide,cpid,cpsljg,cpjgsl}}"/>
+<template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
 
-<view wx:for="{{all}}" wx:key="" wx:for-index='i'>  
-<view class='divline'></view>
-<view class='shangpin'>
-
-<image  src='{{all[i].bigImg}}' class='shangpin-image'> </image>
-
-<text class='shangpin-text' >品名：{{all[i].value0}}\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text>
-
+<view class = "Mymain">
+    <view class ="list" wx:for="{{all}}" wx:key="" bindtap='SrJg' wx:for-index='i' data-id="{{i}}" >  
+        <view class='divline'></view>
+        <view class='shangpin' >
+            <image  src='{{all[i].bigImg}}' class='shangpin-image'> </image>
+            <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text>
+        </view>
+        <view class='shangpin-jin'  data-id="{{i}}" >
+            <view class='shangpin-input'  >数量：{{sl[i]}}</view>
+            <view class='shangpin-input'>价格：{{jg[i]}}</view>  
+        </view>
+    </view>
 </view>
-<view class='shangpin-jin'>
-<view class='shangpin-input'>数量：<input class='shangpin-jinshuxing'></input></view> 
-<view class='shangpin-input'>价格：<input class='shangpin-jinshuxing'></input></view> 
-</view>
- </view>
-
  
 <image class='jiahao1' src='/images/jiahao1.png' bindtap='jiahao1'>    </image>

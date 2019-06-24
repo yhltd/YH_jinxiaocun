@@ -1,6 +1,9 @@
 //app.js
 //app.js
-
+var rkall=[]
+var szsl=[]
+var szje=[]
+var cpsum =0
 var dateUtil = require('./utils/date.js');
 App({
   globalData: {
@@ -12,6 +15,7 @@ App({
       'Cookie': ''
 
     },
+    openid:"",
     appid: 'wxf3c03c2a0c59d299', //填写微信小程序appid
     secret: '691ce55bfc793a9aa352291877afffb4',//填写微信小程序secret
     imageInfopath: "cloud://yhltd-lzok7.7968-yhltd-lzok7/tupian/",

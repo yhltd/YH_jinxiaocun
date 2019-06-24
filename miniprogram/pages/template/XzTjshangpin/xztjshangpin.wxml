@@ -1,0 +1,18 @@
+<view class ="main" >
+    <view class ="xzHeader">
+        <image src="{{}}" />
+        <text>
+            {{name}}\n
+            库存{{kc}}
+        </text>
+    </view>
+    <view class ="Price">
+        价格  <image src=""/> {{spprice}}
+    </view>
+    <view>
+        数量
+    </view>
+    <view>
+        <button type="default" size="defaultSize" loading="loading" plain="plain}" disabled="disabled" bindtap="defaultTap" hover-class="defaultTap">Button</button>
+    </view>
+</view>

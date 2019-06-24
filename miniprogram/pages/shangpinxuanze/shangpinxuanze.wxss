@@ -1,4 +1,15 @@
 /* pages/shangpinxuanze/shangpinxuanze.wxss */
+.main{
+background-color: #F0F8FF;
+height: 1091rpx;
+width: 100%;
+}
+.list{
+  margin-bottom: -3%;
+  height: 209rpx;
+background-color: white;
+
+}
 .jiahao1{
 width: 40px;
 height: 40px;
@@ -18,29 +29,51 @@ justify-content: center;
   height: 5rpx
 }
 .shangpin{
-  width: 50%;
+  width: 34%;
   height: 100px;
-  display: flex
+  display: flex;
+  padding: 8px;
+
 }
 .shangpin-image{
-  width: 90px;
-  height: 90px
+  width: 133rpx;
+  height: 123rpx;
+  position: absolute;
+  left: 9rpx;
+  margin-top: 28rpx;
+
+
+}
+.shangpinpm{
+  font-weight:400rpx;
+  font-size:30rpx
 }
 .shangpin-text{
-  height: 100%;
-  font-size: 13px
+  height: 1%;
+font-size: 61%;
+width: 516%;
+position: absolute;
+left: 20%;
+margin-top: 1%;
+
+
   
 }
 .shangpin-jin{
-  width: 50%;
-  font-size: 15px;
-  float: right;
- display:flex;
- flex-direction: column
+font-size: 15px;
+flex-direction: column;
+position: absolute;
+left: 56%;
+display: flex;
+margin-top: -21%;
+width: 69%;
+
 }
-.shangpin-jinshuxing{
+
+.shangpin-shuliang{
+ 
 
 }
 .shangpin-input{
-  display: flex
+  display: flex;
 }

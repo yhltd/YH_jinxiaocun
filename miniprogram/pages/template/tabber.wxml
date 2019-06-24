@@ -3,9 +3,8 @@
   <view  class="tab-bar" hidden="{{hiddenName}}"  style=" {{tabBar.position=='top'? 'top: 0' : 'bottom: 0'}}; {{tabBar.borderStyle? (tabBar.position=='top'? 'border-bottom: solid 0px '+tabBar.borderStyle + ';' : 'border-top: solid 1px '+tabBar.borderStyle + ';') : ''}}"> 
 
 <view class='tabber'> 
-<view class='jiage'>￥0</view>
-
-<view class='queren'>确认入库</view>
+<view class='jiage'>{{rkSum}}</view>
+<view class='queren' bindtap='querenRk'>{{rkck}}</view>
 
 </view>
 </view>

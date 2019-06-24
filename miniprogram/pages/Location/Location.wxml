@@ -1,2 +1,5 @@
-<!--pages/Location/Location.wxml-->
-<text>pages/Location/Location.wxml</text>
+<view>
+  <view class='main'>
+    <view class='hide'></view>
+  </view>
+</view>
