@@ -79,6 +79,7 @@ App({
 
                 wx.setStorageSync('openid', obj);//存储openid  
                 console.log(obj);
+               
               }
             });
           } else {

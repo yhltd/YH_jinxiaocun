@@ -31,18 +31,18 @@ Page({
         url: "../../images/kuwei_03.jpg",
         text: "进销存",
         index: 4,
-        lianjie: "../Levellocation/Levellocation",
+        lianjie: "../shuju/shuju",
       },
       {
         url: "../../images/sun_03.jpg",
 
-        text: "基础资料",
+        text: "进货方资料",
         index: 5,
         lianjie: "../Location/Location",
       },
       {
         url: "../../images/sepal_03.jpg",
-        text: "用料配置",
+        text: "客户资料",
         index: 6,
         lianjie: "../contract/contract",
       },
@@ -54,7 +54,7 @@ Page({
       },
       {
         url: "../../images/anQun_03.jpg",
-        text: "打印单",
+        text: "统计报表",
         index: 8,
         lianjie: "../dayin/dayin"
       },

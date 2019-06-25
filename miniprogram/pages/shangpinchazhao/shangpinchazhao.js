@@ -13,15 +13,17 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-   const db = wx.cloud.database()
-   var app = getApp();
+    const db = wx.cloud.database()
+    var app = getApp();
+    var _id=options._id
     var _openid = wx.getStorageSync('openid').openid;
     db.collection("Yh_JinXiaoCun_mingxi").where({
-      _openid: _openid
+      _openid: _openid,
+      cpid: _id
     }).get({
-      success:res=>{
+      success: res => {
         that.setData({
-          szzhi:res.data
+          szzhi: res.data
         })
       }
     })

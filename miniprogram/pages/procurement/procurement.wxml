@@ -1,2 +1,25 @@
-<!--pages/procurement/procurement.wxml-->
-<text>pages/procurement/procurement.wxml</text>
+<!--pages/time/time.wxml-->
+<import src="/pages/template/tabber.wxml" />
+<template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
+<view class=' main'> 
+  <view class='list'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
+    <view class='shangpin'>
+        <image class="shangpin-img" src="{{szzhi[i].bigImg}}"></image>
+         <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].value0}}</text>\n售价：{{szzhi[i].value1}}\n进价：{{szzhi[i].value2}}\n类别：{{szzhi[i].value3}}\n备注：{{szzhi[i].value4}}</text>
+    </view>
+       <view class='shangpin-jin'  data-id="{{i}}" >
+            <view class='shangpin-input'  >数量：{{szsl[i]}}</view>
+            <view class='shangpin-input'>价格：{{szje[i]}}</view>  
+        </view>
+  </view>
+</view>
+<view class='kongbai'></view>
+<view class='divline'></view>
+
+<view  class='xuan' bindtap='xuanshangpin'> 
+<image class='jiahao'  src='/images/jiahao.png'></image>
+<text decode="emsp">&emsp;&emsp;选商品</text>
+  </view>
+
+<view class='divline2'></view>
+

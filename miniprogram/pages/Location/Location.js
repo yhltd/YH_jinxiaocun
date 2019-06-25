@@ -5,14 +5,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    hidden1:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const db = wx.cloud.database()
+    var _openid = wx.getStorageSync('openid').openid;
+    db.collection("Yh_JinXiaoCun_jinhuofang").where({
+      _openid: _openid
+    }).get({
+      success: res => {
+        that.setData({
+          all: res.data
+        })
+      }
+    })
   },
 
   /**
@@ -62,5 +72,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  tianjia:function(){
+    var that=this;
+    that.setData({
+      hidden1:!that.data.hidden1
+    })
   }
 })

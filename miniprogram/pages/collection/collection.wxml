@@ -1,2 +1,19 @@
-<!--pages/collection/collection.wxml-->
-<text>pages/collection/collection.wxml</text>
+<!--pages/shangpinxuanze/shangpinxuanze.wxml-->
+
+
+<view class = "Mymain">
+    <view class ="list" wx:for="{{all}}" wx:key=""  wx:for-index='i' data-id="{{i}}" >  
+        <view class='divline'></view>
+        <view bindtap='srJg' data-id="{{i}}">
+        <view class='shangpin' >
+            <image  src='{{all[i].bigImg}}' class='shangpin-image'> </image>
+            <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text>
+        </view>
+        <view class='shangpin-jin'  data-id="{{i}}" >
+
+        </view>
+        </view>
+    </view>
+</view>
+ 
+

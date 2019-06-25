@@ -1,0 +1,15 @@
+<template name="jinhuo">  
+<view hidden="{{hidden1}}" class='jinhuo'>
+<view>备注：
+ <input type="number" data-id="{{item.index}}" bindinput="input1"></input>
+</view>
+
+<view>联系方式：
+ <input type="number" data-id="{{item.index}}" bindinput="input2"></input>
+ </view>
+<view>联系地址：
+ <input type="number" data-id="{{item.index}}" bindinput="input3"></input>
+ </view>
+ <button bindtap='' class=''>确定</button>
+ </view>
+ </template>

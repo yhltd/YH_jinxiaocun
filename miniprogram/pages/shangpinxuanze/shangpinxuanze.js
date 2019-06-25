@@ -2,6 +2,7 @@
 var jg 
 var sl 
 var dtid 
+var cpid
 var cpjg = []
 var cpsl = []
 var szZhi = []
@@ -15,6 +16,7 @@ Page({
     jghide:"none",
     sl:[],
     jg:[],
+     
     rkck:"选择商品"
   },
   
@@ -29,7 +31,8 @@ Page({
       jg: []
     })
     var all = []
-    var _openid = "o1tYZ42DXusfK42hRYB6i_Blm89A"
+    var _openid = wx.getStorageSync('openid').openid;
+    // console.log(_openid)
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_chanpin').where({
      _openid:_openid
@@ -107,14 +110,17 @@ Page({
     })
   
   },
-  SrJg:function(e){
+  srJg:function(e){
     var that=this
-    dtid = e.target.dataset.id
+   
+     dtid = e.target.dataset.id
+ 
+    console.log(dtid)
       that.setData({
         jghide: "flex",
-         cpid:dtid,
-        cpsljg:"",
-        cpjgsl:""
+        cpid : dtid,
+        cpsljg : "",
+        cpjgsl : ""
       })
 
   }, 
@@ -125,24 +131,21 @@ Page({
 
       })
      
-  },cunsl:function(e){
+  },
+  cunsl:function(e){
       sl  =e.detail.value
-  },cunjg:function(e){
+  },
+  cunjg:function(e){
     jg = e.detail.value
-  }, tjjg:function(e){
+  }, 
+  tjjg:function(e){
     var that = this
     zongjia = that.data.rkSum
-    if (sl!=null && jg !=null){
+     if (sl!=null && jg !=null){
       cpsl[dtid] = sl
       cpjg[dtid] = jg
       zongjia = zongjia + (jg * sl)
-    }else{
-      wx.showToast({
-        title: '数量或价格不能为空',
-        icon:"none",
-        duration: 2000
-      })
-    }
+     }
     
    
     for (var  i =0 ;i< cpsl.length;i++){
@@ -158,10 +161,11 @@ Page({
       jg:cpjg,
       rkSum: zongjia
     })
-  }, querenRk:function(){
+  }, 
+  querenRk:function(){
     var pd = 0
     if (cpsl.length == szZhi.length) {
-      
+     
       for (var i = 0; i < cpsl.length; i++) {
         if (cpsl[i] == null) {
           pd = 1
@@ -187,7 +191,8 @@ Page({
           delta:1
         })
       }
-    } else {
+     } 
+    else {
       wx.showToast({
         title: '数量或价格不能为空',
         icon: "none",

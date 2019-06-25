@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/shouye/shouye",
+    "pages/login/login",
+    
     "pages/index/index",
     "pages/time/time",
     "pages/remittance/remittance",
@@ -20,6 +21,7 @@
     "pages/frmadminindex/frmadminindex",
     "pages/shuju/shuju",
     "pages/shezhi/shezhi",
+    "pages/shangpinchazhao/shangpinchazhao",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
