@@ -3,13 +3,14 @@
 <view>备注：
  <input type="number" data-id="{{item.index}}" bindinput="input1"></input>
 </view>
-
+<view class='divline2'></view>
 <view>联系方式：
  <input type="number" data-id="{{item.index}}" bindinput="input2"></input>
  </view>
+ <view class='divline2'></view>
 <view>联系地址：
  <input type="number" data-id="{{item.index}}" bindinput="input3"></input>
  </view>
- <button bindtap='' class=''>确定</button>
+ <button bindtap='quedingjinhuo' class='queding'>确定</button>
  </view>
  </template>

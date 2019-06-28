@@ -5,7 +5,7 @@
     客户
     <view class='xzkhWwb'>
       <text class="Xzkhtext">请选择客户</text> 
-      <text class='xzkhA'>选择</text>
+      <text class='xzkhA' bindtap='xuanzekehu'>选择</text>
     </view>
     <view class="xsp" bindtap='XzspClick'>
       <view class="qxz">

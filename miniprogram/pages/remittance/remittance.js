@@ -120,4 +120,11 @@ Page({
       })
     }
   }
+  ,xuanzekehu:function(){
+
+wx.navigateTo({
+  url: '../contract/contract',
+})
+
+  }
 })

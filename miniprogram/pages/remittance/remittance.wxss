@@ -41,7 +41,8 @@ left: 0%;
 }
 .xzkhWwb{
   position: absolute;
-  left: 17%;
+  margin: 0% 0% 0% 0%
+  
 }
 .xzkh{
   display: flex;

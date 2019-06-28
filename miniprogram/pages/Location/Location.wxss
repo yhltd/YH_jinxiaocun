@@ -1,1 +1,32 @@
 /* pages/Location/Location.wxss */
+.divline2{
+  background:#e0e3Da;
+  width:100%;
+  height: 5rpx;
+  
+
+
+
+}
+.jinhuofan{
+  display: flex;
+  flex-direction: column
+}
+.jinhuo-text{
+  margin: 0 0 0 20%
+}
+.tianjia{
+background-color:  #0000FF;
+color: #ffffff;
+ width: 80%;
+  margin-top: 20rpx;
+  border-radius: 98rpx; 
+  }
+  .queding{
+
+   background-color:  rgb(51, 255, 0);
+color: #ffffff;
+ width: 80%;
+  margin-top: 20rpx;
+  border-radius: 98rpx;  
+  }

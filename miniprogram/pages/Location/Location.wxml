@@ -2,12 +2,17 @@
 <template is="jinhuo" data="{{jinhuo,hidden1}}" />
 
 <view >进货方配置</view>
-<view wx:for="{{all}}" wx:key="" data-id=''>
 
-<view>{{}}</view>
-<view>{{}}</view>
-<view>{{}}</view>
+<view class='divline2'></view>
+<view wx:for="{{all}}" wx:key="" wx:for-index='i' class='jinhuofan'>
 
+<view>进货方{{i+1}}：
+<view class='jinhuo-text'>{{all[i].beizhu}}</view>
+<view class='jinhuo-text'>{{all[i].lianxifangshi}}</view>
+<view class='jinhuo-text'>{{all[i].lianxidizhi}}</view>
+</view>
+<view class='divline2'></view>
 </view>
 
-<button bindtap='tianjia'>添加</button>
+
+<button class="tianjia" bindtap='tianjia'>添加</button>

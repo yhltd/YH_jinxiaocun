@@ -4,9 +4,10 @@
      <text>价格:</text><input  bindblur='cunjg'class = "input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpjgsl}}"></input>
     </view>
     <view class="Xzshuliang" style="display: flex">
-      <text>数量:</text><input class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius: 18rpx; " bindblur='cunsl' value="{{cpsljg}}"></input>
+      <text>数量:</text><input class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindblur='cunsl' value="{{cpsljg}}"></input>
     </view>
     <button bindtap='tjjg'>提交</button>
     <button bindtap='spClose'>关闭</button>
+    
   </view>
 </template>
