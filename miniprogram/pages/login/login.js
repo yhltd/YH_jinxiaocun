@@ -5,6 +5,7 @@ var login = function (that) {
   var finduser, passwod, adminis;
   var listAll = [];
   const db = wx.cloud.database();
+  console.log("ligng")
   db.collection('Yh_JinXiaoCun_user').where({
     name: that.data.name, // 填入当前用户 openid
   }).get({
@@ -12,18 +13,19 @@ var login = function (that) {
       listAll.push(res.data)
       // res.data 是包含以上定义的两条记录的数组
       // console.log(res.data)
+      console.log(res.data)
       listAll = res.data;
       that.setData({
         listAll: listAll[0]
         // finduser=listAll[0].name,
         // passwod= listAll[0].passwod
       },
-
+  
         finduser = listAll[0].name,
         passwod = listAll[0].password,
         adminis = listAll[0].AdminIS,
-        openid = listAll[0]._openid,
-        app.globalData.openid = openid,
+        // openid = listAll[0]._openid,          
+        // app.globalData.openid = openid,
         app.globalData.finduser = finduser,
         app.globalData.passwod = passwod,
         app.globalData.adminis = adminis,
@@ -31,8 +33,9 @@ var login = function (that) {
         console.log(finduser),
         console.log(passwod)
       )
-
+ 
       if (finduser == that.data.name && that.data.pwd == passwod) {
+        console.log("密码对")
         //登录状态写入缓存
         wx.setStorage({
           key: "IsLogin",
@@ -43,6 +46,7 @@ var login = function (that) {
         })
       }
       else {
+        console.log("密码错误")
         wx.showToast({
           title: '密码错误',
           image: "../../images/icon-no.png",

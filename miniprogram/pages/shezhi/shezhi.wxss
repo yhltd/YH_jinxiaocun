@@ -175,3 +175,16 @@
   border: solid 0px black;
   text-align: center;
 }
+
+.item-image {
+  width: 60rpx;
+  height: 60rpx;
+  margin: 4px 0 0  3%;
+}
+
+.item-text {
+  font-size: 48rpx;
+  color: black;
+  align-items: center;
+   
+}

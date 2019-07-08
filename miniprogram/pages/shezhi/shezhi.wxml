@@ -1,6 +1,6 @@
 <navigator class="txbt" url='/pages/frmgerenxinxi/frmgerenxinxi'>
-
-  <text class="nav-mainitem-text">个人信息</text>
+   <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/yonghu.png"></image>
+  <text class="item-text">个人信息</text>
 </navigator>
 <!-- <view class="container">
   <!-- 分割线 -->
@@ -31,8 +31,8 @@
 </view>  -->
 <!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
 <navigator class="txbt" url='/pages/frmadminindex/frmadminindex'>
-
-  <text class="nav-mainitem-text">管理员(G)</text>
+   <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/timecard.png"></image>
+  <text class="item-text">  管理员</text>
 </navigator>
 
 <view class="container">
