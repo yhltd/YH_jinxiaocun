@@ -8,6 +8,48 @@
 
 
 }
+.Xzkhtext{
+  color: #5B5B5B;
+
+
+}
+.xzkhA{
+  /* position: absolute; */
+  /* width: 50%;
+   */
+  /* text-align: center; */
+  float: right; 
+  height: 100%;
+  color: #3A5FCD;
+}
+.xzkh{
+  display: flex;
+  width: 100%;
+  background-color: white;
+  padding: 2%;
+  font-size: 77%;
+}
+.xsp{
+  display: flex;
+position: absolute;
+width: 100%;
+top: 8%;
+background-color: white;
+padding: 3%;
+left: 0%;
+
+
+}
+.qxz{
+margin-left: 37%;
+
+}
+.xsp-text{
+  position: absolute;
+top: 29%;
+color: #5B5B5B;
+
+}
 
 .shangpin{display: flex;
 width: 100%;

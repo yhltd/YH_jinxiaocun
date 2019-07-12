@@ -11,6 +11,7 @@
 <view>联系地址：
  <input type="number" data-id="{{item.index}}" bindinput="input3"></input>
  </view>
+ <view class='divline2'></view>
  <button bindtap='quedingjinhuo' class='queding'>确定</button>
  </view>
  </template>

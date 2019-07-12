@@ -5,14 +5,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hidden1:true
+    hidden1:true,
+    jinhuo:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
 var that=this
+
+that.setData({
+  jinhuo: options.jinhuo
+})
     const db = wx.cloud.database()
     var _openid = wx.getStorageSync('openid').openid;
     db.collection("Yh_JinXiaoCun_jinhuofang").where({
@@ -130,6 +136,19 @@ that.setData({
 })
     that.onLoad()
   },
+  jin: function (e){
+    var that=this
 
+    var id = e.currentTarget.dataset.id
+    console.log(id)
+    if (that.data.jinhuo==1){
+
+      wx.navigateTo({
+        url: '../time/time?id='+id
+})
+
+  }
+  },
+ 
   
 })

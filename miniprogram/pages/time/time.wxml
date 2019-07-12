@@ -16,10 +16,25 @@
 <view class='kongbai'></view>
 <view class='divline'></view>
 
-<view  class='xuan' bindtap='xuanshangpin'> 
+<view class='xzkh'>
+
+<!-- <view  class='xuan' bindtap='xuanshangpin'> 
 <image class='jiahao'  src='/images/jiahao.png'></image>
 <text decode="emsp">&emsp;&emsp;选商品</text>
-  </view>
+  </view> -->
+
+     <view class="xsp" bindtap='xuanshangpin'>
+      <view class="qxz">
+        <image src="../../images/jiahao.png" class="jiahao"></image>
+        <text class='xsp-text'>选商品</text>
+      </view>
+    </view>
 
 <view class='divline2'></view>
+<view class='xzkhWwb'>
 
+      <text hidden='{{hideen1}}'>进货方：{{all}}</text>
+      <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text> 
+      <text hidden='{{hideen2}}' class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
+    </view>
+</view>

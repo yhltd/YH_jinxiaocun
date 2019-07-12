@@ -13,14 +13,41 @@ Page({
    */
   data: {
     rkSum: 0,
-    rkck:"确认入库"
+    rkck:"确认入库",
+    hideen1:true,
+    hideen2: false,
+   
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var all
+    var that=this
+   var id=options.id
+   console.log(id)
+   if(id!=null){
+    that.setData({
+      hideen1:!that.data.hideen1,
+      hideen2: !that.data.hideen2
+    })
+
+   }
+    const db = wx.cloud.database();
+    db.collection('Yh_JinXiaoCun_jinhuofang').get({
+      success: res => {
+
+        console.log(res.data[id].beizhu)
+       that.setData({
+          all:res.data[id].beizhu
+       })
+
+
+     }
+
+
+    })
   },
 
   /**
@@ -108,6 +135,7 @@ wx.navigateTo({
 })
   }, 
   querenRk:function(){
+    var that=this
     var app = getApp()
     var today = common.getToday();
     const db = wx.cloud.database();
@@ -117,6 +145,7 @@ wx.navigateTo({
      
               db.collection('Yh_JinXiaoCun_mingxi').add({
                 data:{
+                  jinhuofang:that.data.all,
                   shijian:today,
                   cpid: szzhi[i]._id,
                   cpname: szzhi[i].value0,
@@ -181,6 +210,11 @@ wx.navigateTo({
            
     //       }
    
+  },
+  xuanzejinhuofang:function(){
+    wx.navigateTo({
+      url: '../Location/Location?jinhuo=1',
+    })
   }
 
 })

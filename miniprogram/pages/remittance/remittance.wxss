@@ -3,9 +3,12 @@ page{
   background-color: #F0F8FF;
 }
 .xzkhA{
-  position: absolute;
-  width: 100%;
-  left: 361%;
+  /* position: absolute; */
+  /* width: 50%;
+   */
+  /* text-align: center; */
+  float: right; 
+  height: 100%;
   color: #3A5FCD;
 }
 .Xzkhtext{
@@ -40,7 +43,7 @@ left: 0%;
 
 }
 .xzkhWwb{
-  position: absolute;
+  /* position: absolute; */
   margin: 0% 0% 0% 0%
   
 }

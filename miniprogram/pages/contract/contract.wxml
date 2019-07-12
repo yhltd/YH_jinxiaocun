@@ -1,2 +1,18 @@
-<!--pages/contract/contract.wxml-->
-<text>pages/contract/contract.wxml</text>
+<import src="/pages/template/jinhuo.wxml" />
+<template is="jinhuo" data="{{jinhuo,hidden1}}" />
+
+<view >客户配置</view>
+
+<view class='divline2'></view>
+<view wx:for="{{all}}" wx:key="" wx:for-index='i' class='jinhuofan'>
+
+<view bindtap='ke' data-id="{{i}}">客户{{i+1}}：
+<view class='jinhuo-text'><text space="ensp">客    户：</text>{{all[i].beizhu}}</view>
+<view class='jinhuo-text'><text space="ensp">联系方式：</text>{{all[i].lianxifangshi}}</view>
+<view class='jinhuo-text'><text space="ensp">地    址：</text>{{all[i].lianxidizhi}}</view>
+</view>
+<view class='divline2'></view>
+</view>
+
+
+<button class="tianjia" bindtap='tianjia'>添加</button>

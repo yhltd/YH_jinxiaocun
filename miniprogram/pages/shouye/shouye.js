@@ -31,7 +31,7 @@ Page({
         url: "../../images/kuwei_03.jpg",
         text: "进销存",
         index: 4,
-        lianjie: "../shuju/shuju",
+        lianjie: "../jinxiaocun/jinxiaocun",
       },
       {
         url: "../../images/sun_03.jpg",

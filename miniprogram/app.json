@@ -2,8 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/shouye/shouye",
-   
-    
+    "pages/jinxiaocun/jinxiaocun",
     "pages/index/index",
     "pages/time/time",
     "pages/remittance/remittance",
@@ -53,7 +52,7 @@
       {
         "iconPath": "images/xinxi.png",
         "selectedIconPath": "images/xinxilv.png",
-        "pagePath": "pages/shuju/shuju",
+        "pagePath": "pages/jinxiaocun/jinxiaocun",
         "text": "库存"
       },
       {

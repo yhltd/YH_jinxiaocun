@@ -120,11 +120,17 @@ Page({
       })
     }
   }
-  ,xuanzekehu:function(){
+  ,xuanzekehu:function(e){
+    var that = this
 
+    var id = e.currentTarget.dataset.id
+    console.log(id)
+    if (that.data.jinhuo == 1) {
 wx.navigateTo({
-  url: '../contract/contract',
+
+  url: '../contract/contract?id'+id,
+
 })
 
-  }
+  }}
 })

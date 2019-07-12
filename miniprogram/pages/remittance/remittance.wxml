@@ -2,17 +2,24 @@
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
 <view class="XzkhMain">
   <view class='xzkh'>
-    客户
-    <view class='xzkhWwb'>
-      <text class="Xzkhtext">请选择客户</text> 
-      <text class='xzkhA' bindtap='xuanzekehu'>选择</text>
-    </view>
-    <view class="xsp" bindtap='XzspClick'>
+
+  
+   <view class="xsp" bindtap='XzspClick'>
       <view class="qxz">
         <image src="../../images/jiahao.png" class="jia"></image>
         <text class='xsp-text'>选商品</text>
       </view>
     </view>
+
+
+
+    <view class='xzkhWwb'>
+      <text class="Xzkhtext">请选择客户</text> 
+      <text class='xzkhA' bindtap='xuanzekehu'>选择</text>
+    </view>
+
+    
+    
   </view>
 
 
