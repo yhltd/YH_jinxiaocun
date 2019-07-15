@@ -1,25 +1,27 @@
-<navigator class="txbt" url='/pages/frmgerenxinxi/frmgerenxinxi'>
-   <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/yonghu.png"></image>
-  <text class="item-text">个人信息</text>
-</navigator>
-<!-- <view class="container">
+<view>
+
+  <navigator class="txbt" url='/pages/frmgerenxinxi/frmgerenxinxi'>
+    <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/yonghu.png"></image>
+    <text class="item-text">个人信息</text>
+  </navigator>
+  <!-- <view class="container">
   <!-- 分割线 -->
   <!-- <view class="divLine"></view>
-</view> --> 
-<!-- <navigator class="txbt" url='/pages/frmDeleteInputData/frmDeleteInputData'>
+</view> -->
+  <!-- <navigator class="txbt" url='/pages/frmDeleteInputData/frmDeleteInputData'>
 
   <text class="nav-mainitem-text">清空数据</text>
 </navigator> -->
 
- 
 
-<view class="container">
-  <!-- 分割线 -->
-  <view class="divLine"></view>
-</view>
 
- 
-<!-- <navigator class="txbt" url='/pages/frmbasedata/frmbasedata'>
+  <view class="container">
+    <!-- 分割线 -->
+    <view class="divLine"></view>
+  </view>
+
+
+  <!-- <navigator class="txbt" url='/pages/frmbasedata/frmbasedata'>
 
   <text class="nav-mainitem-text">设定参数</text>
 </navigator>
@@ -29,13 +31,16 @@
   <!-- <view class="divLine"></view>
   
 </view>  -->
-<!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
-<navigator class="txbt" url='/pages/frmadminindex/frmadminindex'>
-   <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/timecard.png"></image>
-  <text class="item-text">  管理员</text>
-</navigator>
+  <!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
+  <navigator class="txbt" url='/pages/frmadminindex/frmadminindex'>
 
-<view class="container">
-  <!-- 分割线 -->
-  <view class="divLine"></view>
+    <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/timecard.png"></image>
+    <text class="item-text">管理员</text>
+  </navigator>
+
+  <view class="container">
+    <!-- 分割线 -->
+    <view class="divLine"></view>
+  </view>
+
 </view>
