@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    hidden1:true
   },
 
   /**
@@ -102,8 +102,67 @@ Page({
 
   
   },
-  xiugai:function(){
-    
-  }
+  xiugai:function(e){
+    var that = this
+    const db = wx.cloud.database()
+    var id = e.currentTarget.dataset.id
+    console.log(id)
+    that.setData({
+       hidden1:!that.data.hidden1,
+      szzh: that.data.szzhi[id]
+    })
+    // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).update({
+    //   data:{
 
+
+    //   }
+    // })
+
+  },
+  cpsj:function(e){
+    var cpsj = e.detail.value
+    console.log(cpsj)
+    this.setData({
+      cpsj: cpsj
+    })
+  },
+  cpjj: function (e) {
+    var cpjj = e.detail.value
+    console.log(cpjj)
+    this.setData({
+      cpjj: cpjj
+    })
+  }
+  ,
+  cplb: function (e) {
+    var cplb = e.detail.value
+    console.log(cplb)
+    this.setData({
+      cplb: cplb
+    })
+  }
+  ,
+  mxtype: function (e) {
+    var mxtype = e.detail.value
+    console.log(mxtype)
+    this.setData({
+      mxtype: mxtype
+    })
+  }
+  ,
+  cpsl: function (e) {
+    var cpsl = e.detail.value
+    console.log(cpsl)
+    this.setData({
+      cpsl: cpsl
+    })
+  }
+  ,
+  cpjg: function (e) {
+    var cpjg = e.detail.value
+    console.log(cpjg)
+    this.setData({
+      cpjg: cpjg
+    })
+  }
 })

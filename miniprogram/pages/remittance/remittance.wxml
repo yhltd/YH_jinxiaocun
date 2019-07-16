@@ -2,8 +2,6 @@
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
 <view class="XzkhMain">
   <view class='xzkh'>
-
-  
    <view class="xsp" bindtap='XzspClick'>
       <view class="qxz">
         <image src="../../images/jiahao.png" class="jia"></image>

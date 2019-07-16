@@ -74,5 +74,44 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  shanchu: function (e) {
+    var that = this
+    const db = wx.cloud.database()
+    var id = e.currentTarget.dataset.id
+    console.log(id)
+    console.log(that.data.szzhi)
+    wx.showModal({
+      title: '提示',
+      content: '是否删除？',
+      success: function (res) {
+        if (res.confirm) {
+          db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
+            success: console.log,
+            fail: console.error,
+
+          })
+          that.onLoad()
+        } else if (res.cancel) {
+
+          return false;
+        }
+
+      }
+    })
+
+
+  },
+  xiugai: function (e) {
+    var that = this
+    const db = wx.cloud.database()
+    var id = e.currentTarget.dataset.id
+    db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).update({
+      data: {
+
+
+      }
+    })
+
   }
 })

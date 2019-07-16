@@ -1,0 +1,27 @@
+<template name="xiugai" hidden='true'>
+  <view hidden="{{hidden1}}" style="display:{{jghide}};flex-direction: column;" >
+    <view class="Xzjiage" style="display:flex">
+     <text>售价:</text><input placeholder="{{szzh.cpsj}}" bindinput='cpsj'class = "input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpjgsl}}"></input>
+    </view>
+    <view class="Xzshuliang" style="display: flex">
+      <text>进价:</text><input placeholder="{{szzh.cpjj}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpjj' value="{{cpsljg}}"></input>
+    </view>
+    <view class="Xzshuliang" style="display: flex">
+      <text>类别:</text><input placeholder="{{szzh.cplb}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cplb' value="{{cpsljg}}"></input>
+    </view>
+     <view class="Xzshuliang" style="display: flex">
+      <text>明细类别:</text><input placeholder="{{szzh.mxtype}}"  class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='mxtype' value="{{cpsljg}}"></input>
+      </view>
+      <view class="Xzshuliang" style="display: flex">
+  <text>数量:</text><input placeholder="{{szzh.cpsl}}"class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpsl' value="{{cpsljg}}"></input>
+    </view>
+
+    <view class="Xzshuliang" style="display: flex">
+      <text>价格:</text><input placeholder="{{szzh.cpjg}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpjg' value="{{cpsljg}}"></input>
+    </view>
+
+    <button bindtap='tjjg'>提交</button>
+    <button bindtap='spClose'>关闭</button>
+    
+  </view>
+</template>

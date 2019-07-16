@@ -1,5 +1,8 @@
+<import src="/pages/template/xiugai.wxml" />
+<template is="xiugai" data="{{xiugai,hidden1,szzh}}" />
+
 <view class='header'><view class='pm'></view><text class="pm-text">品名</text></view>
-<view class=' main'> 
+<view class='main'> 
   <view class='list'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'>
     <view class='shangpin'>
         <image class="shangpin-img" src="{{szzhi[i].bigImg}}"></image>
