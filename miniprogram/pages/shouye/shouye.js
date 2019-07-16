@@ -28,7 +28,7 @@ Page({
 
       },
       {
-        url: "../../images/kuwei_03.jpg",
+        url: "../../images/login.png",
         text: "进销存",
         index: 4,
         lianjie: "../jinxiaocun/jinxiaocun",
@@ -80,7 +80,8 @@ Page({
         url: that.data.list[idx].lianjie,
       })
     } else {
-      wx.navigateTo({
+      console.log(that.data.list[idx].lianjie + '?index=' + idx)
+      wx.reLaunch({
         url: that.data.list[idx].lianjie + '?index=' + idx,
       })
     }

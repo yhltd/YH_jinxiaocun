@@ -1,7 +1,7 @@
 <template name="xiugai" hidden='true'>
   <view hidden="{{hidden1}}" style="display:{{jghide}};flex-direction: column;" >
     <view class="Xzjiage" style="display:flex">
-     <text>售价:</text><input placeholder="{{szzh.cpsj}}" bindinput='cpsj'class = "input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpjgsl}}"></input>
+     <text>售价:</text><input placeholder="{{szzh.cpsj}}" bindinput='cpsj'class = "input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpsljg}}"></input>
     </view>
     <view class="Xzshuliang" style="display: flex">
       <text>进价:</text><input placeholder="{{szzh.cpjj}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpjj' value="{{cpsljg}}"></input>
