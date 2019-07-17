@@ -58,20 +58,15 @@ Page({
         szzhi = wx.getStorageSync("rkall")
         var sl = wx.getStorageSync("szsl")
         var je =wx.getStorageSync("szje")
-        for (var i = slxinxi.length; i < slxinxi.length +wx.getStorageSync("szsl").length; i++) {
-          if (szsl[i] == null) {
-            slxinxi[i] = Number(szsl[i]) + Number(sl[i])
-            slxinxi[i] = Number(szje[i]) + Number(je[i])
-          }
-        }
+     
         var fuzhii = 0
         var szzhilength = that.data.szzhi.length;
-        console.log(szje)
+        console.log(sl)
         for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length;i++){
             if(cpxinxi[i] == null) {
               cpxinxi[i] = szzhi[fuzhii]
-              slxinxi[i] = szsl[fuzhii]
-              jgxinxi[i] = szje[fuzhii]
+              slxinxi[i] = sl[fuzhii]
+              jgxinxi[i] = je[fuzhii]
             }
         }
         
