@@ -58,20 +58,15 @@ Page({
         szzhi = wx.getStorageSync("rkall")
         var sl = wx.getStorageSync("szsl")
         var je =wx.getStorageSync("szje")
-        console.log(that.data.szzhi)  
-
-        for (var i = 0; i < wx.getStorageSync("szsl").length; i++) {
+        for (var i = slxinxi.length; i < slxinxi.length +wx.getStorageSync("szsl").length; i++) {
           if (szsl[i] == null) {
-            szsl[i] = 0
-            szje[i] = 0
+            slxinxi[i] = Number(szsl[i]) + Number(sl[i])
+            slxinxi[i] = Number(szje[i]) + Number(je[i])
           }
-          szsl[i] = Number(szsl[i]) + Number(sl[i])
-          szje[i] = Number(szje[i]) + Number(je[i])
         }
         var fuzhii = 0
         var szzhilength = that.data.szzhi.length;
         console.log(szje)
-        console.log(jgxinxi)
         for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length;i++){
             if(cpxinxi[i] == null) {
               cpxinxi[i] = szzhi[fuzhii]
