@@ -109,7 +109,13 @@ Page({
     console.log(id)
     that.setData({
        hidden1:!that.data.hidden1,
-      szzh: that.data.szzhi[id]
+      szzh: that.data.szzhi[id],
+      cpsj: that.data.szzhi[id].cpsj,
+      cpjj: that.data.szzhi[id].cpjj,
+      cplb: that.data.szzhi[id].cplb,
+      mxtype: that.data.szzhi[id].mxtype,
+      cpsl: that.data.szzhi[id].cpsl,
+      cpjg: that.data.szzhi[id].cpjg,
     })
     // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).update({
     //   data:{
@@ -164,5 +170,53 @@ Page({
     this.setData({
       cpjg: cpjg
     })
-  }
+  },
+    tjjg:function(){
+      var that=this
+      var cpsj = that.data.cpsj
+      var cpjj = that.data.cpjj
+      var cplb = that.data.cplb
+      var mxtype = that.data.mxtype
+      var cpsl = that.data.cpsl
+      var cpjg = that.data.cpjg
+      const db = wx.cloud.database()
+
+      db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzh._id).update({
+data:{
+  cpsj: cpsj,
+  cpjj: cpjj,
+  cplb: cplb,
+  mxtype: mxtype,
+  cpsl: cpsl,
+  cpjg: cpjg,
+
+
+},
+ success: res => {
+  wx.showToast({
+
+    title: '修改成功！',
+
+  })
+
+}
+
+      })
+that.setData({
+  hidden1: true,
+
+  cpsljg: ""
+})
+
+that.onLoad()
+
+
+    },
+spClose:function(){
+  this.setData({
+    hidden1: true,
+
+    cpsljg: ""
+  })
+}
 })

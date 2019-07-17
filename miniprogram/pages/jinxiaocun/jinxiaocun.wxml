@@ -1,5 +1,5 @@
 <import src="/pages/template/xiugai.wxml" />
-<template is="xiugai" data="{{xiugai,hidden1,szzh}}" />
+<template is="xiugai" data="{{xiugai,hidden1,szzh,cpsljg}}" />
 
 <view class='header'><view class='pm'></view><text class="pm-text">品名</text></view>
 <view class='main'> 
