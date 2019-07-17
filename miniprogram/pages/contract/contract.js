@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hidden1: true
+    hidden1: true,
+    jinhuo:0
   },
 
   /**
@@ -14,6 +15,11 @@ Page({
   onLoad: function (options) {
     var that = this
     const db = wx.cloud.database()
+    that.setData({
+      jinhuo:options.jinhuo 
+    })
+    console.log(that.data.jinhuo)
+    console.log (options.jinhuo )
     var _openid = wx.getStorageSync('openid').openid;
     db.collection("Yh_JinXiaoCun_chuhuofang").where({
       _openid: _openid
@@ -134,12 +140,18 @@ Page({
     var that = this
 
     var id = e.currentTarget.dataset.id
-    console.log(id)
+    console.log(that.data.jinhuo)
     if (that.data.jinhuo == 1) {
-
-      wx.navigateTo({
-        url: '../remittance/remittance?id=' + id
-      })
+      wx.setStorageSync('khname',id );
+      wx.setStorageSync('khpd', "1");
+      //返回上一页
+      wx.navigateBack();
+      // wx.navigateBack({
+      //   delta: 1
+      // })
+      // wx.navigateTo({
+      //   url: '../remittance/remittance?khname=' + id
+      // })
   }}
 
 })

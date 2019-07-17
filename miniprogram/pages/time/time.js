@@ -16,7 +16,7 @@ Page({
     rkck:"确认入库",
     hideen1:true,
     hideen2: false,
-   
+    pd :0
   },
 
   /**
@@ -25,12 +25,16 @@ Page({
   onLoad: function (options) {
     var all
     var that=this
+    if (that.data.pd == 0){
+      
+    }
    var id=options.id
    console.log(id)
    if(id!=null){
     that.setData({
       hideen1:!that.data.hideen1,
-      hideen2: !that.data.hideen2
+      hideen2: !that.data.hideen2,
+      all: id
     })
 
    }

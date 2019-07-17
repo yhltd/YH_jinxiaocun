@@ -14,11 +14,13 @@ Page({
    */
   onLoad: function (options) {
     
-var that=this
-
-that.setData({
-  jinhuo: options.jinhuo
-})
+    var that=this
+    if (options.jinhuo != null ){
+      that.setData({
+        jinhuo: options.jinhuo
+      })
+    }
+    
     const db = wx.cloud.database()
     var _openid = wx.getStorageSync('openid').openid;
     db.collection("Yh_JinXiaoCun_jinhuofang").where({
@@ -111,9 +113,12 @@ input1:function(e){
   },
   quedingjinhuo:function(){
     var that=this
-var beizhu=that.data.beizhu
-var lianxifangshi=that.data.lianxifangshi
-var lianxidizhi=that.data.lianxidizhi 
+    var beizhu=that.data.beizhu
+    var lianxifangshi=that.data.lianxifangshi
+    var lianxidizhi=that.data.lianxidizhi 
+    console.log (beizhu)
+    console.log(lianxifangshi)
+    console.log(lianxidizhi)
     if (beizhu!=null || lianxifangshi!=null){
     const db = wx.cloud.database()
     db.collection("Yh_JinXiaoCun_jinhuofang").add({
@@ -138,11 +143,11 @@ that.setData({
   },
   jin: function (e){
     var that=this
-
+   
     var id = e.currentTarget.dataset.id
     console.log(id)
-    if (that.data.jinhuo==1){
 
+    if (that.data.jinhuo==1){
       wx.navigateTo({
         url: '../time/time?id='+id
 })

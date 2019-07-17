@@ -163,42 +163,49 @@ Page({
     })
   }, 
   querenRk:function(){
-    var pd = 0
-    if (cpsl.length == szZhi.length) {
-     
+      var sli = 0
+      var sl =[]
+      var jg = []
+      var zhi = []
+      console.log(cpsl)
+      console.log(cpjg)
+      console.log(szZhi)
       for (var i = 0; i < cpsl.length; i++) {
-        if (cpsl[i] == null) {
-          pd = 1
-          break;
+        if (cpsl[i] != null && cpsl[i]!= "") {
+          sl[sli] = cpsl[i]
+          jg[sli] = cpjg[i]
+          zhi[sli]= szZhi[i]
+          sli = sli+1
         }
       }
-
-      if (pd == 1) {
+      console.log(zhi)
+      console.log(sl)
+      console.log(jg)
+    if (zhi == null ) {
         wx.showToast({
           title: '数量或价格不能为空',
           icon: "none",
           duration: 2000
         })
       }else{
-        var appjson = getApp()
-        appjson.rkall=szZhi
-        appjson.szsl = cpsl
-        appjson.szje = cpjg
-        appjson.cpsum = zongjia
+        // var appjson = getApp()
+        // appjson.rkall=zhi
+        // appjson.szsl = sl
+        // appjson.szje = jg
+        // appjson.cpsum = zongjia
+      wx.setStorageSync('rkall', zhi);
+      wx.setStorageSync('szsl', sl);
+      wx.setStorageSync('szje', jg);
+      wx.setStorageSync('cpsum', zongjia);
+      //返回上一页
+      wx.navigateBack();
         cpjg = []
         cpsl = []
-        wx.navigateBack({
-          delta:1
-        })
+        // wx.navigateBack({
+        //   delta:1
+        // })
       }
-     } 
-    else {
-      wx.showToast({
-        title: '数量或价格不能为空',
-        icon: "none",
-        duration: 2000
-      })
-    }
-    }
+  }
+       
   
 })
