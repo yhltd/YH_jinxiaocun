@@ -1,4 +1,3 @@
-
 Page({
   data: {
     list: [
@@ -76,12 +75,12 @@ Page({
     var that = this
     var idx = e.currentTarget.dataset.index;
     if (idx == 8) {
-      wx.reLaunch({
+      wx.navigateTo({
         url: that.data.list[idx].lianjie,
       })
     } else {
       console.log(that.data.list[idx].lianjie + '?index=' + idx)
-      wx.reLaunch({
+      wx.navigateTo({
         url: that.data.list[idx].lianjie + '?index=' + idx,
       })
     }

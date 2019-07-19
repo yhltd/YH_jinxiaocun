@@ -201,9 +201,7 @@ Page({
       wx.navigateBack();
         cpjg = []
         cpsl = []
-        // wx.navigateBack({
-        //   delta:1
-        // })
+        
       }
   }
        

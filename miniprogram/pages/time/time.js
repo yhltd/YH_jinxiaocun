@@ -3,20 +3,28 @@
 var common = require('../utils/util.js');
 
 var szzhi = []
-var szsl=[]
+var szsl = []
 var szje = []
-var pd =0
+var khname
+var cpxinxi = []
+var slxinxi = []
+var jgxinxi = []
+var pd = 0
 Page({
 
   /**
    * 页面的初始数据
    */
+
   data: {
+    szzhi: [],
+    szjg: [],
+    szsl: [],
     rkSum: 0,
-    rkck:"确认入库",
-    hideen1:true,
+    rkck: "确认入库",
+    hideen1: true,
     hideen2: false,
-    pd :0
+    pd: 0
   },
 
   /**
@@ -24,31 +32,41 @@ Page({
    */
   onLoad: function (options) {
     var all
-    var that=this
-    if (that.data.pd == 0){
-      
-    }
-   var id=options.id
-   console.log(id)
-   if(id!=null){
-    that.setData({
-      hideen1:!that.data.hideen1,
-      hideen2: !that.data.hideen2,
-      all: id
-    })
+    var that = this
+     that.setData({
+      szzhi: [],
+       szjg: [],
+       szsl: [],
+      rkSum: 0,
+      rkck: "确认入库",
+      hideen1: true,
+      hideen2: false,
+      pd: 0
+    });
+    console.log(that.data.szzhi)
+    if (that.data.pd == 0) {
 
-   }
+    }
+    var id = options.id
+    if (id != null) {
+      that.setData({
+        hideen1: !that.data.hideen1,
+        hideen2: !that.data.hideen2,
+        all: id
+      })
+
+    }
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_jinhuofang').get({
       success: res => {
 
         console.log(res.data[id].beizhu)
-       that.setData({
-          all:res.data[id].beizhu
-       })
+        that.setData({
+          all: res.data[id].beizhu
+        })
 
 
-     }
+      }
 
 
     })
@@ -58,43 +76,68 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var app = getApp();
     var that = this;
-   
-  
-   
-    var rk =that.data.rkSum
-    if (app.rkall != null) {
-      rk = rk + app.cpsum
-      szzhi = app.rkall
-      var sl =app.szsl
-      var je = app.szje
-      for (var i = 0; i < app.szsl.length;i++){
-        if (szsl[i]==null){
-          szsl[i] = 0
-          szje[i] = 0
-        } 
-        szsl[i] = Number(szsl[i]) + Number(sl[i]) 
-        szje[i] = Number(szje[i]) + Number(je[i]) 
-      
+    console.log("onshow")
+    for (var i = 0; i < that.data.szzhi.length; i++) {
+      if (that.data.szzhi[i] != null) {
+        cpxinxi[i] = that.data.szzhi[i]
+        slxinxi[i] = that.data.szsl[i]
+        jgxinxi[i] = that.data.szje[i]
       }
-     
-      that.setData({
-        szzhi: app.rkall,
-        szsl: szsl,
-        szje: szje,
-        rkSum: rk
-
-      })
 
     }
+
+    if (wx.getStorageSync("khpd") != "1") {
+      var rk = that.data.rkSum
+        if (wx.getStorageSync("rkall") != null) {
+        rk = rk + Number(wx.getStorageSync("cpsum"))
+        szzhi = wx.getStorageSync("rkall")
+        var sl = wx.getStorageSync("szsl")
+        var je = wx.getStorageSync("szje")
+
+        var fuzhii = 0
+        var szzhilength = that.data.szzhi.length;
+        console.log(sl)
+        for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length; i++) {
+          if (cpxinxi[i] == null) {
+            cpxinxi[i] = szzhi[fuzhii]
+            slxinxi[i] = sl[fuzhii]
+            jgxinxi[i] = je[fuzhii]
+          }
+        }
+
+        that.setData({
+          szzhi: cpxinxi,
+          szsl: slxinxi,
+          szje: jgxinxi,
+          rkSum: rk
+
+        })
+        wx.clearStorageSync("cpsum")
+        wx.clearStorageSync("rkall")
+        wx.clearStorageSync("szsl")
+        wx.clearStorageSync("szje")
+
+      }
+    } else {
+      if (wx.getStorageSync('khname') != null) {
+        that.setData({
+          khname: wx.getStorageSync('khname'),
+          hidden1: false,
+          hidden2: true
+        })
+        wx.clearStorageSync("khname")
+        wx.setStorageSync("khpd", "0")
+      }
+    }
+
   },
 
   /**
@@ -132,90 +175,44 @@ Page({
 
   },
 
-  xuanshangpin:function(){
+  xuanshangpin: function () {
 
-wx.navigateTo({
-  url: '/pages/shangpinxuanze/shangpinxuanze',
-})
-  }, 
-  querenRk:function(){
-    var that=this
+    wx.navigateTo({
+      url: '/pages/shangpinxuanze/shangpinxuanze',
+    })
+  },
+  querenRk: function () {
+    var that = this
     var app = getApp()
     var today = common.getToday();
     const db = wx.cloud.database();
     pd = 0
-    console.log(szzhi.length)
-    for (var i =0 ;i<szzhi.length;i++){
-     
-              db.collection('Yh_JinXiaoCun_mingxi').add({
-                data:{
-                  jinhuofang:that.data.all,
-                  shijian:today,
-                  cpid: szzhi[i]._id,
-                  cpname: szzhi[i].value0,
-                  cpsj: szzhi[i].value1,
-                  cpjj: szzhi[i].value2,
-                  cplb: szzhi[i].value3,
-                  cpsl: szsl[i],
-                  cpjg: szje[i],
-                  mxtype:"入库",
-                  
-                },
-                success: res => {
-                 wx.showToast({
-                           title: '入库成功',
-                              })
-                }
-              })   
-         }
-    // var _openid = wx.getStorageSync('openid').openid;
-    // for (var kci = 0; kci < szzhi.length; kci++){
-      
-      
-    //        db.collection('Yh_JinXiaoCun_kucun').where({
-    //          cpid: szzhi[kci]._id,
-    //          _openid: _openid
-    //        }).get({
-    //          success: res => {
-    //            if (res.data.length == 0) {
-    //              pd = pd+1
-    //            }
-    //          }
-    //        })
-    //      }
-    //       if (pd == 0) {
-    //         for(var kci = 0;kci <szzhi.length;kci++){
-    //           db.collection('Yh_JinXiaoCun_kucun').add({
-    //             data: {
-    //               cpid: szzhi[kci]._id,
-    //               cpsj: szzhi[kci].value1,
-    //               cpjj: szzhi[kci].value2,
-    //               cplb: szzhi[kci].value3,
-    //               cpsl: szsl[kci],
-    //               cpjg: szje[kci],
-                 
-    //             }
-    //           })
-    //         }
-    //       } else {
-    //         for(var kci =0;kci<szzhi.length;kci++){
-    //           var slsum = res.data[kci].cpsl.cpsl + szsl[kci]
-    //           var jesum = res.data[kci].cpsl.cpjg + szje[kci]
-    //           console.log(res.data[kci]._id)
-    //           db.collection('Yh_JinXiaoCun_kucun').doc(res.data[kci]._id).update({
-    //             data: {
-    //               cpsl: slsum,
-    //               cpjg: jesum
-    //             }
+    console.log(cpxinxi)
+    for (var i = 0; i < cpxinxi.length; i++) {
 
+      db.collection('Yh_JinXiaoCun_mingxi').add({
+        data: {
+          jinhuofang: that.data.all,
+          shijian: today,
+          cpid: cpxinxi[i]._id,
+          cpname: cpxinxi[i].value0,
+          cpsj: cpxinxi[i].value1,
+          cpjj: cpxinxi[i].value2,
+          cplb: cpxinxi[i].value3,
+          cpsl: slxinxi[i],
+          cpjg: jgxinxi[i],
+          mxtype: "入库",
 
-    //           })
-    //         }
-           
-    //       }
-   
+        },
+        success: res => {
+          wx.showToast({
+            title: '入库成功',
+          })
+        }
+      })
+    }
   },
-  xuanzejinhuofang:function(){
+  xuanzejinhuofang: function () {
     wx.navigateTo({
       url: '../Location/Location?jinhuo=1',
     })
