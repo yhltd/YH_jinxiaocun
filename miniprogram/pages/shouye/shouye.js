@@ -30,7 +30,7 @@ Page({
         url: "../../images/login.png",
         text: "进销存",
         index: 4,
-        lianjie: "../jinxiaocun/jinxiaocun",
+        lianjie: "../kucun/kucun",
       },
       {
         url: "../../images/sun_03.jpg",

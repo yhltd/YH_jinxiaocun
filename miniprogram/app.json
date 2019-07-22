@@ -2,6 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/shouye/shouye",
+    "pages/kucun/kucun",
     "pages/jinxiaocun/jinxiaocun",
     "pages/index/index",
     "pages/time/time",

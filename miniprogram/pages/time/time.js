@@ -177,7 +177,7 @@ Page({
 
   xuanshangpin: function () {
 
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/shangpinxuanze/shangpinxuanze',
     })
   },
@@ -213,7 +213,7 @@ Page({
     }
   },
   xuanzejinhuofang: function () {
-    wx.navigateTo({
+    wx.switchTab({
       url: '../Location/Location?jinhuo=1',
     })
   }
