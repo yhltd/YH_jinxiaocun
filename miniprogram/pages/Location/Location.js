@@ -148,8 +148,9 @@ that.setData({
     console.log(id)
 
     if (that.data.jinhuo==1){
+      wx.setStorageSync('jinhuofang', id)
       wx.navigateBack({
-        url: '../time/time?id='+id
+        url: '../time/time'
 })
 
   }

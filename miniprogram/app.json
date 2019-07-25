@@ -7,6 +7,7 @@
     "pages/index/index",
     "pages/time/time",
     "pages/remittance/remittance",
+    "pages/frmadminform/frmadminform",
     "pages/procurement/procurement",
     "pages/Tosell/Tosell",
     "pages/Levellocation/Levellocation",

@@ -12,7 +12,7 @@
 
 
 <view class='xzkhWwb'>
-      <text class="xzkhtt" hidden="{{hidden1}}">客户{{khname}}</text>
+      <text class="xzkhtt" hidden="{{hidden1}}">客户:{{khname}}</text>
       <text class="Xzkhtext" hidden="{{hidden2}}">请选择客户</text> 
       <text class='xzkhA' bindtap='xuanzekehu'>选择</text>
     </view>

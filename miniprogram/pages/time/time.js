@@ -33,6 +33,7 @@ Page({
   onLoad: function (options) {
     var all
     var that = this
+    wx.setStorageSync('jinhuofang', null)
     cpxinxi=[]
     slxinxi=[]
     jgxinxi=[]
@@ -47,24 +48,48 @@ Page({
       hideen2: false,
       pd: 0
     });
+    var id = null
+    if (options.id != null) {
+      id = options.id
+    }
+    console.log(id)
+    if (id != null) {
+      that.setData({
+        hideen1: !that.data.hideen1,
+        hideen2: !that.data.hideen2,
+        all: id
+      })
 
+    }
     if (that.data.pd == 0) {
 
     }
-    
+    var openid=wx.getStorageSync("openid").openid
+    console.log(openid)
     const db = wx.cloud.database();
-    db.collection('Yh_JinXiaoCun_jinhuofang').get({
-      success: res => {
+    db.collection('Yh_JinXiaoCun_jinhuofang').where({
+      _openid: openid
+    }).get({
+    success: function (res) {
+      console.log(res.data)
+      that.setData({
+        all: res.data[id].beizhu
+      })
+    }
+      })
 
-        that.setData({
-          all: res.data[id].beizhu
-        })
+    // db.collection('Yh_JinXiaoCun_jinhuofang').get({
+    //   success: res => {
+
+    //     that.setData({
+    //       all: res.data[id].beizhu
+    //     })
 
 
-      }
+    //   }
 
 
-    })
+    // })
   },
 
   /**
@@ -77,9 +102,11 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function (options) {
+  onShow: function () {
     var that = this;
-    var id = options.id
+    var id =wx.getStorageSync("jinhuofang")
+  
+    console.log(id)
     if (id != null) {
       that.setData({
         hideen1: !that.data.hideen1,
@@ -88,7 +115,7 @@ Page({
       })
 
     }
-   console.log()
+   
     for (var i = 0; i < that.data.szzhi.length; i++) {
       if (that.data.szzhi[i] != null) {
         cpxinxi[i] = that.data.szzhi[i]

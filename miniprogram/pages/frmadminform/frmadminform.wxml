@@ -1,0 +1,48 @@
+<!--miniprogram/pages/frmadminform/frmadminform.wxml-->
+<!-- <text>miniprogram/pages/frmadminform/frmadminform.wxml</text> -->
+<view class="container">
+  <image class="background" mode="widthFix" src="/images/account_bg.png"></image>
+  <text class="lableup">创建账户</text>
+  <text></text>
+</view>
+<view class="container">
+  <!-- 分割线 -->
+  <view class="divLine"></view>
+</view>
+<view class="content-view">
+
+  <form bindsubmit='searchBox'>
+    <text>登录帐号</text>
+    <input placeholder="请输入帐号" type='text' name='username'></input>
+    <text>登录密码</text>
+    <input placeholder="请输入密码" type='text' name='pwd'></input>
+    <text>确认密码</text>
+    <input placeholder="请输入确认密码" type='text' name='pwd2'></input>
+    <text>所属机构</text>
+    <input placeholder="请输入确认所属机构" type='text' name='jigoudaima'></input>
+    <text>管理员</text>
+    <radio-group class="radio-group" bindchange="AdminISradioChange">
+      <label class="radio" wx:for="{{itemsyesno}}">
+        <radio value="{{item.name}}" checked="{{item.checked}}" /> {{item.value}}
+      </label>
+    </radio-group>
+
+
+    <text>帐号设置</text>
+
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.name}}" checked="{{item.checked}}" /> {{item.value}}
+      </label>
+    </radio-group>
+
+    <view class=" ui-p20">
+      <!-- <button class="blue-button" hover-class="blue-button-p" bindtap="recodeExpend">确认</button> -->
+      <button class="blue-button" hover-class="blue-button-p" form-type='submit'>确认</button>
+
+    </view>
+    <view class=" ui-p20">
+      <button class="blue-button" hover-class="blue-button-p" bindtap="btcanel">取消</button>
+    </view>
+  </form>
+</view>

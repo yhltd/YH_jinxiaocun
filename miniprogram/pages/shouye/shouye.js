@@ -27,7 +27,7 @@ Page({
 
       },
       {
-        url: "../../images/login.png",
+        url: "../../images/kuwei_03.jpg",
         text: "进销存",
         index: 4,
         lianjie: "../kucun/kucun",
