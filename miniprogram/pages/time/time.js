@@ -33,6 +33,10 @@ Page({
   onLoad: function (options) {
     var all
     var that = this
+    cpxinxi=[]
+    slxinxi=[]
+    jgxinxi=[]
+    console.log("onload")
      that.setData({
       szzhi: [],
        szjg: [],
@@ -43,24 +47,15 @@ Page({
       hideen2: false,
       pd: 0
     });
-    console.log(that.data.szzhi)
+
     if (that.data.pd == 0) {
 
     }
-    var id = options.id
-    if (id != null) {
-      that.setData({
-        hideen1: !that.data.hideen1,
-        hideen2: !that.data.hideen2,
-        all: id
-      })
-
-    }
+    
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_jinhuofang').get({
       success: res => {
 
-        console.log(res.data[id].beizhu)
         that.setData({
           all: res.data[id].beizhu
         })
@@ -82,18 +77,28 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function (options) {
     var that = this;
-    console.log("onshow")
+    var id = options.id
+    if (id != null) {
+      that.setData({
+        hideen1: !that.data.hideen1,
+        hideen2: !that.data.hideen2,
+        all: id
+      })
+
+    }
+   console.log()
     for (var i = 0; i < that.data.szzhi.length; i++) {
       if (that.data.szzhi[i] != null) {
         cpxinxi[i] = that.data.szzhi[i]
         slxinxi[i] = that.data.szsl[i]
         jgxinxi[i] = that.data.szje[i]
+        
       }
 
     }
-
+    
     if (wx.getStorageSync("khpd") != "1") {
       var rk = that.data.rkSum
         if (wx.getStorageSync("rkall") != null) {
@@ -177,7 +182,7 @@ Page({
 
   xuanshangpin: function () {
 
-    wx.switchTab({
+    wx.navigateTo({
       url: '/pages/shangpinxuanze/shangpinxuanze',
     })
   },
@@ -213,7 +218,7 @@ Page({
     }
   },
   xuanzejinhuofang: function () {
-    wx.switchTab({
+    wx.navigateTo({
       url: '../Location/Location?jinhuo=1',
     })
   }

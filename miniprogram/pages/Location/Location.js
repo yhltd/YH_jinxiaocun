@@ -148,7 +148,7 @@ that.setData({
     console.log(id)
 
     if (that.data.jinhuo==1){
-      wx.navigateTo({
+      wx.navigateBack({
         url: '../time/time?id='+id
 })
 
