@@ -22,9 +22,12 @@ Page({
     }
     
     const db = wx.cloud.database()
+    var finduser = app.globalData.finduser
+    console.log(finduser)
+
     var _openid = wx.getStorageSync('openid').openid;
     db.collection("Yh_JinXiaoCun_jinhuofang").where({
-      _openid: _openid
+      finduser: finduser
     }).get({
       success: res => {
         console.log(res.data)
@@ -121,8 +124,10 @@ input1:function(e){
     console.log(lianxidizhi)
     if (beizhu!=null || lianxifangshi!=null){
     const db = wx.cloud.database()
+      var finduser = app.globalData.finduser
     db.collection("Yh_JinXiaoCun_jinhuofang").add({
       data:{
+        finduser: finduser,
         beizhu: beizhu,
         lianxifangshi: lianxifangshi,
         lianxidizhi: lianxidizhi

@@ -3,6 +3,7 @@
     "pages/login/login",
     "pages/shouye/shouye",
     "pages/kucun/kucun",
+    "pages/frmedituser/frmedituser",
     "pages/jinxiaocun/jinxiaocun",
     "pages/index/index",
     "pages/time/time",

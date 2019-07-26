@@ -1,5 +1,5 @@
 // pages/time/time.js
-
+var app = getApp()
 var common = require('../utils/util.js');
 
 var szzhi = []
@@ -37,7 +37,7 @@ Page({
     cpxinxi=[]
     slxinxi=[]
     jgxinxi=[]
-    console.log("onload")
+    // console.log("onload")
      that.setData({
       szzhi: [],
        szjg: [],
@@ -52,7 +52,7 @@ Page({
     if (options.id != null) {
       id = options.id
     }
-    console.log(id)
+    // console.log(id)
     if (id != null) {
       that.setData({
         hideen1: !that.data.hideen1,
@@ -65,10 +65,12 @@ Page({
 
     }
     var openid=wx.getStorageSync("openid").openid
-    console.log(openid)
+    // console.log(openid)
     const db = wx.cloud.database();
+    var finduser =app.globalData.finduser 
+    console.log(finduser)
     db.collection('Yh_JinXiaoCun_jinhuofang').where({
-      _openid: openid
+      finduser: finduser
     }).get({
     success: function (res) {
       console.log(res.data)
@@ -215,15 +217,18 @@ Page({
   },
   querenRk: function () {
     var that = this
-    var app = getApp()
+    
     var today = common.getToday();
     const db = wx.cloud.database();
     pd = 0
     console.log(cpxinxi)
+    var finduser = app.globalData.finduser
+    console.log(finduser)
     for (var i = 0; i < cpxinxi.length; i++) {
 
       db.collection('Yh_JinXiaoCun_mingxi').add({
         data: {
+          finduser: finduser,
           jinhuofang: that.data.all,
           shijian: today,
           cpid: cpxinxi[i]._id,

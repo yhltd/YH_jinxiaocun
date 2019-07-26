@@ -1,6 +1,6 @@
 // -// miniprogram/pages/frmadminform/frmadminform.js
-// var util = require('../../utils/util.js');
 
+ var util = require('../../utils/util.js');
 
 Page({
 
@@ -21,6 +21,7 @@ Page({
     AdminIS: null,
     Btype: null,
     jigoudaima: null,
+    gongsi:null,
     Createdate_i: ""
   },
 
@@ -93,10 +94,11 @@ Page({
     //   duration: 2000
     // }) 
     const that = this;
-    var uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
+    var gongsi,uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
     uname = e.detail.value.username,
       pass = e.detail.value.pwd,
       pass2 = e.detail.value.pwd2,
+      gongsi = e.detail.value.gongsi,
       jigoudaima = e.detail.value.jigoudaima
     if (pass2 != pass) {
       wx.showToast({
@@ -120,12 +122,13 @@ Page({
     const db = wx.cloud.database();
 
     console.log(that.data.Btype)
-    db.collection("SY_LHDataAnalysis_user").add({
+    db.collection("Yh_JinXiaoCun_user").add({
       data: {
         name: uname,
         password: pass,
         AdminIS: that.data.AdminIS,
         Btype: that.data.Btype,
+        gongsi:gongsi,
         jigoudaima: jigoudaima,
         Createdate: time
       },

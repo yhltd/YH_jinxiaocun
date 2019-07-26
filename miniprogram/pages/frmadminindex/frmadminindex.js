@@ -35,7 +35,7 @@ Page({
   onLoad: function (options) {
     // app.editTabBar1(); //底部栏
     const db = wx.cloud.database();
-    db.collection('SY_LHDataAnalysis_user').doc('XJuFPYnnuWjci0CF').get({
+    db.collection('Yh_JinXiaoCun_user').doc('XJuFPYnnuWjci0CF').get({
       success(res) {
         // res.data 包含该记录的数据
         console.log(res.data)
@@ -57,7 +57,7 @@ Page({
     var that = this;
     var listAll = [];
     const db = wx.cloud.database();
-    db.collection('SY_LHDataAnalysis_user').get({
+    db.collection('Yh_JinXiaoCun_user').get({
       success(res) {
         listAll.push(res.data)
         that.setData({

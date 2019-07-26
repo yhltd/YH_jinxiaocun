@@ -26,7 +26,7 @@ Page({
 
     console.log('1111');
     const db = wx.cloud.database();
-    db.collection('SY_LHDataAnalysis_user').where({
+    db.collection('Yh_JinXiaoCun_user').where({
       name: app.globalData.finduser
     })
       .get({
