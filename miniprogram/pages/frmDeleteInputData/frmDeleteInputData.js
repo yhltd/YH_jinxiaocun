@@ -98,7 +98,11 @@ Page({
     // const command_ = db.command
     const db = wx.cloud.database()
     const _ = db.command
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
     db.collection('SY_LHDataAnalysis_shuju').where({
+      finduser: finduser,
+      gongsi: gongsi,
       shuju8: _.gt(parseFloat(String(startCity).replace("-", "").replace("-", "") + "000000")).and(_.lt(parseFloat(String(endCity).replace("-", "").replace("-", "") + "999999")))
     }).get({
       success: res => {

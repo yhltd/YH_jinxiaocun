@@ -35,6 +35,10 @@ Page({
   onLoad: function (options) {
     // app.editTabBar1(); //底部栏
     const db = wx.cloud.database();
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
+
+    
     db.collection('Yh_JinXiaoCun_user').doc('XJuFPYnnuWjci0CF').get({
       success(res) {
         // res.data 包含该记录的数据

@@ -1,4 +1,5 @@
 // pages/dayin/dayin.js
+var app = getApp()
 Page({
 
   /**

@@ -1,4 +1,5 @@
 // pages/Location/Location.js
+var app = getApp()
 Page({
 
   /**
@@ -23,10 +24,11 @@ Page({
     
     const db = wx.cloud.database()
     var finduser = app.globalData.finduser
-    console.log(finduser)
+    var gongsi = app.globalData.gongsi 
 
     var _openid = wx.getStorageSync('openid').openid;
     db.collection("Yh_JinXiaoCun_jinhuofang").where({
+      gongsi: gongsi,
       finduser: finduser
     }).get({
       success: res => {
@@ -125,8 +127,10 @@ input1:function(e){
     if (beizhu!=null || lianxifangshi!=null){
     const db = wx.cloud.database()
       var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi 
     db.collection("Yh_JinXiaoCun_jinhuofang").add({
       data:{
+        gongsi: gongsi,
         finduser: finduser,
         beizhu: beizhu,
         lianxifangshi: lianxifangshi,

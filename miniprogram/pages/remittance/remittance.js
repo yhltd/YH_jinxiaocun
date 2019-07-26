@@ -6,6 +6,7 @@ var khname
 var cpxinxi= []
 var slxinxi =[]
 var jgxinxi= []
+var app = getApp()
 Page({
 
   /**
@@ -140,9 +141,13 @@ Page({
     var that = this
     const db = wx.cloud.database();
     console.log(szzhi.length)
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
     for (var i = 0; i < szzhi.length; i++) {
       db.collection('Yh_JinXiaoCun_mingxi').add({
         data: {
+          finduser:finduser,
+          gongsi:gongsi,
           jinhuofang: that.data.khname,
           cpid: szzhi[i]._id,
           cpname:szzhi[i].value0,

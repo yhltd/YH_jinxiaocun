@@ -1,4 +1,5 @@
 // pages/shangpinxuanze/shangpinxuanze.js
+var app = getApp()
 var jg
 var sl
 var dtid
@@ -31,12 +32,13 @@ Page({
       jg: []
     })
     var all = []
-    var _openid = wx.getStorageSync('openid').openid;
-    // console.log(_openid)
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
  
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_chanpin').where({
-      _openid: _openid
+      finduser: finduser,
+      gongsi: gongsi
     })
       .get({
         success: res => {

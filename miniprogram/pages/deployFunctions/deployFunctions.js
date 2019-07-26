@@ -1,4 +1,5 @@
 // pages/deployFunctions/deployFunctions.js
+var app = getApp()
 Page({
 
   /**

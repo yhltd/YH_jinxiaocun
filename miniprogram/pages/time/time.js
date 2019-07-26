@@ -68,9 +68,11 @@ Page({
     // console.log(openid)
     const db = wx.cloud.database();
     var finduser =app.globalData.finduser 
+    var gongsi = app.globalData.gongsi
     console.log(finduser)
     db.collection('Yh_JinXiaoCun_jinhuofang').where({
-      finduser: finduser
+      finduser: finduser,
+      gongsi: gongsi
     }).get({
     success: function (res) {
       console.log(res.data)
@@ -223,11 +225,13 @@ Page({
     pd = 0
     console.log(cpxinxi)
     var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
     console.log(finduser)
     for (var i = 0; i < cpxinxi.length; i++) {
 
       db.collection('Yh_JinXiaoCun_mingxi').add({
         data: {
+          gongsi: gongsi,
           finduser: finduser,
           jinhuofang: that.data.all,
           shijian: today,

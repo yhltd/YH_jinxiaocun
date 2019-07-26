@@ -5,16 +5,16 @@
 
 
 <view class = "Mymain">
-    <view class ="list" wx:for="{{all}}" wx:key=""  wx:for-index='i' data-id="{{i}}" >  
+    <view class ="list" wx:for="{{all}}" wx:key=""  wx:for-index='i' >  
         <view class='divline'></view>
-        <view bindtap='srJg' >
+        <view bindtap='srJg'  data-id="{{i}}" >
         <view class='shangpin'  data-id="{{i}}">
-            <image  src='{{all[i].bigImg}}' class='shangpin-image'> </image>
-            <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text>
+            <image  src='{{all[i].bigImg}}' class='shangpin-image'data-id="{{i}}"> </image>
+            <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text>
         </view>
-        <view class='shangpin-jin'  data-id="{{i}}" >
-            <view class='shangpin-input'  >数量：{{sl[i]}}</view>
-            <view class='shangpin-input'>价格：{{jg[i]}}</view>  
+        <view class='shangpin-jin'   >
+            <view class='shangpin-input'  data-id="{{i}}" >数量：{{sl[i]}}</view>
+            <view class='shangpin-input' data-id="{{i}}">价格：{{jg[i]}}</view>  
         </view>
         </view>
     </view>

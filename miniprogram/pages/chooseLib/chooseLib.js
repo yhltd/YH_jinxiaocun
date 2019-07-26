@@ -1,4 +1,5 @@
 // pages/chooseLib/chooseLib.js
+var app = getApp()
 Page({
 
   /**

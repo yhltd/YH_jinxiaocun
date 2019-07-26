@@ -7,6 +7,7 @@ var cpjg = []
 var cpsl = []
 var szZhi = []
 var zongjia 
+var app = getApp()
 Page({
 
   /**
@@ -31,11 +32,12 @@ Page({
       jg: []
     })
     var all = []
-    var _openid = wx.getStorageSync('openid').openid;
-    // console.log(_openid)
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_chanpin').where({
-     _openid:_openid
+      finduser: finduser,
+      gongsi: gongsi
     })
     .get({
       success: res => {

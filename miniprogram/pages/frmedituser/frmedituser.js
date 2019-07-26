@@ -53,6 +53,9 @@ Page({
     //chazhao xinxi 
     const db = wx.cloud.database();
     // var listAll = [];
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
+    
     db.collection('Yh_JinXiaoCun_user').doc(this.data.editid).get({
       success(res) {
         //  listAll.push(res.data)

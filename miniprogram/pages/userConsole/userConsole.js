@@ -1,4 +1,5 @@
 // pages/userConsole/userConsole.js
+var app = getApp()
 Page({
 
   data: {

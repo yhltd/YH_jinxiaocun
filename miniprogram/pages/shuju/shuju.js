@@ -1,4 +1,5 @@
 // pages/shuju/shuju.js
+var app = getApp()
 Page({
 
   /**

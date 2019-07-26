@@ -32,8 +32,11 @@ Page({
     var that = this;
     const db = wx.cloud.database();
     var listAll = [];
-    db.collection('SY_LHDataAnalysis_canshu').where({
 
+   
+    var gongsi = app.globalData.gongsi
+    db.collection('SY_LHDataAnalysis_canshu').where({
+      gongsi: gongsi,
       name: app.globalData.finduser
     })
       .get({
@@ -84,9 +87,10 @@ Page({
       canshu2 = e.detail.value.inputcnashuer,
       uname = app.globalData.finduser
     const db = wx.cloud.database();
-
+    
+    var gongsi = app.globalData.gongsi
     db.collection('SY_LHDataAnalysis_canshu').where({
-
+      gongsi: gongsi ,
       name: uname
     })
       .get({

@@ -1,4 +1,5 @@
 // pages/xinjianshangpin/xinjianshangpin.js
+var app = getApp()
 Page({
 
   /**
@@ -155,10 +156,16 @@ list:[
     var value3 = that.data.value3
     var value4 = that.data.value4
     var bigImg=that.data.bigImg
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
+    console.log(gongsi)
+    console.log(finduser)
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_chanpin').add({
 
       data: {
+        finduser:finduser,
+        gongsi:gongsi,
         bigImg: bigImg,
         value0: value0,
         value1: value1,

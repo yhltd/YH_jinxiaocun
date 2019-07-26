@@ -2,12 +2,15 @@
 // const requestUrl = require('../../config').requestUrl
 const app = getApp();
 var login = function (that) {
-  var finduser, passwod, adminis;
+  var finduser, passwod, adminis,gongsi;
   var listAll = [];
   const db = wx.cloud.database();
   console.log("ligng")
+
+  var gongsi = app.globalData.gongsi
   db.collection('Yh_JinXiaoCun_user').where({
     name: that.data.name, // 填入当前用户 openid
+    gongsi: gongsi
   }).get({
     success: function (res) {
       listAll.push(res.data)
@@ -20,18 +23,21 @@ var login = function (that) {
         // finduser=listAll[0].name,
         // passwod= listAll[0].passwod
       },
-  
+        gongsi= listAll[0].gongsi,
         finduser = listAll[0].name,
         passwod = listAll[0].password,
+        
         adminis = listAll[0].AdminIS,
         // openid = listAll[0]._openid,          
         // app.globalData.openid = openid,
         app.globalData.finduser = finduser,
         app.globalData.passwod = passwod,
         app.globalData.adminis = adminis,
+        app.globalData.gongsi = gongsi,
         console.log(adminis),
         console.log(finduser),
-        console.log(passwod)
+        console.log(passwod),
+        console.log(gongsi)
       )
  
       if (finduser == that.data.name && that.data.pwd == passwod) {

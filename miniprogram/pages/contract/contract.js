@@ -1,4 +1,5 @@
 // pages/Location/Location.js
+var app = getApp()
 Page({
 
   /**
@@ -20,9 +21,11 @@ Page({
     })
     console.log(that.data.jinhuo)
     console.log (options.jinhuo )
-    var _openid = wx.getStorageSync('openid').openid;
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
     db.collection("Yh_JinXiaoCun_chuhuofang").where({
-      _openid: _openid
+      finduser: finduser,
+      gongsi: gongsi
     }).get({
       success: res => {
         console.log(res.data)

@@ -1,4 +1,5 @@
 // pages/Tosell/Tosell.js
+var app = getApp()
 Page({
 
   /**
@@ -15,9 +16,11 @@ Page({
     var that = this
     const db = wx.cloud.database()
     var app = getApp();
-    var _openid = wx.getStorageSync('openid').openid;
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
     db.collection("Yh_JinXiaoCun_mingxi").where({
-      _openid: _openid
+      finduser: finduser,
+      gongsi: gongsi 
     }).get({
       success: res => {
         that.setData({

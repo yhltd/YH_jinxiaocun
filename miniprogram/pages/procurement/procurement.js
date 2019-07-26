@@ -6,6 +6,7 @@ var szzhi = []
 var szsl = []
 var szje = []
 var pd = 0
+var app = getApp()
 Page({
 
   /**
@@ -113,10 +114,14 @@ Page({
     const db = wx.cloud.database();
     pd = 0
     console.log(szzhi.length)
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
     for (var i = 0; i < szzhi.length; i++) {
 
       db.collection('Yh_JinXiaoCun_qichushu').add({
         data: {
+          finduser: finduser,
+          gongsi: gongsi,
           shijian: today,
           cpid: szzhi[i]._id,
           cpname: szzhi[i].value0,

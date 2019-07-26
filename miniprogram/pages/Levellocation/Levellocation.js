@@ -1,4 +1,5 @@
 // pages/Levellocation/Levellocation.js
+var app = getApp()
 Page({
 
   /**

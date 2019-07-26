@@ -1,7 +1,7 @@
 // -// miniprogram/pages/frmadminform/frmadminform.js
 
  var util = require('../../utils/util.js');
-
+var app = getApp()
 Page({
 
   /**
@@ -94,7 +94,7 @@ Page({
     //   duration: 2000
     // }) 
     const that = this;
-    var gongsi,uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
+    var uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
     uname = e.detail.value.username,
       pass = e.detail.value.pwd,
       pass2 = e.detail.value.pwd2,
@@ -121,6 +121,7 @@ Page({
 
     const db = wx.cloud.database();
 
+    var gongsi = app.globalData.gongsi 
     console.log(that.data.Btype)
     db.collection("Yh_JinXiaoCun_user").add({
       data: {

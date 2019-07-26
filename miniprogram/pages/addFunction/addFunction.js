@@ -1,5 +1,5 @@
 // pages/addFunction/addFunction.js
-
+var app = getApp()
 const code = `// 云函数入口函数
 exports.main = (event, context) => {
   console.log(event)

@@ -26,8 +26,11 @@ Page({
 
     console.log('1111');
     const db = wx.cloud.database();
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
     db.collection('Yh_JinXiaoCun_user').where({
-      name: app.globalData.finduser
+      name: app.globalData.finduser,
+      gongsi: gongsi
     })
       .get({
 
