@@ -10,7 +10,7 @@ var login = function (that) {
   var gongsi = app.globalData.gongsi
   db.collection('Yh_JinXiaoCun_user').where({
     name: that.data.name, // 填入当前用户 openid
-    gongsi: gongsi
+    gongsi: that.data.gongsi
   }).get({
     success: function (res) {
       listAll.push(res.data)
@@ -40,7 +40,7 @@ var login = function (that) {
         console.log(gongsi)
       )
  
-      if (finduser == that.data.name && that.data.pwd == passwod) {
+      if (finduser == that.data.name && that.data.pwd == passwod && that.data.gongsi == gongsi) {
         console.log("密码对")
         //登录状态写入缓存
         wx.setStorage({
@@ -87,7 +87,11 @@ Page({
       name: e.detail.value
     })
   },
-
+  bindGsInput:function(e) {
+    this.setData({
+      gongsi: e.detail.value
+    })
+  },
   bindPwdInput: function (e) {
     this.setData({
       pwd: e.detail.value

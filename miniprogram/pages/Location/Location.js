@@ -16,7 +16,9 @@ Page({
   onLoad: function (options) {
     
     var that=this
-    if (options.jinhuo != null ){
+ 
+    if (options.jinhuo != ""){
+
       that.setData({
         jinhuo: options.jinhuo
       })
@@ -148,18 +150,18 @@ that.setData({
 
   hidden1: !that.data.hidden1
 })
-    that.onLoad()
+    //  that.onLoad()
   },
   jin: function (e){
     var that=this
    
     var id = e.currentTarget.dataset.id
-    console.log(id)
+  console.log(id)
 
     if (that.data.jinhuo==1){
       wx.setStorageSync('jinhuofang', id)
       wx.navigateBack({
-        url: '../time/time'
+        url: '../time/time?id='+id
 })
 
   }

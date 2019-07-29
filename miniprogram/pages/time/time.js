@@ -1,6 +1,6 @@
 // pages/time/time.js
 var app = getApp()
-var common = require('../utils/util.js');
+var common = require('../../utils/common.js');
 
 var szzhi = []
 var szsl = []
@@ -33,7 +33,7 @@ Page({
   onLoad: function (options) {
     var all
     var that = this
-    wx.setStorageSync('jinhuofang', null)
+   
     cpxinxi=[]
     slxinxi=[]
     jgxinxi=[]
@@ -48,19 +48,19 @@ Page({
       hideen2: false,
       pd: 0
     });
-    var id = null
-    if (options.id != null) {
-      id = options.id
-    }
+    // var id = null
+    // if (options.id != null) {
+    //   id = options.id
+    // }
     // console.log(id)
-    if (id != null) {
-      that.setData({
-        hideen1: !that.data.hideen1,
-        hideen2: !that.data.hideen2,
-        all: id
-      })
+    // if (id != null) {
+    //   that.setData({
+    //     hideen1: !that.data.hideen1,
+    //     hideen2: !that.data.hideen2,
+    //     all: id
+    //   })
 
-    }
+    // }
     if (that.data.pd == 0) {
 
     }
@@ -111,14 +111,14 @@ Page({
     var id =wx.getStorageSync("jinhuofang")
   
     console.log(id)
-    if (id != null) {
+     if(id!=""){
       that.setData({
         hideen1: !that.data.hideen1,
         hideen2: !that.data.hideen2,
         all: id
       })
-
-    }
+ }
+  
    
     for (var i = 0; i < that.data.szzhi.length; i++) {
       if (that.data.szzhi[i] != null) {
@@ -140,7 +140,7 @@ Page({
 
         var fuzhii = 0
         var szzhilength = that.data.szzhi.length;
-        console.log(sl)
+        // console.log(sl)
         for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length; i++) {
           if (cpxinxi[i] == null) {
             cpxinxi[i] = szzhi[fuzhii]
@@ -220,6 +220,7 @@ Page({
   querenRk: function () {
     var that = this
     
+ 
     var today = common.getToday();
     const db = wx.cloud.database();
     pd = 0

@@ -94,7 +94,7 @@ Page({
     //   duration: 2000
     // }) 
     const that = this;
-    var uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
+    var gongsi,uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
     uname = e.detail.value.username,
       pass = e.detail.value.pwd,
       pass2 = e.detail.value.pwd2,
@@ -121,15 +121,15 @@ Page({
 
     const db = wx.cloud.database();
 
-    var gongsi = app.globalData.gongsi 
+    
     console.log(that.data.Btype)
     db.collection("Yh_JinXiaoCun_user").add({
       data: {
+        gongsi:gongsi,
         name: uname,
         password: pass,
         AdminIS: that.data.AdminIS,
         Btype: that.data.Btype,
-        gongsi:gongsi,
         jigoudaima: jigoudaima,
         Createdate: time
       },
@@ -150,12 +150,14 @@ Page({
 
   radioChange(e) {
     //  console.log('radio发生change事件，携带value值为：', e.detail.value)
+    console.log(e.detail.value)
     this.setData({
       Btype: e.detail.value
     });
   },
   AdminISradioChange(e) {
     // console.log('radio发生change事件，携带value值为：', e.detail.value)
+    console.log(e.detail.value)
     this.setData({
       AdminIS: e.detail.value
     });

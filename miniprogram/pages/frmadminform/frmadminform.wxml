@@ -18,6 +18,8 @@
     <input placeholder="请输入密码" type='text' name='pwd'></input>
     <text>确认密码</text>
     <input placeholder="请输入确认密码" type='text' name='pwd2'></input>
+    <text>所属公司</text>
+    <input placeholder="请输入确认公司" type='text' name='gongsi'></input>
     <text>所属机构</text>
     <input placeholder="请输入确认所属机构" type='text' name='jigoudaima'></input>
     <text>管理员</text>

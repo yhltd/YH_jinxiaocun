@@ -13,21 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    const db = wx.cloud.database()
-    var app = getApp();
-    var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
-    db.collection("Yh_JinXiaoCun_mingxi").where({
-      finduser: finduser,
-      gongsi: gongsi 
-    }).get({
-      success: res => {
-        that.setData({
-          szzhi: res.data
-        })
-      }
-    })
+    
   },
 
   /**
@@ -40,8 +26,53 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function (options) {
+    var that = this
+    const db = wx.cloud.database()
+    var app = getApp();
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
+    db.collection("Yh_JinXiaoCun_mingxi").where({
+      finduser: finduser,
+      gongsi: gongsi
+    }).get({
+      success: res => {
+       
+        var all=[]
+        
+        
+        // for(var i=0;i<=res.data.length;i++){
+        //   var x="0"
+         
+        //   if(i!=0){
+        //   for (var j = 0; j <= all.length; j++){
+        //     console.log(i)
+        //     console.log(j)
+        //     console.log(res.data[i].cpname)
+        //     console.log(all[j].cpname)
+        //     if (all[j].cpname =res.data[i].cpname) {
+        //       console.log("x")
+        //        all[j].cpsl = all[j].cpsl + res.data[i].cpsl
+        //        all[j].cpjj = all[j].cpjj + res.data[i].cpjj
+        //        all[j].cpsj = all[j].cpsj + res.data[i].cpsj
+        //        x="1"
+        //      }
 
+        //   }
+        //   }
+         
+        //   if(x="0"){
+        //     console.log("all")
+        //   all.push(res.data[i])
+        //   console.log(all)
+        //   }
+        // }
+      //  console.log(all)
+        that.setData({
+          szzhi: res.data
+        })
+      }
+    })
   },
 
   /**

@@ -11,6 +11,12 @@
 </view>
 <view class="main-body">
   <form bindsubmit="formLogin">
+
+      <view>
+      <input name="inputName" bindinput="bindGsInput" class="input-login" placeholder="输入公司"  > </input>
+    </view>
+    <view class="hs20"></view>
+
     <view>
       <input name="inputName" bindinput="bindNameInput" class="input-login" placeholder="输入用户名"  > </input>
     </view>

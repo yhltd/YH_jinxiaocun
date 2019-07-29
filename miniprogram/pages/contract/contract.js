@@ -16,11 +16,12 @@ Page({
   onLoad: function (options) {
     var that = this
     const db = wx.cloud.database()
+
+    if (options.jinhuo!=""){
     that.setData({
       jinhuo:options.jinhuo 
     })
-    console.log(that.data.jinhuo)
-    console.log (options.jinhuo )
+    }
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi 
     db.collection("Yh_JinXiaoCun_chuhuofang").where({
@@ -117,10 +118,14 @@ Page({
     var beizhu = that.data.beizhu
     var lianxifangshi = that.data.lianxifangshi
     var lianxidizhi = that.data.lianxidizhi
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi 
     if (beizhu != null || lianxifangshi != null) {
       const db = wx.cloud.database()
       db.collection("Yh_JinXiaoCun_chuhuofang").add({
         data: {
+          finduser:finduser,
+          gongsi: gongsi,
           beizhu: beizhu,
           lianxifangshi: lianxifangshi,
           lianxidizhi: lianxidizhi
@@ -137,7 +142,7 @@ Page({
 
       hidden1: !that.data.hidden1
     })
-    that.onLoad()
+    //  that.onLoad()
   },
   ke: function (e) {
     var that = this

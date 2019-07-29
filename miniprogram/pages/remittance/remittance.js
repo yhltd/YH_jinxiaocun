@@ -7,6 +7,7 @@ var cpxinxi= []
 var slxinxi =[]
 var jgxinxi= []
 var app = getApp()
+var common = require('../../utils/common.js');
 Page({
 
   /**
@@ -143,9 +144,11 @@ Page({
     console.log(szzhi.length)
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
+    var today = common.getToday();
     for (var i = 0; i < szzhi.length; i++) {
       db.collection('Yh_JinXiaoCun_mingxi').add({
         data: {
+          today:today,
           finduser:finduser,
           gongsi:gongsi,
           jinhuofang: that.data.khname,

@@ -35,6 +35,6 @@
 
       <text hidden='{{hideen1}}'>进货方：{{all}}</text>
       <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text> 
-      <text hidden='{{hideen2}}' class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
+      <text  class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
     </view>
 </view>

@@ -35,7 +35,8 @@ Page({
     Btype: '',
     jigoudaima: '',
     Createdate_i: "",
-    editid: ''
+    editid: '',
+    gongsi:""
   },
 
   /**
@@ -54,7 +55,7 @@ Page({
     const db = wx.cloud.database();
     // var listAll = [];
     var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
+    // var gongsi = app.globalData.gongsi 
     
     db.collection('Yh_JinXiaoCun_user').doc(this.data.editid).get({
       success(res) {
@@ -132,7 +133,7 @@ Page({
     //   duration: 2000
     // }) 
     const that = this;
-    var uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
+    var gongsi,uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
     uname = e.detail.value.username,
       pass = e.detail.value.pwd,
       pass2 = e.detail.value.pwd2,
