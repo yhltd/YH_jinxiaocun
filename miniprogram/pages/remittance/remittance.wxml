@@ -1,5 +1,7 @@
 <import src="/pages/template/tabber.wxml" />
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
+<view class="dqy_bj"></view>
+<view class="dq_y">出库</view>
 <view class="XzkhMain">
   <view class='xzkh'>
    <view class="xsp" bindtap='XzspClick'>

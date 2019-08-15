@@ -1,9 +1,16 @@
-<view>
 
+<view class="tl_css">
+  <image class="tu_pian_cc" src='/images/huise_logo.jpg'></image>
+  <view class="mz_css">云和进销存系统</view>
+</view>
+
+<view class="da_kuang">
+<view class="xiao_kuang">
   <navigator class="txbt" url='/pages/frmgerenxinxi/frmgerenxinxi'>
     <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/yonghu.png"></image>
     <text class="item-text">个人信息</text>
   </navigator>
+  </view>
   <!-- <view class="container">
   <!-- 分割线 -->
   <!-- <view class="divLine"></view>
@@ -32,15 +39,40 @@
   
 </view>  -->
   <!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
+  <view class="xiao_kuang">
   <navigator class="txbt" url='/pages/frmadminindex/frmadminindex'>
 
     <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2/SY_LHDataAnalysis/timecard.png"></image>
     <text class="item-text">管理员</text>
   </navigator>
-
+</view>
   <view class="container">
     <!-- 分割线 -->
     <view class="divLine"></view>
+    </view>
+    <view class="xiao_kuang">
+<navigator class="txbt" url='/pages/frmadmindetails/frmadmindetails'>
+
+    <image class="item-image"  src='/images/xiangqing.jpg'></image>
+    <text class="item-text">公司详情</text>
+  </navigator>
+</view>
+
+   <view class="container">
+    <!-- 分割线 -->
+    <view class="divLine"></view>
+
   </view>
 
+
+
+  <view class="sysm_xx">
+<navigator class="txbt" url='/pages/frmadminsysm/frmadminsysm'>
+    <image class="item-image"  src='/images/sysm_x.png'></image>
+    <text class="item-text">使用说明</text>
+  </navigator>
+</view>
+   <view class="container">
+    <view class="divLine"></view>
+  </view>
 </view>

@@ -1,12 +1,16 @@
 <import src="/pages/template/jinhuo.wxml" />
 <template is="jinhuo" data="{{jinhuo,hidden1}}" />
-
-<view >客户配置</view>
+<view class="hidden_kh" hidden="{{backhidden}}"></view>
+<view class="dqy_bj"></view>
+<view class="dq_y">客户资料</view>
+<view class="ke_bt">客户配置:</view>
 
 <view class='divline2'></view>
 <view wx:for="{{all}}" wx:key="" wx:for-index='i' class='jinhuofan'>
-
-<view bindtap='ke' data-id="{{all[i].beizhu}}">客户{{i+1}}：
+<image class='kh_tx' src='/images/kuhu.png' > </image>
+<!-- <view bindtap='ke' data-id="{{all[i].beizhu}}" class="ke_hu">客户序号:{{i+1}}
+</view> -->
+<view class="zheng_kuai">
 <view class='jinhuo-text'><text space="ensp">客    户：</text>{{all[i].beizhu}}</view>
 <view class='jinhuo-text'><text space="ensp">联系方式：</text>{{all[i].lianxifangshi}}</view>
 <view class='jinhuo-text'><text space="ensp">地    址：</text>{{all[i].lianxidizhi}}</view>
@@ -15,4 +19,4 @@
 </view>
 
 
-<button class="tianjia" bindtap='tianjia'>添加</button>
+<button class="tianjia" bindtap='tianjia'><image class='jiahao1' src='/images/jiahao1.png' >    </image></button>

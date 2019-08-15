@@ -107,6 +107,33 @@ Page({
   onShareAppMessage: function () {
 
   },
+  shanchu: function (e) {
+    var that = this
+    const db = wx.cloud.database()
+    var id = e.currentTarget.dataset.id
+    console.log(id)
+    console.log(that.data.all)
+    wx.showModal({
+      title: '提示',
+      content: '是否删除？',
+      success: function (res) {
+        if (res.confirm) {
+          db.collection("Yh_JinXiaoCun_chanpin").doc(that.data.all[id]._id).remove({
+            success: console.log,
+            fail: console.error,
+
+          })
+          that.onLoad()
+        } else if (res.cancel) {
+
+          return false;
+        }
+
+      }
+    })
+
+
+  },
   jiahao1: function () {
     wx.navigateTo({
       url: '/pages/xinjianshangpin/xinjianshangpin',

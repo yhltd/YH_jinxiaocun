@@ -40,7 +40,7 @@ margin-right: 6%;
 
 }
 .pm{
-background-color: rgb(26,26,26,0.4);
+/* background-color: rgb(26,26,26,0.4); */
 display: flex;
 width: 72%;
 color: white;
@@ -64,6 +64,16 @@ font-size: 62%;
 left: 46%;
 
 
+}
+
+.bk_ss{
+   border: 1px solid  #1c60a3;border-radius: 29rpx; 
+  width: 55%;
+  position: absolute;
+  left: 21.3%;
+  top: 0.5%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
 }
 .Hs{
   color: #666666;

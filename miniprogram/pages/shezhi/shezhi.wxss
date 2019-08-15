@@ -1,16 +1,20 @@
 /* pages/shezhi/shezhi.wxss */
 
 .divLine {
-  background: #e0e3da;
+  border: 0.5px dashed #dddfde;
+
   width: 100%;
-  height: 20rpx;
+  height: 6rpx;
 }
 
 .container {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
+  box-sizing: border-box; */
+  /* width: 2%;
+  height: 100%;
+  background-color: #eeeeee; */
 }
 
 .header {
@@ -183,8 +187,39 @@
 }
 
 .item-text {
-  font-size: 48rpx;
+  font-size: 98%;
   color: black;
   align-items: center;
    
+}
+
+.da_kuang{
+
+ 
+
+
+
+}
+
+.tu_pian_cc{
+  height: 150rpx;
+width: 210rpx;
+padding-left: 34%;
+padding-top: 5%;
+
+
+}
+.mz_css{
+  font-size: 86%;
+padding-left: 34%;
+font-weight: bold;
+
+
+}
+
+.tl_css{
+   height: 260rpx;
+  background-color: #eeeeee;
+ 
+
 }

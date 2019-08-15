@@ -3,6 +3,7 @@
 background-color: #F0F8FF;
 height: 1091rpx;
 width: 100%;
+
 }
 .list{
   margin-bottom: -3%;
@@ -20,13 +21,17 @@ height: 40px;
 display: flex;
 align-items: center;
 justify-content: center;
- z-index: 9;
+ z-index: -1;
 
 }
 .divline{
   background:#e0e3Da;
   width:100%;
-  height: 5rpx
+  height: 5rpx;
+  /* position: absolute;
+  top: 23%; */
+  margin-top: 2%;
+
 }
 .shangpin{
   width: 34%;
@@ -76,4 +81,181 @@ width: 69%;
 }
 .shangpin-input{
   display: flex;
+}
+
+.test {
+  background-color: #f8f8f8;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 57.5%;
+  z-index: 1;
+}
+
+.guan_bi{
+  position: absolute;
+	left: 82%;
+  bottom: 95%;
+  font-size: 66%;
+  z-index: 4;
+
+}
+
+    
+.tp_guanbi{
+
+  background-repeat: no-repeat;
+  height: 80rpx;
+  width: 80rpx;
+  /* transform: rotate(45deg); */
+  z-index: 5;
+}
+
+.Xzshuliang{
+  position: absolute;
+  top: 16%; 
+}
+.Xzjiage{
+  position: absolute;
+  top: 25%;
+}
+
+.ti_jiao{
+  position: absolute;
+  top: 34%;
+  left: 21%;
+  background-color: #1c9ef1;
+  width: 55%;
+  font-size: 68%;
+  color: #f8f8f8;
+}
+
+.tp_css{
+  width: 130rpx;
+  height: 130rpx;
+  position: absolute;
+  left: 5%;
+  top: 2%;
+  z-index: 2;
+
+}
+
+.input-srjg{
+  position: fixed;
+  left: 28%;
+  bottom: 11%;
+
+}
+
+.input-srjg1{
+  position: fixed;
+  left: 28%;
+  bottom: 20.5%;
+
+}
+
+.text_css{
+  position: fixed;
+  left: 6%;
+  font-size: 75%;
+  bottom: 12.5%;
+  color: #7c7e7d;
+}
+
+
+.text_css1{
+  position: fixed;
+  left: 6%;
+  font-size: 75%;
+  bottom: 21.5%;
+  color: #7c7e7d;
+}
+
+.text_name{
+  position: absolute;
+  left: 47%;
+  top: 2%;
+}
+
+.hidden_css{
+  width: 100%;
+  height: 59%;
+  background-color: black;
+  z-index: 1;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.bai_bian{
+  /* width: 90rpx;
+  height: 90rpx;
+  background-color: #fd88d7;
+  position: absolute;
+  left: 82%;
+  bottom: 95%; */
+}
+
+.huise_bian{
+  width: 100%;
+  height: 0.2%;
+  background-color: #dddfde;
+  position: absolute;
+  bottom: 85%;
+}
+
+.xu_xian{
+  position: absolute;
+  width: 100%;
+  border: 0.5px dashed  #dddfde;
+  bottom: 75.5%;
+}
+
+.bk_tp{
+  /* background-color: #fd88d7;
+  width: 140rpx;
+  height: 140rpx;
+  position: absolute;
+  left: 4.5%;
+  top: 1.5%; */
+
+
+
+}
+
+.jg_text{
+  position: absolute;
+  left: 1.5%;
+  /* top: 1.5%; */
+}
+
+.sp_dm{
+  font-size: 69%;
+  color: red;
+  position: absolute;
+  top: -49.3%;
+  flex-direction: column;
+  display: flex;
+}
+
+.header{
+  background-color: rgb(30,144,255);
+  padding: 5%;
+  margin-bottom: -2%;
+}
+.ss-text{
+  position: absolute;
+  color: #f8f8f8;
+  top: 1%;
+  font-size: 76%;
+  left: 7%;
+}
+
+.bk_ss{
+  border: 1px solid  #1c60a3;border-radius: 29rpx; 
+  width: 55%;
+  position: absolute;
+  left: 21.3%;
+  top: 0.5%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
 }

@@ -39,7 +39,7 @@ top: 6%;
 margin-right: 6%;
 
 }
-.pm{
+/* .pm{
 background-color: rgb(26,26,26,0.4);
 display: flex;
 width: 72%;
@@ -49,14 +49,11 @@ border-radius: 18px;
 margin-left: 14%;
 height: 55rpx;
 
-
-
-
-}
+} */
 .red {
   color:#EE4000;
 }
-.pm-text{
+/* .pm-text{
   position: absolute;
 color: white;
 top: 2%;
@@ -64,7 +61,7 @@ font-size: 62%;
 left: 46%;
 
 
-}
+} */
 .Hs{
   color: #666666;
   
@@ -80,5 +77,41 @@ left: 46%;
 }
 .shangpinpm{
   font-size: 145%;
+
+}
+.bk_ss{
+   border: 1px solid  #1c60a3;border-radius: 29rpx; 
+  width: 55%;
+  position: absolute;
+  left: 21.3%;
+  top: 0.5%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
+.header{
+  background-color: rgb(30,144,255);
+  padding: 5%;
+
+}
+.ss-text{
+  position: absolute;
+  color: #f8f8f8;
+  top: 1%;
+  font-size: 76%;
+  left: 7%;
+}
+
+.list_ps{
+  margin-bottom: -2%; 
+
+}
+
+.dq_y{
+  font-weight: bold;
+position: absolute;
+top: 1%;
+left: 6%;
+color: white;
 
 }

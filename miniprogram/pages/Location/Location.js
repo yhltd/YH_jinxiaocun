@@ -7,7 +7,8 @@ Page({
    */
   data: {
     hidden1:true,
-    jinhuo:0
+    jinhuo:0,
+    backhidden: true
   },
 
   /**
@@ -113,7 +114,8 @@ input1:function(e){
   tianjia:function(){
     var that=this;
     that.setData({
-      hidden1:!that.data.hidden1
+      hidden1:!that.data.hidden1,
+      backhidden: false
     })
 
 
@@ -147,10 +149,20 @@ input1:function(e){
 
     }
 that.setData({
-
-  hidden1: !that.data.hidden1
+  
+  hidden1: !that.data.hidden1,
+  backhidden: true
 })
     //  that.onLoad()
+  },
+
+  sp_Close: function(e){
+    var that = this
+    that.setData({
+      backhidden: true,
+      hidden1: !that.data.hidden1
+    })
+
   },
   jin: function (e){
     var that=this

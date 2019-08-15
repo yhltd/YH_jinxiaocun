@@ -7,6 +7,7 @@ var cpjg = []
 var cpsl = []
 var szZhi = []
 var zongjia 
+var all = []
 var app = getApp()
 Page({
 
@@ -17,7 +18,7 @@ Page({
     jghide:"none",
     sl:[],
     jg:[],
-     
+    backhidden:true,
     rkck:"选择商品"
   },
   
@@ -31,7 +32,7 @@ Page({
       sl: [],
       jg: []
     })
-    var all = []
+     all = []
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
     const db = wx.cloud.database();
@@ -53,6 +54,76 @@ Page({
 
   },
 
+
+  xixi: function (e) {
+    if(e.detail.value==""){
+      all = []
+      szZhi = []
+      var that = this
+      that.setData({
+        rkSum: 0,
+        sl: [],
+        jg: []
+      })
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      var name = app.globalData.value1
+      const db = wx.cloud.database();
+      db.collection('Yh_JinXiaoCun_chanpin').where({
+        finduser: finduser,
+        gongsi: gongsi,
+        
+      })
+        .get({
+          success: res => {
+
+            console.log(res.data)
+            that.setData({
+              all: res.data,
+
+            })
+            szZhi = res.data
+          }
+        })
+
+    }else{
+      all = []
+      szZhi = []
+      var that = this
+      that.setData({
+        rkSum: 0,
+        sl: [],
+        jg: []
+      })
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      var name = app.globalData.value1
+      const db = wx.cloud.database();
+      db.collection('Yh_JinXiaoCun_chanpin').where({
+        finduser: finduser,
+        gongsi: gongsi,
+        // value1 : e.detail.value
+        value1: db.RegExp({
+          regexp: e.detail.value,
+          options: 'i',      
+        })
+      })
+        .get({
+          success: res => {
+
+            console.log(res.data)
+            that.setData({
+              all: res.data,
+
+            })
+            szZhi = res.data
+          }
+        })
+
+    }
+   
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -71,6 +142,8 @@ Page({
       jg: []
     })
   },
+
+
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -108,7 +181,11 @@ Page({
   },
   jiahao1:function(){
     wx.navigateTo({
-      url: '/pages/xinjianshangpin/xinjianshangpin',
+      jghide: true,
+      jghide: "none",
+    
+      url: '/pages/xinjianshangpin/xinjianshangpin'
+      
     })
   
   },
@@ -116,21 +193,25 @@ Page({
     var that=this
    
      dtid = e.target.dataset.id
- 
-    console.log(dtid)
+     console.log(dtid)
+      console.log(cpsl[dtid])
       that.setData({
         jghide: "flex",
         cpid : dtid,
-        cpsljg : "",
-        cpjgsl : ""
+        cpsl : cpsl,
+        cpjg : cpjg,
+        backhidden:false
       })
 
   }, 
   spClose:function(e){
+      
       var that = this
       that.setData({
+        jghide: true,
         jghide: "none",
-
+        backhidden: true
+        
       })
      
   },
@@ -142,11 +223,17 @@ Page({
   }, 
   tjjg:function(e){
     var that = this
+    that.setData({
+      jghide: true,
+      jghide: "none",
+      backhidden: true
+    })
     zongjia = that.data.rkSum
      if (sl!=null && jg !=null){
       cpsl[dtid] = sl
       cpjg[dtid] = jg
       zongjia = zongjia + (jg * sl)
+       
      }
     
    
@@ -169,9 +256,6 @@ Page({
       var sl =[]
       var jg = []
       var zhi = []
-      console.log(cpsl)
-      console.log(cpjg)
-      console.log(szZhi)
       for (var i = 0; i < cpsl.length; i++) {
         if (cpsl[i] != null && cpsl[i]!= "") {
           sl[sli] = cpsl[i]

@@ -60,7 +60,7 @@ margin-right: 6%;
   color: rgb(80,80,80);
   position: absolute;
   width: 100%;
-  top: 3%;
+  top: 5%;
 
   }
 .jiahao{
@@ -73,7 +73,7 @@ margin-right: 6%;
   width:100%;
   height: 2rpx;
    position: absolute;
-   top: 3%;
+   top: 5%;
     z-index: 2;
 
 
@@ -83,10 +83,26 @@ margin-right: 6%;
   width:100%;
   height: 2rpx;
   position: absolute;
-   top:9%;
+   top:12%;
   z-index: 2;
 
 }
 .kongbai{
   height: 10px
 }
+
+.dq_y{
+  font-weight: bold;
+position: absolute;
+top: 0%;
+left: 6%;
+color: white;
+
+}
+
+  .dqy_bj{
+
+    background-color: #1e90ff;
+    height: 55rpx;
+
+  }

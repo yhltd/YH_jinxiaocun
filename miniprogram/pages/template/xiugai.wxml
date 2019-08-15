@@ -1,27 +1,32 @@
 <template name="xiugai" hidden='true'>
   <view hidden="{{hidden1}}" style="display:{{jghide}};flex-direction: column;" >
-    <view class="Xzjiage" style="display:flex">
+    <view class="Xzjiage" style="display:flex;padding-top: 4%;">
      <text>售价:</text><input placeholder="{{szzh.cpsj}}" bindinput='cpsj'class = "input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpsljg}}"></input>
     </view>
-    <view class="Xzshuliang" style="display: flex">
+    <view class="Xzshuliang" style="display: flex;padding-top: 4%;">
       <text>进价:</text><input placeholder="{{szzh.cpjj}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpjj' value="{{cpsljg}}"></input>
     </view>
-    <view class="Xzshuliang" style="display: flex">
+    <view class="Xzshuliang" style="display: flex;padding-top: 4%;">
       <text>类别:</text><input placeholder="{{szzh.cplb}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cplb' value="{{cpsljg}}"></input>
     </view>
-     <view class="Xzshuliang" style="display: flex">
+     <view class="Xzshuliang" style="display: flex;padding-top: 4%;">
       <text>明细类别:</text><input placeholder="{{szzh.mxtype}}"  class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='mxtype' value="{{cpsljg}}"></input>
       </view>
-      <view class="Xzshuliang" style="display: flex">
+      <view class="Xzshuliang" style="display: flex;padding-top: 4%;">
   <text>数量:</text><input placeholder="{{szzh.cpsl}}"class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpsl' value="{{cpsljg}}"></input>
     </view>
 
-    <view class="Xzshuliang" style="display: flex">
+    <view class="Xzshuliang" style="display: flex;padding-top: 4%;">
       <text>价格:</text><input placeholder="{{szzh.cpjg}}" class='input-srsl'style="border: 1px solid  #DCDCDC;border-radius:          18rpx; " bindinput='cpjg' value="{{cpsljg}}"></input>
     </view>
 
-    <button bindtap='tjjg'>提交</button>
-    <button bindtap='spClose'>关闭</button>
+    <button bindtap='tjjg' style="font-size: 92%;position: absolute;left: 21%;background-color: #1e90ff;height: 63rpx;width: 58%;height: 63rpx;top: 50%;">提交</button>
+    <button bindtap='spClose' style="position: absolute;left: 83%;top: 0%;">
+     
+    <image src="../../images/微信图片_20190805090541.png" class="tp_guanbi" style="height: 75rpx; width: 75rpx"></image>
+    
+    
+    </button> 
     
   </view>
 </template>

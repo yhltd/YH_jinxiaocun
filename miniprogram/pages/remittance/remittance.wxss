@@ -35,7 +35,7 @@ margin-left: 37%;
   display: flex;
 position: absolute;
 width: 100%;
-top: 8%;
+top: 10%;
 background-color: white;
 padding: 3%;
 left: 0%;
@@ -96,3 +96,19 @@ margin-right: 6%;
   font-size: 145%;
 
 }
+
+.dq_y{
+  font-weight: bold;
+position: absolute;
+top: 0%;
+left: 6%;
+color: white;
+
+}
+
+  .dqy_bj{
+
+    background-color: #1e90ff;
+    height: 51rpx;
+
+  }

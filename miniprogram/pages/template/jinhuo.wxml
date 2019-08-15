@@ -1,15 +1,18 @@
 <template name="jinhuo">  
 <view hidden="{{hidden1}}" class='jinhuo'>
-<view>备注：
- <input type="number" data-id="{{item.index}}" bindinput="input1"></input>
+<button class='guan_bi' bindtap='sp_Close'>
+    <image src="../../images/微信图片_20190805090541.png" class="tp_guanbi"></image>
+    </button>
+<view style="margin-top: 8%;"><view class="lab_xx">备注:</view>
+ <input type="number" data-id="{{item.index}}" bindinput="input1" class="tj_1" ></input>
 </view>
 <view class='divline2'></view>
-<view>联系方式：
- <input type="number" data-id="{{item.index}}" bindinput="input2"></input>
+<view><view class="lab_xx">联系方式:</view>
+ <input type="number" data-id="{{item.index}}" bindinput="input2" class="tj_2" ></input>
  </view>
  <view class='divline2'></view>
-<view>联系地址：
- <input type="number" data-id="{{item.index}}" bindinput="input3"></input>
+<view><view class="lab_xx">联系地址:</view>
+ <input type="number" data-id="{{item.index}}" bindinput="input3" class="tj_3" ></input>
  </view>
  <view class='divline2'></view>
  <button bindtap='quedingjinhuo' class='queding'>确定</button>

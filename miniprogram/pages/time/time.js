@@ -10,6 +10,9 @@ var cpxinxi = []
 var slxinxi = []
 var jgxinxi = []
 var pd = 0
+
+
+
 Page({
 
   /**
@@ -24,9 +27,26 @@ Page({
     rkck: "确认入库",
     hideen1: true,
     hideen2: false,
-    pd: 0
+    pd: 0,
+    sjkj:"",
+    ddh : ""
+  },
+  bindDateChange: function (e) {
+    var that = this
+    that.setData({
+      date: e.detail.value,
+      sjkj: e.detail.value
+    })
   },
 
+  ddh_input:function(e){
+    var that = this
+    that.setData({
+      ddh: e.detail.value
+    })
+
+  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
@@ -100,8 +120,19 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+     var that = this
+    that.popup = that.selectComponent("#popup");
+  }, 
+  showPopup:function() { 
+    var that = this 
+    that.popup.showPopup();
   },
+
+  // error() {
+  //   console.log('你点击了取消');
+  //   this.popup.hidePopup();
+  // },
+
 
   /**
    * 生命周期函数--监听页面显示
@@ -217,47 +248,66 @@ Page({
       url: '/pages/shangpinxuanze/shangpinxuanze',
     })
   },
+
   querenRk: function () {
     var that = this
-    
- 
-    var today = common.getToday();
-    const db = wx.cloud.database();
-    pd = 0
-    console.log(cpxinxi)
-    var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
-    console.log(finduser)
-    for (var i = 0; i < cpxinxi.length; i++) {
-
-      db.collection('Yh_JinXiaoCun_mingxi').add({
-        data: {
-          gongsi: gongsi,
-          finduser: finduser,
-          jinhuofang: that.data.all,
-          shijian: today,
-          cpid: cpxinxi[i]._id,
-          cpname: cpxinxi[i].value0,
-          cpsj: cpxinxi[i].value1,
-          cpjj: cpxinxi[i].value2,
-          cplb: cpxinxi[i].value3,
-          cpsl: slxinxi[i],
-          cpjg: jgxinxi[i],
-          mxtype: "入库",
-
-        },
-        success: res => {
-          wx.showToast({
-            title: '入库成功',
-          })
-        }
+  
+    if (that.data.sjkj == ""){
+      console.log(that.data.ddh)
+      wx.showModal({
+        title: '提示',
+        content: '请选择入库时间',
       })
+     
+    }else{  
+      if (that.data.ddh == "") {
+        console.log(that.data.ddh)
+        wx.showModal({
+          title: '提示',
+          content: '请输入订单号',
+        })
+      }
+      else {   
+        var today = that.data.sjkj;
+        var ddh = that.data.ddh;
+        const db = wx.cloud.database();
+        pd = 0
+        var finduser = app.globalData.finduser
+        var gongsi = app.globalData.gongsi
+        console.log(finduser)
+        for (var i = 0; i < cpxinxi.length; i++) {
+          db.collection('Yh_JinXiaoCun_mingxi').add({
+            data: {
+              gongsi: gongsi,
+              finduser: finduser,
+              jinhuofang: that.data.all,
+              shijian: today,
+              cpid: cpxinxi[i]._id,
+              cpname: cpxinxi[i].value0,
+              cpsj: cpxinxi[i].value1,
+              cpjj: cpxinxi[i].value2,
+              cplb: cpxinxi[i].value3,
+              cpsl: slxinxi[i],
+              cpjg: jgxinxi[i],
+              mxtype: "入库",
+              orderid: ddh
+            },
+            success: res => {
+              wx.showToast({
+                title: '入库成功',
+              })
+            }
+          })
+          that.onLoad()
+        }
+
+      }
+      
     }
   },
   xuanzejinhuofang: function () {
     wx.navigateTo({
       url: '../Location/Location?jinhuo=1',
     })
-  }
-
+  },
 })

@@ -53,6 +53,7 @@ Page({
         lianjie: "../collection/collection"
       },
       {
+        
         url: "../../images/anQun_03.jpg",
         text: "统计报表",
         index: 8,
@@ -76,9 +77,13 @@ Page({
     var that = this
     var idx = e.currentTarget.dataset.index;
     if (idx == 8) {
-      wx.navigateTo({
-        url: that.data.list[idx].lianjie,
+      wx.showModal({
+        title: '提示',
+        content: '该功能尚未开发',
       })
+      // wx.navigateTo({
+      //   url: that.data.list[idx].lianjie,
+      // })
     } else {
       console.log(that.data.list[idx].lianjie + '?index=' + idx)
       wx.navigateTo({

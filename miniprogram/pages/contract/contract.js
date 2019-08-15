@@ -7,7 +7,8 @@ Page({
    */
   data: {
     hidden1: true,
-    jinhuo:0
+    jinhuo:0,
+    backhidden: true
   },
 
   /**
@@ -108,7 +109,8 @@ Page({
   tianjia: function () {
     var that = this;
     that.setData({
-      hidden1: !that.data.hidden1
+      hidden1: !that.data.hidden1,
+      backhidden: false
     })
 
 
@@ -128,7 +130,8 @@ Page({
           gongsi: gongsi,
           beizhu: beizhu,
           lianxifangshi: lianxifangshi,
-          lianxidizhi: lianxidizhi
+          lianxidizhi: lianxidizhi,
+          // backhidden: true
         },
         success(res) {
           wx.showToast({
@@ -140,10 +143,25 @@ Page({
     }
     that.setData({
 
-      hidden1: !that.data.hidden1
+      hidden1: !that.data.hidden1,
+      backhidden: true
     })
     //  that.onLoad()
   },
+
+  sp_Close: function(e){
+    var that = this;
+    that.data.beizhu = ""
+    that.data.lianxifangshi = ""
+    that.data.lianxidizhi = ""
+    that.setData({
+
+      hidden1: !that.data.hidden1,
+      backhidden: true
+    })
+
+  },
+
   ke: function (e) {
     var that = this
 

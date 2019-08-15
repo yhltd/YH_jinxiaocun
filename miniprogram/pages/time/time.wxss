@@ -5,6 +5,7 @@
 } 
 .list{
   display: flex;
+  padding-top: 19.1%;
 
 
 }
@@ -22,24 +23,8 @@
   height: 100%;
   color: #3A5FCD;
 }
-.xzkh{
-  display: flex;
-  width: 100%;
-  background-color: white;
-  padding: 2%;
-  font-size: 77%;
-}
-.xsp{
-  display: flex;
-position: absolute;
-width: 100%;
-top: 8%;
-background-color: white;
-padding: 3%;
-left: 0%;
 
 
-}
 .qxz{
 margin-left: 37%;
 
@@ -111,6 +96,7 @@ margin-right: 6%;
 }
 
 .divline{
+  /*----------*/
   background:#e0e3Da;
   width:100%;
   height: 2rpx;
@@ -121,14 +107,100 @@ margin-right: 6%;
 
 }
 .divline2{
-  background:#e0e3Da;
-  width:100%;
-  height: 2rpx;
-  position: absolute;
-   top:9%;
-  z-index: 2;
+  /*----------*/
+  background: #e0e3Da;
+width: 100%;
+height: 2rpx;
+position: absolute;
+top: 16.5%;
+z-index: 2;
+left: 0%;
+
 
 }
 .kongbai{
+  /*----------*/
   height: 10px
+}
+
+.xzkjWwb{
+  /*----------*/
+
+}
+.xsp{
+  /*----------*/
+  display: flex;
+position: absolute;
+width: 100%;
+top: 7.7%;
+background-color: white;
+padding: 3%;
+left: 0%;
+}
+
+.xzkh{
+  /*----------*/
+  display: flex;
+  width: 100%;
+  background-color: white;
+  padding: 2%;
+  font-size: 77%;
+}
+.ss-text{
+
+  position: absolute;
+  top: 4.7%;
+  font-size: 79%;
+  left: 4%;
+  color: #f8f8f8;
+
+
+}
+.header{
+    /*----------*/
+  background-color: rgb(30,144,255);
+  padding: 8%;
+}
+
+.bk_ss{
+  border: 1px solid  #1c60a3;border-radius: 29rpx; 
+  width: 55%;
+  position: absolute;
+  left: 21.3%;
+  top: 4%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+.zg{
+  position: absolute;
+  top: 8.4%;
+  height: 100%;
+  width: 100%;
+}
+
+
+.tui-picker-content{
+  position: absolute;
+  top: 0%;
+  font-size: 71%;
+  left: 4%;
+  color: #f8f8f8
+
+
+}
+
+.dd_text{
+  position: absolute;  
+  top: 32%;
+
+
+
+}
+
+.dq_y{
+  font-weight: bold;
+  position: absolute;
+  top: 4%;
+  left: 6%;
+  color: white;
 }

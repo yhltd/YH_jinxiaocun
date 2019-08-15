@@ -1,9 +1,7 @@
 /* pages/Location/Location.wxss */
 .divline2{
-  background:#e0e3Da;
-  width:100%;
-  height: 5rpx;
-  
+  border: 0.5px dashed #dddfde;
+
 
 
 
@@ -16,7 +14,7 @@
   /* margin: 0 0 0 20% */
 }
 .tianjia{
-background-color:  #0000FF;
+background-color:  #1c9ef1;
 color: #ffffff;
  width: 80%;
   margin-top: 20rpx;
@@ -24,9 +22,157 @@ color: #ffffff;
   }
   .queding{
 
-   background-color:  rgb(51, 255, 0);
+   background-color: #1c9ef1;
 color: #ffffff;
- width: 80%;
-  margin-top: 20rpx;
-  border-radius: 98rpx;  
+width: 44%;
+margin-top: 21rpx;
+border-radius: 69rpx;
+height: 55rpx;
+font-size: 67%;
+margin-bottom: 2%;
+
+}
+
+
+  
+
+  .ke_bt{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 37%;
+    color: #888888;
+
+
+  }
+.kh_tx{
+ height: 120rpx;
+width: 120rpx;
+margin-top: 4%;
+margin-bottom: -21%;
+margin-left: 3%;
+}
+  .zheng_kuai{
+    padding-top: 5%;
+      font-size: 82%;
+    padding-left: 23%;
+  padding-bottom: 5%;
+
+
+  }
+
+  .ke_hu{
+
+     position: absolute;
+    left: 37%;
+    font-size: 92%;
+  }
+
+  .jiahao1{
+width: 50px;
+height: 50px;
+border-radius: 100%;
+position: fixed;
+bottom: 85rpx;
+right: 35rpx;
+display: flex;
+align-items: center;
+justify-content: center;
+
+
+
+}
+
+.tj_1{
+  border: 1px solid #DCDCDC;
+  border-radius: 29rpx;
+  width: 55%;
+  margin-left: 21%;
+  margin-bottom: 3%;
+margin-top: 3%;
+
+
+}
+.tj_2{
+  border: 1px solid #DCDCDC;
+  border-radius: 29rpx;
+  width: 55%;
+  margin-left: 21%;
+  margin-bottom: 3%;
+margin-top: 3%;
+
+
+}
+.tj_3{
+  border: 1px solid #DCDCDC;
+  border-radius: 29rpx;
+  width: 55%;
+  margin-left: 21%;
+  margin-bottom: 3%;
+margin-top: 3%;
+
+
+}
+
+.hidden_kh{
+width: 100%;
+height: 100%;
+z-index: 1;
+background: #000000;
+position: absolute;
+opacity: 0.5;
+
+}
+
+.jinhuo{
+
+ background-color: #f8f8f8;
+  
+
+
+}
+
+
+.lab_xx{
+  color: #7c7e7c;
+  font-size: 73%;
+margin-left: 3%;
+margin-top: 5%;
+margin-bottom: -9%;
+
+
+
+}
+
+.tp_guanbi{
+  /* position: absolute;
+
+left: 85%; */
+
+  background-repeat: no-repeat;
+  height: 80rpx;
+  width: 80rpx;
+
+}
+
+.guan_bi{
+  position: absolute;
+  left: 85%;
+
+
+}
+
+.dq_y{
+  font-weight: bold;
+position: absolute;
+top: 0%;
+left: 5%;
+color: white;
+
+}
+
+  .dqy_bj{
+
+    background-color: #1e90ff;
+    height: 55rpx;
+
   }

@@ -8,30 +8,34 @@ Page({
   data: {
     bigImg:"",
 list:[
+{
+  txet: "商品代码",
+  index: 0
+
+},
 { 
   txet:"品名",
-   index:0
+   index:1
 
 },
   {
     txet: "售价",
-    index: 1
-
-  },
-  {
-    txet: "进价",
     index: 2
 
   },
   {
-    txet: "类别",
+    txet: "进价",
     index: 3
 
   },
   {
-    txet: "备注",
+    txet: "类别",
     index: 4
 
+  },
+  {
+    txet: "备注",
+    index: 5
   }
 
 
@@ -155,11 +159,13 @@ list:[
     var value2 = that.data.value2
     var value3 = that.data.value3
     var value4 = that.data.value4
+    var value5 = that.data.value5
     var bigImg=that.data.bigImg
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
     console.log(gongsi)
     console.log(finduser)
+    console.log(value0)
     const db = wx.cloud.database();
     db.collection('Yh_JinXiaoCun_chanpin').add({
 
@@ -171,8 +177,8 @@ list:[
         value1: value1,
         value2: value2,
         value3: value3,
-        value4: value4
-       
+        value4: value4,
+        value5: value5
 
       },
       success: res => {

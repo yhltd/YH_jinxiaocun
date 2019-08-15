@@ -1,6 +1,8 @@
 <!--pages/time/time.wxml-->
 <import src="/pages/template/tabber.wxml" />
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
+<view class="dqy_bj"></view>
+<view class="dq_y">期初数</view>
 <view class=' main'> 
   <view class='list'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
     <view class='shangpin'>

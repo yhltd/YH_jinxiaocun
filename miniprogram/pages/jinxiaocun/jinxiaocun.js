@@ -75,6 +75,55 @@ Page({
     })
   },
 
+  xixi: function (e) {
+    if (e.detail.value == "") {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      db.collection("Yh_JinXiaoCun_mingxi").where({
+        finduser: finduser,
+        gongsi: gongsi,
+
+      }).get({
+        success: res => {
+          that.setData({
+            szzhi: res.data
+          })
+        }
+      })
+
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      db.collection("Yh_JinXiaoCun_mingxi").where({
+        finduser: finduser,
+        gongsi: gongsi,
+        cpname: db.RegExp({
+        regexp: e.detail.value,
+        options: 'i',
+        })
+      }).get({
+        success: res => {
+          that.setData({
+            szzhi: res.data
+          })
+        }
+      })
+
+    }
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -123,15 +172,15 @@ Page({
           db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
             success: console.log,
             fail: console.error,
-             
+           
           })
-          that.onLoad()
+          that.onShow()
         } else if (res.cancel) {
-       
+        
           return false;
         }
-   
-      }
+       
+      } 
     })
 
   

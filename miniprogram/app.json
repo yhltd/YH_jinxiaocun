@@ -31,7 +31,9 @@
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi"
+    "pages/openapi/openapi",
+    "pages/frmadmindetails/frmadmindetails",
+    "pages/frmadminsysm/frmadminsysm"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
