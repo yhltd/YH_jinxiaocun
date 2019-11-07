@@ -1,12 +1,13 @@
 {
   "pages": [
     "pages/login/login",
+     "pages/time/time",
     "pages/shouye/shouye",
     "pages/kucun/kucun",
     "pages/frmedituser/frmedituser",
     "pages/jinxiaocun/jinxiaocun",
     "pages/index/index",
-    "pages/time/time",
+
     "pages/remittance/remittance",
     "pages/frmadminform/frmadminform",
     "pages/procurement/procurement",

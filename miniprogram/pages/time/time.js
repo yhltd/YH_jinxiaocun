@@ -90,6 +90,17 @@ Page({
     var finduser =app.globalData.finduser 
     var gongsi = app.globalData.gongsi
     console.log(finduser)
+    console.log("a")
+    wx.cloud.callFunction({
+      name:"sqlConnection",
+      success(res){
+          console.log("成功",res)
+      },fail(res)
+      {
+        console.log("失败" ,res)
+
+      }
+    });
     db.collection('Yh_JinXiaoCun_jinhuofang').where({
       finduser: finduser,
       gongsi: gongsi
