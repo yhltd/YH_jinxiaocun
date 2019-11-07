@@ -17,7 +17,7 @@ exports.main = async(event, context) => {
       port:'3306'
     })
 
-    const [rows, fields] = await connection.execute('SELECT * from yh_jinxiaocun_mingxi')
+    const [rows, fields] = await connection.execute(event.sql)
     return rows;
   } catch (err) {
     console.log("链接错误", err)

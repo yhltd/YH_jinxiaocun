@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    szzhi:[]
   },
 
   /**
@@ -16,6 +16,7 @@ Page({
     var that = this
    const db = wx.cloud.database()
    var app = getApp();
+    var szzhi=null;
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi 
     db.collection("Yh_JinXiaoCun_mingxi").where({
@@ -28,6 +29,31 @@ Page({
         })
       }
     })
+
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data:{
+        sql:'SELECT * from yh_jinxiaocun_mingxi where _id="1"'
+      },
+      success(res) {     
+            that.setData({
+              szzhi: res.result
+    } 
+    )      
+        console.log(that.data.szzhi)
+      }, fail(res) {
+        console.log("失败", res)
+
+      }
+    });
+
+    // const [rows, fields] = await connection.execute('SELECT * from yh_jinxiaocun_mingxi')
+    // console.log("jieguo:")
+    // console.log(rows)
+    // that.setData({
+    //   szzhi: rows
+    // })
+    // return rows;
   },
 
 
