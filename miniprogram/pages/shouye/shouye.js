@@ -76,11 +76,14 @@ Page({
   remove: function (e) {
     var that = this
     var idx = e.currentTarget.dataset.index;
+    
     if (idx == 8) {
       wx.showModal({
         title: '提示',
         content: '该功能尚未开发',
+
       })
+      
       // wx.navigateTo({
       //   url: that.data.list[idx].lianjie,
       // })
@@ -99,9 +102,18 @@ Page({
     })
   },
   onLoad: function () {
-
+    
   },
   onShow: function () {
+    // if (app.globalData.gongsi == null || app.globalData.finduser == null) {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '用户未登录！',
+    //   })
+    //   wx.navigateTo({
+    //     url: '../login/login'
+    //   })
+    // }
     console.log(wx.getStorageSync("JianYan"))
     if (wx.getStorageSync("JianYan") == 1) {
       wx.showModal({

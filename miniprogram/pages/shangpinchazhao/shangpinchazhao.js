@@ -20,17 +20,33 @@ Page({
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi 
     var _openid = wx.getStorageSync('openid').openid;
-    db.collection("Yh_JinXiaoCun_mingxi").where({
-      finduser: finduser,
-      gongsi: gongsi,
-      cpid: _id
-    }).get({
-      success: res => {
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "' and sp_dm ='" + _id+"'"
+      },
+      success(res) {
+        console.log("成功", res)
         that.setData({
-          szzhi: res.data
+          szZhi : res.result
         })
+       
+      }, fail(res) {
+        console.log("失败", res)
+
       }
-    })
+    });
+    // db.collection("Yh_JinXiaoCun_mingxi").where({
+    //   finduser: finduser,
+    //   gongsi: gongsi,
+    //   cpid: _id
+    // }).get({
+    //   success: res => {
+    //     that.setData({
+    //       szzhi: res.data
+    //     })
+    //   }
+    // })
   },
   xixi: function (e) {
     if (e.detail.value == "") {
@@ -39,17 +55,33 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      db.collection("Yh_JinXiaoCun_mingxi").where({
-        finduser: finduser,
-        gongsi: gongsi,
-
-      }).get({
-        success: res => {
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
+        },
+        success(res) {
+          console.log("成功", res)
           that.setData({
-            szzhi: res.data
+            szzhi: res.result
           })
+          // szZhi = 
+        }, fail(res) {
+          console.log("失败", res)
+
         }
-      })
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({
+      //   finduser: finduser,
+      //   gongsi: gongsi,
+
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
 
     } else {
       var that = this
@@ -57,20 +89,39 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      db.collection("Yh_JinXiaoCun_mingxi").where({
-        finduser: finduser,
-        gongsi: gongsi,
-        cpname: db.RegExp({
-          regexp: e.detail.value,
-          options: 'i',
-        })
-      }).get({
-        success: res => {
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "' and name='" + db.RegExp({
+            regexp: e.detail.value,
+            options: 'i',
+          })+"'"
+        },
+        success(res) {
+          console.log("成功", res)
           that.setData({
-            szzhi: res.data
+            szzhi: res.result
           })
+          // szZhi =
+        }, fail(res) {
+          console.log("失败", res)
+
         }
-      })
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({
+      //   finduser: finduser,
+      //   gongsi: gongsi,
+      //   cpname: db.RegExp({
+      //     regexp: e.detail.value,
+      //     options: 'i',
+      //   })
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
 
     }
   },

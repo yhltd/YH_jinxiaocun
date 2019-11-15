@@ -32,47 +32,96 @@ Page({
     var app = getApp();
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
-    db.collection("Yh_JinXiaoCun_mingxi").where({
-      finduser: finduser,
-      gongsi: gongsi
-    }).get({
-      success: res => {
-       
-        var all=[]
+    
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'"
+      },
+      success(res) {
+        var all = []
         
-        
-        // for(var i=0;i<=res.data.length;i++){
-        //   var x="0"
-         
-        //   if(i!=0){
-        //   for (var j = 0; j <= all.length; j++){
-        //     console.log(i)
-        //     console.log(j)
-        //     console.log(res.data[i].cpname)
-        //     console.log(all[j].cpname)
-        //     if (all[j].cpname =res.data[i].cpname) {
-        //       console.log("x")
-        //        all[j].cpsl = all[j].cpsl + res.data[i].cpsl
-        //        all[j].cpjj = all[j].cpjj + res.data[i].cpjj
-        //        all[j].cpsj = all[j].cpsj + res.data[i].cpsj
-        //        x="1"
-        //      }
-
-        //   }
-        //   }
-         
-        //   if(x="0"){
-        //     console.log("all")
-        //   all.push(res.data[i])
-        //   console.log(all)
-        //   }
-        // }
-      //  console.log(all)
+        all = res.result;
+        var szary =[]
+        var inserti =0
+        for (var i = 0; i < all.length;i++ )
+        {
+          var pd = false;
+          for (var j = 0; j < szary.length;j++)
+          {
+            if(szary[j].sp_dm== all[i].sp_dm)
+            {
+              pd=true;
+              if(all[i].mxtype =="入库")
+              {
+                szary[j].cpsl = szary[j].cpsl+all[i].cpsl
+                szary[j].cpsj = szary[j].cpsj+all[i].cpsj
+              }else
+              {
+                szary[j].cpsl = szary[j].cpsl - all[i].cpsl
+                szary[j].cpsj = szary[j].cpsj -all[i].cpsj
+              }
+            }
+            
+          }
+          if (pd == false) {
+            szary[inserti]=all[i]
+            inserti++
+            // szary[j].sp_dm = all[i].sp_dm
+            // szary[j].cpsl = all[i].cpsl
+            // szary[j].cpsj = all[i].cpsj
+            // szary[i].cplb = all[i].cplb
+          }
+        }
         that.setData({
-          szzhi: res.data
-        })
+          szzhi: szary
+            })
+      }, fail(res) {
+        console.log("失败", res)
+
       }
-    })
+    });
+    // db.collection("Yh_JinXiaoCun_mingxi").where({
+    //   finduser: finduser,
+    //   gongsi: gongsi
+    // }).get({
+    //   success: res => {
+       
+    //     var all=[]
+        
+        
+    //     // for(var i=0;i<=res.data.length;i++){
+    //     //   var x="0"
+         
+    //     //   if(i!=0){
+    //     //   for (var j = 0; j <= all.length; j++){
+    //     //     console.log(i)
+    //     //     console.log(j)
+    //     //     console.log(res.data[i].cpname)
+    //     //     console.log(all[j].cpname)
+    //     //     if (all[j].cpname =res.data[i].cpname) {
+    //     //       console.log("x")
+    //     //        all[j].cpsl = all[j].cpsl + res.data[i].cpsl
+    //     //        all[j].cpjj = all[j].cpjj + res.data[i].cpjj
+    //     //        all[j].cpsj = all[j].cpsj + res.data[i].cpsj
+    //     //        x="1"
+    //     //      }
+
+    //     //   }
+    //     //   }
+         
+    //     //   if(x="0"){
+    //     //     console.log("all")
+    //     //   all.push(res.data[i])
+    //     //   console.log(all)
+    //     //   }
+    //     // }
+    //   //  console.log(all)
+    //     that.setData({
+    //       szzhi: res.data
+    //     })
+    //   }
+    // })
   },
 
   xixi: function (e) {
@@ -82,17 +131,33 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      db.collection("Yh_JinXiaoCun_mingxi").where({
-        finduser: finduser,
-        gongsi: gongsi,
-
-      }).get({
-        success: res => {
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'"
+        },
+        success(res) {
           that.setData({
             szzhi: res.data
           })
+
+          console.log(that.data.szzhi)
+        }, fail(res) {
+          console.log("失败", res)
+
         }
-      })
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({
+      //   finduser: finduser,
+      //   gongsi: gongsi,
+
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
 
     } else {
       var that = this
@@ -100,20 +165,39 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      db.collection("Yh_JinXiaoCun_mingxi").where({
-        finduser: finduser,
-        gongsi: gongsi,
-        cpname: db.RegExp({
-        regexp: e.detail.value,
-        options: 'i',
-        })
-      }).get({
-        success: res => {
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser + "' and gs_name = '" + gongsi + "',cpname='" + db.RegExp({
+            regexp: e.detail.value,
+            options: 'i',
+          }) + "'"
+        },
+        success(res) {
           that.setData({
-            szzhi: res.data
-          })
+            szzhi: res.result
+          }
+          )
+          console.log(that.data.szzhi)
+        }, fail(res) {
+          console.log("失败", res)
+
         }
-      })
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({
+      //   finduser: finduser,
+      //   gongsi: gongsi,
+      //   cpname: db.RegExp({
+      //   regexp: e.detail.value,
+      //   options: 'i',
+      //   })
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
 
     }
   },
@@ -169,11 +253,28 @@ Page({
       content: '是否删除？',
       success: function (res) {
         if (res.confirm) {
-          db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
-            success: console.log,
-            fail: console.error,
+          wx.cloud.callFunction({
+            name: "sqlConnection",
+            data: {
+              sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+            },
+            success(res) {
+              // that.setData({
+              //   szzhi: res.result
+              // }
+              // )
+              console.log
+              // console.log(that.data.szzhi)
+            }, fail(res) {
+              console.log("失败", res)
+
+            }
+          });
+          // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
+          //   success: console.log,
+          //   fail: console.error,
            
-          })
+          // })
           that.onShow()
         } else if (res.cancel) {
         

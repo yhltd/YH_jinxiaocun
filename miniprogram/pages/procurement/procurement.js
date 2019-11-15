@@ -7,12 +7,18 @@ var szsl = []
 var szje = []
 var pd = 0
 var app = getApp()
+var cpxinxi = []
+var slxinxi = []
+var jgxinxi = []
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    szzhi: [],
+    szjg: [],
+    szsl: [],
     rkSum: 0,
     rkck: "初期数录入"
   },
@@ -35,34 +41,78 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var app = getApp();
-    var that = this;
-
-
-
-    var rk = that.data.rkSum
-    if (app.rkall != null) {
-      rk = rk + app.cpsum
-      szzhi = app.rkall
-      var sl = app.szsl
-      var je = app.szje
-      for (var i = 0; i < app.szsl.length; i++) {
-        if (szsl[i] == null) {
-          szsl[i] = 0
-          szje[i] = 0
-        }
-        szsl[i] = Number(szsl[i]) + Number(sl[i])
-        szje[i] = Number(szje[i]) + Number(je[i])
+    var that= this;
+    for (var i = 0; i < that.data.szzhi.length; i++) {
+      if (that.data.szzhi[i] != null) {
+        cpxinxi[i] = that.data.szzhi[i]
+        slxinxi[i] = that.data.szsl[i]
+        jgxinxi[i] = that.data.szje[i]
 
       }
 
-      that.setData({
-        szzhi: app.rkall,
-        szsl: szsl,
-        szje: szje,
-        rkSum: rk
+    }
 
-      })
+    if (wx.getStorageSync("khpd") != "1") {
+      var rk = that.data.rkSum
+      if (wx.getStorageSync("rkall") != null) {
+        rk = rk + Number(wx.getStorageSync("cpsum"))
+        szzhi = wx.getStorageSync("rkall")
+        var sl = wx.getStorageSync("szsl")
+        var je = wx.getStorageSync("szje")
+
+        var fuzhii = 0
+        var szzhilength = that.data.szzhi.length;
+        // console.log(sl)
+        for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length; i++) {
+          if (cpxinxi[i] == null) {
+            cpxinxi[i] = szzhi[fuzhii]
+            slxinxi[i] = sl[fuzhii]
+            jgxinxi[i] = je[fuzhii]
+            fuzhii++;
+          }
+        }
+
+        that.setData({
+          szzhi: cpxinxi,
+          szsl: slxinxi,
+          szje: jgxinxi,
+          rkSum: rk
+
+        })
+        wx.clearStorageSync("cpsum")
+        wx.clearStorageSync("rkall")
+        wx.clearStorageSync("szsl")
+        wx.clearStorageSync("szje")
+
+      }
+    // var app = getApp();
+    // var that = this;
+
+
+
+    // var rk = that.data.rkSum
+    // if (app.rkall != null) {
+    //   rk = rk + app.cpsum
+    //   szzhi = app.rkall
+    //   var sl = app.szsl
+    //   var je = app.szje
+    //   for (var i = 0; i < app.szsl.length; i++) {
+    //     if (szsl[i] == null) {
+    //       szsl[i] = 0
+    //       szje[i] = 0
+    //     }
+    //     szsl[i] = Number(szsl[i]) + Number(sl[i])
+    //     szje[i] = Number(szje[i]) + Number(je[i])
+
+    //   }
+
+    //   that.setData({
+    //     szzhi: app.rkall,
+    //     szsl: szsl,
+    //     szje: szje,
+    //     rkSum: rk
+
+    //   })
 
     }
   },
@@ -110,35 +160,60 @@ Page({
   },
   querenRk: function () {
     var app = getApp()
-    var today = common.getToday();
+    var that = this;
+    // var today = common.getToday();
     const db = wx.cloud.database();
     pd = 0
     console.log(szzhi.length)
+    if (that.data.date=="")
+    {
+      wx.showModal({
+        title: '提示',
+        content: '请选择入库时间',
+      })
+
+    }else{
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
     for (var i = 0; i < szzhi.length; i++) {
-
-      db.collection('Yh_JinXiaoCun_qichushu').add({
+      wx.cloud.callFunction({
+        name: "sqlConnection",
         data: {
-          finduser: finduser,
-          gongsi: gongsi,
-          shijian: today,
-          cpid: szzhi[i]._id,
-          cpname: szzhi[i].value0,
-          cpsj: szzhi[i].value1,
-          cpjj: szzhi[i].value2,
-          cplb: szzhi[i].value3,
-          cpsl: szsl[i],
-          cpjg: szje[i],
-          mxtype: "期初数",
-
+          sql: "INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian)values('" + szzhi[i].sp_dm + "','" + szzhi[i].lei_bie + "','" + szzhi[i].name + "','" + jgxinxi[i] + "','" + slxinxi[i] + "','" + finduser + "','" + gongsi + "','" + that.data.date+"')"
         },
-        success: res => {
+        success(res) {
+          console.log("成功", res)
           wx.showToast({
             title: '初期数录入成功',
           })
+        }, fail(res) {
+          console.log("失败", res)
+
         }
-      })
+
+      });
+    }
+      // db.collection('Yh_JinXiaoCun_qichushu').add({
+      //   data: {
+      //     finduser: finduser,
+      //     gongsi: gongsi,
+      //     shijian: today,
+      //     cpid: szzhi[i]._id,
+      //     cpname: szzhi[i].value0,
+      //     cpsj: szzhi[i].value1,
+      //     cpjj: szzhi[i].value2,
+      //     cplb: szzhi[i].value3,
+      //     cpsl: szsl[i],
+      //     cpjg: szje[i],
+      //     mxtype: "期初数",
+
+      //   },
+      //   success: res => {
+      //     wx.showToast({
+      //       title: '初期数录入成功',
+      //     })
+      //   }
+      // })
     }
     // var _openid = wx.getStorageSync('openid').openid;
     // for (var kci = 0; kci < szzhi.length; kci++){
@@ -186,6 +261,12 @@ Page({
 
     //       }
 
-  }
+  },bindDateChange: function (e) {
+    var that = this
+    that.setData({
+      date: e.detail.value,
+      sjkj: e.detail.value
+    })
+  },
 
 })

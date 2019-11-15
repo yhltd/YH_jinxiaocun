@@ -9,12 +9,12 @@
         <view class='divline'></view>
         <view bindtap='srJg'  data-id="{{i}}" >
         <view class='shangpin'  data-id="{{i}}">
-            <image  src='{{all[i].bigImg}}' class='shangpin-image'data-id="{{i}}"> </image>
-            <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].value1}}</text>\n售价：{{all[i].value2}}\n进价：{{all[i].value3}}\n类别：{{all[i].value4}}\n备注：{{all[i].value5}} </text>
-           
+            <image  src='{{all[i].mark1}}' class='shangpin-image'data-id="{{i}}"> </image>
+            <!-- <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].name}}</text>\n售价：{{all[i].value2}}\n进价：{{all[i].value3}}\n类别：{{all[i].lei_bie}}\n备注：{{all[i].value5}} </text> -->
+            <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}} </text>
         </view>
         <view class='shangpin-jin'   >
-         <text class="sp_dm" data-id="{{i}}" >商品代码:{{all[i].value0}}</text>
+         <text class="sp_dm" data-id="{{i}}" >商品代码:{{all[i].sp_dm}}</text>
             <view class='shangpin-input'  data-id="{{i}}" >数量：{{sl[i]}}</view>
             <view class='shangpin-input' data-id="{{i}}">价格：{{jg[i]}}</view>  
         </view>

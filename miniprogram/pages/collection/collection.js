@@ -36,21 +36,38 @@ Page({
     var gongsi = app.globalData.gongsi 
  
     const db = wx.cloud.database();
-    db.collection('Yh_JinXiaoCun_chanpin').where({
-      finduser: finduser,
-      gongsi: gongsi
-    })
-      .get({
-        success: res => {
-
-          console.log(res.data)
-          that.setData({
-            all: res.data,
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
+      },
+      success(res) {
+        console.log("成功", res)
+        that.setData({
+            all: res.result,
 
           })
-          szZhi = res.data
-        }
-      })
+        // szZhi = 
+      }, fail(res) {
+        console.log("失败", res)
+
+      }
+    });
+    // db.collection('Yh_JinXiaoCun_chanpin').where({
+    //   finduser: finduser,
+    //   gongsi: gongsi
+    // })
+    //   .get({
+    //     success: res => {
+
+    //       console.log(res.data)
+    //       that.setData({
+    //         all: res.data,
+
+    //       })
+    //       szZhi = res.data
+    //     }
+    //   })
 
   },
 
@@ -118,11 +135,28 @@ Page({
       content: '是否删除？',
       success: function (res) {
         if (res.confirm) {
-          db.collection("Yh_JinXiaoCun_chanpin").doc(that.data.all[id]._id).remove({
-            success: console.log,
-            fail: console.error,
+          wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "delete from Yh_JinXiaoCun_jichuziliao where sp_dm = '" + that.data.all[id].sp_dm+"'"
+      },
+      success(res) {
+        console.log("成功", res)
+        // that.setData({
+        //     all: res.data,
 
-          })
+        //   })
+        // szZhi = 
+      }, fail(res) {
+        console.log("失败", res)
+
+      }
+    });
+          // db.collection("Yh_JinXiaoCun_chanpin").doc(that.data.all[id]._id).remove({
+          //   success: console.log,
+          //   fail: console.error,
+
+          // })
           that.onLoad()
         } else if (res.cancel) {
 

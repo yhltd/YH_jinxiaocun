@@ -7,12 +7,13 @@
 <view class='main'> 
   <view class='list_ps2'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'>
     <view class='shangpin'>
-        <image class="shangpin-img" src="{{szzhi[i].bigImg}}"></image>
-         <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n<text class="Hs">售价：<text class="red">{{szzhi[i].cpsj}}</text>\n进价：<text class="red">{{szzhi[i].cpjj}}</text>\n类别：<text class="red">{{szzhi[i].cplb}}</text>\n明细类别：<text class="red">{{szzhi[i].mxtype}}</text></text></text>
+        <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
+         <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n<text class="Hs">售价：<text class="red">{{szzhi[i].cpsj}}</text>\n进价：<text class="red">{{szzhi[i].cpjj}}</text>\n类别：<text class="red">{{szzhi[i].cplb}}</text>\n明细类别：<text class="red">{{szzhi[i].mxtype}}</text></text></text> -->
+         <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n商品名称{{szzhi[i].cpname}}\n类别：{{szzhi[i].cplb}}</text>
     </view>
        <view class='shangpin-jin'  data-id="{{i}}" >
             <view class='shangpin-input'  ><text class="Hs">数量：</text>{{szzhi[i].cpsl}}</view>
-            <view class='shangpin-input'><text class="Hs">价格：</text>{{szzhi[i].cpjg}}</view>  
+            <view class='shangpin-input'><text class="Hs">价格：</text>{{szzhi[i].cpsj*szzhi[i].cpsl}}</view>  
         </view>
   </view>
 </view>

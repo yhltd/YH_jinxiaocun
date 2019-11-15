@@ -92,26 +92,31 @@ Page({
     console.log(finduser)
     console.log("a")
     wx.cloud.callFunction({
-      name:"sqlConnection",
-      success(res){
-          console.log("成功",res)
-      },fail(res)
-      {
-        console.log("失败" ,res)
+      name: "sqlConnection",
+      data:{
+        sql:"select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi+"'"
+      },
+      success(res) {
+        console.log("成功", res)
+        that.setData({
+          all: res.result[id][0].beizhu
+        })
+      }, fail(res) {
+        console.log("失败", res)
 
       }
     });
-    db.collection('Yh_JinXiaoCun_jinhuofang').where({
-      finduser: finduser,
-      gongsi: gongsi
-    }).get({
-    success: function (res) {
-      console.log(res.data)
-      that.setData({
-        all: res.data[id].beizhu
-      })
-    }
-      })
+    // db.collection('Yh_JinXiaoCun_jinhuofang').where({
+    //   finduser: finduser,
+    //   gongsi: gongsi
+    // }).get({
+    // success: function (res) {
+    //   console.log(res.data)
+    //   that.setData({
+    //     all: res.data[id].beizhu
+    //   })
+    // }
+    //   })
 
     // db.collection('Yh_JinXiaoCun_jinhuofang').get({
     //   success: res => {
@@ -188,6 +193,7 @@ Page({
             cpxinxi[i] = szzhi[fuzhii]
             slxinxi[i] = sl[fuzhii]
             jgxinxi[i] = je[fuzhii]
+            fuzhii ++;
           }
         }
 
@@ -287,30 +293,51 @@ Page({
         var gongsi = app.globalData.gongsi
         console.log(finduser)
         for (var i = 0; i < cpxinxi.length; i++) {
-          db.collection('Yh_JinXiaoCun_mingxi').add({
+          wx.cloud.callFunction({
+            name: "sqlConnection",
             data: {
-              gongsi: gongsi,
-              finduser: finduser,
-              jinhuofang: that.data.all,
-              shijian: today,
-              cpid: cpxinxi[i]._id,
-              cpname: cpxinxi[i].value0,
-              cpsj: cpxinxi[i].value1,
-              cpjj: cpxinxi[i].value2,
-              cplb: cpxinxi[i].value3,
-              cpsl: slxinxi[i],
-              cpjg: jgxinxi[i],
-              mxtype: "入库",
-              orderid: ddh
+              sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i]+ "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh+"')"
+              // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
             },
-            success: res => {
-              wx.showToast({
-                title: '入库成功',
-              })
+            success(res) {
+              console.log("成功", res)
+              // that.setData({
+              //   all: res.result[id][0].beizhu
+              // })
+              
+            }, fail(res) {
+              console.log("失败", res)
+
             }
-          })
-          that.onLoad()
+          });
+          // db.collection('Yh_JinXiaoCun_mingxi').add({
+          //   data: {
+          //     gongsi: gongsi,
+          //     finduser: finduser,
+          //     jinhuofang: that.data.all,
+          //     shijian: today,
+          //     cpid: cpxinxi[i]._id,
+          //     cpname: cpxinxi[i].value0,
+          //     cpsj: cpxinxi[i].value1,
+          //     cpjj: cpxinxi[i].value2,
+          //     cplb: cpxinxi[i].value3,
+          //     cpsl: slxinxi[i],
+          //     cpjg: jgxinxi[i],
+          //     mxtype: "入库",
+          //     orderid: ddh
+          //   },
+          //   success: res => {
+          //     wx.showToast({
+          //       title: '入库成功',
+          //     })
+          //   }
+          // })
+          
         }
+        wx.showToast({
+          title: '入库成功',
+        })
+        that.onLoad()
 
       }
       

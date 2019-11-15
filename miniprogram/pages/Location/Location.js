@@ -30,17 +30,32 @@ Page({
     var gongsi = app.globalData.gongsi 
 
     var _openid = wx.getStorageSync('openid').openid;
-    db.collection("Yh_JinXiaoCun_jinhuofang").where({
-      gongsi: gongsi,
-      finduser: finduser
-    }).get({
-      success: res => {
-        console.log(res.data)
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
+      },
+      success(res) {
+        console.log("成功", res)
         that.setData({
-          all: res.data
+          all: res.result
         })
+      }, fail(res) {
+        console.log("失败", res)
+
       }
-    })
+    });
+    // db.collection("Yh_JinXiaoCun_jinhuofang").where({
+    //   gongsi: gongsi,
+    //   finduser: finduser
+    // }).get({
+    //   success: res => {
+    //     console.log(res.data)
+    //     that.setData({
+    //       all: res.data
+    //     })
+    //   }
+    // })
   },
 
   /**
@@ -54,7 +69,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
 
+    var _openid = wx.getStorageSync('openid').openid;
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
+      },
+      success(res) {
+        console.log("成功", res)
+        that.setData({
+          all: res.result
+        })
+      }, fail(res) {
+        console.log("失败", res)
+
+      }
+    });
   },
 
   /**
@@ -132,19 +165,34 @@ input1:function(e){
     const db = wx.cloud.database()
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi 
-    db.collection("Yh_JinXiaoCun_jinhuofang").add({
-      data:{
-        gongsi: gongsi,
-        finduser: finduser,
-        beizhu: beizhu,
-        lianxifangshi: lianxifangshi,
-        lianxidizhi: lianxidizhi
-      },
-      success (res){
-       wx.showToast({
-       title: '添加成功',
-})
-      }
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "insert Yh_JinXiaoCun_jinhuofang (finduser,gongsi,beizhu,lianxifangshi,lianxidizhi) VALUES('" + finduser + "','" + gongsi + "','" + beizhu + "','" + lianxifangshi + "','" + lianxidizhi + "')"
+          // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
+        },
+        success(res) {
+          console.log("成功", res)
+          wx.showToast({
+            title: '添加成功',
+          })
+        }, fail(res) {
+          console.log("失败", res)
+          
+        }
+//     db.collection("Yh_JinXiaoCun_jinhuofang").add({
+//       data:{
+//         gongsi: gongsi,
+//         finduser: finduser,
+//         beizhu: beizhu,
+//         lianxifangshi: lianxifangshi,
+//         lianxidizhi: lianxidizhi
+//       },
+//       success (res){
+//        wx.showToast({
+//        title: '添加成功',
+// })
+      // }
     })
 
     }

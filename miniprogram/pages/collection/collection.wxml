@@ -7,14 +7,15 @@
         <view class='divline'></view>
         <view bindtap='srJg' data-id="{{i}}">
         <view class='shangpin' >
-            <image  src='{{all[i].bigImg}}' class='shangpin-image'> </image>
-            <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text>
-        </view>
+            <image  src='{{all[i].mark1}}' class='shangpin-image'> </image>
+            <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text> -->
+             <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}} </text>
+        </view> 
 
 
         <view class='shangpin-jin2'  data-id="{{i}}" >
 <view class='shangpin-jin'   >
-         <text class="sp_dm" data-id="{{i}}" >商品代码:{{all[i].value0}}</text>
+         <text class="sp_dm" data-id="{{i}}" >商品代码:{{all[i].sp_dm}}</text>
           
 
         </view>

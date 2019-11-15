@@ -1,9 +1,9 @@
 <template  name="jg" hidden='true'>
   <view class='test' style="display:{{jghide}};flex-direction: column;" >
     <view class="message">
-      <image class='tp_css' src="{{all[cpid].bigImg}}"></image>
+      <image class='tp_css' src="{{all[cpid].mark1}}"></image>
       <view class="bk_tp"></view>
-      <text class='text_name'>{{all[cpid].value0}}</text>
+      <text class='text_name'>{{all[cpid].name}}</text>
     </view>
     <view class="Xzjiage" style="display:flex">
      <text class="text_css">价格:</text><input  bindblur='cunjg'class = "input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpjg[cpid]}}"></input>

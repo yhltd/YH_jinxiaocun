@@ -18,6 +18,7 @@ exports.main = async(event, context) => {
     })
 
     const [rows, fields] = await connection.execute(event.sql)
+    
     return rows;
   } catch (err) {
     console.log("链接错误", err)

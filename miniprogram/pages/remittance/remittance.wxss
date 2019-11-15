@@ -2,6 +2,26 @@
 page{
   background-color: #F0F8FF;
 }
+.list{
+  display: flex;
+  /* padding-top: 19.1%; */
+
+
+}
+.header{
+    /*----------*/
+  background-color: rgb(30,144,255);
+  padding: 8%;
+}
+.bk_ss{
+  border: 1px solid  #1c60a3;border-radius: 29rpx; 
+  width: 55%;
+  position: absolute;
+  left: 21.3%;
+  top: 4%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
 .xzkhA{
   /* position: absolute; */
   /* width: 50%;
@@ -35,7 +55,7 @@ margin-left: 37%;
   display: flex;
 position: absolute;
 width: 100%;
-top: 10%;
+top: 20%;
 background-color: white;
 padding: 3%;
 left: 0%;
@@ -66,7 +86,8 @@ padding: 8px;
   display: flex;
   position: absolute;
   left: 55%;
-margin-top: -17%;
+margin-top: 11%;
+
   font-size: 62%;
 
 
@@ -74,8 +95,10 @@ margin-top: -17%;
 .main{
   position: absolute;
 width: 100%;
-top: 20%;
-z-index: -3;
+margin-top: 18%;
+z-index: -9;
+
+display: block;
 
 }
 .shangpin-text{
@@ -96,13 +119,21 @@ margin-right: 6%;
   font-size: 145%;
 
 }
+.tui-picker-content{
+  position: absolute;
+  top: 0%;
+  font-size: 71%;
+  left: 4%;
+  color: #f8f8f8
 
+
+}
 .dq_y{
   font-weight: bold;
-position: absolute;
-top: 0%;
-left: 6%;
-color: white;
+  position: absolute;
+  top: 4%;
+  left: 6%;
+  color: white;
 
 }
 

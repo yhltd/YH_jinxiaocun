@@ -25,17 +25,33 @@ Page({
     }
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi 
-    db.collection("Yh_JinXiaoCun_chuhuofang").where({
-      finduser: finduser,
-      gongsi: gongsi
-    }).get({
-      success: res => {
-        console.log(res.data)
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_chuhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi+"'"
+        // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
+      },
+      success(res) {
+        console.log("成功", res)
         that.setData({
-          all: res.data
+          all: res.result
         })
+      }, fail(res) {
+        console.log("失败", res)
+
       }
-    })
+    });
+    // db.collection("Yh_JinXiaoCun_chuhuofang").where({
+    //   finduser: finduser,
+    //   gongsi: gongsi
+    // }).get({
+    //   success: res => {
+    //     console.log(res.data)
+    //     that.setData({
+    //       all: res.data
+    //     })
+    //   }
+    // })
   },
 
   /**
@@ -49,7 +65,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_chuhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
+        // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
+      },
+      success(res) {
+        console.log("成功", res)
+        that.setData({
+          all: res.result
+        })
+      }, fail(res) {
+        console.log("失败", res)
 
+      }
+    });
   },
 
   /**
@@ -124,21 +157,38 @@ Page({
     var gongsi = app.globalData.gongsi 
     if (beizhu != null || lianxifangshi != null) {
       const db = wx.cloud.database()
-      db.collection("Yh_JinXiaoCun_chuhuofang").add({
+      wx.cloud.callFunction({
+        name: "sqlConnection",
         data: {
-          finduser:finduser,
-          gongsi: gongsi,
-          beizhu: beizhu,
-          lianxifangshi: lianxifangshi,
-          lianxidizhi: lianxidizhi,
-          // backhidden: true
+          sql: "insert yh_jinxiaocun_chuhuofang (finduser,gongsi,beizhu,lianxifangshi,lianxidizhi) VALUES('" + finduser + "','" + gongsi + "','" + beizhu + "','" + lianxifangshi + "','" + lianxidizhi+"')"
+          // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
         },
         success(res) {
+          console.log("成功", res)
           wx.showToast({
             title: '添加成功',
           })
+          that.onLoad
+        }, fail(res) {
+          console.log("失败", res)
+
         }
-      })
+      });
+      // db.collection("Yh_JinXiaoCun_chuhuofang").add({
+      //   data: {
+      //     finduser:finduser,
+      //     gongsi: gongsi,
+      //     beizhu: beizhu,
+      //     lianxifangshi: lianxifangshi,
+      //     lianxidizhi: lianxidizhi,
+      //     // backhidden: true
+      //   },
+      //   success(res) {
+      //     wx.showToast({
+      //       title: '添加成功',
+      //     })
+      //   }
+      // })
 
     }
     that.setData({

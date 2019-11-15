@@ -3,6 +3,16 @@
   background-color: #F5FFFA;
 
 } 
+.tui-picker-content{
+  position: absolute;
+  top: 1%;
+
+  font-size: 71%;
+  left: 28%;
+  color: #f8f8f8
+
+
+}
 .list{
   display: flex;
 
