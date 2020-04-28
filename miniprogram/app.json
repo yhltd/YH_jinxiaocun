@@ -1,13 +1,28 @@
 {
   "pages": [
     "pages/login/login",
-     "pages/time/time",
+    "pages/home/home",
+     "pages/kaoqin/kaoqin",
+     "pages/peizhi/peizhi",
+     "pages/kaoqinjilu/kaoqinjilu",
+     "pages/gerenxinxi/gerenxinxi",
+     "pages/renyuanxinxiguanli/renyuanxinxiguanli",
+     "pages/gongzimingxi/gongzimingxi",
+     "pages/bumenhuizong/bumenhuizong",
+     "pages/gerensuodeshui/gerensuodeshui",
+     "pages/baopan/baopan",
+     "pages/baoshui/baoshui",
+     "pages/shebao/shebao",
+     "pages/gongzitiao/gongzitiao",
+
+
+
+    "pages/time/time",
     "pages/shouye/shouye",
     "pages/kucun/kucun",
     "pages/frmedituser/frmedituser",
     "pages/jinxiaocun/jinxiaocun",
     "pages/index/index",
-
     "pages/remittance/remittance",
     "pages/frmadminform/frmadminform",
     "pages/procurement/procurement",
