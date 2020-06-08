@@ -1,7 +1,7 @@
 <view class="top-bgimage">
- <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
+  <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
 
- 
+
   <view class="container">
     <view class="userinfo">
       <image class="userinfo-avatar" src="../../images/login.png" background-size="cover"></image>
@@ -12,13 +12,13 @@
 <view class="main-body">
   <form bindsubmit="formLogin">
 
-      <view>
-      <input name="inputName" bindinput="bindGsInput" class="input-login" placeholder="输入公司"  > </input>
+    <view>
+      <input name="inputName" bindinput="bindGsInput" class="input-login" placeholder="输入公司"> </input>
     </view>
     <view class="hs20"></view>
 
     <view>
-      <input name="inputName" bindinput="bindNameInput" class="input-login" placeholder="输入用户名"  > </input>
+      <input name="inputName" bindinput="bindNameInput" class="input-login" placeholder="输入用户名"> </input>
     </view>
     <view class="hs20"></view>
     <view>

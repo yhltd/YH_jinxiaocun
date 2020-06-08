@@ -1,5 +1,5 @@
 //app.js
-//app.js
+
 var rkall=[]
 var szsl=[]
 var szje=[]
@@ -90,8 +90,6 @@ App({
         }
       });
     }
-
-
   }
 })
 

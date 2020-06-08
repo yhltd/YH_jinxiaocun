@@ -1,8 +1,9 @@
 <!--pages/home/home.wxml-->
 <view class="all">
-<view class="top">人资管理系统</view>
-  <view data-index="{{item.index}}" bindtap="submit" wx:for="{{list}}" wx:for-item="item" class="click" wx:key="">
+  <view class="top"></view>
+  <view data-index="{{item.index}}" bindtap="submit" wx:for="{{list}}" wx:for-item="item" class="click" wx:key="key">
     <image class="image" src="{{item.url}}"></image>
-    <view class="fon-30">{{item.text}}</view>
+    <view class="fon-30"> {{item.text}}
+    </view>
   </view>
 </view>

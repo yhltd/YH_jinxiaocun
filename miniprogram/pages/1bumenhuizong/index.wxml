@@ -1,0 +1,50 @@
+<!-- 部门详情表 -->
+
+
+
+<!--顶部操作区-->
+<scroll-view class="up">
+  <text>功能按钮预留区域！</text>
+</scroll-view>
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <view class='table_header'>
+      <view class="th" style='width:101rpx;background-color:white'>
+        <view class='centerclass cell_label'>
+          <text style="font-size:; font-weight:bold;">序号</text>
+        </view>
+      </view>
+      <block wx:for="{{title}}">
+        <view class='th'>
+          <view class="cell_label centerclass">
+            <text style="font-size:; font-weight:bold;">{{item.bumenhuizong}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+
+    <!--内容纵向渲染 -->
+    <block wx:for="{{list}}">
+      <view class='table_main'>
+        <!--序号 -->
+        <view class='td' style='width:101rpx;background-color:white;'>
+          <view class="cell_label centerclass">{{item.id}}</view>
+        </view>
+
+
+
+      </view>
+    </block>
+  </view>
+
+</scroll-view>
+
+
+
+<!--底部操作区-->
+<scroll-view class="down">
+  <text>功能按钮预留区域！</text>
+</scroll-view>

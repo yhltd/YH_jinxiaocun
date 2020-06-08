@@ -2,21 +2,7 @@
   "pages": [
     "pages/login/login",
     "pages/home/home",
-     "pages/kaoqin/kaoqin",
-     "pages/peizhi/peizhi",
-     "pages/kaoqinjilu/kaoqinjilu",
-     "pages/gerenxinxi/gerenxinxi",
-     "pages/renyuanxinxiguanli/renyuanxinxiguanli",
-     "pages/gongzimingxi/gongzimingxi",
-     "pages/bumenhuizong/bumenhuizong",
-     "pages/gerensuodeshui/gerensuodeshui",
-     "pages/baopan/baopan",
-     "pages/baoshui/baoshui",
-     "pages/shebao/shebao",
-     "pages/gongzitiao/gongzitiao",
-
-
-
+    "pages/peizhi/peizhi",
     "pages/time/time",
     "pages/shouye/shouye",
     "pages/kucun/kucun",
@@ -50,6 +36,31 @@
     "pages/openapi/openapi",
     "pages/frmadmindetails/frmadmindetails",
     "pages/frmadminsysm/frmadminsysm"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "name": "renzi",
+      "pages": [
+        "pages/1renyuanxinxiguanli_edit/index",
+        "pages/1gongzimingxi_edit/index",
+        "pages/1peizhi/index",
+        "pages/1kaoqin/kaoqin",
+        "pages/1kaoqinjilu/kaoqinjilu",
+        "pages/1renyuanxinxiguanli/renyuanxinxiguanli",
+        "pages/1renyuanjibenxinxi/index",
+        "pages/1home/index",
+        "pages/1gongzimingxi/gongzimingxi",
+        "pages/1bumenhuizong/index",
+        "pages/1bumenxiangqing/index",
+        "pages/1shebaohuizong/index",
+        "pages/1shebaoxiangqing/index",
+        "pages/1baopan/baopan",
+        "pages/1gerensuodeshui/gerensuodeshui",
+        "pages/1baoshui/index",
+        "pages/1gongzitiao/gongzitiao"
+      ]
+    }
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

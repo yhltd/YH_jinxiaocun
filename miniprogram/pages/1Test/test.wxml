@@ -1,0 +1,12 @@
+<view> hello</view>
+<template name="test">
+  <text>{{adadad}}</text>
+  <view style="height:100rpx"></view>
+  <text>{{adc}}</text>
+  <view>aaaa</view>
+</template>
+
+
+
+<import src="item.wxml"/>
+<template is="test" data="{{adadad: 'forbar',adc:'1212'}}"/>

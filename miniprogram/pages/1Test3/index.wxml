@@ -1,0 +1,27 @@
+<view style="height:100%;position:fixed;width:100%;">
+  <scroll-view scroll-y="false" bindscroll="scroll" style="height:100%;">
+    <view class="page-bottom-content">
+      <text>{{text}}</text>
+    </view>
+    <view class="page-banner">
+      banner
+    </view>
+    <view class="page-group {{scrollTop > 360 ? 'page-group-position' : ''}}">
+      <view class="page-nav-list">
+        <text>首页</text>
+      </view>
+      <view class="page-nav-list">
+        <text>活动</text>
+      </view>
+      <view class="page-nav-list">
+        <text>菜单</text>
+      </view>
+      <view class="page-nav-list">
+        <text>我的</text>
+      </view>
+    </view>
+    <view class="goods-list">
+      goods-list
+    </view>
+  </scroll-view>
+</view>

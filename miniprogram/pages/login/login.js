@@ -1,68 +1,51 @@
 // miniprogram/pages/login/login.js
 // const requestUrl = require('../../config').requestUrl
 const app = getApp();
+
 var login = function(that) {
   var finduser, passwod, adminis, gongsi;
   var listAll = [];
   const db = wx.cloud.database();
   var gongsi = app.globalData.gongsi
   console.log(that.data.gongsi)
-  if (that.data.gongsi.indexOf("_hr") > -1 ) {
+  if (that.data.gongsi.indexOf("_hr") > -1) {
     console.log("1")
+    var login = false;
     //人资管理系统
     console.log("ligng")
- wx.cloud.callFunction({
+    wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        user: 'sa',
-        password: 'Lyh07910_001',
-        server: 'yhocn.cn',
-        database: 'yao',
-        port: '1433',
-        query: "select * from gongzi_renyuan where L = '" + that.data.gongsi + "' and J = '" + that.data.pwd + "' and I ='" + that.data.name + "'"
+        query: "select id from gongzi_renyuan where L = '" + that.data.gongsi + "' and J = '" + that.data.pwd + "' and I ='" + that.data.name + "'"
       },
       success: res => {
-        console.log("成功", res.result)
+        console.log("小程序连接数据库成功,返回res为: ", res.result.recordset)
         if (res.result.recordset.length > 0) {
-          listAll.push(res.result.recordset)
-          gongsi = listAll[0][0].L,
-            finduser = listAll[0][0].I,
-            passwod = listAll[0][0].J,
-
-            adminis = listAll[0][0].AdminIS,
-            // openid = listAll[0]._openid,          
-            // app.globalData.openid = openid,
-            app.globalData.finduser = finduser,
-            app.globalData.passwod = passwod,
-            app.globalData.adminis = adminis,
-            app.globalData.gongsi = gongsi
-          console.log("密码对")
-          //登录状态写入缓存
-          wx.setStorage({
-            key: "IsLogin",
-            data: true
-          })
           wx.navigateTo({
-            url: '../home/home'
+            url: '../home/home',
+          })
+          wx.showToast({
+            title: '登录成功',
+            icon:'success'
           })
         } else {
-          console.log("密码错误")
-
+          console.log("数据库返回为空！返回res长度为：", res.result.recordset.length)
           wx.showToast({
-            title: '密码错误',
-            image: "../../images/icon-no.png",
-            mask: true,
-            duration: 1000
+            title: '输入有误 请重试',
+            icon: 'none',
           })
         }
-        wx.hideNavigationBarLoading(); //隐藏加载
-        wx.stopPullDownRefresh();
-
       },
-      fail(res) {
-        console.log("失败", res)
-
-      }
+      fail: res => {
+        console.log("小程序连接数据库失败")
+        wx.showToast({
+          title: '连接数据库出错',
+          image: "../../images/icon-no.png",
+          mask: true,
+          duration: 1000
+        })
+      },
+      complete: () => {}
     })
   } else {
     //进销存
@@ -189,7 +172,7 @@ Page({
   data: {
     name: '',
     pwd: '',
-    gongsi:""
+    gongsi: ""
   },
   bindNameInput: function(e) {
     this.setData({
@@ -213,6 +196,7 @@ Page({
   formLogin: function(e) {
     login(this)
   },
+
   /**
    * 生命周期函数--监听页面加载
    */

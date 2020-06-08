@@ -1,0 +1,121 @@
+/*通用结构  */
+
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.up {
+  display: flex;
+  background-color: #bfefff;
+  top: 0px;
+  position: sticky;
+  height: 80rpx;
+  z-index: 1;
+  text-align: center;
+}
+
+.down {
+  display: flex;
+  background-color: #bfefff;
+  top: 0px;
+  position: sticky;
+  height: 80rpx;
+  z-index: 1;
+  text-align: center;
+}
+
+.table {
+  display: inline-flex;
+  flex-direction: column;
+  border-bottom: 0;
+  top: 80rpx;
+}
+
+.scrollClass {
+  display: flex;
+  width: auto;
+  white-space: nowrap;
+  margin-top: 0px;
+  height: 80%;
+  background-color: white;
+  border: 10rpx solid rgba(218, 217, 217, 1);
+}
+
+/*头部设置flex并吸顶，因为是改成纵向渲染所以不会有很大影响，并且可以实现标题和列表同步*/
+
+.table_header {
+  display: inline-flex;
+  position: sticky;
+  top: 0rpx;
+  z-index: 1;
+}
+
+.th {
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 90rpx;
+  background: rgba(241, 252, 255, 1);
+  border-right: 1rpx solid rgba(218, 217, 217, 1);
+  border-bottom: 1rpx solid rgba(218, 217, 217, 1);
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.cell_label {
+  font-size: 26rpx;
+  color: rgba(74, 74, 74, 1);
+}
+
+.cell_date_label {
+  font-size: 20rpx;
+  color: rgba(74, 74, 74, 1);
+}
+
+.table_main {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.right-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.td {
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  /* height: 90rpx; */
+  background: white;
+  justify-content: center;
+  align-items: center;
+  border: 1rpx solid rgba(218, 217, 217, 1);
+  border-top: 0;
+  border-left: 0;
+}
+
+.table_Text_class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60rpx;
+  font-size: 30rpx;
+  color: rgba(55, 134, 244, 1);
+  width: 100%;
+  word-break: normal;
+  border-bottom: 1rpx solid rgba(218, 217, 217, 1);
+}
+
+.table_Text_last_class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60rpx;
+  font-size: 30rpx;
+  color: rgba(55, 134, 244, 1);
+  width: 100%;
+  word-break: normal;
+}

@@ -1,0 +1,157 @@
+<!-- 部门详情表 -->
+<view style="height:45rpx"></view>
+
+<!--单选查询蒙版部分-->
+<view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtap='maskWindowBgClick' catchtouchmove='move'>
+  <view class='maskWindowContent' catchtap='clickTap'>
+    <view class="maskWindowTitleText">
+      <icon type="search" size='13' color='#999'></icon>
+      <text> 请选择查询项目(单选)</text>
+    </view>
+    <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index%2===0}}'>
+      <view class="maskWindowText {{index == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index}}'>{{maskWindowList[index]}}</view>
+      <view class="maskWindowText {{index + 1 == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index+1}}'>{{maskWindowList[index+1]}}</view>
+      <!--条件查询结果显示区域！-->
+
+    </view>
+    <view style="height:30rpx"></view>
+    <view class='maskWindowInputView'>
+      <input class='maskWindowInput' maxlength='100' placeholder='请输入查询内容' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput'></input>
+    </view>
+    <view class='maskWindowBtnView'>
+      <view class='maskWindowBtn' hover-class="btn-hover" catchtap='maskWindowCancel' style="background: #ededed;color: #999 !important;">取消</view>
+      <view style="width:28%"></view>
+      <view class='maskWindowBtn' hover-class="btn-hover" bindtap="maskWindowOk" form-type="submit">确定</view>
+      <view style="width:2%"></view>
+    </view>
+  </view>
+</view>
+
+<!--可输入遮罩层-->
+<tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
+  <view bindsubmit="edit_cell" style="text-align: center;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
+    <form bindsubmit="edit_cell">
+      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
+      <button form-type="submit" bindtap="hide9"  bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
+    </form>
+  </view>
+</tui-modal>
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <view class='table_header'>
+      <block wx:for="{{title}}" wx:key="key">
+        <view class="th {{(item.kaoqinjilu == '身份证号码')?'change':''||(item.kaoqinjilu == '银行账号')?'change':''||(item.kaoqinjilu == '序号')?'tap_120':''}}" data-kaoqinjilu='{{item.kaoqinjilu}}'>
+          <view class="cell_label centerclass">
+            <text style="font-size:; font-weight:bold;">{{item.kaoqinjilu}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+
+    <!--内容纵向渲染 -->
+    <block wx:for="{{list}}" wx:key="key" wx:for-index='idx'>
+      <view class='table_main'>
+        <!--序号 -->
+        <view class='td' style='width:120rpx;background-color:white;'>
+          <view class="cell_label centerclass" bindlongtap="click_delete" data-moth='{{item.D}}' data-name="{{item.name}}" data-doinb='name'>{{idx+1}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.name}}" data-doinb='name'>{{item.name}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.C}}" data-doinb='C'>{{item.C}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.D}}" data-doinb='D'>{{item.D}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.E}}" data-doinb='E'>{{item.E}}</view>
+        </view>
+
+        <view class='td' >
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.F}}" data-doinb='F'>{{item.F}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.G}}" data-doinb='G'>{{item.G}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.H}}" data-doinb='H'>{{item.H}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.I}}" data-doinb='I'>{{item.I}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.J}}" data-doinb='J'>{{item.J}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-x="{{item.K}}" data-doinb='K'>{{item.K}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+</scroll-view>
+<!--操作栏-->
+
+<view style="height:20rpx;"></view>
+
+<!--底部操作区-->
+<view class="down">
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <view style="width:5%"></view>
+    <button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view style="height:20rpx"></view>
+
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="leftDrawer">效率
+    </button>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="searchBtn">查找</button>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="tianjia">添加</button>
+    <view style="width:5%"></view>
+  </view>
+</view>
+
+<!--左抽屉-->
+<drawer mode="left" visible="{{leftDrawer}}" bind:close="closeDrawer" data-mode="left">
+  <view class="d-container">
+    <view>
+      <text style="font-size:26rpx">您的权限：</text>
+      <text style="font-size:34rpx">管理员</text>
+    </view>
+    <view style="height:40rpx"></view>
+    <button class="btn-primary-back" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">点击返回</button>
+    <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
+    <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能B</button>
+    <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能C</button>
+    <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">打印当前页</button>
+    <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能E</button>
+  </view>
+</drawer>

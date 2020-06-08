@@ -1,0 +1,17 @@
+{
+  "name": "sqlServer_117",
+  "version": "1.0.0",
+  "description": "none",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mssql": "^6.2.0",
+    "mssql2": "^3.3.1",
+    "wx-server-sdk": "^1.8.3"
+  }
+}

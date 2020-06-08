@@ -4,7 +4,6 @@
   width: 100%;
 }
 .top{
-  height: 15%;
   width: 100%;
   text-align:center;
   font-size: 30px;
@@ -14,9 +13,11 @@
   height: 150rpx;
   width: 150rpx;
   margin-bottom: 20rpx;
+  size:24;
 }
 .click{
   text-align:center;
+  height: auto;
 }
 .fon-30{
   margin-top:-20px;

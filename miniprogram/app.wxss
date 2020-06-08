@@ -1,22 +1,26 @@
+/*原作者进销存的样式*/
+
 /**app.wxss**/
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-} 
+}
 
 button {
   background: initial;
 }
 
-button:focus{
+button:focus {
   outline: 0;
 }
 
-button::after{
+button::after {
   border: none;
 }
+
 /**app.wxss**/
 @import "./style/position.wxss";
 @import "./style/image.wxss";
@@ -57,7 +61,7 @@ button::after{
   background-color: #b8b6b6;
   position: fixed;
   width: 100%;
- height: 65%
+  height: 65%;
 }
 
 /* 图*/
@@ -78,27 +82,30 @@ button::after{
   background-color: #fff;
   margin: 1% 1% 1% 1%;
   width: 23%;
- font-size: 50px;
+  font-size: 50px;
   border-radius: 5px;
 }
+
 .menu-item11 {
   text-align: center;
- align-items: center;
+  align-items: center;
   background-color: #fff;
   margin: 1% 1% 1% 1%;
   width: 23%;
- font-size: 25px;
+  font-size: 25px;
   border-radius: 5px;
 }
+
 .menu-item12 {
   text-align: center;
- align-items: center;
+  align-items: center;
   background-color: #fff;
   margin: 1% 1% 1% 1%;
   width: 16%;
- font-size: 25px;
+  font-size: 25px;
   border-radius: 5px;
 }
+
 .img {
   width: 23px;
   height: 23px;
@@ -682,73 +689,348 @@ button::after{
   height: 40rpx;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-view {
-  
-	box-sizing: border-box;
+.backimage {
+  background-color: #075c23;
+  min-height: 100%;
+  background-size: 100% 100%;
 }
 
-input {
-	padding-left: 15rpx;
-	font-size: 26rpx;
+.qian {
+  width: 10px;
+  height: 10px;
 }
-.backimage{
- background-color: #075c23;
-  min-height:100%;
-   background-size: 100% 100%;
-}
-.qian{
-width: 10px;
-height: 10px;
 
-}
-.jiage{
-height: 100%;
-width: 60%;
-display: flex;
-justify-content: left;
-align-items : center;
-background-color: #FFE4C4;
-color: red;
-float: left
-}
-.queren{
-height: 100%;
-width: 40%;
-display:flex;
-justify-content:center;
-align-items:center;
-color: rgb(255, 255, 255);
-background-color: rgb(104, 140, 248);
-float: right 
-}
-.tabber{
+.jiage {
   height: 100%;
-  width: 100%
+  width: 60%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background-color: #ffe4c4;
+  color: red;
+  float: left;
 }
+
+.queren {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(104, 140, 248);
+  float: right;
+}
+
+.tabber {
+  height: 100%;
+  width: 100%;
+}
+
 .tab-bar {
   display: flex;
   flex-wrap: wrap;
-  background-color: #ffffff;
+  background-color: #fff;
   position: fixed;
   width: 100%;
- height: 10%
+  height: 10%;
 }
-.jinhuo{
+
+.jinhuo {
   display: flex;
-   flex-direction: column
+  flex-direction: column;
 }
+
+/*********************---以下是新增样式---*******************************************/
+
+/*定义在 全局的一个导航条隐藏代码*/
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  color:rgba(218, 217, 217, 1);
+}
+
+/*定义垂直和水平轨道交汇处的样式*/
+::-webkit-scrollbar-corner {
+  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color:#f2f2f2;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color:#f2f2f2;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #5677fc;
+}
+
+/*
+全局按钮样式
+作者：117
+修改时间: 2020/5/15
+*/
+
+.btn_yearmonth {
+  width: 100%;
+  height: auto;
+  font-size: 30rpx;
+  color: #473c8b;
+  background-color: white;
+  border-bottom: 1rpx solid rgba(218, 217, 217, 1);
+}
+
+.btn_yearmonth-hover {
+  color: #333;
+  background: #96cdcd;
+}
+
+.btn-primary-back {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: #fff;
+  font-size: 36rpx;
+  color: #999 !important;
+  border: 1px solid lightgray;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: #4876ff;
+  color: #fff;
+  font-size: 36rpx;
+  border: 1rpx solid rgba(218, 217, 217, 1);
+}
+
+.btn-hover {
+  color: #333;
+  background: #96cdcd;
+}
+
+.btn-gray {
+  background: #ededed;
+  color: #999 !important;
+}
+
+.btn-gray-hover {
+  background: #d5d5d5 !important;
+  color: #898989;
+}
+
+.btn-white {
+  background: #fff;
+  color: #333 !important;
+}
+
+.pageButton {
+  height: auto;
+  font-size: 32rpx; 
+  color: #473c8b;
+  width: 70%;
+  background-color: white;
+  border: 1rpx solid rgba(218, 217, 217, 1);
+}
+
+.pageButton-hover {
+  color: #333;
+  background: #96cdcd;
+}
+
+.pageButton_page-hover {
+  color: #333;
+  background: #96cdcd;
+}
+
+.pageButton_page {
+  height: auto;
+  font-size: 32rpx;
+  color: #473c8b;
+  width: 35%;
+  background-color: white;
+  border: 1rpx solid rgba(218, 217, 217, 1);
+}
+
+/**app.wxss**/
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+/* maskwindow/maskwindow.wxss */
+
+/*作者：117*/
+
+.maskWindow {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+
+.maskWindowContent {
+  padding: 20rpx 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+}
+
+.maskWindowTitleText {
+  padding: 10rpx 20rpx;
+  margin: 10rpx;
+  font-size: 16px;
+  width: 80%;
+}
+
+.maskWindowList {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  color: #222;
+}
+
+.maskWindowText {
+  padding: 10rpx 20rpx;
+  margin: 8rpx;
+  width: 33.33%;
+  font-size: 14px;
+  border-radius: 10rpx;
+}
+
+.maskWindowText_selected {
+  border: 1px solid #4876ff;
+  color: #fff;
+  background-color: #4876ff;
+}
+
+.maskWindowText_unselected {
+  border: 1px solid lightgray;
+}
+
+.maskWindowInputView {
+  width: 80%;
+}
+
+.maskWindowInput {
+  margin: 15rpx 0;
+  padding: 10rpx 20rpx;
+  font-size: 14px;
+  border: 1px solid lightgray;
+  border-radius: 10rpx;
+  color: #473c8b;
+}
+
+.maskWindowBtnView {
+  width: 80%;
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  color: #473c8b;
+}
+
+.maskWindowBtn {
+  padding: 10rpx 50rpx;
+  margin: 20rpx;
+  font-size: 14px;
+  border-radius: 10rpx;
+  color: #fff;
+  border: 1px solid lightgray;
+  background-color: #4876ff;
+}
+
+
+
+/*下拉框用到的css  */
+.select-box {
+  position: relative;
+  width: 100%;
+  font-size: 30rpx;
+}
+
+.select-current {
+  position: relative;
+  width: 100%;
+  padding: 0 10rpx;
+  line-height: 70rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+}
+
+.select-current::after {
+  position: absolute;
+  display: block;
+  right: 16rpx;
+  top: 30rpx;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 10rpx solid transparent;
+  border-top: 10rpx solid #999;
+}
+
+.current-name {
+  display: block;
+  width: 85%;
+  height: 100%;
+  word-wrap: normal;
+  overflow: hidden;
+}
+
+.option-list {
+  position: absolute;
+  left: 0;
+  top: 76rpx;
+  width: 100%;
+  padding: 12rpx 20rpx 10rpx 20rpx;
+  border-radius: 6rpx;
+  box-sizing: border-box;
+  z-index: 99;
+  box-shadow: 0rpx 0rpx 1rpx 1rpx rgba(0, 0, 0, 0.2) inset;
+  background-color: #fff;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  line-height: 70rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.option:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+
+
+
+
+
+
+

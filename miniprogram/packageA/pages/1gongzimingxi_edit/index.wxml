@@ -1,0 +1,334 @@
+<view class="container">
+	<form bindsubmit="formSubmit" bindreset="formReset">
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 姓名：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="B" placeholder="请输入姓名" maxlength="50" type="text" value="{{list[0].B}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 部门：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="C" placeholder="请输入部门名" maxlength="50" type="text" value="{{list[0].C}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 职务：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="D" placeholder="请输入职务名" maxlength="50" type="text" value="{{list[0].D}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 身份证号码：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="E" placeholder="请输入身份证号码" maxlength="50" type="text" value="{{list[0].E}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 入职时间：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="F" placeholder="请输入入职时间" maxlength="50" type="text" value="{{list[0].F}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 基本工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="G" placeholder="请输入" maxlength="50" type="text" value="{{list[0].G}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 效绩工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="H" placeholder="请输入" maxlength="50" type="text" value="{{list[0].H}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 岗位工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="I" placeholder="请输入" maxlength="50" type="text" value="{{list[0].I}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 当月合计工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="J" placeholder="请输入" maxlength="50" type="text" value="{{list[0].J}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 跨度工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="K" placeholder="请输入" maxlength="50" type="text" value="{{list[0].B}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 职称津贴：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="L" placeholder="请输入" maxlength="50" type="text" value="{{list[0].B}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 月出勤天数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="M" placeholder="请输入" maxlength="50" type="text" value="{{list[0].B}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 加班时间：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="N" placeholder="请输入" maxlength="50" type="text" value="{{list[0].B}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 加班费：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="O" placeholder="请输入" maxlength="50" type="text" value="{{list[0].O}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 全勤应发：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="P" placeholder="请输入" maxlength="50" type="text" value="{{list[0].P}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 缺勤天数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="Q" placeholder="请输入" maxlength="50" type="text" value="{{list[0].Q}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 缺勤扣款：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="R" placeholder="请输入" maxlength="50" type="text" value="{{list[0].R}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 迟到天数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="S" placeholder="请输入" maxlength="50" type="text" value="{{list[0].S}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 迟到扣款：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="T" placeholder="请输入" maxlength="50" type="text" value="{{list[0].T}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 应发工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="U" placeholder="请输入" maxlength="50" type="text" value="{{list[0].U}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 社保基数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="V" placeholder="请输入" maxlength="50" type="text" value="{{list[0].V}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 医疗基数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="W" placeholder="请输入" maxlength="50" type="text" value="{{list[0].W}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 公积金基数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="X" placeholder="请输入" maxlength="50" type="text" value="{{list[0].X}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 年基金基数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="Y" placeholder="请输入" maxlength="50" type="text" value="{{list[0].Y}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业养老：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="Z" placeholder="请输入" maxlength="50" type="text" value="{{list[0].Z}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业失业：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AA" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AA}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业医疗：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AB" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AB}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业工伤：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AC" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AC}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业生育：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AD" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AD}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业公积金：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AE" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AE}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业年金：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AF" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AF}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 滞纳金：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AG" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AG}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 利息：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AH" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AH}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 企业小计：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AI" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AI}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 个人养老：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AJ" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AJ}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 个人失业：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AK" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AK}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 个人医疗：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AL" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AL}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 大额医疗：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AM" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AM}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 个人公积金：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AN" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AN}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 个人年金4%：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AO" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AO}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 滞纳金：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AP" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AP}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 利息：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AQ" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AQ}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 个人小计：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AR" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AR}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 税前工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="ASA" placeholder="请输入" maxlength="50" type="text" value="{{list[0].ASA}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 应税工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="ATA" placeholder="请输入" maxlength="50" type="text" value="{{list[0].ATA}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 税率：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AU" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AU}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 扣除数：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AV" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AV}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 代扣个人所得税：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AW" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AW}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 1%年金：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AX" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AX}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 实发工资：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AY" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AY}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 验算公式：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="AZ" placeholder="请输入" maxlength="50" type="text" value="{{list[0].AZ}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 银行卡号：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="BA" placeholder="请输入银行卡号" maxlength="50" type="text" value="{{list[0].BA}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 调薪时间：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="BB" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BB}}" />
+			</view>
+		</tui-list-cell>
+		<tui-list-cell hover="{{false}}">
+			<view class="tui-line-cell">
+				<view class="tui-title">▹ 录入时间：</view>
+				<input placeholder-class="phcolor" class="tui-input" name="BC" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BC}}" />
+			</view>
+		</tui-list-cell>
+		<view class="tui-tips">出现问题？请联系我们</view>
+
+		<view class="tui-btn-box">
+			<button class="btn-primary" hover-class="btn-hover" formType="submit">提交数据</button>
+			<button class="btn-primary btn-gray" hover-class="btn-gray-hover" formType="reset">重置输入</button>
+		</view>
+	</form>
+</view>

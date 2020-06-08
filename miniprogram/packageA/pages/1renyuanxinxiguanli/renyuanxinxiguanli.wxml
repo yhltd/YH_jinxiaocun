@@ -1,0 +1,107 @@
+<!-- 部门详情表 -->
+<view style="height:45rpx"></view>
+
+<!--可输入遮罩层-->
+<tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
+	<view bindsubmit="edit_cell" style="text-align: center;">
+		<view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
+		<form bindsubmit="edit_cell">
+			<input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
+			<button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
+		</form>
+	</view>
+</tui-modal>
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+	<view class='table' style="width:100%;display:flex;align-items: center;justify-content: center;">
+		<view class='table_header'>
+			<block wx:for="{{title}}" wx:key="">
+				<view class="th {{(item.renyuanxinxiguanli == '编号')?'tap_120':''||(item.renyuanxinxiguanli == '操作栏')?'change_x':''}}" data-renyuanxinxiguanli='{{item.renyuanxinxiguanli}}'>
+					<view class="cell_label centerclass">
+						<text style="font-size:; font-weight:bold;">{{item.renyuanxinxiguanli}}</text>
+					</view>
+				</view>
+			</block>
+		</view>
+
+
+		<!--内容纵向渲染 -->
+		<block wx:for="{{list}}">
+			<view class='table_main'>
+				<!--序号 -->
+				<view class='td' style='width:120rpx;background-color:white;'>
+					<view class="cell_label centerclass">{{item.id}}</view>
+				</view>
+				<view class='td'>
+					<view class="cell_label centerclass">{{item.B}}</view>
+				</view>
+				<view class='td'>
+					<view class="cell_label centerclass">{{item.C}}</view>
+				</view>
+				<view class='td'>
+					<view class="cell_label centerclass">{{item.D}}</view>
+				</view>
+				<view class="td" style="background-color:white;width:190rpx;display:inline-flex; flex-direction:row;">
+					<view><button class='del' data-id='{{item.id}}' bindtap='onDel'>删除</button></view>
+					<view style="width:10rpx"></view>
+					<view><button class='update' data-id='{{item.id}}' bindtap='onUpdate'>修改</button></view>
+
+
+				</view>
+
+			</view>
+		</block>
+	</view>
+
+</scroll-view>
+
+<!--操作栏-->
+
+<view style="height:20rpx;"></view>
+
+<!--底部操作区-->
+<view class="down">
+	<view style="display: inline-flex; flex-direction: row;">
+		<view style="width:5%"></view>
+		<button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+		<view style="width:5%"></view>
+	<button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
+		<view style="width:5%"></view>
+		<button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+		<view style="width:5%"></view>
+	</view>
+
+	<view style="height:20rpx"></view>
+
+	<view style="display: inline-flex; flex-direction: row;">
+		<view style="width:5%"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="leftDrawer">更多功能
+		</button>
+		<view style="width:10%"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="">查找</button>
+		<view style="width:5%"></view>
+	</view>
+
+</view>
+<!--左抽屉-->
+<drawer mode="left" visible="{{leftDrawer}}" bind:close="closeDrawer" data-mode="left">
+	<view class="d-container">
+		<view>
+			<text style="font-size:26rpx">您的权限：</text>
+			<text style="font-size:34rpx">管理员</text>
+		</view>
+		<view style="height:40rpx"></view>
+		<button class="btn-primary-back" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">点击返回</button>
+		<view style="height:20rpx"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
+		<view style="height:20rpx"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能B</button>
+		<view style="height:20rpx"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能C</button>
+		<view style="height:20rpx"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">打印当前页</button>
+		<view style="height:20rpx"></view>
+		<button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能E</button>
+	</view>
+</drawer>

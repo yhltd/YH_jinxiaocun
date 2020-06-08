@@ -9,7 +9,7 @@ exports.main = async (event) => {
     password: event.password,
     server: event.server,
     database: event.database,
-    port: event.port * 1, //用数字相乘强制转换
+    port: event.port , //用数字相乘强制转换
     options: {
       encrypt: true
     },

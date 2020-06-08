@@ -9,6 +9,17 @@ function formatTime(date) {
 
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
+
+function newTime(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+  var hour = date.getHours()
+
+
+  return [year].map(formatNumber) + "年" + [month].map(formatNumber) + "月" + [day].map(formatNumber) + "日" + [hour].map(formatNumber) + '时'
+}
+
 function formatTimeblank(date) {
   var year = date.getFullYear()
   var month = date.getMonth() + 1
@@ -27,5 +38,6 @@ function formatNumber(n) {
 
 module.exports = {
   formatTime: formatTime,
-  formatTimeblank: formatTimeblank
+  formatTimeblank: formatTimeblank,
+  newTime:newTime
 }

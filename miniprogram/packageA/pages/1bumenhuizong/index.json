@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "drawer": "../../components/drawer/drawer",
+    "tui-modal": "../../../components/modal/modal"
+  }
+}

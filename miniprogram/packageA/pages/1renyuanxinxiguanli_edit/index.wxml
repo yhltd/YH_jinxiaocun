@@ -1,0 +1,77 @@
+<view class="container">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 姓名：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="name" placeholder="请输入姓名" maxlength="50" type="text" value="{{list[0].B}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 部门：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="department" placeholder="请输入部门名" maxlength="50" type="text" value="{{list[0].C}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 职务：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="job" placeholder="请输入职务名" maxlength="50" type="text" value="{{list[0].D}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 身份证号码：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="idcard" placeholder="请输入身份证号码" maxlength="50" type="text" value="{{list[0].E}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 基本工资：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="money" placeholder="请输入基本工资" maxlength="50" type="text" value="{{list[0].F}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 银行卡号：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="card" placeholder="请输入银行卡号" maxlength="50" type="text" value="{{list[0].G}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 入职时间：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="date" placeholder="请输入入职时间" maxlength="50" type="text" value="{{list[0].H}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 工龄：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="age" placeholder="请输入工龄" maxlength="50" type="number" value="{{list[0].K}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 账号：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="account" placeholder="请输入账号" maxlength="50" type="text" value="{{list[0].I}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 密码：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="pwd" placeholder="请输入密码" maxlength="50" type="text" value="{{list[0].J}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 确认密码：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="pwd2" placeholder="请输入确认密码" maxlength="50" type="text" value="{{list[0].J}}" />
+      </view>
+    </tui-list-cell>
+    <view class="tui-tips">出现问题？请联系我们</view>
+
+    <view class="tui-btn-box">
+      <button class="btn-primary" hover-class="btn-hover" formType="submit">提交数据</button>
+      <button class="btn-primary btn-gray" hover-class="btn-gray-hover" formType="reset">重置输入</button>
+    </view>
+  </form>
+</view>
