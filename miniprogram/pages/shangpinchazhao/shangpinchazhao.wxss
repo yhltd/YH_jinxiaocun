@@ -1,90 +1,50 @@
-page{
-  background-color: #F0F8FF;
-}
-.shangpin{display: flex;
+/* pages/xinjianshangpin/xinjianshangpin.wxss */
+.xinjianshangpin{
 width: 100%;
-background-color: white;
-border-bottom: 0.5px solid #5B5B5B;
-margin-bottom: 7px;
-padding: 8px;
-
-}
-.shangpin-jin{
-  display: flex;
-  position: absolute;
-  left: 55%;
-margin-top: -17%;
-  font-size: 62%;
-
-
-}
-.main{
-  position: absolute;
-width: 100%;
-top: 6%;
-
-
-}
-.shangpin-text{
-  width: 28%;
- font-size: 65%;
-
-}
-.shangpin-img{
-    display: flex;
-    border: 1px solid black;
-    width: 18%;
-    height: 118rpx;
-    margin-top: 5%;
-margin-right: 6%;
-
-}
-.pm{
-/* background-color: rgb(26,26,26,0.4); */
+height: 70px;
 display: flex;
-width: 72%;
-color: white;
-border: 1px solid rgb(30,144,255);
-border-radius: 18px;
-margin-left: 14%;
-height: 55rpx;
-
-
-
-
+justify-content: center;
+align-items: center;
+background-color: #F0F8FF;
+color: #1c9ef1
 }
-.red {
-  color:#EE4000;
-}
-.pm-text{
-  position: absolute;
-color: white;
-top: 2%;
-font-size: 62%;
-left: 46%;
+.xinjian{
+  width: 100%;
+  height: 40px;
+  padding-left: 5%;
 
+display: flex;
 
+align-items: center;
 }
-
-.bk_ss{
-   border: 1px solid  #1c60a3;border-radius: 29rpx; 
-  width: 55%;
-  position: absolute;
-  left: 21.3%;
-  top: 0.5%;
-  color: #f8f8f8;
-  background-color: #1c60a3;
+.querenxinjian{
+background-color:  #1c9ef1;
+color: #ffffff;
+ width: 80%;
+  margin-top: 20rpx;
+  border-radius: 98rpx; 
 }
-.Hs{
-  color: #666666;
+.divline{
+    background:#e0e3Da;
+  width:100%;
+  height: 5rpx
+}
+.xinjianneirong{
+  display: flex;
+flex-direction: column
+}
+.shangchuan{
+background-color:  #1c9ef1;
+color: #ffffff;
+ width: 50%;
   
+  border-radius: 68rpx;
 }
-.header{
- background-color:  rgb(30,144,255);
- padding: 1%;
 
-}
-.shangpinpm{
-  font-size: 145%;
-
+.xz_tp {
+  height: 120rpx;
+  width: 120rpx;
+  position: absolute;
+  right: 67%;
+  z-index: 9;
 }

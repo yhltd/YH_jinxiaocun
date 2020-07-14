@@ -7,19 +7,22 @@
 <view class="biao_tou">进货方配置</view>
 
 <view class='divline2'></view>
-<view wx:for="{{all}}" wx:key="" wx:for-index='i'  class='jinhuofan' bindtap='jin'data-id="{{all[i].beizhu}}">
-<image class='kh_tx' src='/images/huo_wu.png'   > </image>
-<!-- <view bindtap='jin' data-id="{{all[i].beizhu}}" class="jh_f">序号：{{i+1}}</view> -->
-<view class="yi_kuai" >
+<view wx:for="{{all}}" wx:key="" wx:for-index='i' class='jinhuofan' bindlongpress='shanchu' bindtap='jin' data-id="{{all[i].beizhu}}">
+  <image class='kh_tx' src='/images/huo_wu.png'> </image>
+  <!-- <view bindtap='jin' data-id="{{all[i].beizhu}}" class="jh_f">序号：{{i+1}}</view> -->
+  <view class="yi_kuai">
+    <view class='jinhuo-text'>
+      <text space="ensp">进 货 方：</text>{{all[i].beizhu}}</view>
+    <view class='jinhuo-text'>
+      <text space="ensp">联系方式：</text>{{all[i].lianxifangshi}}</view>
+    <view class='jinhuo-text'>
+      <text space="ensp">地    址：</text>{{all[i].lianxidizhi}}</view>
+  </view>
 
-
-<view class='jinhuo-text'><text space="ensp">进 货 方：</text>{{all[i].beizhu}}</view>
-<view class='jinhuo-text'><text space="ensp">联系方式：</text>{{all[i].lianxifangshi}}</view>
-<view class='jinhuo-text'><text space="ensp">地    址：</text>{{all[i].lianxidizhi}}</view>
+  <view class='divline2'></view>
 </view>
 
-<view class='divline2'></view>
-</view>
 
-
-<button class="tianjia" bindtap='tianjia'><image class='jiahao1' src='/images/jiahao1.png' >    </image></button>
+<button class="tianjia" bindtap='tianjia'>
+  <image class='jiahao1' src='/images/jiahao1.png'> </image>
+</button>

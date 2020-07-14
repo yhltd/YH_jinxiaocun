@@ -1,12 +1,12 @@
 // pages/shangpinxuanze/shangpinxuanze.js
-var jg 
-var sl 
-var dtid 
+var jg
+var sl
+var dtid
 var cpid
 var cpjg = []
 var cpsl = []
 var szZhi = []
-var zongjia 
+var zongjia
 var all = []
 var app = getApp()
 Page({
@@ -15,24 +15,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-    jghide:"none",
-    sl:[],
-    jg:[],
-    backhidden:true,
-    rkck:"选择商品"
+    jghide: "none",
+    sl: [],
+    jg: [],
+    backhidden: true,
+    rkck: "选择商品"
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
-    var that=this
+  onLoad: function() {
+    var that = this
     that.setData({
       rkSum: 0,
       sl: [],
       jg: []
     })
-     all = []
+    all = []
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
     const db = wx.cloud.database();
@@ -46,10 +46,10 @@ Page({
         console.log(res.result)
         that.setData({
           all: res.result,
-
         })
         szZhi = res.result
-      }, fail(res) {
+      },
+      fail(res) {
         console.log("失败", res)
 
       }
@@ -64,7 +64,7 @@ Page({
     //     console.log(res.data)
     //     that.setData({
     //        all:res.data,
-          
+
     //                 })
     //     szZhi=res.data
     //   }
@@ -73,8 +73,8 @@ Page({
   },
 
 
-  xixi: function (e) {
-    if(e.detail.value==""){
+  xixi: function(e) {
+    if (e.detail.value == "") {
       all = []
       szZhi = []
       var that = this
@@ -100,7 +100,8 @@ Page({
 
           })
           szZhi = res.result
-        }, fail(res) {
+        },
+        fail(res) {
           console.log("失败", res)
 
         }
@@ -108,7 +109,7 @@ Page({
       // db.collection('Yh_JinXiaoCun_chanpin').where({
       //   finduser: finduser,
       //   gongsi: gongsi,
-        
+
       // })
       //   .get({
       //     success: res => {
@@ -122,7 +123,7 @@ Page({
       //     }
       //   })
 
-    }else{
+    } else {
       all = []
       szZhi = []
       var that = this
@@ -138,7 +139,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "' and name='" + e.detail.value+"'"
+          sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
         },
         success(res) {
           console.log("成功", res)
@@ -148,7 +149,8 @@ Page({
 
           })
           szZhi = res.result
-        }, fail(res) {
+        },
+        fail(res) {
           console.log("失败", res)
 
         }
@@ -175,20 +177,20 @@ Page({
       //   })
 
     }
-   
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     var that = this
     that.setData({
       rkSum: 0,
@@ -212,7 +214,8 @@ Page({
 
         })
         szZhi = res.result
-      }, fail(res) {
+      },
+      fail(res) {
         console.log("失败", res)
 
       }
@@ -224,80 +227,87 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
+  onPullDownRefresh: function() {
+    var that = this
+    wx.showToast({
+      title: '刷新中',
+      icon: 'loading',
+      duration: 500
+    })
+    that.onShow()
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  jiahao1:function(){
+  jiahao1: function() {
     wx.navigateTo({
       jghide: true,
       jghide: "none",
-    
-      url: '/pages/xinjianshangpin/xinjianshangpin'
-      
-    })
-  
-  },
-  srJg:function(e){
-    var that=this
-   
-     dtid = e.target.dataset.id
-     console.log(dtid)
-      console.log(cpsl[dtid])
-      that.setData({
-        jghide: "flex",
-        cpid : dtid,
-        cpsl : cpsl,
-        cpjg : cpjg,
-        backhidden:false
-      })
 
-  }, 
-  spClose:function(e){
-      
-      var that = this
-      that.setData({
-        jghide: true,
-        jghide: "none",
-        backhidden: true
-        
-      })
-     
+      url: '/pages/xinjianshangpin/xinjianshangpin'
+
+    })
+
   },
-  cunsl:function(e){
-      sl  =e.detail.value
+  srJg: function(e) {
+    var that = this
+
+    dtid = e.target.dataset.id
+    console.log(dtid)
+    console.log(cpsl[dtid])
+    that.setData({
+      jghide: "flex",
+      cpid: dtid,
+      cpsl: cpsl,
+      cpjg: cpjg,
+      backhidden: false
+    })
+
   },
-  cunjg:function(e){
+  spClose: function(e) {
+
+    var that = this
+    that.setData({
+      jghide: true,
+      jghide: "none",
+      backhidden: true
+
+    })
+
+  },
+  cunsl: function(e) {
+    sl = e.detail.value
+  },
+  cunjg: function(e) {
     jg = e.detail.value
-  }, 
-  tjjg:function(e){
+  },
+  tjjg: function(e) {
     var that = this
     that.setData({
       jghide: true,
@@ -305,67 +315,67 @@ Page({
       backhidden: true
     })
     zongjia = that.data.rkSum
-     if (sl!=null && jg !=null){
+    if (sl != null && jg != null) {
       cpsl[dtid] = sl
       cpjg[dtid] = jg
       zongjia = zongjia + (jg * sl)
-       
-     }
-    
-   
-    for (var  i =0 ;i< cpsl.length;i++){
-      if (cpjg[i] == null){
-          cpjg[i]=""
-          cpsl[i]=""
+
+    }
+
+
+    for (var i = 0; i < cpsl.length; i++) {
+      if (cpjg[i] == null) {
+        cpjg[i] = ""
+        cpsl[i] = ""
       }
     }
     that.setData({
       jghide: "none",
-      cpid:dtid,
-      sl : cpsl,
-      jg:cpjg,
+      cpid: dtid,
+      sl: cpsl,
+      jg: cpjg,
       rkSum: zongjia
     })
-  }, 
-  querenRk:function(){
-      var sli = 0
-      var sl =[]
-      var jg = []
-      var zhi = []
-      for (var i = 0; i < cpsl.length; i++) {
-        if (cpsl[i] != null && cpsl[i]!= "") {
-          sl[sli] = cpsl[i]
-          jg[sli] = cpjg[i]
-          zhi[sli]= szZhi[i]
-          sli = sli+1
-        }
+  },
+  querenRk: function() {
+    var sli = 0
+    var sl = []
+    var jg = []
+    var zhi = []
+    for (var i = 0; i < cpsl.length; i++) {
+      if (cpsl[i] != null && cpsl[i] != "") {
+        sl[sli] = cpsl[i]
+        jg[sli] = cpjg[i]
+        zhi[sli] = szZhi[i]
+        sli = sli + 1
       }
-      console.log(zhi)
-      console.log(sl)
-      console.log(jg)
-    if (zhi == null ) {
-        wx.showToast({
-          title: '数量或价格不能为空',
-          icon: "none",
-          duration: 2000
-        })
-      }else{
-        // var appjson = getApp()
-        // appjson.rkall=zhi
-        // appjson.szsl = sl
-        // appjson.szje = jg
-        // appjson.cpsum = zongjia
+    }
+    console.log(zhi)
+    console.log(sl)
+    console.log(jg)
+    if (zhi == null) {
+      wx.showToast({
+        title: '数量或价格不能为空',
+        icon: "none",
+        duration: 2000
+      })
+    } else {
+      // var appjson = getApp()
+      // appjson.rkall=zhi
+      // appjson.szsl = sl
+      // appjson.szje = jg
+      // appjson.cpsum = zongjia
       wx.setStorageSync('rkall', zhi);
       wx.setStorageSync('szsl', sl);
       wx.setStorageSync('szje', jg);
       wx.setStorageSync('cpsum', zongjia);
       //返回上一页
       wx.navigateBack();
-        cpjg = []
-        cpsl = []
-        
-      }
+      cpjg = []
+      cpsl = []
+
+    }
   }
-       
-  
+
+
 })

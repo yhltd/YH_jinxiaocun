@@ -2,7 +2,7 @@
 var app = getApp()
 var common = require('../../utils/common.js');
 
-var szzhi = []
+var szzhi = [] //
 var szsl = []
 var szje = []
 var khname
@@ -28,10 +28,10 @@ Page({
     hideen1: true,
     hideen2: false,
     pd: 0,
-    sjkj:"",
-    ddh : ""
+    sjkj: "",
+    ddh: ""
   },
-  bindDateChange: function (e) {
+  bindDateChange: function(e) {
     var that = this
     that.setData({
       date: e.detail.value,
@@ -39,71 +39,74 @@ Page({
     })
   },
 
-  ddh_input:function(e){
+  ddh_input: function(e) {
     var that = this
     that.setData({
       ddh: e.detail.value
     })
 
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var all
     var that = this
-   
-    cpxinxi=[]
-    slxinxi=[]
-    jgxinxi=[]
+
+    cpxinxi = []
+    slxinxi = []
+    jgxinxi = []
     // console.log("onload")
-     that.setData({
+    that.setData({
       szzhi: [],
-       szjg: [],
-       szsl: [],
+      szjg: [],
+      szsl: [],
       rkSum: 0,
       rkck: "确认入库",
       hideen1: true,
       hideen2: false,
       pd: 0
     });
-    // var id = null
-    // if (options.id != null) {
-    //   id = options.id
-    // }
-    // console.log(id)
-    // if (id != null) {
-    //   that.setData({
-    //     hideen1: !that.data.hideen1,
-    //     hideen2: !that.data.hideen2,
-    //     all: id
-    //   })
+    var id = null
+    if (options.id != null) {
+      id = options.id
+    }
+    console.log(id)
+    if (id != null) {
+      that.setData({
+        hideen1: !that.data.hideen1,
+        hideen2: !that.data.hideen2,
+        all: id
+      })
 
-    // }
+    }
     if (that.data.pd == 0) {
 
     }
-    var openid=wx.getStorageSync("openid").openid
+    var openid = wx.getStorageSync("openid").openid
     // console.log(openid)
     const db = wx.cloud.database();
-    var finduser =app.globalData.finduser 
+    var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
     console.log(finduser)
     console.log("a")
     wx.cloud.callFunction({
       name: "sqlConnection",
-      data:{
-        sql:"select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi+"'"
+      data: {
+        sql: "select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
       },
       success(res) {
-        console.log("成功", res)
-        that.setData({
-          all: res.result[id][0].beizhu
-        })
-      }, fail(res) {
+        console.log("成功", res.result)
+        console.log(id)
+        if (id != null) {   //如果id不为空则赋值
+          that.setData({
+            all: res.result[id].beizhu
+          })
+        }
+      },
+      fail(res) {
         console.log("失败", res)
-
       }
     });
     // db.collection('Yh_JinXiaoCun_jinhuofang').where({
@@ -135,12 +138,12 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-     var that = this
+  onReady: function() {
+    var that = this
     that.popup = that.selectComponent("#popup");
-  }, 
-  showPopup:function() { 
-    var that = this 
+  },
+  showPopup: function() {
+    var that = this
     that.popup.showPopup();
   },
 
@@ -153,33 +156,33 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     var that = this;
-    var id =wx.getStorageSync("jinhuofang")
-  
+    var id = wx.getStorageSync("jinhuofang")
+
     console.log(id)
-     if(id!=""){
+    if (id != "") {
       that.setData({
-        hideen1: !that.data.hideen1,
-        hideen2: !that.data.hideen2,
+        hideen1: false,
+        hideen2: true,
         all: id
       })
- }
-  
-   
+    }
+
+
     for (var i = 0; i < that.data.szzhi.length; i++) {
       if (that.data.szzhi[i] != null) {
         cpxinxi[i] = that.data.szzhi[i]
         slxinxi[i] = that.data.szsl[i]
         jgxinxi[i] = that.data.szje[i]
-        
+
       }
 
     }
-    
+
     if (wx.getStorageSync("khpd") != "1") {
       var rk = that.data.rkSum
-        if (wx.getStorageSync("rkall") != null) {
+      if (wx.getStorageSync("rkall") != null) {
         rk = rk + Number(wx.getStorageSync("cpsum"))
         szzhi = wx.getStorageSync("rkall")
         var sl = wx.getStorageSync("szsl")
@@ -193,7 +196,7 @@ Page({
             cpxinxi[i] = szzhi[fuzhii]
             slxinxi[i] = sl[fuzhii]
             jgxinxi[i] = je[fuzhii]
-            fuzhii ++;
+            fuzhii++;
           }
         }
 
@@ -227,123 +230,143 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
+  onPullDownRefresh: function() {
+    var that = this
+    wx.showToast({
+      title: '刷新中',
+      icon: 'loading',
+      duration: 500
+    })
+    that.onShow()
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
 
-  xuanshangpin: function () {
+  xuanshangpin: function() {
 
     wx.navigateTo({
       url: '/pages/shangpinxuanze/shangpinxuanze',
     })
   },
 
-  querenRk: function () {
+  querenRk: function() {
     var that = this
-  
-    if (that.data.sjkj == ""){
+
+    if (that.data.sjkj == "") {
       console.log(that.data.ddh)
       wx.showModal({
         title: '提示',
         content: '请选择入库时间',
       })
-     
-    }else{  
-      if (that.data.ddh == "") {
-        console.log(that.data.ddh)
+
+    } else {
+      if (that.data.all == undefined) { //2020/7/2
         wx.showModal({
           title: '提示',
-          content: '请输入订单号',
+          content: '请选择进货方',
         })
-      }
-      else {   
-        var today = that.data.sjkj;
-        var ddh = that.data.ddh;
-        const db = wx.cloud.database();
-        pd = 0
-        var finduser = app.globalData.finduser
-        var gongsi = app.globalData.gongsi
-        console.log(finduser)
-        for (var i = 0; i < cpxinxi.length; i++) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i]+ "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh+"')"
-              // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
-            },
-            success(res) {
-              console.log("成功", res)
-              // that.setData({
-              //   all: res.result[id][0].beizhu
+      } else {
+        if (that.data.ddh == "") {
+          console.log(that.data.ddh)
+          wx.showModal({
+            title: '提示',
+            content: '请输入订单号',
+          })
+        } else {
+          if (cpxinxi.length == 0) {
+            wx.showModal({
+              title: '提示',
+              content: '请选择入库商品',
+            })
+          } else {
+
+            var today = that.data.sjkj;
+            var ddh = that.data.ddh;
+            const db = wx.cloud.database();
+            pd = 0
+            var finduser = app.globalData.finduser
+            var gongsi = app.globalData.gongsi
+            console.log(finduser)
+            for (var i = 0; i < cpxinxi.length; i++) {
+              wx.cloud.callFunction({
+                name: "sqlConnection",
+                data: {
+                  sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "')"
+                  // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
+                },
+                success(res) {
+                  console.log("成功", res)
+                  // that.setData({
+                  //   all: res.result[id][0].beizhu
+                  // })
+
+                },
+                fail(res) {
+                  console.log("失败", res)
+
+                }
+              });
+              // db.collection('Yh_JinXiaoCun_mingxi').add({
+              //   data: {
+              //     gongsi: gongsi,
+              //     finduser: finduser,
+              //     jinhuofang: that.data.all,
+              //     shijian: today,
+              //     cpid: cpxinxi[i]._id,
+              //     cpname: cpxinxi[i].value0,
+              //     cpsj: cpxinxi[i].value1,
+              //     cpjj: cpxinxi[i].value2,
+              //     cplb: cpxinxi[i].value3,
+              //     cpsl: slxinxi[i],
+              //     cpjg: jgxinxi[i],
+              //     mxtype: "入库",
+              //     orderid: ddh
+              //   },
+              //   success: res => {
+              //     wx.showToast({
+              //       title: '入库成功',
+              //     })
+              //   }
               // })
-              
-            }, fail(res) {
-              console.log("失败", res)
 
             }
-          });
-          // db.collection('Yh_JinXiaoCun_mingxi').add({
-          //   data: {
-          //     gongsi: gongsi,
-          //     finduser: finduser,
-          //     jinhuofang: that.data.all,
-          //     shijian: today,
-          //     cpid: cpxinxi[i]._id,
-          //     cpname: cpxinxi[i].value0,
-          //     cpsj: cpxinxi[i].value1,
-          //     cpjj: cpxinxi[i].value2,
-          //     cplb: cpxinxi[i].value3,
-          //     cpsl: slxinxi[i],
-          //     cpjg: jgxinxi[i],
-          //     mxtype: "入库",
-          //     orderid: ddh
-          //   },
-          //   success: res => {
-          //     wx.showToast({
-          //       title: '入库成功',
-          //     })
-          //   }
-          // })
-          
+            wx.showToast({
+              title: '入库成功',
+            })
+            that.onLoad()
+          }
         }
-        wx.showToast({
-          title: '入库成功',
-        })
-        that.onLoad()
-
       }
-      
     }
   },
-  xuanzejinhuofang: function () {
+  xuanzejinhuofang: function() {
     wx.navigateTo({
       url: '../Location/Location?jinhuo=1',
     })

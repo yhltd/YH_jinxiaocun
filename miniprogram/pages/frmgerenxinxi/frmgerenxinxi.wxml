@@ -31,7 +31,8 @@
       <icon class="iconfont icon-xiaoxi color5"></icon>
       <text>改密码</text>
     </view>
-    <view bindtap="navgiate" data-page="askList/askList?type=PatClose" data-pro="put">
+    <!--<view bindtap="navgiate" data-page="askList/askList?type=PatClose" data-pro="put">-->
+    <view bindtap="toHome" data-page="askList/askList?type=PatClose" data-pro="put">
       <icon class="iconfont icon-xiaoxi color4"></icon>
       <text>录数据</text>
     </view>

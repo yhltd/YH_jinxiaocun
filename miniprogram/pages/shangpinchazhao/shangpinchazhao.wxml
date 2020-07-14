@@ -1,4 +1,4 @@
-<view class='header'><view class='pm'></view><input class='bk_ss'style="" bindblur='' value=""    bindconfirm="xixi"  placeholder="搜索" placeholder-style="color:#f8f8f8;padding-left:40%;z-index: 0"></input></view>
+<!-- <view class='header'><view class='pm'></view><input class='bk_ss'style="" bindblur='' value=""    bindconfirm="xixi"  placeholder="搜索" placeholder-style="color:#f8f8f8;padding-left:40%;z-index: 0"></input></view>
 <view class=' main'> 
   <view class='list' style="margin-bottom: -2%;" wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
     <view class='shangpin'>
@@ -10,4 +10,37 @@
             <view class='shangpin-input'><text class="Hs">价格：</text>{{szzhi[i].cpjg}}</view>  
         </view>
   </view>
-</view>
+</view> -->
+
+<!--pages/xinjianshangpin/xinjianshangpin.wxml-->
+<view class='xinjianshangpin'> 修改商品信息</view>
+<view style="height:6rpx"></view>
+
+
+<button class='shangchuan' bindtap='chooseImage'>
+  <image class="xz_tp" src="/images/tm_22.png"></image>
+  <text>选择图片</text>
+</button>
+
+<view style="height:30rpx"></view>
+<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item">
+  <view class='xinjian' wx:if="{{item.txet == '商品代码'}}"> {{item.txet}}:
+    <input type="number" data-id="{{item.index}}" bindinput="input" value="{{all[0].sp_dm}}"></input>
+  </view>
+  <view class='xinjian' wx:if="{{item.txet == '商品名称'}}"> {{item.txet}}:
+    <input type="txet" data-id="{{item.index}}" bindinput="input" value="{{all[0].name}}"></input>
+  </view>
+  <view class='xinjian' wx:if="{{item.txet == '单位'}}"> {{item.txet}}:
+    <input type="txet" data-id="{{item.index}}" bindinput="input" value="{{all[0].dan_wei}}"></input>
+  </view>
+  <view class='xinjian' wx:if="{{item.txet == '类别'}}"> {{item.txet}}:
+    <input type="txet" data-id="{{item.index}}" bindinput="input" value="{{all[0].lei_bie}}"></input>
+  </view>
+
+
+  <view class='divline'> </view>
+
+
+</block>
+
+<button class='querenxinjian' bindtap='querenxinjian'>确认修改</button>

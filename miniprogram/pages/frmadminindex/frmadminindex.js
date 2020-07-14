@@ -32,13 +32,13 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     // app.editTabBar1(); //底部栏
     const db = wx.cloud.database();
     var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
+    var gongsi = app.globalData.gongsi
 
-    
+
     db.collection('Yh_JinXiaoCun_user').doc('XJuFPYnnuWjci0CF').get({
       success(res) {
         // res.data 包含该记录的数据
@@ -50,70 +50,87 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     var that = this;
     var listAll = [];
     const db = wx.cloud.database();
-    db.collection('Yh_JinXiaoCun_user').get({
+    // db.collection('Yh_JinXiaoCun_user').get({
+    //   success(res) {
+    //     listAll.push(res.data)
+    //     that.setData({
+    //       listAll: listAll[0]
+    //     },
+    //       console.log(listAll)
+    //     )
+    //   }
+    // })
+    
+    var gongsi = app.globalData.gongsi 
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select * from yh_jinxiaocun_user where gongsi = '" + gongsi + "'"
+      },
       success(res) {
-        listAll.push(res.data)
+        console.log("成功", res)
         that.setData({
-          listAll: listAll[0]
-        },
-          console.log(listAll)
-        )
+          listAll: res.result
+        })
+        console.log(listAll)
+      },
+      fail(res) {
+        console.log("失败", res)
       }
-    })
-
+    });
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
-  searchFocus: function () {
+  searchFocus: function() {
     this.setData({
       searchClass: "inputFocus"
     });
   },
-  searchBlur: function () {
+  searchBlur: function() {
     this.setData({
       searchClass: ""
     })
   },
 
-  searchKey: function (e) {
+  searchKey: function(e) {
 
     // 节流算法
     change && clearTimeout(change);
@@ -140,14 +157,14 @@ Page({
       });
     }, 500);
   },
-  navgiate: function () {
+  navgiate: function() {
 
     wx.navigateTo({
       url: "/pages/frmadminform/frmadminform"
     });
 
   },
-  navgiate2: function () {
+  navgiate2: function() {
     console.log(this.data.select)
     wx.navigateTo({
       url: "/pages/frmedituser/frmedituser?_id=" + this.data.selectnameValue
@@ -155,12 +172,12 @@ Page({
     });
 
   },
-  bindAll: function (e) {
+  bindAll: function(e) {
 
 
   },
   //单选
-  select: function (e) {
+  select: function(e) {
     let selectValue = e.currentTarget.dataset.name
     let index = e.currentTarget.dataset.index;
     let listAll = this.data.listAll
@@ -188,13 +205,13 @@ Page({
     console.log(this.data.shopitem)
 
   },
-  bindshop: function (event) {
+  bindshop: function(event) {
     var classify = event.currentTarget.dataset.classify;
     var that = this;
 
-    console.log(classify)  //输出的结果就是你点击的
+    console.log(classify) //输出的结果就是你点击的
     this.setData({
-      shopitem: classify,  //更新
+      shopitem: classify, //更新
 
 
     })
@@ -203,7 +220,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

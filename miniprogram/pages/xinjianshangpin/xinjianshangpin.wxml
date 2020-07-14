@@ -1,18 +1,23 @@
 <!--pages/xinjianshangpin/xinjianshangpin.wxml-->
 <view class='xinjianshangpin'> 新建商品</view>
-<image class="xz_tp" src="/images/tm_22.png"></image> 
-<button class='shangchuan' bindtap='chooseImage'> 
+<view style="height:6rpx"></view>
 
-选择图片
+
+<button class='shangchuan' bindtap='chooseImage'>
+    <image class="xz_tp" src="/images/tm_22.png"></image>
+  <text>选择图片</text>
 </button>
 
-<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item"  >
-<view  class='xinjian'> {{item.txet}}:
+<view style="height:30rpx"></view>
+<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item">
+  <view class='xinjian' wx:if="{{item.txet == '商品代码'}}"> {{item.txet}}:
+    <input type="number" data-id="{{item.index}}" bindinput="input"></input>
+  </view>
+  <view class='xinjian' wx:else> {{item.txet}}:
+    <input type="txet" data-id="{{item.index}}" bindinput="input"></input>
+  </view>
 
-<input type="number" data-id="{{item.index}}" bindinput="input"></input>
-</view>
-
-<view class='divline'> </view>
+  <view class='divline'> </view>
 
 
 </block>

@@ -6,19 +6,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    szzhi:[]
+    szzhi: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this
-   const db = wx.cloud.database()
-   var app = getApp();
-    var szzhi=null;
+    const db = wx.cloud.database()
+    var app = getApp();
+    var szzhi = null;
     var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
+    var gongsi = app.globalData.gongsi
     // db.collection("Yh_JinXiaoCun_mingxi").where({
     //   finduser: finduser,
     //   gongsi: gongsi
@@ -32,16 +32,16 @@ Page({
 
     wx.cloud.callFunction({
       name: "sqlConnection",
-      data:{
-        sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser+"' and gs_name = '" + gongsi+"'"
+      data: {
+        sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.zh_name='" + finduser + "' and yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
       },
-      success(res) {     
-            that.setData({
-              szzhi: res.result
-    } 
-    )      
+      success(res) {
+        that.setData({
+          szzhi: res.result
+        })
         console.log(that.data.szzhi)
-      }, fail(res) {
+      },
+      fail(res) {
         console.log("失败", res)
 
       }
@@ -57,8 +57,8 @@ Page({
   },
 
 
-  xixi: function (e) {
-    if(e.detail.value==""){
+  xixi: function(e) {
+    if (e.detail.value == "") {
       var that = this
       const db = wx.cloud.database()
       var app = getApp();
@@ -72,10 +72,10 @@ Page({
         success(res) {
           that.setData({
             szzhi: res.result
-          }
-          )
+          })
           console.log(that.data.szzhi)
-        }, fail(res) {
+        },
+        fail(res) {
           console.log("失败", res)
 
         }
@@ -83,7 +83,7 @@ Page({
       // db.collection("Yh_JinXiaoCun_mingxi").where({
       //   finduser: finduser,
       //   gongsi: gongsi,
-      
+
       // }).get({
       //   success: res => {
       //     that.setData({
@@ -92,95 +92,103 @@ Page({
       //   }
       // })
 
-    }else{
- var that = this
-    const db = wx.cloud.database()
-    var app = getApp();
-    var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser + "' and gs_name = '" + gongsi + "',cpname='" + e.detail.value  +"'"
+          sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.zh_name='" + finduser + "' and yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'and yh_jinxiaocun_mingxi.cpname like '%" + e.detail.value + "%'"
         },
         success(res) {
           that.setData({
             szzhi: res.result
-          }
-          )
+          })
           console.log(that.data.szzhi)
-        }, fail(res) {
+        },
+        fail(res) {
           console.log("失败", res)
 
         }
       });
-    // db.collection("Yh_JinXiaoCun_mingxi").where({      
-    //     finduser: finduser,
-    //     gongsi: gongsi,
-    //     cpname: db.RegExp({
-    //       regexp: e.detail.value,    
-    //     options: 'i',   
-    //     })    
-    // }).get({
-    //   success: res => {
-    //     that.setData({
-    //       szzhi: res.data
-    //     })
-    //   }
-    // })
+      // db.collection("Yh_JinXiaoCun_mingxi").where({      
+      //     finduser: finduser,
+      //     gongsi: gongsi,
+      //     cpname: db.RegExp({
+      //       regexp: e.detail.value,    
+      //     options: 'i',   
+      //     })    
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
 
     }
-   
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
+  onPullDownRefresh: function() {
+    var that = this
+    wx.showToast({
+      title: '刷新中',
+      icon: 'loading',
+      duration: 500
+    })
+    that.onLoad()
+    that.onShow()
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  shanchu: function (e) {
+  shanchu: function(e) {
     var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id
@@ -189,12 +197,12 @@ Page({
     wx.showModal({
       title: '提示',
       content: '是否删除？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           wx.cloud.callFunction({
             name: "sqlConnection",
             data: {
-              sql: "DELETE  FROM yh_jinxiaocun_mingxi  where orderid='" + that.data.szzhi[id].orderid+"'"
+              sql: "DELETE  FROM yh_jinxiaocun_mingxi  where orderid='" + that.data.szzhi[id].orderid + "'"
             },
             success(res) {
               // that.setData({
@@ -203,7 +211,8 @@ Page({
               // )
               console.log
               // console.log(that.data.szzhi)
-            }, fail(res) {
+            },
+            fail(res) {
               console.log("失败", res)
 
             }
@@ -224,7 +233,7 @@ Page({
 
 
   },
-  xiugai: function (e) {
+  xiugai: function(e) {
     var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id

@@ -1,27 +1,33 @@
 <!--pages/shangpinxuanze/shangpinxuanze.wxml-->
-<view class="dqy_bj"></view>
-<view class="dq_y">商品查询</view>
 
-<view class = "Mymain">
-    <view class ="list" wx:for="{{all}}" wx:key=""  wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu">  
-        <view class='divline'></view>
-        <view bindtap='srJg' data-id="{{i}}">
-        <view class='shangpin' >
-            <image  src='{{all[i].mark1}}' class='shangpin-image'> </image>
-            <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text> -->
-             <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}} </text>
-        </view> 
-
-
-        <view class='shangpin-jin2'  data-id="{{i}}" >
-<view class='shangpin-jin'   >
-         <text class="sp_dm" data-id="{{i}}" >商品代码:{{all[i].sp_dm}}</text>
-          
-
-        </view>
-        </view>
-        </view>
-    </view>
+<view class='header'>
+  <view class="dq_y">搜索</view>
+  <view class='pm'></view>
+  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
 </view>
- 
 
+
+
+
+<view class="Mymain">
+  <view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu">
+    <view class='divline'></view>
+    <view bindtap='srJg' data-id="{{i}}">
+      <view class='shangpin'>
+        <image src='{{all[i].mark1}}' class='shangpin-image'> </image>
+        <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{all[i].value0}}</text>\n售价：{{all[i].value1}}\n进价：{{all[i].value2}}\n类别：{{all[i].value3}}\n备注：{{all[i].value4}}</text> -->
+        <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}} </text>
+      </view>
+
+
+      <view class='shangpin-jin2' data-id="{{i}}">
+        <view class='shangpin-jin'>
+          <text class="sp_dm" data-id="{{i}}">商品代码:{{all[i].sp_dm}}</text>
+
+
+        </view> 
+      </view>
+    </view>
+  </view>
+</view>
+<image class='jiahao1' src='/images/jiahao1.png' bindtap='jiahao1'> </image>
