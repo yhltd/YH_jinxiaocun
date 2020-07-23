@@ -1,14 +1,18 @@
 const form = require("../../../components/utils/formValidation.js")
 Page({
   data: {
-    id: '',
-    list: []
+    id: -1,
+    list: [],
+    length : 0,
+    companyName : ""
   },
   onLoad: function (options) {
     var that = this
     console.log("options.id", options.id)
     that.setData({
-      id: options.id
+      id: options.id,
+      length : options.length,
+      companyName : options.companyName
     })
     wx.setNavigationBarTitle({
       title: '修改信息'
@@ -37,251 +41,116 @@ Page({
     var that = this
     //表单规则
     let rules = [{
-      name: "B",
-      rule: ["required", "isChinese", "minLength:2", "maxLength:10"], //可使用区间，此处主要测试功能
-      msg: ["请输入姓名", "姓名必须全部为中文", "姓名必须2个或以上字符", "姓名不能超过10个字符"]
+      name: "name",
+      rule: ["required", "minLength:2", "maxLength:10"], //可使用区间，此处主要测试功能
+      msg: ["请输入姓名", "姓名必须2个或以上字符", "姓名不能超过10个字符"]
     }, {
-      name: 'C',
+      name: 'department',
       rule: ['required'],
       msg: ["请输入部门名"]
     }, {
-      name: 'D',
+      name: 'job',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入职务名"]
     }, {
-      name: 'E',
+      name: 'idcard',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入身份证号码"]
     }, {
-      name: 'F',
+      name: 'money',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入基本工资"]
     }, {
-      name: 'G',
+      name: 'card',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入银行卡号"]
     }, {
-      name: 'H',
+      name: 'date',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入入职时间"]
     }, {
-      name: 'I',
+      name: 'account',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入账号"]
     }, {
-      name: 'J',
+      name: 'pwd',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入密码"]
     }, {
-      name: 'K',
+      name: 'age',
       rule: ['required'],
-      msg: ["请输入部门名"]
+      msg: ["请输入工龄"]
     }, {
-      name: 'L',
+      name: 'pwd2',
       rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'M',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'N',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'O',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'P',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'Q',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'R',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'S',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'T',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'U',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'V',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'W',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'X',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'Y',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'Z',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AA',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AB',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AC',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AD',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AE',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AF',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AG',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AH',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AI',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AJ',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AK',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AL',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AM',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AN',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AO',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AP',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AQ',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AR',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'ASA',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'ATA',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AU',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AV',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AW',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AX',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AY',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'AZ',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'BA',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'BB',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, {
-      name: 'BC',
-      rule: ['required'],
-      msg: ["请输入部门名"]
-    }, ];
+      msg: ["请确认密码"]
+    }]
     //进行表单检查
     let formData = e.detail.value;
+    if(formData.pwd!=formData.pwd2){
+      wx.showToast({
+        title: "请确认密码",
+        icon: "none"
+      });
+      return
+    }
     let checkRes = form.validation(formData, rules);
+    var id = that.data.id;
+    var sql = "";
+    var log = "";
     if (!checkRes) {
       wx.showToast({
         title: "验证通过,提交成功！",
         icon: "none"
       });
+      var sql = "";
+      if(id==undefined || id==-1){
+        console.log(sql)
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "insert into gongzi_renyuan (B,C,D,E,F,G,H,I,J,K,L) values('" + formData.name + "','" + formData.department + "','" + formData.job + "','" + formData.idcard + "','" + formData.money + "','" + formData.card + "','" + formData.date + "','" + formData.account + "','" + formData.pwd + "','" + formData.age + "','"+that.data.companyName+"_hr');insert into gongzi_renyuanManager (R_id,[add],del,upd,sel,look,view_id) values((select @@identity),'1','1','1','1','1','1'),((select @@identity),'0','0','0','0','0','2'),((select @@identity),'1','1','1','1','1','3'),((select @@identity),'1','1','1','1','1','4'),((select @@identity),'1','1','1','1','1','5'),((select @@identity),'1','1','1','1','1','6'),((select @@identity),'1','1','1','1','1','7'),((select @@identity),'1','1','1','1','1','8'),((select @@identity),'1','1','1','1','1','9'),((select @@identity),'0','0','0','0','0','10'),((select @@identity),'1','1','1','1','1','11'),((select @@identity),'1','1','1','1','1','12')"
+          },
+          success: res => {
+            console.log(log)
+            wx.showToast({
+              title: log,
+              icon: "none"
+            })
+            wx.navigateBack({
+              complete: (res) => {},
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          }
+        })
+        log = sql;
+      }else{
+        sql = "update gongzi_renyuan set B = '" + formData.name + "',C ='" + formData.department + "',D = '" + formData.job + "',E = '" + formData.idcard + "',F = '" + formData.money + "',G = '" + formData.card + "',H = '" + formData.date + "',I = '" + formData.account + "',J = '" + formData.pwd + "',K = '" + formData.age + "' where id =" + that.data.id
+        log = "修改成功！";
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: sql
+          },
+          success: res => {
+            console.log(log)
+            wx.showToast({
+              title: log,
+              icon: "none"
+            })
+            wx.navigateBack({
+              complete: (res) => {},
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          }
+        })
+      }
       console.log(formData)
-      wx.cloud.callFunction({
-        name: 'sqlServer_117',
-        data: {
-          query: "update gongzi_renyuan set B = '" + formData.name + "',C ='" + formData.department + "',D = '" + formData.job + "',E = '" + formData.idcard + "',F = '" + formData.money + "',G = '" + formData.card + "',H = '" + formData.date + "',I = '" + formData.account + "',J = '" + formData.pwd + "',K = '" + formData.age + "' where id =" + that.data.id
-        },
-        success: res => {
-          console.log("修改成功！")
-          wx.showToast({
-            title: '修改成功！',
-            icon: "none"
-          })
-          wx.navigateBack({
-            complete: (res) => {},
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        }
-      })
-    } else {
+    }else {
       wx.showToast({
         title: checkRes,
         icon: "none"

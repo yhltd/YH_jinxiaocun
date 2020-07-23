@@ -757,3 +757,25 @@ input {
   color: rgb(102, 102, 102);
  
 }
+
+.hid_1{
+  float: left;width: 74.5%;
+}
+
+.bt_choice_company{
+  width: 100%;
+  font-size: 30rpx;
+  background-color: #333333;
+  border-radius: 0px;
+  color: white;
+  padding: 0;
+}
+
+.bt_choice_system{
+  width: 100%;
+  font-size: 32rpx;
+  background-color: #333333;
+  border-radius: 0px;
+  color: white;
+  padding: 0;
+}

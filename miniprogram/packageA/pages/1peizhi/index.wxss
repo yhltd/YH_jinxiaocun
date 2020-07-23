@@ -6,6 +6,9 @@ page {
   background-color: #f2f2f2;
 }
 
+.td view{
+  line-height: 50rpx;
+}
 
 .down {
   display: flex;
@@ -73,6 +76,20 @@ page {
 .cell_label {
   font-size: 26rpx;
   color: rgba(74, 74, 74, 1);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 50rpx;
+
+}
+
+.cell_label_header{
+  font-size: 26rpx;
+  color: rgba(74, 74, 74, 1);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 80rpx;
 }
 
 .cell_date_label {

@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/login/login",
+    
+    "pages/login/login","pages/c_home/c_home",
     "pages/home/home",
     "pages/peizhi/peizhi",
     "pages/time/time",
@@ -58,7 +59,19 @@
         "pages/1baopan/baopan",
         "pages/1gerensuodeshui/gerensuodeshui",
         "pages/1baoshui/index",
-        "pages/1gongzitiao/gongzitiao"
+        "pages/1gongzitiao/gongzitiao",
+        "pages/1renyuanxinxiguanli_edit_access/access"
+      ]
+    },
+    {
+      "root": "packageC",
+      "name": "caiwu",
+      "pages": [
+        "pages/c_pingzhenghuizong/c_pingzhenghuizong",
+        "pages/c_kemuzongzhang/c_kemuzongzheng",
+        "pages/c_kemuzongzhang_insert/c_kemuzongzhang_insert",
+        "pages/c_zichanfuzhai/c_zichanfuzhai",
+        "pages/c_kaizhixiangmu/c_kaizhixiangmu"
       ]
     }
   ],

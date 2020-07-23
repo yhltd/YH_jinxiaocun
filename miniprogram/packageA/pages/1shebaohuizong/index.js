@@ -4,6 +4,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    result : [],
+    isMaskWindowShow: false,
+    selectIndex: -1,
+    isMaskWindowInputShow: false,
+    isMaskWindowInputShow1: false,
+    maskWindowInputValue: "",
+    maskWindowList: [' 查询部门'],
+    options01 : [],
+    selected : {},
+
     maxpagenumber: 0,
     showModalStatus: false,
     animationData: "",
@@ -15,19 +25,27 @@ Page({
     title: [],
     page: "1",
     IsLastPage: false,
+    svHidden : false,
+    selectHid : false,
+    selectText : "请选择",
     id: '',
     name: '',
     edit_old: '',
     modal9: false,
     mark: '',
     edit_new: '',
-
+    companyName : ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (options) {
+    var _this = this;
+    _this.setData({
+      companyName : options.companyName,
+      result : JSON.parse(options.access)
+    })
     wx.setNavigationBarTitle({
       title: '各部门社保汇总表'
     })
@@ -40,7 +58,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select shebaohuizong from title where shebaohuizong is not null"
+        query: "select shebaohuizong from gongzi_title where shebaohuizong is not null"
       },
       success: res => {
         this.setData({
@@ -57,7 +75,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C"
+        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having BD ='"+_this.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功")
@@ -88,7 +106,7 @@ Page({
       content: '点击‘部门’列可以跳转到相应部门的‘部门详情表’',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {},
       fail: function (res) {}, //接口调用失败的回调函数
       complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
@@ -96,7 +114,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(1) as maxpagenumber from (SELECT count(C) as doinb from gongzi_gongzimingxi group by C)t1"
+        query: "select count(1) as maxpagenumber from (SELECT count(C) as doinb,count(BD) as company from gongzi_gongzimingxi group by C,BD HAVING BD = '"+that.data.companyName+"')t1"
       },
       success: res => {
         that.setData({
@@ -106,6 +124,23 @@ Page({
       },
       err: res => {
         console.log("错误!")
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: "select id,bumen from gongzi_peizhi where gongsi = '"+that.data.companyName+"' and bumen != '-' and bumen is not null"
+      },
+      success: res => {
+        console.log("部门查询成功！", res.result)
+        this.setData({
+          options01 : res.result.recordset
+        })
+        console.log(this.data.options01)
+      },
+      err: res => {
+        console.log("错误!", res)
       }
     })
   },
@@ -182,7 +217,7 @@ Page({
     console.log(XD)
     var department = XD.department
     wx.navigateTo({
-      url: "../1shebaoxiangqing/index?message=" + department,
+      url: "../1shebaoxiangqing/index?message=" + department+"&companyName="+this.data.companyName +"&access="+JSON.stringify(this.data.result),
     })
   },
 
@@ -268,7 +303,7 @@ Page({
       cancelText: "取消", //默认是“取消”
       cancelColor: '', //取消文字的颜色
       confirmText: "编辑", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
@@ -394,7 +429,40 @@ Page({
 
 
 
-
+/**
+ * 查询功能
+ */
+selTap : function(e){
+  var _this = this;
+  var index = e.currentTarget.dataset.windowIndex;
+  _this.setData({
+    svHidden : _this.data.svHidden?false:true,
+    selectHid : false,
+    selectText : "请选择",
+    selectIndex : index,
+    isMaskWindowInputShow : true,
+    isMaskWindowInputShow1: true
+  })
+},
+selectTap : function(){
+  this.setData({
+    selectHid : this.data.selectHid?false:true
+  })
+},
+choice : function(e){
+  var value = e.currentTarget.dataset.value;
+  var id = e.currentTarget.dataset.index;
+  var newSelected = {Id:id,Name:value};
+  wx.showToast({
+    title: "选择"+value+"序号"+id,
+    icon: 'none'
+  })
+  this.setData({
+    selectText : value,
+    selectHid : false,
+    selected : newSelected
+  })
+},
 
 
 
@@ -493,7 +561,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having BD ='"+that.data.companyName+"'"
       },
       success: res => {
         this.setData({
@@ -532,20 +600,78 @@ Page({
 
   //查找
   chazhao: function () {
+    this.showMaskWindow();
+  },
+
+  // 显示蒙版弹窗
+  showMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: true,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      isMaskWindowInputShow1: false,
+      maskWindowInputValue: ""
+    })
+  },
+
+  //切换选择项事件
+  maskWindowTableSelect: function (e) {
+    var index = e.currentTarget.dataset.windowIndex;
+    console.log(e.currentTarget.dataset)
+    this.setData({
+      selectIndex: e.currentTarget.dataset.windowIndex,
+      isMaskWindowInputShow: index == 0 || index == 1 || index == 2,
+      isMaskWindowInputShow1: index == 3
+    })
+  },
+
+  //输入框输入绑定事件
+  maskWindowInput: function (e) {
+    var value = e.detail.value;
+    var that = this
+    this.setData({
+      maskWindowInputValue: value
+    })
+    console.log(value)
+    console.log(that.data.selectIndex)
+  },
+
+  maskWindowOk : function(){
+    var that = this;
+    var input = that.data.selected.Name;
     wx.cloud.callFunction({
-      name: 'sqlServer_117',
+      name: "sqlServer_117",
       data: {
-        query: "select top 100 * from gongzi_gongzimingxi where B = '亚索'"
+        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having C = '"+input+"' and BD = '"+that.data.companyName+"'"
       },
       success: res => {
-        console.log("查找成功")
-        this.setData({
-          list: res.result.recordset
+        console.log("部门查询成功！", res.result)
+        
+        that.setData({
+          list: res.result.recordset,
+          svHidden : false,
+          selectHid : false,
+          selectText : "请选择",
         })
+        that.dismissMaskWindow();
       },
       err: res => {
         console.log("错误!", res)
+      },
+      complete: () => {
+
       }
+    })
+  },
+
+  // 隐藏蒙版窗体
+  dismissMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: false,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      isMaskWindowInputShow1: false,
+      maskWindowInputValue: ""
     })
   },
 

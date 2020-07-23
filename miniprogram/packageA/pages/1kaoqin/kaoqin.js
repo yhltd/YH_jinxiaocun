@@ -5,6 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    result : [],
+    companyName : "",
     jiaqi: [],
     jiaqiLength: 0,
 
@@ -14,7 +16,7 @@ Page({
     selectIndex: -1,
     isMaskWindowInputShow: false,
     maskWindowInputValue: '',
-
+    isSearch : false,
 
 
     type: 0,
@@ -38,10 +40,10 @@ Page({
     list: [],
     title: [],
     page: "1",
-    IsLastPage: false,
+    IsLastPage: true,
     moth: '',
     name: '',
-    edit_old: '',
+    edit_cell: '',
     modal9: false,
     mark: '',
     edit_new: '',
@@ -51,11 +53,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
+  onLoad: function(options) {
+    var _this = this;
     var time = util.newTime(new Date());
     // 再通过setData更改Page()里面的data，动态更新页面的数据
-    this.setData({
-      time: time
+    _this.setData({
+      time: time,
+      companyName : options.companyName,
+      result : JSON.parse(options.access)
     });
 
     wx.setNavigationBarTitle({
@@ -96,7 +101,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select kaoqinbiao from title where kaoqinbiao is not null"
+        query: "select kaoqinbiao from gongzi_title where kaoqinbiao is not null"
       },
       success: res => {
         this.setData({
@@ -118,9 +123,10 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_kaoqinjilu "
+        query: "select count(id) as maxpagenumber from gongzi_kaoqinjilu where AO = '"+that.data.companyName+"'"
       },
       success: res => {
+        console.log(that.data.companyName);
         that.setData({
           maxpagenumber: Math.ceil(res.result.recordset[0].maxpagenumber / 100)
         })
@@ -134,7 +140,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select day,month,year from gongzi_peizhi where day is not null"
+        query: "select day,month,year from gongzi_peizhi where day is not null and gongsi = '"+that.data.companyName+"'"
       },
       success: res => {
         console.log("假期:", res.result.recordset.length)
@@ -148,6 +154,7 @@ Page({
       }
     })
   },
+
 
   //月份选择器
   show: function(e) {
@@ -174,7 +181,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month
+        query: "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month +" and AO = '"+this.data.companyName+"'"
       },
       success: res => {
         console.log(res)
@@ -269,6 +276,7 @@ Page({
   jiaqi: function(e) {
     var that = this
     //点击关闭左遮罩
+    
     console.log(that.data.list)
     console.log(that.data.jiaqi)
     const type = e.currentTarget.dataset.type;
@@ -281,6 +289,13 @@ Page({
       this.setData({
         rightDrawer: false
       })
+    }
+    if(that.data.isSearch){
+      wx.showToast({
+        title: '请先同步数据',
+        icon: 'none'
+      })
+      return;
     }
 
     var youbiao = ['E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI']
@@ -336,20 +351,20 @@ Page({
         for (var i = 0; i < monthLength; i++) {
           a = i + xingqi + 6
           if (youbiaokachi[a] == '休') {
-            that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '休' where id =" + that.data.list[loop].id + ";"
+            that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '休' where id =" + that.data.list[loop].id + " and AO = '"+this.data.companyName + "';"
           }
         }
       } else if (type == 'chushihua') {
         for (var i = 0; i < monthLength; i++) {
           a = i + xingqi + 6
-          that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '" + youbiaokachi[a] + "' where id =" + that.data.list[loop].id + ";"
+          that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '" + youbiaokachi[a] + "' where id =" + that.data.list[loop].id + " and AO = '"+this.data.companyName + "';"
         }
       }
       for (var ix = 0; ix < jiaqiLength; ix++) {
         if (that.data.list[loop].year == that.data.jiaqi[ix].year) { //判断年份
           if (that.data.list[loop].moth == that.data.jiaqi[ix].month) { //判断月份
             //进行一个月中每天的判断
-            that.data.sql2 = that.data.sql2 + "update gongzi_kaoqinjilu set " + youbiao[that.data.jiaqi[ix].day - 1] + " = '休' where id =" + that.data.list[loop].id + ";" 
+            that.data.sql2 = that.data.sql2 + "update gongzi_kaoqinjilu set " + youbiao[that.data.jiaqi[ix].day - 1] + " = '休' where id =" + that.data.list[loop].id + " and AO = '"+this.data.companyName + "';"
           }
         }
       }
@@ -523,7 +538,7 @@ Page({
     //更新实际天数并写入,实际天数=shijitianshu
     for (var ii = 0; ii < length; ii++) {
       //拼接  实际出勤天数的统计 + 请假 + 加班 + 迟到
-      that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set AJ = " + quanqin[ii] + " where id =" + that.data.list[ii].id + ";" + "update gongzi_kaoqinjilu set AK = " + shijitianshu[ii] + " where id =" + that.data.list[ii].id + ";" + "update gongzi_kaoqinjilu set AL = " + qingjia[ii] + " where id =" + that.data.list[ii].id + ';' + "update gongzi_kaoqinjilu set AM = " + jiaban[ii] + " where id =" + that.data.list[ii].id + ";" + "update gongzi_kaoqinjilu set AN = " + chidao[ii] + " where id =" + that.data.list[ii].id + ";"
+      that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set AJ = " + quanqin[ii] + " where id =" + that.data.list[ii].id + " and AO = '" +that.data.companyName + "';" + "update gongzi_kaoqinjilu set AK = " + shijitianshu[ii] + " where id =" + that.data.list[ii].id + " and AO = '" +that.data.companyName + "';" + "update gongzi_kaoqinjilu set AL = " + qingjia[ii] + " where id =" + that.data.list[ii].id + " and AO = '"+ that.data.companyName +"';" + "update gongzi_kaoqinjilu set AM = " + jiaban[ii] + " where id =" + that.data.list[ii].id + " and AO = '"+ that.data.companyName + "';" + "update gongzi_kaoqinjilu set AN = " + chidao[ii] + " where id =" + that.data.list[ii].id + "and AO = '" + that.data.companyName + "';"
     }
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -578,16 +593,16 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "update gongzi_kaoqinjilu set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "'"
+        query: "update gongzi_kaoqinjilu set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "' and AO = '" +that.data.companyName+"'"
       },
       success: res => {
         console.log('操作成功')
         //成功说明insert操作已经执行，则清除所有的标记
         that.setData({
-          id: '',
-          name: '',
-          edit_old: '',
-          edit_new: '',
+          id: "",
+          name: "",
+          edit_old: "",
+          edit_new: "",
         })
         that.baochi()
       },
@@ -598,12 +613,19 @@ Page({
   },
   click_edit(e) {
     var that = this
-    var $collection = e.currentTarget.dataset
+    if(that.data.result.upd!= 1){
+      wx.showToast({
+        title: '您没有权限',
+        icon : 'none'
+      })
+      return
+    }
+    var collection = e.currentTarget.dataset
     that.setData({
-      id: $collection.id,
-      name: $collection.name,
-      edit_old: $collection.x,
-      mark: $collection.doinb, //这个值是传过来的该列在mssql数据库的【列标】，也是json数组中的标记位，因为标记为不能取到，所以只能一个一个在WXML中定义，然后传值（老板说json取不到标记位，我现在时间紧迫没时间研究，等有空了重看代码的时候再研究！）
+      id: collection.id,
+      name: collection.name,
+      edit_old: collection.x,
+      mark: collection.doinb, //这个值是传过来的该列在mssql数据库的【列标】，也是json数组中的标记位，因为标记为不能取到，所以只能一个一个在WXML中定义，然后传值（老板说json取不到标记位，我现在时间紧迫没时间研究，等有空了重看代码的时候再研究！）
       modal9: true
     })
     console.log(that.data.id, that.data.name, that.data.edit_old, that.data.modal9)
@@ -615,6 +637,7 @@ Page({
     //清除标记位
     that.setData({
       modal9: false,
+      edit_old : ''
     })
     console.log("隐藏自定义可输入弹窗！！")
   },
@@ -631,6 +654,13 @@ Page({
 
   click_delete: function(e) {
     var that = this
+    if(that.data.result.del!=1){
+      wx.showToast({
+        title: '您没有权限',
+        icon : 'none'
+      })
+      return;
+    }
     var $collection = e.currentTarget.dataset
     var id = $collection.id
     var name = $collection.name
@@ -642,9 +672,9 @@ Page({
       content: '正在删除姓名为' + name + "的" + year + "年" + month + "月的考勤\r\n删除后不能恢复\r\n请选择操作",
       showCancel: true, //是否显示取消按钮
       cancelText: "取消", //默认是“取消”
-      cancelColor: 'skyblue', //取消文字的颜色
+      cancelColor: '', //取消文字的颜色
       confirmText: "删除", //默认是“确定”
-      confirmColor: 'red', //确定文字的颜色
+      confirmColor: '#DD5044', //确定文字的颜色
       success: function(res) {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
@@ -654,7 +684,7 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_117',
             data: {
-              query: "delete from gongzi_kaoqinjilu where id =" + id
+              query: "delete from gongzi_kaoqinjilu where id =" + id +" and AO = '" +that.data.companyName+"'"
             },
             success: res => {
               console.log("成功删除")
@@ -710,7 +740,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -750,7 +780,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName+"'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -855,7 +885,15 @@ Page({
     })
   },
   leftDrawer() {
-    this.setData({
+    var _this = this;
+    if(_this.data.title_month=="" || _this.data.title_year==""){
+      wx.showToast({
+        title: '请选择年月',
+        icon : "none"
+      })
+      return;
+    }
+    _this.setData({
       leftDrawer: true
     })
   },
@@ -882,11 +920,12 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName  +"'"
       },
       success: res => {
         this.setData({
-          list: res.result.recordset
+          list: res.result.recordset,
+          isSearch : false
         })
       },
       err: res => {
@@ -921,12 +960,13 @@ Page({
 
   //查找 ---- 失效！
   chazhao: function(e) {
+
     var that = this
     //按照姓名，部门，职务三个查找？e中包含三个数值
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from gongzi_kaoqinjilu where name = '" + that.data.name + "' and moth = '" + that.data.title_month + "' and year = '" + that.data.title_year + "'"
+        query: "select top 100 * from gongzi_kaoqinjilu where name = '" + that.data.name + "' and moth = '" + that.data.title_month + "' and year = '" + that.data.title_year + "' and AO = '" + that.data.companyName+"'"
       },
       success: res => {
         console.log("查找成功")
@@ -952,7 +992,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "insert into gongzi_kaoqinjilu (name,moth,year,AF,AG,AH,AI) values('请输入','" + month + "','" + year + "','','','','')"
+          query: "insert into gongzi_kaoqinjilu (name,moth,year,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AO) VALUES ('请输入',"+month+","+year+",'-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','"+that.data.companyName+"')"
         },
         success: res => {
           console.log("插入成功")
@@ -987,7 +1027,15 @@ Page({
    * 页面查询按钮功能
    */
   searchBtn: function(e) {
-    this.showMaskWindow();
+    var _this = this;
+    if(_this.data.title_month=="" || _this.data.title_year==""){
+      wx.showToast({
+        title: '请选择年月',
+        icon : "none"
+      })
+      return;
+    }
+    _this.showMaskWindow();
   },
 
   //弹框以外区域点击
@@ -1052,12 +1100,13 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name ='" + input + "'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name ='" + input + "' and AO = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
           that.setData({
-            list: res.result.recordset
+            list: res.result.recordset,
+            isSearch : true
           })
         },
         err: res => {
@@ -1071,7 +1120,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name ='" + input + "' and moth = '" + month + "' and year = '" + year + "'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name ='" + input + "' and moth = '" + month + "' and year = '" + year + "' and AO = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)

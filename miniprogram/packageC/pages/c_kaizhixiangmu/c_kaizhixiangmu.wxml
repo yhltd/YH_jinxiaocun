@@ -1,0 +1,17 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}" wx:key="text">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_items" wx:key="class">
+      <view class="table_main" wx:for="{{list_items.arr}}" wx:for-item="list_item" wx:key="id">
+          
+        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="code" data-value="{{list_item.code}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.code}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>

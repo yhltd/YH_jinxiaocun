@@ -8,7 +8,7 @@ exports.main = async(event) => {
     user: 'sa',
     password: 'Lyh07910_001',
     server: 'yhocn.cn',
-    database: 'test',
+    database: 'yao',
     port: '1433' * 1, //用数字相乘强制转换,之前没用 *1 转换所以报错！笨
     options: {
       encrypt: true
@@ -16,7 +16,7 @@ exports.main = async(event) => {
     pool: {
       min: 0,
       max: 10,
-      idleTimeoutMillis: 30000
+      idleTimeoutMillis: 10
     }
   };
   try {

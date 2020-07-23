@@ -1,0 +1,65 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='{{}}'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_items" wx:key="class">
+      <view class="table_main" wx:for="{{list_items.arr}}" wx:for-item="list_item" wx:key="id" wx:if="{{list_item.class==class_id}}">
+        <view class="list_view" style="width:100rpx">
+          <view class="list_text">{{list_item.ROW_ID}}</view>
+        </view>
+        <view class="list_view" style="width:400rpx">
+          <view class="list_text">{{list_item.name}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx">
+          <view class="list_text">{{list_item.load}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx">
+          <view class="list_text">{{list_item.money}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="moreDo" bindtap="showSum">查看合计</button>
+  <button class="moreDo" bindtap="moreDo">更多操作</button>
+</view>
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" bindtap="updClass_moroDo">{{class_name}}</button>
+  <button class="moreDo_view_bt" bindtap="init">重新计算</button>
+</view>
+
+<view class="sw_view" animation="{{animationData_updClass}}">
+  <view class="sw_view_btView">
+    <button class="sv_view_btView_bt" bindtap="backClass">取消</button>
+    <button class="sv_view_btView_bt" bindtap="updClass">完成</button>
+  </view>
+  <swiper class="sw" circular="true" easing-function="linear" bindchange="changeClass">
+    <swiper-item wx:for="{{list}}" wx:key="class">
+      <view class="sw_item">{{item.className}}</view>
+    </swiper-item>
+  </swiper>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>
+
+<view class="sum_view" animation="{{animationData_sum}}">
+  <view class="sum_view_top">
+    <view class="sum_text_view" wx:for="{{sumItem}}" wx:key="text">
+      <view class="sum_view_text">{{item.text}}</view>
+      <view class="sum_view_text">{{item.sum}}</view>
+    </view>
+  </view>
+  <view class="sum_view_bottom">
+    <button class="sum_bt" bindtap="choice_sum">关闭</button>
+  </view>
+</view>
+
+
+

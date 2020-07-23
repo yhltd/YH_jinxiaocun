@@ -4,7 +4,20 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isload : true,
+    result : [],
+    input_type : "",
+    isMaskWindowShow: false,
+    selectIndex: -1,
+    isMaskWindowInputShow: false,
+    isMaskWindowInputShow1:false,
+    maskWindowInputValue: "",
+    maskWindowList: [' 查询部门'],
+    options01 : [],
+    selected : {},
+
     maxpagenumber: 0,
+    
     showModalStatus: false,
     animationData: "",
     tabIndex: 26,
@@ -14,6 +27,10 @@ Page({
     list: [],
     title: [],
     page: "1",
+    
+    svHidden : false,
+    selectHid : false,
+    selectText : "请选择",
     IsLastPage: false,
     id: '',
     name: '',
@@ -21,13 +38,20 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
+    companyName : ""
   },
 
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (options) {
+    var _this = this;
+    _this.setData({
+      companyName : options.companyName,
+      result : JSON.parse(options.access),
+      isload : true
+    })
     wx.setNavigationBarTitle({
       title: '部门汇总表'
     })
@@ -39,23 +63,34 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 C as department,COUNT(id) as num,SUM(CAST(G as int))AS G,SUM(CAST(H as int))as H,SUM(CAST(I as int))as I,SUM(CAST(J as int))as J,SUM(CAST(K as int))as K,SUM(CAST(L as int))as L,SUM(CAST(M as int))as M,SUM(CAST(N as int))as N,SUM(CAST(O as int))as O,SUM(CAST(P as int))as P,SUM(CAST(Q as int))as Q,SUM(CAST(R as int))as R,SUM(CAST(S as int))as S,SUM(CAST(T as int))as T,SUM(CAST(U as int))as U,SUM(CAST(V as int))as V,SUM(CAST(W as int))as W,SUM(CAST(X as int))as X,SUM(CAST(Y as int))as Y,SUM(CAST(Z as int))as Z,SUM(CAST(AA as int))as AA,SUM(CAST(AB as int))as AB,SUM(CAST(AC as int))as AC,SUM(CAST(AD as int))as AD,SUM(CAST(AE as int))as AE,SUM(CAST(AF as int))as AF,SUM(CAST(AG as int))as AG,SUM(CAST(AH as int))as AH,SUM(CAST(AI as int))as AI ,SUM(CAST(AJ as int))as AJ,SUM(CAST(AK as int))as AK,SUM(CAST(AL as int))as AL,SUM(CAST(AM as int))as AM,SUM(CAST(AN as int))as AN,SUM(CAST(AO as int))as AO,SUM(CAST(AP as int))as AP,SUM(CAST(AQ as int))as AQ,SUM(CAST(AR as int))as AR,SUM(CAST(ASA as int))as ASA,SUM(CAST(ATA as int))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as int))as AV,SUM(CAST(AW as int))as AW,SUM(CAST(AX as int))as AX,SUM(CAST(AY as int))as AY from gongzi_gongzimingxi GROUP BY C"
+        query: "SELECT C,count(id) AS num,SUM(CAST(G AS float)) AS G,SUM(CAST(H AS float)) AS H,SUM(CAST(I AS float)) AS I,SUM(CAST(J AS float)) AS J,SUM(CAST(K AS float)) AS K,SUM(CAST(L AS float)) AS  L,SUM(CAST(M AS float)) AS M,SUM(CAST(N AS float)) AS N,SUM(CAST(O AS float)) AS O,SUM(CAST(P AS float)) AS P,SUM(CAST(Q AS float)) AS Q,SUM(CAST(R AS float)) AS R,SUM(CAST(S AS float)) AS S,SUM(CAST(T AS float)) AS T,SUM(CAST(U AS float)) AS U,SUM(CAST(V AS float)) AS V,SUM(CAST(W AS float)) AS W,SUM(CAST(X AS float)) AS X,SUM(CAST(Y AS float)) AS Y,SUM(CAST(Z AS float)) AS Z,SUM(CAST(AA AS float)) AS AA,SUM(CAST(AB AS float)) AS AB,SUM(CAST(AC AS float)) AS AC,SUM(CAST(AD AS float)) AS AD,SUM(CAST(AE AS float)) AS AE,SUM(CAST(AF AS float)) AS AF,SUM(CAST(AG AS float)) AS AG,SUM(CAST(AH AS float)) AS AH,SUM(CAST(AI AS float)) AS AI,SUM(CAST(AJ AS float)) AS AJ,SUM(CAST(AK AS float)) AS AK,SUM(CAST(AL AS float)) AS AL,SUM(CAST(AM AS float)) AS AM,SUM(CAST(AN AS float)) AS AN,SUM(CAST(AO AS float)) AS AO,SUM(CAST(AP AS float)) AS AP,SUM(CAST(AQ AS float)) AS AQ,SUM(CAST(AR AS float)) AS AR,SUM(CAST(ASA AS float)) AS ASA,SUM(CAST(ATA AS float)) AS ATA,SUM(CAST(AU AS float)) AS AU,SUM(CAST(AV AS float)) AS AV,SUM(CAST(AW AS float)) AS AW,SUM(CAST(AX AS float)) AS AX,SUM(CAST(AY AS float)) AS AY FROM gongzi_gongzimingxi where BD = '"+_this.data.companyName+"' GROUP BY C,bd"
       },
       success: res => {
         console.log("进入成功!")
-        if (res.result.recordset.length < 100) {
           this.setData({
             list: res.result.recordset,
-            IsLastPage: true
+            isload : false
           })
-        } else {
-          this.setData({
-            list: res.result.recordset
-          })
-        }
       },
       err: res => {
         console.log("数据库连接失败！")
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: "select id,bumen from gongzi_peizhi where gongsi = '"+_this.data.companyName+"' and bumen != '-' and bumen is not null"
+      },
+      success: res => {
+        console.log("部门查询成功！", res.result)
+        this.setData({
+          options01 : res.result.recordset
+        })
+        console.log(this.data.options01)
+      },
+      err: res => {
+        console.log("错误!", res)
       }
     })
 
@@ -64,7 +99,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select bumenhuizong from title where bumenhuizong is not null"
+        query: "select bumenhuizong from gongzi_title where bumenhuizong is not null"
       },
       success: res => {
         console.log("进入成功!")
@@ -92,16 +127,17 @@ Page({
       content: '点击‘部门’列可以跳转到相应部门的‘部门详情表’',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {},
       fail: function (res) {}, //接口调用失败的回调函数
       complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
     })
     
+    
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(1) as maxpagenumber from (SELECT count(C) as doinb from gongzi_gongzimingxi group by C)t1"
+        query: "select count(doinb) as maxpagenumber from (SELECT count(C) as doinb,count(BD) as companyName from gongzi_gongzimingxi group by C,BD HAVING BD = '"+that.data.companyName+"')t1"
       },
       success: res => {
         that.setData({
@@ -119,7 +155,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -170,7 +206,7 @@ Page({
         rightDrawer: false
       })
     }
-    that.onLoad()
+    that.baochi()
     wx.showToast({
       title: '同步数据成功',
       icon: 'none'
@@ -184,10 +220,11 @@ Page({
   */
   to_bumenxiangqing: function (e) {
     var XD = e.currentTarget.dataset;
+    var companyName = this.data.companyName
     console.log(XD)
     var department = XD.department
     wx.navigateTo({
-      url: "../1bumenxiangqing/index?message=" + department,
+      url: "../1bumenxiangqing/index?message=" + department + "&companyName=" +companyName +"&access="+JSON.stringify(this.data.result)
     })
   },
 
@@ -238,6 +275,7 @@ Page({
     var that = this
     var $collection = e.currentTarget.dataset
     that.setData({
+      input_type : $collection.type,
       id: $collection.id,
       name: $collection.name,
       edit_old: $collection.x,
@@ -278,7 +316,7 @@ Page({
       cancelText: "取消", //默认是“取消”
       cancelColor: '', //取消文字的颜色
       confirmText: "编辑", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
@@ -295,7 +333,39 @@ Page({
       complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
     })
 
-    //修改之后刷新页面
+  },
+  selTap : function(e){
+    var _this = this;
+    var index = e.currentTarget.dataset.windowIndex;
+    _this.setData({
+      svHidden : _this.data.svHidden?false:true,
+      selectHid : false,
+      selectText : "请选择",
+      selectIndex : index,
+      isMaskWindowInputShow : true,
+      isMaskWindowInputShow1: true
+    })
+  },
+  selectTap : function(){
+    var _this = this;
+    var selectHid = _this.data.selectHid
+    _this.setData({
+      selectHid : selectHid?false:true
+    })
+  },
+  choice : function(e){
+    var value = e.currentTarget.dataset.value;
+    var id = e.currentTarget.dataset.index;
+    var newSelected = {Id:id,Name:value};
+    wx.showToast({
+      title: "选择"+value+"序号"+id,
+      icon: 'none'
+    })
+    this.setData({
+      selectText : value,
+      selectHid : false,
+      selected : newSelected
+    })
   },
 
 
@@ -331,7 +401,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber,  C as department,COUNT(id) as num,SUM(CAST(G as int))AS G,SUM(CAST(H as int))as H,SUM(CAST(I as int))as I,SUM(CAST(J as int))as J,SUM(CAST(K as int))as K,SUM(CAST(L as int))as L,SUM(CAST(M as int))as M,SUM(CAST(N as int))as N,SUM(CAST(O as int))as O,SUM(CAST(P as int))as P,SUM(CAST(Q as int))as Q,SUM(CAST(R as int))as R,SUM(CAST(S as int))as S,SUM(CAST(T as int))as T,SUM(CAST(U as int))as U,SUM(CAST(V as int))as V,SUM(CAST(W as int))as W,SUM(CAST(X as int))as X,SUM(CAST(Y as int))as Y,SUM(CAST(Z as int))as Z,SUM(CAST(AA as int))as AA,SUM(CAST(AB as int))as AB,SUM(CAST(AC as int))as AC,SUM(CAST(AD as int))as AD,SUM(CAST(AE as int))as AE,SUM(CAST(AF as int))as AF,SUM(CAST(AG as int))as AG,SUM(CAST(AH as int))as AH,SUM(CAST(AI as int))as AI ,SUM(CAST(AJ as int))as AJ,SUM(CAST(AK as int))as AK,SUM(CAST(AL as int))as AL,SUM(CAST(AM as int))as AM,SUM(CAST(AN as int))as AN,SUM(CAST(AO as int))as AO,SUM(CAST(AP as int))as AP,SUM(CAST(AQ as int))as AQ,SUM(CAST(AR as int))as AR,SUM(CAST(ASA as int))as ASA,SUM(CAST(ATA as int))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as int))as AV,SUM(CAST(AW as int))as AW,SUM(CAST(AX as int))as AX,SUM(CAST(AY as int))as AY from gongzi_gongzimingxi GROUP BY C) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by COUNT(id) asc) as rownumber,  C as department,COUNT(id) as num,SUM(CAST(G as int))AS G,SUM(CAST(H as int))as H,SUM(CAST(I as int))as I,SUM(CAST(J as int))as J,SUM(CAST(K as int))as K,SUM(CAST(L as int))as L,SUM(CAST(M as int))as M,SUM(CAST(N as int))as N,SUM(CAST(O as int))as O,SUM(CAST(P as int))as P,SUM(CAST(Q as int))as Q,SUM(CAST(R as int))as R,SUM(CAST(S as int))as S,SUM(CAST(T as int))as T,SUM(CAST(U as int))as U,SUM(CAST(V as int))as V,SUM(CAST(W as int))as W,SUM(CAST(X as int))as X,SUM(CAST(Y as int))as Y,SUM(CAST(Z as int))as Z,SUM(CAST(AA as int))as AA,SUM(CAST(AB as int))as AB,SUM(CAST(AC as int))as AC,SUM(CAST(AD as int))as AD,SUM(CAST(AE as int))as AE,SUM(CAST(AF as int))as AF,SUM(CAST(AG as int))as AG,SUM(CAST(AH as int))as AH,SUM(CAST(AI as int))as AI ,SUM(CAST(AJ as int))as AJ,SUM(CAST(AK as int))as AK,SUM(CAST(AL as int))as AL,SUM(CAST(AM as int))as AM,SUM(CAST(AN as int))as AN,SUM(CAST(AO as int))as AO,SUM(CAST(AP as int))as AP,SUM(CAST(AQ as int))as AQ,SUM(CAST(AR as int))as AR,SUM(CAST(ASA as int))as ASA,SUM(CAST(ATA as int))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as int))as AV,SUM(CAST(AW as int))as AW,SUM(CAST(AX as int))as AX,SUM(CAST(AY as int))as AY from gongzi_gongzimingxi GROUP BY C,BD having BD = '"+that.data.companyName+"') temp_row where rownumber > (( '"+that.data.page+"' - 1) * 100);"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -351,54 +421,30 @@ Page({
     }
   },
   //内嵌列表查找下一页数据
-  nextpage: function () {
-    var that = this
-    console.log("islastpage?:", that.data.IsLastPage)
-    //通过Islastpage判断是否为最后一页
-    //如果第一页是最后一页，则在onload里第一次setdata中将Islastpage置true
-    if (that.data.IsLastPage) {
+  nextpage: function (e) {
+    var _this = this
+
+    var pagego = e.currentTarget.dataset.pagego
+    var page = parseInt(_this.data.page);
+    if(pagego=="1"){page++}else{page--}
+
+    if(page>_this.data.maxpagenumber){ 
       wx.showToast({
-        title: '已经是最后一页',
-        icon: 'none'
+        title: '已经是最后一页！',
+        icon : 'none'
       })
-    } else {
-      that.data.page++
+      return;
+    }else if(page<1){
       wx.showToast({
-        title: '正在加载第' + that.data.page + '页',
-        icon: 'none',
-        duration: 2500
+        title: '已经是第一页！',
+        icon : 'none'
       })
-      wx.cloud.callFunction({
-        name: 'sqlServer_117',
-        data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber,  C as department,COUNT(id) as num,SUM(CAST(G as int))AS G,SUM(CAST(H as int))as H,SUM(CAST(I as int))as I,SUM(CAST(J as int))as J,SUM(CAST(K as int))as K,SUM(CAST(L as int))as L,SUM(CAST(M as int))as M,SUM(CAST(N as int))as N,SUM(CAST(O as int))as O,SUM(CAST(P as int))as P,SUM(CAST(Q as int))as Q,SUM(CAST(R as int))as R,SUM(CAST(S as int))as S,SUM(CAST(T as int))as T,SUM(CAST(U as int))as U,SUM(CAST(V as int))as V,SUM(CAST(W as int))as W,SUM(CAST(X as int))as X,SUM(CAST(Y as int))as Y,SUM(CAST(Z as int))as Z,SUM(CAST(AA as int))as AA,SUM(CAST(AB as int))as AB,SUM(CAST(AC as int))as AC,SUM(CAST(AD as int))as AD,SUM(CAST(AE as int))as AE,SUM(CAST(AF as int))as AF,SUM(CAST(AG as int))as AG,SUM(CAST(AH as int))as AH,SUM(CAST(AI as int))as AI ,SUM(CAST(AJ as int))as AJ,SUM(CAST(AK as int))as AK,SUM(CAST(AL as int))as AL,SUM(CAST(AM as int))as AM,SUM(CAST(AN as int))as AN,SUM(CAST(AO as int))as AO,SUM(CAST(AP as int))as AP,SUM(CAST(AQ as int))as AQ,SUM(CAST(AR as int))as AR,SUM(CAST(ASA as int))as ASA,SUM(CAST(ATA as int))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as int))as AV,SUM(CAST(AW as int))as AW,SUM(CAST(AX as int))as AX,SUM(CAST(AY as int))as AY from gongzi_gongzimingxi GROUP BY C) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
-        },
-        success: res => {
-          console.log("返回长度", res.result)
-          //长度不为0则说明不是最后一页，可以输出
-          if (res.result.recordset.length != 0) {
-            console.log("下一页进入成功：第" + that.data.page + "页")
-            that.setData({
-              list: res.result.recordset,
-            })
-          }
-          //输出的长度小于100，则本页的下一页是最后一页，将标记置true
-          if (res.result.recordset.length < 100) {
-            that.setData({
-              IsLastPage: true
-            })
-            console.log("抵达最后一页")
-          }
-        },
-        err: res => {
-          console.log("错误!", res)
-        },
-        complete: () => {
-          that.setData({
-            page: this.data.page
-          })
-        }
+      return;
+    }else{
+      _this.setData({
+        page
       })
+      _this.baochi();
     }
   },
 
@@ -500,15 +546,19 @@ Page({
   //用于刷新页面时保持页数，或者跳转到某一页
   baochi: function () {
     var that = this
+    that.setData({
+      isload : true
+    })
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber,  C as department,COUNT(id) as num,SUM(CAST(G as int))AS G,SUM(CAST(H as int))as H,SUM(CAST(I as int))as I,SUM(CAST(J as int))as J,SUM(CAST(K as int))as K,SUM(CAST(L as int))as L,SUM(CAST(M as int))as M,SUM(CAST(N as int))as N,SUM(CAST(O as int))as O,SUM(CAST(P as int))as P,SUM(CAST(Q as int))as Q,SUM(CAST(R as int))as R,SUM(CAST(S as int))as S,SUM(CAST(T as int))as T,SUM(CAST(U as int))as U,SUM(CAST(V as int))as V,SUM(CAST(W as int))as W,SUM(CAST(X as int))as X,SUM(CAST(Y as int))as Y,SUM(CAST(Z as int))as Z,SUM(CAST(AA as int))as AA,SUM(CAST(AB as int))as AB,SUM(CAST(AC as int))as AC,SUM(CAST(AD as int))as AD,SUM(CAST(AE as int))as AE,SUM(CAST(AF as int))as AF,SUM(CAST(AG as int))as AG,SUM(CAST(AH as int))as AH,SUM(CAST(AI as int))as AI ,SUM(CAST(AJ as int))as AJ,SUM(CAST(AK as int))as AK,SUM(CAST(AL as int))as AL,SUM(CAST(AM as int))as AM,SUM(CAST(AN as int))as AN,SUM(CAST(AO as int))as AO,SUM(CAST(AP as int))as AP,SUM(CAST(AQ as int))as AQ,SUM(CAST(AR as int))as AR,SUM(CAST(ASA as int))as ASA,SUM(CAST(ATA as int))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as int))as AV,SUM(CAST(AW as int))as AW,SUM(CAST(AX as int))as AX,SUM(CAST(AY as int))as AY from gongzi_gongzimingxi GROUP BY C) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+        query: "select * from (SELECT C,count(id) AS num,SUM(CAST(G AS float)) AS G,SUM(CAST(H AS float)) AS H,SUM(CAST(I AS float)) AS I,SUM(CAST(J AS float)) AS J,SUM(CAST(K AS float)) AS K,SUM(CAST(L AS float)) AS  L,SUM(CAST(M AS float)) AS M,SUM(CAST(N AS float)) AS N,SUM(CAST(O AS float)) AS O,SUM(CAST(P AS float)) AS P,SUM(CAST(Q AS float)) AS Q,SUM(CAST(R AS float)) AS R,SUM(CAST(S AS float)) AS S,SUM(CAST(T AS float)) AS T,SUM(CAST(U AS float)) AS U,SUM(CAST(V AS float)) AS V,SUM(CAST(W AS float)) AS W,SUM(CAST(X AS float)) AS X,SUM(CAST(Y AS float)) AS Y,SUM(CAST(Z AS float)) AS Z,SUM(CAST(AA AS float)) AS AA,SUM(CAST(AB AS float)) AS AB,SUM(CAST(AC AS float)) AS AC,SUM(CAST(AD AS float)) AS AD,SUM(CAST(AE AS float)) AS AE,SUM(CAST(AF AS float)) AS AF,SUM(CAST(AG AS float)) AS AG,SUM(CAST(AH AS float)) AS AH,SUM(CAST(AI AS float)) AS AI,SUM(CAST(AJ AS float)) AS AJ,SUM(CAST(AK AS float)) AS AK,SUM(CAST(AL AS float)) AS AL,SUM(CAST(AM AS float)) AS AM,SUM(CAST(AN AS float)) AS AN,SUM(CAST(AO AS float)) AS AO,SUM(CAST(AP AS float)) AS AP,SUM(CAST(AQ AS float)) AS AQ,SUM(CAST(AR AS float)) AS AR,SUM(CAST(ASA AS float)) AS ASA,SUM(CAST(ATA AS float)) AS ATA,SUM(CAST(AU AS float)) AS AU,SUM(CAST(AV AS float)) AS AV,SUM(CAST(AW AS float)) AS AW,SUM(CAST(AX AS float)) AS AX,SUM(CAST(AY AS float)) AS AY,ROW_NUMBER() over(order by C) ROW_ID FROM gongzi_gongzimingxi where BD = '"+that.data.companyName+"' GROUP BY C,bd) as t where t.ROW_ID > "+that.data.page+"-1*100 and t.ROW_ID<"+that.data.page+"*100+1"
       },
       success: res => {
         console.log(res.result.recordset)
         this.setData({
-          list: res.result.recordset
+          list: res.result.recordset,
+          isload : false
         })
       },
       err: res => {
@@ -543,22 +593,77 @@ Page({
 
   //查找
   chazhao: function () {
+    this.showMaskWindow();
+  },
+
+  // 显示蒙版弹窗
+  showMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: true,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      isMaskWindowInputShow1: false,
+      maskWindowInputValue: ""
+    })
+  },
+
+  //输入框输入绑定事件
+  maskWindowInput: function (e) {
+    var value = e.detail.value;
+    var that = this
+    this.setData({
+      maskWindowInputValue: value
+    })
+    console.log(value)
+    console.log(that.data.selectIndex)
+  },
+
+  maskWindowOk : function(){
+    
+    var that = this;
+    var input = that.data.selected.Name;
+    var sql = "select top 100 C as department,COUNT(id) as num,SUM(CAST(G as int))AS G,SUM(CAST(H as int))as H,SUM(CAST(I as int))as I,SUM(CAST(J as int))as J,SUM(CAST(K as int))as K,SUM(CAST(L as int))as L,SUM(CAST(M as int))as M,SUM(CAST(N as int))as N,SUM(CAST(O as int))as O,SUM(CAST(P as int))as P,SUM(CAST(Q as int))as Q,SUM(CAST(R as int))as R,SUM(CAST(S as int))as S,SUM(CAST(T as int))as T,SUM(CAST(U as int))as U,SUM(CAST(V as int))as V,SUM(CAST(W as int))as W,SUM(CAST(X as int))as X,SUM(CAST(Y as int))as Y,SUM(CAST(Z as int))as Z,SUM(CAST(AA as int))as AA,SUM(CAST(AB as int))as AB,SUM(CAST(AC as int))as AC,SUM(CAST(AD as int))as AD,SUM(CAST(AE as int))as AE,SUM(CAST(AF as int))as AF,SUM(CAST(AG as int))as AG,SUM(CAST(AH as int))as AH,SUM(CAST(AI as int))as AI ,SUM(CAST(AJ as int))as AJ,SUM(CAST(AK as int))as AK,SUM(CAST(AL as int))as AL,SUM(CAST(AM as int))as AM,SUM(CAST(AN as int))as AN,SUM(CAST(AO as int))as AO,SUM(CAST(AP as int))as AP,SUM(CAST(AQ as int))as AQ,SUM(CAST(AR as int))as AR,SUM(CAST(ASA as int))as ASA,SUM(CAST(ATA as int))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as int))as AV,SUM(CAST(AW as int))as AW,SUM(CAST(AX as int))as AX,SUM(CAST(AY as int))as AY from gongzi_gongzimingxi GROUP BY C having C = '"+input+"' and BD = '"+that.data.companyName+"'"
+    console.log(sql)
     wx.cloud.callFunction({
-      name: 'sqlServer_117',
+      name: "sqlServer_117",
       data: {
-        query: "select top 100 * from gongzi_gongzimingxi where B = '亚索'"
+        query: sql
       },
       success: res => {
-        console.log("查找成功")
-        this.setData({
-          list: res.result.recordset
+        console.log("部门查询成功！", res.result)
+        that.setData({
+          list: res.result.recordset,
+          svHidden : false,
+          selectHid : false,
+          selectText : "请选择",
         })
+        that.dismissMaskWindow();
       },
       err: res => {
         console.log("错误!", res)
+      },
+      complete: () => {
+
       }
     })
   },
+
+  close() {
+    // 关闭select
+    this.selectComponent('#select').close()
+  },
+
+  // 隐藏蒙版窗体
+  dismissMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: false,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      isMaskWindowInputShow1: false,
+      maskWindowInputValue: ""
+    })
+  },
+  
 
   //添加
   tianjia: function () {
@@ -566,7 +671,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "insert into gongzi_gongzimingxi (B) values('请输入')"
+        query: "insert into gongzi_gongzimingxi (B,BD) values('请输入','"+that.data.companyName+"')"
       },
       success: res => {
         console.log("插入成功")

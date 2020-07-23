@@ -1,12 +1,45 @@
-<!-- 部门汇总表-->
-<view style="height:45rpx"></view>
+
+<view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtouchmove='move'>
+  <view class='maskWindowContent'>
+    <view class="maskWindowTitleText">
+      <icon type="search" size='13' color='#999'></icon>
+      <text> 请选择查询项目(单选)</text>
+    </view>
+    <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index===0}}'>
+      <view class="maskWindowText {{svHidden? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='selTap' data-window-Index='{{index}}'>{{maskWindowList[index]}}</view>
+    </view>
+    <!--条件查询结果显示区域！-->
+
+
+    <view style="height:30rpx"></view>
+    <view class='maskWindowInputView11'>
+      <view hidden="{{!svHidden}}" style="width:88%;margin: auto;">
+        <view style="float: left;width: 87%;">
+          <input class="textView" value="{{selectText}}"/>
+        </view>
+        <view style="float: left;width: 13%;">
+          <view class="selectHead" bindtap="selectTap">V</view>
+        </view>
+      </view>
+      <scroll-view class="sv" hidden="{{!selectHid}}" scroll-y="true">
+        <view wx:for="{{options01}}"  class="optionView" catchtap="choice" data-index="{{item.id}}" data-value="{{item.bumen}}">{{item.bumen}}</view>
+      </scroll-view>
+    </view>
+    <view class='maskWindowBtnView'>
+      <view class='maskWindowBtn' catchtap='dismissMaskWindow' hover-class="btn-hover" style="background: #ededed;color: #999 !important;">取消</view>
+      <view style="width:28%"></view>
+      <view class='maskWindowBtn' hover-class="btn-hover" bindtap="maskWindowOk">提交</view>
+      <view style="width:2%"></view>
+    </view>
+  </view>
+</view>
 
 <!--可输入遮罩层-->
 <tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
   <view bindsubmit="edit_cell" style="text-align: center;">
     <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
     <form bindsubmit="edit_cell">
-      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
+      <input name="value" type="{{input_type}}" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
       <button form-type="submit" bindtap="hide9"  bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
     </form>
   </view>
@@ -17,8 +50,8 @@
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}">
-        <view class="th {{(item.bumenhuizong == '部门')?'tap_120':''}}" data-bumenhuizong='{{item.bumenhuizong}}'>
-          <view class="cell_label centerclass">
+        <view class="th {{(item.bumenhuizong == '部门')?'tap_120':''}}" data-bumenhuizong='{{item.bumenhuizong}}' style="{{item.bumenhuizong=='部门'?' position: sticky;top: 0;left: 0;':''}}">
+          <view class="cell_label_header centerclass">
             <text style="font-size:; font-weight:bold;">{{item.bumenhuizong}}</text>
           </view>
         </view>
@@ -27,12 +60,12 @@
 
 
     <!--内容纵向渲染 -->
-    <block wx:for="{{list}}">
+    <block wx:for="{{list}}" catchtap='dismissMaskWindow' > 
       <view class='table_main'>
-        <view class='td' style="width:120rpx;background-color:white;">
-          <view bindtap="to_bumenxiangqing" data-department="{{item.department}}" class="cell_label centerclass">{{item.department}}</view>
+        <view class='td' style="width:120rpx;background-color:white;position: sticky;left: 0;">
+          <view bindtap="to_bumenxiangqing" data-department="{{item.C}}" class="cell_label centerclass">{{item.C}}</view>
         </view>
-        <view class='td'>
+        <view class='td' >
           <view class="cell_label centerclass">{{item.num}}</view>
         </view>
         <view class='td'>
@@ -185,11 +218,11 @@
 <view class="down">
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <button class="pageButton" hover-class="pageButton-hover" disabled="{{isload}}" bindtap="nextpage" data-pagego="0">上一页</button>
     <view style="width:5%"></view>
-   <button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
+    <button class="pageButton_page" disabled="{{isload}}" hover-class="pageButton_page-hover">{{page}}/{{maxpagenumber}} </button>
     <view style="width:5%"></view>
-    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <button class="pageButton" hover-class="pageButton-hover" disabled="{{isload}}" bindtap="nextpage" data-pagego="1">下一页</button>
     <view style="width:5%"></view>
   </view>
 
@@ -200,7 +233,7 @@
     <button class="btn-primary" hover-class="btn-hover" bindtap="leftDrawer">更多功能
     </button>
     <view style="width:10%"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="">查找</button>
+    <button class="btn-primary" hover-class="btn-hover" disabled="{{result.sel!=1}}" bindtap="chazhao">查找</button>
     <view style="width:5%"></view>
   </view>
 </view>
@@ -217,12 +250,6 @@
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
     <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能B</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能C</button>
-    <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">打印当前页</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能E</button>
   </view>
 </drawer>

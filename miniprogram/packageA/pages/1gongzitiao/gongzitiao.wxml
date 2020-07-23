@@ -1,2 +1,259 @@
-<!--pages/gongzitiao/gongzitiao.wxml-->
-<text>pages/gongzitiao/gongzitiao.wxml</text>
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <view class='table_header'>
+      <block wx:for="{{title}}" wx:key="key">
+        <view class="th {{(item.gongzimingxi == '身份证号码')?'change':''||(item.gongzimingxi == '银行账号')?'change':''||(item.gongzimingxi == '序号')?'tap':''}}" style="{{item.gongzimingxi=='序号'?'position:sticky;top:0;left:0':''}}">
+          <view class="cell_label_header centerclass">
+            <text style="font-size:; font-weight:bold;">{{item.gongzimingxi}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+
+        <!--内容纵向渲染 -->
+    <block wx:for="{{list}}" wx:key="key" wx:for-index="idx">
+      <view class='table_main'>
+        <!--序号 -->
+        <view class='td' style='width:101rpx;background-color:white;position:sticky;left:0'>
+          <view class="cell_label centerclass" >{{item.ROW_ID}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.B}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.C}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.D}}</view>
+        </view>
+
+        <view class='td' style="width:300rpx;">
+          <view class="cell_label centerclass" >{{item.E}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.F}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.G}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.H}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.I}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.J}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.K}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.L}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.M}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.N}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.O}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.P}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.Q}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.R}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.S}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.T}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.U}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.V}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.W}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.X}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.Y}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.Z}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.AA}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AB}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AC}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AD}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AE}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AF}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AG}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AH}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AI}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AJ}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AK}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AL}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AM}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AN}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AO}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AP}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AQ}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AR}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.ASA}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.ATA}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AU}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AV}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AW}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AX}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AY}}</view>
+        </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass" >{{item.AZ}}</view>
+        </view>
+
+        <view class='td' style="width:300rpx;">
+          <view class="cell_label centerclass" >{{item.BA}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="selAgain">打印</button>
+  <button class="bt_bottom" bindtap="selAgain">查询</button>
+</view>
+
+<view class="Mask" hidden="{{hidMask}}">
+  <view class="criteria_view" hidden="{{hidMask}}">  
+    <view class="option" wx:for="{{options}}" wx:for-index="op_index" wx:for-item="op_item">
+      <view style="width:88%;margin: auto;height: 100%;">
+        <view style="float: left;width: 65%;">
+          <input class="option_text" value="{{op_item.text}}" bindinput="input" data-index="{{op_index}}"/>
+        </view>
+        <view style="float: left;width: 30%;">
+          <button class="option_bt" bindtap="selectTap" data-items_index="{{op_index}}">V</button>
+        </view>
+      </view>
+      <scroll-view class="option_sv" hidden="{{op_item.selectHid}}" scroll-y="true">
+        <view class="option_sv_item" wx:for="{{op_item.items}}" wx:for-index="index" wx:for-item="item" catchtap="choice" data-items_index="{{op_index}}" data-item_index="{{index}}">{{item}}</view>
+      </scroll-view>
+    </view>
+    <view class="criteria_view_bottom">
+      <button class="bt_save" bindtap="sel" disabled="{{result.sel!=1}}">查询</button>
+    </view>
+  </view>
+  
+</view>

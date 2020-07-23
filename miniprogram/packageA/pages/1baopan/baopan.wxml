@@ -1,8 +1,5 @@
-<!-- 报盘表 -->
-<view style="height:45rpx"></view>
-
 <!--单选查询蒙版部分-->
-<view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtap='maskWindowBgClick' catchtouchmove='move'>
+<view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtap='' catchtouchmove='move'>
   <view class='maskWindowContent' catchtap='clickTap'>
     <view class="maskWindowTitleText">
       <icon type="search" size='13' color='#999'></icon>
@@ -17,21 +14,6 @@
     <view style="height:30rpx"></view>
     <view class='maskWindowInputView'>
       <input class='maskWindowInput' maxlength='100' placeholder='请输入查询内容' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput'></input>
-      
-      <view hidden='{{!isMaskWindowInputShow1}}'>
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入待查询姓名' bindinput='maskWindowInput'></input>
-        <view bindtap="close" style="margin: 15rpx 0;">
-          <view class="select-wrap">
-            <select id="select" options="{{options01}}" key="Id" text="Name" bind:change="change01"></select>
-          </view>
-        </view>
-        <view bindtap="close" style="margin: 15rpx 0;">
-          <view class="select-wrap">
-            <select id="select" options="{{options02}}" key="Id" text="Name" bind:change="change02"></select>
-          </view>
-        </view>
-        <view style="height:200rpx"></view>
-      </view>
     </view>
 
 
@@ -51,7 +33,7 @@
   <view bindsubmit="edit_cell" style="text-align: center;">
     <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
     <form bindsubmit="edit_cell">
-      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
+      <input type="{{type}}" name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
       <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
     </form>
   </view>
@@ -64,7 +46,7 @@
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="">
         <view class="th {{(item.baopan == '员工银行账号')?'change':''||(item.baopan == '员工编号')?'tap_120':''}}" data-baopan='{{item.baopan}}'>
-          <view class="cell_label centerclass">
+          <view class="cell_label_header centerclass">
             <text style="font-size:; font-weight:bold;">{{item.baopan}}</text>
           </view>
         </view>
@@ -76,17 +58,17 @@
     <block wx:for="{{list}}" wx:for-index="idx">
       <view class='table_main'>
         <!--序号 -->
-        <view class='td' style='width:120rpx;background-color:white;'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name="{{item.B}}">{{idx+1}}</view>
+        <view class='td' style='width:120rpx;background-color:white;position: sticky;left: 0;'>
+          <view class="cell_label centerclass" bindlongtap="click_delete"  data-id='{{item.id}}' data-name="{{item.B}}">{{idx+1}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" bindlongtap="click_delete" bindtap="click_edit" data-id='{{item.id}}' data-x="{{item.B}}" data-name="{{item.B}}" data-doinb='B'>{{item.B}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-x="{{item.B}}" data-name="{{item.B}}" data-doinb='B' data-type="text">{{item.B}}</view>
         </view>
         <view class='td' style="width: 300rpx">
-          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.BA}}" data-doinb='BA'>{{item.BA}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.BA}}" data-type="number" data-doinb='BA'>{{item.BA}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-doinb='AY'>{{item.AY}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.AY}}</view>
         </view>
         <view class='td'>
           <view class="cell_label centerclass">人民币</view>
@@ -105,11 +87,11 @@
 <view class="down">
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <button class="pageButton" hover-class="pageButton-hover" disabled="{{!isLoad}}" bindtap="lastpage">上一页</button>
     <view style="width:5%"></view>
     <button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
     <view style="width:5%"></view>
-    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <button class="pageButton" hover-class="pageButton-hover" disabled="{{!isLoad}}" bindtap="nextpage">下一页</button>
     <view style="width:5%"></view>
   </view>
 
@@ -117,10 +99,10 @@
 
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="leftDrawer">更多功能
+    <button class="btn-primary" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="leftDrawer">更多功能
     </button>
     <view style="width:10%"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="searchBtn">查找</button>
+    <button class="btn-primary" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="searchBtn" disabled="{{result.sel!=1}}">查找</button>
     <view style="width:5%"></view>
   </view>
 
@@ -137,12 +119,6 @@
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
     <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能B</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能C</button>
-    <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="dayin" data-mode="left">打印当前页</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">功能E</button>
   </view>
 </drawer>

@@ -1,0 +1,62 @@
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="code_input_view" bindtap="showGetCode" name="code" value="">{{code}}</view>
+    <view class="input_view">
+      <view class="input_text">项目名称</view>
+      <input name="name" placeholder="请输入项目名称" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">借贷方向</view>
+      <radio-group class="radio" name="direction">
+        <radio value="1" checked="true" color="#282B33" >借</radio>
+        <radio value="0" color="#282B33">贷</radio>
+      </radio-group>
+    </view>
+    <view class="input_view">
+      <view class="input_text">年初借金</view>
+      <input name="name" placeholder="请输入年初借金" name="load" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">年初贷金</view>
+      <input name="name" placeholder="请输入年初贷金" name="borrowed" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="bottom">
+      <button class="bt" form-type="reset">重置</button>
+      <button class="bt" form-type="submit">保存</button>
+    </view>
+  </form>
+</view>
+
+<view class="getCode_view" animation="{{animationData_getCode}}" hidden="{{initHidView?'true':''}}">
+  <view class="sw_view" wx:for="{{getCodeItems}}" wx:key="text" wx:for-item="items" wx:for-index="i">
+    <view class="sw_text">{{items.text}}</view>
+    <swiper class="sw" previous-margin="150rpx" next-margin="150rpx" circular="true" easing-function="linear" bindchange="changeClass">
+      <swiper-item wx:for="{{items.list}}" wx:key="class" item-id="{{i}}">
+        <view class="sw_item">{{item.className}}</view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class="getCode_view_bt_view">
+    <button class="getCode_view_bt" bindtap="back_getCode">取消</button>
+    <button class="getCode_view_bt" bindtap="getCode">确定</button>
+  </view>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>
+
+<view class="getParentCode_view" animation="{{animationData_getParentCode}}">
+  <view class="getParentCode_view_text">选择父级项目</view>
+  <view class="gpc_sv_view" wx:for="{{getParentCodeItems}}" wx:key="id" wx:for-item="items" wx:for-index="i" wx:if="{{items.grade<3}}">
+    <scroll-view class="gpc_sv" scroll-x="true" wx:if="{{items.grade<getCodeItem[1]}}">
+      <view class="{{item.is==0?'gpc_sv_item':'gpc_sv_item_hover'}}" wx:for="{{items.list}}" wx:key="code" wx:for-item="item" wx:for-index="j" wx:if="{{getCodeItem[0]==item.class && (item.parentCode==parentCode || i==0)}}" bindtap="choiceCode" data-code="{{item.code}}" data-i="{{i}}" data-j="{{j}}">
+        <view class="gpc_sv_item_text">{{item.name}}</view>
+        <view class="gpc_sv_item_text">{{item.code}}</view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="gpc_bt_view">
+    <button class="gpc_bt" bindtap="back_getParentCode">返回</button>
+    <button class="gpc_bt" bindtap="saveCode">确定</button>
+  </view>
+</view>

@@ -5,6 +5,7 @@
     "tui-button": "../../../components/extend/button/button",
     "tui-datetime": "../../../components/dateTime/dateTime",
     "tui-icon": "../../../components/icon/icon",
-    "select": "/components/select/select"
+    "select": "../../../components/select/select"
+    
   }
 }

@@ -4,6 +4,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    result : [],
+    isMaskWindowShow: false,
+    maskWindowList: [' 查询姓名'],
+    selectIndex: -1,
+    isMaskWindowInputShow: false,
+    isMaskWindowInputShow1: false,
+    maskWindowInputValue: '',
+
     maxpagenumber: 0,
     showModalStatus: false,
     animationData: "",
@@ -21,13 +29,18 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
-
+    companyName : ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (options) {
+    var _this = this;
+    _this.setData({
+      companyName : options.companyName,
+      result : JSON.parse(options.access)
+    })
     wx.setNavigationBarTitle({
       title: '人员基本信息表'
     })
@@ -39,7 +52,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from gongzi_renyuan"
+        query: "select top 100 * from gongzi_renyuan where L like '"+_this.data.companyName+"%'"
       },
       success: res => {
         if (res.result.recordset.length < 100) {
@@ -61,7 +74,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select renyuanjibenxinxi from title where renyuanjibenxinxi is not null"
+        query: "select renyuanjibenxinxi from gongzi_title where renyuanjibenxinxi is not null"
       },
       success: res => {
         this.setData({
@@ -82,7 +95,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_renyuan "
+        query: "select count(id) as maxpagenumber from gongzi_renyuan where L like '"+that.data.companyName+"%'"
       },
       success: res => {
         that.setData({
@@ -219,7 +232,7 @@ Page({
       cancelText: "取消", //默认是“取消”
       cancelColor: '', //取消文字的颜色
       confirmText: "编辑", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
@@ -272,7 +285,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_renyuan) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_renyuan) temp_row where rownumber > (( '"+that.data.page+"' - 1) * 100) and L like '"+that.data.companyName+"%';"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -312,7 +325,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_renyuan) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_renyuan) temp_row where rownumber > (( '"+that.data.page+"' - 1) * 100) and L like '"+that.data.companyName+"%';"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -444,7 +457,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_renyuan) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_renyuan) temp_row where rownumber > (( '"+that.data.page+"' - 1) * 100) and L like '"+that.data.companyName+"%';"
       },
       success: res => {
         this.setData({
@@ -481,43 +494,107 @@ Page({
     })
   },
 
-  //查找
-  chazhao: function () {
+  /**
+   * 页面查询按钮功能
+   */
+  searchBtn: function (e) {
+    this.showMaskWindow();
+  },
+
+  //弹框以外区域点击
+  maskWindowBgClick: function (e) {
+    this.dismissMaskWindow();
+  },
+
+  //弹窗区域点击事件
+  clickTap: function (e) {
+
+  },
+
+  //切换选择项事件
+  maskWindowTableSelect: function (e) {
+    var index = e.currentTarget.dataset.windowIndex;
+    console.log(e.currentTarget.dataset)
+    this.setData({
+      selectIndex: e.currentTarget.dataset.windowIndex,
+      isMaskWindowInputShow: index == 0 || index == 1 || index == 2,
+      isMaskWindowInputShow1: index == 3
+    })
+  },
+
+  //输入框输入绑定事件
+  maskWindowInput: function (e) {
+    var value = e.detail.value;
+    var that = this
+    this.setData({
+      maskWindowInputValue: value
+    })
+    console.log(value)
+    console.log(that.data.selectIndex)
+  },
+
+  //点击确定按钮之后的事件
+  maskWindowOk: function (e) {
+    var _this = this;
+    var value = _this.data.maskWindowInputValue;
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from gongzi_renyuan where B = '亚索'"
+        query: "select top 100 * from gongzi_renyuan where B = '"+value+"' and L = '"+_this.data.companyName+"'"
       },
       success: res => {
-        console.log("查找成功")
-        this.setData({
-          list: res.result.recordset
-        })
+        if (res.result.recordset.length < 100) {
+          this.setData({
+            list: res.result.recordset,
+            IsLastPage: true
+          })
+        } else {
+          this.setData({
+            list: res.result.recordset
+          })
+        }
+        this.dismissMaskWindow();
       },
       err: res => {
-        console.log("错误!", res)
+        console.log("错误!")
       }
+    })
+  },
+  maskWindowCancel: function (e) {
+    this.dismissMaskWindow();
+  },
+
+  // 显示蒙版弹窗
+  showMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: true,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      isMaskWindowInputShow1: false,
+      maskWindowInputValue: ""
+    })
+  },
+
+  // 隐藏蒙版窗体
+  dismissMaskWindow: function () {
+    this.setData({
+      isMaskWindowShow: false,
+      selectIndex: -1,
+      isMaskWindowInputShow: false,
+      isMaskWindowInputShow1: false,
+      maskWindowInputValue: ""
     })
   },
 
   //添加
   tianjia: function () {
-    var that = this
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "insert into gongzi_gongzimingxi (B) values('请输入')"
-      },
-      success: res => {
-        console.log("插入成功")
-        that.setData({
-          list: res.result.recordset
-        })
-        that.baochi()
-      },
-      err: res => {
-        console.log("错误!", res)
-      }
+    wx.showToast({
+      title: "跳转至新增人员",
+      icon: 'none'
+    })
+    var length = this.data.list.length;
+    wx.navigateTo({
+      url: "../1renyuanjibenxinxi_edit/newRenyuan?listLength="+length
     })
   },
 })

@@ -1,0 +1,16 @@
+<view class="body">
+    <view class="list" wx:for="{{names}}" wx:for-item="items" wx:for-index="i" >
+      <view class="item{{items.listHid?'_hover':''}}" 
+      bindtap="choice" data-index="{{i}}">
+        <view class="item_text1">{{items.name}}</view>
+      </view>
+      <scroll-view class="sv" scroll-y="true" animation="{{items.animationData}}">
+        <view class="svitem" wx:for="{{items.list}}" bindtap="go" data-index="{{index}}" data-itemindex="{{i}}">{{item.text}}</view>
+      </scroll-view>
+    </view>
+</view>
+  
+
+
+
+

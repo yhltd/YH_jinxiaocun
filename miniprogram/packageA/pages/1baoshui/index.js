@@ -4,6 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    result : [],
     options01: [],
     options02: [],
     selected: {},
@@ -16,6 +17,7 @@ Page({
     isMaskWindowInputShow: false,
     isMaskWindowInputShow1: false,
     maskWindowInputValue: '',
+    isload : false,
 
     maxpagenumber: 0,
     showModalStatus: false,
@@ -34,12 +36,19 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
+    input_type : "",
+    companyName : ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (options) {
+    var that = this
+    that.setData({
+      companyName : options.companyName,
+      result : JSON.parse(options.access)
+    })
     wx.setNavigationBarTitle({
       title: '报税样表'
     })
@@ -47,20 +56,21 @@ Page({
       frontColor: '#ffffff',
       backgroundColor: '#4876ff',
     })
+   
     console.log('onLoad')
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 E,B,U,AI,(AL+AM)AS COUN1,AK,AN,AO from gongzi_gongzimingxi"
+        query: "select top 100 id,E,B,O,U,AI,(AL+AM)AS COUN1,AK,AN,AP,AQ,AR,ASA,AZ,AO from gongzi_gongzimingxi where BD = '"+that.data.companyName+"'"
       },
       success: res => {
         if (res.result.recordset.length < 100) {
-          this.setData({
+          that.setData({
             list: res.result.recordset,
             IsLastPage: true
           })
         } else {
-          this.setData({
+          that.setData({
             list: res.result.recordset
           })
         }
@@ -73,12 +83,30 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select baoshui from title where baoshui is not null"
+        query: "select baoshui from gongzi_title where baoshui is not null"
       },
       success: res => {
-        this.setData({
+        that.setData({
           title: res.result.recordsets[0]
         })
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })
+
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select count(id) as maxpagenumber from gongzi_gongzimingxi where BD = '"+that.data.companyName+"'"
+      },
+      success: res => {
+        that.setData({
+          maxpagenumber: Math.ceil(res.result.recordset[0].maxpagenumber / 100),
+          isload : true
+        })
+        console.log(that.data.maxpagenumber)
       },
       err: res => {
         console.log("错误!")
@@ -90,22 +118,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var that = this
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "select count(id) as maxpagenumber from gongzi_gongzimingxi "
-      },
-      success: res => {
-        that.setData({
-          maxpagenumber: Math.ceil(res.result.recordset[0].maxpagenumber / 100)
-        })
-        console.log(that.data.maxpagenumber)
-      },
-      err: res => {
-        console.log("错误!")
-      }
-    })
+    
   },
 
   /**
@@ -215,7 +228,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'"
+          query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "' and BD = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -234,7 +247,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where C ='" + input + "'"
+          query: "select top 100 * from gongzi_gongzimingxi where C ='" + input + "' and BD = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -253,7 +266,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where D ='" + input + "'"
+          query: "select top 100 * from gongzi_gongzimingxi where D ='" + input + "' and BD = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -280,7 +293,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and C='" + that.data.title_bumen + "'and D='" + that.data.title_gangwei + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and C='" + that.data.title_bumen + "'and D='" + that.data.title_gangwei + "' and BD = '"+that.data.companyName+"'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -296,7 +309,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and D='" + that.data.title_gangwei + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and D='" + that.data.title_gangwei + "' and BD = '"+that.data.companyName+"'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -312,7 +325,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and C='" + that.data.title_bumen + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and C='" + that.data.title_bumen + "' and BD = '"+that.data.companyName+"'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -328,7 +341,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "' and BD = '"+that.data.companyName+"'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -453,14 +466,16 @@ Page({
     var that = this
     if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
       that.setData({
-        edit_new: that.data.edit_old
+        edit_new: that.data.edit_old,
+        edit_old :""
       })
     } else if (e.detail.value.value.length != 0) {
       that.setData({
-        edit_new: e.detail.value.value
+        edit_new: e.detail.value.value,
+        edit_old :""
       })
     }
-    console.log("选中单元格的信息：", that.data.id, that.data.name, that.data.edit_old) //that.data.edit_old的是单元格修改之前的值
+    console.log("选中单元格的信息：", that.data.id, that.data.name, that.data.edit_old,that.data.edit_new) //that.data.edit_old的是单元格修改之前的值
     console.log("提交成功，得到的值为:", that.data.edit_new)
 
     //通过云函数修改数据库内容
@@ -480,8 +495,16 @@ Page({
   },
   click_edit(e) {
     var that = this
+    if(that.data.result.upd!=1){
+      wx.showToast({
+        title: '您没有权限',
+        icon : 'none'
+      })
+      return;
+    }
     var $collection = e.currentTarget.dataset
     that.setData({
+      input_type : $collection.type,
       id: $collection.id,
       name: $collection.name,
       edit_old: $collection.x,
@@ -522,7 +545,7 @@ Page({
       cancelText: "取消", //默认是“取消”
       cancelColor: '', //取消文字的颜色
       confirmText: "编辑", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
@@ -572,15 +595,19 @@ Page({
         icon: 'none',
         duration: 2500
       })
+      that.setData({
+        isload : false
+      })
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, E,B,U,AI,(AL+AM)AS COUN1,AK,AN,AO from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, E,B,U,AI,(AL+AM)AS COUN1,AK,AN,AO from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
           that.setData({
-            list: res.result.recordset
+            list: res.result.recordset,
+            isload : true
           })
         },
         err: res => {
@@ -588,7 +615,8 @@ Page({
         },
         complete: () => {
           that.setData({
-            page: this.data.page
+            page: this.data.page,
+            isload : true
           })
         }
       })
@@ -612,10 +640,13 @@ Page({
         icon: 'none',
         duration: 2500
       })
+      this.setData({
+        isload : false
+      })
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, E,B,U,AI,(AL+AM)AS COUN1,AK,AN,AO from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, E,B,U,AI,(AL+AM)AS COUN1,AK,AN,AO from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) BD = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -624,12 +655,14 @@ Page({
             console.log("下一页进入成功：第" + that.data.page + "页")
             that.setData({
               list: res.result.recordset,
+              isload : true
             })
           }
           //输出的长度小于100，则本页的下一页是最后一页，将标记置true
           if (res.result.recordset.length < 100) {
             that.setData({
-              IsLastPage: true
+              IsLastPage: true,
+              isload : true
             })
             console.log("抵达最后一页")
           }
@@ -639,7 +672,8 @@ Page({
         },
         complete: () => {
           that.setData({
-            page: this.data.page
+            page: this.data.page,
+            isload : true
           })
         }
       })
@@ -744,14 +778,18 @@ Page({
   //用于刷新页面时保持页数，或者跳转到某一页
   baochi: function () {
     var that = this
+    that.setData({
+      isload : false
+    })
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, E,B,U,AI,(AL+AM)AS COUN1,AK,AN,AO from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,E,B,O,U,AI,(AL+AM)AS COUN1,AK,AN,AP,AQ,AR,ASA,AZ,AO from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100)"
       },
       success: res => {
         this.setData({
-          list: res.result.recordset
+          list: res.result.recordset,
+          isload : true
         })
       },
       err: res => {
@@ -784,24 +822,6 @@ Page({
     })
   },
 
-  //查找
-  chazhao: function () {
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "select top 100 * from gongzi_gongzimingxi where B = '亚索'"
-      },
-      success: res => {
-        console.log("查找成功")
-        this.setData({
-          list: res.result.recordset
-        })
-      },
-      err: res => {
-        console.log("错误!", res)
-      }
-    })
-  },
 
   //添加
   tianjia: function () {
@@ -809,7 +829,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "insert into gongzi_gongzimingxi (B) values('请输入')"
+        query: "insert into gongzi_gongzimingxi (B,BD) values('请输入','"+that.data.companyName+"')"
       },
       success: res => {
         console.log("插入成功")
@@ -824,4 +844,9 @@ Page({
     })
   },
 
+  aa : function(){
+    console.log("sadsadsad")
+  }
+
 })
+

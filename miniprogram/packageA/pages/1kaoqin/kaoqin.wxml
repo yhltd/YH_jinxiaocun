@@ -44,20 +44,20 @@
   <view bindsubmit="edit_cell" style="text-align: center;">
     <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
     <form bindsubmit="edit_cell">
-      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" />
+      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" value=""/>
       <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
     </form>
   </view>
 </tui-modal>
 
 <!--标题栏-->
-<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass' >
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="key">
         <view class="kaoqinbiao {{(item.kaoqinbiao == '姓名')?'xingming':''||(item.kaoqinbiao == '年月')?'no':''||(item.kaoqinbiao == '全勤天数')?'no':''||(item.kaoqinbiao == '实际天数')?'no':''||(item.kaoqinbiao == '请假时间/小时')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''||(item.kaoqinbiao == '迟到天数')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''||(item.kaoqinbiao == '公司')?'no':''}}"
           data-kaoqinbiao="{{item.kaoqinbiao}}" data-kaoqinbiao='{{item.kaoqinbiao}}'>
-          <view class="cell_label centerclass" style="display:flex;flex-direction:column">
+          <view class="cell_label_header centerclass" style="display:flex;flex-direction:column">
             <text style="font-size:; font-weight:bold;">{{item.kaoqinbiao}}</text>
             <text style="font-size:; font-weight:bold;">{{week}}</text>
           </view>
@@ -70,11 +70,11 @@
     <block wx:for="{{list}}">
       <view class='table_main'>
         <!--序号 -->
-        <view class='td' style='background-color:white;'>
+        <view class='td ' style="background-color:white;position: sticky;left: 0;">
           <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.moth}}' data-name='{{item.name}}' data-id='{{item.id}}' data-x="{{item.name}}" data-doinb='name'>{{item.name}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" bindlongtap="click_delete" data-name='{{item.name}}' data-id='{{item.id}}' data-year='{{item.year}}' data-moth='{{item.moth}}'>
+          <view class="cell_label centerclass"  bindlongtap="click_delete" data-name='{{item.name}}' data-id='{{item.id}}' data-year='{{item.year}}' data-moth='{{item.moth}}'>
             <view>{{item.year}}年{{item.moth}}月</view>
           </view>
         </view>
@@ -215,12 +215,12 @@
 
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="leftDrawer">效率
+    <button class="btn-primary" hover-class="btn-hover" disabled="{{result.upd!=1}}"   bindtap="leftDrawer">效率
     </button>
     <view style="width:10%"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="searchBtn">查找</button>
+    <button class="btn-primary" disabled="{{result.sel!=1}}" hover-class="btn-hover" bindtap="searchBtn">查找</button>
     <view style="width:10%"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="tianjia">添加</button>
+    <button class="btn-primary" disabled="{{result.add!=1}}" hover-class="btn-hover" bindtap="tianjia">添加</button>
     <view style="width:5%"></view>
   </view>
 

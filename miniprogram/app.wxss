@@ -932,7 +932,11 @@ button::after {
 }
 
 .maskWindowInputView {
-  width: 80%;
+  width: 78%;
+}
+
+.maskWindowInputView11 {
+  width: 100%;
 }
 
 .maskWindowInput {

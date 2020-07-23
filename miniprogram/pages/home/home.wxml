@@ -1,9 +1,7 @@
 <!--pages/home/home.wxml-->
 <view class="all">
-  <view class="top"></view>
-  <view data-index="{{item.index}}" bindtap="submit" wx:for="{{list}}" wx:for-item="item" class="click" wx:key="key">
+  <view data-index="{{index}}" style="{{item.hid?'opacity:1':'opacity:0.3'}}" data-view_id="{{item.index}}" bindtap="submit" wx:for="{{list}}" wx:for-item="item" class="click" wx:key="key" >
     <image class="image" src="{{item.url}}"></image>
-    <view class="fon-30"> {{item.text}}
-    </view>
+    <view class="fon-30"> {{item.text}}</view>
   </view>
 </view>

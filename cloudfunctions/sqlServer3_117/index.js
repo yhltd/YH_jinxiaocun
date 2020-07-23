@@ -16,7 +16,7 @@ exports.main = async (event) => {
     pool: {
       min: 0,
       max: 10,
-      idleTimeoutMillis: 30000
+      idleTimeoutMillis: 30
     }
   };
   try {

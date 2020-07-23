@@ -25,7 +25,7 @@ page {
   width: auto;
   white-space: nowrap;
   margin-top: 0px;
-  height: 75%;
+  height: 80%;
   background-color: #f2f2f2;
 }
 

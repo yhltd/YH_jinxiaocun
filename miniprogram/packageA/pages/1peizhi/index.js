@@ -5,10 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    result : [],
+    companyName : "",
     id: 0,
     maxLength: 0,
     jiaqiLength: 0,
 
+    input_type : "",
     type: 1,
     startYear: 1980,
     endYear: 2030,
@@ -40,10 +43,66 @@ Page({
   },
 
 
+  click_delete: function (e) {
+    var _this = this;
+    if(_this.data.result.del!=1){
+      wx.showToast({
+        title: '您没有权限',
+        icon : 'none'
+      })
+      return;
+    }
+    var $collection = e.currentTarget.dataset
+    var dbid = $collection.dbid
+    var id = $collection.id
+    wx.showModal({
+      title: '操作选择',
+      content: '确认删除么？序号'+id,
+      showCancel: true, //是否显示取消按钮
+      cancelText: "取消", //默认是“取消”
+      cancelColor: '', //取消文字的颜色
+      confirmText: "删除", //默认是“确定”
+      confirmColor: '#DD5044', //确定文字的颜色
+      success: function (res) {
+        if (res.cancel) {
+          //点击取消,默认隐藏弹框
+          //这里可以callfunction！！！！
+        } else {
+          var sql = "delete from gongzi_peizhi where id = "+ dbid
+          console.log(sql)
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data: {
+              query: sql
+            },
+            success: res => {
+              _this.baochi();
+            },
+            err: res => {
+              console.log("错误!", res)
+            }
+          })
+          wx.showToast({
+            title: '删除成功！序号为' + id,
+            icon: 'none'
+          })
+        }
+      },
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function (options) {
+    var _this = this
+    _this.setData({
+      companyName : options.companyName,
+      result : JSON.parse(options.access)
+    })
     wx.setNavigationBarTitle({
       title: '配置表'
     })
@@ -58,7 +117,7 @@ Page({
       name: 'sqlServer_117',
       data: {
         //用isnull来判断
-        query: "select top 100 isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi"
+        query: "select top 100 isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi where gongsi = '"+_this.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功")
@@ -81,7 +140,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select peizhi from title where peizhi is not null"
+        query: "select peizhi from gongzi_title where peizhi is not null "
       },
       success: res => {
         this.setData({
@@ -102,7 +161,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_peizhi "
+        query: "select count(id) as maxpagenumber from gongzi_peizhi where gongsi = '"+that.data.companyName+"'"
       },
       success: res => {
         that.setData({
@@ -118,7 +177,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(day)as count from gongzi_peizhi where day is not null and day <>'-' and day <> ''"
+        query: "select count(day)as count from gongzi_peizhi where day is not null and day <>'-' and day <> '' and gongsi = '"+that.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功:", res.result.recordset[0].count)
@@ -134,7 +193,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(day)as count from gongzi_peizhi"
+        query: "select count(day)as count from gongzi_peizhi where gongsi ='"+that.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功:", res.result.recordset[0].count)
@@ -197,41 +256,52 @@ Page({
     that.setData({
       id:id
     })
-    wx.showModal({
-      title: '请选择操作',
-      content: '删除或编辑假期配置',
-      showCancel: true, //是否显示取消按钮
-      cancelText: "删除", //默认是“取消”
-      cancelColor: 'red', //取消文字的颜色
-      confirmText: "编辑", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
-      success: function (res) {
-        if (res.cancel) {
-          //取消就删除，直接云函数  （双押！！！skr）
-          wx.cloud.callFunction({
-            name: 'sqlServer_117',
-            data: {
-              query: "update gongzi_peizhi set year = null,month = null,day = null  where id =" + id
-            },
-            success: res => {
-              that.data.list[id+1].jiaqi = '-'
-              that.setData({
-                list: that.data.list
+    if($collection.x!="-"){
+      wx.showModal({
+        title: '请选择操作',
+        content: '删除或编辑假期配置',
+        showCancel: true, //是否显示取消按钮
+        cancelText: "删除", //默认是“取消”
+        cancelColor: '#DD5044', //取消文字的颜色
+        confirmText: "编辑", //默认是“确定”
+        confirmColor: '#84B9F2', //确定文字的颜色
+        success: function (res) {
+          if (res.cancel) {
+            if(that.data.result.del!=1){
+              wx.showToast({
+                title: '您没有权限',
+                icon : 'none'
               })
-              console.log("删除成功")
-              that.baochi()
-            },
-            err: res => {
-              console.log("错误!", res)
+              return;
             }
-          })
-        } else {
-          that.show()
-        }
-      },
-      fail: function (res) {}, //接口调用失败的回调函数
-      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
-    })
+            //取消就删除，直接云函数  （双押！！！skr）
+            wx.cloud.callFunction({
+              name: 'sqlServer_117',
+              data: {
+                query: "update gongzi_peizhi set year = null,month = null,day = null  where id =" + id
+              },
+              success: res => {
+                that.data.list[id+1].jiaqi = '-'
+                that.setData({
+                  list: that.data.list
+                })
+                console.log("删除成功")
+                that.baochi()
+              },
+              err: res => {
+                console.log("错误!", res)
+              }
+            })
+          } else {
+            that.show()
+          }
+        },
+        fail: function (res) {}, //接口调用失败的回调函数
+        complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+      })
+    }else{
+      that.show();
+    }
   },
   showM: function () {
     var that = this
@@ -243,7 +313,7 @@ Page({
       cancelText: "取消", //默认是“取消”
       cancelColor: '', //取消文字的颜色
       confirmText: "添加", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
+      confirmColor: '#84B9F2', //确定文字的颜色
       success: function (res) {
         if (res.cancel) {
           //点击取消无操作
@@ -257,17 +327,25 @@ Page({
   },
 
   show: function () {
-    this.setData({
+    var _this = this;
+    if(_this.data.result.upd!=1){
+      wx.showToast({
+        title: '您没有权限',
+        icon : 'none'
+      })
+      return;
+    }
+    _this.setData({
       cancelColor: "#888",
       color: "#5677fc",
       setDateTime: "",
       startYear: 1980,
       endYear: 2030
     })
-    this.setData({
+    _this.setData({
       type: 2
     })
-    this.dateTime.show();
+    _this.dateTime.show();
   },
   change: function (e) {
     console.log(e)
@@ -309,6 +387,7 @@ Page({
         }
       })
     }
+    
   },
 
 
@@ -320,7 +399,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "insert into gongzi_peizhi (gongsi,kaoqin,kaoqin_peizhi,bumen,zhiwu) values('云合未来','-','-','-','-')"
+        query: "insert into gongzi_peizhi (gongsi,kaoqin,kaoqin_peizhi,bumen,zhiwu) values('"+that.data.companyName+"','-','-','-','-')"
       },
       success: res => {
         console.log("插入成功!!!!!!")
@@ -401,8 +480,16 @@ Page({
   },
   click_edit(e) {
     var that = this
+    if(that.data.result.upd!=1){
+      wx.showToast({
+        title: '您没有权限',
+        icon : 'none'
+      })
+      return;
+    }
     var $collection = e.currentTarget.dataset
     that.setData({
+      input_type : $collection.type,
       id: $collection.id,
       name: $collection.name,
       edit_old: $collection.x,
@@ -432,36 +519,7 @@ Page({
   时间：2020/5/20
   */
 
-  click_delete: function (e) {
-    var $collection = e.currentTarget.dataset
-    var id = $collection.id
-    var name = $collection.name
-    wx.showModal({
-      title: '操作选择',
-      content: '姓名为' + name + "，序号为" + id + "的成员被选中\r\n请选择操作",
-      showCancel: true, //是否显示取消按钮
-      cancelText: "取消", //默认是“取消”
-      cancelColor: '', //取消文字的颜色
-      confirmText: "编辑", //默认是“确定”
-      confirmColor: 'skyblue', //确定文字的颜色
-      success: function (res) {
-        if (res.cancel) {
-          //点击取消,默认隐藏弹框
-          //这里可以callfunction！！！！
-        } else {
-          //点击编辑
-          wx.showToast({
-            title: '编辑姓名：' + name,
-            icon: 'none'
-          })
-        }
-      },
-      fail: function (res) {}, //接口调用失败的回调函数
-      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
-    })
-
-    //修改之后刷新页面
-  },
+  
 
 
 
@@ -496,7 +554,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and gongsi = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -536,7 +594,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and gongsi = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -668,18 +726,40 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber,isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100);"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber,isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and gongsi = '"+that.data.companyName+"'"
       },
       success: res => {
-        this.setData({
-          list: res.result.recordset
-        })
+        if(res.result.recordset==""){
+          that.setData({
+            list: ""
+          })
+        }else{
+          that.setData({
+            list: res.result.recordset
+          })
+        }
+        
       },
       err: res => {
         console.log("错误!", res)
       }
     })
 
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select count(id) as maxpagenumber from gongzi_peizhi where gongsi = '"+that.data.companyName+"'"
+      },
+      success: res => {
+        that.setData({
+          maxpagenumber: Math.ceil(res.result.recordset[0].maxpagenumber / 100)
+        })
+        console.log(that.data.maxpagenumber)
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })
 
   },
 
@@ -705,24 +785,6 @@ Page({
     })
   },
 
-  //查找
-  chazhao: function () {
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "select top 100 * from gongzi_peizhi where B = '亚索'"
-      },
-      success: res => {
-        console.log("查找成功")
-        this.setData({
-          list: res.result.recordset
-        })
-      },
-      err: res => {
-        console.log("错误!", res)
-      }
-    })
-  },
 
 
 

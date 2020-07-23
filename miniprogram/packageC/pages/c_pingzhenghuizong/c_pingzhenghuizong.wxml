@@ -1,0 +1,166 @@
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
+      <view class="table_main">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0"  >
+          <view wx:if="{{!examine}}" class="list_text">{{list_item.ROW_ID}}</view>
+          <view wx:if="{{examine}}">
+            <checkbox-group bindchange="choice_checkBox_examine"  wx:if="{{examine}}">
+              <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
+            </checkbox-group>
+          </view>
+        </view>
+        
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="word" data-value="{{list_item.word}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.word}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="no" data-value="{{list_item.no}}" bindtap="clickView" style="width:300rpx" data-input_type="text">
+          <view class="list_text">{{list_item.no}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="voucherDate" data-value="{{list_item.voucherDate}}" data-input_type="date" bindtap="clickView" style="width:350rpx">
+          <view class="list_text">{{list_item.voucherDate}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="abstract" data-value="{{list_item.abstract}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.abstract}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="code" data-value="{{list_item.code}}" bindtap="show_upd_view">
+          <view class="list_text">{{list_item.code}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="name" data-value="{{list_item.name}}" style="width:650rpx">
+          <view class="list_text">{{list_item.name}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="load"   data-value="{{list_item.load}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.load}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="borrowed" data-value="{{list_item.borrowed}}"  bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.borrowed}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="department"  data-value="{{list_item.department}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.department}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="expenditure"  data-value="{{list_item.expenditure}}" bindtap="clickView" data-input_type="text"style="width:300rpx">
+          <view class="list_text">{{list_item.expenditure}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="note"  data-value="{{list_item.note}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.note}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="man" data-value="{{list_item.man}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.man}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save">
+    <view wx:if="{{isDate}}">
+      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+    </view>
+    <view style="height: 52%;" wx:if="{{!isDate}}">
+      <view class="input_date_form" wx:for="{{dateArray}}">
+        <input class="input_date" value="{{item.value}}" type="number" name="{{item.name}}" ></input>
+        <view class="input_date_text">{{item.text}}</view>
+      </view>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="upd_code_view" animation="{{animationData_upd_code}}" hidden="{{initHidView?initHidView:''}}">
+  <view class="upd_area1">
+    <block wx:for="{{accounting}}">
+      <button class="bt_upd_code" hover-class="bt_upd_code_hover" data-index="{{index}}" bindtap="choice_item">{{item.text}}</button>
+    </block>
+  </view>
+  <view class="upd_area2">
+    <scroll-view class="sv_upd_code" scroll-y="true">
+      <view class="sv_upd_header">
+        <view class="upd_text1">科目代码</view>
+        <view class="upd_text2">科目名称</view>
+      </view>
+      <view wx:for="{{accounting_arr}}" class="sv_upd_show" hover-class="sv_upd_show_hover" bindtap="choice_item_upd" data-code="{{item.code}}" data-name="{{item.name}}" style="{{index==0?'margin-top:11%':''}}">
+        <view class="upd_text1">{{item.code}}</view>
+        <view class="upd_text2">{{item.name}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<view class="examine_view" animation="{{animationData_examine}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="examine_save">
+    <view class="examine_input_view">
+      <input class="examine_input" placeholder="请输入审核人姓名" value="{{empty}}" name="man"></input>
+      <input class="examine_input" placeholder="请输入操作密码" value="{{empty}}" name="do" type="password"></input>
+    </view>
+    <view class="examine_bt_view">
+      <button class="examine_bt" form-type="submit">确定</button>
+    </view>
+  </form>
+  
+</view>
+
+<view class="upd_countPage_view" animation="{{animationData_countPage}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save_countPage" style="height:100%;width:100%">
+    <input class="upd_countPage_input" placeholder="每页显示条数" name="countPage" value="{{countPage}}" type="number"></input>
+    <button class="upd_countPage_bt" form-type="submit">保存</button>
+  </form>
+</view>
+
+<view class="bottom_view"  >
+  <view style="{{isSelect?'opacity:0.3':'opacity:1'}}">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
+    <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
+    <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+  </view>
+  <view class="backSelect" wx:if="{{isSelect || examine}}" bindtap="backSelect">
+    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
+  </view>
+  <button class="moreDo" bindtap="{{examine?'upd_examine':'moreDo'}}">{{examine?'审核':'更多操作'}}</button>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">
+</view>
+
+<view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="select">
+    <view class="option" wx:for="{{options}}" wx:for-index="op_index" wx:for-item="op_item">
+      <view style="width: 93%;margin: auto;height: 68rpx;display: inline-flex;flex-direction: row;align-items:center;margin-bottom: 21rpx;">
+        <view style="width: 79%;display: inline-flex;margin-left: 7%;height: 100%;">
+          <input class="option_text" value="{{op_item.text}}" bindinput="input" data-index="{{op_index}}" placeholder="请选择凭证字" name="{{op_item.columnName}}"/>
+      </view>
+      <view style="width: 14%;display: inline-flex;">
+        <button class="option_bt" bindtap="selectTap" data-items_index="{{op_index}}">V</button>
+      </view>
+    </view>
+      <scroll-view class="option_sv" hidden="{{op_item.selectHid}}" scroll-y="true">
+        <view class="option_sv_item" wx:for="{{op_item.items}}" wx:for-index="index" wx:for-item="item" catchtap="choice" data-items_index="{{op_index}}" data-item_index="{{index}}">{{item}}</view>
+      </scroll-view>
+    </view>
+    <view class="select_view">
+      <input class="select_view_input" type="number" value="{{empty}}" placeholder="年" name="year"/>
+      <view style="width: 0;margin-left: 6%;">~</view>
+      <input class="select_view_input" type="number" value="{{empty}}" placeholder="月" name="month"/>
+    </view>
+    <view class="moreDo_bt_view" style="">
+      <button class="moreDo_bt" bindtap="hid_view">返回</button>
+      <button class="moreDo_bt" form-type="submit">查询</button>
+    </view>
+  </form>
+</view>
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" bindtap="examine">审核</button>
+  <button class="moreDo_view_bt" bindtap="showSelect">查询</button>
+  <button class="moreDo_view_bt" bindtap="examine">添加一行</button>
+</view>

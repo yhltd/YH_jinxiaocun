@@ -11,7 +11,7 @@ const form = {
    formData:Object 表单对象。{key:value,key:value},key==rules.name
    rules: Array [{name:name,rule:[],msg:[]},{name:name,rule:[],msg:[]}]
   		name:name 属性=> 元素的名称
-  		rule:字符串数组 ["required","isMobile","isEmail","isCarNo","isIdCard","isAmount","isNum","isChinese","isEnglish",isEnAndNo","isSpecial","isEmoji",""isDate","isUrl","isSame:key","range:[1,9]","minLength:9","maxLength:Number"]
+  		rule:字符串数组 ["required","isMobile","isEmail","isCarNo","isIdCard","isAmount","isNum","isEnglish",isEnAndNo","isSpecial","isEmoji",""isDate","isUrl","isSame:key","range:[1,9]","minLength:9","maxLength:Number"]
   		msg:数组 []。 与数组 rule 长度相同,对应的错误提示信息
   */
   validation: function(formData, rules) {
@@ -57,9 +57,6 @@ const form = {
             break;
           case "isNum":
             isError = !form._isNum(formData[key]);
-            break;
-          case "isChinese":
-            isError = !form._isChinese(formData[key]);
             break;
           case "isEnglish":
             isError = !form._isEnglish(formData[key]);
@@ -197,10 +194,6 @@ const form = {
     //只能为数字
     return /^[0-9]+$/.test(value);
   },
-  _isChinese: function(value) {
-    let reg = /^[\u0391-\uFFE5]+$/;
-    return value !== "" && reg.test(value) && !form._isSpecial(value) && !form._isEmoji(value)
-  },
   _isEnglish: function(value) {
     return /^[a-zA-Z]*$/.test(value)
   },
@@ -247,9 +240,15 @@ const form = {
   _minLength: function(value, min) {
     console.log(value)
     console.log(min)
+    if(value==undefined || value == null || value==""){
+      return 2;
+    }
     return value.length >= Number(min)
   },
   _maxLength: function(value, max) {
+    if(value==undefined || value == null || value==""){
+      return 2;
+    }
     return value.length <= Number(max)
   }
 };
