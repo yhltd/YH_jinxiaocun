@@ -1,6 +1,6 @@
 // -// miniprogram/pages/frmadminform/frmadminform.js
 
- var util = require('../../utils/util.js');
+var util = require('../../utils/util.js');
 var app = getApp()
 Page({
 
@@ -8,27 +8,39 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items: [
-      { name: 'lock', value: '锁定' },
-      { name: 'unlock', value: '正常', checked: 'true' },
+    items: [{
+        name: 'lock',
+        value: '锁定'
+      },
+      {
+        name: 'unlock',
+        value: '正常',
+        checked: 'true'
+      },
 
     ],
-    itemsyesno: [
-      { name: 'lock', value: '是' },
-      { name: 'unlock', value: '否', checked: 'true' },
+    itemsyesno: [{
+        name: 'lock',
+        value: '是'
+      },
+      {
+        name: 'unlock',
+        value: '否',
+        checked: 'true'
+      },
 
     ],
     AdminIS: null,
     Btype: null,
     jigoudaima: null,
-    gongsi:null,
+    gongsi: null,
     Createdate_i: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this;
     var time = util.formatTime(new Date());
 
@@ -41,60 +53,60 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
   //事件处理函数
-  searchBox: function (e) {
+  searchBox: function(e) {
     // wx.showToast({
     //   title: 'jj' ,
     //   icon: 'success',
     //   duration: 2000
     // }) 
     const that = this;
-    var gongsi,uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
+    var gongsi, uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
     uname = e.detail.value.username,
       pass = e.detail.value.pwd,
       pass2 = e.detail.value.pwd2,
@@ -121,28 +133,48 @@ Page({
 
     const db = wx.cloud.database();
 
-    
+
     console.log(that.data.Btype)
-    db.collection("Yh_JinXiaoCun_user").add({
+    // db.collection("Yh_JinXiaoCun_user").add({
+    //   data: {
+    //     gongsi:gongsi,
+    //     name: uname,
+    //     password: pass,
+    //     AdminIS: that.data.AdminIS,
+    //     Btype: that.data.Btype,
+    //     jigoudaima: jigoudaima,
+    //     Createdate: time
+    //   },
+    // });
+    // wx.showToast({
+    //   title: '创建成功，请返回',
+    //   icon: 'success',
+    //   duration: 3000
+    // })
+
+    wx.cloud.callFunction({
+      name: "sqlConnection",
       data: {
-        gongsi:gongsi,
-        name: uname,
-        password: pass,
-        AdminIS: that.data.AdminIS,
-        Btype: that.data.Btype,
-        jigoudaima: jigoudaima,
-        Createdate: time
+        sql: "insert into yh_jinxiaocun_user (gongsi,_id,name,password,AdminIS,Btype,jigoudaima,Createdate)VALUES('" + gongsi + "','"+ uname +"','" + uname + "','" + pass + "','" + that.data.AdminIS + "','" + that.data.Btype + "','" + jigoudaima + "','" + time + "')"
       },
+      success(res) {
+        console.log("成功")
+        wx.showToast({
+          title: '创建成功',
+          icon: 'success',
+          duration: 3000
+        },wx.navigateBack({
+          delta: 1
+        }))
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
     });
-    wx.showToast({
-      title: '创建成功，请返回',
-      icon: 'success',
-      duration: 3000
-    })
 
   },
 
-  btcanel: function () {
+  btcanel: function() {
     wx.navigateBack({
 
     })

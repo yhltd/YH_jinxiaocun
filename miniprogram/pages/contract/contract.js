@@ -8,7 +8,8 @@ Page({
   data: {
     hidden1: true,
     jinhuo:0,
-    backhidden: true
+    backhidden: true,
+    id:''
   },
 
   /**
@@ -65,6 +66,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this;
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
     wx.cloud.callFunction({
@@ -103,7 +105,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    var that = this
+    wx.showToast({
+      title: '刷新中',
+      icon: 'loading',
+      duration: 500
+    })
+    that.onLoad()
+    that.onShow()
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -111,6 +121,45 @@ Page({
    */
   onReachBottom: function () {
 
+  },
+
+  shanchu:function(e){
+    var that = this
+    const db = wx.cloud.database()
+    var id = e.currentTarget.dataset.id
+    // console.log(id)
+    // console.log(that.data.all)
+    wx.showModal({
+      title: '提示',
+      content: '是否删除？',
+      success: function (res) {
+        if (res.confirm) {
+          wx.cloud.callFunction({
+            name: "sqlConnection",
+            data: {
+              // sql: "delete from yh_jinxiaocun_jinhuofang where beizhu = '" + id + "'"
+              sql: "delete from yh_jinxiaocun_chuhuofang where beizhu = '" + id + "'"
+            },
+            success(res) {
+              console.log("成功", res)
+              that.onLoad();
+              that.onShow();
+              // that.setData({
+              //     all: res.data,
+              //   })
+              // szZhi = 
+            },
+            fail(res) {
+              console.log("失败", res)
+            }
+          });
+        } else if (res.cancel) {
+          return false;
+        }
+      }
+    })
+    that.onLoad();
+    that.onShow();
   },
   input1: function (e) {
     var beizhu = e.detail.value
@@ -196,6 +245,8 @@ Page({
       hidden1: !that.data.hidden1,
       backhidden: true
     })
+    that.onLoad();
+    that.onShow();
     //  that.onLoad()
   },
 
@@ -214,11 +265,12 @@ Page({
 
   ke: function (e) {
     var that = this
-
-    var id = e.currentTarget.dataset.id
-    console.log(that.data.jinhuo)
+    that.setData({
+        id: e.currentTarget.dataset.id
+    })
+    console.log("单击时获得的值",that.data.id)
     if (that.data.jinhuo == 1) {
-      wx.setStorageSync('khname',id );
+      wx.setStorageSync('khname',that.data.id );
       wx.setStorageSync('khpd', "1");
       //返回上一页
       wx.navigateBack();

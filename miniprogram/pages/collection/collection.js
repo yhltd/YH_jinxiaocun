@@ -24,7 +24,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function () {
+  onLoad: function() {
     var that = this
     that.setData({
       rkSum: 0,
@@ -33,8 +33,8 @@ Page({
     })
     var all = []
     var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
- 
+    var gongsi = app.globalData.gongsi
+
     const db = wx.cloud.database();
     wx.cloud.callFunction({
       name: "sqlConnection",
@@ -44,11 +44,12 @@ Page({
       success(res) {
         console.log("成功", res)
         that.setData({
-            all: res.result,
+          all: res.result,
 
-          })
+        })
         // szZhi = 
-      }, fail(res) {
+      },
+      fail(res) {
         console.log("失败", res)
 
       }
@@ -74,14 +75,14 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     var that = this
     that.setData({
       rkSum: 0,
@@ -93,38 +94,113 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
+  onPullDownRefresh: function() {
+    var that = this
+    wx.showToast({
+      title: '刷新中',
+      icon: 'loading',
+      duration: 500
+    })
+    that.onLoad()
+    that.onShow()
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  shanchu: function (e) {
+
+  xixi: function(e) {
+    console.log(e.detail.value)
+    if (e.detail.value == "") {
+      
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT * from yh_jinxiaocun_jichuziliao where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'"
+        },
+        success(res) {
+          that.setData({
+            all: res.result
+          })
+          console.log(that.data.szzhi)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({
+      //   finduser: finduser,
+      //   gongsi: gongsi,
+
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
+
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT * from yh_jinxiaocun_jichuziliao where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
+        },
+        success(res) {
+          that.setData({
+            all: res.result
+          })
+          console.log(that.data.all)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+    }
+  },
+
+
+
+
+
+  shanchu: function(e) {
     var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id
@@ -133,25 +209,26 @@ Page({
     wx.showModal({
       title: '提示',
       content: '是否删除？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "delete from Yh_JinXiaoCun_jichuziliao where sp_dm = '" + that.data.all[id].sp_dm+"'"
-      },
-      success(res) {
-        console.log("成功", res)
-        // that.setData({
-        //     all: res.data,
+            name: "sqlConnection",
+            data: {
+              sql: "delete from Yh_JinXiaoCun_jichuziliao where sp_dm = '" + that.data.all[id].sp_dm + "'"
+            },
+            success(res) {
+              console.log("成功", res)
+              // that.setData({
+              //     all: res.data,
 
-        //   })
-        // szZhi = 
-      }, fail(res) {
-        console.log("失败", res)
+              //   })
+              // szZhi = 
+            },
+            fail(res) {
+              console.log("失败", res)
 
-      }
-    });
+            }
+          });
           // db.collection("Yh_JinXiaoCun_chanpin").doc(that.data.all[id]._id).remove({
           //   success: console.log,
           //   fail: console.error,
@@ -168,21 +245,21 @@ Page({
 
 
   },
-  jiahao1: function () {
+  jiahao1: function() {
     wx.navigateTo({
       url: '/pages/xinjianshangpin/xinjianshangpin',
     })
 
   },
-  srJg: function (e) {
+  srJg: function(e) {
     var that = this
     dtid = e.target.dataset.id
     console.log(dtid)
-   var _id=that.data.all[dtid]._id
-   console.log(_id)
-   wx.navigateTo({
-     url: '/pages/shangpinchazhao/shangpinchazhao?_id='+_id,
-   })
+    var _id = that.data.all[dtid].id
+    console.log(_id)
+    wx.navigateTo({
+      url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id,
+    })
     // var _openid = wx.getStorageSync('openid').openid;
     // const db = wx.cloud.database();
     // db.collection('Yh_JinXiaoCun_mingxi').where({
@@ -197,11 +274,11 @@ Page({
     //         alll: res.data,
 
     //       })
-         
+
     //     }
     //   })
 
   },
 
-  
+
 })

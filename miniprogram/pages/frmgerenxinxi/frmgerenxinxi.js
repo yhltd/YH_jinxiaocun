@@ -94,7 +94,12 @@ Page({
       wx.navigateTo({
         url: '../login/login',
       })
+  },
 
+  toHome: function(){
+    wx.navigateTo({
+      url: '../shouye/shouye',
+    })
   }
 
 });

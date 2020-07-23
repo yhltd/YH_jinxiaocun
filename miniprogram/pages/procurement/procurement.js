@@ -185,7 +185,7 @@ Page({
           console.log("成功", res)
           wx.showToast({
             title: '初期数录入成功',
-          })
+          },that.onShow())
         }, fail(res) {
           console.log("失败", res)
 

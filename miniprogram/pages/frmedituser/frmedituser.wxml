@@ -12,8 +12,8 @@
 <view class="content-view">
 
   <form bindsubmit='searchBox'>
-    <text>登录帐号</text>
-    <input placeholder="请输入帐号" type='text' name='username' value='{{listAll.name}}'> </input>
+    <text>登录账号</text>
+    <input placeholder="请输入账号" type='text' name='username' value='{{listAll.name}}'> </input>
     <text>登录密码</text>
     <input placeholder="请输入密码" type='text' name='pwd' value='{{listAll.password}}'></input>
     <text>确认密码</text>
@@ -23,22 +23,22 @@
     <text>所属公司</text>
     <input placeholder="请输入确认所属公司" type='text' name='gongsi' value='{{listAll.gongsi}}'></input>
     <text>管理员</text>
-    <view class="button-hover">
+    <!-- <view class="button-hover">
       <input placeholder="" type='text' name='AdminIStx' value='{{listAll.AdminIS}}'>{{AdminIS}}</input>
-    </view>
+    </view> -->
     <radio-group class="radio-group" bindchange="AdminISradioChange">
       <label class="radio" wx:for="{{itemsyesno}}">
-        <radio value="{{item.name}}" checked="{{item.checked}}" /> {{item.name}}
+        <radio value="{{item.value}}" checked="{{item.checked}}" /> {{item.name}}
       </label>
     </radio-group>
 
-    <text>帐号设置</text>
-    <view class="button-hover">
+    <text>帐账号设置</text>
+    <!-- <view class="button-hover">
       <input placeholder="" type='text' name='Btypetx' value='{{listAll.Btype}}'>{{Btype}}</input>
-    </view>
+    </view> -->
     <radio-group class="radio-group" bindchange="radioChange">
       <label class="radio" wx:for="{{items}}">
-        <radio value="{{item.name}}" checked="{{item.val}}" /> {{item.value}}
+        <radio value="{{item.value}}" checked="{{item.val}}" /> {{item.name}}
       </label>
 
     </radio-group>

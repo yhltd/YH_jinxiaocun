@@ -8,8 +8,26 @@ width: 100%;
   margin-bottom: -3%;
   height: 209rpx;
 background-color: white;
-
 }
+
+.header {
+  background-color: rgb(30, 144, 255);
+  padding: 5%;
+}
+
+.bk_ss {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 55%;
+  position: absolute;
+  left: 21.3%;
+  top: 0.5%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
+
+
 .jiahao1{
 width: 40px;
 height: 40px;
@@ -21,8 +39,8 @@ display: flex;
 align-items: center;
 justify-content: center;
  z-index: 9;
-
 }
+
 .divline{
   background:#e0e3Da;
   width:100%;
@@ -106,15 +124,21 @@ width: 69%;
   display: flex;
 }
 
-.dq_y{
+/* .dq_y{
   font-weight: bold;
 position: absolute;
 top: 0%;
 left: 5%;
 color: white;
+} */
 
+.dq_y {
+  font-weight: bold;
+  position: absolute;
+  top: 1%;
+  left: 6%;
+  color: white;
 }
-
   .dqy_bj{
 
     background-color: #1e90ff;

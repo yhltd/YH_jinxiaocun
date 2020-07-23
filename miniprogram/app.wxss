@@ -178,7 +178,7 @@ button::after {
 /* 主盒子 */
 
 .row-box {
-  width: 94vw;
+  /* width: 94vw; */
   min-height: 30rpx;
   margin: 0 auto;
   background-color: white;

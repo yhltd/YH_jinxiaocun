@@ -23,13 +23,13 @@
 
   <view class="four-list row-box clearfix">
 
-    <view class="four-list-tag">
+    <!-- <view class="four-list-tag">
       <text></text>
       <view class="four-list-all">
         <text></text>
         <icon class="iconfont icon-fangxiangyou"></icon>
       </view>
-    </view>
+    </view> -->
 
     <view class="four-list-icon">
 

@@ -41,14 +41,10 @@ color: #ffffff;
   border-radius: 68rpx;
 }
 
-.xz_tp{
-  height: 150rpx;
-  width: 150rpx;
+.xz_tp {
+  height: 120rpx;
+  width: 120rpx;
   position: absolute;
-  top: 12%;
-  left: 23%;
-  z-index: 1;
-
-
-
+  right: 67%;
+  z-index: 9;
 }

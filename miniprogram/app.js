@@ -28,8 +28,6 @@ App({
     city: "",
     country: "",
     language: "",
-  
-
   },
 
   

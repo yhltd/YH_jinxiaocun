@@ -1,52 +1,54 @@
 <!-- pages/time/time.wxml -->
 <import src="/pages/template/tabber.wxml" />
 
-<view class=' main'> 
-  <view class='list'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
+<view class=' main'>
+  <view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
     <view class='shangpin'>
-        <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
-         <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].value0}}</text>\n售价：{{szzhi[i].value1}}\n进价：{{szzhi[i].value2}}\n类别：{{szzhi[i].value3}}\n备注：{{szzhi[i].value4}}</text> -->
-         <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].lei_bie}}\n单位：{{szzhi[i].dan_wei}}</text>
+      <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
+      <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].value0}}</text>\n售价：{{szzhi[i].value1}}\n进价：{{szzhi[i].value2}}\n类别：{{szzhi[i].value3}}\n备注：{{szzhi[i].value4}}</text> -->
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">商品名称： {{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].lei_bie}}\n单位：{{szzhi[i].dan_wei}}</text>
     </view>
-       <view class='shangpin-jin'  data-id="{{i}}" >
-            <view class='shangpin-input'  >数量：{{szsl[i]}}</view>
-            <view class='shangpin-input'>价格：{{szje[i]}}</view>  
-        </view>
+    <view class='shangpin-jin' data-id="{{i}}">
+      <view class='shangpin-input'>数量：{{szsl[i]}}</view>
+      <view class='shangpin-input'>价格：{{szje[i]}}</view>
+    </view>
   </view>
 </view>
- <view class='header'>
- <view class='dq_y'>入库</view>
- <view class='pm'></view><input class='bk_ss'style="" bindinput='ddh_input' value=""  placeholder="订单号" placeholder-style="color:#f8f8f8;padding-left:38%;z-index: 0"></input></view> 
+<view class='header'>
+  <view class='dq_y'>入库</view>
+  <view class='pm'></view>
+  <input class='bk_ss' type="number" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="输入入库订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+</view>
 <view class='zg'>
-<view class='kongbai'></view>
-<view class='divline'></view>
+  <view class='kongbai'></view>
+  <!-- <view class='divline'></view> -->
 
-<view class='xzkh'>
+  <view class='xzkh'>
 
 
 
-     <view class="xsp" bindtap='xuanshangpin'>
+    <view class="xsp" bindtap='xuanshangpin'>
       <view class="qxz">
         <image src="../../images/jiahao.png" class="jiahao"></image>
         <text class='xsp-text'>选商品</text>
       </view>
     </view>
 
-<view class='divline2'></view>
-<view class='xzkhWwb'>
+    <!-- <view class='divline2'></view> -->
+    <view class='xzkhWwb'>
 
       <text hidden='{{hideen1}}'>进货方：{{all}}</text>
-      <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text> 
-      <text  class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
+      <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text>
+      <text class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
     </view>
+  </view>
 </view>
-</view>
- <view class="tui-picker-content">
-   <picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange" >
-     <view class="tui-picker-detail">
-       选择入库日期（选择年月日）: {{date}}
-     </view>
+<view class="tui-picker-content">
+  <picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
+    <view class="tui-picker-detail">
+      选择入库日期 （年月日）: {{date}}
+    </view>
   </picker>
-  </view> 
+</view>
 
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
