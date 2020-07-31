@@ -11,7 +11,7 @@
         <view class="list_view" style="width:100rpx;position:sticky;left:0"  >
           <view wx:if="{{!examine}}" class="list_text">{{list_item.ROW_ID}}</view>
           <view wx:if="{{examine}}">
-            <checkbox-group bindchange="choice_checkBox_examine"  wx:if="{{examine}}">
+            <checkbox-group bindchange="choice_checkBox_examine" data-id="{{list_item.id}}" wx:if="{{examine}}">
               <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
             </checkbox-group>
           </view>
@@ -35,10 +35,10 @@
         <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="name" data-value="{{list_item.name}}" style="width:650rpx">
           <view class="list_text">{{list_item.name}}</view>
         </view>
-        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="load"   data-value="{{list_item.load}}" bindtap="clickView" data-input_type="number">
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="money" data-money_type="load" data-value="{{list_item.load}}" bindtap="{{list_item.load==0?'':'clickView'}}" data-input_type="number">
           <view class="list_text">{{list_item.load}}</view>
         </view>
-        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="borrowed" data-value="{{list_item.borrowed}}"  bindtap="clickView" data-input_type="number">
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="money" data-money_type="borrowed" data-value="{{list_item.borrowed}}"  bindtap="{{list_item.borrowed==0?'':'clickView'}}" data-input_type="number">
           <view class="list_text">{{list_item.borrowed}}</view>
         </view>
         <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="department"  data-value="{{list_item.department}}" bindtap="clickView" data-input_type="text">
@@ -52,6 +52,15 @@
         </view>
         <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="man" data-value="{{list_item.man}}" bindtap="clickView" data-input_type="text">
           <view class="list_text">{{list_item.man}}</view>
+        </view>
+        <view class="list_view">
+          <view class="list_text">{{list_item.money}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="real" data-value="{{list_item.real}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.real}}</view>
+        </view>
+        <view class="list_view">
+          <view class="list_text">{{list_item.not_get}}</view>
         </view>
       </view>
     </block>
@@ -162,5 +171,5 @@
 <view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
   <button class="moreDo_view_bt" bindtap="examine">审核</button>
   <button class="moreDo_view_bt" bindtap="showSelect">查询</button>
-  <button class="moreDo_view_bt" bindtap="examine">添加一行</button>
+  <button class="moreDo_view_bt" bindtap="getExcel">生成Excel</button>
 </view>

@@ -1,0 +1,72 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_items" wx:key="class">
+      <view class="table_main" wx:for="{{list_items.arr}}" wx:for-item="list_item" wx:key="id" wx:if="{{class_id==list_item.direction}}">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0">
+          <view  class="list_text">{{list_item.ROW_ID}}</view>
+        </view>
+        <view class="list_view" style="width:400rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="name" data-value="{{list_item.name}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.name}}</view>
+        </view>
+        
+        <view class="list_view" style="width:400rpx" >
+          <view class="list_text">{{list_item.sum_month}}</view>
+        </view>
+        <view class="list_view" style="width:400rpx" >
+          <view class="list_text">{{list_item.sum_year}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="table_main">
+      <view class="list_view" style="width:100rpx;position:sticky;left:0">
+        <view  class="list_text"></view>
+      </view>
+      <view class="list_view" style="width:400rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="name" data-value="{{list_item.name}}" bindtap="clickView" data-input_type="text">
+        <view class="list_text">合计</view>
+      </view>
+      
+      <view class="list_view" style="width:400rpx" >
+        <view class="list_text">{{monthSum}}</view>
+      </view>
+      <view class="list_view" style="width:400rpx" >
+        <view class="list_text">{{yearSum}}</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <view>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
+    <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
+    <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+  </view>
+  <view class="backSelect" wx:if="{{isDelete}}" bindtap="backDelete">
+    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
+  </view>
+  <button class="moreDo" bindtap="{{isDelete?'delete':'moreDo'}}">{{isDelete?'删除':'更多操作'}}</button>
+</view>
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" bindtap="updClass_moroDo">{{class_name}}</button>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>
+
+<view class="sw_view" animation="{{animationData_updClass}}">
+  <view class="sw_view_btView">
+    <button class="sv_view_btView_bt" bindtap="backClass">取消</button>
+    <button class="sv_view_btView_bt" bindtap="updClass">完成</button>
+  </view>
+  <swiper class="sw" circular="true" easing-function="linear" bindchange="changeClass">
+    <swiper-item wx:for="{{list}}" wx:key="class">
+      <view class="sw_item">{{item.className}}</view>
+    </swiper-item>
+  </swiper>
+</view>

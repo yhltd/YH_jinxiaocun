@@ -1,7 +1,7 @@
 {
   "pages": [
-    
-    "pages/login/login","pages/c_home/c_home",
+    "pages/login/login",
+    "pages/c_home/c_home",
     "pages/home/home",
     "pages/peizhi/peizhi",
     "pages/time/time",
@@ -71,7 +71,15 @@
         "pages/c_kemuzongzhang/c_kemuzongzheng",
         "pages/c_kemuzongzhang_insert/c_kemuzongzhang_insert",
         "pages/c_zichanfuzhai/c_zichanfuzhai",
-        "pages/c_kaizhixiangmu/c_kaizhixiangmu"
+        "pages/c_kaizhixiangmu/c_kaizhixiangmu",
+        "pages/c_bumenpeizhi/c_bumenpeizhi",
+        "pages/c_pingzhenghuizong_insert/c_pingzhenghuizong_insert",
+        "pages/c_zhinengkanban/c_zhinengkanban",
+        "pages/c_jijiantaizhang/c_jijiantaizhang",
+        "pages/c_jijiantaizhang_insert/c_jijiantaizhang_insert",
+        "pages/c_jijianzongzhang/c_jijianzongzhang",
+        "pages/c_liyisunyi/c_liyisunyi",
+        "pages/c_xianjinliuliang/c_xianjinliuliang"
       ]
     }
   ],

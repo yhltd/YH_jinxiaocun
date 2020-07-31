@@ -1,0 +1,55 @@
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
+      <view class="table_main">
+        <view class="list_view" style="width:400rpx">
+          <view class="list_text">{{list_item.expenditure}}</view>
+        </view>
+        <view class="list_view" style="width:400rpx">
+          <view class="list_text">{{list_item.money_month}}</view>
+        </view>
+        <view class="list_view" style="width:400rpx">
+          <view class="list_text">{{list_item.money_year}}</view>
+        </view>
+      </view>
+    </block>
+    <block class="list_row">
+      <view class="table_main">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0">
+          <view class="list_text"></view>
+        </view>
+        <view class="list_view" style="width:400rpx" >
+          <view class="list_text">合计</view>
+        </view>
+        <view class="list_view" style="width:400rpx">
+          <view class="list_text">{{sum_month}}</view>
+        </view>
+        <view class="list_view" style="width:400rpx">
+          <view class="list_text">{{sum_year}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="moreDo" bindtap="showChoiceMonth" hidden="{{choiceMonth}}">{{month}}月份</button>
+</view>
+
+<view class="choiceMonth" animation="{{animationData_choice}}" wx:if="{{initHidView}}">
+  <form bindsubmit="setMonth">
+    <view class="form_view">
+      <input class="input_choiceMonth" type="number" name="month" placeholder="月份"></input>
+      <button class="bt_choiceMonth" form-type="submit">确定</button>
+    </view>
+  </form>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">
+</view>

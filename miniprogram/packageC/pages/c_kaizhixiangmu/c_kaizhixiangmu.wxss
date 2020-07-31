@@ -46,7 +46,7 @@ button{
 
 .title_text{
   display: flex;
-  width: 200rpx;
+  width: 100%;
   border-right: 1rpx solid #C4C5C9;
   border-bottom: 1rpx solid #C4C5C9;
   justify-content: center;
@@ -60,24 +60,123 @@ button{
 
 .list_row{
   display: inline-flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .table_main{
   display: inline-flex;
   height: 7%;
+  width: 100%;
 }
 
 .list_view{
   display: flex;
   flex-direction: column;
-  width: 200rpx;
+  width: 100%;
   height: 70rpx;
   justify-content: center;
   align-items: center;
   background-color: white;
   color: black;
+  line-height: 70rpx;  
   border-right: 1rpx solid #C4C5C9;
   border-bottom: 1rpx solid #C4C5C9;
-  line-height: 70rpx;  
+}
+
+/*
+  input
+*/
+.input_view{
+  position: fixed;
+  width: 90%;
+  height: 380rpx;
+  top: 25%;
+  background-color: white;
+  border-radius: 10rpx;
+  box-shadow: 10rpx 10rpx 10rpx black;
+  z-index: 20;
+}
+.input_message{
+  position: fixed;
+  width: 80%;
+  left: 10%;
+  top: 4%;
+  text-align: center;
+  color: #787878;
+  text-shadow: 5rpx 5rpx 5rpx #D6D6D6;  
+}
+.input_text_form{
+  border: 5rpx solid #E6E6E6;
+  margin: auto;
+  width: 80%;
+  height: 64rpx;
+  align-items: center;
+  margin-top: 13%;
+  border-radius: 19rpx;
+  padding-left: 3%;
+}
+.bt_view{
+  margin: auto;
+  border-top: 1rpx solid #3D3D3D;
+  width: 90%;
+  height: 38%;
+  margin-top: 10%;  
+}
+
+.bt_form{
+  background-color: #009688;
+  width: 39%;
+  margin-top: 4%;
+  float: left;
+  margin-left: 7%;
+  color: white;
+}
+
+.bt_form_hover{
+  background-color: #03C9B6;
+  width: 39%;
+  margin-top: 4%;
+  float: left;
+  margin-left: 7%;
+  color: white;
+}
+/**/
+
+/*
+  bottom_view
+*/
+.bottom_view{
+  height: 10%;
+  align-items: center;
+  display: flex;
+}
+.init{
+  width: 80%;
+  background-color: #282B33;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+}
+.init_hover{
+  width: 80%;
+  background-color: #2D2D2D;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+}
+/**/
+
+
+
+.mask{
+  visibility: visible;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 19;
+  transition: all 0.3s ease-in-out;
 }

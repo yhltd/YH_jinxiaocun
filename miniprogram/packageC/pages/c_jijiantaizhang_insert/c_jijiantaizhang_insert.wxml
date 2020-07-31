@@ -1,0 +1,43 @@
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="code_input_view" bindtap="showGetCode" name="accounting" value="">{{accounting}}</view>
+    <view class="input_view">
+      <view class="input_text">项目名称</view>
+      <input name="project" placeholder="请输入项目名称" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">应收</view>
+      <input name="receivable" placeholder="请输入应收" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">实收</view>
+      <input name="receipts" placeholder="请输入实收" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">应付</view>
+      <input name="cope" placeholder="请输入应付" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">实付</view>
+      <input name="payment" placeholder="请输入实付" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="bottom">
+      <button class="bt" form-type="reset">重置</button>
+      <button class="bt" form-type="submit">保存</button>
+    </view>
+  </form>
+</view>
+
+<view class="getCode_view" animation="{{animationData_getCode}}" hidden="{{initHidView?'true':''}}">
+  <view class="sw_view" wx:for="{{getAccountingItems}}" wx:key="text" wx:for-item="items" wx:for-index="i">
+    <view class="sw_text">{{items.text}}</view>
+    <swiper class="sw" previous-margin="150rpx" next-margin="150rpx" circular="true" easing-function="linear" bindchange="changeClass">
+      <swiper-item wx:for="{{items.list}}" wx:key="class" item-id="{{i}}">
+        <view class="sw_item">{{item.className}}</view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>

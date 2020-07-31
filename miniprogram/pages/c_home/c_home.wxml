@@ -1,13 +1,104 @@
 <view class="body">
-    <view class="list" wx:for="{{names}}" wx:for-item="items" wx:for-index="i" >
+    <view class="list" wx:for="{{names}}" wx:for-item="items" wx:for-index="i" wx:key="id">
       <view class="item{{items.listHid?'_hover':''}}" 
       bindtap="choice" data-index="{{i}}">
         <view class="item_text1">{{items.name}}</view>
       </view>
-      <scroll-view class="sv" scroll-y="true" animation="{{items.animationData}}">
+      <scroll-view class="sv" scroll-y="true" animation="{{items.animationData}}" hidden="{{!items.listHid}}">
         <view class="svitem" wx:for="{{items.list}}" bindtap="go" data-index="{{index}}" data-itemindex="{{i}}">{{item.text}}</view>
       </scroll-view>
     </view>
+</view>
+
+
+<view class="userInfo_view" animation="{{ianimation_userinfo}}" wx:if="{{initHidView}}">
+
+  <swiper class="swiper"  circular="true" easing-function="linear" bindchange="changeFunction">
+    <swiper-item style="display: flex;align-items: center;" item-id="upd_pwd">
+      <view class="swiper_item">登陆密码更改</view>
+    </swiper-item>
+    <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
+      <view class="swiper_item">操作密码更改</view>
+    </swiper-item>
+    <swiper-item style="display: flex;align-items: center;" item-id="new_user">
+    <view class="swiper_item">新建用户账号</view>
+    </swiper-item>
+  </swiper>
+
+  <view hidden="{{function_userInfo!='upd_pwd'}}">
+    <form bindsubmit="update_pwd" bindreset="empty">
+      <view class="input_view">
+      <view class="input_text">输入新密码</view>
+      <input name="name" placeholder="请输入新密码" name="new_pwd" type="text" value="{{empty}}"></input>
+      </view>
+      <view class="input_view">
+        <view class="input_text">重复新密码</view>
+        <input name="name" placeholder="请重复新密码" name="again_pwd"  value="{{empty}}" type="text"></input>
+      </view>  
+
+      <view class="bt_view">  
+        <button class="bt_form" form-type="reset" hover-class="bt_form_hover">重置</button>
+        <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+      </view>
+    </form>
+  </view>
+  <view hidden="{{function_userInfo!='upd_do'}}">
+    <form bindsubmit="update_do" bindreset="empty">
+      <view class="input_view">
+        <view class="input_text">原操作密码</view>
+        <input name="name" placeholder="请输入原操作密码" name="old_do"  value="{{empty}}" type="text"></input>
+      </view>
+      <view class="input_view">
+        <view class="input_text">新操作密码</view>
+        <input name="name" placeholder="请输入新操作密码" name="new_do" value="{{empty}}" type="text"></input>
+      </view>  
+      <view class="input_view">
+        <view class="input_text">重复新操作密码</view>
+        <input name="name" placeholder="请重复新操作密码" name="again_do" value="{{empty}}" type="text"></input>
+      </view>  
+
+      <view class="bt_view">  
+        <button class="bt_form" form-type="reset" hover-class="bt_form_hover">重置</button>
+        <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+      </view>
+    </form>
+  </view>
+  <view hidden="{{function_userInfo!='new_user'}}">
+    <form bindsubmit="check_do" bindreset="empty" hidden="{{isdo_newuser}}">
+      <view class="input_view">
+        <view class="input_text">操作密码</view>
+        <input name="name" placeholder="请输入操作密码" name="do" type="text" value="{{empty}}"></input>
+      </view>
+      <view class="bt_view">  
+        <button class="bt_form" form-type="reset" hover-class="bt_form_hover">重置</button>
+        <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+      </view>
+    </form>
+
+
+    <form bindsubmit="new_user" bindreset="empty" hidden="{{!isdo_newuser}}">
+      <view class="input_view">
+        <view class="input_text">账号名称</view>
+        <input name="name" placeholder="请输入账号名称" name="newuser_name" value="{{empty}}" type="text"></input>
+      </view>
+      <view class="input_view">
+        <view class="input_text">账号密码</view>
+        <input name="name" placeholder="请输入账号密码" name="newuser_pwd" value="{{empty}}" type="text"></input>
+      </view>  
+      <view class="input_view">
+        <view class="input_text">操作密码</view>
+        <input name="name" placeholder="请输入操作密码" name="newuser_do" value="{{empty}}" type="text"></input>
+      </view>  
+
+      <view class="bt_view">  
+        <button class="bt_form" form-type="reset" hover-class="bt_form_hover">重置</button>
+        <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+      </view>
+    </form>
+  </view>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="hidUserInfo">
 </view>
   
 

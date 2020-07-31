@@ -260,7 +260,7 @@ Page({
           if(num==0){
             wx.showModal({
               title : '提示',
-              content : '该项目下没有子项目,清先创建其子项目',
+              content : '该项目下没有子项目,请先创建其子项目',
               showCancel: 'false',
               confirmColor : '#009688',
               success : res => {
@@ -316,7 +316,7 @@ Page({
     for(var i=0;i<list.length;i++){
       var code = parseInt(list[i].code)
       var l_class = parseInt(list[i].class)
-      if(l_class==1){
+      if(list[i].grade==1){
         parentCode = code
         list[i].parentCode = code
       }

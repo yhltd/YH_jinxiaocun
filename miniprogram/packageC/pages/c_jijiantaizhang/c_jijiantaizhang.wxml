@@ -1,0 +1,79 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row">
+      <view class="table_main" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0">
+          <view wx:if="{{!isDelete}}" class="list_text">{{list_item.ROW_ID}}</view>
+          <view wx:if="{{isDelete}}">
+            <checkbox-group bindchange="choice_checkBox_delete">
+              <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
+            </checkbox-group>
+          </view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="project" data-value="{{list_item.project}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.project}}</view>
+        </view>
+        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="receivable" data-value="{{list_item.receivable}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.receivable}}</view>
+        </view>
+        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="receipts" data-value="{{list_item.receipts}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.receipts}}</view>
+        </view>
+        <view class="list_view" style="width:170rpx">
+          <view class="list_text">{{list_item.notget1}}</view>
+        </view>
+        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="cope" data-value="{{list_item.cope}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.cope}}</view>
+        </view>
+        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="payment" data-value="{{list_item.payment}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.payment}}</view>
+        </view>
+        <view class="list_view" style="width:170rpx">
+          <view class="list_text">{{list_item.notget2}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="accounting" data-value="{{list_item.accounting}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.accounting}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save">
+    <view>
+      <view class="input_message" wx:if="{{message_input!=''}}">提示：{{message_input}}</view>
+      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="bottom_view">
+  <view>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
+    <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
+    <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+  </view>
+  <view class="backSelect" wx:if="{{isDelete}}" bindtap="backDelete">
+    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
+  </view>
+  <button class="moreDo" bindtap="{{isDelete?'delete':'moreDo'}}">{{isDelete?'删除':'更多操作'}}</button>
+</view>
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" bindtap="bindDelete">删除项目</button>
+  <button class="moreDo_view_bt" bindtap="insert">新增项目</button>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>

@@ -1,0 +1,13 @@
+
+<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ec}}"></ec-canvas>
+
+<view class="other_view">
+  <scroll-view class="sv" scroll-x="true">
+    <view class="sv_item{{others[0]==1?'_hover':''}}" bindtap="getAccounting">年初余额</view>
+    <view class="sv_item{{others[1]==1?'_hover':''}}" bindtap="getSummary">凭证金额</view>
+    <view class="sv_item{{others[2]==1?'_hover':''}}" bindtap="getAccountingBalance">科目余额</view>
+    <view class="sv_item{{others[3]==1?'_hover':''}}" bindtap="getLiabilities">资产负债</view>
+    <view class="sv_item{{others[4]==1?'_hover':''}}" bindtap="getProfit">利润合计</view>
+    <view class="sv_item{{others[5]==1?'_hover':''}}" bindtap="getFlow">现金流量</view>
+  </scroll-view>
+</view>

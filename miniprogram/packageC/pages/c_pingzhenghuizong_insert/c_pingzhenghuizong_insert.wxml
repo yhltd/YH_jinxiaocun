@@ -1,0 +1,99 @@
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="input_view">
+      <view class="input_text">凭证字</view>
+      <view class="option_view">
+        <view class="option">
+          <input class="option_text" value="{{options_word.text}}" bindinput="input" data-name="options_word" placeholder="请选择凭证字" name="{{options_word.columnName}}"/>
+          <button class="option_bt" bindtap="selectTap" data-name="options_word">V</button>
+        </view>
+        <scroll-view class="option_sv" hidden="{{options_word.selectHid}}" scroll-y="true">
+          <view class="option_sv_item" wx:for="{{options_word.items}}" catchtap="choice" data-index="{{index}}" data-name="options_word">{{item}}</view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="input_view">
+      <view class="input_text">凭证号</view>
+      <input name="name" placeholder="请输入凭证号" name="no" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">摘要</view>
+      <input name="name" placeholder="请输入摘要" name="abstract" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">科目代码</view>
+      <view class="code_input" bindtap="show_upd_view">{{code}}</view>
+    </view>
+    <view class="input_view">
+      <view class="input_text">借贷方向</view>
+      <radio-group class="radio" name="direction">
+        <radio value="1" checked="true" color="#282B33" >借</radio>
+        <radio value="0" color="#282B33">贷</radio>
+      </radio-group>
+    </view>
+    <view class="input_view">
+      <view class="input_text">部门</view>
+      <view class="option_view">
+        <view class="option">
+          <input class="option_text" value="{{options_department.text}}" bindinput="input" data-name="options_department" placeholder="请选择部门" name="{{options_department.columnName}}"/>
+          <button class="option_bt" bindtap="selectTap" data-name="options_department">V</button>
+        </view>
+        <scroll-view class="option_sv" hidden="{{options_department.selectHid}}" scroll-y="true">
+          <view class="option_sv_item" wx:for="{{options_department.items}}" catchtap="choice" data-index="{{index}}" data-name="options_department">{{item}}</view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="input_view">
+      <view class="input_text">开支项目</view>
+      <view class="option_view">
+        <view class="option">
+          <input class="option_text" value="{{options_expenditure.text}}" bindinput="input" data-name="options_expenditure" placeholder="请选择开支项目" name="{{options_expenditure.columnName}}"/>
+          <button class="option_bt" bindtap="selectTap" data-name="options_expenditure">V</button>
+        </view>
+        <scroll-view class="option_sv" hidden="{{options_expenditure.selectHid}}" scroll-y="true">
+          <view class="option_sv_item" wx:for="{{options_expenditure.items}}" catchtap="choice" data-index="{{index}}" data-name="options_expenditure">{{item}}</view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class="input_view">
+      <view class="input_text">备注</view>
+      <input name="name" placeholder="请输入备注" name="note" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">金额</view>
+      <input name="name" placeholder="请输入金额" name="money" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">实收金额</view>
+      <input name="name" placeholder="请输入实收金额" name="real" type="number" value="{{empty}}"></input>
+    </view>
+
+    <view class="bottom">
+      <button class="bt" form-type="reset">重置</button>
+      <button class="bt" form-type="submit">保存</button>
+    </view>
+  </form>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">
+</view>
+
+<view class="upd_code_view" animation="{{animationData_upd_code}}" hidden="{{initHidView?initHidView:''}}">
+  <view class="upd_area1">
+    <block wx:for="{{accounting}}" wx:key="text">
+      <button class="bt_upd_code" hover-class="bt_upd_code_hover" data-index="{{index}}" bindtap="choice_item">{{item.text}}</button>
+    </block>
+  </view>
+  <view class="upd_area2">
+    <scroll-view class="sv_upd_code" scroll-y="true">
+      <view class="sv_upd_header">
+        <view class="upd_text1">科目代码</view>
+        <view class="upd_text2">科目名称</view>
+      </view>
+      <view wx:for="{{accounting_arr}}" wx:key="code" class="sv_upd_show" hover-class="sv_upd_show_hover" bindtap="choice_code" data-code="{{item.code}}" style="{{index==0?'margin-top:11%':''}}">
+        <view class="upd_text1">{{item.code}}</view>
+        <view class="upd_text2">{{item.name}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -45,7 +45,7 @@ Page({
       {text:"科目等级",width:"180rpx"},
       {text:"科目全称",width:"650rpx"},
       {text:"方向",width:"130rpx"},
-      {text:"金额 ",width:"200rpx"},
+      {text:"借贷合计",width:"200rpx"},
       {text:"明细",width:"150rpx"},
       {text:"年初借金",width:"250rpx"},
       {text:"年初贷金",width:"250rpx"},
@@ -126,8 +126,6 @@ Page({
       if(list[i].grade==4){list[i].grade = "I"}
       if(list[i].grade==6){list[i].grade = "II"}
       if(list[i].grade==8){list[i].grade = "III"}
-      //累加项目金额
-      list[i].money += list[i].load+list[i].borrowed
     }
     return list
   },
@@ -331,7 +329,6 @@ Page({
         break;
     }
   },
-
   hid_view : function(){
     var _this = this;
     _this.hidView(_this,"input")
@@ -393,20 +390,34 @@ Page({
 
   choice_checkBox_delete : function(e){
     var _this = this;
-    var id = e.detail.value
-    if(id!=""){
-      var checkItems = _this.data.checkItems;
+    var id = e.currentTarget.dataset.id
+    var value = e.detail.value
+    var checkItems = _this.data.checkItems;
+    if(value!=""){
       checkItems.push(id)
-      _this.setData({
-        checkItems
-      })
+    }else{
+      for(let i=0;i<checkItems.length;i++){
+        if(checkItems[i]==id){
+          checkItems.splice(i,1)
+        }
+      }
     }
+    _this.setData({
+      checkItems
+    })
   },
   
   delete : function(){
     
     var _this = this;
     var checkItems = _this.data.checkItems
+    if(checkItems==""){
+      wx.showToast({
+        title: '请选择科目',
+        icon :'none'
+      })
+      return
+    }
 
     wx.showModal({
       title : '提示',
@@ -460,6 +471,7 @@ Page({
 
   backDelete : function(){
     this.setData({
+      checkItems : [],
       isDelete : false
     })
   },

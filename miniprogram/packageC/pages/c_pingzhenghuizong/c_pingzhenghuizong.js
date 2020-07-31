@@ -10,7 +10,7 @@ Page({
 
     isDate : true,
 
-    countPage : 2, //每一页显示的数据数据数量
+    countPage : 50, //每一页显示的数据数据数量
     pageCount : 0, //总页数
     pageNum : 1, //当前页 
     hid_view : true,
@@ -19,25 +19,29 @@ Page({
 
     list : {},
     titil : [
-      {text:"序号",width:"100rpx"},
-      {text:"凭证字",width:"200rpx"},
-      {text:"凭证号",width:"300rpx"},
-      {text:"录入时间",width:"350rpx"},
-      {text:"摘要",width:"200rpx"},
-      {text:"科目代码",width:"200rpx"},
-      {text:"科目名称",width:"650rpx"},
-      {text:"借方金额",width:"200rpx"},
-      {text:"贷方金额",width:"200rpx"},
-      {text:"部门",width:"200rpx"},
-      {text:"开支项目",width:"300rpx"},
-      {text:"备注",width:"200rpx"},
-      {text:"审核人",width:"200rpx"}
+      {text:"序号",width:"100rpx",type:"number",columnName:"ROW_ID"},
+      {text:"凭证字",width:"200rpx",type:"string",columnName:"word"},
+      {text:"凭证号",width:"300rpx",type:"string",columnName:"no"},
+      {text:"录入时间",width:"350rpx",type:"string",columnName:"voucherDate"},
+      {text:"摘要",width:"200rpx",type:"string",columnName:"abstract"},
+      {text:"科目代码",width:"200rpx",type:"number",columnName:"code"},
+      {text:"科目名称",width:"650rpx",type:"string",columnName:"name"},
+      {text:"借方金额",width:"200rpx",type:"number",columnName:"load"},
+      {text:"贷方金额",width:"200rpx",type:"number",columnName:"borrowed"},
+      {text:"部门",width:"200rpx",type:"string",columnName:"department"},
+      {text:"开支项目",width:"300rpx",type:"string",columnName:"expenditure"},
+      {text:"备注",width:"200rpx",type:"string",columnName:"note"},
+      {text:"审核人",width:"200rpx",type:"string",columnName:"man"},
+      {text:"应收/付",width:"200rpx",type:"number",columnName:"money"},
+      {text:"实收/付",width:"200rpx",type:"number",columnName:"real"},
+      {text:"未收/付",width:"200rpx",type:"number",columnName:"not_get"}
     ],
     animationData_input : "",
     value_input : "",
     index_input : "",
     column_input : "",
     input_type : "text",
+    money_type : "",
     dateArray : [
       {text:"年",name:"year",value:""},
       {text:"月",name:"month",value:""},
@@ -58,7 +62,6 @@ Page({
     animationData_upd_code : "",
 
     upd_index : 0,
-    upd_db_id : 0,
 
     animationData_moreDo_view : "",
     animationData_select_view : "",
@@ -108,13 +111,6 @@ Page({
           accounting : Accounting
         })
         
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -138,16 +134,15 @@ Page({
       where2 = ""
     }
 
-    var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs,Accounting as ac where vs.code = ac.code and vs.company = '"+_this.data.userInfo.company+"') t "+where+where2
+    var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,vs.money,vs.real,(money-real) as not_get,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs,Accounting as ac where vs.code = ac.code and vs.company = '"+_this.data.userInfo.company+"' and ac.company = '"+_this.data.userInfo.company+"' and year(vs.voucherDate) = year(getDate())) t "+where+where2
 
-    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
         query: sql
       },
       success: res => {
-        console.log(res)
+
         var list = res.result.recordset
         for(var i=0;i<list.length;i++){
           if(list[i].name1!=list[i].name2){
@@ -157,6 +152,13 @@ Page({
             list[i].name1 +="-"+list[i].name3
           }
           list[i].name = list[i].name1
+          if(list[i].borrowed!=0){
+            list[i].borrowed = list[i].money
+            list[i].load = 0
+          }else if(list[i].load!=0){
+            list[i].load = list[i].money
+            list[i].borrowed = 0
+          }
         }
         
 
@@ -170,13 +172,6 @@ Page({
       },
       err: res => {
         console.log("错误!")
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -188,11 +183,13 @@ Page({
     var column = e.currentTarget.dataset.column;
     var value = e.currentTarget.dataset.value;
     var input_type = e.currentTarget.dataset.input_type;
+    var money_type = e.currentTarget.dataset.money_type;
     _this.setData({
       value_input : value,
       index_input : index,
       column_input : column,
-      upd_db_id
+      upd_db_id,
+      money_type
     })
 
     if(input_type=="date"){
@@ -226,12 +223,19 @@ Page({
 
   show_upd_view : function(e){
     var _this = this;
+    var index = e.currentTarget.dataset.index
+    var id = e.currentTarget.dataset.id
+
+    _this.setData({
+      index_input : index,
+      upd_db_id : id
+    })
     _this.showView(_this,"upd_code_input")
   },
 
   save: function(e){
     var _this = this;
-    console.log(e)
+
     var new_value_input = ""
     if(_this.data.input_type=="date"){
       var year = parseInt(e.detail.value.year)
@@ -256,9 +260,24 @@ Page({
 
    
     _this.hidView(_this,"input")
+    
+    
+    if(column=="money"){
+      var money_type = _this.data.money_type;
+      _this.setData({
+        ["list["+index+"].money"] : new_value_input,
+        ["list["+index+"]."+money_type] : new_value_input,
+        empty : ""
+      })
+    }else{
+      _this.setData({
+        ["list["+index+"]."+column] : new_value_input,
+        empty : ""
+      })
+    }
+
     _this.setData({
-      ["list["+index+"]."+column] : new_value_input,
-      empty : ""
+      ["list["+index+"].not_get"] : _this.data.list[index].money-_this.data.list[index].real
     })
 
     wx.cloud.callFunction({
@@ -277,13 +296,6 @@ Page({
           title: "错误",
           icon : "none"
         })
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -411,7 +423,7 @@ Page({
 
   choice_item_upd : function(e){
     var _this = this;
-    var index = _this.data.upd_index;
+    var index = _this.data.index_input;
     var id = _this.data.upd_db_id;
     var name = e.currentTarget.dataset.name
     var code = e.currentTarget.dataset.code;
@@ -438,25 +450,17 @@ Page({
 
     var sql = "update VoucherSummary set code = '"+code+"' where id = '"+id+"'"
 
-    console.log("修改科目代码sql："+sql)
+    
     wx.cloud.callFunction({
       name : "sqlServer_cw",
       data : {
         query : sql
       },
       success : res=>{
-        console.log(res)
         wx.showToast({
           title: "修改成功",
           icon : "none"
         })
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -504,7 +508,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select word from VoucherSummary where company = '"+_this.data.userInfo.company+"' GROUP BY word "
+        query: "select word from VoucherWord where company = '"+_this.data.userInfo.company+"' GROUP BY word"
       },
       success: res => {
         var wordList = res.result.recordset
@@ -519,13 +523,6 @@ Page({
       },
       err: res => {
         console.log("错误!")
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -554,13 +551,6 @@ Page({
       },
       err: res => {
         console.log("错误!")
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -638,7 +628,8 @@ Page({
     _this.setData({
       where : "where t.[ROW_ID] > "+(_this.data.pageNum-1)*_this.data.countPage+" and t.[ROW_ID] <'"+(_this.data.pageNum*_this.data.countPage+1)+"'",
       isSelect : false,
-      examine : false
+      examine : false,
+      checkItems : []
     })
     _this.init();
   },
@@ -654,23 +645,39 @@ Page({
 
   choice_checkBox_examine : function(e){
     var _this = this;
-    var id = e.detail.value
-    if(id!=""){
-      var checkItems = _this.data.checkItems;
+    var value = e.detail.value
+    var id = e.currentTarget.dataset.id;
+    var checkItems = _this.data.checkItems;
+    if(value!=""){
       checkItems.push(id)
-      _this.setData({
-        checkItems
-      })
+    }else{
+      for(let i=0;i<checkItems.length;i++){
+        if(checkItems[i]==id){
+          checkItems.splice(i,1)
+        }
+      }
     }
+    _this.setData({
+      checkItems
+    })
   },
 
   upd_examine : function(){
     var _this = this;
+    var checkItems = _this.data.checkItems;
+    if(checkItems==""){
+      wx.showToast({
+        title: '请选择凭证',
+        icon :'none'
+      })
+      return
+    }
     _this.showView(_this,"examine")
   },
 
   examine_save : function(e){
     var _this = this
+    
     var man = e.detail.value.man
     var db_do = e.detail.value.do
     if(man=="" || db_do==""){
@@ -692,7 +699,6 @@ Page({
         query : "select * from Account where id='"+userInfo.id+"' and do = '"+db_do+"' and company = '"+_this.data.userInfo.company+"'"
       },
       success : res =>{
-        console.log(res)
         if(res.result.recordset.length!=0){
           var checkItems = _this.data.checkItems;
           var sql = "update VoucherSummary set man = '"+man+"' where id in (";
@@ -703,7 +709,6 @@ Page({
             }
             sql += checkItems[i]+","
           }
-          console.log(sql)
           wx.cloud.callFunction({
             name : 'sqlServer_cw',
             data : {
@@ -728,13 +733,6 @@ Page({
             },
             err : res =>{
               console.log("错误："+res)
-            },
-            fail : res=>{
-              wx.showToast({
-                title: '请求失败！',
-                icon : 'none'
-              })
-              console.log("请求失败！")
             }
           })
         }else{
@@ -750,13 +748,6 @@ Page({
       },
       err : res =>{
         console.log("错误："+res)
-      },
-      fail : res=>{
-        wx.showToast({
-          title: '请求失败！',
-          icon : 'none'
-        })
-        console.log("请求失败！")
       }
     })
   },
@@ -770,10 +761,62 @@ Page({
     var _this = this;
     var countPage = e.detail.value.countPage
     _this.setData({
+      pageNum : 1,
       countPage
     })
     _this.hidView(_this,"countPage")
     _this.init()
+  },
+
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({item:title[i].text,type:title[i].type,columnName:title[i].columnName})
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
   },
 
   onReady : function(){

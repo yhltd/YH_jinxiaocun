@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "ec-canvas" : "../../components/ec-canvas/ec-canvas"
+  },
+  "navigationBarBackgroundColor" : "#393D49",
+  "navigationBarTitleText" : "智能看板",
+  "pageOrientation": "landscape"
+}

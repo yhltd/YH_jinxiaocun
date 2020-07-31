@@ -1,6 +1,8 @@
 // miniprogram/pages/login/login.js
 // const requestUrl = require('../../config').requestUrl
 const app = getApp();
+
+
 var login = function(that,info) {
   var lock = that.data.lock;
   if(!lock){
@@ -63,19 +65,13 @@ var login = function(that,info) {
     console.log("财务管理")
     //财务管理
     var sql = "select * from Account where name = '"+that.data.name+"' and pwd = '"+that.data.pwd+"' and company = '"+that.data.gongsi+"'"
-    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
         query: sql
       },
       success: res => {
-        console.log("小程序连接数据库成功,返回res为: ", res)
-        if(res.result.name=="RequestError"){
-          console.log("数据库连接错误:RequestError")
-        }
         if (res.result.recordset.length > 0) {
-
           var userInfo = res.result.recordset[0]
           wx.navigateTo({
             url: '../c_home/c_home?userInfo='+ JSON.stringify(userInfo)
@@ -234,9 +230,37 @@ var login = function(that,info) {
   //     wx.stopPullDownRefresh();
   //   }
   // })
-
-
 }
+
+function getCompanyTime(that,info){
+  var date = new Date()
+  var nowTime = date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date .getDate()
+  wx.cloud.callFunction({
+    name : 'sqlServer_system',
+    data : {
+      query : "select CASE endtime WHEN '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE mark2 WHEN '"+nowTime+"' THEN 1 ELSE 0 END as mark2 from control_soft_time where soft_name = '财务' and name = '"+that.data.gongsi+"'"
+    },
+    success : res=> {
+      var list = res.result.recordset
+      var result = ""
+      if(list[0].endtime == 1){
+        result = "工具到期，请联系我公司续费"
+      }else if(list[0].mark2 == 1){
+        result = "服务器到期，请联系我公司续费"
+      }
+      if(result==""){
+        login(that,info)
+      }else{
+        wx.showModal({
+          title : '提示',
+          content : result,
+          showCancel: false,
+        })
+        return;
+      }
+    }
+  })
+} 
 
 Page({
 
@@ -297,16 +321,12 @@ Page({
         for(var i=0;i<res.result.recordset.length;i++){
           list.push(res.result.recordset[i].systemName)
         }
-        console.log(list)
         _this.setData({
           systemArray : list
         })
       },
       err: res => {
         console.log("错误!"+ res)
-      },
-      fail: res =>{
-        console.log("失败"+res)
       }
     })
   },
@@ -385,11 +405,19 @@ Page({
     })
   },
   bindInputLogin: function(e) {
-    login(this)
+    if(this.data.system=="云合未来财务系统"){
+      getCompanyTime(this,e.detail.value)
+    }else{
+      login(this,e.detail.value)
+    }
   },
 
   formLogin: function(e) {
-    login(this,e.detail.value)
+    if(this.data.system=="云合未来财务系统"){
+      getCompanyTime(this,e.detail.value)
+    }else{
+      login(this,e.detail.value)
+    }
   },
 
   /**
