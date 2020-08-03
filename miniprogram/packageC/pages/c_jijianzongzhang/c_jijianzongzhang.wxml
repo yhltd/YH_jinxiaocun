@@ -1,75 +1,42 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
-  <view class="table">
-    <view class='table_header'>
-      <block class="title" wx:for="{{titil}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
-      </block>
-    </view> 
-    <block class="list_row">
-      <view class="table_main" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
-        <view class="list_view" style="width:100rpx;position:sticky;left:0">
-          <view wx:if="{{!isDelete}}" class="list_text">{{list_item.ROW_ID}}</view>
-          <view wx:if="{{isDelete}}">
-            <checkbox-group bindchange="choice_checkBox_delete">
-              <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.accounting}}" color="#282B33"/>
-            </checkbox-group>
-          </view>
-        </view>
-        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="accounting" data-value="{{list_item.accounting}}" bindtap="clickView" data-input_type="text">
-          <view class="list_text">{{list_item.accounting}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.receivable}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.receipts}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.notget1}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.cope}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.payment}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.notget2}}</view>
-        </view>
-      </view>
-    </block>
-  </view>
-</scroll-view>
-
-<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
-  <form bindsubmit="save">
-    <view>
-      <view class="input_message" wx:if="{{message_input!=''}}">提示：{{message_input}}</view>
-      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="code_input_view" bindtap="showGetCode" name="accounting" value="">{{accounting}}</view>
+    <view class="input_view">
+      <view class="input_text">项目名称</view>
+      <input name="project" placeholder="请输入项目名称" value="{{empty}}"></input>
     </view>
-    <view class="bt_view">  
-      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
-      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    <view class="input_view">
+      <view class="input_text">应收</view>
+      <input name="receivable" placeholder="请输入应收" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">实收</view>
+      <input name="receipts" placeholder="请输入实收" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">应付</view>
+      <input name="cope" placeholder="请输入应付" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">实付</view>
+      <input name="payment" placeholder="请输入实付" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="bottom">
+      <button class="bt" form-type="reset">重置</button>
+      <button class="bt" form-type="submit">保存</button>
     </view>
   </form>
-
 </view>
 
-<view class="bottom_view">
-  <view>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
-    <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
-    <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+<view class="getCode_view" animation="{{animationData_getCode}}" hidden="{{initHidView?'true':''}}">
+  <view class="sw_view" wx:for="{{getAccountingItems}}" wx:key="text" wx:for-item="items" wx:for-index="i">
+    <view class="sw_text">{{items.text}}</view>
+    <swiper class="sw" previous-margin="150rpx" next-margin="150rpx" circular="true" easing-function="linear" bindchange="changeClass">
+      <swiper-item wx:for="{{items.list}}" wx:key="class" item-id="{{i}}">
+        <view class="sw_item">{{item.className}}</view>
+      </swiper-item>
+    </swiper>
   </view>
-  <view class="backSelect" wx:if="{{isDelete}}" bindtap="backDelete">
-    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
-  </view>
-  <button class="moreDo" bindtap="{{isDelete?'delete':'moreDo'}}">{{isDelete?'删除':'更多操作'}}</button>
-</view>
-
-<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
-  <button class="moreDo_view_bt" bindtap="bindDelete">删除项目</button>
-  <button class="moreDo_view_bt" bindtap="insert">新增项目</button>
 </view>
 
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">

@@ -1,3 +1,4 @@
+const updSpace = require('../../util/updSpace')
 Page({
 
   /**
@@ -125,6 +126,7 @@ Page({
       data_list.push({"id":x+1,"ROW_ID":x+1})
     }
     newList[0].arr = data_list
+
     return newList
   },
 
@@ -209,19 +211,27 @@ Page({
       confirmColor : '#009688',
       success : res => {
         if (res.confirm) {
+          
           wx.showLoading({
             title: '加载中',
             mask : 'true'
           })
           var sql = ""
           var list = _this.data.list;
-
-          sql += "insert into "+list[index].dbTable+"(["+list[index].dbName+"],company) values('','"+_this.data.userInfo.company+"');"
+          if(!updSpace.insert(list[index].dbTable)){
+            wx.showModal({
+              title : '警告',
+              content : '数据库已满，请将数据备份后删除部分数据',
+              showCancel : false,
+              confirmColor : '#009688',
+            })
+            return
+          }
 
           wx.cloud.callFunction({
             name : "sqlServer_cw",
             data : {
-              query: sql
+              query: "insert into "+list[index].dbTable+"(["+list[index].dbName+"],company) values('','"+_this.data.userInfo.company+"');"
             },
             success : res=>{
               wx.hideLoading({
@@ -274,7 +284,8 @@ Page({
                 title: "删除成功",
                 icon : "none"
               })
-              _this.init()
+              _this.arrangeList()
+              updSpace.del(dataset.dbtable,1)
             },
             err : res =>{
               wx.showToast({
@@ -287,6 +298,27 @@ Page({
           console.log('用户点击取消')
         }
       }
+    })
+  },
+
+  arrangeList : function(){
+    var _this = this;
+    var list = _this.data.list
+    var maxLength = 0;
+    for(let i=1;i<list.length;i++){
+      if(maxLength<list[i].arr.length){
+        maxLength = list[i].arr.length
+      }
+    }
+
+    var RowList = list[0].arr
+    if(RowList.length>maxLength){
+      RowList.splice(-1,1)
+    }else if(RowList.length<maxLength){
+      RowList.push({"id":RowList.length+1,"ROW_ID":RowList.length+1})
+    }
+    _this.setData({
+      ["list[0].arr"] : RowList
     })
   },
 

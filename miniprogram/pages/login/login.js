@@ -64,7 +64,7 @@ var login = function(that,info) {
   } else if(system=="云合未来财务系统"){
     console.log("财务管理")
     //财务管理
-    var sql = "select * from Account where name = '"+that.data.name+"' and pwd = '"+that.data.pwd+"' and company = '"+that.data.gongsi+"'"
+    var sql = "select * from Account where name = '"+info.inputName+"' and pwd = '"+info.inputPwd+"' and company = '"+that.data.gongsi+"'"
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {

@@ -1,4 +1,4 @@
-// packageC/pages/c_kemuzongzhang/c_kemuzongzheng.js
+const updSpace = require('../../util/updSpace')
 Page({
 
   /**
@@ -296,20 +296,34 @@ Page({
 
   choice_checkBox_delete : function(e){
     var _this = this;
-    var accounting = e.detail.value
-    if(accounting!=""){
-      var checkItems = _this.data.checkItems;
-      checkItems.push(accounting)
-      _this.setData({
-        checkItems
-      })
+    var value = e.detail.value
+    var id = e.currentTarget.dataset.id
+    var checkItems = _this.data.checkItems;
+    if(value!=""){
+      checkItems.push(id)
+    }else{
+      for(let i=0;i<checkItems.length;i++){
+        if(checkItems[i]==id){
+          checkItems.splice(i,1)
+        }
+      }
     }
+    _this.setData({
+      checkItems
+    })
   },
   
   delete : function(){
     
     var _this = this;
     var checkItems = _this.data.checkItems
+    if(checkItems==""){
+      wx.showToast({
+        title: '请选择科目',
+        icon : 'none'
+      })
+      return;
+    }
 
     wx.showModal({
       title : '提示',
@@ -325,7 +339,7 @@ Page({
           var sql = "delete from SimpleData where accounting in ("
           for(var i=0;i<checkItems.length;i++){
             if(i==checkItems.length-1){
-              sql += "'"+checkItems[i]+"','');"
+              sql += "'"+checkItems[i]+"','') and company = '"+_this.data.userInfo.company+"';"
               break;
             }
             sql += "'"+checkItems[i]+"',"
@@ -333,7 +347,7 @@ Page({
           sql += "delete from SimpleAccounting where accounting in ("
           for(var j=0;j<checkItems.length;j++){
             if(j==checkItems.length-1){
-              sql += "'"+checkItems[j]+"','');"
+              sql += "'"+checkItems[j]+"','') and company = '"+_this.data.userInfo.company+"';"
               break;
             }
             sql += "'"+checkItems[j]+"',"
@@ -345,6 +359,14 @@ Page({
               query : sql
             },
             success : res =>{
+              if(checkItems.length==1 && checkItems[0]==""){
+                updSpace.del("SimpleData",1)
+                updSpace.del("SimpleAccounting",1)
+              }else{
+                updSpace.del("SimpleData",checkItems.length-1)
+                updSpace.del("SimpleAccounting",checkItems.length-1)
+              }
+              
               wx.hideLoading({
                 success: (res)=>{
                   _this.init();
@@ -385,6 +407,16 @@ Page({
       confirmColor : '#009688',
       success : res => {
         if(res.confirm){
+          if(!updSpace.insert("SimpleAccounting")){
+            wx.showModal({
+              title : '警告',
+              content : '数据库已满，请将数据备份后删除部分数据',
+              showCancel : false,
+              confirmColor : '#009688',
+            })
+            return;
+          }
+      
           var sql = "insert into SimpleAccounting(company,accounting) values('"+_this.data.userInfo.company+"','')"
           wx.cloud.callFunction({
             name : "sqlServer_cw",

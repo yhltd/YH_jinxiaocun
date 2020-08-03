@@ -1,3 +1,5 @@
+
+const updSpace = require('../../util/updSpace')
 Page({
 
   /**
@@ -229,15 +231,21 @@ Page({
         title : '验证通过加载中',
         mask : 'true'
       })
-
-      var sql = "insert into VoucherSummary(word,no,abstract,code,department,expenditure,note,man,money,company,voucherDate,real) values('"+form.word+"','"+form.no+"','"+form.abstract+"','"+_this.data.code+"','"+department+"','"+form.expenditure+"','"+form.note+"','"+man+"','"+money+"','"+_this.data.userInfo.company+"','"+_this.getDate()+"','"+form.real+"')"
-
-      console.log(sql)
+      if(!updSpace.insert("VoucherSummary")){
+        wx.showModal({
+          title : '警告',
+          content : '数据库已满，请将数据备份后删除部分数据',
+          showCancel : false,
+          confirmColor : '#009688',
+        })
+        return;
+      }
+  
       
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
-          query: sql
+          query: "insert into VoucherSummary(word,no,abstract,code,department,expenditure,note,man,money,company,voucherDate,real) values('"+form.word+"','"+form.no+"','"+form.abstract+"','"+_this.data.code+"','"+department+"','"+form.expenditure+"','"+form.note+"','"+man+"','"+money+"','"+_this.data.userInfo.company+"','"+_this.getDate()+"','"+form.real+"')"
         },
         success: res => {
           wx.hideLoading({

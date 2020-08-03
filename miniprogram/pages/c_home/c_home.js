@@ -1,4 +1,5 @@
 const formValidation = require("../../components/utils/formValidation.js")
+const app = getApp()
 Page({
 
   /**
@@ -115,7 +116,8 @@ Page({
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })
-    console.log(JSON.parse(options.userInfo))
+    _this.getSpace()
+    _this.init();
   },
 
   onShow : function(){
@@ -132,11 +134,7 @@ Page({
   },
 
   
-  init : function(mark4){
-    wx.showLoading({
-      title : '正在计算',
-      mask : 'true'
-    })
+  init : function(){
     var _this = this;
     var userInfo = _this.data.userInfo;
 
@@ -147,18 +145,15 @@ Page({
         query: "exec sp_spaceused 'Account';exec sp_spaceused 'Accounting';exec sp_spaceused 'Department';exec sp_spaceused 'FinancingExpenditure';exec sp_spaceused 'FinancingIncome';exec sp_spaceused 'InvestmentIncome';exec sp_spaceused 'FinancingExpenditure';exec sp_spaceused 'ManagementExpenditure';exec sp_spaceused 'ManagementIncome';exec sp_spaceused 'SimpleAccounting';exec sp_spaceused 'SimpleData';exec sp_spaceused 'VoucherSummary';exec sp_spaceused 'VoucherWord';"
       },
       success: res => {
-        var lists = res.result.recordsets
-        let list = []
-        for(let i=0;i<lists.length;i++){
-          list.push(lists[i][0])
-        }
-        _this.setData({
-          list
-        })
-        wx.hideLoading({
+        var list = res.result.recordsets
+        var list_space = []
 
-        })
-        _this.getPro(mark4)
+        for(let i=0;i<list.length;i++){
+          list_space.push({name:list[i][0].name,size:Math.ceil(list[i][0].reserved.split(" ")[0]/list[i][0].rows)})
+        }
+        app.globalData.spaceList_cw.list_table = list_space
+
+        _this.getPro(list)
       },
       err: res => {
         console.log("错误!")
@@ -169,11 +164,7 @@ Page({
     
   },
 
-  getPro : function(mark4){
-    wx.showLoading({
-      title : '正在计算',
-      mask : 'true'
-    })
+  getPro : function(list){
     var _this = this;
     var userInfo = _this.data.userInfo;
 
@@ -184,22 +175,12 @@ Page({
       },
       success: res => {
         var lists = res.result.recordsets
-        let list = _this.data.list
         var useSpase = 0
         for(let i=0;i<list.length;i++){
-          useSpase += parseInt(list[i].reserved.split("K")[0])*Math.ceil(lists[i][0].proportion)
+          useSpase += parseInt(list[i][0].reserved.split("K")[0])*Math.ceil(lists[i][0].proportion)
         }
-        console.log(useSpase+"KB")
-        wx.hideLoading({
-          complete: (res) => {},
-        })
-
-        wx.showModal({
-          title : '已用空间：'+Math.ceil(useSpase/(mark4*1024)*100)+"%",
-          content : '剩余大小：'+Math.floor((mark4*1024-useSpase)/1024)+"MB",
-          showCancel: false,
-          confirmColor : '#009688'
-        })
+        app.globalData.spaceList_cw.usedSpace = useSpase
+        console.log(app.globalData.spaceList_cw)
       },
       err: res => {
         console.log("错误!")
@@ -208,10 +189,6 @@ Page({
   },
 
   getSpace : function(){
-    wx.showLoading({
-      title : '正在计算',
-      mask : 'true'
-    })
     var _this = this;
     var userInfo = _this.data.userInfo;
     var mark4 = 0;
@@ -221,11 +198,7 @@ Page({
         query : "SELECT mark4 from control_soft_time where name = '"+userInfo.company+"' and soft_name = '财务'"
       },
       success : res=> {
-        mark4 = res.result.recordset[0].mark4
-        wx.hideLoading({
-          complete: (res) => {},
-        })
-        _this.init(mark4)
+        app.globalData.spaceList_cw.allSpace = res.result.recordset[0].mark4*1024
       }
     })
   },
@@ -276,7 +249,21 @@ Page({
       return
     }
     if(_this.data.names[itemindex].list[index].text=="数据空间"){
-      _this.getSpace()
+      if(app.globalData.spaceList_cw.list_table=="" || app.globalData.spaceList_cw.usedSpace==0 || app.globalData.allSpace == 0){
+        wx.showToast({
+          title: '正在加载',
+          icon : 'none'
+        })
+        return
+      }
+      var usedSpace = app.globalData.spaceList_cw.usedSpace
+      var allSpace = app.globalData.spaceList_cw.allSpace
+      wx.showModal({
+        title : '已用空间：'+Math.ceil(usedSpace/allSpace*100)+'%',
+        content : '剩余空间：'+Math.floor((allSpace-usedSpace)/1024)+'MB',
+        showCancel : false,
+        cancelColor	: '#009688'
+      })
       return;
     }
     if(url==null || url==undefined || url==""){
@@ -538,12 +525,20 @@ Page({
     var userDo = e.detail.value.newuser_do;
 
     var userInfo = _this.data.userInfo
-    var sql = "insert into Account([name],[pwd],[do],[company]) values('"+userName+"','"+userPwd+"','"+userDo+"','"+userInfo.company+"')"
 
+    if(!updSpace.insert("Account")){
+      wx.showModal({
+        title : '警告',
+        content : '数据库已满，请将数据备份后删除部分数据',
+        showCancel : false,
+        confirmColor : '#009688',
+      })
+      return;
+    }
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: sql
+        query: "insert into Account([name],[pwd],[do],[company]) values('"+userName+"','"+userPwd+"','"+userDo+"','"+userInfo.company+"')"
       },
       success: res => {
         wx.showToast({

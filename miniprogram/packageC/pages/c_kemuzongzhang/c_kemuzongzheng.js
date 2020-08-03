@@ -1,4 +1,4 @@
-// packageC/pages/c_kemuzongzhang/c_kemuzongzheng.js
+const updSpace = require('../../util/updSpace')
 Page({
 
   /**
@@ -438,7 +438,6 @@ Page({
             }
             sql += checkItems[i]+","
           }
-          console.log(sql)
           wx.cloud.callFunction({
             name : 'sqlServer_cw',
             data : {
@@ -454,6 +453,7 @@ Page({
                     title: '删除成功',
                     icon : 'success'
                   })
+                  updSpace.del("Accounting",checkItems.length)
                 },
               })
             },

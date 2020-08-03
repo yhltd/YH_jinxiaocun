@@ -28,6 +28,12 @@ App({
     city: "",
     country: "",
     language: "",
+    //财务系统用来计算用户数据库容量
+    spaceList_cw : {
+      list_table : [],
+      usedSpace : 0,
+      allSpace : 0
+    }
   },
 
   

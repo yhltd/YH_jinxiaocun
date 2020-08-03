@@ -21,10 +21,7 @@
     </block>
     <block class="list_row">
       <view class="table_main">
-        <view class="list_view" style="width:100rpx;position:sticky;left:0">
-          <view class="list_text"></view>
-        </view>
-        <view class="list_view" style="width:400rpx" >
+        <view class="list_view" style="width:400rpx;position:sticky;left:0" >
           <view class="list_text">合计</view>
         </view>
         <view class="list_view" style="width:400rpx">

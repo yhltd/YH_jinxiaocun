@@ -1,3 +1,4 @@
+const updSpace = require('../../util/updSpace')
 Page({
 
   /**
@@ -85,13 +86,20 @@ Page({
 
     if(_this.data.code != "选择项目代码"){
       if(result==""){
-        var sql = "insert into Accounting(code,name,direction,load,borrowed,company) values('"+_this.data.code+"','"+form.name+"','"+form.direction+"','"+form.load+"','"+form.borrowed+"','"+_this.data.userInfo.company+"')"
-
+        if(!updSpace.insert("Accounting")){
+          wx.showModal({
+            title : '警告',
+            content : '数据库已满，请将数据备份后删除部分数据',
+            showCancel : false,
+            confirmColor : '#009688',
+          })
+          return;
+        }
 
         wx.cloud.callFunction({
           name : 'sqlServer_cw',
           data : {
-            query : sql
+            query : "insert into Accounting(code,name,direction,load,borrowed,company) values('"+_this.data.code+"','"+form.name+"','"+form.direction+"','"+form.load+"','"+form.borrowed+"','"+_this.data.userInfo.company+"')"
           },
           success : res => {
             wx.hideLoading({

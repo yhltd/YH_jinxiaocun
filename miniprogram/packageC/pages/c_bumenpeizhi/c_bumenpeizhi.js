@@ -1,4 +1,4 @@
-// miniprogram/packageC/pages/c_bumenpeizhi/c_bumenpeizhi.js
+const updSpace = require('../../util/updSpace')
 Page({
 
   /**
@@ -189,6 +189,15 @@ Page({
   insert : function(){
     var _this = this;
     _this.hidView(_this,"moreDo")
+    if(!updSpace.insert("Department")){
+      wx.showModal({
+        title : '警告',
+        content : '数据库已满，请将数据备份后删除部分数据',
+        showCancel : false,
+        confirmColor : '#009688',
+      })
+      return;
+    }
 
     wx.cloud.callFunction({
       name : "sqlServer_cw",
@@ -233,6 +242,7 @@ Page({
               })
               var list = _this.data.list;
               list.splice(index,1)
+              updSpace.del("Department",1)
               _this.setData({
                 list
               })
