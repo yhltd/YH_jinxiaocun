@@ -4,23 +4,23 @@
 <view class="hidden_css" hidden="{{backhidden}}"></view>
 <view class='header'>
   <view class='pm'>
-    <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索产品名称" placeholder-style="color:#f8f8f8;text-align:center;"></input>
+    <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindinput="select" placeholder="搜索产品名称" placeholder-style="color:#f8f8f8;text-align:center;"></input>
   </view>
 </view>
 <view class="Mymain">
-  <view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i'>
+  <view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i' hidden="{{item.isSelect!=0}}">
 
     <view class='divline'></view>
-    <view bindtap='srJg' data-id="{{i}}">
+    <view bindtap='srJg' data-id="{{i}}" data-dm="{{all[i].sp_dm}}">
       <view class='shangpin' data-id="{{i}}">
         <image src='{{all[i].mark1}}' class='shangpin-image' data-id="{{i}}"> </image>
-        <!-- <text class='shangpin-text' data-id="{{i}}" ><text class="shangpinpm">{{all[i].name}}</text>\n售价：{{all[i].value2}}\n进价：{{all[i].value3}}\n类别：{{all[i].lei_bie}}\n备注：{{all[i].value5}} </text> -->
         <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}} </text>
       </view>
       <view class='shangpin-jin'>
         <text class="sp_dm" data-id="{{i}}">商品代码:{{all[i].sp_dm}}</text>
-        <view class='shangpin-input' data-id="{{i}}">数量：{{sl[i]}}</view>
+        <view class='shangpin-input' style="{{sl!='' && sl[i]>all[i].allSL && fun!='qichu'?'color:red':''}}" data-id="{{i}}">数量：{{sl[i]}}</view>
         <view class='shangpin-input' data-id="{{i}}">价格：{{jg[i]}}</view>
+        <view hidden="{{fun=='qichu'}}" class='shangpin-input' data-id="{{i}}">库存数量：{{all[i].allSL}}</view>
       </view>
     </view>
   </view>

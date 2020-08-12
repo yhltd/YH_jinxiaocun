@@ -39,10 +39,10 @@
 </view>  -->
   <!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
   <view class="xiao_kuang">
-    <navigator class="txbt" url='/pages/frmadminindex/frmadminindex'>
+    <view class="txbt" bindtap="goUserManager">
       <image class="item-image" src="/images/timecard.png"></image>
       <text class="item-text">管理人员</text>
-    </navigator>
+    </view>
   </view>
   <view class="container">
     <!-- 分割线 -->

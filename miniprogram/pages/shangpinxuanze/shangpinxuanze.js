@@ -19,18 +19,22 @@ Page({
     sl: [],
     jg: [],
     backhidden: true,
-    rkck: "选择商品"
+    rkck: "选择商品",
+    fun : "",
+    dms : [],
+    dm : ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
+  onLoad: function(options) {
     var that = this
     that.setData({
       rkSum: 0,
       sl: [],
-      jg: []
+      jg: [],
+      fun : options.fun
     })
     all = []
     var finduser = app.globalData.finduser
@@ -39,7 +43,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where zh_name = '" + finduser + "' and gs_name = '"+gongsi+"'"
       },
       success(res) {
         console.log("成功", res)
@@ -54,130 +58,23 @@ Page({
 
       }
     });
-    // db.collection('Yh_JinXiaoCun_chanpin').where({
-    //   finduser: finduser,
-    //   gongsi: gongsi
-    // })
-    // .get({
-    //   success: res => {
-
-    //     console.log(res.data)
-    //     that.setData({
-    //        all:res.data,
-
-    //                 })
-    //     szZhi=res.data
-    //   }
-    //   })
-
   },
 
-
-  xixi: function(e) {
-    if (e.detail.value == "") {
-      all = []
-      szZhi = []
-      var that = this
-      that.setData({
-        rkSum: 0,
-        sl: [],
-        jg: []
-      })
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      var name = app.globalData.value1
-      const db = wx.cloud.database();
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
-        },
-        success(res) {
-          console.log("成功", res)
-          console.log(res.result)
-          that.setData({
-            all: res.result,
-
-          })
-          szZhi = res.result
-        },
-        fail(res) {
-          console.log("失败", res)
-
-        }
-      });
-      // db.collection('Yh_JinXiaoCun_chanpin').where({
-      //   finduser: finduser,
-      //   gongsi: gongsi,
-
-      // })
-      //   .get({
-      //     success: res => {
-
-      //       console.log(res.data)
-      //       that.setData({
-      //         all: res.data,
-
-      //       })
-      //       szZhi = res.data
-      //     }
-      //   })
-
-    } else {
-      all = []
-      szZhi = []
-      var that = this
-      that.setData({
-        rkSum: 0,
-        sl: [],
-        jg: []
-      })
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      var name = app.globalData.value1
-      const db = wx.cloud.database();
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
-        },
-        success(res) {
-          console.log("成功", res)
-          console.log(res.result)
-          that.setData({
-            all: res.result,
-
-          })
-          szZhi = res.result
-        },
-        fail(res) {
-          console.log("失败", res)
-
-        }
-      });
-      // db.collection('Yh_JinXiaoCun_chanpin').where({
-      //   finduser: finduser,
-      //   gongsi: gongsi,
-      //   // value1 : e.detail.value
-      //   value1: db.RegExp({
-      //     regexp: e.detail.value,
-      //     options: 'i',      
-      //   })
-      // })
-      //   .get({
-      //     success: res => {
-
-      //       console.log(res.data)
-      //       that.setData({
-      //         all: res.data,
-
-      //       })
-      //       szZhi = res.data
-      //     }
-      //   })
+  select : function(e){
+    var _this = this;
+    var all = _this.data.all;
+    for(let i = 0;i<all.length;i++){
+      if(all[i].name.indexOf(e.detail.value)==-1){
+        _this.setData({
+          ["all["+i+"].isSelect"] : 1
+        })
+      }else{
+        _this.setData({
+          ["all["+i+"].isSelect"] : 0
+        })
+      }
 
     }
-
   },
 
   /**
@@ -204,20 +101,16 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where zh_name = '" + finduser + "' and gs_name = '"+gongsi+"'"
       },
       success(res) {
-        console.log("成功", res)
-        console.log(res.result)
         that.setData({
           all: res.result,
-
         })
         szZhi = res.result
       },
       fail(res) {
         console.log("失败", res)
-
       }
     });
   },
@@ -277,10 +170,13 @@ Page({
   },
   srJg: function(e) {
     var that = this
-
-    dtid = e.target.dataset.id
-    console.log(dtid)
-    console.log(cpsl[dtid])
+    dtid = e.currentTarget.dataset.id
+    if(that.data.fun=='qichu'){
+      var dm = e.currentTarget.dataset.dm
+      that.setData({
+        dm
+      })
+    }
     that.setData({
       jghide: "flex",
       cpid: dtid,
@@ -288,7 +184,6 @@ Page({
       cpjg: cpjg,
       backhidden: false
     })
-
   },
   spClose: function(e) {
 
@@ -319,7 +214,6 @@ Page({
       cpsl[dtid] = sl
       cpjg[dtid] = jg
       zongjia = zongjia + (jg * sl)
-
     }
 
 
@@ -336,46 +230,95 @@ Page({
       jg: cpjg,
       rkSum: zongjia
     })
+    if(that.data.fun=='qichu'){
+      var dms = that.data.dms;
+      var dm = that.data.dm;
+      if(dms.length==0){
+        dms.push(dm);
+      }else{
+        for(let i=0;i<dms.length;i++){
+          if(dms[i] == dm){
+            continue;
+          }else{
+            dms.push(dm)
+          }
+        }
+      }
+      that.setData({
+        dms
+      })
+    }
   },
   querenRk: function() {
+    var _this = this;
     var sli = 0
     var sl = []
     var jg = []
     var zhi = []
-    for (var i = 0; i < cpsl.length; i++) {
-      if (cpsl[i] != null && cpsl[i] != "") {
-        sl[sli] = cpsl[i]
-        jg[sli] = cpjg[i]
-        zhi[sli] = szZhi[i]
-        sli = sli + 1
+    if(_this.data.fun!='qichu'){
+      for (var i = 0; i < cpsl.length; i++) {
+        if (cpsl[i] != null && cpsl[i] != "") {
+          if(cpsl[i] > szZhi[i].allSL){
+            wx.showToast({
+              title: '商品出库数量大于总数量',
+              icon : 'none'
+            })
+            return;
+          }
+          sl[sli] = cpsl[i]
+          jg[sli] = cpjg[i]
+          zhi[sli] = szZhi[i]
+          sli = sli + 1
+        }
       }
-    }
-    console.log(zhi)
-    console.log(sl)
-    console.log(jg)
-    if (zhi == null) {
-      wx.showToast({
-        title: '数量或价格不能为空',
-        icon: "none",
-        duration: 2000
-      })
-    } else {
-      // var appjson = getApp()
-      // appjson.rkall=zhi
-      // appjson.szsl = sl
-      // appjson.szje = jg
-      // appjson.cpsum = zongjia
-      wx.setStorageSync('rkall', zhi);
-      wx.setStorageSync('szsl', sl);
-      wx.setStorageSync('szje', jg);
-      wx.setStorageSync('cpsum', zongjia);
-      //返回上一页
-      wx.navigateBack();
-      cpjg = []
-      cpsl = []
-
+      if (zhi == null) {
+        wx.showToast({
+          title: '数量或价格不能为空',
+          icon: "none",
+          duration: 2000
+        })
+      } else {
+        wx.setStorageSync('rkall', zhi);
+        wx.setStorageSync('szsl', sl);
+        wx.setStorageSync('szje', jg);
+        wx.setStorageSync('cpsum', zongjia);
+        //返回上一页
+        wx.navigateBack();
+        cpjg = []
+        cpsl = []
+      }
+    }else{
+      var _this = this;
+      var ssql = "";
+      var dms = _this.data.dms
+      for(let i=0;i<szZhi.length;i++){
+        for(let j=0;j<dms.length;j++){
+          if(szZhi[i].sp_dm==dms[j]){
+            ssql +="INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian,mark1)values('" + szZhi[i].sp_dm + "','" + szZhi[i].lei_bie + "','" + szZhi[i].name + "','" + cpjg[i] + "','" + cpsl[i] + "','" + app.globalData.finduser + "','" + app.globalData.gongsi + "','" + new Date()+"','"+szZhi[i].mark1+"');"
+            break;
+          }
+        }
+      }
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: ssql
+        },
+        success(res) {
+          console.log(res)
+          wx.showToast({
+            title: '期初数录入成功',
+            icon : 'success',
+            complete : res=> {
+              wx.navigateBack({
+                delta: 0,
+              })
+            }
+          })
+        }, fail(res) {
+          
+        }
+      });
     }
   }
-
-
 })

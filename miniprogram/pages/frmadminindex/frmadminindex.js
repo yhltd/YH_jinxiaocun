@@ -76,7 +76,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_user where gongsi = '" + gongsi + "'"
+        sql: "select *,'1' as isShow from yh_jinxiaocun_user where gongsi = '" + gongsi + "'"
       },
       success(res) {
         console.log("成功", res)
@@ -131,46 +131,29 @@ Page({
   },
 
   searchKey: function(e) {
-
-    // 节流算法
-    change && clearTimeout(change);
-
-    change = setTimeout(() => {
-      change = null;
-      let val = e.detail.value;
-      val && a.request({
-        "doc_name": val,
-        "depId": -1,
-        "subdepId": -1
-      }, "searchDoctor", data => {
-        data = data.data;
-        if (typeof data == "object") {
-          data.map && data.map(res => {
-            res.split = res.name.split(val);
-            res.key = val;
-            return res;
-          });
-          this.setData({
-            searchDoctor: data
-          });
-        }
-      });
-    }, 500);
+    var _this = this;
+    var listAll = _this.data.listAll;
+    for(let i=0;i<listAll.length;i++){
+      if(listAll[i].name.indexOf(e.detail.value)==-1){
+        _this.setData({
+          ["listAll["+i+"].isShow"] : 0
+        })
+      }else{
+        _this.setData({
+          ["listAll["+i+"].isShow"] : 1
+        })
+      }
+    }
   },
   navgiate: function() {
-
     wx.navigateTo({
       url: "/pages/frmadminform/frmadminform"
     });
-
   },
-  navgiate2: function() {
-    console.log(this.data.select)
+  navgiate2: function(e) {
     wx.navigateTo({
-      url: "/pages/frmedituser/frmedituser?_id=" + this.data.selectnameValue
-      // this.data.select
+      url: "/pages/frmedituser/frmedituser?_id=" + e.currentTarget.dataset.id
     });
-
   },
   bindAll: function(e) {
 

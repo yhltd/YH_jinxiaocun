@@ -38,9 +38,10 @@ padding: 8px;
 }
 .main{
   position: absolute;
-width: 100%;
-top: 12%;
-
+  width: 100%;
+  top: 12%;
+  z-index: 5;
+  height: 78%;
 }
 .shangpin-text{
   width: 28%;

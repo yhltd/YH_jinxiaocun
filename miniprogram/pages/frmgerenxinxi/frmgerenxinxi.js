@@ -17,46 +17,34 @@ Page({
     },
     finduser: "",
     listAll: [],
+    isUpdPwd :true,
+    empty : ""
   },
 
   onShow: function () {
 
     var that = this;
     var listAll = [];
-
-    console.log('1111');
     const db = wx.cloud.database();
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi 
-    db.collection('Yh_JinXiaoCun_user').where({
-      name: app.globalData.finduser,
-      gongsi: gongsi
-    })
-      .get({
-
-        success(res) {
-          listAll.push(res.data)
-          that.setData({
-            // finduser: app.globalData.finduser,
-            listAll: listAll[0]
-          },
-            console.log(listAll)
-          )
-        }
-      }),
-
-      // 初始化版本
-      this.setData({
-        finduser: app.globalData.finduser
-
+    wx.cloud.callFunction({
+      name : 'sqlConnection',
+      data : {
+        sql : "select * from yh_jinxiaocun_user where gongsi = '"+gongsi+"' and name = '"+finduser+"'"
       },
-
-      );
+      success : res=> {
+        that.setData({
+          listAll : res.result
+        })
+      }
+    })
+    this.setData({
+      finduser: app.globalData.finduser
+    })
   },
 
   onLoad: function (a) {
-
-
     // 监听数据 同步全局
     Object.defineProperty(this.data, "userInfo", {
       set: data => {
@@ -82,18 +70,75 @@ Page({
 
     // 兼容事件处理
     res.detail && (res = res.detail);
-
-
   },
-  navgiate: function () {
+
+  Show_updPwd : function(){
+    this.setData({
+      isUpdPwd : false
+    })
+  },
+  backUpdPwd : function(){
+    this.setData({
+      isUpdPwd : true
+    })
+  },
+  updPwd : function(e){
+    var _this = this;
+    var listAll = _this.data.listAll;
+    var oldPwd = e.detail.value.oldPwd
+    var newPwd = e.detail.value.newPwd==e.detail.value.newPwd_again?e.detail.value.newPwd:""
+    if(newPwd==""){
+      wx.showToast({
+        title: '两次新密码输入不一致',
+        icon : 'none'
+      })
+      return;
+    }
+    if(listAll[0].password!=oldPwd){
+      wx.showToast({
+        title: '旧密码错误',
+        icon : 'none'
+      })
+      return;
+    }
+    wx.cloud.callFunction({
+      name : 'sqlConnection',
+      data : {
+        sql : "update yh_jinxiaocun_user set password = '"+newPwd+"' where _id = '"+listAll[0]._id+"'"
+      },
+      success : res=> {
+        
+        if(res.result.changedRows >= 1){
+          wx.showToast({
+            title: '修改成功',
+            icon : 'success'
+          })
+          this.setData({
+            isUpdPwd : true,
+            empty : ""
+          })
+        }
+      }
+    })
+  },
+  
+
+  navgiate: function (e) {
     //登录状态写入缓存
     wx.setStorage({
       key: "IsLogin",
       data: false
-    }),
-      wx.navigateTo({
-        url: '../login/login',
+    })
+    if(e.currentTarget.dataset.delta=="2"){
+      wx.reLaunch({
+        url: '../../pages/login/login',
       })
+      return;
+    }
+    wx.navigateBack({
+      delta : parseInt(e.currentTarget.dataset.delta),
+      complete: (res) => {},
+    })
   },
 
   toHome: function(){

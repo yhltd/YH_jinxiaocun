@@ -23,28 +23,12 @@
 
   <view class="four-list row-box clearfix">
 
-    <!-- <view class="four-list-tag">
-      <text></text>
-      <view class="four-list-all">
-        <text></text>
-        <icon class="iconfont icon-fangxiangyou"></icon>
-      </view>
-    </view> -->
-
     <view class="four-list-icon">
 
       <view bindtap="navgiate" data-page="askList/askList?type=PatAlive" data-pro="put">
         <image src="/images/iconfont-iconfont-new.png"></image>
         <navigator url='/pages/frmadminform/frmadminform'>
           <text>新建</text>
-        </navigator>
-      </view>
-
-
-      <view bindtap="navgiate2" data-page="askList/askList?type=PatAlive" data-pro="put">
-        <image src="/images/039aca64ea8386f7b6f814cfad13c979.png"></image>
-        <navigator url='/pages/frmedituser/frmedituser'>
-          <text>编辑</text>
         </navigator>
       </view>
     </view>
@@ -55,24 +39,17 @@
   <view>
     <view class="list-title-left">用户名</view>
     <view class="list-title-right">状态</view>
+    <view class="list-title-right">编辑</view>
     <view class="clear"></view>
   </view>
-  <!-- <view wx:key="{{listAll}}" wx:for="{{listAll}}" bindtap="bindAll" data-id="{{item.DateTime}}">
-    <view class="list-content-left">{{item.name}}</view>
-    <view class="list-content-right">{{item.Btype}}</view>
-    <view class="clear"></view>
-  </view> -->
 
   <block wx:for="{{listAll}}" wx:key="*this.index">
-    <view data-index="{{index}}" data-name="{{item._id}}" class="{{item.checked==true?'red bc':'bc'}}" bindtap='select'>
+    <view data-index="{{index}}" hidden="{{item.isShow==0}}" data-name="{{item._id}}" class="{{item.checked==true?'red bc':'bc'}}" bindtap='select'>
       <view class="list-content-left">{{item.name}}</view>
       <view class="list-content-right">{{item.Btype}}</view>
-
+      <view class="list-content-right">
+        <image style="width: 50rpx;height: 50rpx;" bindtap="navgiate2" data-id="{{item._id}}" src="/images/039aca64ea8386f7b6f814cfad13c979.png"/>
+      </view>
     </view>
-
   </block>
-  <!-- <button bindtap='selectAll'>全选</button> -->
-  <!-- <view class='shop_list'>
-    <view class="shop_item{{item == shopitem?'active':''}}" wx:for="{{listAll}}" bindtap='bindshop' data-classify="{{item}}">{{item.name}}</view>
-  </view> -->
 </view>

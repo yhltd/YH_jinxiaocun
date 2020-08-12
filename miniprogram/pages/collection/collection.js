@@ -21,6 +21,23 @@ Page({
     rkck: "选择商品"
   },
 
+  select : function(e){
+    var _this = this;
+    var all = _this.data.all;
+    for(let i = 0;i<all.length;i++){
+      if(all[i].name.indexOf(e.detail.value)==-1){
+        _this.setData({
+          ["all["+i+"].isSelect"] : 1
+        })
+      }else{
+        _this.setData({
+          ["all["+i+"].isSelect"] : 0
+        })
+      }
+
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -39,7 +56,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
+        sql: "select *,0 as isSelect from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
       },
       success(res) {
         console.log("成功", res)

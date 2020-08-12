@@ -20,7 +20,9 @@ Page({
     szjg: [],
     szsl: [],
     rkSum: 0,
-    rkck: "初期数录入"
+    rkck: "期初数录入",
+    startTime : 0,
+    endTime : 0
   },
 
   /**
@@ -37,84 +39,90 @@ Page({
 
   },
 
+  upd : function(e){
+    var _this = this;
+    if(_this.data.endTime - _this.data.startTime >= 350){
+      return;
+    }
+    var _id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id+'&fun=qichu',
+    })
+  },
+
+  del : function(e){
+    var _id = e.currentTarget.dataset.id
+    var _this = this;
+    wx.showModal({
+      title : '提示',
+      content : '确定删除么？',
+      success (res) {
+        if (res.confirm) {
+          wx.cloud.callFunction({
+            name : 'sqlConnection',
+            data : {
+              sql : "delete from yh_jinxiaocun_qichushu where _id = '"+_id+"'"
+            },
+            success : res=> {
+              if(res.result.affectedRows>0){
+                wx.showToast({
+                  title: '删除成功',
+                  icon :'success'
+                })
+                _this.init();
+              }
+            }
+          })
+        } else if (res.cancel) {
+          return;
+        }
+      }
+    })
+  },
+
+
+
+  bindTouchStart: function(e) {//触碰开始
+    var _this = this
+    _this.startTime = e.timeStamp;
+    _this.setData({
+      startTime: e.timeStamp
+    })
+  },
+  bindTouchEnd: function(e) {//触碰结束
+    var _this = this
+    _this.setData({
+      endTime: e.timeStamp
+    })
+  },
+
+  init : function(){
+    var _this = this;
+    var zh_name = app.globalData.finduser;
+    var gs_name = app.globalData.gongsi;
+    wx.cloud.callFunction({
+      name : 'sqlConnection',
+      data : {
+        sql : "select * from yh_jinxiaocun_qichushu where zh_name = '"+zh_name+"' and gs_name = '"+gs_name+"'"
+      },
+      success : res=> {
+        var sum = 0;
+        for(let i=0;i<res.result.length;i++){
+          sum += res.result[i].cpsl*res.result[i].cpsj
+        }
+        console.log(res.result)
+        _this.setData({
+          szzhi : res.result,
+          rkSum : sum
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that= this;
-    for (var i = 0; i < that.data.szzhi.length; i++) {
-      if (that.data.szzhi[i] != null) {
-        cpxinxi[i] = that.data.szzhi[i]
-        slxinxi[i] = that.data.szsl[i]
-        jgxinxi[i] = that.data.szje[i]
-
-      }
-
-    }
-
-    if (wx.getStorageSync("khpd") != "1") {
-      var rk = that.data.rkSum
-      if (wx.getStorageSync("rkall") != null) {
-        rk = rk + Number(wx.getStorageSync("cpsum"))
-        szzhi = wx.getStorageSync("rkall")
-        var sl = wx.getStorageSync("szsl")
-        var je = wx.getStorageSync("szje")
-
-        var fuzhii = 0
-        var szzhilength = that.data.szzhi.length;
-        // console.log(sl)
-        for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length; i++) {
-          if (cpxinxi[i] == null) {
-            cpxinxi[i] = szzhi[fuzhii]
-            slxinxi[i] = sl[fuzhii]
-            jgxinxi[i] = je[fuzhii]
-            fuzhii++;
-          }
-        }
-
-        that.setData({
-          szzhi: cpxinxi,
-          szsl: slxinxi,
-          szje: jgxinxi,
-          rkSum: rk
-
-        })
-        wx.clearStorageSync("cpsum")
-        wx.clearStorageSync("rkall")
-        wx.clearStorageSync("szsl")
-        wx.clearStorageSync("szje")
-
-      }
-    // var app = getApp();
-    // var that = this;
-
-
-
-    // var rk = that.data.rkSum
-    // if (app.rkall != null) {
-    //   rk = rk + app.cpsum
-    //   szzhi = app.rkall
-    //   var sl = app.szsl
-    //   var je = app.szje
-    //   for (var i = 0; i < app.szsl.length; i++) {
-    //     if (szsl[i] == null) {
-    //       szsl[i] = 0
-    //       szje[i] = 0
-    //     }
-    //     szsl[i] = Number(szsl[i]) + Number(sl[i])
-    //     szje[i] = Number(szje[i]) + Number(je[i])
-
-    //   }
-
-    //   that.setData({
-    //     szzhi: app.rkall,
-    //     szsl: szsl,
-    //     szje: szje,
-    //     rkSum: rk
-
-    //   })
-
-    }
+    this.init();
   },
 
   /**
@@ -153,9 +161,8 @@ Page({
   },
 
   xuanshangpin: function () {
-
     wx.navigateTo({
-      url: '/pages/shangpinxuanze/shangpinxuanze',
+      url: '/pages/shangpinxuanze/shangpinxuanze?fun=qichu',
     })
   },
   querenRk: function () {
@@ -171,7 +178,6 @@ Page({
         title: '提示',
         content: '请选择入库时间',
       })
-
     }else{
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
@@ -190,78 +196,11 @@ Page({
           console.log("失败", res)
 
         }
-
       });
     }
-      // db.collection('Yh_JinXiaoCun_qichushu').add({
-      //   data: {
-      //     finduser: finduser,
-      //     gongsi: gongsi,
-      //     shijian: today,
-      //     cpid: szzhi[i]._id,
-      //     cpname: szzhi[i].value0,
-      //     cpsj: szzhi[i].value1,
-      //     cpjj: szzhi[i].value2,
-      //     cplb: szzhi[i].value3,
-      //     cpsl: szsl[i],
-      //     cpjg: szje[i],
-      //     mxtype: "期初数",
-
-      //   },
-      //   success: res => {
-      //     wx.showToast({
-      //       title: '初期数录入成功',
-      //     })
-      //   }
-      // })
     }
-    // var _openid = wx.getStorageSync('openid').openid;
-    // for (var kci = 0; kci < szzhi.length; kci++){
-
-
-    //        db.collection('Yh_JinXiaoCun_kucun').where({
-    //          cpid: szzhi[kci]._id,
-    //          _openid: _openid
-    //        }).get({
-    //          success: res => {
-    //            if (res.data.length == 0) {
-    //              pd = pd+1
-    //            }
-    //          }
-    //        })
-    //      }
-    //       if (pd == 0) {
-    //         for(var kci = 0;kci <szzhi.length;kci++){
-    //           db.collection('Yh_JinXiaoCun_kucun').add({
-    //             data: {
-    //               cpid: szzhi[kci]._id,
-    //               cpsj: szzhi[kci].value1,
-    //               cpjj: szzhi[kci].value2,
-    //               cplb: szzhi[kci].value3,
-    //               cpsl: szsl[kci],
-    //               cpjg: szje[kci],
-
-    //             }
-    //           })
-    //         }
-    //       } else {
-    //         for(var kci =0;kci<szzhi.length;kci++){
-    //           var slsum = res.data[kci].cpsl.cpsl + szsl[kci]
-    //           var jesum = res.data[kci].cpsl.cpjg + szje[kci]
-    //           console.log(res.data[kci]._id)
-    //           db.collection('Yh_JinXiaoCun_kucun').doc(res.data[kci]._id).update({
-    //             data: {
-    //               cpsl: slsum,
-    //               cpjg: jesum
-    //             }
-
-
-    //           })
-    //         }
-
-    //       }
-
-  },bindDateChange: function (e) {
+  },
+  bindDateChange: function (e) {
     var that = this
     that.setData({
       date: e.detail.value,

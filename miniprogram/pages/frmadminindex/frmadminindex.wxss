@@ -62,7 +62,7 @@ page {
 
 .list-title-left {
   box-sizing: border-box;
-  width: 50%;
+  width: 33%;
   border: 2rpx solid #eaeaea;
   float: left;
   line-height: 76rpx;
@@ -73,7 +73,7 @@ page {
 
 .list-title-right {
   box-sizing: border-box;
-  width: 50%;
+  width: 33%;
   border: 2rpx solid #eaeaea;
   float: left;
   line-height: 76rpx;
@@ -86,7 +86,7 @@ page {
 
 .list-content-left {
   box-sizing: border-box;
-  width: 50%;
+  width: 33%;
   border: 2rpx solid #eaeaea;
   float: left;
   line-height: 76rpx;
@@ -97,7 +97,7 @@ page {
 
 .list-content-right {
   box-sizing: border-box;
-  width: 50%;
+  width: 33%;
   border: 2rpx solid #eaeaea;
   float: left;
   line-height: 76rpx;

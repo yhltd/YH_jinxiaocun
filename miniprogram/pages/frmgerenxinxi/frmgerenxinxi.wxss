@@ -70,3 +70,41 @@
 .padding-empty > view {
   padding: 10rpx;
 }
+
+.updPwd_view{
+  position: fixed;
+  width: 85%;
+  height: 400rpx;
+  background-color: white;
+  z-index: 20;
+  box-shadow: 5rpx 5rpx 20rpx black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;  
+}
+.input_updPwd{
+  width: 480rpx;
+  height: 62rpx;
+  border: 1rpx solid #E6E6E6;
+  margin-bottom: 25rpx;
+  
+}
+.bt_view{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  
+}
+.bt_updPwd{
+  background-color: #1E90FF;
+  color: white;
+  width: 173rpx;
+  padding: 0;
+  margin: 0;
+  height: 65rpx;
+  line-height: 65rpx;
+}

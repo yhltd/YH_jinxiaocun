@@ -13,14 +13,21 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  
+  goUserManager : function(){
+    if(app.globalData.adminis=="true"){
+      wx.navigateTo({
+        url: '/pages/frmadminindex/frmadminindex',
+      })
+    }else{
+      wx.showToast({
+        title: '没有权限！',
+        icon : 'none'
+      })
+    }
+  },
   onGotUserInfo(res) {
     var that = this;
-    console.log(res.detail.errMsg)
-    console.log(res.detail.userInfo)
-    console.log(res.detail.rawData)
     var requestUrl = wx.getStorageSync("url")
     this.setData({
       login_name: res.detail.userInfo.nickName,

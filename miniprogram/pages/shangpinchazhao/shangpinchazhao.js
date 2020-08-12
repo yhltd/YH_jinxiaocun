@@ -12,74 +12,40 @@ Page({
     // szZhi:[],
     list: [{
         txet: "商品代码",
-        index: 0
+        index: 0,
+        name : 'sp_dm',
+        fun : 'cpid'
       },
       {
         txet: "商品名称",
-        index: 1
+        index: 1,
+        name : 'name',
+        fun : 'cpname'
       },
       {
         txet: "单位",
-        index: 2
+        index: 2,
+        name : 'dan_wei'
       },
-      // {
-      //   txet: "进价",
-      //   index: 3
-      // },
       {
         txet: "类别",
-        index: 4
+        index: 4,
+        name : 'lei_bie',
+        fun : 'cplb'
       },
-      // {
-      //   txet: "备注",
-      //   index: 5
-      // }
-    ]
+      
+    ],
+    fun : ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var _id = options._id
-    console.log(_id)
     this.setData({
-      id: _id
+      id: options._id,
+      fun: options.fun
     })
-    // var that = this
-    // const db = wx.cloud.database()
-    // var app = getApp();
-    // var _id = options._id
-    // var finduser = app.globalData.finduser
-    // var gongsi = app.globalData.gongsi 
-    // var _openid = wx.getStorageSync('openid').openid;
-    // wx.cloud.callFunction({
-    //   name: "sqlConnection",
-    //   data: {
-    //     sql: "select * from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "' and id ='" + _id+"'" //这里不知道标识的是什么，暂且认定是id标识而不是sp_dm
-    //   },
-    //   success(res) {
-    //     console.log("成功", res)
-    //     that.setData({
-    //       szzhi : res.result
-    //     })
-
-    //   }, fail(res) {
-    //     console.log("失败", res)
-
-    //   }
-    // });
-    // db.collection("Yh_JinXiaoCun_mingxi").where({
-    //   finduser: finduser,
-    //   gongsi: gongsi,
-    //   cpid: _id
-    // }).get({
-    //   success: res => {
-    //     that.setData({
-    //       szzhi: res.data
-    //     })
-    //   }
-    // })
   },
 
 
@@ -96,17 +62,22 @@ Page({
   onShow: function() {
     var that = this
     var gongsi = app.globalData.gongsi
+    var fun = that.data.fun;
+    var ssql = ""
+    if(fun == 'qichu'){
+      ssql = "select * from yh_jinxiaocun_qichushu where gs_name = '" + gongsi + "' and _id ='" + this.data.id + "'"
+    }else{
+      ssql = "select * from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "' and id ='" + this.data.id + "'"
+    }
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "' and id ='" + this.data.id + "'" //这里不知道标识的是什么，暂且认定是id标识而不是sp_dm
+        sql: ssql 
       },
       success(res) {
-        console.log("成功", res)
         that.setData({
           all: res.result
         })
-        console.log(that.data.all[0].sp_dm)
       },
       fail(res) {
         console.log("失败", res)
@@ -214,13 +185,20 @@ Page({
   querenxinjian: function() {
     var that = this;
     var id = that.data.id;
+    var fun = that.data.fun;
     if (that.data.value0 == undefined) {
       var value0 = that.data.all[0].sp_dm
+      if(fun == 'qichu'){
+        value0 = that.data.all[0].cpid
+      }
     } else {
       var value0 = that.data.value0
     }
     if (that.data.value1 == undefined) {
       var value1 = that.data.all[0].name
+      if(fun == 'qichu'){
+        value1 = that.data.all[0].cpname
+      }
     } else {
       var value1 = that.data.value1
     }
@@ -229,13 +207,11 @@ Page({
     } else {
       var value2 = that.data.value2
     }
-    if (that.data.value3 == undefined) {
-      var value3 = that.data.all[0].dan_wei
-    } else {
-      var value3 = that.data.value3
-    }
     if (that.data.value4 == undefined) {
       var value4 = that.data.all[0].lei_bie
+      if(fun == 'qichu'){
+        value4 = that.data.all[0].cplb
+      }
     } else {
       var value4 = that.data.value4
     }
@@ -246,14 +222,19 @@ Page({
       var bigImg = that.data.bigImg
     }
     
-    var gongsi = app.globalData.gongsi
-    console.log(gongsi)
-    console.log(value0)
+    var gongsi = app.globalData.gongsi;
+    var ssql = "";
+    
+    if(fun == 'qichu'){
+      ssql = "update yh_jinxiaocun_qichushu set cpid ='" + value0 + "',`cpname` = '" + value1 + "',cplb ='" + value4 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
+    }else{
+      ssql = "update yh_jinxiaocun_jichuziliao set sp_dm ='" + value0 + "',`name` = '" + value1 + "',lei_bie ='" + value4 + "',dan_wei = '" + value2 + "',gs_name='" + gongsi + "',mark1='" + bigImg + "' where id =" + id
+    }
     const db = wx.cloud.database();
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "update yh_jinxiaocun_jichuziliao set sp_dm ='" + value0 + "',`name` = '" + value1 + "',lei_bie ='" + value4 + "',dan_wei = '" + value2 + "',gs_name='" + gongsi + "',mark1='" + bigImg + "' where id =" + id
+        sql: ssql
       },
       success(res) {
         console.log("成功", res)
