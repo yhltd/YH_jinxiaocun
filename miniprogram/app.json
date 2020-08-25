@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/z_home/z_home",
     "pages/c_home/c_home",
     "pages/home/home",
     "pages/peizhi/peizhi",
@@ -80,6 +81,19 @@
         "pages/c_jijianzongzhang/c_jijianzongzhang",
         "pages/c_liyisunyi/c_liyisunyi",
         "pages/c_xianjinliuliang/c_xianjinliuliang"
+      ]
+    },
+    {
+      "root": "packageZ",
+      "name": "lingshou",
+      "pages": [
+        "z_kucun/z_kucun",
+        "z_xiaoshoujilu/z_xiaoshoujilu",
+        "z_yonghuguanli/z_yonghuguanli",
+        "z_yonghuguanli_insert/z_yonghuguanli_insert",
+        "z_chuku/z_chuku",
+        "z_ruku/z_ruku",
+        "z_sum_xiaoshoujilu/z_sum_xiaoshoujilu"
       ]
     }
   ],

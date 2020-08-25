@@ -1,0 +1,81 @@
+<view class="sel_view_item">
+    商品代码:
+    <input class="sel_view_top_input" data-column="code" bindinput="input_sel" type="text"></input>
+    付款方式：
+    <input class="sel_view_top_input" data-column="payType" bindinput="input_sel" type="text"></input>
+</view>
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main" hidden="{{list_item.isHid!=0}}">
+        <view 
+          wx:for="{{title}}"
+          wx:for-item="item"
+          wx:key="item"
+          class="{{index==0?'list_view_fixed':'list_view'}}" 
+          style="width:{{item.width}}" 
+          data-index="{{i}}" 
+          data-id="{{list_item.id}}" 
+          data-column="{{item.columnName}}" 
+          data-value="{{list_item[item.columnName]}}" 
+          data-input_type="{{item.type}}"
+          data-isupd="{{item.isupd}}"
+          bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}"
+        >
+          <view class="list_text">
+            {{item.columnName=='direction'?
+            list_item[item.columnName]==1?'入库':'出库':
+            list_item[item.columnName]}}
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="table_main_bottom" >
+  <view class="table_main_bottom_text">
+    订单号：{{order_id}}
+  </view>
+  <view class="table_main_bottom_text">
+    方向：{{direction}}
+  </view>
+  <view class="table_main_bottom_text">
+    {{direction}}员：{{userName}}
+  </view>
+  <view class="table_main_bottom_text">
+    时间：{{time}}
+  </view>
+  <view class="table_main_bottom_text">
+    金额合计：{{sum_price}}
+  </view>
+  <view class="table_main_bottom_text">
+    折后金额合计：{{sum_endDiscountPrice}}
+  </view>
+</view>
+
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="init">刷新</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="print">打印</button>
+</view>

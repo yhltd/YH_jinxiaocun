@@ -1,0 +1,58 @@
+<view class="sel_view_item">
+    按价格查找:
+    <input class="sel_view_top_input" data-column="startPrice" bindinput="input_Price" type="digit"></input>
+    到
+    <input class="sel_view_top_input" data-column="endPrice" bindinput="input_Price" type="digit"></input>
+</view>
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view 
+          wx:for="{{title}}"
+          wx:for-item="item"
+          wx:key="item"
+          class="{{index==0?'list_view_fixed':'list_view'}}" 
+          style="width:{{item.width}}" 
+          data-index="{{i}}" 
+          data-id="{{list_item.id}}" 
+          data-column="{{item.columnName}}" 
+          data-value="{{list_item[item.columnName]}}" 
+          data-input_type="{{item.type}}"
+          data-isupd="{{item.isupd}}"
+          bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}" 
+          hidden="{{list_item.isHid!=0}}"
+        >
+          <view class="list_text">{{list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="init">刷新</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="print">打印</button>
+</view>
+
+
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>

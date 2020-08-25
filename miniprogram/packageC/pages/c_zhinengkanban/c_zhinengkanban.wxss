@@ -42,7 +42,7 @@ page{
   border: 1rpx solid #E6E6E6;
   font-size: 17rpx;
   line-height: 50rpx;
-  border-radius: 10rpx;
+  border-radius: 5rpx;
   display: inline-flex;
   align-items: center;
   justify-content: center;

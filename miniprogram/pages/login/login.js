@@ -49,17 +49,16 @@ var login = function(that,info) {
             title: '输入有误 请重试',
             icon: 'none',
           })
-          that.setData({
-            lock : true
-          })
         }
       },
       err: res => {
         console.log("错误!", res)
+      },
+      complete : function(){
         that.setData({
           lock : true
         })
-      },
+      }
     })
   } else if(system=="云合未来财务系统"){
     console.log("财务管理")
@@ -86,9 +85,6 @@ var login = function(that,info) {
             title: '输入有误 请重试',
             icon: 'none',
           })
-          that.setData({
-            lock : true
-          })
         }
       },
       fail: res => {
@@ -99,11 +95,12 @@ var login = function(that,info) {
           mask: true,
           duration: 1000
         })
+      },
+      complete : function(){
         that.setData({
           lock : true
         })
-      },
-      complete: () => {}
+      }
     })
   }else if(system=="服务器_jxc"){
     //进销存
@@ -145,25 +142,63 @@ var login = function(that,info) {
             mask: true,
             duration: 1000
           })
-          that.setData({
-            lock : true
-          })
         }
         wx.hideNavigationBarLoading(); //隐藏加载
         wx.stopPullDownRefresh();
-
       },
       fail(res) {
         console.log("失败", res)
+      },
+      complete : function(){
         that.setData({
           lock : true
         })
       }
     })
-  }else{
+  } else if(system=="零售管理系统"){
+    //零售管理系统
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select id,userName,password,power,shop from zeng_user where userName = '"+info.inputName+"' and password = '"+info.inputPwd+"' and shop = '"+that.data.gongsi+"'"
+      },
+      success: res => {
+        if (res.result.recordset.length > 0) {
+          var userInfo = res.result.recordset[0]
+          wx.navigateTo({
+            url: '../z_home/z_home?userInfo='+ JSON.stringify(userInfo)
+          })
+          wx.showToast({
+            title: '登录成功',
+            icon:'success'
+          })
+        } else {
+          wx.showToast({
+            title: '用户名密码错误',
+            icon: 'none',
+          })
+        }
+      },
+      fail: res => {
+        console.log("小程序连接数据库失败")
+        wx.showToast({
+          title: '连接数据库出错，请联系我公司',
+          mask: true,
+        })
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  } else{
     wx.showToast({
       title: '请选择系统',
       icon : 'none'   
+    })
+    that.setData({
+      lock : true
     })
   }
   //财务
@@ -232,13 +267,17 @@ var login = function(that,info) {
   // })
 }
 
-function getCompanyTime(that,info){
+function getCompanyTime(that,info,sort_name){
   var date = new Date()
   var nowTime = date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date .getDate()
+  var sql = "select CASE endtime WHEN '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE mark2 WHEN '"+nowTime+"' THEN 1 ELSE 0 END as mark2 from control_soft_time where soft_name = '"+sort_name+"'"
+  if(sort_name=='云合未来财务系统'){
+    sql += " and name = '"+that.data.gongsi+"'"
+  }
   wx.cloud.callFunction({
     name : 'sqlServer_system',
     data : {
-      query : "select CASE endtime WHEN '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE mark2 WHEN '"+nowTime+"' THEN 1 ELSE 0 END as mark2 from control_soft_time where soft_name = '财务' and name = '"+that.data.gongsi+"'"
+      query : sql
     },
     success : res=> {
       var list = res.result.recordset
@@ -311,6 +350,10 @@ Page({
 
   getSystemName : function(){
     var _this = this;
+    wx.showLoading({
+      title: '获取系统信息中',
+      mask : 'true'
+    })
     wx.cloud.callFunction({
       name: 'sqlServer_system',
       data: {
@@ -327,6 +370,11 @@ Page({
       },
       err: res => {
         console.log("错误!"+ res)
+      },
+      complete : function(){
+        wx.hideLoading({
+          success: (res) => {},
+        })
       }
     })
   },
@@ -343,6 +391,15 @@ Page({
     var _this = this;
     var system = _this.data.systemArray[e.detail.value];
     var arr = "";
+    if(system=="零售管理系统"){
+      _this.setData({
+        gongsi : "选择店铺"
+      })
+    }else{
+      _this.setData({
+        gongsi : "选择公司"
+      })
+    }
     if(system=="服务器_jxc"){
       _this.setData({
         system,
@@ -385,6 +442,11 @@ Page({
         system
       })
       arr = ["sqlServer_cw","select company from Account GROUP BY company","company"]
+    }else if(system=="零售管理系统"){
+      _this.setData({
+        system
+      })
+      arr = ["sqlServer_117","select shop from zeng_user GROUP BY shop","shop"]
     }
     _this.getCompanyName(arr)
   },
@@ -406,7 +468,9 @@ Page({
   },
   bindInputLogin: function(e) {
     if(this.data.system=="云合未来财务系统"){
-      getCompanyTime(this,e.detail.value)
+      getCompanyTime(this,e.detail.value,'财务')
+    }else if(this.data.system=="零售管理系统"){
+      getCompanyTime(this,e.detail.value,this.data.system)
     }else{
       login(this,e.detail.value)
     }
@@ -414,7 +478,9 @@ Page({
 
   formLogin: function(e) {
     if(this.data.system=="云合未来财务系统"){
-      getCompanyTime(this,e.detail.value)
+      getCompanyTime(this,e.detail.value,'财务')
+    }else if(this.data.system=="零售管理系统"){
+      getCompanyTime(this,e.detail.value,this.data.system)
     }else{
       login(this,e.detail.value)
     }

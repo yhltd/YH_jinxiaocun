@@ -1,0 +1,148 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+	<view class="table">
+		<view class='table_header'>
+			<block class="title" wx:for="{{title}}">
+				<view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+			</block>
+		</view>
+		<block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+			<view class="table_main">
+				<view 
+        wx:for="{{title}}" 
+        wx:for-item="item" 
+        wx:key="item" 
+        class="{{index==0?'list_view_fixed':'list_view'}}"
+        style="width:{{item.width}}" 
+        data-index="{{i}}"
+        data-column="{{item.columnName}}" 
+        data-value="{{list_item[item.columnName]}}" 
+        data-input_type="{{item.type}}" 
+        data-isupd="{{item.isupd}}" 
+        bindtap="clickView">
+					<view class="list_text">{{list_item[item.columnName]}}</view>
+				</view>
+			</view>
+		</block>
+	</view>
+</scroll-view>
+
+<view class="table_main_bottom" >
+	合计金额：{{sumPrice}}
+</view>
+
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+
+<view class="choiceList" hidden="{{choice_hid}}">
+	<view class="sel_view_item">
+		按价格查找:
+		<input class="sel_view_top_input" data-column="startPrice" bindinput="input_Price" type="digit"></input>
+		到
+		<input class="sel_view_top_input" data-column="endPrice" bindinput="input_Price" type="digit"></input>
+	</view>
+	<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:75%">
+		<view class="table">
+			<view class='table_header'>
+				<block class="title" wx:for="{{title2}}">
+					<view class="title_text" style="width:{{item.width}};{{item.text=='操作'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+				</block>
+			</view>
+			<block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+				<view class="table_main" hidden="{{list_item.isHid!=0}}">
+					<view wx:for="{{title2}}" wx:for-item="item" wx:key="item" class="{{index==0?'list_view_fixed':'list_view'}}" style="width:{{item.width}}">
+						<view wx:if="{{index==0}}">
+							<checkbox-group bindchange="choice_checkBox" data-index="{{i}}">
+								<checkbox style="width: 62rpx;margin-bottom:8rpx;" color="#282B33" value="{{i}}" />
+							</checkbox-group>
+						</view>
+						<view class="list_text">{{list_item[item.columnName]}}</view>
+					</view>
+				</view>
+			</block>
+		</view>
+	</scroll-view>
+	<view class="bottom_view" style="height: 15%;">
+		<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="insertList">确定</button>
+		<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="hid_view">返回</button>
+	</view>
+</view>   
+
+<view class="newList" hidden="{{new_hid}}">
+	<form bindsubmit="newList">
+		<view class="input_view_new">
+			<view class="input_text">商品代码：</view>
+			<input name="code" placeholder="请输入商品代码" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">商品名：</view>
+			<input name="name" placeholder="请输入商品名" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">单价：</view>
+			<input name="price" placeholder="请输入单价" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">用料：</view>
+			<input name="cloth" placeholder="请输入用料" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">规格：</view>
+			<input name="norms" placeholder="请输入规格" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">类型：</view>
+			<input name="type" placeholder="请输入类型" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">备用字段1：</view>
+			<input name="mark1" placeholder="请输入备用字段1" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">备用字段2：</view>
+			<input name="mark2" placeholder="请输入备用字段2" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">备用字段3：</view>
+			<input name="mark3" placeholder="请输入备用字段3" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">备用字段4：</view>
+			<input name="mark4" placeholder="请输入备用字段4" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
+			<view class="input_text">备用字段5：</view>
+			<input name="mark5" placeholder="请输入备用字段5" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="bottom_view">
+			<button class="bt_bottom_hover" bindtap="hid_view">返回</button>
+			<button class="bt_bottom_hover" form-type="submit">确定</button>
+		</view>
+	</form>
+	
+</view>
+
+
+<view class="moreDo_view" hidden="{{moreDo_hid}}">
+  <button class="moreDo_view_bt" bindtap="choice_show">选择现有商品</button>
+  <button class="moreDo_view_bt" bindtap="new_show">新增商品</button>
+</view>
+
+
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo_show">选择商品</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="set">入库</button>
+</view>
+
+
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>

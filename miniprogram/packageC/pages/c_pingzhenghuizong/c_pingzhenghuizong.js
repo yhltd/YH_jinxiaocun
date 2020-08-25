@@ -777,12 +777,18 @@ Page({
     var list = _this.data.list;
     var title = _this.data.titil
     var cloudList = {
+      name : '凭证汇总',
       items : [],
       header : []
     }
 
     for(let i=0;i<title.length;i++){
-      cloudList.header.push({item:title[i].text,type:title[i].type,columnName:title[i].columnName})
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
     }
     cloudList.items = list
     console.log(cloudList)

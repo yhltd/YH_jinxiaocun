@@ -1,0 +1,59 @@
+<view class="sel_view_item">
+    用户名:
+    <input class="sel_view_top_input" data-column="userName" bindinput="input_sel" type="text"></input>
+    所属店铺：
+    <input class="sel_view_top_input" data-column="shop" bindinput="input_sel" type="text"></input>
+</view>
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{index==0?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      
+      <view class="table_main">
+        <view 
+          wx:for="{{title}}"
+          wx:for-item="item"
+          wx:key="item"
+          class="{{index==0?'list_view_fixed':'list_view'}}" 
+          style="width:{{item.width}}" 
+          data-index="{{i}}" 
+          bindtap="{{item.columnName=='qrCode_shop'?'showImage':''}}"
+          hidden="{{list_item.isHid!=0}}"
+        >
+          <view wx:if="{{index==0}}">
+              <checkbox-group bindchange="choice_checkBox" data-id="{{list_item.id}}">
+                <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
+              </checkbox-group>
+          </view>
+          <view class="list_text" wx:if="{{index!=0}}">
+            {{item.columnName=='power'?
+            list_item[item.columnName]==1?'老板':'员工':
+            item.columnName=='qrCode_shop'?'点击查看':list_item[item.columnName]}}
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="init">刷新</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo_show">更多</button>
+</view>
+
+<view class="moreDo_view" hidden="{{moreDo_hid}}">
+  <button class="moreDo_view_bt" bindtap="newUser">新增用户</button>
+  <button class="moreDo_view_bt" bindtap="updUser">修改用户</button>
+  <button class="moreDo_view_bt" bindtap="delUser">删除用户</button>
+</view>
+
+<view class="show_image" hidden="{{image_hid}}">
+  <image src="{{showImageUrl}}" style="width: 300rpx;height: 300rpx;"></image>
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
