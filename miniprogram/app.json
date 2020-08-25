@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/login/login",
-    "pages/z_home/z_home",
+    
+    "pages/z_home/z_home","pages/login/login",
     "pages/c_home/c_home",
     "pages/home/home",
     "pages/peizhi/peizhi",

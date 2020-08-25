@@ -1,11 +1,8 @@
-var fileId = "";
-
 function print(title,list,name){
   var _this = this;
-  fileId = "";
-  wx.showToast({
+  wx.showLoading({
     title: '正在打开Excel',
-    icon : 'loading'
+    mask : 'true'
   })
   var cloudList = {
     name : name,
@@ -27,12 +24,11 @@ function print(title,list,name){
         break;
     }
     cloudList.header.push({
-      item:title[i].text,
-      type:type,
-      width:parseInt(title[i].width.split("r")[0])/40,
+      item: title[i].text,
+      type: type,
+      width:parseInt(title[i].width.split("r")[0])/20,
       columnName:title[i].columnName
     })
-    
   }
   cloudList.items = list
 
@@ -43,25 +39,27 @@ function print(title,list,name){
     },
     success: function(res){
       console.log("获取云储存id",res)
-      fileId = res.result.fileID
+      var fileId = res.result.fileID
       wx.cloud.downloadFile({
         fileID : res.result.fileID,
         success : res=> {
           console.log("获得临时路径",res.tempFilePath)
           wx.getFileSystemManager().saveFile({
             tempFilePath: res.tempFilePath,
-            filePath : wx.env.USER_DATA_PATH + "/" + name + ".xlsx",
+            filePath : wx.env.USER_DATA_PATH + "/" + name + getTime() + ".xlsx",
             success : res=> {
               let path_downLoad = res.savedFilePath
               console.log("下载完成",res)
+              delCloudFile(fileId)
               wx.openDocument({
                 filePath: path_downLoad,
+                fileType : 'xlsx',
                 showMenu : true,
                 success : res=> {
-                  wx.showToast({
-                    title: '用户打开文件',
-                    icon : 'none'
+                  wx.hideLoading({
+                    success: (res) => {},
                   })
+                  console.log("用户打开文件")
                 }
               })
             }
@@ -75,7 +73,7 @@ function print(title,list,name){
   })
 }
 
-function delCloudFile(){
+function delCloudFile(fileId){
   var fileIds = [];
   fileIds.push(fileId);
   wx.cloud.deleteFile({
@@ -85,6 +83,14 @@ function delCloudFile(){
     },
     fail : console.error
   })
+}
+
+function getTime(){
+  var myDate = new Date();
+  var year = myDate.getFullYear();
+  var month = myDate.getMonth()+1 > 10 ? myDate.getMonth() + 1 : "0" + (myDate.getMonth()+1);
+  var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
+  return year+"-"+month+"-"+day
 }
 
 module.exports = {

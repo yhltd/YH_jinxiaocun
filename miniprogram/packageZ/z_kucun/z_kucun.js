@@ -81,7 +81,7 @@ Page({
     var value = dataset.value;
     var index = dataset.index;
     
-    var new_value = parseInt(e.detail.value.new)
+    var new_value = e.detail.value.new
     if(new_value=="" && new_value != 0){
       new_value = value
       wx.showToast({

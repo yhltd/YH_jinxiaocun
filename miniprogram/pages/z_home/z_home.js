@@ -153,9 +153,9 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
-    _this.setData({
-      userInfo : JSON.parse(options.userInfo)
-    })
+    // _this.setData({
+    //   userInfo : JSON.parse(options.userInfo)
+    // })
     _this.getSpace()
     _this.init();
   },
