@@ -50,6 +50,7 @@ Page({
     new_hid: true,
 
     checkItems : [],
+    checked : false,
 
     sumPrice : 0,
 
@@ -238,29 +239,52 @@ Page({
     var list = _this.data.list;
 
     if(_this.checkForm(form)){
-      list.push({
-        row_id : list.length+1,
-        order_id : _this.getOrder_id(),
-        num : 0,
-        comment : "",
-        code : form.code,
-        name : form.name,
-        price : form.price,
-        cloth : form.cloth,
-        norms : form.norms,
-        type : form.type,
-        mark1 : form.mark1,
-        mark2 : form.mark2,
-        mark3 : form.mark3,
-        mark4 : form.mark4,
-        mark5 : form.mark5,
-        sqlType : 1
+      wx.showLoading({
+        title : '检查代码唯一性',
+        mask : 'true'
       })
-
-      _this.setData({
-        list
+      wx.cloud.callFunction({
+        name : 'sqlServer_117',
+        data : {
+          query : "select count(*) as num from zeng_wares where code = '"+form.code+"'"
+        },
+        success : res=> {
+          wx.hideLoading({
+            success: (res) => {},
+          })
+          if(parseInt(res.result.recordset[0].num) <= 0){
+            list.push({
+              row_id : list.length+1,
+              order_id : _this.getOrder_id(),
+              num : 0,
+              comment : "",
+              code : form.code,
+              name : form.name,
+              price : form.price,
+              cloth : form.cloth,
+              norms : form.norms,
+              type : form.type,
+              mark1 : form.mark1,
+              mark2 : form.mark2,
+              mark3 : form.mark3,
+              mark4 : form.mark4,
+              mark5 : form.mark5,
+              sqlType : 1
+            })
+            _this.setData({
+              list
+            })
+            _this.hid_view();
+          }else{
+            wx.showToast({
+              title: '商品代码已存在',
+              icon : 'none',
+              duration : 1500
+            })
+            return;
+          }
+        }
       })
-      _this.hid_view();
     }
   },
 
@@ -280,9 +304,11 @@ Page({
           if (res.confirm) {
             var list = _this.data.list;
             var index = dataset.index;
+            var sumPrice = _this.data.sumPrice-list[index].num*list[index].price
             list.splice(index,1)
             _this.setData({
-              list
+              list,
+              sumPrice
             })
           }
         }
@@ -316,14 +342,7 @@ Page({
     }
 
     if(column == "num"){
-      if(new_value > list[index].maxNum){
-        wx.showToast({
-          title: '出库数量不可大于库存数量',
-          duration: 2000,
-          icon : "none"
-        })
-        return;
-      }
+      new_value = parseInt(new_value)
       _this.setData({
         sumPrice : _this.data.sumPrice+=(new_value-value)*list[index].price
       })
@@ -403,7 +422,9 @@ Page({
         _this.init();
         _this.setData({
           list : [],
-          sumPrice : 0
+          sumPrice : 0,
+          checkItems : [],
+          checked : false
         })
       },
       complete: res => {

@@ -1,0 +1,18 @@
+<canvas class="canvas" canvas-id="outCanvas" hidden="{{!mask_hid}}" style="width:{{width_user}}px;height:{{height_user}}px;"></canvas>
+
+<view class="bottom_view">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="updComment_show">编辑订单备注</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save">保存到手机</button>
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
+
+<view class="updComment_view" hidden="{{updComment_hid}}">
+  <form bindsubmit="updComment">
+    <textarea fixed class="textarea" placeholder="在此输入..." name="comment_order"></textarea>
+    <view class="bottom_view" style="height: 20%;">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="hid_view">返回</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" form-type="submit">确定</button>
+    </view>
+  </form>
+</view>   

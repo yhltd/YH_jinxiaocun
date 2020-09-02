@@ -34,7 +34,7 @@ Page({
       {text: "操作",width: "100rpx",columnName: "",},
       {text: "商品代码",width: "250rpx",columnName: "code",},
       {text: "商品名称",width: "250rpx",columnName: "name",},
-      {text: "库存数量",width: "250rpx",columnName: "maxNum",},
+      {text: "库存数量",width: "250rpx",columnName: "num",},
       {text: "商品单价",width: "200rpx",columnName: "price",},
       {text: "用料",width: "250rpx",columnName: "cloth",},
       {text: "规格",width: "250rpx",columnName: "norms",},
@@ -52,6 +52,7 @@ Page({
     new_hid: true,
 
     checkItems : [],
+    checked : false,
 
     sumPrice : 0,
 
@@ -60,7 +61,7 @@ Page({
     empty : "",
 
     startPrice : 0,
-    endPrice : 0
+    endPrice : 0,
   },
   init: function () {
     var _this = this;
@@ -68,7 +69,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    var sql = "select id,code,name,price,cloth,norms,type,mark1,mark2,mark3,mark4,mark5,(select ISNULL(sum(case s.direction when 1 then s.num else s.num*-1 end), 0) from zeng_stock as s where s.productCode = w.code) as maxNum,0 as isHid from zeng_wares as w";
+    var sql = "select *,0 as isHid from zeng_wares where num > 0";
     wx.cloud.callFunction({
       name: "sqlServer_117",
       data: {
@@ -183,7 +184,7 @@ Page({
       list.push({
         id : list2[checkItems[i]].id,
         row_id : list.length+1,
-        maxNum : list2[checkItems[i]].maxNum,
+        maxNum : list2[checkItems[i]].num,
         num : 0,
         discount : 0.0,
         payType : "",
@@ -223,9 +224,11 @@ Page({
           if (res.confirm) {
             var list = _this.data.list;
             var index = dataset.index;
+            var sumPrice = _this.data.sumPrice-list[index].num*list[index].price
             list.splice(index,1)
             _this.setData({
-              list
+              list,
+              sumPrice
             })
           }
         }
@@ -259,13 +262,14 @@ Page({
     }
 
     if(column == "num"){
+      new_value = parseInt(new_value)
       var num = 0
       for(let i = 0;i<list.length;i++){
         if(list[index].code == list[i].code){
-          num += list[i].num
+          num += parseInt(list[i].num)
         }
       }
-      if(num+new_value-list[index].num > list[index].maxNum){
+      if(num+new_value-parseInt(list[index].num) > list[index].maxNum){
         wx.showToast({
           title: '出库数量不可大于库存数量',
           duration: 2000,
@@ -341,13 +345,10 @@ Page({
               title: '出库成功',
               icon : 'success'
             })
-            getExcel.print(_this.data.title,_this.data.list,'出库单');
           }
         })
-        _this.init();
-        _this.setData({
-          list : [],
-          sumPrice : 0
+        wx.navigateTo({
+          url: '../z_chuku_getImage/z_chuku_getImage?list='+encodeURIComponent(JSON.stringify(_this.data.list))+'&user_id='+_this.data.userInfo.id+'&order_id='+order_id,
         })
       },
       complete: res => {
@@ -441,7 +442,12 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.setData({
+      list : [],
+      sumPrice : 0,
+      checkItems : [],
+      checked : false
+    })
   },
 
   /**

@@ -52,7 +52,7 @@ Page({
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
 
-    var sql = "select * from (select name,y.sum_month,y.sum_year,a.direction,row_number() over(order by name) as ROW_ID from Accounting as a,(SELECT code,(SELECT sum(money) FROM VoucherSummary WHERE MONTH(voucherDate) = MONTH(GETDATE()) AND code = y.code) AS sum_month,(SELECT sum(money) FROM VoucherSummary WHERE YEAR(voucherDate) = YEAR(GETDATE()) AND code = y.code) AS sum_year FROM VoucherSummary AS y WHERE company = '"+userInfo.company+"' and YEAR(voucherDate) = YEAR(GETDATE()) GROUP BY y.code) as y where a.code = y.code and a.company = '"+userInfo.company+"' and a.direction = "+class_id+") as t where t.ROW_ID > "+(pageNum-1)*countPage+" and t.ROW_ID < "+(pageNum*countPage+1)
+    var sql = "select * from (select name,y.sum_month,y.sum_year,a.direction,row_number() over(order by name) as ROW_ID from Accounting as a,(SELECT code,isnull((SELECT sum(money) FROM VoucherSummary WHERE MONTH(voucherDate) = MONTH(GETDATE()) AND code = y.code),0) AS sum_month,isnull((SELECT sum(money) FROM VoucherSummary WHERE YEAR(voucherDate) = YEAR(GETDATE()) AND code = y.code),0) AS sum_year FROM VoucherSummary AS y WHERE company = '"+userInfo.company+"' and YEAR(voucherDate) = YEAR(GETDATE()) GROUP BY y.code) as y where a.code = y.code and a.company = '"+userInfo.company+"' and a.direction = "+class_id+") as t where t.ROW_ID > "+(pageNum-1)*countPage+" and t.ROW_ID < "+(pageNum*countPage+1)
 
     _this.getPageCount(sql);
     wx.cloud.callFunction({

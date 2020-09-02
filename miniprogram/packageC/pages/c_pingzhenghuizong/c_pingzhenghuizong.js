@@ -20,21 +20,21 @@ Page({
     list : {},
     titil : [
       {text:"序号",width:"100rpx",type:"number",columnName:"ROW_ID"},
-      {text:"凭证字",width:"200rpx",type:"string",columnName:"word"},
-      {text:"凭证号",width:"300rpx",type:"string",columnName:"no"},
-      {text:"录入时间",width:"350rpx",type:"string",columnName:"voucherDate"},
-      {text:"摘要",width:"200rpx",type:"string",columnName:"abstract"},
-      {text:"科目代码",width:"200rpx",type:"number",columnName:"code"},
-      {text:"科目名称",width:"650rpx",type:"string",columnName:"name"},
-      {text:"借方金额",width:"200rpx",type:"number",columnName:"load"},
-      {text:"贷方金额",width:"200rpx",type:"number",columnName:"borrowed"},
-      {text:"部门",width:"200rpx",type:"string",columnName:"department"},
-      {text:"开支项目",width:"300rpx",type:"string",columnName:"expenditure"},
-      {text:"备注",width:"200rpx",type:"string",columnName:"note"},
-      {text:"审核人",width:"200rpx",type:"string",columnName:"man"},
-      {text:"应收/付",width:"200rpx",type:"number",columnName:"money"},
-      {text:"实收/付",width:"200rpx",type:"number",columnName:"real"},
-      {text:"未收/付",width:"200rpx",type:"number",columnName:"not_get"}
+      {text:"凭证字",width:"200rpx",type:"text",columnName:"word"},
+      {text:"凭证号",width:"300rpx",type:"text",columnName:"no"},
+      {text:"录入时间",width:"350rpx",type:"text",columnName:"voucherDate"},
+      {text:"摘要",width:"200rpx",type:"text",columnName:"abstract"},
+      {text:"科目代码",width:"200rpx",type:"text",columnName:"code"},
+      {text:"科目名称",width:"650rpx",type:"text",columnName:"name"},
+      {text:"借方金额",width:"200rpx",type:"digit",columnName:"load"},
+      {text:"贷方金额",width:"200rpx",type:"digit",columnName:"borrowed"},
+      {text:"部门",width:"200rpx",type:"text",columnName:"department"},
+      {text:"开支项目",width:"300rpx",type:"text",columnName:"expenditure"},
+      {text:"备注",width:"200rpx",type:"text",columnName:"note"},
+      {text:"审核人",width:"200rpx",type:"text",columnName:"man"},
+      {text:"应收/付",width:"200rpx",type:"digit",columnName:"money"},
+      {text:"实收/付",width:"200rpx",type:"digit",columnName:"real"},
+      {text:"未收/付",width:"200rpx",type:"digit",columnName:"not_get"}
     ],
     animationData_input : "",
     value_input : "",
@@ -136,6 +136,7 @@ Page({
 
     var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,vs.money,vs.real,(money-real) as not_get,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs,Accounting as ac where vs.code = ac.code and vs.company = '"+_this.data.userInfo.company+"' and ac.company = '"+_this.data.userInfo.company+"' and year(vs.voucherDate) = year(getDate())) t "+where+where2
 
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
@@ -606,11 +607,14 @@ Page({
     var where = "where 1=1"
     if(word!=""){
       where += " and word = '"+word+"'"
-    }else if(year!=""){
-      where += " and year = '"+year+"'"
-    }else if(month!=""){
-      where += " and month = '"+month+"'"
-    }else{
+    }
+    if(year!=""){
+      where += " and year(voucherDate) = '"+year+"'"
+    }
+    if(month!=""){
+      where += " and month(voucherDate) = '"+month+"'"
+    }
+    if(word=="" && year=="" && month==""){
       _this.hidView(_this,"select");
       return
     }

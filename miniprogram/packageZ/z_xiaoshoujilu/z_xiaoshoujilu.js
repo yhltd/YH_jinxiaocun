@@ -10,9 +10,9 @@ Page({
     title: [
       {text:"序号",width:"100rpx",type:"text",columnName:"row_id",isupd:false},
       {text:"商品代码",width:"250rpx",type:"text",columnName:"productCode",isupd:false},
-      {text:"单价",width:"250rpx",type:"text",columnName:"price",isupd:false},
+      {text:"单价",width:"250rpx",type:"number",columnName:"price",isupd:false},
       {text:"折扣",width:"200rpx",type:"digit",columnName:"discount",isupd:false},
-      {text:"折后单价",width:"250rpx",type:"text",columnName:"endDiscountPrice",isupd:false},
+      {text:"折后单价",width:"250rpx",type:"number",columnName:"endDiscountPrice",isupd:false},
       {text:"数量",width:"250rpx",type:"number",columnName:"num",isupd:false},
       {text:"支付方式",width:"250rpx",type:"text",columnName:"payType",isupd:true},
       {text:"备注",width:"400rpx",type:"text",columnName:"comment",isupd:true}

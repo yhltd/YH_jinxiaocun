@@ -9,12 +9,12 @@ Page({
     title: [
       {text:"序号",width:"100rpx",type:"text",columnName:"row_id",isupd:false},
       {text:"订单号",width:"300rpx",type:"text",columnName:"order_id",isupd:true},
-      {text:"方向",width:"200rpx",type:"digit",columnName:"direction",isupd:false},
-      {text:"合计金额",width:"250rpx",type:"text",columnName:"sum_price",isupd:false},
-      {text:"合计折后金额",width:"250rpx",type:"text",columnName:"sum_endPrice",isupd:false},
-      {text:"数量",width:"200rpx",type:"text",columnName:"sum_num",isupd:false},
-      {text:"销售员",width:"200rpx",type:"digit",columnName:"userName",isupd:false},
-      {text:"时间",width:"350rpx",type:"digit",columnName:"time",isupd:false},
+      {text:"方向",width:"200rpx",type:"text",columnName:"direction",isupd:false},
+      {text:"合计金额",width:"250rpx",type:"number",columnName:"sum_price",isupd:false},
+      {text:"合计折后金额",width:"250rpx",type:"number",columnName:"sum_endPrice",isupd:false},
+      {text:"数量",width:"200rpx",type:"number",columnName:"sum_num",isupd:false},
+      {text:"销售员",width:"200rpx",type:"text",columnName:"userName",isupd:false},
+      {text:"时间",width:"350rpx",type:"text",columnName:"time",isupd:false},
     ],
     list : [],
     

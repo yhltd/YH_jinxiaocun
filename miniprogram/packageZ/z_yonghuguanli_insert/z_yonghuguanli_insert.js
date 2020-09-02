@@ -48,7 +48,7 @@ Page({
     var _this = this;
     var form = e.detail.value
     var list = _this.data.list;
-    if(list.qrCode_shop==""){
+    if(list.qrCode_shop=="" || list.qrCode_shop==undefined){
       wx.showToast({
         title: '未上传二维码',
         icon : 'none'

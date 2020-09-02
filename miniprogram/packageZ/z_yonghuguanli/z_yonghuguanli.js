@@ -37,6 +37,7 @@ Page({
 
     wx.showLoading({
       title: '加载中',
+      mask : 'true'
     })
     wx.cloud.callFunction({
       name : "sqlServer_117",

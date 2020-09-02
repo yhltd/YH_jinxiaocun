@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo : {id:2,userName:"测试2",password:"111",power:"1",shop:"上海"},
+    userInfo : [],
     showList : [
       {
         text : "入库",
@@ -51,7 +51,7 @@ Page({
         }
       })
     }else{
-      if(_this.data.showList[index].text!="入库" && _this.data.showList[index].text!="出单"){
+      if(_this.data.showList[index].text!="入库" && _this.data.showList[index].text!="出库" && _this.data.showList[index].text!="使用说明"){
         if(_this.data.userInfo.power!=1){
           wx.showModal({
             title : "提示",
@@ -67,7 +67,7 @@ Page({
           mask : true
         })
         wx.cloud.downloadFile({
-          fileID: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/零售管理系统-使用说明.pdf",
+          fileID: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/零售管理系统-使用说明.docx",
           success : res=> {
             console.log("获取本地临时路径:"+res.tempFilePath)
             wx.openDocument({
@@ -153,9 +153,9 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
-    // _this.setData({
-    //   userInfo : JSON.parse(options.userInfo)
-    // })
+    _this.setData({
+      userInfo : JSON.parse(options.userInfo)
+    })
     _this.getSpace()
     _this.init();
   },
