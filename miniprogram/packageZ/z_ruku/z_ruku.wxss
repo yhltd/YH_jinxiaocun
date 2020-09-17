@@ -154,6 +154,7 @@ button{
   float: left;
   margin-left: 7%;
   color: white;
+  margin-bottom: 38rpx;
 }
 
 .bt_form_hover{
@@ -163,6 +164,7 @@ button{
   float: left;
   margin-left: 7%;
   color: white;
+  margin-bottom: 38rpx;
 }
 
 

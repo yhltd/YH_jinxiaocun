@@ -1,6 +1,5 @@
 {
   "usingComponents": {},
   "navigationBarBackgroundColor" : "#393D49",
-  "navigationBarTitleText" : "出库单",
-  "enablePullDownRefresh": true
+  "navigationBarTitleText" : "出库单"
 }

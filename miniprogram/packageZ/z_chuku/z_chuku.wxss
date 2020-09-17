@@ -118,7 +118,7 @@ button{
 .input_view{
   position: fixed;
   width: 90%;
-  height: 31%;
+  height: auto;
   top: 25%;
   background-color: white;
   border-radius: 10rpx;
@@ -152,6 +152,7 @@ button{
   float: left;
   margin-left: 7%;
   color: white;
+  margin-bottom: 38rpx
 }
 
 .bt_form_hover{
@@ -161,6 +162,7 @@ button{
   float: left;
   margin-left: 7%;
   color: white;
+  margin-bottom: 38rpx;
 }
 
 /*

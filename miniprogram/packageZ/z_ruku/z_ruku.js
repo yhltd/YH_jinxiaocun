@@ -202,7 +202,9 @@ Page({
       })
     }
     _this.setData({
-      list
+      list,
+      checked : false,
+      checkItems : []
     })
     _this.hid_view();
   },
@@ -344,7 +346,7 @@ Page({
     if(column == "num"){
       new_value = parseInt(new_value)
       _this.setData({
-        sumPrice : _this.data.sumPrice+=(new_value-value)*list[index].price
+        sumPrice : Math.floor((_this.data.sumPrice+=(new_value-value)*list[index].price)*100)/100
       })
     }
     _this.setData({

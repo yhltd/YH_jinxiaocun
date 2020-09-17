@@ -1,55 +1,10 @@
 page{
   height: 100%;
 }
-view{
-  font-size: 32rpx;
-}
-button{
-  font-size: 32rpx;
-}
 .canvas{
   margin:auto;
   border: 1rpx solid #F2F2F2;
   margin-top: 20rpx;
-}
-.blueListView{
-  margin-bottom: 80rpx;
-  border: 1rpx solid #e6e6e6;
-  width: 98%;
-  margin: auto;
-}
-
-.blueListView_title_false{
-  background-color: #282B33;
-  border: none;
-  border-radius: 0;
-  color: white;
-}
-.blueListView_title_true{
-  background-color: #00B26A;
-  border: none;
-  border-radius: 0;
-  color: white;
-}
-.blueListView_scroll{
-  max-height: 160rpx;
-  height: auto;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: rgba(155, 153, 153, 0.589);
-}
-.blueListView_scroll_item{
-  height: 115rpx;
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  justify-content: center;
-  border: 1rpx solid #e6e6e6;
-  margin: auto;
-  margin-top: 20rpx;
-  padding-left: 30rpx;
 }
 
 /*
@@ -68,6 +23,7 @@ button{
   height: 80rpx;
   margin: auto;
   line-height: 80rpx;
+  font-size: 32rpx;
 }
 .bt_bottom_hover{
   width: 39%;
@@ -76,6 +32,7 @@ button{
   height: 80rpx;
   margin: auto;
   line-height: 80rpx;
+  font-size: 32rpx;
 }
 
 

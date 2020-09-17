@@ -39,6 +39,11 @@ App({
       list_table : [],
       usedSpace : 0,
       allSpace : 0
+    },
+    z_option_BLE : {
+      deviceId : "",
+      serviceId : "",
+      characteristicId : ""
     }
   },
 
