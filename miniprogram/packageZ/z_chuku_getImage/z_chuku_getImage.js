@@ -69,7 +69,7 @@ Page({
     ctx.setTextAlign('center')
     ctx.fillText('商品名', width / 2-width / 5*2, 145)
     ctx.fillText('数量', width / 2-width / 5, 145)
-    ctx.fillText('折扣', width / 2, 145)
+    ctx.fillText('金额', width / 2, 145)
     ctx.fillText('支付方式', width / 2+width / 5, 145)
     ctx.fillText('备注', width / 2+width / 5*2, 145)
     
@@ -80,34 +80,49 @@ Page({
     ctx.setFontSize(14)
     var y = 185;
     for(let i=0;i<list.length;i++,y+=30){
+      let price = list[i].num*list[i].price
+      if(list[i].discount!=0){
+        price = Math.floor(price*list[i].discount*100)/100+"/"+list[i].discount*10+"折"
+      }else{
+        price = Math.floor(price*100)/100
+      }
       ctx.fillText(list[i].name, width / 2-width / 5*2, y);
       ctx.fillText(list[i].num, width / 2-width / 5, y);
-      ctx.fillText((list[i].discount*10)+"折", width / 2, y);
+      ctx.fillText(price, width / 2, y);
       ctx.fillText(list[i].payType, width / 2+width / 5, y);
-      ctx.fillText(list[i].comment, width / 2+width / 5*2, y);
+      if(list[i].comment.length>3){
+        ctx.fillText(list[i].comment.substr(0,3), width / 2+width / 5*2, y);
+        y+=30
+        ctx.setTextAlign('left')
+        ctx.fillText(list[i].comment.substr(3),  20, y);
+        ctx.setTextAlign('center')
+      }else{
+        ctx.fillText(list[i].comment, width / 2+width / 5*2, y);
+      }
     }
 
     ctx.moveTo(0, y-20)
     ctx.lineTo((width_all-width)/2+width, y-20)
 
     if(comment_order!="" && comment_order!=undefined){
+      let h = y
       ctx.setTextAlign('left')
-      y+=30
+      h+=30
       ctx.setFontSize(15)
       var comment_orders = [];
       //一行的长度
       var columnLength = width/2/15;
       //循环次数
       var num = Math.ceil(comment_order.length/columnLength);
-      for(let x=0;x<num;x++,y+=15){
+      
+      for(let x=0;x<num;x++,h+=15){
         ctx.fillText(
           comment_order.substring(
             x*columnLength,
             columnLength+x*columnLength
-          ), 0, y
+          ), 0, h
         )
       }
-      y-=30
     }
 
 
@@ -164,14 +179,20 @@ Page({
     })
   },
 
-  getUserInfo : function(length){
+  getUserInfo : function(list){
     var _this = this;
+    var length = list.length*30+350
+    for(let i=0;i<list.length;i++){
+      if(list[i].comment.length>3){
+        length+=30
+      }
+    }
     wx.getSystemInfo({
       success: res=> {
         _this.setData({
           width_user_all : res.windowWidth,
           width_user : res.windowWidth*0.98,
-          height_user : length*30+350
+          height_user : length
         })
       },
     })
@@ -679,13 +700,20 @@ Page({
       order_id : options.order_id
     })
     _this.getQRCodeBase64(options.user_id);
-    _this.getUserInfo(JSON.parse(decodeURIComponent(options.list)).length);
+    _this.getUserInfo(JSON.parse(decodeURIComponent(options.list)));
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
     var _this = this;
     if(app.globalData.z_option_BLE.deviceId!=""){
       wx.showToast({
@@ -695,13 +723,6 @@ Page({
       })
       _this.createOldBLE();
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
   },
 
   /**

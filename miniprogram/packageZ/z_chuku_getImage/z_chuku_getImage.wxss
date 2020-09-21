@@ -32,7 +32,7 @@ button{
   color: white;
 }
 .blueListView_scroll{
-  max-height: 160rpx;
+  max-height: 200rpx;
   height: auto;
 }
 
