@@ -1,0 +1,31 @@
+.login{
+  font-size: 40rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+}
+.img{
+  top: 30rpx;
+  position: relative;
+
+display: inline;
+}
+.img1{
+  top: 60rpx;
+  position: relative;
+
+display: inline;
+}
+.name{
+  font-size: 45rpx;
+  font-weight: bold;
+ margin-left: 110rpx;
+margin-top: -70rpx;
+ color: cadetblue;
+}
+.gs{
+  font-size: 45rpx;
+  font-weight: bold;
+  margin-left: 110rpx;
+  margin-top: -70rpx;
+  color: blue;
+}

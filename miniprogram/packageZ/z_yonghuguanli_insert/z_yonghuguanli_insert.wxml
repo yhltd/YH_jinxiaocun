@@ -1,0 +1,31 @@
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="input_view">
+      <view class="input_text">用户名</view>
+      <input name="userName" placeholder="请输入用户名" type="text" value="{{list.userName}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">密码</view>
+      <input name="password" placeholder="请输入密码" type="text" value="{{list.password}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">身份</view>
+      <radio-group class="radio" name="power">
+        <radio value="1" checked="{{list.power==1}}" color="#282B33" >老板</radio>
+        <radio value="0" checked="{{list.power==0}}" color="#282B33">员工</radio>
+      </radio-group>
+    </view>
+    <view class="input_view">
+      <view class="input_text">所属店铺</view>
+      <input name="shop" placeholder="请输入店铺" type="text" value="{{list.shop}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">二维码</view>
+      <view class="qr_input_view" bindtap="choiceImg">{{list.qrCode_shop!='' && list.length != 0?'已上传,点击修改':'点击上传'}}</view>
+    </view>
+    <view class="bottom">
+      <button class="bt" form-type="reset">重置</button>
+      <button class="bt" form-type="submit">保存</button>
+    </view>
+  </form>
+</view>

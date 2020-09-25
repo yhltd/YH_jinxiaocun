@@ -120,6 +120,7 @@ Page({
   onReady: function() {
     this.dateTime = this.selectComponent("#tui-dateTime-ctx")
     var that = this
+    
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {

@@ -1,0 +1,44 @@
+<scroll-view class="scroll" scroll-y="true">
+<view class="table">
+<view class="th" wx:for="{{titil}}" wx:key="text" wx:for-item="item" >
+  <view class="tr">{{item.text}}</view>
+</view>
+<view class="th" wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item" >
+  <view class="td" >{{gongsi}}</view>
+  <view class="td" data-index="{{index}}" >{{item.C}}</view>
+  <view class="td" data-index="{{index}}" >{{item.D}}</view>
+  <view class="td" data-index="{{index}}" >{{item.E}}</view>
+</view>
+</view>
+</scroll-view>
+<!-- 添加 -->
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_name" maxlength="6"></input>
+      <input class="input_text_form" placeholder="请输入账号" value="{{num}}" type="number" name="input_num" maxlength="6"></input>
+      <input class="input_text_form" password="{{true}}" placeholder="请输入密码" value="{{pwd}}" type="text" name="input_pwd" maxlength="6"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+  
+<button class="bt_form_hover"  bindtap="add">添加</button>
+<button class="bt_form_hover"  bindtap="det">删除</button>
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
+<!-- 删除 -->
+  <view class="input_view" hidden="{{input_det}}">
+  <form bindsubmit="saves">
+    <view>
+      <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_detname" maxlength="6"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="det_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+  <view class="masks" bindtap="hid_det" hidden="{{mask_det}}"></view>

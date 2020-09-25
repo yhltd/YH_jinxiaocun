@@ -1,0 +1,30 @@
+.button{
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.but{
+margin-top: 80rpx;
+height: 460rpx;
+width: 120rpx;
+background: -webkit-linear-gradient(left,rgb(98, 174, 236),steelblue);
+font-size: 46rpx;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+color: whitesmoke;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.button2{
+  margin-top: 40rpx;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  }

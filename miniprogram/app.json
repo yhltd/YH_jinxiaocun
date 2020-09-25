@@ -1,6 +1,8 @@
 {
-  "pages": [
+  "pages": [    
+   
     "pages/login/login",
+    "pages/z_home/z_home",
     "pages/c_home/c_home",
     "pages/home/home",
     "pages/peizhi/peizhi",
@@ -36,7 +38,8 @@
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/frmadmindetails/frmadmindetails",
-    "pages/frmadminsysm/frmadminsysm"
+    "pages/frmadminsysm/frmadminsysm",
+    "100lie_page"
   ],
   "subpackages": [
     {
@@ -80,6 +83,35 @@
         "pages/c_jijianzongzhang/c_jijianzongzhang",
         "pages/c_liyisunyi/c_liyisunyi",
         "pages/c_xianjinliuliang/c_xianjinliuliang"
+      ]
+    },
+    {
+      "root": "100lie_page",
+      "name": "100lie",
+      "pages": [
+        "pages/show/show",
+        "pages/shows/shows",
+        "pages/companyfix/companyfix",
+        "pages/personfix/personfix",
+        "pages/work/work",
+        "pages/gwork/gwork",
+        "pages/userpeople/userpeople",
+        "pages/guserpeople/guserpeople",
+        "pages/personmasg/personmasg",
+        "pages/loginpeople/loginpeople"
+      ] 
+    },{
+      "root": "packageZ",
+      "name": "lingshou",
+      "pages": [
+        "z_kucun/z_kucun",
+        "z_xiaoshoujilu/z_xiaoshoujilu",
+        "z_yonghuguanli/z_yonghuguanli",
+        "z_yonghuguanli_insert/z_yonghuguanli_insert",
+        "z_chuku/z_chuku",
+        "z_ruku/z_ruku",
+        "z_sum_xiaoshoujilu/z_sum_xiaoshoujilu",
+        "z_chuku_getImage/z_chuku_getImage"
       ]
     }
   ],

@@ -1,0 +1,45 @@
+.text{
+  margin-left: 20rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  
+}
+.bian{
+  font-size: 50rpx;
+  color: blue;
+}
+.text1{
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.button{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  }
+  .but{
+  margin-top: 60rpx;
+  height: 460rpx;
+  width: 120rpx;
+  background: -webkit-linear-gradient(left,rgb(98, 174, 236),steelblue);
+  font-size: 46rpx;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  }
+  .button2{
+    margin-top: 30rpx;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    }

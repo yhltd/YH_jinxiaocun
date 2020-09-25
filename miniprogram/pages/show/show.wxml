@@ -1,0 +1,4 @@
+<view>
+<button class="but" bindtap="work">工作台</button>
+<button class="but" bindtap="userren">使用人员</button>
+</view>

@@ -1,0 +1,13 @@
+.but{
+  margin-top: 80rpx;
+  height: 460rpx;
+  width: 120rpx;
+  background: -webkit-linear-gradient(left,rgb(98, 174, 236),steelblue);
+  font-size: 46rpx;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 100rpx;
+  }

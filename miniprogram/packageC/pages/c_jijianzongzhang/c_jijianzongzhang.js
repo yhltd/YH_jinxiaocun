@@ -298,12 +298,13 @@ Page({
     var _this = this;
     var value = e.detail.value
     var id = e.currentTarget.dataset.id
+    var accounting = e.currentTarget.dataset.accounting
     var checkItems = _this.data.checkItems;
     if(value!=""){
-      checkItems.push(id)
+      checkItems.push({id:id,accounting:accounting})
     }else{
       for(let i=0;i<checkItems.length;i++){
-        if(checkItems[i]==id){
+        if(checkItems[i].id==id){
           checkItems.splice(i,1)
         }
       }
@@ -339,18 +340,18 @@ Page({
           var sql = "delete from SimpleData where accounting in ("
           for(var i=0;i<checkItems.length;i++){
             if(i==checkItems.length-1){
-              sql += "'"+checkItems[i]+"','') and company = '"+_this.data.userInfo.company+"';"
+              sql += "'"+checkItems[i].accounting+"','') and company = '"+_this.data.userInfo.company+"';"
               break;
             }
-            sql += "'"+checkItems[i]+"',"
+            sql += "'"+checkItems[i].accounting+"',"
           }
-          sql += "delete from SimpleAccounting where accounting in ("
+          sql += "delete from SimpleAccounting where id in ("
           for(var j=0;j<checkItems.length;j++){
             if(j==checkItems.length-1){
-              sql += "'"+checkItems[j]+"','') and company = '"+_this.data.userInfo.company+"';"
+              sql += "'"+checkItems[j].id+"','') and company = '"+_this.data.userInfo.company+"';"
               break;
             }
-            sql += "'"+checkItems[j]+"',"
+            sql += "'"+checkItems[j].id+"',"
           }
           console.log(sql)
           wx.cloud.callFunction({
@@ -377,6 +378,9 @@ Page({
                     icon : 'success'
                   })
                 },
+              })
+              _this.setData({
+                checkItems : []
               })
             },
             err : res =>{

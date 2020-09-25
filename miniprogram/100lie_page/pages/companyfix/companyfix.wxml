@@ -1,0 +1,9 @@
+<scroll-view class="scroll" scroll-x="true"scroll-y="true" >
+<view class="table">
+<view class="tr" wx:for="{{title}}" wx:key="index" wx:for-index="index" style="width:{{item.width}}">
+<view class="td1">{{item.text}}</view>
+<view class="td" data-index="{{index}}" data-colmun='{{item.colmun}}' bindtap="click" >{{item.val}} </view>
+</view>
+</view>
+</scroll-view>
+ 

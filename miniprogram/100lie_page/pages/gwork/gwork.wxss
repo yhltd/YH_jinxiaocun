@@ -1,0 +1,235 @@
+.scroll{
+  width: 100%;
+  height: 330rpx;
+  white-space: nowrap;
+  background-color: azure;
+  }
+  .section{
+    display: inline-block;
+  }
+  .pick{
+    width: 480rpx;
+  }
+  .picker{
+  margin-top: 20rpx;
+  margin-left: 5rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  border: 1rpx solid #E6E6E6;
+  border-radius: 10rpx;
+  height: 80rpx;
+  width: 480rpx;
+  display: flex;
+  align-items: center;
+  background: -webkit-linear-gradient(left,rgb(204,199,199),rgb(155,129,129));
+  }
+  .but{
+    background: -webkit-linear-gradient(left,rgb(204,199,199),rgb(155,129,129));
+    font-size: 40rpx;
+     font-weight: bold;
+    width: 280rpx;
+    height: 140rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 570rpx;
+  margin-top: -205rpx;
+  
+  }
+  .colmun{
+    border: 8rpx solid;
+    border-color:#ffc274 #ff5d3b #ffc274 #ff5d3b ;
+    border-radius: 10rpx;
+    height: 90rpx;
+    width: 1700rpx;
+    margin-left: 930rpx;
+    margin-top: -223rpx;
+    font-size: 34rpx;
+     font-weight: bold;
+  }
+  .tex{
+    font-size: 40rpx;
+     font-weight: bold;
+  }
+  .text{
+  font-size: 40rpx;
+  color: brown;
+  font-weight: bold;
+  margin-left: 1004rpx;
+  margin-top: 23rpx;
+  }
+  .text2{
+    font-size: 40rpx;
+    color: brown;
+    font-weight: bold;
+    margin-left:1646rpx;
+    margin-top: -170rpx;
+  }
+  .button1{
+    font-size: 40rpx;
+    font-weight: bold;
+    background-color: burlywood;
+   width: 400rpx;
+   height: 110rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1030rpx;
+  margin-top: 10rpx;
+  
+  }
+  .button2{
+    font-size: 40rpx;
+    background-color: burlywood;
+    font-weight: bold;
+   width: 250rpx;
+   height: 108rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1798rpx;
+  margin-top: -108rpx;
+  
+  }
+  .jiahao{
+    
+    margin-left:2310rpx;
+    margin-top: 4rpx;
+  }
+  .jia{
+    background-color: rgba(0, 139, 139, 0);
+    width: 88rpx;
+    height: 80rpx;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-left: 2325rpx;
+   margin-top: -110rpx;
+  
+  }
+  /* 表格 */
+  .scrolls{
+    width: 100%;
+    height: 1000rpx;
+    /* white-space: nowrap; */
+   
+    }
+  .table{
+    display: inline-block; 
+   }    
+  .th{
+    display: inline-flex;
+    flex-direction: row;
+  margin: 0;
+  padding: 0;
+  }
+  .tr{
+     padding: 10rpx;
+    display: flex;
+    width: 200rpx;
+    height: 55rpx;
+    background-color: rgb(143, 198, 245);
+    border-right: 1rpx solid rgb(24, 24, 26);
+    border-bottom: 1rpx solid rgb(27, 27, 29);
+    /* border-top:1rpx solid rgb(27, 27, 29) ; */
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    font-weight: bold;
+    font-size: 35rpx; 
+    flex-wrap: wrap;
+    
+  } 
+  .td{
+    padding: 10rpx;
+   display: flex;
+   width: 200rpx;
+   height: 55rpx;
+   border-right: 1rpx solid rgb(24, 24, 26);
+   border-bottom: 1rpx solid rgb(27, 27, 29);
+   justify-content: center;
+   align-items: center;
+   overflow-x: auto;
+   font-weight: bold;
+   font-size: 35rpx; 
+   flex-wrap: wrap;
+  } 
+  /* 日期查看 */
+  .mask{
+    visibility: visible;
+    opacity: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 19;
+    transition: all 0.3s ease-in-out;
+    }
+    .input_view{
+      position: fixed;
+      width: 100%;
+      height: 78%;
+      top: 25%;
+      background-color: white;
+      z-index: 20;
+      }
+      /* 插入信息 */
+      .input_text_form{
+        border: 5rpx solid #E6E6E6;
+        margin:auto;
+        width: 80%;
+        height: 64rpx;
+        align-items: center;
+        margin-top: 13%;
+        border-radius: 19rpx;
+        padding-left: 3%;
+      }
+      .bt_view{
+        margin: auto;
+        border-top: 1rpx solid #3D3D3D;
+        width: 90%;
+        height: 38%;
+        margin-top: 90rpx;  
+      }
+      
+      .bt_form{
+        background-color: #009688;
+        width: 39%;
+        margin-top: 100rpx;
+        float: left;
+        margin-left: 7%;
+        color: white;
+      }
+      
+      /* .bt_form_hover{
+        background-color: rgb(11, 194, 176);
+        width: 39%;
+        margin-top: 4%;
+        float: left;
+        margin-left: 7%;
+        color: white;
+      } */
+      .masks{
+        visibility: visible;
+        opacity: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 19;
+        transition: all 0.3s ease-in-out;
+        }
+        .input_view{
+          position: fixed;
+          width: 100%;
+          height: 78%;
+          top: 25%;
+          background-color: white;
+          border-radius: 10rpx 10rpx 0 0;
+          box-shadow: 10rpx 10rpx 10rpx black;
+          z-index: 20;
+          }

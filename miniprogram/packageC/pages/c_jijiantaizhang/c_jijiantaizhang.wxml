@@ -10,7 +10,7 @@
         <view class="list_view" style="width:100rpx;position:sticky;left:0">
           <view wx:if="{{!isDelete}}" class="list_text">{{list_item.ROW_ID}}</view>
           <view wx:if="{{isDelete}}">
-            <checkbox-group bindchange="choice_checkBox_delete">
+            <checkbox-group bindchange="choice_checkBox_delete" data-id="{{list_item.id}}">
               <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
             </checkbox-group>
           </view>

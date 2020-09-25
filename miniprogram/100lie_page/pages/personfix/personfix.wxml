@@ -1,0 +1,118 @@
+
+  <scroll-view scroll-y="true" scroll-x="true" class="scroll2">
+  <view class="table">
+  <view class="th">
+  <block  wx:for="{{titil}}" wx:key="titil" wx:for-item="item" wx:for-index="indwx">
+     <view class="tr">{{item.text}}</view>
+  </block>
+  </view>
+  <block wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th">
+      <view class="td" >{{gongsi}}</view>
+      <view class="td" data-index="{{index}}" >{{item.B}}</view>
+      <view class="td" data-index="{{index}}" data-column='C' data-name='{{item.B}}' bindtap="click" >{{item.C}}</view>
+      <view class="td" data-index="{{index}}" data-column='D' data-name='{{item.B}}' bindtap="click" >{{item.D}}</view>
+      <view class="td" data-index="{{index}}" data-column='E' data-name='{{item.B}}' bindtap="click" >{{item.E}}</view>
+      <view class="td" data-index="{{index}}" data-column='F' data-name='{{item.B}}' bindtap="click" >{{item.F}}</view>
+      <view class="td" data-index="{{index}}" data-column='G' data-name='{{item.B}}' bindtap="click" >{{item.G}}</view>
+      <view class="td" data-index="{{index}}" data-column='H' data-name='{{item.B}}' bindtap="click" >{{item.H}}</view>
+      <view class="td" data-index="{{index}}" data-column='I' data-name='{{item.B}}' bindtap="click" >{{item.I}}</view>
+      <view class="td" data-index="{{index}}" data-column='J' data-name='{{item.B}}' bindtap="click" >{{item.J}}</view>
+      <view class="td" data-index="{{index}}" data-column='K' data-name='{{item.B}}' bindtap="click" >{{item.K}}</view>
+      <view class="td" data-index="{{index}}" data-column='L' data-name='{{item.B}}' bindtap="click" >{{item.L}}</view>
+      <view class="td" data-index="{{index}}" data-column='M' data-name='{{item.B}}' bindtap="click" >{{item.M}}</view>
+      <view class="td" data-index="{{index}}" data-column='N' data-name='{{item.B}}' bindtap="click" >{{item.N}}</view>
+      <view class="td" data-index="{{index}}" data-column='O' data-name='{{item.B}}' bindtap="click" >{{item.O}}</view>
+      <view class="td" data-index="{{index}}" data-column='P' data-name='{{item.B}}' bindtap="click" >{{item.P}}</view>
+      <view class="td" data-index="{{index}}" data-column='Q' data-name='{{item.B}}' bindtap="click" >{{item.Q}}</view>
+      <view class="td" data-index="{{index}}" data-column='R' data-name='{{item.B}}' bindtap="click" >{{item.R}}</view>
+      <view class="td" data-index="{{index}}" data-column='S' data-name='{{item.B}}' bindtap="click" >{{item.S}}</view>
+      <view class="td" data-index="{{index}}" data-column='T' data-name='{{item.B}}' bindtap="click" >{{item.T}}</view>
+      <view class="td" data-index="{{index}}" data-column='U' data-name='{{item.B}}' bindtap="click" >{{item.U}}</view>
+      <view class="td" data-index="{{index}}" data-column='V' data-name='{{item.B}}' bindtap="click" >{{item.V}}</view>
+      <view class="td" data-index="{{index}}" data-column='W' data-name='{{item.B}}' bindtap="click" >{{item.W}}</view>
+      <view class="td" data-index="{{index}}" data-column='X' data-name='{{item.B}}' bindtap="click" >{{item.X}}</view>
+      <view class="td" data-index="{{index}}" data-column='Y' data-name='{{item.B}}' bindtap="click" >{{item.Y}}</view>
+      <view class="td" data-index="{{index}}" data-column='Z' data-name='{{item.B}}' bindtap="click" >{{item.Z}}</view>
+      <view class="td" data-index="{{index}}" data-column='AA' data-name='{{item.B}}' bindtap="click" >{{item.AA}}</view>
+      <view class="td" data-index="{{index}}" data-column='AB' data-name='{{item.B}}' bindtap="click" >{{item.AB}}</view>
+      <view class="td" data-index="{{index}}" data-column='AC' data-name='{{item.B}}' bindtap="click" >{{item.AC}}</view>
+      <view class="td" data-index="{{index}}" data-column='AD' data-name='{{item.B}}' bindtap="click" >{{item.AD}}</view>
+      <view class="td" data-index="{{index}}" data-column='AE' data-name='{{item.B}}' bindtap="click" >{{item.AE}}</view>
+      <view class="td" data-index="{{index}}" data-column='AF' data-name='{{item.B}}' bindtap="click" >{{item.AF}}</view>
+      <view class="td" data-index="{{index}}" data-column='AG' data-name='{{item.B}}' bindtap="click" >{{item.AG}}</view>
+      <view class="td" data-index="{{index}}" data-column='AH' data-name='{{item.B}}' bindtap="click" >{{item.AH}}</view>
+      <view class="td" data-index="{{index}}" data-column='AI' data-name='{{item.B}}' bindtap="click" >{{item.AI}}</view>
+      <view class="td" data-index="{{index}}" data-column='AJ' data-name='{{item.B}}' bindtap="click" >{{item.AJ}}</view>
+      <view class="td" data-index="{{index}}" data-column='AK' data-name='{{item.B}}' bindtap="click" >{{item.AK}}</view>
+      <view class="td" data-index="{{index}}" data-column='AL' data-name='{{item.B}}' bindtap="click" >{{item.AL}}</view>
+      <view class="td" data-index="{{index}}" data-column='AM' data-name='{{item.B}}' bindtap="click" >{{item.AM}}</view>
+      <view class="td" data-index="{{index}}" data-column='AN' data-name='{{item.B}}' bindtap="click" >{{item.AN}}</view>
+      <view class="td" data-index="{{index}}" data-column='AO' data-name='{{item.B}}' bindtap="click" >{{item.AO}}</view>
+      <view class="td" data-index="{{index}}" data-column='AP' data-name='{{item.B}}' bindtap="click" >{{item.AP}}</view>
+      <view class="td" data-index="{{index}}" data-column='AQ' data-name='{{item.B}}' bindtap="click" >{{item.AQ}}</view>
+      <view class="td" data-index="{{index}}" data-column='AR' data-name='{{item.B}}' bindtap="click" >{{item.AR}}</view>
+      <view class="td" data-index="{{index}}" data-column='ASS' data-name='{{item.B}}' bindtap="click" >{{item.ASS}}</view>
+      <view class="td" data-index="{{index}}" data-column='AT' data-name='{{item.B}}' bindtap="click" >{{item.AT}}</view>
+      <view class="td" data-index="{{index}}" data-column='AU' data-name='{{item.B}}' bindtap="click" >{{item.AU}}</view>
+      <view class="td" data-index="{{index}}" data-column='AV' data-name='{{item.B}}' bindtap="click" >{{item.AV}}</view>
+      <view class="td" data-index="{{index}}" data-column='AW' data-name='{{item.B}}' bindtap="click" >{{item.AW}}</view>
+      <view class="td" data-index="{{index}}" data-column='AX' data-name='{{item.B}}' bindtap="click" >{{item.AX}}</view>
+      <view class="td" data-index="{{index}}" data-column='AY' data-name='{{item.B}}' bindtap="click" >{{item.AY}}</view>
+      <view class="td" data-index="{{index}}" data-column='AZ' data-name='{{item.B}}' bindtap="click" >{{item.AZ}}</view>
+       <view class="td" data-index="{{index}}" data-column='BA' data-name='{{item.B}}' bindtap="click" >{{item.BA}}</view>
+      <view class="td" data-index="{{index}}" data-column='BB' data-name='{{item.B}}' bindtap="click" >{{item.BB}}</view>
+      <view class="td" data-index="{{index}}" data-column='BC' data-name='{{item.B}}' bindtap="click" >{{item.BC}}</view>
+      <view class="td" data-index="{{index}}" data-column='BD' data-name='{{item.B}}' bindtap="click" >{{item.BD}}</view>
+      <view class="td" data-index="{{index}}" data-column='BE' data-name='{{item.B}}' bindtap="click" >{{item.BE}}</view>
+      <view class="td" data-index="{{index}}" data-column='BF' data-name='{{item.B}}' bindtap="click" >{{item.BF}}</view>
+      <view class="td" data-index="{{index}}" data-column='BG' data-name='{{item.B}}' bindtap="click" >{{item.BG}}</view>
+      <view class="td" data-index="{{index}}" data-column='BH' data-name='{{item.B}}' bindtap="click" >{{item.BH}}</view>
+      <view class="td" data-index="{{index}}" data-column='BI' data-name='{{item.B}}' bindtap="click" >{{item.BI}}</view>
+      <view class="td" data-index="{{index}}" data-column='BJ' data-name='{{item.B}}' bindtap="click" >{{item.BJ}}</view>
+      <view class="td" data-index="{{index}}" data-column='BK' data-name='{{item.B}}' bindtap="click" >{{item.BK}}</view>
+      <view class="td" data-index="{{index}}" data-column='BL' data-name='{{item.B}}' bindtap="click" >{{item.BL}}</view>
+      <view class="td" data-index="{{index}}" data-column='BM' data-name='{{item.B}}' bindtap="click" >{{item.BM}}</view>
+      <view class="td" data-index="{{index}}" data-column='BN' data-name='{{item.B}}' bindtap="click" >{{item.BN}}</view>
+      <view class="td" data-index="{{index}}" data-column='BO' data-name='{{item.B}}' bindtap="click" >{{item.BO}}</view>
+      <view class="td" data-index="{{index}}" data-column='BP' data-name='{{item.B}}' bindtap="click" >{{item.BP}}</view>
+      <view class="td" data-index="{{index}}" data-column='BQ' data-name='{{item.B}}' bindtap="click" >{{item.BQ}}</view>
+      <view class="td" data-index="{{index}}" data-column='BR' data-name='{{item.B}}' bindtap="click" >{{item.BR}}</view>
+      <view class="td" data-index="{{index}}" data-column='BS' data-name='{{item.B}}' bindtap="click" >{{item.BS}}</view>
+      <view class="td" data-index="{{index}}" data-column='BT' data-name='{{item.B}}' bindtap="click" >{{item.BT}}</view>
+      <view class="td" data-index="{{index}}" data-column='BU' data-name='{{item.B}}' bindtap="click" >{{item.BU}}</view>
+      <view class="td" data-index="{{index}}" data-column='BV' data-name='{{item.B}}' bindtap="click" >{{item.BV}}</view>
+      <view class="td" data-index="{{index}}" data-column='BW' data-name='{{item.B}}' bindtap="click" >{{item.BW}}</view>
+      <view class="td" data-index="{{index}}" data-column='BX' data-name='{{item.B}}' bindtap="click" >{{item.BX}}</view>
+      <view class="td" data-index="{{index}}" data-column='BYY' data-name='{{item.B}}' bindtap="click" >{{item.BYY}}</view>
+      <view class="td" data-index="{{index}}" data-column='BZ' data-name='{{item.B}}' bindtap="click" >{{item.BZ}}</view>
+      <view class="td" data-index="{{index}}" data-column='CA' data-name='{{item.B}}' bindtap="click" >{{item.CA}}</view>
+      <view class="td" data-index="{{index}}" data-column='CB' data-name='{{item.B}}' bindtap="click" >{{item.CB}}</view>
+      <view class="td" data-index="{{index}}" data-column='CC' data-name='{{item.B}}' bindtap="click" >{{item.CC}}</view>
+      <view class="td" data-index="{{index}}" data-column='CD' data-name='{{item.B}}' bindtap="click" >{{item.CD}}</view>
+      <view class="td" data-index="{{index}}" data-column='CE' data-name='{{item.B}}' bindtap="click" >{{item.CE}}</view>
+      <view class="td" data-index="{{index}}" data-column='CF' data-name='{{item.B}}' bindtap="click" >{{item.CF}}</view>
+      <view class="td" data-index="{{index}}" data-column='CG' data-name='{{item.B}}' bindtap="click" >{{item.CG}}</view>
+      <view class="td" data-index="{{index}}" data-column='CH' data-name='{{item.B}}' bindtap="click" >{{item.CH}}</view>
+      <view class="td" data-index="{{index}}" data-column='CI' data-name='{{item.B}}' bindtap="click" >{{item.CI}}</view>
+      <view class="td" data-index="{{index}}" data-column='CJ' data-name='{{item.B}}' bindtap="click" >{{item.CJ}}</view>
+      <view class="td" data-index="{{index}}" data-column='CK' data-name='{{item.B}}' bindtap="click" >{{item.CK}}</view>
+      <view class="td" data-index="{{index}}" data-column='CL' data-name='{{item.B}}' bindtap="click" >{{item.CL}}</view>
+      <view class="td" data-index="{{index}}" data-column='CM' data-name='{{item.B}}' bindtap="click" >{{item.CM}}</view>
+      <view class="td" data-index="{{index}}" data-column='CN' data-name='{{item.B}}' bindtap="click" >{{item.CN}}</view>
+      <view class="td" data-index="{{index}}" data-column='CO' data-name='{{item.B}}' bindtap="click" >{{item.CO}}</view>
+      <view class="td" data-index="{{index}}" data-column='CP' data-name='{{item.B}}' bindtap="click" >{{item.CP}}</view>
+      <view class="td" data-index="{{index}}" data-column='CQ' data-name='{{item.B}}' bindtap="click" >{{item.CQ}}</view>
+      <view class="td" data-index="{{index}}" data-column='CR' data-name='{{item.B}}' bindtap="click" >{{item.CR}}</view>
+      <view class="td" data-index="{{index}}" data-column='CS' data-name='{{item.B}}' bindtap="click" >{{item.CS}}</view>
+      <view class="td" data-index="{{index}}" data-column='CT' data-name='{{item.B}}' bindtap="click" >{{item.CT}}</view>
+      <view class="td" data-index="{{index}}" data-column='CU' data-name='{{item.B}}' bindtap="click" >{{item.CU}}</view>
+      <view class="td" data-index="{{index}}" data-column='CV' data-name='{{item.B}}' bindtap="click" >{{item.CV}}</view>
+      <view class="td" data-index="{{index}}" data-column='CW' data-name='{{item.B}}' bindtap="click" >{{item.CW}}</view>
+      <view class="td" data-index="{{index}}" data-column='CX' data-name='{{item.B}}' bindtap="click" >{{item.CX}}</view>
+      <view class="td" data-index="{{index}}" data-column='CY' data-name='{{item.B}}' bindtap="click" >{{item.CY}}</view>
+      <view class="td" data-index="{{index}}" data-column='CZ' data-name='{{item.B}}' bindtap="click" >{{item.CZ}}</view>
+    </view>
+  </block>
+  </view>
+</scroll-view>

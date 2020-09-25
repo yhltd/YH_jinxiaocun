@@ -1,0 +1,130 @@
+
+<scroll-view class="scrolls" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+       <view class="td" data-index="{{index}}" data-clie='C' data-column='A' >{{item.A}}</view>
+      <view class="td" data-index="{{index}}" data-clie='D' data-column='B' >{{item.B}}</view>
+      <view class="td" data-index="{{index}}" data-clie='E' data-column='C' >{{item.C}}</view>
+      <view class="td" data-index="{{index}}" data-clie='F' data-column='D' >{{item.D}}</view>
+      <view class="td" data-index="{{index}}" data-clie='G' data-column='E' >{{item.E}}</view>
+      <view class="td" data-index="{{index}}" data-clie='H' data-column='F' >{{item.F}}</view>
+      <view class="td" data-index="{{index}}" data-clie='I' data-column='G' >{{item.G}}</view>
+      <view class="td" data-index="{{index}}" data-clie='J' data-column='H' >{{item.H}}</view>
+      <view class="td" data-index="{{index}}" data-clie='K' data-column='I' >{{item.I}}</view>
+      <view class="td" data-index="{{index}}" data-clie='L' data-column='J' >{{item.J}}</view>
+      <view class="td" data-index="{{index}}" data-clie='M' data-column='K' >{{item.K}}</view>
+      <view class="td" data-index="{{index}}" data-clie='N' data-column='L' >{{item.L}}</view>
+      <view class="td" data-index="{{index}}" data-clie='O' data-column='M' >{{item.M}}</view>
+      <view class="td" data-index="{{index}}" data-clie='P' data-column='N' >{{item.N}}</view>
+      <view class="td" data-index="{{index}}" data-clie='Q' data-column='O' >{{item.O}}</view>
+      <view class="td" data-index="{{index}}" data-clie='R' data-column='P' >{{item.P}}</view>
+      <view class="td" data-index="{{index}}" data-clie='S' data-column='Q' >{{item.Q}}</view>
+      <view class="td" data-index="{{index}}" data-clie='T' data-column='R' >{{item.R}}</view>
+      <view class="td" data-index="{{index}}" data-clie='U' data-column='S' >{{item.S}}</view>
+      <view class="td" data-index="{{index}}" data-clie='V' data-column='T' >{{item.T}}</view>
+      <view class="td" data-index="{{index}}" data-clie='W' data-column='U' >{{item.U}}</view>
+      <view class="td" data-index="{{index}}" data-clie='X' data-column='V' >{{item.V}}</view>
+      <view class="td" data-index="{{index}}" data-clie='Y' data-column='W' >{{item.W}}</view>
+      <view class="td" data-index="{{index}}" data-clie='Z' data-column='X' >{{item.X}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AA' data-column='Y'  >{{item.Y}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AB' data-column='Z'  >{{item.Z}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AC' data-column='AA'  >{{item.AA}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AD' data-column='AB'  >{{item.AB}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AE' data-column='AC'  >{{item.AC}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AF' data-column='AD'  >{{item.AD}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AG' data-column='AE'  >{{item.AE}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AH' data-column='AF'  >{{item.AF}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AI' data-column='AG'  >{{item.AG}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AJ' data-column='AH'  >{{item.AH}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AK' data-column='AI'  >{{item.AI}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AL' data-column='AJ'  >{{item.AJ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AM' data-column='AK'  >{{item.AK}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AN' data-column='AL'  >{{item.AL}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AO' data-column='AM'  >{{item.AM}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AP' data-column='AN'  >{{item.AN}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AQ' data-column='AO'  >{{item.AO}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AR' data-column='AP'  >{{item.AP}}</view>
+      <view class="td" data-index="{{index}}" data-clie='ASS' data-column='AQ'  >{{item.AQ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AT' data-column='AR'  >{{item.AR}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AU' data-column='ASS'  >{{item.ASS}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AV' data-column='AT'  >{{item.AT}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AW' data-column='AU'  >{{item.AU}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AX' data-column='AV'  >{{item.AV}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AY' data-column='AW'  >{{item.AW}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AZ' data-column='AX'  >{{item.AX}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BA' data-column='AY'  >{{item.AY}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BB' data-column='AZ'  >{{item.AZ}}</view>
+       <view class="td" data-index="{{index}}" data-clie='BC' data-column='BA'  >{{item.BA}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BD' data-column='BB'  >{{item.BB}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BE' data-column='BC'  >{{item.BC}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BF' data-column='BD'  >{{item.BD}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BG' data-column='BE'  >{{item.BE}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BH' data-column='BF'  >{{item.BF}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BI' data-column='BG'  >{{item.BG}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BJ' data-column='BH'  >{{item.BH}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BK' data-column='BI'  >{{item.BI}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BL' data-column='BJ'  >{{item.BJ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BM' data-column='BK'  >{{item.BK}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BN' data-column='BL'  >{{item.BL}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BO' data-column='BM'  >{{item.BM}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BP' data-column='BN'  >{{item.BN}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BQ' data-column='BO'  >{{item.BO}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BR' data-column='BP'  >{{item.BP}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BS' data-column='BQ'  >{{item.BQ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BT' data-column='BR'  >{{item.BR}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BU' data-column='BS'  >{{item.BS}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BV' data-column='BT'  >{{item.BT}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BW' data-column='BU'  >{{item.BU}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BX' data-column='BV'  >{{item.BV}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BYY' data-column='BW'  >{{item.BW}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BZ' data-column='BX'  >{{item.BX}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CA' data-column='BYY'  >{{item.BYY}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CB' data-column='BZ'  >{{item.BZ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CC' data-column='CA'  >{{item.CA}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CD' data-column='CB'  >{{item.CB}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CE' data-column='CC'  >{{item.CC}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CF' data-column='CD'  >{{item.CD}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CG' data-column='CE'  >{{item.CE}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CH' data-column='CF'  >{{item.CF}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CI' data-column='CG'  >{{item.CG}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CJ' data-column='CH'  >{{item.CH}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CK' data-column='CI'  >{{item.CI}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CL' data-column='CJ'  >{{item.CJ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CM' data-column='CK'  >{{item.CK}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CN' data-column='CL'  >{{item.CL}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CO' data-column='CM'  >{{item.CM}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CP' data-column='CN'  >{{item.CN}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CQ' data-column='CO'  >{{item.CO}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CR' data-column='CP'  >{{item.CP}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CS' data-column='CQ'  >{{item.CQ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CT' data-column='CR'  >{{item.CR}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CU' data-column='CS'  >{{item.CS}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CV' data-column='CT'  >{{item.CT}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CW' data-column='CU'  >{{item.CU}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CX' data-column='CV'  >{{item.CV}}</view>
+       <view class="td" >{{gongsi}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+<view class="but">
+<button class="delt" bindtap="delt">删除</button>
+<button class="ref" bindtap="ref">刷新</button>
+</view>
+<view class="input_view" hidden="{{input}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="请输入列名" value="{{info}}" type="text" name="input_name" maxlength="2"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="up_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>

@@ -1,0 +1,10 @@
+<view class="login">登录人员：</view>
+<view class="img">
+<image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/fenquanbianji/user.png" style="width:80rpx; height:80rpx"></image>
+<view class="name">{{name}}</view>
+</view>
+<view class="img1">
+<image style="width:80rpx; height:80rpx" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/fenquanbianji/company.png"></image>
+<view class="gs">{{gongsi}}</view>
+</view>
+
