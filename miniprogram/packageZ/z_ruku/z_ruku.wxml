@@ -93,6 +93,10 @@
 			<input name="price" placeholder="请输入单价" type="text" value="{{empty}}" class="input"></input>
 		</view>
 		<view class="input_view_new">
+			<view class="input_text">入库数量：</view>
+			<input name="num" placeholder="请输入数量" type="text" value="{{empty}}" class="input"></input>
+		</view>
+		<view class="input_view_new">
 			<view class="input_text">用料：</view>
 			<input name="cloth" placeholder="请输入用料" type="text" value="{{empty}}" class="input"></input>
 		</view>
