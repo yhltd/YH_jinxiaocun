@@ -34,7 +34,10 @@ Page({
       deviceId : "",
       serviceId : "",
       characteristicId : ""
-    }
+    },
+
+    startTime : 0,
+    endTime : 0
   },
 
   setCanvas : function(comment_order){
@@ -52,20 +55,20 @@ Page({
     
     ctx.setTextAlign('center')
     ctx.setFillStyle('#000000')
-    ctx.setFontSize(20)   
+    ctx.setFontSize(21)   
     ctx.fillText('出库单', width / 2, 35)
-    ctx.setFontSize(13)   
+    ctx.setFontSize(17)   
     ctx.setTextAlign('left')
     ctx.fillText('单号：'+_this.data.order_id, 0, 75)
     ctx.setTextAlign('right')
-    ctx.fillText('开单时间：'+_this.getTime(), width, 75)
+    ctx.fillText('销售员：'+userInfo.userName, width, 75)
     ctx.setTextAlign('left')
-    ctx.fillText('销售员：'+userInfo.userName, 0, 95)
+    ctx.fillText('开单时间：'+_this.getTime(), 0, 95)
 
     ctx.moveTo(0, 115)
     ctx.lineTo((width_all-width)/2+width, 115)
 
-    ctx.setFontSize(16)   
+    ctx.setFontSize(19)   
     ctx.setTextAlign('center')
     ctx.fillText('商品名', width / 2-width / 5*2, 145)
     ctx.fillText('数量', width / 2-width / 5, 145)
@@ -77,7 +80,7 @@ Page({
     ctx.moveTo(0, 165)
     ctx.lineTo((width_all-width)/2+width, 165)
 
-    ctx.setFontSize(14)
+    ctx.setFontSize(18)
     var y = 185;
     for(let i=0;i<list.length;i++,y+=30){
       let price = list[i].num*list[i].price
@@ -108,7 +111,7 @@ Page({
       let h = y
       ctx.setTextAlign('left')
       h+=30
-      ctx.setFontSize(15)
+      ctx.setFontSize(16)
       var comment_orders = [];
       //一行的长度
       var columnLength = width/2/15;
@@ -233,38 +236,6 @@ Page({
     _this.setCanvas(value)
   },
 
-  setSetting : function(){
-    var _this = this;
-    wx.showModal({
-      title: '提示',
-      content: '请先授权再保存此图片',
-      success(res) {
-        if(res.confirm){
-          wx.openSetting({
-            success : res=> {
-              if(res.authSetting['scope.writePhotosAlbum']){
-                _this.save();
-              }else{
-                wx.showToast({
-                  title: '未授权，保存失败',
-                  icon : 'none',
-                  duration : 2000
-                })
-              }
-            }
-          })
-        }
-        if(res.cancel){
-          wx.showToast({
-            title: '未授权，保存失败',
-            icon : 'none',
-            duration : 2000
-          })
-        }
-      }
-    })
-  },
-
   unlinkFile : function(){
     wx.getFileSystemManager().readdir({  // 获取文件列表
       dirPath: wx.env.USER_DATA_PATH,
@@ -281,73 +252,7 @@ Page({
     })
   },
 
-  save : function(){
-    var _this = this;
 
-    wx.openBluetoothAdapter({
-      success: function (res) {
-        console.log("初始化蓝牙适配器状态");
-        console.log(res);
-        wx.getBluetoothAdapterState({
-          success: res=> {
-            if(res.available){
-              console.log("蓝牙适配器可用");
-              console.log(res);
-              wx.createBLEConnection({
-                deviceId: "04:7F:0E:05:B8:DE",
-                timeout : 10000,
-                success : res=> {
-                  console.log("连接成功")
-                  wx.showToast({
-                    title: '连接成功',
-                    icon : 'none'
-                  })
-
-                  _this.printTo()
-                },
-                fail : res=> {
-                  console.log(res)
-                  if(res.errCode == 10012){
-                    wx.showToast({
-                      title: '连接超时',
-                      icon : 'none',
-                      duration : 2000
-                    })
-                  }
-                  if(res.errCode == -1){
-                    _this.printTo()
-                  }
-                }
-              })
-            }
-          },
-          fail : res=> {
-            console.log(res)
-          }
-        })
-      },
-      fail : res=> {
-        if(res.errCode!=undefined){
-          if(res.errCode==10001){
-            wx.showToast({
-              title: '本机蓝牙未打开',
-              duration : 2000,
-              icon : 'none'
-            })
-          }
-        }
-        if(res.state!=undefined){
-          if(res.state == 4){
-            wx.showToast({
-              title: '本机蓝牙未打开',
-              duration : 2000,
-              icon : 'none'
-            })
-          }
-        }
-      }
-    })
-  },
 
   //初始化蓝牙适配器
   openBluetoothAdapter : function(){
@@ -509,6 +414,10 @@ Page({
     wx.createBLEConnection({
       deviceId: app.globalData.z_option_BLE.deviceId,
       success : res=> {
+        wx.showToast({
+          title : "连接成功",
+          icon : "success"
+        })
         this.setData({
           option : {
             deviceId : app.globalData.z_option_BLE.deviceId,
@@ -517,20 +426,23 @@ Page({
           },
           isConn : true
         })
-      },
-      fail : res=> {
-        if(res.errCode==-1){
-          this.setData({
-            option : {
-              deviceId : app.globalData.z_option_BLE.deviceId,
-              serviceId : app.globalData.z_option_BLE.serviceId,
-              characteristicId : app.globalData.z_option_BLE.characteristicId
-            },
-            isConn : true
-          })
-        }
       }
     })
+  },
+
+  //打印按钮click事件
+  save : function(){
+    var _this = this;
+
+    if(!_this.data.isConn){
+      wx.showToast({
+        title : '蓝牙未连接',
+        icon : 'none'
+      })
+      return;
+    }else{
+      _this.printTo()
+    }
   },
   
   printTo : function(){
@@ -555,7 +467,8 @@ Page({
         console.log("Uint8ClampedArray=>",imageData)
         let arr = _this.convert4to1(res.data);
         let data = _this.convert8to1(arr);
-        const cmds = [].concat([27, 97, 49],[29, 118, 48, 0, widths.width/8%256, widths.width/8/256, height%256, height/256], data, [27, 100, 10], [27, 64]);
+        //局中，传入点阵位图，初始化打印机，走纸30行
+        const cmds = [].concat([27, 97, 49],[29, 118, 48, 0, widths.width/8%256, widths.width/8/256, height%256, height/256], data, [27, 64],[27, 100, 30]);
         const buffer = toArrayBuffer(Buffer.from(cmds, 'gbk'));
         let arrPrint = [];
         for (let i = 0; i < buffer.byteLength; i = i + 20) {
@@ -585,48 +498,6 @@ Page({
       width++
     }
   },
-
-
-  grayPixle : function(pix) {
-    return pix[0] * 0.299 + pix[1] * 0.587 + pix[2] * 0.114;
-  },
-
-  //
-  overwriteImageData : function(data){
-    var _this = this;
-    let sendWidth = data.width,
-        sendHeight = data.height;
-    const threshold = data.threshold || 180;
-    let sendImageData = new ArrayBuffer((sendWidth * sendHeight) / 8);
-    sendImageData = new Uint8Array(sendImageData);
-    let pix = data.imageData;
-    const part = [];
-    let index = 0;
-    for (let i = 0; i < pix.length; i += 32) {
-        //横向每8个像素点组成一个字节（8位二进制数）。
-        for (let k = 0; k < 8; k++) {
-            const grayPixle1 = _this.grayPixle(pix.slice(i + k * 4, i + k * 4 + (4 - 1)));
-            //阈值调整
-            if (grayPixle1 > threshold) {
-                //灰度值大于threshold位   白色 为第k位0不打印
-                part[k] = 0;
-            } else {
-                part[k] = 1;
-            }
-        }
-        let temp = 0;
-        for (let a = 0; a < part.length; a++) {
-            temp += part[a] * Math.pow(2, part.length - 1 - a);
-        }
-        sendImageData[index++] = temp;
-    }
-    return {
-      array: Array.from(sendImageData),
-      width: sendWidth / 8,
-      height: sendHeight,
-    };
-  },
-
 
   //4合1
   convert4to1 : function(res){
@@ -673,7 +544,6 @@ Page({
 
 	//发送数据
 	sendStr: function(device, bufferstr, success, fail) {
-		let tthis = this;
 		console.log('sendStr', device);
 		wx.writeBLECharacteristicValue({
 			deviceId: device.deviceId,

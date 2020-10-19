@@ -215,15 +215,19 @@ Page({
     var rules = [{
       name: "code",
       rule: ["required"],
-      msg: ["请输入用户名"]
+      msg: ["请输入商品代码"]
     },{
       name: "name",
       rule: ["required"], 
-      msg: ["请输入密码"]
+      msg: ["请输入商品名"]
     },{
       name: "price",
       rule: ["required"], 
-      msg: ["请选择身份"]
+      msg: ["请输入单价"]
+    },{
+      name: "num",
+      rule: ["required"], 
+      msg: ["请输入入库数量"]
     }]
     var msg = formValidation.validation(form,rules)
     if(msg!=""){
@@ -258,7 +262,7 @@ Page({
             list.push({
               row_id : list.length+1,
               order_id : _this.getOrder_id(),
-              num : 0,
+              num : form.num,
               comment : "",
               code : form.code,
               name : form.name,

@@ -11,14 +11,13 @@ Page({
     
     title: [
       {text: "序号",width: "100rpx",columnName: "row_id",type:"text",isupd:true},
+      {text: "商品代码",width: "250rpx",columnName: "code",isupd:false},
+      {text: "商品名称",width: "250rpx",columnName: "name",isupd:false},
+      {text: "商品单价",width: "200rpx",columnName: "price",isupd:false},
       {text: "出库数量",width: "200rpx",columnName: "num",type:"number",isupd:true},
       {text: "折扣",width: "200rpx",columnName: "discount",type:"digit",isupd:true},
       {text: "支付方式",width: "250rpx",columnName: "payType",type:"text",isupd:true},
       {text: "备注",width: "300rpx",columnName: "comment",type:"text",isupd:true},
-      
-      {text: "商品代码",width: "250rpx",columnName: "code",isupd:false},
-      {text: "商品名称",width: "250rpx",columnName: "name",isupd:false},
-      {text: "商品单价",width: "200rpx",columnName: "price",isupd:false},
       {text: "用料",width: "250rpx",columnName: "cloth",isupd:false},
       {text: "规格",width: "250rpx",columnName: "norms",isupd:false},
       {text: "类型",width: "250rpx",columnName: "type",isupd:false},
