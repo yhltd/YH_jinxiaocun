@@ -98,7 +98,9 @@
         "pages/userpeople/userpeople",
         "pages/guserpeople/guserpeople",
         "pages/personmasg/personmasg",
-        "pages/loginpeople/loginpeople"
+        "pages/loginpeople/loginpeople",
+        "pages/gather/gather",
+        "pages/picture/picture"
       ] 
     },{
       "root": "packageZ",

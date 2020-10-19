@@ -136,9 +136,19 @@ padding: 0;
   flex-wrap: wrap;
   
 } 
+.yuan{
+  width: 40rpx; 
+  height: 40rpx;
+  /* background-color:red; */
+  border-radius: 50%;
+  border: 1rpx solid black;
+  /* background-color: white; */
+  -moz-border-radius: 50%; 
+  -webkit-border-radius: 50%;
+}
 .td{
   padding: 10rpx;
- display: flex;
+  display: flex; 
  width: 200rpx;
  height: 55rpx;
  border-right: 1rpx solid rgb(24, 24, 26);
@@ -228,5 +238,80 @@ padding: 0;
         border-radius: 10rpx 10rpx 0 0;
         box-shadow: 10rpx 10rpx 10rpx black;
         z-index: 20;
+        }
+        /* 更多 */
+        .geng{
+          margin-top: 36rpx;
+          height: 100rpx;
+          width: 550rpx;
+          font-size: 50rpx;
+          background-color:#3D3D3D;
+           color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 10rpx 10rpx 10rpx black;
+        }
+        .gengduo{
+          position: fixed;
+          width: 400rpx;
+          height: 100%;
+          top: 20%;
+          background-color: white;
+          border-radius: 10rpx 10rpx 0 0;
+          box-shadow: 10rpx 10rpx 10rpx black;
+          z-index: 20;
+
+        }
+        .mor{
+          margin-top: 30rpx;
+          height: 100rpx;
+          width: 280rpx;
+          font-size: 40rpx;
+          background-color:#1ea396; 
+          color: azure;      
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 10rpx 10rpx 10rpx #09796d;
+
+        }
+        .xuan{
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          background-color: white;
+          border-radius: 10rpx 10rpx 0 0;
+          box-shadow: 10rpx 10rpx 10rpx black;
+          z-index: 20;
+        }
+        .paif{
+          display: flex;
+          display: inline-block;
+           flex-direction: row; 
+          flex-wrap: wrap; 
+          justify-content: center;
+          align-items: center;
+          width: 150rpx;
+        }
+        .yin{
+          margin-top: 20rpx;
+          height: 80rpx;
+          width: 350rpx;
+          font-size: 40rpx;
+          background-color:#1ea396; 
+          color: white;      
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 10rpx 10rpx 10rpx #09796d;
+        }
+        .pai{
+          font-size: 30rpx;
+          font-weight: bold;
+        }
+        .xuanif{
+          width: 100%;
         }
        

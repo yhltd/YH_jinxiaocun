@@ -32,7 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  box-shadow: 10rpx 10rpx 10rpx rgb(9, 98, 170);
   }
   .button2{
     margin-top: 30rpx;

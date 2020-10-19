@@ -423,6 +423,7 @@ saves:function(e){
     })
     return
   }
+  var column = that.data.column
   var list = that.data.list
   var idx =that.data.idx
   var date = new Date();
@@ -440,6 +441,14 @@ saves:function(e){
   that.setData({
     input_name:e.detail.value.input_name,
   })
+  if(column=="A" ||column=="B" || column=="C" ||column=="D"){
+    if(isNaN(that.data.input_name)==true){
+      wx.showToast({
+        title: '请输数字',
+      }) 
+      return;
+    }
+  }
   if(that.data.input_name == ""){
     wx.showToast({
       title: '请输入',
