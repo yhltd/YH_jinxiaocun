@@ -7,6 +7,7 @@ Page({
   data: {
     gongsi:'',
     name:'',
+    info:'',
     input:true,
     titil:[
       {text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
@@ -76,6 +77,9 @@ Page({
         wx.showToast({
           title: '删除成功',
         })  
+        that.setData({
+          info:''
+        })
       }else if(lie==""){
         this.setData({
           input:true

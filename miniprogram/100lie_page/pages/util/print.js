@@ -16,18 +16,6 @@ function print(title,list,name){
     })
   }
   cloudList.items = list
-      // var filePath = "outputExcels";
-      // var fileName = cloudList.name+'.xlsx';
-      //   wx.cloud.uploadFile({
-      //     // 指定上传到的云路径
-      //     cloudPath: filePath+fileName,
-      //     // 指定要上传的文件的小程序临时文件路径
-      //     filePath: tempFilePaths[0],
-      //     // 成功回调
-      //     success: res => {
-      //       console.log('上传成功', res)
-      //     },
-      //   })
   wx.cloud.callFunction({
     name:'getExcel',
     data:{
@@ -45,13 +33,13 @@ function print(title,list,name){
             filePath : wx.env.USER_DATA_PATH + "/" + name + getTime() + ".xlsx",
             success : res=> {
               let path_downLoad = res.savedFilePath
-              console.log("下载完成",res)
-             delCloudFile(fileId)
+              console.log("下载完成",res)           
               wx.openDocument({
                 filePath: path_downLoad,
                 fileType : 'xlsx',
                 showMenu : true,
                 success : res=> {
+                  delCloudFile(fileId)
                   wx.hideLoading({
                     success: (res) => {},
                   })
@@ -62,33 +50,27 @@ function print(title,list,name){
           })
         }
       })
+      
+
+      
     },
     fail : res=> {
       console.log(res)
     }
   })
 }
-
 function delCloudFile(fileId){
-  var fileIds = [];
-  fileIds.push(fileId);
-  wx.cloud.deleteFile({
-    fileList: fileIds,
-    success: res => {
-      console.log("11",res.fileList);
+  wx.cloud.callFunction({
+    name:'detExcel',
+    data:{
+      fileID : fileId
     },
-    fail : console.error
+    success(res){
+      console.log('删除日志',res)
+    },
+    
   })
 }
-// function delCloudFile(){ 
-//   wx.cloud.deleteFile({
-//     fileList: ['cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/outputExcels/工作台.xlsx'],
-//     success: res => {
-//       console.log("11",res.fileList);
-//     },
-//     fail : console.error
-//   })
-// }
 function getTime(){
   var myDate = new Date();
   var year = myDate.getFullYear();

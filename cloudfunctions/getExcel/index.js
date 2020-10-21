@@ -3,7 +3,6 @@ const cloud = require('wx-server-sdk')
 const nodeExcel = require('excel-export')
 const path = require('path');
 cloud.init()
-
 // 云函数入口函数
 exports.main = async(event, context) => {
   var list = event.list;
@@ -36,9 +35,10 @@ exports.main = async(event, context) => {
 
   var excelResult = nodeExcel.execute(tableMap);
   var filePath = "outputExcels";
+  var num = Math.floor( Math.random()*100000);
   var fileName = list.name+'.xlsx';
   return await cloud.uploadFile({
-    cloudPath: path.join(filePath, fileName),
+    cloudPath: path.join(filePath,num,fileName),
     fileContent: new Buffer(excelResult, 'binary')
   });
   

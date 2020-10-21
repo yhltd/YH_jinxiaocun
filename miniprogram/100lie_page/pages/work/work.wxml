@@ -287,7 +287,7 @@ style="display:{{duoxz.toString().indexOf('A')!=-1? none:flex}}"
     <button class="mor" bindtap="dateGather">数据汇总</button>
     <button class="mor" bindtap="hid">隐藏列</button>
     <button class="mor" bindtap="showlie">显示列</button>
-    <button class="mor" bindtap="pringbiao">选择打印</button>
+    <button class="mor" bindtap="pringbiao">选择下载</button>
     <button class="mor" bindtap="service">服务通知</button>
     <button class="mor" bindtap="card">卡包</button>
     <button class="mor" bindtap="picture">图形分析</button>

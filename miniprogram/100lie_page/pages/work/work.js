@@ -128,6 +128,8 @@ Page({
         name:options.name,      
       })
     }
+    // var num =Math.floor( Math.random()*100000)
+    // console.log('随机数',num)
     var sql = " select C from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "'"
     wx.cloud.callFunction({
       name: 'sqlServer_117',

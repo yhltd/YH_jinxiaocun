@@ -25,9 +25,9 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"useIsolateContext": true,
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"useIsolateContext": true
 	},
 	"appid": "wxf3c03c2a0c59d299",
 	"projectname": "YH_jinxiaocun",
