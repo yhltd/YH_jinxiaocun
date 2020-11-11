@@ -1,22 +1,52 @@
 <!-- 数据汇总 -->
-   <view class="table">
- <view class="tr bg-w">
-  <view class="th">列号</view>
-  <view class="th-2">合计</view>
- </view>
- <block wx:for="{{listData}}" wx:key="item">
-  <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
-   <view class="td-1" selectable="true">{{item.code}}</view>
-   <view class="td-2" selectable="true" scroll-y="true" >
-   <text class="th-text" style="overflow-y:auto;overflow-x:scroll" selectable="true">{{item.text}}</text>
-   </view>
+   <!-- <view class="table">
+      <view class="tr bg-w">
+        <view class="th">列号</view>
+        <view class="th-2">合计</view>
+      </view>
+  <block wx:for="{{listData}}" wx:key="item">
+    <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+    <view class="td-1" selectable="true">{{item.code}}</view>
+    <view class="td-2" selectable="true" scroll-y="true" >
+    <text class="th-text" style="overflow-y:auto;overflow-x:scroll" selectable="true">{{item.text}}</text>
+    </view>
+    </view>
+    <view class="tr bg-g2" wx:else>
+    <view class="td-1" selectable="true">{{item.code}}</view>
+    <view class="td-2" selectable="true" scroll-y="true" >
+    <text class="th-text" style="overflow-y:auto;overflow-x:scroll" selectable="true">{{item.text}}</text>
+    </view>
+    </view>
+  </block>
+</view> -->
+<view class="bor">
+<input class="input_text" placeholder="请输入要查询的列" value="{{info}}" type="text" name="inputname" maxlength="2" bindinput="submitlie"></input>
+  <view class="showview"></view>
+  <view class="pickju">
+  <picker class="pick" mode="date" value="{{date}}" bindchange="strDateChange">
+    <view class="picker">
+      选择起始日期: {{date1}}
+    </view>
+  </picker>
+  <picker class="pick" mode="date" value="{{date}}" bindchange="endDateChange">
+    <view class="picker">
+      选择结束日期: {{date2}}
+    </view>
+  </picker>
   </view>
-  <view class="tr bg-g2" wx:else>
-   <view class="td-1" selectable="true">{{item.code}}</view>
-   <view class="td-2" selectable="true" scroll-y="true" >
-   <text class="th-text" style="overflow-y:auto;overflow-x:scroll" selectable="true">{{item.text}}</text>
-   </view>
-  </view>
- </block>
+   <button class="butselect" bindtap="cha">查看</button>
 </view>
-
+<view class="table" hidden="{{liesum}}">
+  <view class="tr bg-w">
+        <view class="th">列号</view>
+        <view class="th-2">合计</view>
+  </view>
+  <block wx:for="{{listData}}" wx:key="item">
+  <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+    <view class="td-1" selectable="true">{{item.code}}</view>
+    <view class="td-2" selectable="true" scroll-y="true" >
+    <text class="th-text" style="overflow-y:auto;overflow-x:scroll" selectable="true">{{item.text}}</text>
+    </view>
+    </view>
+    </block>
+</view>

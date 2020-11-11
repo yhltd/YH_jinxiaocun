@@ -128,8 +128,13 @@ Page({
         name:options.name,      
       })
     }
-    // var num =Math.floor( Math.random()*100000)
-    // console.log('随机数',num)
+    // var randm=[];
+    // for (var ii=0;ii<6;ii++){
+    //   var num =Math.floor( Math.random()*33)+1    
+    //       randm.push(num)    
+    // }
+     
+    //  console.log('随机数',randm)
     var sql = " select C from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "'"
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -146,21 +151,33 @@ Page({
            names,
         })
       }
-    })
+    }) 
+      // wx.removeStorageSync('keytitil')
+      // wx.removeStorageSync('keylist')    
     var ssql = "select * from baitaoquanxian where 公司 = '" + that.data.gongsi + "' "
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
         query : ssql
       },
-        success(res){
-          var list = res.result.recordset      
-          that.setData({
-            list
-         })
-        }
-      })  
+      success(res){
+        var list = res.result.recordset      
+        that.setData({
+          list
+        })
+      }
+    })  
+    let duoxz = wx.getStorageSync('keylist')
+    if(duoxz!=""){that.setData({
+      duoxz: duoxz
+    })}
+    let titil = wx.getStorageSync('keytitil')
+    if(titil!=""){that.setData({
+      titil: titil
+    })}
+    that.yin();
   },
+ 
   // 开始日期
   strDateChange:function(e){
     this.setData({
@@ -576,6 +593,8 @@ showlie(){
   var that=this
   var duoxz=that.data.duoxz
   var titil = that.data.titil
+  wx.removeStorageSync('keytitil')
+   wx.removeStorageSync('keylist')  
   var arr=[
     {text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
     {text:'F'}, {text:'G'}, {text:'H'}, {text:'I'}, {text:'J'}, {text:'K'}, {text:'L'},
@@ -684,10 +703,8 @@ xuanz(e){
 //隐藏
 yin:function(){
   var that=this
-  var titleres =that.data.titleres
   var titil = that.data.titil
   var duoxz=that.data.duoxz
-  var list=that.data.list
   that.setData({
     yuan:true,
   })
@@ -703,6 +720,8 @@ yin:function(){
       }
     }
   }
+  wx.setStorageSync('keytitil', titil)
+  wx.setStorageSync('keylist', duoxz)
   for(var a=0;a<duoxz.length;a++){
     if(duoxz[a]=='A'){
       that.setData({
@@ -1307,6 +1326,7 @@ print:function(){
     more:true, 
     mask_up:true,
   })
-  that.showlie()
+  that.onLoad();
 },
+
 })

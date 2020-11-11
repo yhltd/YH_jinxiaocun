@@ -6,7 +6,8 @@ Page({
    */
   data: {
     gongsi:'',
-
+    yin:true,
+    dat:true,
     ec : {
       lazyLoad : true
     },
@@ -17,9 +18,12 @@ Page({
    */
   onLoad: function (options) {
     var that=this
-    that.setData({
-      gongsi:options.gongsi
-    })
+    if(options!=undefined){
+      that.setData({
+        gongsi:options.gongsi
+      })
+    }
+   
     var sql="select top 1 (select count(A) from baitaoquanxian where A ='') as a,(select count(A) from baitaoquanxian where A !='') as b from baitaoquanxian ; select top 1 (select count(B) from baitaoquanxian where B ='') as a,(select count(B) from baitaoquanxian where B !='') as b from baitaoquanxian ; select top 1 (select count(C) from baitaoquanxian where C ='') as a,(select count(C) from baitaoquanxian where C !='') as b from baitaoquanxian ; select top 1 (select count(D) from baitaoquanxian where D ='') as a,(select count(D) from baitaoquanxian where D !='') as b from baitaoquanxian"
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -36,6 +40,7 @@ Page({
           },
           tooltip: {
             trigger: "axis",
+            show:true,
             axisPointer: {
               type: "shadow"
             }
@@ -100,76 +105,162 @@ Page({
       return barChart;
     });
   },
-  // 饼图
-  // bing:function(){
-  //   var that=this
-  //   var sql="select top 1 (select count(A) from baitaoquanxian where A ='') as a,(select count(A) from baitaoquanxian where A !='') as b from baitaoquanxian ; select top 1 (select count(B) from baitaoquanxian where B ='') as a,(select count(B) from baitaoquanxian where B !='') as b from baitaoquanxian ; select top 1 (select count(C) from baitaoquanxian where C ='') as a,(select count(C) from baitaoquanxian where C !='') as b from baitaoquanxian ; select top 1 (select count(D) from baitaoquanxian where D ='') as a,(select count(D) from baitaoquanxian where D !='') as b from baitaoquanxian"
-  //   wx.cloud.callFunction({
-  //     name:'sqlServer_117',
-  //     data:{        
-  //        query : sql        
-  //     },
-  //     success: res => {
-  //       console.log(res)
-  //       var accounting = res.result.recordsets
-  //       var options = {
-  //         title : {
-  //           text: '工作台列使用情况',
-  //           show : true
-  //         },
-  //         tooltip: {
-  //           trigger: "item",
-  //           axisPointer: {
-  //             type: "shadow"
-  //           }
-  //         },
-  //         grid: {},
-  //         xAxis: [{
-  //           type: "category",
-  //           data: ["A","B","C","D"],
-  //           axisTick: {
-  //             alignWithLabel: true
-  //           }
-  //         }],
-  //         yAxis: [{
-  //           type: "value",
-  //           splitNumber : "8"
-  //         }],
-  //         series: [{
-  //           name: "使用",
-  //           type: "bar",
-  //           label : {
-  //             show : "true",
-  //             position : "top"
-  //           },
-  //           itemStyle : {
-  //             color : "#00CC99"
-  //           },
-  //           data: []
-  //         },{
-  //           name: "未使用",
-  //           type: "bar",
-  //           label : {
-  //             show : "true",
-  //             position : "top"
-  //           },
-  //           itemStyle : {
-  //             color : "#003399"
-  //           },
-  //           data: []
-  //         }]
-  //       }
-  //       for(let i=0;i<accounting.length;i++){
-  //         options.series[0].data.push(accounting[i][0].b)
-  //         options.series[1].data.push(accounting[i][0].a)
-  //       }
+  
+  // 柱状图
+  zhu:function(){
+    var that= this
+    that.onLoad()
+  },
+  // 饼显示
+  bi:function(){
+    var that= this
+     
+    if(that.data.dat){
+      that.setData({
+        yin:false,
+      })
+    }else{
+      that.setData({
+        yin:true,
+      })
+    }
+    that.data.dat = !that.data.dat
+
+  },
+  // 使用
+  users(){
+    var that=this
+    var sql="select top 1 (select count(A) from baitaoquanxian where A !='') as b from baitaoquanxian ; select top 1 (select count(B) from baitaoquanxian where B !='') as b from baitaoquanxian ; select top 1 (select count(C) from baitaoquanxian where C !='') as b from baitaoquanxian ; select top 1 (select count(D) from baitaoquanxian where D !='') as b from baitaoquanxian"
+    wx.cloud.callFunction({
+      name:'sqlServer_117',
+      data:{        
+         query : sql        
+      },
+      success: res => {
+        console.log(res)
+        var accounting = res.result.recordsets
+        var options = {
+          title : {
+           text: '工作台列使用情况',
+            show : true,
+            left: 'center',
+            top:'20%'
+          },
+          // {a}（系列名称），{b}（数据项名称），{c}（数值）, {d}（百分比）
+          tooltip: {
+            show:true,
+            trigger: "item",
+            formatter:'{a} {b} : {c} ({d}%)'
+          },
+         legend:{
+          orient: 'vertical',
+          left: 'left',
+          data: ['A', 'B', 'C', 'D']
+         },          
+          series: [{
+            name: "使用",
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+              {value: '', name: 'A'},
+              {value: '', name: 'B'},
+              {value: '', name: 'C'},
+              {value: '', name: 'D'},            
+          ],
+          emphasis: {
+              itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+          }
+          }]
+        }
+       
         
-  //       console.log(options)
-  //        that.updChart(options)
-  //       wx.hideLoading({
-  //         success: (res) => {},
-  //       })
-  //     },
-  //   })
-  // }
+        for(let i=0;i<accounting.length;i++){
+          options.series[0].data[i].value=(accounting[i][0].b)
+        
+        }
+        
+        console.log(options)
+         that.updChart(options)
+        wx.hideLoading({
+          success: (res) => {},
+        })
+      },
+    })
+    that.setData({
+      yin:true
+    })
+  },
+  // 未使用
+  nuser(){
+    var that=this
+    var sql="select top 1 (select count(A) from baitaoquanxian where A ='') as a from baitaoquanxian ; select top 1 (select count(B) from baitaoquanxian where B ='') as a from baitaoquanxian ; select top 1 (select count(C) from baitaoquanxian where C ='') as a from baitaoquanxian ; select top 1 (select count(D) from baitaoquanxian where D ='') as a from baitaoquanxian"
+    wx.cloud.callFunction({
+      name:'sqlServer_117',
+      data:{        
+         query : sql        
+      },
+      success: res => {
+        console.log(res)
+        var accounting = res.result.recordsets
+        var options = {
+          title : {
+           text: '工作台列未使用情况',
+            show : true,
+            left: 'center',
+            top:'20%'
+          },
+          // {a}（系列名称），{b}（数据项名称），{c}（数值）, {d}（百分比）
+          tooltip: {
+            show:true,
+            trigger: "item",
+            formatter:'{a} {b} : {c} ({d}%)'
+          },
+         legend:{
+          orient: 'vertical',
+          left: 'left',
+          data: ['A', 'B', 'C', 'D']
+         },          
+          series: [{
+            name: "未使用",
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+              {value: '', name: 'A'},
+              {value: '', name: 'B'},
+              {value: '', name: 'C'},
+              {value: '', name: 'D'},            
+          ],
+          emphasis: {
+              itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+          }
+          }]
+        }
+       
+        
+        for(let i=0;i<accounting.length;i++){
+          options.series[0].data[i].value=(accounting[i][0].a)
+        }
+        
+        console.log(options)
+         that.updChart(options)
+        wx.hideLoading({
+          success: (res) => {},
+        })
+      },
+    })
+    that.setData({
+      yin:true
+    })
+  }
+  
 })

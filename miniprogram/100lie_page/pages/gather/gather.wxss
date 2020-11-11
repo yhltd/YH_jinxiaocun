@@ -1,9 +1,13 @@
+page{
+  background-color: rgb(245, 229, 199);
+}
 .table {
+  
   border: 2px solid darkgray;
   width: 80%;
   margin-top: 2rem;
   margin-right: 1rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
    
    
  }
@@ -19,7 +23,7 @@
    justify-content: center;
    display: flex;
    text-align: center;
-   border-right: 2px solid #ddd;
+   border-right: 2px solid black;
    height: 100%;
  }
  .td-1 {
@@ -81,4 +85,63 @@
   max-height: 3rem;
   max-width: 80%;
  }
- 
+ .bor{
+   margin-top: 30rpx;
+   margin-left: 25rpx;
+   height: 600rpx;
+   width:700rpx;
+   border: 6rpx solid ;
+   border-color:#bbe1f1 #9bdf70 ;
+   border-radius: 10rpx;
+ }
+ .showview{
+  margin: auto;
+  border-top: 1rpx solid #3D3D3D;
+  width: 90%;
+  height: 38%;
+  margin-top: 60rpx;  
+}
+.input_text{
+  border: 5rpx solid rgb(54, 50, 50);
+  margin:auto;
+  width: 80%;
+  height: 70rpx;
+  align-items: center;
+  margin-top: 6%;
+  border-radius: 19rpx;
+}
+.pick{
+  width: 480rpx;
+}
+.picker{
+  margin-top: 20rpx;
+  margin-left: 5rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  border: 1rpx solid #E6E6E6;
+  border-radius: 10rpx;
+  height: 90rpx;
+  width: 540rpx;
+  display: flex;
+  align-items: center;
+  background: -webkit-linear-gradient(left,rgb(23, 245, 245),rgb(25, 196, 173));
+  
+}
+.pickju{
+  position: relative;
+  top: -200rpx;
+  /* left: 25rpx; */
+  margin-left: 75rpx;
+}
+.butselect{
+  top: -150rpx;
+  width: 300rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+background: -webkit-linear-gradient(left,#ffc274,#ff5d3b);
+font-size: 40rpx;
+font-weight: 700;
+}
