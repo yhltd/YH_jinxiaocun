@@ -1,0 +1,11 @@
+<!--xykManager/pages/logins/logins.wxml-->
+<view class="button">
+<button class="but" bindtap="khxx">客户信息</button>
+<button class="but" bindtap="rjy">日交易记录</button>
+<button class="but" bindtap="yjy">月交易记录</button>
+</view>
+<view class="button2">
+<button class="but" bindtap="tjjyze">统计交易总额</button>
+<button class="but" bindtap="ksl">统计卡数量</button>
+<button class="but" bindtap="ygxx">员工信息</button>
+</view>

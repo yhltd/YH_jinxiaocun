@@ -115,6 +115,15 @@
         "z_sum_xiaoshoujilu/z_sum_xiaoshoujilu",
         "z_chuku_getImage/z_chuku_getImage"
       ]
+    },
+    {
+      "root": "xykManager",
+      "name": "xyk",
+      "pages": [
+        "pages/login/login",
+        "pages/logins/logins",
+        "pages/customermsg/customermsg"
+      ]
     }
   ],
   "window": {
