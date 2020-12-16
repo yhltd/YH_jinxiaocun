@@ -20,14 +20,15 @@
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
+		"useIsolateContext": true,
 		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"useIsolateContext": true
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"appid": "wxf3c03c2a0c59d299",
 	"projectname": "YH_jinxiaocun",

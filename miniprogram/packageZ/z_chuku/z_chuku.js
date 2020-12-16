@@ -1,5 +1,6 @@
 const updSpace = require('../util/updSpace')
-const getExcel = require('../util/print')
+const getExcel = require('../util/print');
+const app = getApp();
 Page({
 
   /**
@@ -361,6 +362,21 @@ Page({
     })
   },
 
+  get_ble : function(){
+    var _this = this;
+    console.log(_this.data.userInfo)
+    wx.cloud.callFunction({
+      name : 'sqlServer_117',
+      data : {
+        query : "select deviceId,serviceId,characteristicId from zeng_user where id = '"+_this.data.userInfo.id+"'"
+      },
+      success : res=> {
+        app.globalData.z_option_BLE.deviceId = res.result.recordset[0].deviceId;
+        app.globalData.z_option_BLE.serviceId = res.result.recordset[0].serviceId;
+        app.globalData.z_option_BLE.characteristicId = res.result.recordset[0].characteristicId;
+      }
+    })
+  },
 
 
   
@@ -372,6 +388,7 @@ Page({
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })
+    _this.get_ble();
     _this.init();
   },
   choice_checkBox: function (e) {
@@ -429,7 +446,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**

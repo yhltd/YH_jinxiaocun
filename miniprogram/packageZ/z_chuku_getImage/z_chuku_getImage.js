@@ -40,6 +40,18 @@ Page({
     endTime : 0
   },
 
+  set_ble : function(){
+    var _this = this;
+    var option = _this.data.option
+    wx.cloud.callFunction({
+      name : 'sqlServer_117',
+      data : {
+        query : "update zeng_user set deviceId = '" + option.deviceId + "' and serviceId = '"+ option.serviceId +"' and characteristicId = '"+ option.characteristicId +"' where id = '"+_this.data.userInfo.id+"'"
+      },
+      success : res=> {
+      }
+    })
+  }, 
   setCanvas : function(comment_order){
     var _this = this;
     var list = _this.data.list
@@ -571,6 +583,7 @@ Page({
     })
     _this.getQRCodeBase64(options.user_id);
     _this.getUserInfo(JSON.parse(decodeURIComponent(options.list)));
+    
   },
 
   /**
@@ -584,7 +597,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var _this = this;
     if(app.globalData.z_option_BLE.deviceId!=""){
       wx.showToast({
         title: '正在连接',
@@ -610,8 +622,12 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    var _this = this;
     //删除二维码暂存文件
-    this.unlinkFile();
+    _this.unlinkFile();
+    if(_this.data.isConn){
+      _this.set_ble()
+    }
   },
 
   /**
