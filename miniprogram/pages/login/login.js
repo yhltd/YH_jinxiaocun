@@ -275,7 +275,56 @@ var login = function(that,info) {
         })
       }
     })
-  } else{
+  }else if(system=="云合信用卡管理系统") {
+    var xsql = "select * from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and uname ='" + info.inputName + "'"
+    wx.cloud.callFunction({
+      
+      name: 'sqlserver_xinyongka',
+      data: {
+        sql: xsql
+      },
+      
+      success(res) {
+        if (res.result.length > 0) {
+          if (info.inputName == "bbb") {
+            wx.navigateTo({
+              url: '../../xykManager/pages/logins/logins?company=' + that.data.gongsi + '&uname=' + info.inputName
+            })
+            wx.showToast({
+              title: '登录成功',
+            })
+
+          } else {
+            wx.navigateTo({
+              url: '../../xykManager/pages/login/login?company=' + that.data.gongsi + '&uname=' + info.inputName
+            })
+            wx.showToast({
+              title: '登录成功',
+            })
+
+          }
+
+
+        } else {
+          wx.showToast({
+            title: '用户名密码不对',
+            icon: "none"
+          })
+
+        }
+
+      },
+      fail(res) {
+        console.log("失败", res)
+      },
+      complete: function () {
+        that.setData({
+          lock: true
+        })
+      }
+    })
+
+  }else{
     wx.showToast({
       title: '请选择系统',
       icon : 'none'   
@@ -514,6 +563,9 @@ Page({
         err: res => {
           console.log("错误!", res)
         },
+        fail:res=>{
+          console.log(res)
+        }
       })
     }else if(system=="云合人事管理系统"){
       _this.setData({
@@ -535,6 +587,38 @@ Page({
         system
       })
       arr = ["sqlServer_117","select B from baitaoquanxian_renyun GROUP BY B","B"]
+    } else if (system == "云合信用卡管理系统") {
+      _this.setData({
+        system,
+      })
+      wx.showLoading({
+        title: '获取公司信息中',
+        mask: 'true'
+      })
+      var _this = this;
+      wx.cloud.callFunction({
+        name: "sqlserver_xinyongka",
+        data: {
+          sql: "select company from users group by company"
+        },
+        success: res => {
+          console.log(res);
+          var list = []
+          for (var i = 0; i < res.result.length; i++) {
+            list.push(res.result[i].company)
+          }
+          _this.setData({
+            pickerArray: list
+          })
+          wx.hideLoading({
+            success: (res) => { },
+          })
+          return;
+        },
+        err: res => {
+          console.log("错误!", res)
+        },
+      })
     }
     _this.getCompanyName(arr)
   },
