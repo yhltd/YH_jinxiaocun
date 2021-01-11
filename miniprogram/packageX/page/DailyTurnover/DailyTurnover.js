@@ -1,0 +1,174 @@
+// miniprogram/packageX/page/Turnover/Turnover.js
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    userInfo: [],
+    input_type: 'text',
+    list: [],
+    riqi: "",
+    empty: "",
+    gongsi: "",
+    uname: "",
+    getDate: function () {
+      var myDate = new Date();
+      var year = myDate.getFullYear();
+      var month = myDate.getMonth() + 1 > 10 ? myDate.getMonth() + 1 : "0" + (myDate.getMonth() + 1);
+      var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
+      return year + "-" + month + "-" + day
+    },
+    title: [{ text: "编号", width: "100rpx", columnName: "did", type: "number", isupd: true },
+            { text: "日期", width: "200rpx", columnName: "date_time", type: "text", isupd: true },
+            { text: "已还款", width: "300rpx", columnName: "repayment", type: "text", isupd: true },
+            { text: "商户", width: "250rpx", columnName: "commercial_tenant", type: "text", isupd: true },
+            { text: "刷卡额", width: "250rpx", columnName: "swipe", type: "text", isupd: true },
+            { text: "费率", width: "200rpx", columnName: "rate", type: "date", isupd: true },
+            { text: "到账金额", width: "250rpx", columnName: "arrival_amount", type: "date", isupd: true },
+            { text: "基础手续费", width: "250rpx", columnName: "basics_service_charge", type: "number", isupd: true },
+            { text: "其他手续费", width: "250rpx", columnName: "other_service_charge", type: "number", isupd: true },
+      ],
+    input_hid: true,
+    frmStudfind: true,
+    mask_hid: true,
+  },
+
+
+  choiceDate: function (e) {
+    //e.preventDefault(); 
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value
+    })
+  },
+
+  init: function () {
+    var _this = this;
+    let sql = "select * from day_trading where date_time like '%"+ _this.data.riqi +"%' and day_trading.gongsi='" + _this.data.gongsi +"'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_xinyongka',
+      data: {
+        sql: sql
+      },
+      success: res => {
+        console.log("select-success", res)
+        _this.setData({
+          list: res.result,
+          skr: "",
+          fkr: "",
+          ckr: "",
+        })
+      },
+      fail: res => {
+        console.log("select-fail", res)
+      }
+    })
+  },
+
+
+
+  entering: function () {
+    var _this = this;
+    _this.setData({
+      riqi:"",
+    })
+    _this.init();
+  },
+
+
+
+  inquire_QX: function () {
+    var _this = this;
+    _this.setData({
+      frmStudfind: true,
+      mask_hid: true,
+    })
+  },
+
+
+
+
+  save: function (e) {
+    var _this = this;
+    _this.setData({
+      skr: e.detail.value.skr,
+      fkr: e.detail.value.fkr,
+      ckr: e.detail.value.ckr
+    })
+    _this.init();
+    _this.setData({
+      frmStudfind: true,
+      mask_hid: true,
+    })
+  },
+
+  inquire: function () {
+    var _this = this;
+    _this.setData({
+      frmStudfind: false,
+      mask_hid: false,
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    var _this = this;
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      gongsi: userInfo.gongsi,
+      uname: userInfo.uname,
+    })
+    _this.init();
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

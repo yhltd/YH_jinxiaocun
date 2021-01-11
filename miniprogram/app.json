@@ -1,8 +1,11 @@
 {
-  "pages": [    
-   
+  "pages": [
     "pages/login/login",
+    "pages/x_home/x_home",
     "pages/z_home/z_home",
+    
+   
+    
     "pages/c_home/c_home",
     "pages/home/home",
     "pages/peizhi/peizhi",
@@ -101,8 +104,9 @@
         "pages/loginpeople/loginpeople",
         "pages/gather/gather",
         "pages/picture/picture"
-      ] 
-    },{
+      ]
+    },
+    {
       "root": "packageZ",
       "name": "lingshou",
       "pages": [
@@ -117,12 +121,14 @@
       ]
     },
     {
-      "root": "xykManager",
+      "root": "packageX",
       "name": "xyk",
       "pages": [
-        "pages/login/login",
-        "pages/logins/logins",
-        "pages/customermsg/customermsg"
+        "page/customerInfo/customerInfo",
+        "page/DailyTurnover/DailyTurnover",
+        "page/MonthlyTurnover/MonthlyTurnover",
+        "page/Statistics/Statistics",
+        "page/UserInfo/UserInfo"
       ]
     }
   ],

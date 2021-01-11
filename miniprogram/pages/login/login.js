@@ -283,20 +283,18 @@ var login = function(that,info) {
       data: {
         sql: xsql
       },
-      
       success(res) {
         if (res.result.length > 0) {
           if (info.inputName == "bbb") {
             wx.navigateTo({
-              url: '../../xykManager/pages/logins/logins?company=' + that.data.gongsi + '&uname=' + info.inputName
+              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id
             })
             wx.showToast({
               title: '登录成功',
             })
-
           } else {
             wx.navigateTo({
-              url: '../../xykManager/pages/login/login?company=' + that.data.gongsi + '&uname=' + info.inputName
+              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id
             })
             wx.showToast({
               title: '登录成功',

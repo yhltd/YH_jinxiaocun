@@ -1,0 +1,160 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="{{index==0?'list_view_fixed':'list_view'}}" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+
+<!--客户信息-->
+<!--- 查询 --->
+<!----------->
+<view class="choiceList" hidden="{{frmStudfind}}">
+  <form bindsubmit="save">
+    <view>
+      <view class="lables">用户名:</view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="name"></input>
+    </view>
+    <view class="bt_view">
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</view>
+
+
+
+
+
+
+
+
+<!--客户信息-->
+<!--- 修改 --->
+<!----------->
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="changed">
+    <view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view"> 
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</view>
+
+
+
+
+
+
+
+
+<!--客户信息-->
+<!--- 删除 --->
+<!----------->
+<view class="input_view" hidden="{{handle}}">
+      <button class="bt_form" bindtap="ryqx" hover-class="bt_form_hover">权限</button>
+      <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
+</view>
+
+
+
+
+
+
+<!--客户信息-->
+<!--- 录入 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
+  <form bindsubmit="add">
+    <view>
+      <view class="lables">职位:</view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="zw"></input>
+      <view class="lables">员工:</view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="yg"></input>
+      <view class="lables">账号:</view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="zh"></input>
+      <view class="lables">密码:</view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="mm"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</scroll-view>
+
+
+
+
+
+
+<!--客户信息-->
+<!--- 权限 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList2" hidden="{{quanxian}}">
+  <view class="left_area2">
+    <scroll-view class="left_sv2" scroll-y="true">
+      <view class="left_item2" style="{{item.index==view_id?'border:5rpx solid #99D4FF':'border:5rpx solid #E6E6E6'}}" wx:for="{{views}}" bindtap="choice_left_item" data-view_index="{{item.index}}">
+        <image class="left_image2" src="{{item.image_url}}"></image>
+        <view class="left_text2">{{item.text}}</view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class="right_area2">
+    <view wx:for="{{show}}" wx:key="view_id" wx:for-item="items" wx:for-index="i">
+      <view wx:if="{{items.view_id==view_id}}" hidden="{{!item.isShow}}" class="{{item.is==1?'right_item_choice2':'right_item2'}}" wx:for="{{items.is}}" wx:key="text" bindtap="choice_right_item" data-index="{{index}}" data-is="{{item.is}}">
+        {{item.text}}
+      </view>
+    </view>
+  </view>
+  <view class="bottom_view2">
+    <button class="bottom_bt2" bindtap="inquire_QX">取消</button>
+    <button class="bottom_bt2" bindtap="qxsave">保存</button>
+  </view>
+</scroll-view>
+
+
+
+
+
+
+
+
+<!------------->
+<!-- 下方按钮 -->
+<!------------->
+<view class="bottom_view" style="height:16%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">查询</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">录入</button>
+</view>
+
+<!---------->
+<!-- 黑底 -->
+<!---------->
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>

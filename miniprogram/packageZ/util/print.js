@@ -94,5 +94,6 @@ function getTime(){
 }
 
 module.exports = {
-  print
+  print,
+  getTime
 }
