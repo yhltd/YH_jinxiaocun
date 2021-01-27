@@ -73,7 +73,6 @@ Page({
 
     show : [],
     sqlArr : [],
-
     view_id : ""
   },
 

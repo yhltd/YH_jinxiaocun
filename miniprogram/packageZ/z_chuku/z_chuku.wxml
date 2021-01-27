@@ -40,7 +40,6 @@
       <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
     </view>
   </form>
-
 </view>
 
 

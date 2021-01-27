@@ -1,7 +1,7 @@
 {
-  "pages": [    
-   
+  "pages": [
     "pages/login/login",
+    "pages/x_home/x_home",
     "pages/z_home/z_home",
     "pages/c_home/c_home",
     "pages/home/home",
@@ -65,8 +65,7 @@
         "pages/1gongzitiao/gongzitiao",
         "pages/1renyuanxinxiguanli_edit_access/access"
       ]
-    },
-    {
+    },{
       "root": "packageC",
       "name": "caiwu",
       "pages": [
@@ -84,8 +83,7 @@
         "pages/c_liyisunyi/c_liyisunyi",
         "pages/c_xianjinliuliang/c_xianjinliuliang"
       ]
-    },
-    {
+    },{
       "root": "100lie_page",
       "name": "100lie",
       "pages": [
@@ -101,7 +99,7 @@
         "pages/loginpeople/loginpeople",
         "pages/gather/gather",
         "pages/picture/picture"
-      ] 
+      ]
     },{
       "root": "packageZ",
       "name": "lingshou",
@@ -114,6 +112,16 @@
         "z_ruku/z_ruku",
         "z_sum_xiaoshoujilu/z_sum_xiaoshoujilu",
         "z_chuku_getImage/z_chuku_getImage"
+      ]
+    },{
+      "root": "packageX",
+      "name": "xyk",
+      "pages": [
+        "page/customerInfo/customerInfo",
+        "page/DailyTurnover/DailyTurnover",
+        "page/MonthlyTurnover/MonthlyTurnover",
+        "page/Statistics/Statistics",
+        "page/UserInfo/UserInfo"
       ]
     }
   ],
