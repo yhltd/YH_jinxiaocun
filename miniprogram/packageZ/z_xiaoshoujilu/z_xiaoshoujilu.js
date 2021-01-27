@@ -11,8 +11,8 @@ Page({
       {text:"序号",width:"100rpx",type:"text",columnName:"row_id",isupd:false},
       {text:"商品代码",width:"250rpx",type:"text",columnName:"productCode",isupd:false},
       {text:"单价",width:"250rpx",type:"number",columnName:"price",isupd:false},
-      {text:"折扣",width:"200rpx",type:"digit",columnName:"discount",isupd:false},
-      {text:"折后单价",width:"250rpx",type:"number",columnName:"endDiscountPrice",isupd:false},
+      {text:"让",width:"200rpx",type:"digit",columnName:"discount",isupd:false},
+      {text:"让后单价",width:"250rpx",type:"number",columnName:"endDiscountPrice",isupd:false},
       {text:"数量",width:"250rpx",type:"number",columnName:"num",isupd:false},
       {text:"支付方式",width:"250rpx",type:"text",columnName:"payType",isupd:true},
       {text:"备注",width:"400rpx",type:"text",columnName:"comment",isupd:true}
@@ -38,7 +38,7 @@ Page({
 
   init : function(){
     var _this = this;
-    var sql = " select s.id,row_number() over(order by s.id) as row_id,s.order_id,s.productCode,w.price,Round((w.price*(case s.discount when 0 then 1 else s.discount end)),2) as endDiscountPrice,case s.direction when 1 then '无' else CAST(s.discount*10 as varchar)+'折' end as discount,s.direction,s.userName,s.num,CONVERT(varchar(100), s.[time], 20) as [time],s.payType,s.comment,0 as isHid from zeng_stock as s,zeng_wares as w where s.productCode = w.code and s.order_id = '"+_this.data.order_id+"'"
+    var sql = " select s.id,row_number() over(order by s.id) as row_id,s.order_id,s.productCode,w.price,Round((w.price-s.discount),2) as endDiscountPrice,s.discount,s.direction,s.userName,s.num,CONVERT(varchar(100), s.[time], 20) as [time],s.payType,s.comment,0 as isHid from zeng_stock as s,zeng_wares as w where s.productCode = w.code and s.order_id = '"+_this.data.order_id+"'"
 
     wx.showLoading({
       title: '加载中',

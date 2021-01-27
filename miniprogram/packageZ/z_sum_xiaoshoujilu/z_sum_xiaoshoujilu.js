@@ -11,7 +11,7 @@ Page({
       {text:"订单号",width:"300rpx",type:"text",columnName:"order_id",isupd:true},
       {text:"方向",width:"200rpx",type:"text",columnName:"direction",isupd:false},
       {text:"合计金额",width:"250rpx",type:"number",columnName:"sum_price",isupd:false},
-      {text:"合计折后金额",width:"250rpx",type:"number",columnName:"sum_endPrice",isupd:false},
+      {text:"合计让后金额",width:"250rpx",type:"number",columnName:"sum_endPrice",isupd:false},
       {text:"数量",width:"200rpx",type:"number",columnName:"sum_num",isupd:false},
       {text:"销售员",width:"200rpx",type:"text",columnName:"userName",isupd:false},
       {text:"时间",width:"350rpx",type:"text",columnName:"time",isupd:false},
@@ -39,7 +39,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    var sql = "select row_number() over(order by time desc) as row_id,order_id,round(sum(w.price*s.num),2) as sum_price,round(sum((case discount when 0 then 1 else discount end)*w.price*s.num),2) as sum_endPrice,round(sum(s.num),2) as sum_num,userName,(case direction when 1 then '入库' else '出库' end) as direction,CONVERT(varchar(100), s.[time], 20) as [time],0 as isHid from zeng_stock as s,zeng_wares as w where s.productCode = w.code GROUP BY order_id,userName,direction,time having 1=1"+_this.getSql()+" order by time desc"
+    var sql = "select row_number() over(order by time desc) as row_id,order_id,round(sum(w.price*s.num),2) as sum_price,round(sum((w.price-s.discount)*s.num),2) as sum_endPrice,round(sum(s.num),2) as sum_num,userName,(case direction when 1 then '入库' else '出库' end) as direction,CONVERT(varchar(100), s.[time], 20) as [time],0 as isHid from zeng_stock as s,zeng_wares as w where s.productCode = w.code GROUP BY order_id,userName,direction,time having 1=1"+_this.getSql()+" order by time desc"
     wx.cloud.callFunction({
       name : "sqlServer_117",
       data : {

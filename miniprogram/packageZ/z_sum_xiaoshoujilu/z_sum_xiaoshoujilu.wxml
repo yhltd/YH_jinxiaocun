@@ -31,7 +31,7 @@
     出库金额合计：{{sumPrice}}
   </view>
   <view class="table_main_bottom_text">
-    出库折扣金额合计：{{sumEndPrice}}
+    出库让后金额合计：{{sumEndPrice}}
   </view>
   <view class="table_main_bottom_text">
     入库数量合计：{{sumNum}}

@@ -56,7 +56,7 @@
     金额合计：{{sum_price}}
   </view>
   <view class="table_main_bottom_text">
-    折后金额合计：{{sum_endDiscountPrice}}
+    让后金额合计：{{sum_endDiscountPrice}}
   </view>
 </view>
 

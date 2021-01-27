@@ -49,6 +49,30 @@ Page({
         query : "update zeng_user set deviceId = '" + option.deviceId + "' and serviceId = '"+ option.serviceId +"' and characteristicId = '"+ option.characteristicId +"' where id = '"+_this.data.userInfo.id+"'"
       },
       success : res=> {
+        wx.showModal({
+          title: '保存蓝牙连接态成功',
+          content: JSON.stringify(res),
+          success : res=> {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      },
+      error: res=> {
+        wx.showModal({
+          title: '错误！',
+          content: JSON.stringify(res),
+          success : res=> {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
       }
     })
   }, 
@@ -97,9 +121,7 @@ Page({
     for(let i=0;i<list.length;i++,y+=30){
       let price = list[i].num*list[i].price
       if(list[i].discount!=0){
-        price = Math.floor(price*list[i].discount*100)/100+"/"+list[i].discount*10+"折"
-      }else{
-        price = Math.floor(price*100)/100
+        price = price + "让" + list[i].discount
       }
       ctx.fillText(list[i].name, width / 2-width / 5*2, y);
       ctx.fillText(list[i].num, width / 2-width / 5, y);
@@ -249,6 +271,7 @@ Page({
   },
 
   unlinkFile : function(){
+    const ms = wx.getFileSystemManager();
     wx.getFileSystemManager().readdir({  // 获取文件列表
       dirPath: wx.env.USER_DATA_PATH,
       success : res=> {
@@ -616,6 +639,9 @@ Page({
         console.log("关闭蓝牙模块")
       }
     })
+    if(this.data.isConn){
+      this.set_ble()
+    }
   },
 
   /**
@@ -625,9 +651,6 @@ Page({
     var _this = this;
     //删除二维码暂存文件
     _this.unlinkFile();
-    if(_this.data.isConn){
-      _this.set_ble()
-    }
   },
 
   /**

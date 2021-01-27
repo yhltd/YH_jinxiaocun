@@ -16,17 +16,12 @@ Page({
       {text: "商品名称",width: "250rpx",columnName: "name",isupd:false},
       {text: "商品单价",width: "200rpx",columnName: "price",isupd:false},
       {text: "出库数量",width: "200rpx",columnName: "num",type:"number",isupd:true},
-      {text: "折扣",width: "200rpx",columnName: "discount",type:"digit",isupd:true},
+      {text: "让",width: "200rpx",columnName: "discount",type:"digit",isupd:true},
       {text: "支付方式",width: "250rpx",columnName: "payType",type:"text",isupd:true},
       {text: "备注",width: "300rpx",columnName: "comment",type:"text",isupd:true},
       {text: "用料",width: "250rpx",columnName: "cloth",isupd:false},
       {text: "规格",width: "250rpx",columnName: "norms",isupd:false},
-      {text: "类型",width: "250rpx",columnName: "type",isupd:false},
-      {text: "备用字段1",width: "250rpx",columnName: "mark1",isupd:false},
-      {text: "备用字段2",width: "250rpx",columnName: "mark2",isupd:false},
-      {text: "备用字段3",width: "250rpx",columnName: "mark3",isupd:false},
-      {text: "备用字段4",width: "250rpx",columnName: "mark4",isupd:false},
-      {text: "备用字段5",width: "250rpx",columnName: "mark5",isupd:false},
+      {text: "类型",width: "250rpx",columnName: "type",isupd:false}
     ],
 
     list2 : [],
@@ -38,12 +33,7 @@ Page({
       {text: "商品单价",width: "200rpx",columnName: "price",},
       {text: "用料",width: "250rpx",columnName: "cloth",},
       {text: "规格",width: "250rpx",columnName: "norms",},
-      {text: "类型",width: "250rpx",columnName: "type",},
-      {text: "备用字段1",width: "250rpx",columnName: "mark1"},
-      {text: "备用字段2",width: "250rpx",columnName: "mark2"},
-      {text: "备用字段3",width: "250rpx",columnName: "mark3"},
-      {text: "备用字段4",width: "250rpx",columnName: "mark4"},
-      {text: "备用字段5",width: "250rpx",columnName: "mark5"},
+      {text: "类型",width: "250rpx",columnName: "type",}
     ],
 
 
@@ -87,6 +77,18 @@ Page({
         })
       }
 
+    })
+  },
+
+  setSumPrice : function(){
+    var _this = this;
+    var list = _this.data.list;
+    var sum_price = 0;
+    for(let i = 0;i<list.length;i++){
+      sum_price += parseFloat((list[i].price*list[i].num).toFixed(2))
+    }
+    _this.setData({
+      sumPrice : sum_price
     })
   },
 
@@ -226,12 +228,11 @@ Page({
           if (res.confirm) {
             var list = _this.data.list;
             var index = dataset.index;
-            var sumPrice = _this.data.sumPrice-list[index].num*list[index].price
             list.splice(index,1)
             _this.setData({
-              list,
-              sumPrice
+              list
             })
+            _this.setSumPrice();
           }
         }
       })
@@ -279,13 +280,16 @@ Page({
         })
         return;
       }
+      
+    }else if(column == 'discount' || column == 'price'){
       _this.setData({
-        sumPrice : Math.floor((_this.data.sumPrice+=(new_value-value)*list[index].price)*100/100)
+        ['list['+index+'].price'] : parseFloat((list[index].price+=(value-new_value)).toFixed(2))
       })
     }
     _this.setData({
       ["list["+index+"]."+column] : new_value,
     })
+    _this.setSumPrice();
     _this.hid_view()
   },
 
@@ -374,6 +378,9 @@ Page({
         app.globalData.z_option_BLE.deviceId = res.result.recordset[0].deviceId;
         app.globalData.z_option_BLE.serviceId = res.result.recordset[0].serviceId;
         app.globalData.z_option_BLE.characteristicId = res.result.recordset[0].characteristicId;
+      },
+      error: res=> {
+        
       }
     })
   },

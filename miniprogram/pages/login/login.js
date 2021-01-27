@@ -156,6 +156,10 @@ var login = function(that,info) {
       }
     })
   } else if(system=="零售管理系统"){
+    wx.showLoading({
+      title: '正在登录',
+      mask: true
+    })
     //零售管理系统
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -163,6 +167,9 @@ var login = function(that,info) {
         query: "select id,userName,password,power,shop from zeng_user where userName = '"+info.inputName+"' and password = '"+info.inputPwd+"' and shop = '"+that.data.gongsi+"'"
       },
       success: res => {
+        wx.hideLoading({
+          success: (res) => {},
+        })
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
           wx.navigateTo({
@@ -239,6 +246,10 @@ var login = function(that,info) {
       }
     })
   } else if(system=="零售管理系统"){
+    wx.showLoading({
+      title: '正在登录',
+      mask: true
+    })
     //零售管理系统
     wx.cloud.callFunction({
       name: 'sqlServer_117',

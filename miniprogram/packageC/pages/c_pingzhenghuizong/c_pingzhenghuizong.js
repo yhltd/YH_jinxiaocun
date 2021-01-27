@@ -127,14 +127,14 @@ Page({
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
 
-    var where = "where t.[ROW_ID] > "+(_this.data.pageNum-1)*_this.data.countPage+" and t.[ROW_ID] <'"+(_this.data.pageNum*_this.data.countPage+1)+"'"
+    var where = "where t.[ROW_ID] > "+(pageNum-1)*countPage+" and t.[ROW_ID] <'"+(pageNum*countPage+1)+"'"
     if(where2!="" && where2!=undefined){
       where = ""
     }else{
       where2 = ""
     }
 
-    var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,vs.money,vs.real,(money-real) as not_get,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs,Accounting as ac where vs.code = ac.code and vs.company = '"+_this.data.userInfo.company+"' and ac.company = '"+_this.data.userInfo.company+"' and year(vs.voucherDate) = year(getDate())) t "+where+where2
+    var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,vs.money,vs.real,(money-real) as not_get,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs left join Accounting as ac on vs.code = ac.code and ac.company = '"+_this.data.userInfo.company+"' where vs.company = '"+_this.data.userInfo.company+"' ) t "+where+where2
 
     console.log(sql)
     wx.cloud.callFunction({
@@ -162,8 +162,6 @@ Page({
           }
         }
         
-
-        var countPage = _this.data.countPage;
         _this.setData({
           list
         })
