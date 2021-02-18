@@ -287,7 +287,7 @@ var login = function(that,info) {
       }
     })
   }else if(system=="云合信用卡管理系统") {
-    var xsql = "select * from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and uname ='" + info.inputName + "'"
+    var xsql = "select * from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and account ='" + info.inputName + "'"
     wx.cloud.callFunction({
       
       name: 'sqlserver_xinyongka',

@@ -62,7 +62,9 @@
 <view class="input_view" hidden="{{input_hid}}">
   <form bindsubmit="changed">
     <view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+      <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
+        <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{new}}" type="{{dataset_input.input_type}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+      </picker>
     </view>
     <view class="bt_view"> 
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -107,24 +109,24 @@
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="fkh"></input>
       <view class="lables">账单日:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="zdr" bindchange="choiceDate">
-        <input class="input_text_form" placeholder="{{}}" value="{{zdr}}" name="zdr"></input>
+        <input class="input_text_form" placeholder="{{}}" value="{{zdr}}" name="zdr" disabled="disabled"></input>
       </picker>
       <view  class="lables">还款日:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="hkr" bindchange="choiceDate">
-        <input class="input_text_form" placeholder="{{}}" value="{{hkr}}" name="hkr"></input>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{hkr}}" name="hkr" disabled="disabled"></input>
       </picker>
       <view  class="lables">总金额:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="zje"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="zje"></input>
       <view  class="lables">应还款:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="yhk"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="yhk"></input>
       <view  class="lables">余款额:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="yke"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="yke"></input>
       <view  class="lables">借款额:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="jke"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="jke"></input>
       <view  class="lables">手续费:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="sxf"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="sxf"></input>
       <view  class="lables">电话号:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="dhh"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="dhh"></input>
       <view  class="lables">密码:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="mm"></input>
       <view  class="lables">员工:</view>
@@ -188,7 +190,7 @@
 <view class="input_view" hidden="{{input_hid2}}">
   <form bindsubmit="changed2">
     <view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{dataset_input.value}}" type="{{dataset_input.input_type}}" name="new"></input>
     </view>
     <view class="bt_view"> 
       <button class="bt_form" bindtap="xq_qx" hover-class="bt_form_hover">取消</button>
@@ -222,19 +224,19 @@
   <form bindsubmit="add2">
     <view>
       <view class="lables">已还金额:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="yhje"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="yhje"></input>
       <view class="lables">商户:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="sh"></input>
       <view class="lables">刷卡额:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="ske"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="ske"></input>
       <view class="lables">费率:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="fl"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="fl"></input>
       <view  class="lables">到账金额:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="dzje"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="dzje"></input>
       <view  class="lables">基础手续费:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="jcsxf"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="jcsxf"></input>
       <view  class="lables">其他手续费:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="qtsxf"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="qtsxf"></input>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

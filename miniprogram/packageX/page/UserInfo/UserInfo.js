@@ -23,7 +23,7 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "number", isupd: true },
+    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit", isupd: true },
     { text: "职位", width: "200rpx", columnName: "position", type: "text", isupd: true },
     { text: "员工", width: "300rpx", columnName: "uname", type: "text", isupd: true },
     { text: "账号", width: "250rpx", columnName: "account", type: "text", isupd: true },
@@ -82,7 +82,8 @@ Page({
         mask_hid: false,
       })
     } else {
-      if(_this.data.sheetqx5.Upd=="1"){
+      if (dataset_input.column != "account") {
+      if (_this.data.sheetqx5.Upd == "1" ){
       _this.setData({
         dataset_input,
         input_hid: false,
@@ -95,6 +96,7 @@ Page({
           icon: 'none',
         })
       }
+    }
     }
   },
 
@@ -509,33 +511,57 @@ Page({
 
   add: function (e) {
     var _this = this;
-    let sql = "insert into users(position,account, uname, password,company) values('" + e.detail.value.zw + "','" + e.detail.value.yg + "','" + e.detail.value.zh + "','" + e.detail.value.mm + "','"+ _this.data.gongsi +"');"
+    let sql1 = "select count(id) as count from users where company='" + _this.data.gongsi + "' and account='" + e.detail.value.zh +"'"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
-        sql: sql
+        sql: sql1
       },
       success: res => {
-        _this.setData({
-          id:res.result.insertId
-        })
-        _this.addquanxian();
-        // wx.showToast({
-        //   title: "添加成功！",
-        //   icon: "none"
-        // })
-      },
-      error: res => {
-        console.log(res)
-      },
-      fail: res => {
-        console.log(res)
+        if (res.result[0].count<=0){
+          if (e.detail.value.zw != "" && e.detail.value.yg != "" && e.detail.value.zh != "" && e.detail.value.mm != "") {
+            let sql = "insert into users(position,uname,account, password,company) values('" + e.detail.value.zw + "','" + e.detail.value.yg + "','" + e.detail.value.zh + "','" + e.detail.value.mm + "','" + _this.data.gongsi + "');"
+            wx.cloud.callFunction({
+              name: 'sqlserver_xinyongka',
+              data: {
+                sql: sql
+              },
+              success: res => {
+                _this.setData({
+                  id: res.result.insertId
+                })
+                _this.addquanxian();
+                // wx.showToast({
+                //   title: "添加成功！",
+                //   icon: "none"
+                // })
+              },
+              error: res => {
+                console.log(res)
+              },
+              fail: res => {
+                console.log(res)
+              }
+            })
+            _this.setData({
+              addTable: true,
+              mask_hid: true,
+            })
+          }else{
+            wx.showToast({
+                  title: "必填项不能为空！",
+                  icon: "none"
+                })
+          }
+        }else{
+          wx.showToast({
+            title: "该账号已存在！",
+            icon: "none"
+          })
+        }
       }
     })
-    _this.setData({
-      addTable: true,
-      mask_hid: true,
-    })
+    
   },
 
   addquanxian: function (e) {
@@ -571,7 +597,8 @@ Page({
 
   init: function () {
     var _this = this;
-    let sql = "select * from users  where uname like '%" + _this.data.name + "%' and company='"+ _this.data.gongsi +"'"
+    var name = _this.data.name.split("'").join("").trim();
+    let sql = "select * from users  where uname like '%" + name + "%' and company='"+ _this.data.gongsi +"'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',

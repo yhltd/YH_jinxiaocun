@@ -21,19 +21,19 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "number", isupd: true },
+    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit", isupd: true },
     { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text", isupd: true },
     { text: "付款人", width: "300rpx", columnName: "cardholder", type: "text", isupd: true },
     { text: "持卡人", width: "250rpx", columnName: "drawee", type: "text", isupd: true },
     { text: "发卡行", width: "250rpx", columnName: "issuing_bank", type: "text", isupd: true },
     { text: "账单日", width: "200rpx", columnName: "bill_day", type: "date", isupd: true },
     { text: "还款日", width: "250rpx", columnName: "repayment_date", type: "date", isupd: true },
-    { text: "总金额", width: "250rpx", columnName: "total", type: "number", isupd: true },
-    { text: "应还款", width: "250rpx", columnName: "repayable", type: "number", isupd: true },
-    { text: "剩余金额", width: "250rpx", columnName: "balance", type: "number", isupd: true },
-    { text: "借款金额", width: "250rpx", columnName: "loan", type: "number", isupd: true },
-      { text: "已还款", width: "250rpx", columnName: "repayment", type: "number", isupd: true },
-      { text: "已刷金额", width: "250rpx", columnName: "swipe", type: "number", isupd: true },
+      { text: "总金额", width: "250rpx", columnName: "total", type: "digit", isupd: true },
+      { text: "应还款", width: "250rpx", columnName: "repayable", type: "digit", isupd: true },
+      { text: "剩余金额", width: "250rpx", columnName: "balance", type: "digit", isupd: true },
+      { text: "借款金额", width: "250rpx", columnName: "loan", type: "digit", isupd: true },
+      { text: "已还款", width: "250rpx", columnName: "repayment", type: "digit", isupd: true },
+      { text: "已刷金额", width: "250rpx", columnName: "swipe", type: "digit", isupd: true },
       { text: "未刷金额", width: "250rpx", columnName: "balance_of_credit_card", isupd: true },
       { text: "总手续费", width: "250rpx", columnName: "the_total_fee", isupd: true },
       { text: "应收金额", width: "250rpx", columnName: "collected_amount", isupd: true },
@@ -49,7 +49,10 @@ Page({
 
   init: function () {
     var _this = this;
-    let sql = "select b.*,sum(a.repayment) as repayment,sum(a.swipe) as swipe,sum(a.repayment)-sum(a.swipe) as balance_of_credit_card,sum(a.basics_service_charge)+sum(a.other_service_charge) as the_total_fee,sum(a.swipe)*(b.service_charge)+sum(a.repayment)-sum(a.swipe) as collected_amount,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from day_trading as a,customer as b  where a.id=b.id and recipient like '%" + _this.data.skr + "%' and cardholder like '%" + _this.data.fkr + "%' and drawee like '%" + _this.data.ckr + "%' and a.gongsi='"+ _this.data.gongsi +"'"
+    var skr = _this.data.skr.split("'").join("").trim();
+    var fkr = _this.data.fkr.split("'").join("").trim();
+    var ckr = _this.data.ckr.split("'").join("").trim();
+    let sql = "select b.*,sum(a.repayment) as repayment,sum(a.swipe) as swipe,sum(a.repayment)-sum(a.swipe) as balance_of_credit_card,sum(a.basics_service_charge)+sum(a.other_service_charge) as the_total_fee,sum(a.swipe)*(b.service_charge)+sum(a.repayment)-sum(a.swipe) as collected_amount,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from customer as b left join day_trading as a on b.id = a.id where b.recipient like '%" + skr + "%' and b.cardholder like '%" + fkr + "%' and b.drawee like '%" + ckr + "%' and b.gongsi='" + gongsi +"' group by b.id"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -57,9 +60,15 @@ Page({
         sql: sql
       },
       success: res => {
+        var _list
         console.log("select-success", res)
+        if(res.result[0].id==null){
+          _list=null
+        }else{
+        _list= res.result
+        }
         _this.setData({
-          list: res.result,
+          list: _list,
           skr: "",
           fkr: "",
           ckr: "",

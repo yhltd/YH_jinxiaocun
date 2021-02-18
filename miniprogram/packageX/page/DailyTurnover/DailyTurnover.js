@@ -8,7 +8,8 @@ Page({
     userInfo: [],
     input_type: 'text',
     list: [],
-    riqi: "",
+    riqi1: "",
+    riqi2: "",
     empty: "",
     gongsi: "",
     uname: "",
@@ -19,15 +20,15 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "编号", width: "100rpx", columnName: "did", type: "number", isupd: true },
+    title: [{ text: "编号", width: "100rpx", columnName: "did", type: "digit", isupd: true },
             { text: "日期", width: "200rpx", columnName: "date_time", type: "text", isupd: true },
             { text: "已还款", width: "300rpx", columnName: "repayment", type: "text", isupd: true },
             { text: "商户", width: "250rpx", columnName: "commercial_tenant", type: "text", isupd: true },
             { text: "刷卡额", width: "250rpx", columnName: "swipe", type: "text", isupd: true },
             { text: "费率", width: "200rpx", columnName: "rate", type: "date", isupd: true },
             { text: "到账金额", width: "250rpx", columnName: "arrival_amount", type: "date", isupd: true },
-            { text: "基础手续费", width: "250rpx", columnName: "basics_service_charge", type: "number", isupd: true },
-            { text: "其他手续费", width: "250rpx", columnName: "other_service_charge", type: "number", isupd: true },
+      { text: "基础手续费", width: "250rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
+      { text: "其他手续费", width: "250rpx", columnName: "other_service_charge", type: "digit", isupd: true },
       ],
     input_hid: true,
     frmStudfind: true,
@@ -44,7 +45,17 @@ Page({
 
   init: function () {
     var _this = this;
-    let sql = "select * from day_trading where date_time like '%"+ _this.data.riqi +"%' and day_trading.gongsi='" + _this.data.gongsi +"'"
+    if (_this.data.riqi1==""){
+      _this.setData({
+        riqi1:"1900/1/1"
+      })
+    }
+    if (_this.data.riqi2 == "") {
+      _this.setData({
+        riqi2:"2030/12/31"
+      })
+    }
+    let sql = "select * from day_trading where cast(date_time as date)>= cast('" + _this.data.riqi1 + "' as date) and cast(date_time as date)<= cast('" + _this.data.riqi2 +"' as date) and day_trading.gongsi='" + _this.data.gongsi +"' "
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -71,7 +82,8 @@ Page({
   entering: function () {
     var _this = this;
     _this.setData({
-      riqi:"",
+      riqi1:"1900/1/1",
+      riqi2: "2030/12/31",
     })
     _this.init();
   },
@@ -92,9 +104,8 @@ Page({
   save: function (e) {
     var _this = this;
     _this.setData({
-      skr: e.detail.value.skr,
-      fkr: e.detail.value.fkr,
-      ckr: e.detail.value.ckr
+      riqi1: e.detail.value.riqi1,
+      riqi2: e.detail.value.riqi2,
     })
     _this.init();
     _this.setData({
@@ -106,6 +117,8 @@ Page({
   inquire: function () {
     var _this = this;
     _this.setData({
+      riqi1: "",
+      riqi2: "",
       frmStudfind: false,
       mask_hid: false,
     })
@@ -120,6 +133,7 @@ Page({
       gongsi: userInfo.gongsi,
       uname: userInfo.uname,
     })
+    _this.entering();
     _this.init();
   },
 
