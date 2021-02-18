@@ -699,6 +699,9 @@ button::after {
   width: 10px;
   height: 10px;
 }
+.list_view{
+  overflow: hidden;
+}
 
 .jiage {
   height: 100%;

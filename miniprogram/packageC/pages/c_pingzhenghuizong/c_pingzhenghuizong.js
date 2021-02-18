@@ -1,3 +1,5 @@
+const updSpace = require('../../util/updSpace')
+
 Page({
 
   /**
@@ -171,6 +173,52 @@ Page({
       },
       err: res => {
         console.log("错误!")
+      }
+    })
+  },
+
+  delete: function(e){
+    var _this = this;
+    wx.showModal({
+      title : '提示',
+      content : '确定删除吗？',
+      cancelColor: '#009688',
+      confirmColor : '#DD5044',
+      success : res => {
+        if (res.confirm) {
+          let id = e.currentTarget.dataset.id
+          wx.showLoading({
+            title: '加载中',
+            mask : 'true'
+          })
+          var sql = "delete from VoucherSummary where id = '" + id + "';"
+          wx.cloud.callFunction({
+            name : 'sqlServer_cw',
+            data : {
+              query : sql
+            },
+            success : res =>{
+              wx.hideLoading({
+                success: (res)=>{
+                  _this.init();
+                },
+                complete: (res) => {
+                  wx.showToast({
+                    title: '删除成功',
+                    icon : 'success'
+                  })
+                  updSpace.del("VoucherSummary",1)
+                },
+              })
+            },
+            err : res =>{
+              console.log("错误："+res)
+            },
+            fail : res=>{
+              console.log("请求失败！"+res)
+            }
+          })
+        }
       }
     })
   },

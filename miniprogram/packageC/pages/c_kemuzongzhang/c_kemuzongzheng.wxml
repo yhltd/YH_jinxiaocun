@@ -89,7 +89,7 @@
     <button class="sv_view_btView_bt" bindtap="backClass">取消</button>
     <button class="sv_view_btView_bt" bindtap="updClass">完成</button>
   </view>
-  <swiper class="sw" circular="true" easing-function="linear" bindchange="changeClass">
+  <swiper class="sw" circular="true" easing-function="linear" bindchange="changeClass" previous-margin="40px" next-margin="40px">
     <swiper-item wx:for="{{list}}" wx:key="class">
       <view class="sw_item">{{item.className}}</view>
     </swiper-item>

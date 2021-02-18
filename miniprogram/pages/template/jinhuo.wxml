@@ -4,7 +4,7 @@
       <image src="../../images/微信图片_20190805090541.png" class="tp_guanbi"></image>
     </button>
     <view style="margin-top: 8%;">
-      <view class="lab_xx">备注:</view>
+      <view class="lab_xx">名称:</view>
       <input type="text" data-id="{{item.index}}" bindinput="input1" class="tj_1"></input>
     </view>
     <view class='divline2'></view>

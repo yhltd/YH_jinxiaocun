@@ -647,15 +647,6 @@ Page({
       pwd: e.detail.value
     })
   },
-  bindInputLogin: function(e) {
-    if(this.data.system=="云合未来财务系统"){
-      getCompanyTime(this,e.detail.value,'财务')
-    }else if(this.data.system=="零售管理系统"){
-      getCompanyTime(this,e.detail.value,this.data.system)
-    }else{
-      login(this,e.detail.value)
-    }
-  },
 
   formLogin: function(e) {
     if(this.data.system=="云合未来财务系统"){
