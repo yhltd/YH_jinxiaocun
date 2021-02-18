@@ -32,104 +32,53 @@ Page({
     var _this = this;
     var userInfo = _this.data.userInfo;
 
-
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select expenditure,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year(getdate()) and month(voucherDate) = "+_this.data.month+" and s.expenditure = v.expenditure),0) as money_month,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year(getdate()) and s.expenditure = v.expenditure),0) as money_year from VoucherSummary as v where company = '"+userInfo.company+"' GROUP BY expenditure"
+        query: "select expenditure,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year('"+_this.data.month+"'+'-01') and month(voucherDate) = month('"+_this.data.month+"'+'-01') and s.expenditure = v.expenditure),0) as money_month,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year(getdate()) and s.expenditure = v.expenditure),0) as money_year from VoucherSummary as v where company = '"+userInfo.company+"' GROUP BY expenditure"
       },
       success: res => {
         var list = res.result.recordset
         var sum_month = 0;
         var sum_year = 0
-        for(let i=0;i<list.length;i++){
-          sum_month+=list[i].money_month
-          sum_year+=list[i].money_year
+        if(list != undefined){
+          for(let i=0;i<list.length;i++){
+            sum_month+=list[i].money_month
+            sum_year+=list[i].money_year
+          }
+          _this.setData({
+            list,
+            sum_month,
+            sum_year
+          })
         }
-        _this.setData({
-          list,
-          sum_month,
-          sum_year
-        })
-        wx.hideLoading({
-          success: (res) => {},
-        })
-        
       },
       err: res => {
         console.log("错误!")
-      }
-    })
-  },
-
-
-  showChoiceMonth : function(){
-    var _this = this;
-    _this.showView(_this,"choiceMonth")
-  },
-
-  setMonth : function(e){
-    var _this = this;
-    console.log(e)
-    var month = e.detail.value.month
-    if(month>0 && month<13){
-      _this.hidView(_this,"choiceMonth");
-      _this.setData({
-        month
-      })
-      _this.init();
-    }else{
-      wx.showToast({
-        title: '请输入正确的月份',
-        icon: 'none'
-      })
-    }
-  },
-
-  hid_view : function(){
-    var _this = this;
-    _this.hidView(_this,"choiceMonth")
-  },
-
-  hidView : function(_this,type){
-    var animation = wx.createAnimation({
-      duration : 300
-    })
-    _this.setData({
-      hid_view : false
-    })
-
-    switch(type){
-      case "choiceMonth":
-        animation.translateY(400).step()
-        _this.setData({
-          animationData_choice : animation.export(),
+      },
+      complete: res => {
+        wx.hideLoading({
+          success: (res) => {},
         })
-        break;
-    }
-  },
-
-  showView : function(_this,type){
-    var animation = wx.createAnimation({
-      duration : 300
-    })
-    _this.setData({
-      hid_view : true,
-      initHidView : true
-    })
-
-    setTimeout(function(){
-      switch(type){
-        case "choiceMonth":
-          animation.translateY(0).step()
-          _this.setData({
-            animationData_choice : animation.export(),
-          })
-          break;
       }
-    },100)
+    })
   },
 
+
+  showChoiceMonth : function(e){
+    var _this = this;
+    _this.setData({
+      month: e.detail.value
+    })
+    _this.init();
+  },
+
+  getMonth: function(){
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() > 8 ? date.getMonth()+1 : '0' + (date.getMonth()+1);
+    return year + '-' + month;
+  },
   
   /**
    * 生命周期函数--监听页面加载
@@ -152,11 +101,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
     var _this = this;
-    _this.hid_view();
+    _this.setData({
+      month: _this.getMonth()
+    })
     _this.init()
-    
   },
 
   /**

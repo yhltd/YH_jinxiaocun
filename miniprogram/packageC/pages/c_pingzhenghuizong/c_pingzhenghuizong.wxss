@@ -80,6 +80,7 @@ button{
   border-right: 1rpx solid #C4C5C9;
   border-bottom: 1rpx solid #C4C5C9;
   line-height: 70rpx;  
+  overflow: hidden;
 }
 
 .input_view{

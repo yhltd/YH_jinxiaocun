@@ -90,10 +90,12 @@ button{
   align-items: center;  
 }
 .moreDo{
-  width: 80%;
+  margin: 0 auto;
   background-color: #282B33;
   color: #E6E6E6;
   height: 75rpx;
+  line-height: 75rpx;
+  width: 80%;  
 }
 .choiceMonth{
   width: 94%;
@@ -141,4 +143,7 @@ button{
   background: rgba(0,0,0,0.6);
   z-index: 19;
   transition: all 0.3s ease-in-out;
+}
+.date-picker{
+  width: 100%;
 }

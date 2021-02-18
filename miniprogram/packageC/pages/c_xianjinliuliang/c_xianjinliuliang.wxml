@@ -36,16 +36,9 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <button class="moreDo" bindtap="showChoiceMonth" hidden="{{choiceMonth}}">{{month}}月份</button>
-</view>
-
-<view class="choiceMonth" animation="{{animationData_choice}}" wx:if="{{initHidView}}">
-  <form bindsubmit="setMonth">
-    <view class="form_view">
-      <input class="input_choiceMonth" type="number" name="month" placeholder="月份"></input>
-      <button class="bt_choiceMonth" form-type="submit">确定</button>
-    </view>
-  </form>
+  <picker class="date-picker" mode="date" fields="month" bindchange="showChoiceMonth">
+    <button class="moreDo" hidden="{{choiceMonth}}">{{month}}</button>
+  </picker>
 </view>
 
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">

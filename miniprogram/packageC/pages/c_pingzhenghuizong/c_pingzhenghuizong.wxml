@@ -9,7 +9,7 @@
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
       <view class="table_main">
         <view class="list_view" style="width:100rpx;position:sticky;left:0"  >
-          <view wx:if="{{!examine}}" class="list_text">{{list_item.ROW_ID}}</view>
+          <view wx:if="{{!examine}}" bindlongtap="delete" data-id="{{list_item.id}}" class="list_text">{{list_item.ROW_ID}}</view>
           <view wx:if="{{examine}}">
             <checkbox-group bindchange="choice_checkBox_examine" data-id="{{list_item.id}}" wx:if="{{examine}}">
               <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
