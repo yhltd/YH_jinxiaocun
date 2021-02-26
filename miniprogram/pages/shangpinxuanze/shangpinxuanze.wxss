@@ -11,6 +11,12 @@
   height: 209rpx;
   background-color: white;
 }
+.shangpinline{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 200rpx;  
+}
 
 .jiahao1 {
   width: 40px;
@@ -35,18 +41,16 @@
 }
 
 .shangpin {
-  width: 34%;
-  height: 100px;
+  width: 70%;
+  height: 100%;
   display: flex;
   padding: 8px;
+  align-items: center;
 }
 
 .shangpin-image {
-  width: 133rpx;
-  height: 123rpx;
-  position: absolute;
-  left: 9rpx;
-  margin-top: 28rpx;
+  width: 130rpx;
+  height: 130rpx;
 }
 
 .shangpinpm {
@@ -55,29 +59,21 @@
 }
 
 .shangpin-text {
-  height: 1%;
+  height: 50%;
   font-size: 61%;
-  width: 516%;
-  position: absolute;
-  left: 20%;
-  margin-top: 1%;
+  margin-left: 15rpx;
 }
 
 .shangpin-jin {
-  font-size: 15px;
-  flex-direction: column;
-  position: absolute;
-  left: 56%;
-  display: flex;
-  margin-top: -21%;
-  width: 69%;
+  font-size: 24rpx;
+  width: 30%;
+  height: 132rpx;  
 }
 
 .shangpin-shuliang {
 }
 
 .shangpin-input {
-  display: flex;
 }
 
 .test {
@@ -91,10 +87,18 @@
 
 .guan_bi {
   position: absolute;
-  left: 82%;
+  left: 89%;
   bottom: 95%;
   font-size: 66%;
   z-index: 4;
+  background-color: #393D49;
+  color: #fff;
+}
+.Mymain{
+  position: fixed;
+  width: 100%;
+  height: 86%;
+  overflow-y: scroll;
 }
 
 .tp_guanbi {
@@ -165,7 +169,7 @@
 .text_name {
   position: absolute;
   left: 35%;
-  top: 5%;
+  top: 3%;
 }
 
 .hidden_css {
@@ -217,12 +221,8 @@
 }
 
 .sp_dm {
-  font-size: 69%;
+  font-size: 90%;
   color: red;
-  position: absolute;
-  top: -49.3%;
-  flex-direction: column;
-  display: flex;
 }
 
 .header {

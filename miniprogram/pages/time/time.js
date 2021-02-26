@@ -270,7 +270,7 @@ Page({
   },
 
   xuanshangpin: function() {
-
+    wx.setStorageSync('type', '1');
     wx.navigateTo({
       url: '/pages/shangpinxuanze/shangpinxuanze',
     })
@@ -319,7 +319,6 @@ Page({
                 name: "sqlConnection",
                 data: {
                   sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "')"
-                  // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
                 },
                 success(res) {
                   console.log("成功", res)

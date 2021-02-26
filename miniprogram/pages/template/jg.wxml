@@ -1,25 +1,30 @@
 <template name="jg" hidden='true'>
-  <view class='test' style="display:{{jghide}};flex-direction: column;">
-    <view class="message">
-      <image class='tp_css' src="{{all[cpid].mark1}}"></image>
-      <view ><text class='text_name'>商品名称：{{all[cpid].name}}</text></view>
-    </view>
-    <view class="Xzjiage" style="display:flex">
-      <text class="text_css">价格:</text>
-      <input type="digit" bindblur='cunjg' class="input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpjg[cpid]}}"></input>
-    </view>
-    <view class="xu_xian"></view>
-    <view class="huise_bian"></view>
-    <view class="Xzshuliang" style="display: flex">
-      <text class="text_css1">数量:</text>
-      <input type="number" class='input-srjg1' style="border: 1px solid  #DCDCDC;border-radius:18rpx; " bindblur='cunsl' value="{{cpsl[cpid]}}"></input>
-    </view>
-    <button class='ti_jiao' bindtap='tjjg'>提交</button>
-    <view class="bai_bian"></view>
-    <button class='guan_bi' bindtap='spClose'>
-      <image src="../../images/微信图片_20190805090541.png" class="tp_guanbi"></image>
+	<view class='test' style="display:{{jghide}};flex-direction: column;">
+		<view class="message">
+			<image class='tp_css' src="{{all[cpid].mark1}}"></image>
+			<view>
+				<text class='text_name'>商品名称：{{all[cpid].name}}</text>
+				<text class='text_name' style="top: 6%;">库存数量：{{all[cpid].allSL}}</text>
+			</view>
+		</view>
+		<form bindsubmit="tjjg">
+			<view class="Xzjiage" style="display:flex">
+				<text class="text_css">价格:</text>
+				<input type="digit" bindblur='cunjg' name="price" class="input-srjg" style="border: 1px solid #DCDCDC;border-radius: 18rpx;" value="{{cpjg[cpid]}}"></input>
+			</view>
+			<view class="xu_xian"></view>
+			<view class="huise_bian"></view>
+			<view class="Xzshuliang" style="display: flex">
+				<text class="text_css1">数量:</text>
+				<input type="number" class='input-srjg1' name="num" style="border: 1px solid  #DCDCDC;border-radius:18rpx; " bindblur='cunsl' value="{{cpsl[cpid]}}"></input>
+			</view>
+			<button class='ti_jiao' form-type="submit">提交</button>
+		</form>
 
-    </button>
+		<view class="bai_bian"></view>
+		<button class='guan_bi' bindtap='spClose'>
+			X
+		</button>
 
-  </view>
+	</view>
 </template>

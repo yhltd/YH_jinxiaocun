@@ -5,9 +5,12 @@ height: 1091rpx;
 width: 100%;
 }
 .list{
-  margin-bottom: -3%;
-  height: 209rpx;
-background-color: white;
+  height: 200rpx;
+  background-color: white;
+  padding: 10rpx;
+}
+.name{
+  font-weight: bold;
 }
 
 .header {
@@ -54,66 +57,38 @@ justify-content: center;
 
 }
 .shangpin{
-  width: 34%;
-  height: 100px;
   display: flex;
-  padding: 8px;
-
 }
 .shangpin-image{
-  width: 133rpx;
-  height: 123rpx;
-  position: absolute;
-  left: 9rpx;
-  margin-top: 28rpx;
-
-
+  width: 150rpx;
+  height: 150rpx;
+  margin-right: 10rpx;
+  border: 1rpx solid #f2f2f2;
+  border-radius: 6rpx;
 }
 .shangpinpm{
-  font-weight:400rpx;
-  font-size:30rpx
+  font-size: 30rpx;
+  margin-bottom: 5rpx;
+  width: 500rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .shangpin-text{
-  height: 1%;
-font-size: 61%;
-width: 516%;
-position: absolute;
-left: 20%;
-margin-top: 1%;
-
-
-  
-}
-.shangpin-jin{
-font-size: 15px;
-flex-direction: column;
-position: absolute;
-left: 50%;
-display: flex;
-margin-top: -30%;
-width: 69%;
-
-
+  font-size: 61%;
 }
 
 .shangpin-jin2{
-font-size: 15px;
-flex-direction: column;
-position: absolute;
-left: 23%;
-display: flex;
-margin-top: -7%;
-width: 69%;
-
+  margin-top: 10rpx;
 }
 
 .sp_dm{
-  font-size: 69%;
-  color: red;
-  position: absolute;
-  top: -49.3%;
-  flex-direction: column;
-  display: flex;
+  font-size: 25rpx;
+  padding: 5rpx;
+  color: rgb(30, 144, 255);
+  border-top: 1rpx solid #f2f2f2;
+  width: 100%;
+  border-bottom: 1rpx solid #f2f2f2;
 }
 
 .shangpin-shuliang{
@@ -123,14 +98,6 @@ width: 69%;
 .shangpin-input{
   display: flex;
 }
-
-/* .dq_y{
-  font-weight: bold;
-position: absolute;
-top: 0%;
-left: 5%;
-color: white;
-} */
 
 .dq_y {
   font-weight: bold;

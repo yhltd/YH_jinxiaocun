@@ -7,9 +7,11 @@ Page({
    */
   data: {
     hidden1: true,
-    jinhuo:0,
+    jinhuo: 0,
     backhidden: true,
-    id:''
+    id: '',
+    updIndex: -1,
+    isStock: false
   },
 
   /**
@@ -19,17 +21,18 @@ Page({
     var that = this
     const db = wx.cloud.database()
 
-    if (options.jinhuo!=""){
-    that.setData({
-      jinhuo:options.jinhuo 
-    })
+    if (options.jinhuo != undefined) {
+      that.setData({
+        isStock: true,
+        jinhuo: options.jinhuo
+      })
     }
     var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
+    var gongsi = app.globalData.gongsi
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_chuhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi+"'"
+        sql: "select * from yh_jinxiaocun_chuhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
         // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
       },
       success(res) {
@@ -37,7 +40,8 @@ Page({
         that.setData({
           all: res.result
         })
-      }, fail(res) {
+      },
+      fail(res) {
         console.log("失败", res)
 
       }
@@ -80,7 +84,8 @@ Page({
         that.setData({
           all: res.result
         })
-      }, fail(res) {
+      },
+      fail(res) {
         console.log("失败", res)
 
       }
@@ -111,7 +116,6 @@ Page({
       icon: 'loading',
       duration: 500
     })
-    that.onLoad()
     that.onShow()
     wx.stopPullDownRefresh()
   },
@@ -123,7 +127,7 @@ Page({
 
   },
 
-  shanchu:function(e){
+  shanchu: function (e) {
     var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id
@@ -137,17 +141,11 @@ Page({
           wx.cloud.callFunction({
             name: "sqlConnection",
             data: {
-              // sql: "delete from yh_jinxiaocun_jinhuofang where beizhu = '" + id + "'"
-              sql: "delete from yh_jinxiaocun_chuhuofang where beizhu = '" + id + "'"
+              sql: "delete from yh_jinxiaocun_chuhuofang where _id = '" + id + "'"
             },
             success(res) {
               console.log("成功", res)
-              that.onLoad();
               that.onShow();
-              // that.setData({
-              //     all: res.data,
-              //   })
-              // szZhi = 
             },
             fail(res) {
               console.log("失败", res)
@@ -158,7 +156,6 @@ Page({
         }
       }
     })
-    that.onLoad();
     that.onShow();
   },
   input1: function (e) {
@@ -203,13 +200,13 @@ Page({
     var lianxifangshi = that.data.lianxifangshi
     var lianxidizhi = that.data.lianxidizhi
     var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi 
+    var gongsi = app.globalData.gongsi
     if (beizhu != null || lianxifangshi != null) {
       const db = wx.cloud.database()
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "insert yh_jinxiaocun_chuhuofang (finduser,gongsi,beizhu,lianxifangshi,lianxidizhi) VALUES('" + finduser + "','" + gongsi + "','" + beizhu + "','" + lianxifangshi + "','" + lianxidizhi+"')"
+          sql: "insert yh_jinxiaocun_chuhuofang (finduser,gongsi,beizhu,lianxifangshi,lianxidizhi) VALUES('" + finduser + "','" + gongsi + "','" + beizhu + "','" + lianxifangshi + "','" + lianxidizhi + "')"
           // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
         },
         success(res) {
@@ -217,8 +214,8 @@ Page({
           wx.showToast({
             title: '添加成功',
           })
-          that.onLoad
-        }, fail(res) {
+        },
+        fail(res) {
           console.log("失败", res)
 
         }
@@ -245,12 +242,10 @@ Page({
       hidden1: !that.data.hidden1,
       backhidden: true
     })
-    that.onLoad();
     that.onShow();
-    //  that.onLoad()
   },
 
-  sp_Close: function(e){
+  sp_Close: function (e) {
     var that = this;
     that.data.beizhu = ""
     that.data.lianxifangshi = ""
@@ -263,23 +258,54 @@ Page({
 
   },
 
-  ke: function (e) {
-    var that = this
-    that.setData({
-        id: e.currentTarget.dataset.id
+  save: function (e) {
+    var _this = this;
+    let updIndex = _this.data.updIndex
+
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "update yh_jinxiaocun_chuhuofang set beizhu = '" + e.detail.beizhu + "',lianxifangshi= '" + e.detail.lianxifangshi + "',lianxidizhi= '" + e.detail.lianxidizhi + "' where _id = '" + _this.data.all[updIndex]._id + "'"
+      },
+      success(res) {
+        if (res.errMsg == 'cloud.callFunction:ok') {
+          _this.setData({
+            updIndex: -1
+          }, function () {
+            _this.onShow()
+            wx.showToast({
+              title: '修改成功',
+            })
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          title: '修改失败',
+          icon: 'none',
+          mask: true
+        })
+      }
+    });
+  },
+
+  back: function () {
+    this.setData({
+      updIndex: -1
     })
-    console.log("单击时获得的值",that.data.id)
-    if (that.data.jinhuo == 1) {
-      wx.setStorageSync('khname',that.data.id );
-      wx.setStorageSync('khpd', "1");
-      //返回上一页
+  },
+
+  ke: function (e) {
+
+    var that = this
+    if(that.data.isStock){
+      wx.setStorageSync('khname', that.data.all[e.currentTarget.dataset.index].beizhu)
       wx.navigateBack();
-      // wx.navigateBack({
-      //   delta: 1
-      // })
-      // wx.navigateTo({
-      //   url: '../remittance/remittance?khname=' + id
-      // })
-  }}
+      return;
+    }
+    that.setData({
+      updIndex: e.currentTarget.dataset.index
+    })
+  }
 
 })

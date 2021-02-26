@@ -244,39 +244,13 @@ Page({
           'icon': 'none',
           duration: 3000
         })
+        wx.navigateBack({
+          // delta: 1 
+        })
       },
       fail(res) {
         console.log("失败", res)
-
       }
     });
-    // db.collection('Yh_JinXiaoCun_chanpin').add({
-
-    //   data: {
-    //     finduser:finduser,
-    //     gongsi:gongsi,
-    //     bigImg: bigImg,
-    //     value0: value0,
-    //     value1: value1,
-    //     value2: value2,
-    //     value3: value3,
-    //     value4: value4,
-    //     value5: value5
-
-    //   },
-    //   success: res => {
-    //     // 在返回结果中会包含新创建的记录的 _id
-    //     wx.showToast({
-    //       title: '新建成功',
-    //       'icon': 'none',
-    //       duration: 3000
-    //     })
-
-    //   }
-    // })
-
-    wx.navigateBack({
-      // delta: 1 
-    })
   }
 })

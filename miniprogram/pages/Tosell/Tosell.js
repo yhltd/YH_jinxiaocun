@@ -192,8 +192,7 @@ Page({
     var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id
-    console.log(id)
-    console.log(that.data.szzhi)
+    var uid = e.currentTarget.dataset.uid;
     wx.showModal({
       title: '提示',
       content: '是否删除？',
@@ -202,27 +201,15 @@ Page({
           wx.cloud.callFunction({
             name: "sqlConnection",
             data: {
-              sql: "DELETE  FROM yh_jinxiaocun_mingxi  where orderid='" + that.data.szzhi[id].orderid + "'"
+              sql: "DELETE FROM yh_jinxiaocun_mingxi where _id = '" + uid + "'"
             },
-            success(res) {
-              // that.setData({
-              //   szzhi: res.result
-              // }
-              // )
-              console.log
-              // console.log(that.data.szzhi)
+            success: res=> {
+              that.onLoad()
             },
-            fail(res) {
+            fail: res=> {
               console.log("失败", res)
-
             }
           });
-          // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
-          //   success: console.log,
-          //   fail: console.error,
-
-          // })
-          that.onLoad()
         } else if (res.cancel) {
 
           return false;
