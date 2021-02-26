@@ -8,7 +8,8 @@ Page({
     userInfo: [],
     input_type: 'text',
     list: [],
-    riqi: "",
+    riqi1: "",
+    riqi2: "",
     empty: "",
     gongsi:"",
     uname:"",
@@ -19,7 +20,7 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "日期", width: "300rpx", columnName: "date_time", type: "number", isupd: true },
+    title: [{ text: "日期", width: "300rpx", columnName: "date_time", type: "digit", isupd: true },
     { text: "交易额", width: "300rpx", columnName: "recipient", type: "text", isupd: true },
     { text: "已刷额", width: "300rpx", columnName: "swipe", type: "text", isupd: true },
     { text: "手续费", width: "350rpx", columnName: "the_total_fee", type: "text", isupd: true },
@@ -40,7 +41,17 @@ Page({
 
   init: function () {
     var _this = this;
-    let sql = "select a.date_time,sum(a.repayment) as repayment,sum(a.swipe) as swipe,(sum(a.basics_service_charge)+sum(a.other_service_charge)) as the_total_fee,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from day_trading as a,customer as b where a.id=b.id and a.date_time like '%"+ _this.data.riqi +"%' and a.gongsi='" + _this.data.gongsi + "' group by a.date_time"
+    if (_this.data.riqi1 == "") {
+      _this.setData({
+        riqi1: "1900/1/1"
+      })
+    }
+    if (_this.data.riqi2 == "") {
+      _this.setData({
+        riqi2: "2030/12/31"
+      })
+    }
+    let sql = "select a.date_time,sum(a.repayment) as repayment,sum(a.swipe) as swipe,(sum(a.basics_service_charge)+sum(a.other_service_charge)) as the_total_fee,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from day_trading as a,customer as b where a.id=b.id and cast(a.date_time as date) >= cast('" + _this.data.riqi1 + "' as date) and cast(a.date_time as date) >= cast('" + _this.data.riqi2 +"' as date) and a.gongsi='" + _this.data.gongsi + "' group by a.date_time"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -67,7 +78,8 @@ Page({
   entering: function () {
     var _this = this;
     _this.setData({
-      riqi:"",
+      riqi1:"",
+      riqi2: "",
     })
     _this.init();
   },
@@ -78,6 +90,8 @@ Page({
   inquire_QX: function () {
     var _this = this;
     _this.setData({
+      riqi1:"",
+      riqi2: "",
       frmStudfind: true,
       mask_hid: true,
     })

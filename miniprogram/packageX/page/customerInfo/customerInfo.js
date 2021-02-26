@@ -7,6 +7,9 @@ Page({
   data: {
     userInfo: [],
     input_type: 'text',
+    updatePicker: true,
+    updateInput: false,
+    newdata:"",
     list: [],
     list2: [],
     skr:"",
@@ -24,32 +27,32 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "number",isupd: true},
+    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
             { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text",isupd: true},
             { text: "付款人",width: "300rpx",columnName: "cardholder",type: "text",isupd: true},
             { text: "持卡人", width: "250rpx", columnName: "drawee", type: "text", isupd: true},
             { text: "发卡行", width: "250rpx", columnName: "issuing_bank", type: "text", isupd: true},
             { text: "账单日", width: "200rpx", columnName: "bill_day", type: "date", isupd: true},
             { text: "还款日", width: "250rpx", columnName: "repayment_date", type: "date", isupd: true},
-            { text: "总金额", width: "250rpx", columnName: "total", type: "number", isupd: true},
-            { text: "应还款", width: "250rpx", columnName: "repayable", type: "number", isupd: true},
-            { text: "剩余金额", width: "250rpx", columnName: "balance", type: "number", isupd: true},
-            { text: "借款金额", width: "250rpx", columnName: "loan", type: "number", isupd: true},
-            { text: "手续费", width: "250rpx", columnName: "service_charge", type: "number", isupd: true},
-            { text: "电话号", width: "250rpx", columnName: "telephone", type: "number", isupd: true},
+      { text: "总金额", width: "250rpx", columnName: "total", type: "digit", isupd: true},
+      { text: "应还款", width: "250rpx", columnName: "repayable", type: "digit", isupd: true},
+      { text: "剩余金额", width: "250rpx", columnName: "balance", type: "digit", isupd: true},
+      { text: "借款金额", width: "250rpx", columnName: "loan", type: "digit", isupd: true},
+      { text: "手续费", width: "250rpx", columnName: "service_charge", type: "digit", isupd: true},
+      { text: "电话号", width: "250rpx", columnName: "telephone", type: "digit", isupd: true},
             { text: "密码", width: "250rpx", columnName: "password", isupd: true},
             { text: "员工", width: "250rpx", columnName: "staff", isupd: true},
             ],
 
-    title2: [{ text: "编号", width: "100rpx", columnName: "did", type: "number", isupd: true },
+    title2: [{ text: "编号", width: "100rpx", columnName: "did", type: "digit", isupd: true },
               { text: "日期", width: "200rpx", columnName: "date_time", type: "text", isupd: true },
               { text: "已还款", width: "300rpx", columnName: "repayment", type: "text", isupd: true },
               { text: "商户", width: "250rpx", columnName: "commercial_tenant", type: "text", isupd: true },
               { text: "刷卡额", width: "250rpx", columnName: "swipe", type: "text", isupd: true },
               { text: "费率", width: "200rpx", columnName: "rate", type: "date", isupd: true },
               { text: "到账金额", width: "250rpx", columnName: "arrival_amount", type: "date", isupd: true },
-              { text: "基础手续费", width: "250rpx", columnName: "basics_service_charge", type: "number", isupd: true },
-              { text: "其他手续费", width: "250rpx", columnName: "other_service_charge", type: "number", isupd: true },
+      { text: "基础手续费", width: "250rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
+      { text: "其他手续费", width: "250rpx", columnName: "other_service_charge", type: "digit", isupd: true },
               
               ],
     input_hid: true,
@@ -69,6 +72,18 @@ Page({
     var dataset_input = e.currentTarget.dataset;
     if (!dataset_input.isupd) {
       return;
+    }
+    if (dataset_input.input_type=="date") {
+      _this.setData({
+        updatePicker: false,
+        empty: dataset_input.value
+      })
+    }else{
+      _this.setData({
+        updatePicker: true,
+        updateInput: false,
+        empty: dataset_input.value
+      })
     }
     if (dataset_input.column =="rownum") {
       _this.setData({
@@ -107,7 +122,7 @@ Page({
         mask_hid: false,
       })
     } else {
-      if (_this.data.sheetqx2.Upd == "1") {
+      if (_this.data.sheetqx2.Upd == "1" && dataset_input.column == "date_time") {
       _this.setData({
         dataset_input,
         input_hid2: false,
@@ -163,8 +178,7 @@ Page({
       content: '确认删除吗？',
       success: res => {
         if (res.confirm) {
-          var sql = "delete from customer where id = '" + id + "'";
-
+          var sql = "delete from customer where id = '" + id + "';";
           wx.cloud.callFunction({
             name: 'sqlserver_xinyongka',
             data: {
@@ -174,7 +188,10 @@ Page({
               wx.showToast({
                 title: "删除成功",
                 icon: "none"
-                
+              })
+              _this.setData({
+                handle: true,
+                mask_hid: true
               })
               _this.init()
             },
@@ -183,6 +200,13 @@ Page({
                 title: "错误",
                 icon: "none"
               })
+            }
+          })
+          var sql = "delete from day_trading where id = '" + id + "'";
+          wx.cloud.callFunction({
+            name: 'sqlserver_xinyongka',
+            data: {
+              sql: sql
             }
           })
         } else if (res.cancel) {
@@ -252,6 +276,8 @@ Page({
     if (!dataset.isupd) {
       return;
     }
+    if (new_value != "" || column == "telephone"
+      || column == "password" || column == "staff"){
     var sql = "update customer set " + column + " = '" + new_value + "' where id = '" + _this.data.list[index].id + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -278,6 +304,12 @@ Page({
         })
       }
     })
+      }else{
+      wx.showToast({
+        title: "不能为空！",
+        icon: "none"
+      })
+      }
   },
 
 
@@ -295,6 +327,7 @@ Page({
     if (!dataset.isupd) {
       return;
     }
+    if (new_value!=""){
     var sql = "update day_trading set " + column + " = '" + new_value + "' where did = '" + _this.data.list2[index].did + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -321,6 +354,12 @@ Page({
         })
       }
     })
+    }else{
+      wx.showToast({
+        title: "不能为空！",
+        icon: "none"
+      })
+    }
   },
 
 
@@ -331,7 +370,7 @@ Page({
   choiceDate: function(e){
     //e.preventDefault(); 
     this.setData({
-      [e.target.dataset.column_name] : e.detail.value
+      [e.currentTarget.dataset.column_name]: e.detail.value
     })
   },
 
@@ -430,11 +469,27 @@ Page({
     // mm: e.detail.value.mm,
     // yh: e.detail.value.yh
     //})
+    if(e.detail.value.zje==""){
+      e.detail.value.zje =0
+    }
+    if (e.detail.value.yhk == "") {
+      e.detail.value.yhk = 0
+    }
+    if (e.detail.value.yke == "") {
+      e.detail.value.yke = 0
+    }
+    if (e.detail.value.jke == "") {
+      e.detail.value.jke = 0
+    }
+    if (e.detail.value.sxf == "") {
+      e.detail.value.sxf = 0
+    }
+    if (e.detail.value.skr !="" && e.detail.value.fkr != "" && e.detail.value.ckr != "" && e.detail.value.fkh != "" && e.detail.value.zdr != "" && e.detail.value.hkr != "" && e.detail.value.zje != "" && e.detail.value.yhk != "" && e.detail.value.yke != "" && e.detail.value.jke != "" && e.detail.value.sxf !=""){
     let sql = "insert into customer(recipient, cardholder, drawee, issuing_bank, bill_day, repayment_date, total, repayable, balance, loan, service_charge, telephone, password, staff,gongsi) values('" + e.detail.value.skr + "','" +
-      e.detail.value.fkr + "','" + e.detail.value.ckr + "','" + e.detail.value.fkh + "'," +
-      e.detail.value.zdr + "," + e.detail.value.hkr + "," +
-      e.detail.value.zje + "," + e.detail.value.yhk + "," + e.detail.value.yke + "," +
-      e.detail.value.jke + "," + e.detail.value.sxf + ",'" + e.detail.value.dhh + "','" + e.detail.value.mm + "','" + e.detail.value.yg + "','" + _this.data.gongsi + "')"
+      e.detail.value.fkr + "','" + e.detail.value.ckr + "','" + e.detail.value.fkh + "','" +
+      e.detail.value.zdr + "','" + e.detail.value.hkr + "'," +
+      parseInt(e.detail.value.zje) + "," + parseInt(e.detail.value.yhk) + "," + parseInt(e.detail.value.yke) + "," +
+      parseInt(e.detail.value.jke) + "," + parseInt(e.detail.value.sxf) + ",'" + e.detail.value.dhh + "','" + e.detail.value.mm + "','" + e.detail.value.yg + "','" + _this.data.gongsi + "')"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -458,10 +513,17 @@ Page({
       addTable: true,
       mask_hid: true,
     })
+    }else{
+      wx.showToast({
+        title: "必填项不能为空！",
+        icon:"none"
+      })
+    }
   },
 
 
   add2: function (e) {
+    if (e.detail.value.yhje != "" && e.detail.value.sh != "" && e.detail.value.ske != "" && e.detail.value.fl != "" && e.detail.value.dzje != "" && e.detail.value.jcsxf != "" && e.detail.value.qtsxf != "" ){
     var _this = this;
     var id = _this.data.list[_this.data.dataset_input.index].id;
     var now_time = _this.data.getDate();
@@ -492,13 +554,22 @@ Page({
       addTable2: true,
       mask_hid: true,
     })
+    }else{
+      wx.showToast({
+        title: "必填项不能为空！",
+        icon: "none"
+      })
+    }
   },
 
 
 
   init: function() {
     var _this = this;
-    let sql = "select * from customer  where recipient like '%" + _this.data.skr + "%' and cardholder like '%" + _this.data.fkr + "%' and drawee like '%" + _this.data.ckr + "%' and gongsi='"+ _this.data.gongsi +"'"
+    var skr = _this.data.skr.split("'").join("").trim();
+    var fkr = _this.data.fkr.split("'").join("").trim();
+    var ckr = _this.data.ckr.split("'").join("").trim();
+    let sql = "select * from customer  where recipient like '%" + skr + "%' and cardholder like '%" + fkr + "%' and drawee like '%" + ckr + "%' and gongsi='"+ _this.data.gongsi +"'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
