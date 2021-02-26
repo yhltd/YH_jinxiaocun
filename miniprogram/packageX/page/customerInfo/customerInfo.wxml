@@ -190,7 +190,9 @@
 <view class="input_view" hidden="{{input_hid2}}">
   <form bindsubmit="changed2">
     <view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{dataset_input.value}}" type="{{dataset_input.input_type}}" name="new"></input>
+      <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{dataset_input.value}}" type="{{dataset_input.input_type}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+      </picker>
     </view>
     <view class="bt_view"> 
       <button class="bt_form" bindtap="xq_qx" hover-class="bt_form_hover">取消</button>

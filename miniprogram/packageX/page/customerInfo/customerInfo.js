@@ -125,12 +125,22 @@ Page({
       if (_this.data.sheetqx2.Upd == "1" && dataset_input.column == "date_time") {
       _this.setData({
         dataset_input,
+        updatePicker: false,
         input_hid2: false,
         handle2: true,
         mask_hid: false,
         input_type: e.currentTarget.dataset.input_type
       })
-      } else {
+      } else if (_this.data.sheetqx2.Upd == "1" && dataset_input.column != "date_time"){
+        _this.setData({
+          dataset_input,
+          updatePicker: true,
+          input_hid2: false,
+          handle2: true,
+          mask_hid: false,
+          input_type: e.currentTarget.dataset.input_type
+        })
+      }else{
         wx.showToast({
           title: '无权限',
           icon: 'none',
@@ -293,7 +303,8 @@ Page({
           input_hid: false,
           mask_hid: false,
           input_type: e.currentTarget.dataset.input_type,
-          ["list[" + index + "]." + column]: new_value
+          ["list[" + index + "]." + column]: new_value,
+          new: ""
         })
         _this.hid_view()
       },

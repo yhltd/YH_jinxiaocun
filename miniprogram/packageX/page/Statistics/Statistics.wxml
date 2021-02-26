@@ -37,8 +37,8 @@
       <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{riqi1}}" disabled="disabled" name="riqi1"></input>
       </picker>
       <view class="lables">结束日期:</view>
-      <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{riqi1}}" disabled="disabled" name="riqi1"></input>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{riqi2}}" disabled="disabled" name="riqi2"></input>
       </picker>
     </view>
     <view class="bt_view">

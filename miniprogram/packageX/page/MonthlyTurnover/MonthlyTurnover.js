@@ -52,7 +52,7 @@ Page({
     var skr = _this.data.skr.split("'").join("").trim();
     var fkr = _this.data.fkr.split("'").join("").trim();
     var ckr = _this.data.ckr.split("'").join("").trim();
-    let sql = "select b.*,sum(a.repayment) as repayment,sum(a.swipe) as swipe,sum(a.repayment)-sum(a.swipe) as balance_of_credit_card,sum(a.basics_service_charge)+sum(a.other_service_charge) as the_total_fee,sum(a.swipe)*(b.service_charge)+sum(a.repayment)-sum(a.swipe) as collected_amount,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from customer as b left join day_trading as a on b.id = a.id where b.recipient like '%" + skr + "%' and b.cardholder like '%" + fkr + "%' and b.drawee like '%" + ckr + "%' and b.gongsi='" + gongsi +"' group by b.id"
+    let sql = "select b.*,sum(a.repayment) as repayment,sum(a.swipe) as swipe,sum(a.repayment)-sum(a.swipe) as balance_of_credit_card,sum(a.basics_service_charge)+sum(a.other_service_charge) as the_total_fee,sum(a.swipe)*(b.service_charge)+sum(a.repayment)-sum(a.swipe) as collected_amount,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from customer as b left join day_trading as a on b.id = a.id where b.recipient like '%" + skr + "%' and b.cardholder like '%" + fkr + "%' and b.drawee like '%" + ckr + "%' and b.gongsi='" + _this.data.gongsi +"' group by b.id"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
