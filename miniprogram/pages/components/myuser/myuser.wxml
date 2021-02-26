@@ -1,0 +1,20 @@
+<view class="myuser" style="display: {{show ? 'block' : 'none'}}">
+	<form bindsubmit="save">
+		<view class="myview">
+			<view class="mytext">名称</view>
+			<input class="myinput" value="{{beizhu}}" name="beizhu"></input>
+		</view>
+		<view class="myview">
+			<view class="mytext">联系方式</view>
+			<input class="myinput" value="{{lianxifangshi}}" name="lianxifangshi"></input>
+		</view>
+		<view class="myview">
+			<view class="mytext">联系地址</view>
+			<input class="myinput" value="{{lianxidizhi}}" name="lianxidizhi"></input>
+		</view>
+    <view class="myview">
+      <button class="mybtn" form-type="submit">保存</button>
+      <button class="mybtn" bindtap="back">取消</button>
+    </view>
+	</form>
+</view>

@@ -55,6 +55,15 @@ Page({
    */
   onShow: function() {
     var that = this;
+    if (wx.getStorageSync('khname') != undefined && wx.getStorageSync('khname') != '') {
+      that.setData({
+        khname: wx.getStorageSync('khname'),
+        hidden1: false,
+        hidden2: true
+      })
+      wx.clearStorageSync('khname');
+      wx.setStorageSync("khpd", "0")
+    }
     for (var i = 0; i < that.data.szzhi.length; i++) {
       if (that.data.szzhi[i] != null) {
         cpxinxi[i] = that.data.szzhi[i]
@@ -158,6 +167,13 @@ Page({
 
   },
   XzspClick: function() {
+    wx.setStorageSync('type', '0');
+    let szzhi = this.data.szzhi
+    let sz = {}
+    for(let i = 0 ;i< szzhi.length ;i++){
+      sz[szzhi[i].id] = this.data.szsl[i]
+    }
+    wx.setStorageSync('sz', JSON.stringify(sz));
     wx.navigateTo({
       url: '/pages/shangpinxuanze/shangpinxuanze',
     })

@@ -88,6 +88,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    
+
+    cpsl = []
+    cpjg = []
     var that = this
     that.setData({
       rkSum: 0,
@@ -107,6 +111,18 @@ Page({
         that.setData({
           all: res.result,
         })
+        console.log(wx.getStorageSync('sz'))
+        if(wx.getStorageSync('sz') != undefined){
+          let sz = JSON.parse(wx.getStorageSync('sz'));
+          for(let i=0;i<res.result.length;i++){
+            if(sz[res.result[i].id] != undefined){
+              that.setData({
+                ["all["+i+"].allSL"]: res.result[i].allSL - parseInt(sz[res.result[i].id])
+              })
+            }
+            
+          }
+        }
         szZhi = res.result
       },
       fail(res) {
@@ -213,7 +229,12 @@ Page({
     if (sl != null && jg != null) {
       cpsl[dtid] = sl
       cpjg[dtid] = jg
-      zongjia = zongjia + (jg * sl)
+      zongjia = 0
+      for(let idx=0;idx < cpsl.length ;idx++){
+        if(cpsl[idx] != '' && cpsl[idx] != undefined && cpjg[idx] != '' && cpjg[idx] != undefined){
+          zongjia += parseInt(cpsl[idx]) * parseInt(cpjg[idx])
+        }
+      }
     }
 
 
@@ -255,15 +276,18 @@ Page({
     var sl = []
     var jg = []
     var zhi = []
-    if(_this.data.fun!='qichu'){
+    var type = wx.getStorageSync('type');
+    if(_this.data.fun!='qichu' ){
       for (var i = 0; i < cpsl.length; i++) {
         if (cpsl[i] != null && cpsl[i] != "") {
-          if(cpsl[i] > szZhi[i].allSL){
-            wx.showToast({
-              title: '商品出库数量大于总数量',
-              icon : 'none'
-            })
-            return;
+          if(type != "1"){
+            if(cpsl[i] > szZhi[i].allSL){
+              wx.showToast({
+                title: '商品出库数量大于总数量',
+                icon : 'none'
+              })
+              return;
+            }
           }
           sl[sli] = cpsl[i]
           jg[sli] = cpjg[i]
@@ -282,10 +306,10 @@ Page({
         wx.setStorageSync('szsl', sl);
         wx.setStorageSync('szje', jg);
         wx.setStorageSync('cpsum', zongjia);
-        //返回上一页
-        wx.navigateBack();
         cpjg = []
         cpsl = []
+        //返回上一页
+        wx.navigateBack();
       }
     }else{
       var _this = this;

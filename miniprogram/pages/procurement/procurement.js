@@ -20,9 +20,9 @@ Page({
     szjg: [],
     szsl: [],
     rkSum: 0,
-    rkck: "期初数录入",
-    startTime : 0,
-    endTime : 0
+    rkck: "",
+    startTime: 0,
+    endTime: 0
   },
 
   /**
@@ -39,35 +39,35 @@ Page({
 
   },
 
-  upd : function(e){
+  upd: function (e) {
     var _this = this;
-    if(_this.data.endTime - _this.data.startTime >= 350){
+    if (_this.data.endTime - _this.data.startTime >= 350) {
       return;
     }
     var _id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id+'&fun=qichu',
+      url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id + '&fun=qichu',
     })
   },
 
-  del : function(e){
+  del: function (e) {
     var _id = e.currentTarget.dataset.id
     var _this = this;
     wx.showModal({
-      title : '提示',
-      content : '确定删除么？',
-      success (res) {
+      title: '提示',
+      content: '确定删除么？',
+      success(res) {
         if (res.confirm) {
           wx.cloud.callFunction({
-            name : 'sqlConnection',
-            data : {
-              sql : "delete from yh_jinxiaocun_qichushu where _id = '"+_id+"'"
+            name: 'sqlConnection',
+            data: {
+              sql: "delete from yh_jinxiaocun_qichushu where _id = '" + _id + "'"
             },
-            success : res=> {
-              if(res.result.affectedRows>0){
+            success: res => {
+              if (res.result.affectedRows > 0) {
                 wx.showToast({
                   title: '删除成功',
-                  icon :'success'
+                  icon: 'success'
                 })
                 _this.init();
               }
@@ -82,38 +82,38 @@ Page({
 
 
 
-  bindTouchStart: function(e) {//触碰开始
+  bindTouchStart: function (e) { //触碰开始
     var _this = this
     _this.startTime = e.timeStamp;
     _this.setData({
       startTime: e.timeStamp
     })
   },
-  bindTouchEnd: function(e) {//触碰结束
+  bindTouchEnd: function (e) { //触碰结束
     var _this = this
     _this.setData({
       endTime: e.timeStamp
     })
   },
 
-  init : function(){
+  init: function () {
     var _this = this;
     var zh_name = app.globalData.finduser;
     var gs_name = app.globalData.gongsi;
     wx.cloud.callFunction({
-      name : 'sqlConnection',
-      data : {
-        sql : "select * from yh_jinxiaocun_qichushu where zh_name = '"+zh_name+"' and gs_name = '"+gs_name+"'"
+      name: 'sqlConnection',
+      data: {
+        sql: "select * from yh_jinxiaocun_qichushu where zh_name = '" + zh_name + "' and gs_name = '" + gs_name + "'"
       },
-      success : res=> {
+      success: res => {
         var sum = 0;
-        for(let i=0;i<res.result.length;i++){
-          sum += res.result[i].cpsl*res.result[i].cpsj
+        for (let i = 0; i < res.result.length; i++) {
+          sum += res.result[i].cpsl * res.result[i].cpsj
         }
         console.log(res.result)
         _this.setData({
-          szzhi : res.result,
-          rkSum : sum
+          szzhi: res.result,
+          rkSum: sum
         })
       }
     })
@@ -143,7 +143,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.init();
+    wx.stopPullDownRefresh({
+      success: (res) => {},
+    })
   },
 
   /**
@@ -166,39 +169,40 @@ Page({
     })
   },
   querenRk: function () {
-    var app = getApp()
-    var that = this;
-    // var today = common.getToday();
-    const db = wx.cloud.database();
-    pd = 0
-    console.log(szzhi.length)
-    if (that.data.date=="")
-    {
-      wx.showModal({
-        title: '提示',
-        content: '请选择入库时间',
-      })
-    }else{
-    var finduser = app.globalData.finduser
-    var gongsi = app.globalData.gongsi
-    for (var i = 0; i < szzhi.length; i++) {
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian)values('" + szzhi[i].sp_dm + "','" + szzhi[i].lei_bie + "','" + szzhi[i].name + "','" + jgxinxi[i] + "','" + slxinxi[i] + "','" + finduser + "','" + gongsi + "','" + that.data.date+"')"
-        },
-        success(res) {
-          console.log("成功", res)
-          wx.showToast({
-            title: '初期数录入成功',
-          },that.onShow())
-        }, fail(res) {
-          console.log("失败", res)
+return;
 
-        }
-      });
-    }
-    }
+    // var app = getApp()
+    // var that = this;
+    // const db = wx.cloud.database();
+    // pd = 0
+    // console.log(szzhi.length)
+    // if (that.data.date == "") {
+    //   wx.showModal({
+    //     title: '提示',
+    //     content: '请选择入库时间',
+    //   })
+    // } else {
+    //   var finduser = app.globalData.finduser
+    //   var gongsi = app.globalData.gongsi
+    //   for (var i = 0; i < szzhi.length; i++) {
+    //     wx.cloud.callFunction({
+    //       name: "sqlConnection",
+    //       data: {
+    //         sql: "INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian)values('" + szzhi[i].sp_dm + "','" + szzhi[i].lei_bie + "','" + szzhi[i].name + "','" + jgxinxi[i] + "','" + slxinxi[i] + "','" + finduser + "','" + gongsi + "','" + that.data.date + "')"
+    //       },
+    //       success(res) {
+    //         console.log("成功", res)
+    //         wx.showToast({
+    //           title: '初期数录入成功',
+    //         }, that.onShow())
+    //       },
+    //       fail(res) {
+    //         console.log("失败", res)
+
+    //       }
+    //     });
+    //   }
+    // }
   },
   bindDateChange: function (e) {
     var that = this

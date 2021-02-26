@@ -62,15 +62,4 @@
 
   </view>
 
-
-
-  <view class="sysm_xx">
-    <navigator class="txbt" url='/pages/frmadminsysm/frmadminsysm'>
-      <image class="item-image" src='/images/sysm_x.png'></image>
-      <text class="item-text">使用说明</text>
-    </navigator>
-  </view>
-  <view class="container">
-    <view class="divLine"></view>
-  </view>
 </view>

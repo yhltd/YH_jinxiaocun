@@ -52,13 +52,13 @@ Page({
         index: 7,
         lianjie: "../collection/collection"
       },
-      {
+      // {
         
-        url: "../../images/anQun_03.jpg",
-        text: "统计报表",
-        index: 8,
-        lianjie: "../dayin/dayin"
-      },
+      //   url: "../../images/anQun_03.jpg",
+      //   text: "统计报表",
+      //   index: 8,
+      //   lianjie: "../dayin/dayin"
+      // },
       // {
       //   url: "../../images/hao_03.jpg",
       //   text: "破损数量查询",

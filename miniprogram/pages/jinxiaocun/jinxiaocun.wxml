@@ -4,16 +4,14 @@
 <view class='header'>
   <view class="dq_y">进销存</view>
   <view class='pm'></view>
-  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
 </view>
 <view class='main'>
   <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->
    <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="" bindtap=''>
     <view class='shangpin'>
       <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
-      <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n<text class="Hs">售价：<text class="red">{{szzhi[i].cpsj}}</text>\n进价：<text class="red">{{szzhi[i].cpjj}}</text>\n类别：<text class="red">{{szzhi[i].cplb}}</text>\n明细类别：<text class="red">{{szzhi[i].mxtype}}</text></text></text> -->
       <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].cplb}}</text>
-      <!-- 商品名称：{{szzhi[i].cpname}} -->
     </view>
     <view class='shangpin-jin' data-id="{{i}}">
       <view class='shangpin-input'>

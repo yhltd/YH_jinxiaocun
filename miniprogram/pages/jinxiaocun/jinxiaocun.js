@@ -127,6 +127,12 @@ Page({
   },
 
   xixi: function(e) {
+    console.log("xixi:", e)
+    wx.showToast({
+      title: '正在搜索',
+      icon: 'loading',
+      duration: 1000
+    })
     if (e.detail.value == "") {
       var that = this
       const db = wx.cloud.database()
@@ -169,10 +175,6 @@ Page({
               }
               console.log(szary[inserti])
               inserti++
-              // szary[j].sp_dm = all[i].sp_dm
-              // szary[j].cpsl = all[i].cpsl
-              // szary[j].cpsj = all[i].cpsj
-              // szary[i].cplb = all[i].cplb
             }
           }
           that.setData({
@@ -183,18 +185,6 @@ Page({
           console.log("失败", res)
         }
       });
-      // db.collection("Yh_JinXiaoCun_mingxi").where({
-      //   finduser: finduser,
-      //   gongsi: gongsi,
-
-      // }).get({
-      //   success: res => {
-      //     that.setData({
-      //       szzhi: res.data
-      //     })
-      //   }
-      // })
-
     } else {
       var that = this
       const db = wx.cloud.database()
@@ -241,10 +231,6 @@ Page({
               }
               console.log(szary[inserti])
               inserti++
-              // szary[j].sp_dm = all[i].sp_dm
-              // szary[j].cpsl = all[i].cpsl
-              // szary[j].cpsj = all[i].cpsj
-              // szary[i].cplb = all[i].cplb
             }
           }
           that.setData({
@@ -255,21 +241,6 @@ Page({
           console.log("失败", res)
         }
       });
-      // db.collection("Yh_JinXiaoCun_mingxi").where({
-      //   finduser: finduser,
-      //   gongsi: gongsi,
-      //   cpname: db.RegExp({
-      //   regexp: e.detail.value,
-      //   options: 'i',
-      //   })
-      // }).get({
-      //   success: res => {
-      //     that.setData({
-      //       szzhi: res.data
-      //     })
-      //   }
-      // })
-
     }
   },
   /**

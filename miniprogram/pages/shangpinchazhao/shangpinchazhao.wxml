@@ -10,7 +10,7 @@
 <view style="height:30rpx"></view>
 <block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item">
   <view class='xinjian' wx:if="{{fun=='qichu' && item.txet=='单位'?false:true}}"> {{item.txet}}:
-    <input type="text" data-id="{{item.index}}" bindinput="input" value="{{fun=='qichu'?all[0][item.fun]:all[0][item.name]}}"></input>
+    <input class="chanpin-input" type="text" data-id="{{item.index}}" bindinput="input" value="{{fun=='qichu'?all[0][item.fun]:all[0][item.name]}}"></input>
   </view>
   <view class='divline'> </view>
 </block>

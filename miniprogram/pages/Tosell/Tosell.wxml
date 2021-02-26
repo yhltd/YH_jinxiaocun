@@ -4,7 +4,7 @@
   <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
 </view>
 <view class=' main'>
-  <view class='list_ps' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'>
+  <view class='list_ps' wx:for="{{szzhi}}" wx:key="item" wx:for-index='i' data-uid="{{item._id}}" data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'>
     <view class='shangpin'>
       <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
 

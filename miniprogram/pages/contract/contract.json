@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "myuser": "../components/myuser/myuser"
+  },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark"
 }

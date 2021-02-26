@@ -8,7 +8,9 @@ Page({
   data: {
     hidden1: true,
     jinhuo: '',
-    backhidden: true
+    backhidden: true,
+    updIndex: -1,
+    isStock: false
   },
 
   /**
@@ -20,6 +22,9 @@ Page({
     var relief = '';
     if (options.jinhuo != undefined) {
       relief = options.jinhuo
+      that.setData({
+        isStock: true
+      })
     }
     if (relief != "") {
       that.setData({
@@ -119,7 +124,6 @@ Page({
       icon: 'loading',
       duration: 500
     })
-    that.onLoad()
     that.onShow()
     wx.stopPullDownRefresh()
   },
@@ -167,11 +171,10 @@ Page({
           wx.cloud.callFunction({
             name: "sqlConnection",
             data: {
-              sql: "delete from yh_jinxiaocun_jinhuofang where beizhu = '" + id + "'"
+              sql: "delete from yh_jinxiaocun_jinhuofang where _id = '" + id + "'"
             },
             success(res) {
               console.log("成功", res)
-              that.onLoad();
               that.onShow();
               // that.setData({
               //     all: res.data,
@@ -219,7 +222,6 @@ Page({
         name: "sqlConnection",
         data: {
           sql: "insert Yh_JinXiaoCun_jinhuofang (finduser,gongsi,beizhu,lianxifangshi,lianxidizhi) VALUES('" + finduser + "','" + gongsi + "','" + beizhu + "','" + lianxifangshi + "','" + lianxidizhi + "')"
-          // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
         },
         success(res) {
           console.log("成功", res)
@@ -251,9 +253,7 @@ Page({
       hidden1: !that.data.hidden1,
       backhidden: true
     })
-    that.onLoad();
     that.onShow();
-    //  that.onLoad()
   },
 
   sp_Close: function(e) {
@@ -266,18 +266,53 @@ Page({
   },
   jin: function(e) {
     var that = this
-
-    var id = e.currentTarget.dataset.id
-    console.log("传值：", id)
-
-    if (that.data.jinhuo == 1) {
-      wx.setStorageSync("jinhuofang", id) //使用了同步的
-      //返回上一页
-      // wx.navigateBack();
-      wx.navigateBack({
-        url: '../time/time?id=' + id
-      })
+    if(that.data.isStock){
+      wx.setStorageSync('jinhuofang', that.data.all[e.currentTarget.dataset.index].beizhu);
+      wx.navigateBack()
+      return;
     }
+    var index = e.currentTarget.dataset.index
+
+    that.setData({
+      updIndex: index
+    })
+  },
+
+  save: function(e){
+    var _this = this;
+    let updIndex = _this.data.updIndex
+
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "update Yh_JinXiaoCun_jinhuofang set beizhu = '"+e.detail.beizhu+"',lianxifangshi= '"+e.detail.lianxifangshi+"',lianxidizhi= '"+e.detail.lianxidizhi+"' where _id = '" + _this.data.all[updIndex]._id + "'"
+      },
+      success(res) {
+        if(res.errMsg == 'cloud.callFunction:ok'){
+          _this.setData({
+            updIndex: -1
+          }, function(){
+            _this.onShow()
+            wx.showToast({
+              title: '修改成功',
+            })
+          })
+        }
+      },
+      fail(res) {
+        wx.showToast({
+          title: '修改失败',
+          icon: 'none',
+          mask: true
+        })
+      }
+    });
+  },
+
+  back: function(){
+    this.setData({
+      updIndex: -1
+    })
   },
 
 

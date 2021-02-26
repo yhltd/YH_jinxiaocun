@@ -6,7 +6,7 @@
 <view class="ke_bt">客户配置:</view>
 
 <view class='divline2'></view>  
-<view wx:for="{{all}}" bindlongpress='shanchu' bindtap='ke' data-id="{{all[i].beizhu}}" wx:key="" wx:for-index='i' class='jinhuofan'>
+<view wx:for="{{all}}" bindlongpress='shanchu' bindtap='ke' data-id="{{all[i]._id}}" wx:key="" wx:for-index='i' data-index="{{i}}" class='jinhuofan'>
   <image class='kh_tx' src='/images/kuhu.png'> </image>
   <!-- <view bindtap='ke' data-id="{{all[i].beizhu}}" class="ke_hu">客户序号:{{i+1}}
 </view> -->
@@ -20,6 +20,15 @@
   </view>
   <view class='divline2'></view>
 </view>
+
+<myuser 
+  show="{{updIndex >= 0}}" 
+  bind:save = "save"
+  bind:back = "back"
+  beizhu= "{{all[updIndex].beizhu}}"
+  lianxifangshi= "{{all[updIndex].lianxifangshi}}"
+  lianxidizhi= "{{all[updIndex].lianxidizhi}}"
+></myuser>
 
 
 <button class="tianjia" bindtap='tianjia'>

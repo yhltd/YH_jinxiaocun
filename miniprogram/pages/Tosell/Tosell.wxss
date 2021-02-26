@@ -13,10 +13,11 @@ page {
 
 .shangpin-jin {
   display: flex;
-  position: absolute;
-  left: 55%;
-  margin-top: -17%;
+  position: relative;
+  left: 67%;
+  bottom: 100rpx;
   font-size: 62%;
+  flex-direction: column;  
 }
 
 .main {
@@ -26,8 +27,9 @@ page {
 }
 
 .shangpin-text {
-  width: 28%;
+  width: 41%;
   font-size: 65%;
+  
 }
 
 .shangpin-img {

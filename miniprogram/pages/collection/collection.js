@@ -42,6 +42,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
+    this.init();
+
+  },
+
+  init: function(){
     var that = this
     that.setData({
       rkSum: 0,
@@ -58,35 +63,15 @@ Page({
       data: {
         sql: "select *,0 as isSelect from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
       },
-      success(res) {
-        console.log("成功", res)
+      success: res=> {
         that.setData({
           all: res.result,
-
         })
-        // szZhi = 
       },
-      fail(res) {
+      fail: res=> {
         console.log("失败", res)
-
       }
     });
-    // db.collection('Yh_JinXiaoCun_chanpin').where({
-    //   finduser: finduser,
-    //   gongsi: gongsi
-    // })
-    //   .get({
-    //     success: res => {
-
-    //       console.log(res.data)
-    //       that.setData({
-    //         all: res.data,
-
-    //       })
-    //       szZhi = res.data
-    //     }
-    //   })
-
   },
 
   /**
@@ -101,6 +86,7 @@ Page({
    */
   onShow: function() {
     var that = this
+    that.init();
     that.setData({
       rkSum: 0,
       sl: [],
@@ -277,24 +263,6 @@ Page({
     wx.navigateTo({
       url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id,
     })
-    // var _openid = wx.getStorageSync('openid').openid;
-    // const db = wx.cloud.database();
-    // db.collection('Yh_JinXiaoCun_mingxi').where({
-    //   _openid: _openid,
-    //   cpid:_id
-    // })
-    //   .get({
-    //     success: res => {
-
-    //       console.log(res.data)
-    //       that.setData({
-    //         alll: res.data,
-
-    //       })
-
-    //     }
-    //   })
-
   },
 
 
