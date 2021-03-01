@@ -55,7 +55,7 @@
 
 <view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
   <button class="moreDo_view_bt" bindtap="updClass_moroDo">{{class_name}}</button>
-  <button class="moreDo_view_bt" bindtap="init">重新计算</button>
+  <button class="moreDo_view_bt" bindtap="reInit">重新计算</button>
 </view>
 
 <view class="sw_view" animation="{{animationData_updClass}}" hidden="{{initHidView?'true':''}}">

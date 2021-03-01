@@ -117,6 +117,12 @@ radio{
   line-height: 80rpx;
   font-size: 37rpx;  
 }
+.sw_item.active{
+  background-color: #393D49;
+  color: #fff;
+  border: 5rpx solid #F2F2F2;
+}
+
 .getCode_view_bt_view{
   display: flex;
   flex-direction: row;

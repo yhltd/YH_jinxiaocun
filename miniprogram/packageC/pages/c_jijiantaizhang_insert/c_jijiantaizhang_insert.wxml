@@ -22,8 +22,9 @@
       <input name="payment" placeholder="请输入实付" type="number" value="{{empty}}"></input>
     </view>
     <view class="bottom">
-      <button class="bt" form-type="reset">重置</button>
-      <button class="bt" form-type="submit">保存</button>
+      <button class="bt" form-type="reset" data-type="reset">重置</button>
+      <button class="bt" form-type="submit" data-type="submit">保存</button>
+      <button class="bt" form-type="submit" data-type="submitAndReset">保存并重置</button>
     </view>
   </form>
 </view>
@@ -33,7 +34,7 @@
     <view class="sw_text">{{items.text}}</view>
     <swiper class="sw" previous-margin="150rpx" next-margin="150rpx" circular="true" easing-function="linear" bindchange="changeClass">
       <swiper-item wx:for="{{items.list}}" wx:key="class" item-id="{{i}}">
-        <view class="sw_item">{{item.className}}</view>
+        <view class="sw_item {{item.className == accounting ? 'active' : ''}}">{{item.className}}</view>
       </swiper-item>
     </swiper>
   </view>

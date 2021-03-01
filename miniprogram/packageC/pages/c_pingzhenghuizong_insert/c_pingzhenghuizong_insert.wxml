@@ -69,8 +69,9 @@
     </view>
 
     <view class="bottom">
-      <button class="bt" form-type="reset">重置</button>
-      <button class="bt" form-type="submit">保存</button>
+      <button class="bt" form-type="reset" data-type="reset">重置</button>
+      <button class="bt" form-type="submit" data-type="submit">保存</button>
+      <button class="bt" form-type="submit" data-type="submitAndReset">保存并重置</button>
     </view>
   </form>
 </view>

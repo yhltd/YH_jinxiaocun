@@ -255,6 +255,9 @@ Page({
                 icon : 'success',
                 mask : 'true',
               })
+              if(e.detail.target.dataset.type == 'submitAndReset'){
+                _this.reset();
+              }
             },
           })
         },
@@ -378,7 +381,6 @@ Page({
     var second = date.getSeconds();
     return year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
   },
-
 
 
 
