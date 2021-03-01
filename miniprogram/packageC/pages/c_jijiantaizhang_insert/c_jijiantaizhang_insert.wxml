@@ -32,7 +32,7 @@
 <view class="getCode_view" animation="{{animationData_getCode}}" hidden="{{initHidView?'true':''}}">
   <view class="sw_view" wx:for="{{getAccountingItems}}" wx:key="text" wx:for-item="items" wx:for-index="i">
     <view class="sw_text">{{items.text}}</view>
-    <swiper class="sw" previous-margin="150rpx" next-margin="150rpx" circular="true" easing-function="linear" bindchange="changeClass">
+    <swiper class="sw" previous-margin="80rpx" next-margin="80rpx" circular="true" easing-function="linear" bindchange="changeClass">
       <swiper-item wx:for="{{items.list}}" wx:key="class" item-id="{{i}}">
         <view class="sw_item {{item.className == accounting ? 'active' : ''}}">{{item.className}}</view>
       </swiper-item>

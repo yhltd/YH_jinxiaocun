@@ -275,7 +275,7 @@ Page({
       code : "选择科目代码",
       ["options_word.text"] : "",
       ["options_department.text"] : "",
-      ["expenditure.text"] : ""
+      ["options_expenditure.text"] : ""
     })
 
   },
