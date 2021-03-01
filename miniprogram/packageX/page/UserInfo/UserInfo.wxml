@@ -94,13 +94,17 @@
   <form bindsubmit="add">
     <view>
       <view class="lables">职位:</view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="zw"></input>
+     <!--placeholder="{{dataset_input.value}}"--> 
+      <input class="input_text_form"  value="{{empty}}" type="text" name="zw"></input>
       <view class="lables">员工:</view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="yg"></input>
+      <!--placeholder="{{dataset_input.value}}"--> 
+      <input class="input_text_form"  value="{{empty}}" type="text" name="yg"></input>
       <view class="lables">账号:</view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="zh"></input>
+      <!--placeholder="{{dataset_input.value}}"--> 
+      <input class="input_text_form"  value="{{empty}}" type="text" name="zh"></input>
       <view class="lables">密码:</view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="mm"></input>
+      <!--placeholder="{{dataset_input.value}}"--> 
+      <input class="input_text_form"  value="{{empty}}" type="text" name="mm"></input>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

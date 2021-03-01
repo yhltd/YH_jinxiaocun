@@ -294,6 +294,10 @@ Page({
                 icon: "none"
 
               })
+              _this.setData({
+                handle:true,
+                mask_hid:true
+              })
               _this.init()
             },
             err: res => {
@@ -329,6 +333,7 @@ Page({
     if (!dataset.isupd) {
       return;
     }
+    if (new_value != "" ) {
     var sql = "update users set " + column + " = '" + new_value + "' where id = '" + _this.data.list[index].id + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -355,6 +360,12 @@ Page({
         })
       }
     })
+    } else {
+      wx.showToast({
+        title: "不能为空！",
+        icon: "none"
+      })
+    }
   },
 
 

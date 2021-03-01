@@ -21,7 +21,7 @@ Page({
       return year + "-" + month + "-" + day
     },
     title: [{ text: "日期", width: "300rpx", columnName: "date_time", type: "digit", isupd: true },
-    { text: "交易额", width: "300rpx", columnName: "recipient", type: "text", isupd: true },
+      { text: "交易额", width: "300rpx", columnName: "repayment", type: "text", isupd: true },
     { text: "已刷额", width: "300rpx", columnName: "swipe", type: "text", isupd: true },
     { text: "手续费", width: "350rpx", columnName: "the_total_fee", type: "text", isupd: true },
     { text: "利润", width: "350rpx", columnName: "profit", type: "text", isupd: true },
@@ -51,7 +51,7 @@ Page({
         riqi2: "2030/12/31"
       })
     }
-    let sql = "select a.date_time,sum(a.repayment) as repayment,sum(a.swipe) as swipe,(sum(a.basics_service_charge)+sum(a.other_service_charge)) as the_total_fee,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from day_trading as a,customer as b where a.id=b.id and cast(a.date_time as date) >= cast('" + _this.data.riqi1 + "' as date) and cast(a.date_time as date) >= cast('" + _this.data.riqi2 +"' as date) and a.gongsi='" + _this.data.gongsi + "' group by a.date_time"
+    let sql = "select a.date_time,sum(a.repayment) as repayment,sum(a.swipe) as swipe,(sum(a.basics_service_charge)+sum(a.other_service_charge)) as the_total_fee,sum(a.swipe)*(b.service_charge)-sum(a.basics_service_charge)+sum(a.other_service_charge) as profit from day_trading as a,customer as b where a.id=b.id and cast(a.date_time as date) >= cast('" + _this.data.riqi1 + "' as date) and cast(a.date_time as date) <= cast('" + _this.data.riqi2 +"' as date) and a.gongsi='" + _this.data.gongsi + "' group by a.date_time"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -118,6 +118,8 @@ Page({
   inquire: function () {
     var _this = this;
     _this.setData({
+      riqi1:"",
+      riqi2:"",
       frmStudfind: false,
       mask_hid: false,
     })
