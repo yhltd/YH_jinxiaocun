@@ -40,7 +40,7 @@ Page({
     list: [],
     title: [],
     page: "1",
-    IsLastPage: true,
+    IsLastPage: false,
     moth: '',
     name: '',
     edit_cell: '',
@@ -185,7 +185,7 @@ Page({
         query: "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month +" and AO = '"+this.data.companyName+"'"
       },
       success: res => {
-        console.log(res)
+        console.log('change',res)
         if (res.result.recordset.length < 100) {
           that.setData({
             list: res.result.recordset,

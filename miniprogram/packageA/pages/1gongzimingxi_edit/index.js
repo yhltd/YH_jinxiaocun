@@ -1,4 +1,5 @@
 const form = require("../../../components/utils/formValidation.js")
+const utils = require("../../../components/utils/utils.js")
 Page({
   data: {
     id: '',
@@ -10,6 +11,7 @@ Page({
     console.log("options.id", options.id)
     that.setData({
       id: options.id,
+      ['list[0].BC']: utils.getDate(),
       companyName : options.companyName
     })
     wx.setNavigationBarTitle({
@@ -39,49 +41,33 @@ Page({
     var that = this
     //表单规则
     let rules = [{
-      name: "name",
-      rule: ["required", "isChinese", "minLength:2", "maxLength:10"], //可使用区间，此处主要测试功能
-      msg: ["请输入姓名", "姓名必须全部为中文", "姓名必须2个或以上字符", "姓名不能超过10个字符"]
+      name: "B",
+      rule: ["required"], //可使用区间，此处主要测试功能
+      msg: ["请输入姓名"]
     }, {
-      name: 'department',
+      name: 'C',
       rule: ['required'],
       msg: ["请输入部门名"]
     }, {
-      name: 'job',
+      name: 'D',
       rule: ['required'],
       msg: ["请输入职务名"]
     }, {
-      name: "idcard",
+      name: "E",
       rule: ["required"],
       msg: ["请输入身份证号码", "请输入正确的身份证号码"]
     }, {
-      name: "money",
-      rule: ["required"],
-      msg: ["请输入基本工资"]
-    }, {
-      name: "card",
-      rule: ["required"],
-      msg: ["请输入银行卡号"]
-    }, {
-      name: "date",
+      name: "F",
       rule: ["required"],
       msg: ["请输入入职时间"]
     }, {
-      name: "age",
+      name: "G",
       rule: ["required"],
-      msg: ["请输入工龄", "请输入正确的工龄", "请输入正确的工龄范围：0-100"]
+      msg: ["请输入基本工资"]
     }, {
-      name: "account",
+      name: "BA",
       rule: ["required"],
-      msg: ["请输入账号"]
-    }, {
-      name: "pwd",
-      rule: ["required"],
-      msg: ["请输入密码", "密码为8~20位数字和字母组合"]
-    }, {
-      name: "pwd2",
-      rule: ["required"],
-      msg: ["请输入确认密码", "两次输入的密码不一致"]
+      msg: ["请输入银行卡号"]
     }];
     //进行表单检查
     var formData = e.detail.value;
@@ -124,5 +110,11 @@ Page({
   //清空数据按钮调用的函数
   formReset: function (e) {
     console.log("清空数据")
+  },
+
+  updateDate: function(e){
+    this.setData({
+      ['list[0].' + e.currentTarget.dataset.column]: e.detail.value
+    })
   }
 })

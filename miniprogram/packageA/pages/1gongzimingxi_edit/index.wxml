@@ -27,7 +27,9 @@
 		<tui-list-cell hover="{{false}}">
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 入职时间：</view>
-				<input placeholder-class="phcolor" class="tui-input" name="F" placeholder="请输入入职时间" maxlength="50" type="number" value="{{list[0].F}}" />
+				<picker mode="date" bindchange="updateDate" data-column="F">
+					<input placeholder-class="phcolor" disabled="true" class="tui-input" name="F" placeholder="请输入入职时间" maxlength="50" type="number" value="{{list[0].F}}" />
+				</picker>
 			</view>
 		</tui-list-cell>
 		<tui-list-cell hover="{{false}}">
@@ -315,13 +317,15 @@
 		<tui-list-cell hover="{{false}}">
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 调薪时间：</view>
-				<input placeholder-class="phcolor" class="tui-input" name="BB" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BB}}" />
+				<picker mode="date" bindchange="updateDate" data-column="BB">
+					<input placeholder-class="phcolor" disabled="true" class="tui-input" name="BB" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BB}}" />
+				</picker>
 			</view>
 		</tui-list-cell>
 		<tui-list-cell hover="{{false}}">
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 录入时间：</view>
-				<input placeholder-class="phcolor" class="tui-input" name="BC" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BC}}" />
+				<input placeholder-class="phcolor" class="tui-input" name="BC" placeholder="请输入" disabled="true" maxlength="50" type="text" value="{{list[0].BC}}" />
 			</view>
 		</tui-list-cell>
 		<view class="tui-tips">出现问题？请联系我们</view>
