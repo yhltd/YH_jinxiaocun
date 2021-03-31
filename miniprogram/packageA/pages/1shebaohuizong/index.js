@@ -75,7 +75,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having BD ='"+_this.data.companyName+"'"
+        query: "SELECT top 100 C as department,sum(cast(Z as float))as Z,sum(cast(AJ as float))as AJ,SUM(cast(Z as float)+cast(AJ AS float))AS COUNT1, SUM(CAST(AA AS float))AS AA,SUM(CAST(AK AS float))AS AK,SUM(CAST(AA AS float) + CAST(AK AS float))AS COUNT2,SUM(CAST(AC AS float))AS AC,SUM(CAST(AD AS float))AS AD,SUM(CAST(Z AS float)+CAST(AA AS float)+CAST(AC AS float)+CAST(AD AS float))AS COUNT3,SUM(CAST(AJ AS float)+CAST(AK AS float))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having BD ='"+_this.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功")

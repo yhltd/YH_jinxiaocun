@@ -24,9 +24,23 @@ const utils = {
     if (component) {
       component.show();
     }
+  },
+  getDate: function(){
+    const date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth()+1;
+    let day = date.getDate();
+
+    let formatNumber = function(n){
+      n = parseInt(n);
+      return n > 10 ? n : "0" + n;
+    }
+
+    return [year, month, day].map(formatNumber).join('-');
   }
 };
 module.exports = {
   toast: utils.toast,
-  dateTime: utils.dateTime
+  dateTime: utils.dateTime,
+  getDate: utils.getDate
 };

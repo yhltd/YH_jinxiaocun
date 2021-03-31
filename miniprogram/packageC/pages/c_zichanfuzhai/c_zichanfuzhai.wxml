@@ -55,7 +55,7 @@
 
 <view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
   <button class="moreDo_view_bt" bindtap="updClass_moroDo">{{class_name}}</button>
-  <button class="moreDo_view_bt" bindtap="init">重新计算</button>
+  <button class="moreDo_view_bt" bindtap="reInit">重新计算</button>
 </view>
 
 <view class="sw_view" animation="{{animationData_updClass}}" hidden="{{initHidView?'true':''}}">
@@ -63,7 +63,7 @@
     <button class="sv_view_btView_bt" bindtap="backClass">取消</button>
     <button class="sv_view_btView_bt" bindtap="updClass">完成</button>
   </view>
-  <swiper class="sw" circular="true" easing-function="linear" bindchange="changeClass">
+  <swiper class="sw"  previous-margin="150rpx" next-margin="150rpx" circular="true" easing-function="linear" bindchange="changeClass">
     <swiper-item wx:for="{{list}}" wx:key="class">
       <view class="sw_item">{{item.className}}</view>
     </swiper-item>

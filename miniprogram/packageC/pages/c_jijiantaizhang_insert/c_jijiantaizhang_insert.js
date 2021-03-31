@@ -67,7 +67,9 @@ Page({
                   title: '保存成功',
                   icon : 'success',
                   complete: res => { 
-                    
+                    if(e.detail.target.dataset.type == 'submitAndReset'){
+                      _this.reset();
+                    }
                   }
                 })
               },
@@ -142,7 +144,6 @@ Page({
     _this.setData({
       accounting : class_id
     })
-    console.log(_this.data.getCodeItem)
   },
 
   getAccountingItems : function(){
@@ -222,6 +223,11 @@ Page({
           _this.setData({
             animationData_getCode : animation.export()
           })
+          if(_this.data.accounting == '选择科目'){
+            _this.setData({
+              accounting: _this.data.getAccountingItems[0].list[0].className
+            })
+          }
           break;
         case "getParentCode":
           animation.translateX(0).step()

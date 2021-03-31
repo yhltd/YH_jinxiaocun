@@ -255,6 +255,9 @@ Page({
                 icon : 'success',
                 mask : 'true',
               })
+              if(e.detail.target.dataset.type == 'submitAndReset'){
+                _this.reset();
+              }
             },
           })
         },
@@ -272,7 +275,7 @@ Page({
       code : "选择科目代码",
       ["options_word.text"] : "",
       ["options_department.text"] : "",
-      ["expenditure.text"] : ""
+      ["options_expenditure.text"] : ""
     })
 
   },
@@ -378,7 +381,6 @@ Page({
     var second = date.getSeconds();
     return year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second
   },
-
 
 
 

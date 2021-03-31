@@ -44,7 +44,7 @@ Page({
   },
 
 
-  init : function(){
+  init : function(callback){
     wx.showLoading({
       title : '加载中',
       mask : 'true'
@@ -63,10 +63,11 @@ Page({
           ["list["+(class_id-1)+"].arr"] : list,
           class_name : _this.data.list[class_id-1].className
         })
-        wx.hideLoading({
-
-        })
+        wx.hideLoading()
         _this.getSum()
+        if(callback != undefined){
+          callback();
+        }
       },
       err: res => {
         console.log("错误!")
@@ -162,6 +163,17 @@ Page({
       class_id_new : _this.data.class_id
     })
     _this.hidView(_this,"updClass");
+  },
+
+  reInit: function(){
+    var _this = this;
+    _this.init(function(){
+      wx.showToast({
+        title: '计算成功',
+        icon: 'none'
+      })
+      _this.hidView(_this,"moreDo")
+    })
   },
 
 

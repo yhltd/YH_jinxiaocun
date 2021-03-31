@@ -569,6 +569,13 @@ Page({
     console.log(that.data.id, that.data.name, that.data.edit_old, that.data.modal9)
     console.log("对应数据库中查找的标记位为:", that.data.mark)
   },
+
+  updateDate: function(e){
+    this.setData({
+      edit_old: e.detail.value
+    })
+  },
+
   //通过清除标记位modal9，来隐藏弹窗的控制函数
   hide9() {
     var that = this

@@ -56,7 +56,7 @@
   <view bindsubmit="edit_cell" style="text-align: center;">
     <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
     <form bindsubmit="edit_cell">
-      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" type="{{input_type}}" />
+      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" type="{{input_type}}"  value="{{edit_old}}"/>
       <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
     </form>
   </view>
