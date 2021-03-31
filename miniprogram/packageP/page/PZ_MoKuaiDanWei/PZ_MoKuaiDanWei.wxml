@@ -1,0 +1,132 @@
+
+<!------------------------->
+<!---------模块添加--------->
+<!------------------------->
+<view class="flex-wrp">
+<van-tag wx:if="{{ show.success }}" closeable size="large" id="{{item.id}}" type="primary" color="#d9ecff" text-color="#409EFF" bind:close="onClose" custom-class="custom" wx:for="{{list}}" wx:key="text">{{item.name}}</van-tag>
+  <van-button type="small" custom-class="custom2" bind:click="onClick1">+添加</van-button>
+</view>
+
+
+<!------------------------->
+<!---------模块弹窗--------->
+<!------------------------->
+<van-dialog
+  use-slot
+  title="添加模块类别"
+  show="{{ showWindow1 }}"
+  bind:close="onClose" 
+  closeOnClickOverlay="true"
+  show-confirm-button="true" 
+  show-cancel-button="true" 
+  bind:confirm="save1"
+>
+  <view class="lables">请输入模块类别名称:</view>
+  <input bindinput="onInput" class="input_text_form" value="{{empty}}" type="{{dataset_input.input_type}}" name="moduleName" data-column="moduleName"></input>
+</van-dialog>
+
+<!------------------------->
+<!---------详情删改--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">模块类别</view>
+    <input bindinput="onInput" bindtap="onClick2" data-column="mklb" class="input_text_form" value="{{mklb}}" type="text" name="mklb" disabled="disabled"></input>
+    <view class="lables">名称</view>
+    <input bindinput="onInput" data-column="mc" class="input_text_form" value="{{mc}}" type="text" name="mc"></input>
+    <view class="lables">效率/时</view>
+    <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
+    <view class="lables">父模块</view>
+    <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
+  <view class="bottom_view" style="height:10%">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------模块添加--------->
+<!------------------------->
+
+
+
+<!------------------------->
+<!-----------显示----------->
+<!------------------------->
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:80%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list_module_info}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="{{'list_view'}}" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              bindtap="{{'clickView'}}">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">模块类别</view>
+    <input bindinput="onInput" bindtap="onClick2" data-column="mklb" class="input_text_form" value="{{mklb}}" type="text" name="mklb" disabled="disabled"></input>
+    <view class="lables">名称</view>
+    <input bindinput="onInput" data-column="mc" class="input_text_form" value="{{mc}}" type="text" name="mc"></input>
+    <view class="lables">效率/时</view>
+    <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
+    <view class="lables">父模块</view>
+    <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save2">添加</button>
+  </view>
+</van-popup>
+
+ <!--  下拉选1-->
+<van-action-sheet
+  show="{{ xlShow1 }}"
+  actions="{{ actions1 }}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>
+ <!--  下拉选2-->
+<van-action-sheet
+  show="{{ xlShow2 }}"
+  actions="{{ actions2 }}"
+  close-on-click-overlay
+  bind:close="select2"
+  bind:select="select2" 
+/>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" bind:close="onClose" >
+  <view class="lables">查询类别:</view>
+    <input bindinput="onInput" class="input_text_form" data-column="moduleName" value="{{empty}}" type="{{dataset_input.input_type}}" name="moduleName"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="chaxun">查询</button>
+  </view>
+</van-popup>

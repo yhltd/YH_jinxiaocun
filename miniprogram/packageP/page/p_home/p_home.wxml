@@ -1,0 +1,10 @@
+<view class="iframe" wx:if="{{active===0}}"><PeiZhiBiao /></view>
+<view class="iframe" wx:if="{{active===1}}"><DingDan /></view>
+<view class="iframe" wx:if="{{active===2}}"><PaiChan /></view>
+<view class="iframe" wx:if="{{active===3}}"><HuiZong /></view>
+<van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../images/配置.png">配置表</van-tabbar-item>
+  <van-tabbar-item icon="../../images/订单.png">订单</van-tabbar-item>
+  <van-tabbar-item icon="../../images/排产订单.png">排产</van-tabbar-item>
+  <van-tabbar-item icon="../../images/操作-汇总表.png">汇总</van-tabbar-item>
+</van-tabbar>

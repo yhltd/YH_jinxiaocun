@@ -333,6 +333,52 @@ var login = function(that,info) {
       }
     })
 
+  } else if (system == "云合排产管理系统") {
+    wx.showLoading({
+      title: '正在登录',
+      mask: true
+    })
+    //零售管理系统
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select * from user_info where user_code = '" + info.inputName + "' and password = '" + info.inputPwd + "' and company = '" + that.data.gongsi + "'"
+      },
+      success: res => {
+        wx.hideLoading({
+          success: (res) => { },
+        })
+        //app.paichan_user.gongsi = that.data.gongsi
+        if (res.result.recordset.length > 0) {
+          var userInfo = res.result.recordset[0]
+          wx.navigateTo({
+            url: '../../packageP/page/PeiZhiBiao/PeiZhiBiao'
+          })
+          wx.showToast({
+            title: '登录成功',
+            icon: 'success'
+          })
+          app.globalData.gongsi = that.data.gongsi
+        } else {
+          wx.showToast({
+            title: '用户名密码错误',
+            icon: 'none',
+          })
+        }
+      },
+      fail: res => {
+        console.log("小程序连接数据库失败")
+        wx.showToast({
+          title: '连接数据库出错，请联系我公司',
+          mask: true,
+        })
+      },
+      complete: () => {
+        that.setData({
+          lock: true
+        })
+      }
+    })
   }else{
     wx.showToast({
       title: '请选择系统',
@@ -628,6 +674,11 @@ Page({
           console.log("错误!", res)
         },
       })
+    } else if (system == "云合排产管理系统") {
+      _this.setData({
+        system
+      })
+      arr = ["sqlServer_PC", "select company from user_info GROUP BY company", "company"]
     }
     _this.getCompanyName(arr)
   },

@@ -65,7 +65,8 @@
         "pages/1gongzitiao/gongzitiao",
         "pages/1renyuanxinxiguanli_edit_access/access"
       ]
-    },{
+    },
+    {
       "root": "packageC",
       "name": "caiwu",
       "pages": [
@@ -83,7 +84,8 @@
         "pages/c_liyisunyi/c_liyisunyi",
         "pages/c_xianjinliuliang/c_xianjinliuliang"
       ]
-    },{
+    },
+    {
       "root": "100lie_page",
       "name": "100lie",
       "pages": [
@@ -100,7 +102,8 @@
         "pages/gather/gather",
         "pages/picture/picture"
       ]
-    },{
+    },
+    {
       "root": "packageZ",
       "name": "lingshou",
       "pages": [
@@ -113,7 +116,8 @@
         "z_sum_xiaoshoujilu/z_sum_xiaoshoujilu",
         "z_chuku_getImage/z_chuku_getImage"
       ]
-    },{
+    },
+    {
       "root": "packageX",
       "name": "xyk",
       "pages": [
@@ -122,6 +126,23 @@
         "page/MonthlyTurnover/MonthlyTurnover",
         "page/Statistics/Statistics",
         "page/UserInfo/UserInfo"
+      ]
+    },
+    {
+      "root": "packageP",
+      "name": "paichan",
+      "pages": [
+        "page/p_home/p_home",
+        "page/PeiZhiBiao/PeiZhiBiao",
+        "page/DingDan/DingDan",
+        "page/PaiChan/PaiChan",
+        "page/HuiZong/HuiZong",
+        "page/PZ_MoKuaiDanWei/PZ_MoKuaiDanWei",
+        "page/PZ_GongZuoShiJian/PZ_GongZuoShiJian",
+        "page/PZ_Bom/PZ_Bom",
+        "page/DD_DD/DD_DD",
+        "page/PC_PC/PC_PC",
+        "page/HZ_HZ/HZ_HZ"
       ]
     }
   ],
