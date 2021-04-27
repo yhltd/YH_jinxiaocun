@@ -44,6 +44,10 @@ App({
       deviceId : "",
       serviceId : "",
       characteristicId : ""
+    },
+
+    paichan_user: {
+      gongsi:"",
     }
   },
 

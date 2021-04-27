@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-button": "../../components/button/index",
+    "van-tag": "../../components/tag/index",
+    "van-popup": "../../components/popup/index",
+    "van-dialog": "../../components/dialog/index",
+    "van-action-sheet": "../../components/action-sheet/index"
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "模块"
+}

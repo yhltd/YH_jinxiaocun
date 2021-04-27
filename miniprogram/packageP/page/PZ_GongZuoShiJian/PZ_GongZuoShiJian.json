@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-collapse": "../../components/collapse/index",
+    "van-collapse-item": "../../components/collapse-item/index",
+    "van-datetime-picker": "../../components/datetime-picker/index",
+    "van-popup": "../../components/popup/index",
+    "van-dialog": "../../components/dialog/index"
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "工作时间"
+}

@@ -129,10 +129,20 @@
       ]
     },
     {
-      "root": "package_tb3999803",
-      "name": "tb3999803",
+      "root": "packageP",
+      "name": "paichan",
       "pages": [
-        "pages/index/index"
+        "page/p_home/p_home",
+        "page/PeiZhiBiao/PeiZhiBiao",
+        "page/DingDan/DingDan",
+        "page/PaiChan/PaiChan",
+        "page/HuiZong/HuiZong",
+        "page/PZ_MoKuaiDanWei/PZ_MoKuaiDanWei",
+        "page/PZ_GongZuoShiJian/PZ_GongZuoShiJian",
+        "page/PZ_Bom/PZ_Bom",
+        "page/DD_DD/DD_DD",
+        "page/PC_PC/PC_PC",
+        "page/HZ_HZ/HZ_HZ"
       ]
     }
   ],

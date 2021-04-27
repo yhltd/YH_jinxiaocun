@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-popup": "../../components/popup/index",
+    "van-dialog": "../../components/dialog/index",
+    "van-action-sheet": "../../components/action-sheet/index"
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "汇总"
+}

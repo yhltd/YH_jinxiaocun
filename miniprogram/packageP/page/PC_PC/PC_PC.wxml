@@ -1,0 +1,215 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
+</view>
+
+
+
+
+
+
+
+
+
+
+<!------------------------->
+<!---------排产详情--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow" show="{{ xiangqingShow }}" position="bottom" custom-style="height: 100%;" >
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title2}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list3}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title2}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView2">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+ <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+  </view>
+</van-popup>
+
+
+
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+	<view class="lables">订单号</view>
+    <input bindinput="onInput3" data-column="dingDanHao" class="input_text_form" value="{{dingDanHao}}" type="dingDanHao" name="code" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+
+
+<!--------------------->
+<!--------删除确认-------->
+<!--------------------->
+<van-dialog
+  use-slot
+  title="确认删除该排产订单？"
+  show="{{ delWindow1 }}"
+  bind:close="onClose" 
+  closeOnClickOverlay="true"
+  show-confirm-button="true" 
+  show-cancel-button="true" 
+  bind:confirm="sure1"
+>
+</van-dialog>
+
+
+
+
+
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">订单号</view>
+    <input bindinput="onInput3" bindtap="selDDH" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" disabled="disabled"></input>
+    <view class="lables">所属模块</view>
+    <input bindinput="onInput3" bindtap="selSSMK" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
+    <view class="lables">排产数量</view>
+    <input bindinput="onInput3" data-column="pcsl" class="input_text_form" value="{{pcsl}}" type="digit" name="cpmc"></input>
+    <view class="lables">开始生产日期</view>
+    <input bindinput="onInput3" data-column="xdrq" bindtap="selRIQI" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq" disabled="disabled"></input>
+    <view class="lables">是否插单</view>
+    <input bindinput="onInput3" data-column="sfcd" bindtap="selSFCD"  class="input_text_form" value="{{sfcd}}" type="text" name="sfcd" disabled="disabled"></input>
+    <view class="lables" hidden="{{shiFouChaDan}}" >插至此单后</view>
+    <input hidden="{{shiFouChaDan}}"  bindinput="onInput" bindtap="selCD" data-column="xdsl" class="input_text_form" value="{{xdsl}}" type="digit" name="xdsl" disabled="disabled"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+
+
+
+<van-popup bind:click-overlay="qxShow2" show="{{ xzmkShow }}" position="bottom" custom-style="height: 60%;" >
+<view class="weui-cells__title van-ellipsis">
+  多选（已选：{{countries}}）
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <checkbox-group data-name="countries" bindchange="onCheckboxChange" >
+    <label 
+      class="weui-cell weui-check__label"
+      wx:for="{{ssmkXZ}}" 
+      wx:key="id" 
+      wx:for-item="item" 
+      wx:for-index="i"
+    >
+      <view class="weui-cell__bd">{{item.name}}</view>
+      <view class="weui-cell__hd">
+        <checkbox value="{{item.id}}" color="red" style="color:red"/>
+      </view>
+    </label>
+  </checkbox-group>
+</view>
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">确定</button>
+  </view>
+</van-popup>
+
+
+
+<!--  是否插单下拉选-->
+<van-action-sheet
+  show="{{ xlShow1 }}"
+  actions="{{ actions1 }}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>
+<!--  订单号下拉选-->
+<van-action-sheet
+  show="{{ xlShow2 }}"
+  actions="{{ actions2 }}"
+  close-on-click-overlay
+  bind:close="select2"
+  bind:select="select2" 
+/>
+<!--  模块下拉选-->
+<van-action-sheet
+  show="{{ xlShow3 }}"
+  actions="{{ actions3 }}"
+  close-on-click-overlay
+  bind:close="select3"
+  bind:select="select3" 
+/>
+<!--  插单下拉-->
+<van-action-sheet
+  show="{{ xlShow4 }}"
+  actions="{{ listDingDan }}"
+  close-on-click-overlay
+  bind:close="select4"
+  bind:select="select4" 
+/>
+<!--  dateTime拉选-->
+<van-popup bind:click-overlay="qxShow2" show="{{ rqxzShow }}" position="bottom" custom-style="height: 60%;" >
+<van-datetime-picker
+  type="datetime"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:input="onInput"
+  bind:confirm="onInput2"
+  bind:cancel="qxShow2"
+/>
+</van-popup>

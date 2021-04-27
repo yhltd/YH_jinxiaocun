@@ -1,0 +1,101 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
+</view>
+
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">物料编码</view>
+    <input bindinput="onInput" data-column="wlbm" class="input_text_form" value="{{wlbm}}" type="text" name="wlbm" ></input>
+    <view class="lables">物料名称</view>
+    <input bindinput="onInput" data-column="wlmc" class="input_text_form" value="{{wlmc}}" type="text" name="mwlmcc"></input>
+    <view class="lables">类别</view>
+    <input bindinput="onInput" data-column="lb" class="input_text_form" value="{{lb}}" type="text" name="lb"></input>
+    <view class="lables">规格</view>
+    <input bindinput="onInput" data-column="gg" class="input_text_form" value="{{gg}}" type="text" name="gg"></input>
+    <view class="lables">描述</view>
+    <input bindinput="onInput" data-column="ms" class="input_text_form" value="{{ms}}" type="text" name="ms"></input>
+    <view class="lables">大小</view>
+    <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="digit" name="dx"></input>
+    <view class="lables">单位</view>
+    <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="xgShow" show="{{ xgShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">物料编码</view>
+    <input bindinput="onInput" data-column="wlbm" class="input_text_form" value="{{wlbm}}" type="text" name="wlbm" ></input>
+    <view class="lables">物料名称</view>
+    <input bindinput="onInput" data-column="wlmc" class="input_text_form" value="{{wlmc}}" type="text" name="mwlmcc"></input>
+    <view class="lables">类别</view>
+    <input bindinput="onInput" data-column="lb" class="input_text_form" value="{{lb}}" type="text" name="lb"></input>
+    <view class="lables">规格</view>
+    <input bindinput="onInput" data-column="gg" class="input_text_form" value="{{gg}}" type="text" name="gg"></input>
+    <view class="lables">描述</view>
+    <input bindinput="onInput" data-column="ms" class="input_text_form" value="{{ms}}" type="text" name="ms"></input>
+    <view class="lables">大小</view>
+    <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="digit" name="dx"></input>
+    <view class="lables">单位</view>
+    <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+	<view class="lables">物料编码</view>
+    <input bindinput="onInput" data-column="code" class="input_text_form" value="{{code}}" type="text" name="code" ></input>
+    <view class="lables">物料名称</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
+    <view class="lables">类别</view>
+    <input bindinput="onInput" data-column="type" class="input_text_form" value="{{type}}" type="text" name="type"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

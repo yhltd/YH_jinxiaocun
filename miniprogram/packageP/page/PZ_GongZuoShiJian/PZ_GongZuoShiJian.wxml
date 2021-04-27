@@ -1,0 +1,203 @@
+<van-collapse value="{{ activeNames }}" bind:change="onChange" accordion>
+  <van-collapse-item title="星期一" name="1">
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="星期二" name="2">
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="星期三" name="3" >
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="星期四" name="4" >
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="星期五" name="5" >
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="星期六" name="6" >
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="星期日" name="7" >
+    <!-------早-------->
+    <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring1}}" placeholder="早上起始时间" type="text" name="monring1" data-column="monring1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{monring2}}" placeholder="早上结束时间" type="text" name="monring2" data-column="monring2" disabled="disabled"></input>
+    </view>
+    <!-------中-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon1}}" placeholder="中午起始时间" type="text" name="noon1" data-column="noon1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{noon2}}" placeholder="中午结束时间" type="text" name="noon2" data-column="noon2" disabled="disabled"></input>
+    </view>
+    <!-------晚-------->
+     <view class="bottom_view" style="height:10%">
+        <input bindtap="onInput" class="input_text_form_small" value="{{night1}}" placeholder="晚上起始时间" type="text" name="night1" data-column="night1" disabled="disabled"></input>
+        <input bindtap="onInput" class="input_text_form_small" value="{{night2}}" placeholder="晚上结束时间" type="text" name="night2" data-column="night2" disabled="disabled"></input>
+    </view>
+    <!-------保存-------->
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+    </view>
+  </van-collapse-item>
+  <van-collapse-item title="休息日" name="8" >
+  <view wx:for="{{dayOff}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" bindtap="clickView" data-id="{{list_item.id}}" style="font-size: 50rpx;text-align: center;border-bottom: 1rpx solid #f2f2f2;">{{list_item.day_or_reset}}</view>
+    <view class="bottom_view" style="height:10%">
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">添加</button>
+    </view>
+  </van-collapse-item>
+</van-collapse>
+
+
+<!--------------------->
+<!--------添加窗体-------->
+<!--------------------->
+<van-dialog
+  use-slot
+  title="休息日添加"
+  show="{{ addWindow1 }}"
+  bind:close="onClose" 
+  closeOnClickOverlay="true"
+  show-confirm-button="true" 
+  show-cancel-button="true" 
+  bind:confirm="sure2"
+>
+ <view class="lables">请选择休息日:</view>
+ <picker class="pick" mode="date" value="{{date}}" data-column_name="empty" bindchange="choiceDate">
+  <input bindinput="onInput2" class="input_text_form2" value="{{empty}}" type="{{dataset_input.input_type}}" name="moduleName" data-column="moduleName" disabled="disabled"></input>
+  </picker>
+</van-dialog>
+
+
+
+
+
+<!--------------------->
+<!--------删除确认-------->
+<!--------------------->
+<van-dialog
+  use-slot
+  title="确认删除该休息日？"
+  show="{{ delWindow1 }}"
+  bind:close="onClose" 
+  closeOnClickOverlay="true"
+  show-confirm-button="true" 
+  show-cancel-button="true" 
+  bind:confirm="sure1"
+>
+</van-dialog>
+
+
+
+<!--------------------->
+<!--------选择时间-------->
+<!--------------------->
+<van-popup show="{{sijianShow}}" bind:click-overlay="timeQX" position="bottom" custom-style="width: 100;height: 65%;" >
+	<van-datetime-picker bind:cancel="timeQX" bind:confirm="timeWC" bind:click-overlay="qxShow" filter="{{ filter }}" type="time" value="{{ currentDate }}" min-hour="{{ minHour }}" max-hour="{{ maxHour }}" min-minute="{{minMinute}}" max-minute="{{maxMinute}}" bind:input="onInput"/>
+</van-popup>
