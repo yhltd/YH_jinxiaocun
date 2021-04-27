@@ -65,7 +65,8 @@
         "pages/1gongzitiao/gongzitiao",
         "pages/1renyuanxinxiguanli_edit_access/access"
       ]
-    },{
+    },
+    {
       "root": "packageC",
       "name": "caiwu",
       "pages": [
@@ -83,7 +84,8 @@
         "pages/c_liyisunyi/c_liyisunyi",
         "pages/c_xianjinliuliang/c_xianjinliuliang"
       ]
-    },{
+    },
+    {
       "root": "100lie_page",
       "name": "100lie",
       "pages": [
@@ -100,7 +102,8 @@
         "pages/gather/gather",
         "pages/picture/picture"
       ]
-    },{
+    },
+    {
       "root": "packageZ",
       "name": "lingshou",
       "pages": [
@@ -113,7 +116,8 @@
         "z_sum_xiaoshoujilu/z_sum_xiaoshoujilu",
         "z_chuku_getImage/z_chuku_getImage"
       ]
-    },{
+    },
+    {
       "root": "packageX",
       "name": "xyk",
       "pages": [
@@ -122,6 +126,13 @@
         "page/MonthlyTurnover/MonthlyTurnover",
         "page/Statistics/Statistics",
         "page/UserInfo/UserInfo"
+      ]
+    },
+    {
+      "root": "package_tb3999803",
+      "name": "tb3999803",
+      "pages": [
+        "pages/index/index"
       ]
     }
   ],

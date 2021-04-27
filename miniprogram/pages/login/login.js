@@ -12,6 +12,15 @@ var login = function(that,info) {
       lock : false
     })
   }
+
+  var re = /select|update|delete|truncate|join|union|exec|insert|drop|count|'|"|;|>|<|%/i;
+  if(re.test(info.inputName) || re.test(info.inputPwd)){
+    wx.showToast({
+      title: '请不要输入非法字符！',
+      icon: 'none'
+    })
+    return;
+  }
   
   var finduser, passwod, adminis, gongsi;
   var listAll = [];
@@ -245,48 +254,7 @@ var login = function(that,info) {
         })
       }
     })
-  } else if(system=="零售管理系统"){
-    wx.showLoading({
-      title: '正在登录',
-      mask: true
-    })
-    //零售管理系统
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "select id,userName,password,power,shop from zeng_user where userName = '"+info.inputName+"' and password = '"+info.inputPwd+"' and shop = '"+that.data.gongsi+"'"
-      },
-      success: res => {
-        if (res.result.recordset.length > 0) {
-          var userInfo = res.result.recordset[0]
-          wx.navigateTo({
-            url: '../z_home/z_home?userInfo='+ JSON.stringify(userInfo)
-          })
-          wx.showToast({
-            title: '登录成功',
-            icon:'success'
-          })
-        } else {
-          wx.showToast({
-            title: '用户名密码错误',
-            icon: 'none',
-          })
-        }
-      },
-      fail: res => {
-        console.log("小程序连接数据库失败")
-        wx.showToast({
-          title: '连接数据库出错，请联系我公司',
-          mask: true,
-        })
-      },
-      complete: () => {
-        that.setData({
-          lock : true
-        })
-      }
-    })
-  }else if(system=="云合信用卡管理系统") {
+  } else if(system=="云合信用卡管理系统") {
     var xsql = "select * from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and account ='" + info.inputName + "'"
     wx.cloud.callFunction({
       
@@ -333,6 +301,46 @@ var login = function(that,info) {
       }
     })
 
+  }else if(system =="订单追踪系统"){
+    var sql = "select * from user_info where code = '" + info.inputName + "' and pwd = '" + info.inputPwd + "'";
+
+    wx.cloud.callFunction({
+      
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql
+      },
+      success(res) {
+        if(res.result.recordset.length == undefined){
+          wx.showToast({
+            title: '用户密码错误',
+            icon: 'none'
+          })
+        }else{
+          if (res.result.recordset.length > 0) {
+            wx.navigateTo({
+              url: '../../package_tb3999803/pages/index/index?user=' + JSON.stringify(res.result.recordset[0])
+            })
+            wx.showToast({
+              title: '登录成功',
+            })
+          } else {
+            wx.showToast({
+              title: '用户名密码错误',
+              icon: "none"
+            })
+          }
+        }
+      },
+      fail(res) {
+        console.log("失败", res)
+      },
+      complete: function () {
+        that.setData({
+          lock: true
+        })
+      }
+    })
   }else{
     wx.showToast({
       title: '请选择系统',
@@ -541,6 +549,20 @@ Page({
         gongsi : "选择公司"
       })
     }
+    if (system == '订单追踪系统'){
+      _this.setData({
+        system,
+        gongsi : '订单追踪系统',
+        pickerArray: ['订单追踪系统']
+      })
+      return;
+    }else{
+      _this.setData({
+        gongsi : "选择公司",
+        pickerArray: []
+      })
+    }
+
     if(system=="服务器_jxc"){
       _this.setData({
         system,
@@ -596,7 +618,7 @@ Page({
         system
       })
       arr = ["sqlServer_117","select B from baitaoquanxian_renyun GROUP BY B","B"]
-    } else if (system == "云合信用卡管理系统") {
+    }else if (system == "云合信用卡管理系统") {
       _this.setData({
         system,
       })
@@ -629,7 +651,10 @@ Page({
         },
       })
     }
-    _this.getCompanyName(arr)
+
+    if(_this.data.system != '选择系统'){
+      _this.getCompanyName(arr)
+    }
   },
   out_choice_system : function(){
   },

@@ -1,0 +1,16 @@
+{
+  "usingComponents": {
+    "van-popup": "../../components/vant/popup/index",
+    "van-panel": "../../components/vant/panel/index",
+    "van-empty": "../../components/vant/empty/index",
+    "van-loading": "../../components/vant/loading/index",
+    "van-button": "../../components/vant/button/index",
+    "van-row": "../../components/vant/row/index",
+    "van-col": "../../components/vant/col/index",
+    "van-field": "../../components/vant/field/index",
+    "van-datetime-picker": "../../components/vant/datetime-picker/index"
+  },
+  "navigationBarTextStyle" : "black",
+  "navigationBarBackgroundColor" : "#F5F5F5",
+  "navigationBarTitleText" : "订单查询"
+}

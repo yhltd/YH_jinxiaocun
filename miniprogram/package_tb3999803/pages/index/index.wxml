@@ -1,0 +1,279 @@
+<view class="page-main">
+  <scroll-view 
+    wx:if="{{!page.isEmpty}}" 
+    class="order-view" 
+    scroll-y="{{true}}"
+    bindscrolltolower="page"
+    enhanced="{{true}}"
+    bounces="{{false}}"
+    refresher-enabled
+    bindrefresherrefresh="pageRefresh"
+    refresher-triggered="{{scrollLoading}}"
+    refresher-default-style="none"
+  >
+    <van-panel 
+      wx:for="{{page.list}}" wx:key="id"
+      title="{{item.productionNo}}" 
+      desc="{{item.form}}" 
+      status="{{item.state}}"
+      bindtap="openOrderDetail"
+      data-index="{{index}}"
+    />
+    <view class="order-tag" bindtap="{{page.isError ? 'page' : ''}}">
+      {{page.isError ? '网络错误，点击重试' : page.isLoad ? '' : page.isFinish ? '没有更多了' : ''}}
+      <van-loading wx:if="{{page.isLoad}}" size="35rpx">加载中...</van-loading>
+    </view>
+  </scroll-view>
+
+  <view bindtap="page" wx:else>
+    <van-empty description="没有查询到订单，点击刷新" />
+  </view>
+</view>
+
+<view class="page-footer">
+  <van-row style="width: 100%">
+    <van-col span="10" offset="1">
+      <van-button 
+        icon="revoke" 
+        type="info" 
+        size="large" 
+        bind:click="onSelectAll"
+      >查询全部</van-button>
+    </van-col>
+    <van-col span="10" offset="2">
+      <van-button 
+        icon="search" 
+        type="info" 
+        size="large" 
+        bind:click="openSelectPopup"
+      >查询</van-button>
+    </van-col>
+  </van-row>
+</view>
+
+
+<van-popup 
+  show="{{showSelectPopup}}"
+  bind:close="onSelectPopupClose"
+  custom-style="width: 100%;padding-top: 80rpx"
+  position="bottom"
+  bind:close="closeSelectPopup"
+  bind:click-overlay="closeSelectPopup"
+  closeable
+>
+  <van-cell-group>
+    <van-field
+      value="{{selectParams.productionNo}}"
+      label="生产单号"
+      placeholder="请输入生产单号"
+      bind:input="setSelectParams"
+      data-type="productionNo"
+    />
+    <van-field
+      value="{{selectParams.XDriqi.startDate}}"
+      label="起始下单日"
+      readonly
+      bind:click-input="onClickXDriqi"
+      placeholder="点击选择日期"
+      data-type="startDate"
+    />
+    <van-field
+      value="{{selectParams.XDriqi.endDate}}"
+      label="结束下单日"
+      readonly
+      bind:click-input="onClickXDriqi"
+      placeholder="点击选择日期"
+      data-type="endDate"
+    />
+    <van-field
+      value="{{selectParams.area}}"
+      label="客户区域"
+      placeholder="请输入客户区域"
+      bind:input="setSelectParams"
+      data-type="area"
+    />
+    <van-field
+      value="{{selectParams.clientNo}}"
+      label="客户号"
+      placeholder="请输入客户号"
+      bind:input="setSelectParams"
+      data-type="clientNo"
+    />
+    <van-field
+      value="{{selectParams.clientName}}"
+      label="客户名称"
+      placeholder="请输入客户名称"
+      bind:input="setSelectParams"
+      data-type="clientName"
+    />
+    <van-field
+      value="{{selectParams.clientSite}}"
+      label="客户地址"
+      placeholder="请输入客户地址"
+      bind:input="setSelectParams"
+      data-type="clientSite"
+    />
+  </van-cell-group>
+
+  <van-row custom-class="selectPopupFooter">
+    <van-col span="6" offset="9">
+      <van-button 
+        size="large" 
+        type="default" 
+        bind:click="selectParamsReset"
+      >清空</van-button>
+    </van-col>
+    <van-col span="7" offset="1">
+      <van-button 
+        size="large" 
+        type="info" 
+        loading="{{page.isLoad}}" 
+        loading-text="查询中..."
+        bind:click="selectParamsSave"
+      >查询</van-button>
+    </van-col>
+  </van-row>
+</van-popup>
+
+<van-popup 
+  show="{{showChoiceXDriqi}}"
+  position="bottom"
+  custom-style="width: 100%;height: 50%;"
+  z-index="101"
+  bind:close="setXDriqi"
+  bind:click-overlay="setXDriqi"
+>
+  <van-datetime-picker 
+    type="date"
+    bind:confirm="setXDriqi"
+    bind:cancel="setXDriqi"
+  />
+</van-popup>
+
+<van-popup 
+  show="{{showOrderDetail}}"
+  position="left"
+  custom-style="width: 90%;height: 100%;"
+  bind:close="closeOrderDetail"
+  bind:click-overlay="closeOrderDetail"
+>
+  <van-cell-group>
+    <van-field
+      label="生产单号"
+      value="{{page.list[nowOrder].productionNo}}"
+      readonly
+    />
+    <van-field
+      label="相关联单号1"
+      value="{{page.list[nowOrder].GL_one}}"
+      readonly
+    />
+    <van-field
+      label="相关联单号2"
+      value="{{page.list[nowOrder].GL_two}}"
+      readonly
+    />
+    <van-field
+      label="下单日期"
+      value="{{page.list[nowOrder].XDriqi}}"
+      readonly
+    />
+    <van-field
+      label="客户号"
+      value="{{page.list[nowOrder].clientNo}}"
+      readonly
+    />
+    <van-field
+      label="客户名称"
+      value="{{page.list[nowOrder].clientName}}"
+      readonly
+    />
+    <van-field
+      label="客户地址"
+      value="{{page.list[nowOrder].clientSite}}"
+      readonly
+    />
+    <van-field
+      label="定金比"
+      value="{{page.list[nowOrder].percentage*100}}%"
+      readonly
+    />
+    <van-field
+      label="终端用户"
+      value="{{page.list[nowOrder].client}}"
+      readonly
+    />
+    <van-field
+      label="取货地址"
+      value="{{page.list[nowOrder].deliveryAddress}}"
+      readonly
+    />
+    <van-field
+      label="预算工期"
+      value="{{page.list[nowOrder].projectTime}}"
+      readonly
+    />
+    <van-field
+      label="订单内容"
+      value="{{page.list[nowOrder].content}}"
+      readonly
+    />
+    <van-field
+      label="订单形式"
+      value="{{page.list[nowOrder].form}}"
+      readonly
+    />
+    <van-field
+      label="出货方式"
+      value="{{page.list[nowOrder].way}}"
+      readonly
+    />
+    <van-field
+      label="清单数量"
+      value="{{page.list[nowOrder].count}}"
+      readonly
+    />
+    <van-field
+      label="订单金额"
+      value="{{page.list[nowOrder].money}}"
+      readonly
+    />
+    <van-field
+      label="mark1"
+      value="{{page.list[nowOrder].Kong_one}}"
+      readonly
+    />
+    <van-field
+      label="mark2"
+      value="{{page.list[nowOrder].Kong_two}}"
+      readonly
+    />
+    <van-field
+      label="出货应收款"
+      value="{{page.list[nowOrder].receivable}}"
+      readonly
+    />
+    <van-field
+      label="账期内已付款"
+      value="{{page.list[nowOrder].pay_money}}"
+      readonly
+    />
+    <van-field
+      label="账期内未付款"
+      value="{{page.list[nowOrder].receivable-page.list[nowOrder].pay_money}}"
+      readonly
+    />
+    <van-field
+      label="派单日期"
+      value="{{page.list[nowOrder].paidan_date}}"
+      readonly
+    />
+    <van-field
+      label="订单状态"
+      value="{{page.list[nowOrder].state}}"
+      readonly
+    />
+  </van-cell-group>
+</van-popup>
+
+
