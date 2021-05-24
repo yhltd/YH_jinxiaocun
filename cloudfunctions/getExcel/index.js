@@ -35,10 +35,14 @@ exports.main = async(event, context) => {
 
   var excelResult = nodeExcel.execute(tableMap);
   var filePath = "outputExcels";
-  var num = Math.floor( Math.random()*100000);
+  var num = String(Math.floor( Math.random()*100000));    //胡超  20210524更新
+  //var num = Math.floor( Math.random()*100000);   //原有
   var fileName = list.name+'.xlsx';
+  path.join(filePath,num,fileName);             //胡超  20210524更新
+  console.log(path)                           //胡超  20210524更新
   return await cloud.uploadFile({
-    cloudPath: path.join(filePath,num,fileName),
+    cloudPath: String(path),              //胡超  20210524更新
+    //cloudPath: path.join(filePath,num,fileName),    //原有
     fileContent: new Buffer(excelResult, 'binary')
   });
   
