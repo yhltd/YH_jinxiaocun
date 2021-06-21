@@ -6,7 +6,8 @@ Page({
    */
   data: {
     active: 1,
-    showList: [{text: "订单",url: "../DD_DD/DD_DD"}]
+    showList: [{text: "订单",url: "../DD_DD/DD_DD"}],
+    showList2:[{text: "部门",url: "../BuMen/BuMen"}]
   },
 
   /**
@@ -37,6 +38,15 @@ Page({
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
+      wx.navigateTo({
+        url: url 
+        }) 
+  },
+  goto: function (e) {
+    var _this = this;
+    var index = e.currentTarget.dataset.index;
+    var url = _this.data.showList2[index].url
+    var text = _this.data.showList2[index].text
       wx.navigateTo({
         url: url 
         }) 

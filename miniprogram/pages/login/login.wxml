@@ -13,7 +13,7 @@
   <form bindsubmit="formLogin">
 
     <picker class="picker_system" bindcancel="out_choice_system" mode="selector" bindchange="choice_system"  range="{{systemArray}}">
-        <button class="bt_choice_system">{{system}}</button>
+        <button class="bt_choice_system" style="position: relative; left: 0rpx; top: 2rpx">{{system}}</button>
     </picker>
     <view class="hs20"></view>
 

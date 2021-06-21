@@ -33,20 +33,92 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">添加</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box">查询</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" style="width: 247rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: -11rpx; top: 0rpx">更多操作</button>
 </view>
 
-
-
-
-
-
-
-
-
-
+<!-- 更多操作弹窗 -->
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{shiFouChaDan?'true':''}}">
+  <view class="vcent">起始时间:</view>
+  <input bindinput="onInput3" data-column="riqi2" class="input_text_form" bindtap="selRIQI3"   value="{{riqi2}}" type="text" name="riqi2" ></input>
+  <view class="vcent">截止时间:</view>
+  <input bindinput="onInput3" data-column="riqi3" class="input_text_form" bindtap="selRIQI4"   value="{{riqi3}}" type="text" name="riqi3" ></input>
+  <button class="moreDo_view_bt" bindtap="sel3">统计</button>
+  <view class="vcent">起始时间:</view>
+  <input bindinput="onInput3" data-column="riqi4" class="input_text_form" bindtap="selRIQI5"   value="{{riqi4}}" type="text" name="riqi4" ></input>
+  <view class="vcent">截止时间:</view>
+  <input bindinput="onInput3" data-column="riqi5" class="input_text_form" bindtap="selRIQI6"   value="{{riqi5}}" type="text" name="riqi5" ></input>
+  <button class="moreDo_view_bt" bindtap="getAccounting">生成图表</button>
+</view>
+<!-- 背景 -->
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{shiFouChaDan?'true':''}}">
+</view>
 <!------------------------->
+<!---------每日生产计划--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow2" show="{{ xiangqingShow2 }}" position="bottom" custom-style="height: 100%;" >
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title3}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list3}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title3}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="sel2">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+ <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+  </view>
+</van-popup>
+
+<!-- 统计界面 -->
+<van-popup bind:click-overlay="tjShow2" show="{{ xiangqingShow3 }}" position="bottom" custom-style="height: 100%;" >
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title4}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list5}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title4}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="sel3">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+ <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+  </view>
+</van-popup>
 <!---------排产详情--------->
 <!------------------------->
 <van-popup bind:click-overlay="tjShow" show="{{ xiangqingShow }}" position="bottom" custom-style="height: 100%;" >
@@ -92,6 +164,16 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+  <view class="hs20">
+
+  </view>
+  <!-- 每日生产计划 -->
+  <view class="lables">每日生产计划</view>
+    <input bindinput="onInput3" data-column="riqi" class="input_text_form" bindtap="selRIQI2"   value="{{riqi}}" type="text" name="code" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel2">查询</button>
   </view>
 </van-popup>
 
@@ -167,8 +249,32 @@
   </view>
 </van-popup>
 
-
-
+<!-- 查询每日生产计划时间下拉
+<van-popup bind:click-overlay="qxShow22" show="{{ xzmkShow2 }}" position="bottom" custom-style="height: 60%;" >
+<view class="weui-cells__title van-ellipsis">
+  多选（已选：{{countries}}）
+</view>
+<view class="weui-cells weui-cells_after-title">
+  <checkbox-group data-name="countries" bindchange="onCheckboxChange" >
+    <label 
+      class="weui-cell weui-check__label"
+      wx:for="{{ssmkXZ}}" 
+      wx:key="id" 
+      wx:for-item="item" 
+      wx:for-index="i"
+    >
+      <view class="weui-cell__bd">{{item.name}}</view>
+      <view class="weui-cell__hd">
+        <checkbox value="{{item.id}}" color="red" style="color:red"/>
+      </view>
+    </label>
+  </checkbox-group>
+</view>
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow22">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add22">确定</button>
+  </view>
+</van-popup> -->
 <!--  是否插单下拉选-->
 <van-action-sheet
   show="{{ xlShow1 }}"
@@ -211,5 +317,65 @@
   bind:input="onInput"
   bind:confirm="onInput2"
   bind:cancel="qxShow2"
+/>
+</van-popup>
+<!--  查询dateTime拉选-->
+<van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow2 }}" position="bottom" custom-style="height: 60%;" >
+<van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:input="onInput"
+  bind:confirm="onInput22"
+  bind:cancel="qxShow22"
+/>
+</van-popup>
+<!--  查询dateTime拉选-->
+<van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow3}}" position="bottom" custom-style="height: 60%;" >
+<van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:input="onInput"
+  bind:confirm="onInput33"
+  bind:cancel="qxShow22"
+/>
+</van-popup>
+<!--  查询dateTime拉选-->
+<van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow4}}" position="bottom" custom-style="height: 60%;" >
+<van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:input="onInput"
+  bind:confirm="onInput4"
+  bind:cancel="qxShow22"
+/>
+</van-popup>
+<!--  查询dateTime拉选-->
+<van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow5}}" position="bottom" custom-style="height: 60%;" >
+<van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:input="onInput"
+  bind:confirm="onInput5"
+  bind:cancel="qxShow22"
+/>
+</van-popup>
+<!--  查询dateTime拉选-->
+<van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow6}}" position="bottom" custom-style="height: 60%;" >
+<van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:input="onInput"
+  bind:confirm="onInput6"
+  bind:cancel="qxShow22"
 />
 </van-popup>

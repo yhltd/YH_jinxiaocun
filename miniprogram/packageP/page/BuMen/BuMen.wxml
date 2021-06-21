@@ -1,0 +1,90 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">添加</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
+</view>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+
+  <van-popup  position="bottom" custom-style="height: 100%;"  show="{{xzShow}}" >
+	<view class="lables">部门名称</view>
+    <input bindinput="onInput" data-column="dname" class="input_text_form" value="{{dname}}" type="text" name="dname" ></input>
+    <view class="lables">页面名称</view>
+    <input bindinput="onInput" data-column="vname" class="input_text_form" value="{{vname}}" type="text" name="vname"></input>
+   <view class="lables">添加</view>
+   <view class="swit">否<switch  data-column="dadd" name="dadd" checked="{{dadd=='是'?true:false}}" bindchange="switch1Change"></switch>是</view>
+  <!-- <input bindinput="onInput" data-column="dadd" class="input_text_form" value="{{dadd}}" type="text" name="dadd"></input> -->
+    <view class="lables">删除</view>
+    <view class="swit">否<switch data-column="ddel" name="ddel" checked="{{ddel=='是'?true:false}}" bindchange="switch2Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="ddel" class="input_text_form" value="{{ddel}}" type="text" name="ddel"></input> -->
+    <view class="lables">修改</view>
+    <view class="swit">否<switch data-column="dupd" name="dupd" checked="{{dupd=='是'?true:false}}" bindchange="switch3Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="dupd" class="input_text_form" value="{{dupd}}" type="text" name="dupd" ></input> -->
+    <view class="lables">查询</view>
+    <view class="swit">否<switch data-column="dsel" name="dsel" checked="{{dsel=='是'?true:false}}" bindchange="switch4Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="dsel" class="input_text_form" value="{{dsel}}" 
+    type="text" name="dsel"></input> -->
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!-- ----------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
+	  <view class="lables">部门名称</view>
+    <input bindinput="onInput" data-column="dname" class="input_text_form" value="{{dname}}" type="text" name="dname" ></input>
+    <view class="lables">页面名称</view>
+    <input bindinput="onInput" data-column="vname" class="input_text_form" value="{{vname}}" type="text" name="vname"></input>
+    <view class="lables">添加</view>
+    <view class="swit">否<switch  data-column="dadd" name="dadd" checked="{{dadd=='是'?true:false}}" bindchange="switch1Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="dadd" class="input_text_form" value="{{dadd}}" type="text" name="dadd"></input> -->
+    <view class="lables">删除</view>
+    <view class="swit">否<switch  data-column="ddel" name="ddel" checked="{{ddel=='是'?true:false}}" bindchange="switch2Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="ddel" class="input_text_form" value="{{ddel}}" type="text" name="ddel"></input> -->
+    <view class="lables">修改</view>
+    <view class="swit">否<switch  data-column="dupd" name="dupd" checked="{{dupd=='是'?true:false}}" bindchange="switch3Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="dupd" class="input_text_form" value="{{dupd}}" type="text" name="dupd"></input> -->
+    <view class="lables">查询</view>
+    <view class="swit">否<switch  data-column="dsel" name="dsel" checked="{{dsel=='是'?true:false}}" bindchange="switch4Change"></switch>是</view>
+    <!-- <input bindinput="onInput" data-column="dsel" class="input_text_form" value="{{dsel}}" type="digit" name="dsel"></input> -->
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+    </view>
+</van-popup>
+ 

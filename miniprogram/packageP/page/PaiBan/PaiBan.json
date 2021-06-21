@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-popup": "../../components/popup/index",
+    "van-dialog": "../../components/dialog/index",
+    "van-action-sheet": "../../components/action-sheet/index",
+    "van-datetime-picker": "../../components/datetime-picker/index",
+    "van-picker": "../../components/picker/index"
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "排班"
+}

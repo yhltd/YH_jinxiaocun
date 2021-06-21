@@ -31,10 +31,16 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view" style="height:10%">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
+<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">添加</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering"
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">查询</button>
+
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="getExcel"
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: -6rpx; top: 0rpx">导出excel</button>
 </view>
+  
 
 
 <!------------------------->

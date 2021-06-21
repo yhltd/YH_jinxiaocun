@@ -8,13 +8,23 @@ Page({
     cxShow:false,
     xlShow1: false,
     list:[],
+    list2:[],
     actions1: [],
+    
     title: [{ text: "类别", width: "200rpx", columnName: "type", type: "digit", isupd: true },
     { text: "模块名称", width: "200rpx", columnName: "name", type: "text", isupd: true },
     { text: "产量/小时", width: "200rpx", columnName: "num", type: "text", isupd: true },
       { text: "父模块", width: "200rpx", columnName: "parentName", type: "text", isupd: true },
       { text: "合计产量", width: "200rpx", columnName: "workNum", type: "date", isupd: true }
     ],
+    title2: [{ text: "订单号", width: "200rpx", columnName: "id", type: "digit", isupd: true },
+      { text: "类别", width: "200rpx", columnName: "type", type: "digit", isupd: true },
+    { text: "模块名称", width: "200rpx", columnName: "name", type: "text", isupd: true },
+    { text: "产量/小时", width: "200rpx", columnName: "num", type: "text", isupd: true },
+      { text: "父模块", width: "200rpx", columnName: "parentName", type: "text", isupd: true },
+      { text: "合计产量", width: "200rpx", columnName: "workNum", type: "date", isupd: true }
+    ],
+    oid:"",
     modal:"",
     id:"",
     name:"",
@@ -37,6 +47,7 @@ Page({
     }else{
       sql = "select mt.name as type,mi.name as name,mi.num as num,(select name from module_info where id = mi.parent_id) as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id where wd.company = '" + user + "' and mi.type_id = '" + e +"' group by mt.name,mi.name,mi.num,mi.parent_id"
     }
+   console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
@@ -47,6 +58,7 @@ Page({
         _this.setData({
           list: list
         })
+        console.log(list)
         wx.hideLoading({
 
         })
@@ -63,6 +75,44 @@ Page({
       }
     })
   },
+  // 按照订单号查询
+  tableShow2: function (e) {
+    var _this = this
+    let user = app.globalData.gongsi;
+    var sql=""
+    if (e==""){
+      sql = "select mt.name as type, mi.name as name, mi.num as num, (select name from module_info where id = mi.parent_id) as parentName, sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id where wd.company = '"+ user +"' group by mt.name, mi.name, mi.num, mi.parent_id"
+    }else{
+      sql = "select mt.name as type,mi.name as name,mi.num as num,(select name from module_info where id = mi.parent_id) as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and o.order_id like'%" + e +"%' group by mt.name,mi.name,mi.num,mi.parent_id"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: sql
+      },    
+        success: res => {
+          var list = res.result.recordset
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+          wx.hideLoading({
+  
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+    },
   entering:function(){
     var _this = this
     _this.setData({
@@ -123,6 +173,14 @@ Page({
       [column]: e.detail.value
     })
   },
+  onInput2: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      [column]: e.detail.value
+     
+    })
+  },
   sel1:function(){
     var _this = this
     var e=_this.data.id
@@ -130,6 +188,16 @@ Page({
     _this.setData({
       cxShow:false,
       modal:"",
+    })
+  },
+// 按照单号查询
+  sel2:function(){
+    var _this = this
+    var e = _this.data.oid
+    _this.tableShow2(e)
+    _this.setData({
+      cxShow:false,
+      oid:"",
     })
   },
   /**

@@ -6,7 +6,8 @@ Page({
    */
   data: {
     active: 2,
-    showList: [{ text: "排产", url: "../PC_PC/PC_PC" }]
+    showList: [{ text: "排产", url: "../PC_PC/PC_PC" }],
+    showList2: [{ text: "排班", url: "../PaiBan/PaiBan" }]
   },
 
   /**
@@ -36,6 +37,15 @@ Page({
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
+    wx.navigateTo({
+      url: url
+    })
+  },
+  togo: function (e) {
+    var _this = this;
+    var index = e.currentTarget.dataset.index;
+    var url = _this.data.showList2[index].url
+    var text = _this.data.showList2[index].text
     wx.navigateTo({
       url: url
     })

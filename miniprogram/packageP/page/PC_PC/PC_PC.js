@@ -19,11 +19,15 @@ Page({
     addId:"",
     addCDIde: "",
 
-
-
-
-
-
+    riqi:"",
+    riqi2:"",
+    riqi3:"",
+    riqi4:"",
+    riqi5:"",
+    riqi6:"",
+    shuliang:"",
+    shengchanshuliang:"",
+    shengyushuliang:"",
     countries:"",
     title: [{ text: "编号", width: "200rpx", columnName: "row_num", type: "digit", isupd: true },
     { text: "订单号", width: "200rpx", columnName: "order_id", type: "digit", isupd: true },
@@ -35,14 +39,37 @@ Page({
     title2: [{ text: "日期", width: "400rpx", columnName: "riqi", type: "digit", isupd: true },
     { text: "数量", width: "400rpx", columnName: "shuliang", type: "text", isupd: true }
     ],
+    title3: [
+      { text: "日期", width: "200rpx", columnName: "riqi", type: "digit", isupd: true },
+    { text: "订单号", width: "200rpx", columnName: "order_id", type: "digit", isupd: true },
+    { text: "所属模块", width: "200rpx", columnName: "name", type: "text", isupd: true },
+    { text: "效率/时", width: "200rpx", columnName: "num", type: "text", isupd: true },
+    { text: "数量", width: "400rpx", columnName: "shuliang", type: "text", isupd: true }
+    ],
+    title4: [
+    { text: "订单号", width: "200rpx", columnName: "order_id", type: "digit", isupd: true },
+    { text: "所属模块", width: "200rpx", columnName: "name", type: "text", isupd: true },
+    { text: "已生产数量", width: "200rpx", columnName: "shengchanshuliang", type: "text", isupd: true },
+    { text: "未生产数量", width: "400rpx", columnName: "shengyushuliang", type: "text", isupd: true },
+    ],
     shiFouChaDan:true,
     xiangqingShow: false,
+    xiangqingShow2: false,
+    xiangqingShow3:false,
     cxShow: false,
     delWindow1:false,
+    delWindow2:false,
     tjShow: false,
+    tjShow2: false,
     xlShow1: false,
     xzmkShow: false,
+    xzmkShow2: false,
     rqxzShow: false,
+    rqxzShow2: false,
+    rqxzShow3: false,
+    rqxzShow4: false,
+    rqxzShow5: false,
+    rqxzShow6: false,
     xlShow4: false,
     actions1: [{name: "是"},{ name: "否"}],
     actions2:[],
@@ -51,6 +78,7 @@ Page({
     list2: [],
     list3: [],
     list4: [],
+    list5: [],
     ssmkXZ:[],
     ssmkXZID: {},
     listDingDan:[],
@@ -58,6 +86,7 @@ Page({
     listXiuXiri:[],
     listGongZuoShiJian:[],
     listMeiTianShiJian:[],
+    animationData_moreDo_view : [],
     minHour: 0,
     maxHour: 60,
     minDate: new Date(1899, 1, 1).getTime(),
@@ -183,6 +212,7 @@ Page({
         query: "select week,morning_start,morning_end,noon_start,noon_end,night_start,night_end from  time_config Where company='" + user +"' order by week"
       },
       success: res => {
+        
         var list = res.result.recordset
         var listMeiTianShiJian = []
         var x=0
@@ -205,15 +235,19 @@ Page({
           }
         }
         _this.setData({
+          
           listGongZuoShiJian: list,
-          listMeiTianShiJian: listMeiTianShiJian
+          listMeiTianShiJian: listMeiTianShiJian        
         })
+        console.log(list);
+        console.log(listMeiTianShiJian);
         if(x>0){
           wx.showToast({
             title: '请补全每日工作时间！',
             icon: 'none'
           })
         }else{
+          
           _this.selListDingDan(e, function(){
             _this.selListJiQi(e, function(){
               _this.selListXiuXiri(e, function(){
@@ -334,6 +368,7 @@ Page({
     })
   },
   clickView:function(e){
+   console.log(e);
     var _this=this
     var list = [{ riqi: "", shuliang: ""}]
     if (e.currentTarget.dataset.column =="order_id"){
@@ -345,11 +380,14 @@ Page({
       let index = e.currentTarget.dataset.index;
       let list = _this.data.listJiQi;
       let list3 = [];
+      
       for (let item in list[index].list){
+        console.log(item);
         list3.push({
           riqi: item,
           shuliang: list[index].list[item]
-        })
+        }),
+        console.log(list3)
       }
       _this.setData({
         xiangqingShow: true,
@@ -361,9 +399,12 @@ Page({
     var _this = this
     _this.setData({
       xiangqingShow: false,
+      xiangqingShow2: false,
+      xiangqingShow3:false,
       cxShow: false,
       delWindow1: false,
       tjShow: false,
+      tjShow2: false,
       xlShow1:false,
       xzmkShow: false
     })
@@ -375,7 +416,19 @@ Page({
       rqxzShow:false
     })
   },
-  entering:function(){
+  // 查询每日生产计划下拉取消
+  qxShow22:function(){
+    var _this = this
+    _this.setData({
+      xzmkShow2: false,
+      rqxzShow2:false,
+      rqxzShow3:false,
+      rqxzShow4: false,
+      rqxzShow5:false,
+      rqxzShow6: false,
+    })
+  },
+  entering:function(e){
     var _this = this
     _this.setData({
       cxShow: true
@@ -383,9 +436,134 @@ Page({
   },
   sel1:function(){
     var _this = this
+    console.log(_this)
     var e = _this.data.dingDanHao
     _this.selListGongZuoShiJian(e)
     _this.qxShow()
+  },
+ 
+   // 根据日期查询每日生产计划
+   sel2:function(e){
+    
+    var _this=this;
+    let riqi2 = _this.data.riqi;
+    let jiqi= _this.data.listJiQi;
+    let list3=[];
+    
+    // console.log(jiqi)
+    // console.log(riqi2);
+    // console.log(jiqi[1].name)
+    // console.log(jiqi[1].list[riqi2]);
+    for(let i=0;i<jiqi.length;i++){
+      // console.log(12);
+      for(let item in jiqi[i].list){        
+          // console.log(123);
+          // console.log(item);
+          // console.log(jiqi[i].list[item]);
+          if(item==riqi2){
+           list3.push({
+                 riqi:item,
+                 order_id:jiqi[i].order_id,
+                 name:jiqi[i].name,
+                 num:jiqi[i].num,
+                 shuliang:jiqi[i].list[item],
+               })
+          }              
+      }
+      console.log(list3);
+      _this.setData({
+        xiangqingShow2: true,
+        list3,
+        xiangqingShow3:false,
+        xiangqingShow: false,       
+        cxShow: false,
+        delWindow1: false,
+        tjShow: false,
+        tjShow2: false,
+        xlShow1:false,
+        xzmkShow: false
+      })
+      
+    }
+    
+    // _this.selListGongZuoShiJian2()
+    // _this.qxShow22()
+   
+      // for (let item in list[index].list){
+       
+      //   list3.push({
+      //     riqi: item,
+      //     shuliang: list[index].list[item]
+      //   })
+      //   console.log(item);   
+      // }   
+      // _this.setData({
+      //    xiangqingShow2: true,
+      //    list3
+      //  })
+    
+  },
+  sel3:function(e){
+    
+    var _this=this;
+    let riqi2 = _this.data.riqi2;
+    let riqi3 = _this.data.riqi3;
+    let jiqi= _this.data.listJiQi;
+    let list3=[]; 
+    // console.log(jiqi)
+    // console.log(riqi2);
+    // console.log(jiqi[1].name)
+    // console.log(jiqi[1].list[riqi2]);
+    for(let i=0;i<jiqi.length;i++){
+      // console.log(12);
+      for(let item in jiqi[i].list){        
+          // console.log(123);
+          // console.log(item);
+          // console.log(jiqi[i].list[item]);
+          if(item>=riqi2&&item<=riqi3){
+            list3.push({
+                 order_id:jiqi[i].order_id,
+                 name:jiqi[i].name,
+                 shengchanshuliang:jiqi[i].list[item],
+                 shengyushuliang:0,
+               })
+              //  console.log(list3);
+          }else{
+            list3.push({
+              order_id:jiqi[i].order_id,
+              name:jiqi[i].name,
+              shengchanshuliang:0,
+              shengyushuliang:jiqi[i].list[item],
+            })
+          }             
+      }
+    let list5=[];
+    list3.forEach(el=> {
+      const res = list5.findIndex(ol=> {
+        return el.order_id === ol.order_id,el.name===ol.name;        
+      });
+      if (res!== -1) {
+        list5[res].shengyushuliang = parseInt(list5[res].shengyushuliang) +  parseInt(el.shengyushuliang);
+        list5[res].shengchanshuliang = parseInt(list5[res].shengchanshuliang) +  parseInt(el.shengchanshuliang);
+      } else {
+        list5.push(el);
+      }
+    });
+      console.log(list5);
+      // console.log(list3);
+      _this.setData({
+        xiangqingShow3:true,
+        list5,
+        xiangqingShow2: false,
+        xiangqingShow: false,       
+        cxShow: false,
+        delWindow1: false,
+        tjShow: false,
+        tjShow2: false,
+        xlShow1:false,
+        xzmkShow: false
+      })
+    }
   },
   sure1:function(){
     var _this = this
@@ -454,6 +632,39 @@ Page({
 
     })
   },
+  // 查询点击日期时间事件
+  selRIQI2:function(){
+    var _this=this
+    _this.setData({
+      rqxzShow2:true,
+
+    })
+  },
+  selRIQI3:function(){
+    var _this=this
+    _this.setData({
+      rqxzShow3:true,
+    })
+  },
+  selRIQI4:function(){
+    var _this=this
+    _this.setData({
+      rqxzShow4:true,
+    })
+  },
+  selRIQI5:function(){
+    var _this=this
+    _this.setData({
+      rqxzShow5:true,
+    })
+  },
+  selRIQI6:function(){
+    var _this=this
+    _this.setData({
+      rqxzShow6:true,
+    })
+  },
+
   onCheckboxChange: function (e) {
     var _this = this
     var countries=""
@@ -548,12 +759,7 @@ Page({
     })
     }
   },
-  selSSMK: function () {
-    var _this = this
-    _this.setData({
-      xzmkShow: true
-    })
-  },
+
   select3: function (e) {
     var _this = this
     _this.setData({
@@ -587,6 +793,13 @@ Page({
       xzmkShow:false,
     })
   },
+  add22:function(){
+    var _this = this
+    _this.setData({
+      riqi: _this.data.countries,
+      xzmkShow2:false,
+    })
+  },
   onInput(event) {
     this.setData({
       currentDate: event.detail,
@@ -606,6 +819,106 @@ Page({
     });
     _this.qxShow2()
   },
+  // 查询每天的生产计划日期转化
+  onInput22:function(){
+    var _this=this
+    var date = new Date(_this.data.currentDate)
+    var Y = date.getFullYear() + '-'
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    
+    var riqi=Y+M+D
+    _this.setData({
+      riqi: riqi,
+    });
+    _this.qxShow22()
+  },
+  // 起始日期获取
+  onInput33:function(){
+    var _this=this
+    var date = new Date(_this.data.currentDate)
+    var Y = date.getFullYear() + '-'
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    
+    var riqi=Y+M+D
+    console.log(riqi)
+    _this.setData({
+      riqi2: riqi,
+    });
+    _this.qxShow22()
+  },
+  onInput4:function(){
+    var _this=this
+    var date = new Date(_this.data.currentDate)
+    var Y = date.getFullYear() + '-'
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    console.log(_this)
+    var riqi=Y+M+D
+    console.log(riqi)
+    console.log(_this.data.riqi2)
+    if(riqi<_this.data.riqi2){
+      wx.showToast({
+        title: '截止日期不可以小于起始日期！',
+        icon: 'none'
+      })
+    }else{
+      _this.setData({
+        riqi3: riqi,
+      });
+      _this.qxShow22()
+    }
+    
+  },
+  onInput5:function(){
+    var _this=this
+    var date = new Date(_this.data.currentDate)
+    var Y = date.getFullYear() + '-'
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    console.log(_this)
+    var riqi=Y+M+D
+    console.log(riqi)
+    console.log(_this.data.riqi2)
+    if(riqi<_this.data.riqi2){
+      wx.showToast({
+        title: '截止日期不可以小于起始日期！',
+        icon: 'none'
+      })
+    }else{
+      _this.setData({
+        riqi4: riqi,
+      });
+      _this.qxShow22()
+    }
+    
+  },
+  onInput6:function(){
+    var _this=this
+    var date = new Date(_this.data.currentDate)
+    var Y = date.getFullYear() + '-'
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    console.log(_this)
+    var riqi=Y+M+D
+    console.log(riqi)
+    console.log(_this.data.riqi2)
+    if(riqi<_this.data.riqi2){
+      wx.showToast({
+        title: '截止日期不可以小于起始日期！',
+        icon: 'none'
+      })
+    }else{
+      _this.setData({
+        riqi5: riqi,
+      });
+      _this.qxShow22()
+    }
+    
+  },
+
+
   add1:function(){
     var _this=this
     let user = app.globalData.gongsi;
@@ -724,13 +1037,232 @@ Page({
       })
     }
   },
-  onInput3: function (e) {
+  // onInput3: function (e) {
+  //   var _this = this
+  //   let column = e.currentTarget.dataset.column
+  //   _this.setData({
+  //     [column]: e.detail.value
+  //   })
+  // },
+  selListshe: function (e) {
     var _this = this
-    let column = e.currentTarget.dataset.column
-    _this.setData({
-      [column]: e.detail.value
+    let user = app.globalData.gongsi;
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select week,morning_start,morning_end,noon_start,noon_end,night_start,night_end from  time_config Where company='" + user +"' order by week"
+      },
+      success: res => {
+        var list = res.result.recordset
+        var listMeiTianShiJian = []
+        var x=0
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].morning_end != null && list[i].morning_end != "" && list[i].morning_start != null && list[i].morning_start != "" && list[i].noon_end != null && list[i].noon_end != "" && list[i].noon_start != null && list[i].noon_start != "" && list[i].night_end != null && list[i].night_end != "" && list[i].night_start != null && list[i].night_start != "" ){
+          var morning_end = new Date("2021-01-01 " + list[i].morning_end + ':00')
+          var morning_start = new Date("2021-01-01 " + list[i].morning_start + ':00')
+          var noon_end = new Date("2021-01-01 " + list[i].noon_end + ':00')
+          var noon_start = new Date("2021-01-01 " + list[i].noon_start + ':00')
+          var night_end = new Date("2021-01-01 " + list[i].night_end + ':00')
+          var night_start = new Date("2021-01-01 " + list[i].night_start + ':00')
+            var time1 = (morning_end.getMinutes() - morning_start.getMinutes()) + (morning_end.getHours() - morning_start.getHours())*60
+            var time2 = (noon_end.getMinutes() - noon_start.getMinutes()) + (noon_end.getHours() - noon_start.getHours()) * 60
+            var time3 = (night_end.getMinutes() - night_start.getMinutes()) + (night_end.getHours() - night_start.getHours()) * 60
+          listMeiTianShiJian[list[i].week] = (time1+time2+time3)/60
+          }else{
+            if (list[i].week != "6" && list[i].week != "6"){
+            x=x+1
+            }
+          }
+        }
+        _this.setData({
+          listGongZuoShiJian: list,
+          listMeiTianShiJian: listMeiTianShiJian
+        })
+        if(x>0){
+          wx.showToast({
+            title: '请补全每日工作时间！',
+            icon: 'none'
+          })
+        }else{
+          _this.selListDingDan(e, function(){
+            _this.selListJiQi(e, function(){
+              _this.selListXiuXiri(e, function(){
+                _this.chongsuan()
+              })
+            })
+          })
+        }
+        wx.hideLoading({
+
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
     })
   },
+//  更多操做点击事件
+moreDo: function(){
+  var _this = this;
+  _this.showView(_this,"moreDo")
+},
+// 侧面窗口
+showView : function(_this,type){
+  var animation = wx.createAnimation({
+    duration : 300
+  })
+  _this.setData({
+    shiFouChaDan : false
+  })
+  
+  setTimeout(function(){
+    switch(type){
+      case "moreDo":
+        animation.translateX(0).step()
+        _this.setData({
+          animationData_moreDo_view : animation.export(),
+          hid_view : true
+        })
+        break;
+    }
+  },100)
+  
+},
+// 侧面窗口背景和动画
+hidView : function(_this,type){
+  var animation = wx.createAnimation({
+    duration : 300
+  })
+  
+  switch(type){
+    case "moreDo":
+      animation.translateX(-300).step()
+      _this.setData({
+        animationData_moreDo_view : animation.export(),
+        hid_view : false
+      })
+    break;
+  }
+},
+hid_view : function(){
+  var _this = this;
+  _this.hidView(_this,"moreDo")
+
+},
+//图表
+sel4:function(e){
+    
+  var _this=this;
+  let riqi4 = _this.data.riqi4;
+  let riqi5 = _this.data.riqi5;
+  let jiqi= _this.data.listJiQi;
+  let list3=[]; 
+  // console.log(jiqi)
+  // console.log(riqi2);
+  // console.log(jiqi[1].name)
+  // console.log(jiqi[1].list[riqi2]);
+  for(let i=0;i<jiqi.length;i++){
+    for(let item in jiqi[i].list){        
+        if(item>=riqi4&&item<=riqi5){
+          list3.push({
+               riqi6:item,
+               shuliang:jiqi[i].list[item],
+             })
+         }    
+    }
+  }
+   
+    _this.setData({
+      xiangqingShow3:true,
+      list3,
+      xiangqingShow2: false,
+      xiangqingShow: false,       
+      cxShow: false,
+      delWindow1: false,
+      tjShow: false,
+      tjShow2: false,
+      xlShow1:false,
+      xzmkShow: false
+    })
+  
+},
+getAccounting : function(e){
+  wx.showLoading({
+    title : '加载中',
+    mask : 'true'
+  })
+  var _this=this;
+  let riqi4 = _this.data.riqi4;
+  let riqi5 = _this.data.riqi5;
+  let jiqi= _this.data.listJiQi;
+  let list3=[]; 
+  
+    for(let i=0;i<jiqi.length;i++){
+      for(let item in jiqi[i].list){        
+          if(item>=riqi4&&item<=riqi5){
+            list3.push({
+                 riqi6:item,
+                 shuliang:jiqi[i].list[item],
+               })
+           }    
+      }
+    }
+    
+      var accounting = res.result.recordset
+      var options = {
+        title : {
+          show : false
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        grid: {},
+        xAxis: [{
+          type: "category",
+          data: [list3.riqi6],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }],
+        yAxis: [{
+          type: "value",
+          splitNumber : "8"
+        }],
+        series: [{
+          name: "生产数量",
+          type: "bar",
+          label : {
+            show : "true",
+            position : "top"
+          },
+          itemStyle : {
+            color : "#00CC99"
+          },
+          data: []
+        },]
+      }
+      for(let i=0;i<accounting.length;i++){
+        options.series[0].data.push(accounting[i].sum_load)
+        options.series[1].data.push(accounting[i].sum_borrowed)
+      }
+      _this.updChart(options)
+      _this.updOthers(0)
+      wx.hideLoading({
+        success: (res) => {},
+      })
+   
+},
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -742,7 +1274,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var _this = this;
+    _this.hid_view()
   },
 
   /**
