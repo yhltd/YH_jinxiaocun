@@ -142,7 +142,8 @@
         "page/PZ_Bom/PZ_Bom",
         "page/DD_DD/DD_DD",
         "page/PC_PC/PC_PC",
-        "page/HZ_HZ/HZ_HZ"
+        "page/HZ_HZ/HZ_HZ",
+        "page/PCtuxing/PCtuxing"
       ]
     }
   ],

@@ -35,6 +35,7 @@ Page({
     vname:"",
     dcompany:"",
     sw1:"",
+    bumen:"",
   },
 
   /**
@@ -51,6 +52,8 @@ Page({
   tableShow:function(){
     var _this = this
     let user = app.globalData.gongsi;
+    let bumen = app.globalData;
+    console.log(bumen)
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {

@@ -1,0 +1,11 @@
+<!--miniprogram/packageP/page/PCtuxing/PCtuxing.wxml-->
+
+<view class="but">
+  <button class="put" bindtap="bi">饼图</button>
+  <button class="zput" bindtap="zhu">柱状图</button>
+    <view class="picure" hidden="{{yin}}">
+    <button class="user" bindtap="users">使用</button>
+    <button class="nuser" bindtap="nuser">未使用</button>
+    </view>
+</view>
+<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ec}}"></ec-canvas>

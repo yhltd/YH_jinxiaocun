@@ -13,9 +13,7 @@ Page({
     xdrq: "",
     sfcd: "",
     xdsl: "",
-
-
-
+  
     addId:"",
     addCDIde: "",
 
@@ -79,6 +77,7 @@ Page({
     list3: [],
     list4: [],
     list5: [],
+    list6: [],
     ssmkXZ:[],
     ssmkXZID: {},
     listDingDan:[],
@@ -686,6 +685,12 @@ Page({
       xzmkShow:true
     })
   },
+  selSSMK2:function(){
+    var _this=this
+    _this.setData({
+      xzmkShow:true
+    })
+  },
   selDingDanHao:function(){
     var _this = this
     wx.cloud.callFunction({
@@ -741,6 +746,18 @@ Page({
       xlShow2: true
     })
   },
+  selDDH2:function(){
+    var _this = this
+    _this.setData({
+      xlShow2: true
+    })
+  },
+  selDDH3:function(){
+    var _this = this
+    _this.setData({
+      xlShow4: true
+    })
+  },
   select2: function (e) {
     var _this = this
     if(e.type == "select"){
@@ -766,6 +783,7 @@ Page({
       xlShow3: false
     })
   },
+  
   selCD: function () {
     var _this = this
     _this.setData({
@@ -779,6 +797,26 @@ Page({
         xlShow4: false,
         xdsl: e.detail.name,
         addCDIde:e.detail.id,
+      })
+    } else if (e.type == "close"){
+    _this.setData({
+      xlShow4: false,
+    })
+    }
+  },
+  add2:function(){
+    var _this = this
+    _this.setData({
+      ssmk: _this.data.countries,
+      xzmkShow:false,
+    })
+  },
+  select5: function (e) {
+    var _this = this
+    if(e.type=="select"){
+      _this.setData({
+        xlShow4: false,
+        ssmk: e.detail.name,
       })
     } else if (e.type == "close"){
     _this.setData({
@@ -1112,6 +1150,8 @@ Page({
 moreDo: function(){
   var _this = this;
   _this.showView(_this,"moreDo")
+  _this.selDingDanHao()
+    _this.selMoKuai()
 },
 // 侧面窗口
 showView : function(_this,type){
@@ -1193,74 +1233,119 @@ sel4:function(e){
     })
   
 },
-getAccounting : function(e){
-  wx.showLoading({
-    title : '加载中',
-    mask : 'true'
-  })
-  var _this=this;
-  let riqi4 = _this.data.riqi4;
-  let riqi5 = _this.data.riqi5;
-  let jiqi= _this.data.listJiQi;
-  let list3=[]; 
+// getAccounting : function(e){
+//   wx.showLoading({
+//     title : '加载中',
+//     mask : 'true'
+//   })
+//   var _this=this;
+//   let riqi4 = _this.data.riqi4;
+//   let riqi5 = _this.data.riqi5;
+//   let jiqi= _this.data.listJiQi;
+//   let list3=[]; 
   
-    for(let i=0;i<jiqi.length;i++){
-      for(let item in jiqi[i].list){        
+//     for(let i=0;i<jiqi.length;i++){
+//       for(let item in jiqi[i].list){        
+//           if(item>=riqi4&&item<=riqi5){
+//             list3.push({
+//                  riqi6:item,
+//                  shuliang:jiqi[i].list[item],
+//                })
+//            }    
+//       }
+//     }
+    
+//       var accounting = res.result.recordset
+//       var options = {
+//         title : {
+//           show : false
+//         },
+//         tooltip: {
+//           trigger: "axis",
+//           axisPointer: {
+//             type: "shadow"
+//           }
+//         },
+//         grid: {},
+//         xAxis: [{
+//           type: "category",
+//           data: [list3.riqi6],
+//           axisTick: {
+//             alignWithLabel: true
+//           }
+//         }],
+//         yAxis: [{
+//           type: "value",
+//           splitNumber : "8"
+//         }],
+//         series: [{
+//           name: "生产数量",
+//           type: "bar",
+//           label : {
+//             show : "true",
+//             position : "top"
+//           },
+//           itemStyle : {
+//             color : "#00CC99"
+//           },
+//           data: []
+//         },]
+//       }
+//       for(let i=0;i<accounting.length;i++){
+//         options.series[0].data.push(accounting[i].sum_load)
+//         options.series[1].data.push(accounting[i].sum_borrowed)
+//       }
+//       _this.updChart(options)
+//       _this.updOthers(0)
+//       wx.hideLoading({
+//         success: (res) => {},
+//       })
+   
+// },
+// 图形分析
+picture(){
+  var _this=this;
+  var riqi4 = _this.data.riqi4;
+  var riqi5 = _this.data.riqi5;
+  var jiqi= _this.data.listJiQi;
+  console.log(_this)
+  var oid= _this.data.ssmk;
+  console.log(oid)
+  var dname =  _this.data.ddh;
+  console.log(dname)
+  // console.log(jiqi)
+  let list6=[];
+  for(let i=0;i<jiqi.length;i++){
+      if(jiqi[i].order_id==oid&&jiqi[i].name==dname){
+        for(let item in jiqi[i].list){        
           if(item>=riqi4&&item<=riqi5){
-            list3.push({
-                 riqi6:item,
-                 shuliang:jiqi[i].list[item],
-               })
-           }    
+            console.log(1)
+            list6.push({
+              riqi6:item,
+              shuliang:jiqi[i].list[item],
+            })
+            console.log(item)
+            console.log(jiqi[i].list[item])
+          }    
       }
     }
-    
-      var accounting = res.result.recordset
-      var options = {
-        title : {
-          show : false
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow"
-          }
-        },
-        grid: {},
-        xAxis: [{
-          type: "category",
-          data: [list3.riqi6],
-          axisTick: {
-            alignWithLabel: true
-          }
-        }],
-        yAxis: [{
-          type: "value",
-          splitNumber : "8"
-        }],
-        series: [{
-          name: "生产数量",
-          type: "bar",
-          label : {
-            show : "true",
-            position : "top"
-          },
-          itemStyle : {
-            color : "#00CC99"
-          },
-          data: []
-        },]
-      }
-      for(let i=0;i<accounting.length;i++){
-        options.series[0].data.push(accounting[i].sum_load)
-        options.series[1].data.push(accounting[i].sum_borrowed)
-      }
-      _this.updChart(options)
-      _this.updOthers(0)
-      wx.hideLoading({
-        success: (res) => {},
-      })
-   
+  }
+    _this.setData({
+      list6
+    })
+    _this.onChar();
+  
+},
+onChar:function(){
+  var that=this
+  console.log(that.data.list6)
+  wx.navigateTo({
+    url: '../PCtuxing/PCtuxing?list6='+that.data.list6,
+  })
+  that.setData({
+    more:true, 
+    mask_up:true,
+  })
 },
 
   /**

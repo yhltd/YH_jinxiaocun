@@ -49,7 +49,11 @@
   <input bindinput="onInput3" data-column="riqi4" class="input_text_form" bindtap="selRIQI5"   value="{{riqi4}}" type="text" name="riqi4" ></input>
   <view class="vcent">截止时间:</view>
   <input bindinput="onInput3" data-column="riqi5" class="input_text_form" bindtap="selRIQI6"   value="{{riqi5}}" type="text" name="riqi5" ></input>
-  <button class="moreDo_view_bt" bindtap="getAccounting">生成图表</button>
+  <view class="vcent">订单号</view>
+    <input bindinput="onInput" bindtap="selDDH2" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" disabled="disabled"></input>
+    <view class="vcent">所属模块</view>
+    <input bindinput="onInput" bindtap="selDDH3" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
+  <button class="moreDo_view_bt" bindtap="picture">生成图表</button>
 </view>
 <!-- 背景 -->
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{shiFouChaDan?'true':''}}">
@@ -291,9 +295,16 @@
   bind:close="select2"
   bind:select="select2" 
 />
+<van-action-sheet
+  show="{{ xlShow4 }}"
+  actions="{{ ssmkXZ }}"
+  close-on-click-overlay
+  bind:close="select5"
+  bind:select="select5" 
+/>
 <!--  模块下拉选-->
 <van-action-sheet
-  show="{{ xlShow3 }}"
+  show="{{ xlShow }}"
   actions="{{ actions3 }}"
   close-on-click-overlay
   bind:close="select3"
@@ -301,7 +312,7 @@
 />
 <!--  插单下拉-->
 <van-action-sheet
-  show="{{ xlShow4 }}"
+  show="{{ xlShow5 }}"
   actions="{{ listDingDan }}"
   close-on-click-overlay
   bind:close="select4"
