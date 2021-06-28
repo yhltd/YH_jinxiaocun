@@ -4,7 +4,7 @@
 <!------------------------->
 <view class="flex-wrp">
 <van-tag wx:if="{{ show.success }}" closeable size="large" id="{{item.id}}" type="primary" color="#d9ecff" text-color="#409EFF" bind:close="onClose" custom-class="custom" wx:for="{{list}}" wx:key="text">{{item.name}}</van-tag>
-  <van-button type="small" custom-class="custom2" bind:click="onClick1">+添加</van-button>
+  <van-button type="small" custom-class="custom2" bind:click="onClick1" >+添加</van-button>
 </view>
 
 
@@ -80,8 +80,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering"disabled="{{isdischa!=1}}">查询</button>
 </view>
 
 <!------------------------->

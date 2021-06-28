@@ -358,7 +358,9 @@ var login = function(that,info) {
             title: '登录成功',
             icon: 'success'
           })
+          console.log("paichan"+info.inputName)
           app.globalData.gongsi = that.data.gongsi
+          app.globalData.finduser = info.inputName
         } else {
           wx.showToast({
             title: '用户名密码错误',

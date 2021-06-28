@@ -1,6 +1,12 @@
 {
   "usingComponents": {
-    "ec-canvas" : "../../components/ec-canvas/ec-canvas"
+    "ec-canvas" : "../ec-canvasnew/ec-canvas",
+    "van-popup": "../../components/popup/index",
+    "van-dialog": "../../components/dialog/index",
+    "van-action-sheet": "../../components/action-sheet/index",
+    "van-radio": "../../components/radio/index",
+    "van-radio-group": "../../components/radio-group/index",
+    "van-datetime-picker": "../../components/datetime-picker/index"
   },
   "navigationBarTitleText": "图形分析"
 }
