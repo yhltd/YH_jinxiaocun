@@ -39,8 +39,8 @@
     <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del" disabled="{{isdisshan!=1}}">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd"  disabled="{{isdisgai!=1}}">修改</button>
   </view>
 </van-popup>
 <!------------------------->

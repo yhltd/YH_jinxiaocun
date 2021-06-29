@@ -30,7 +30,7 @@
 <!------------------------->
 <view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">添加</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdis!=1}}">添加</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
     style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
 </view>
@@ -58,8 +58,8 @@
     type="text" name="dsel"></input> -->
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del" disabled="{{isdisshan!=1}}">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1" disabled="{{isdisgai!=1}}">修改</button>
   </view>
 </van-popup>
 <!-- ----------------------->

@@ -69,16 +69,19 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
-    _this.panduanquanxian(),
+    _this.panduanquanxian()
+    if (_this.data.isdischa == 1) {
       _this.addMK(),
-      _this.module_info_show('')
+        _this.module_info_show('')
+    }
   },
+
   //权限执行判断方法
   panduanquanxian: function () {
     var _this = this
     _this.setData({
       isdis: 1,
-      isdischa:1
+      isdischa: 1
     });
     //读取缓存    
     var department_list1 = wx.getStorageSync('department_list')
@@ -87,30 +90,54 @@ Page({
     console.log(paibanbiao_renyuan_bumen1)
     for (let i = 0; i < department_list1.length; i++) {
       console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
-      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "模块") {
-        console.log("模块没有添加权限")
+      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "模块单位") {
+        console.log("模块单位没有添加权限")
         console.log(department_list1[i])
         //添加没权限
         if (department_list1[i].add == "否") {
           _this.setData({
-            isdis: 2            
+            isdis: 2
           });
         } else {
           _this.setData({
-            isdis: 1           
+            isdis: 1
           });
 
         }
         //查询没权限
         if (department_list1[i].sel == "否") {
-          _this.setData({           
-            isdischa:2
+          _this.setData({
+            isdischa: 2
           });
         } else {
-          _this.setData({           
-            isdischa:1
+          _this.setData({
+            isdischa: 1
           });
 
+        }
+        //修改没权限
+        if (department_list1[i].upd == "否") {
+          _this.setData({
+            isdisgai: 2
+          });
+        } else {
+          _this.setData({
+            isdisgai: 1
+          });
+
+        }
+        //删除没权限
+        if (department_list1[i].del == "否") {
+          _this.setData({
+            isdisshan: 2
+          });
+          console.log("否 isdisshan：" + _this.data.isdisshan)
+        } else {
+          _this.setData({
+            isdisshan: 1
+          });
+
+          console.log("是 isdisshan：" + _this.data.isdisshan)
         }
         console.log(_this.data.isdis)
 

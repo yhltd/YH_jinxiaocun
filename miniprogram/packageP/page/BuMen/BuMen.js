@@ -1,7 +1,7 @@
 // miniprogram/packageP/page/BuMen/BuMen.js
 const app = getApp();
 Page({
- 
+
   /**
    * 页面的初始数据
    */
@@ -9,33 +9,68 @@ Page({
   tjShow: false,
   data: {
     list: [],
-    list2:[],
-    title: 
-    [{ text: "部门名称", width: "200rpx", columnName: "department_name", type: "digit", isupd: true },
-    { text: "页面名称", width: "200rpx", columnName: "view_name", type: "text", isupd: true },
-    { text: "添加", width: "200rpx", columnName: "add", type: "text", isupd: true },
-    { text: "删除", width: "200rpx", columnName: "del", type: "text", isupd: true },
-    { text: "修改", width: "200rpx", columnName: "upd", type: "date", isupd: true },
-    { text: "查询", width: "200rpx", columnName: "sel", type: "text", isupd: true }
-  ],
-    id:"",
-    department_name:"",
-    add:"",
-    del:"",
-    upd:"",
-    sel:"",
-    view_name:"",
-    company:"",
-    did:"",
-    dname:"",
-    dadd:"",
-    ddel:"",
-    dupd:"",
-    dsel:"",
-    vname:"",
-    dcompany:"",
-    sw1:"",
-    bumen:"",
+    list2: [],
+    title: [{
+        text: "部门名称",
+        width: "200rpx",
+        columnName: "department_name",
+        type: "digit",
+        isupd: true
+      },
+      {
+        text: "页面名称",
+        width: "200rpx",
+        columnName: "view_name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "添加",
+        width: "200rpx",
+        columnName: "add",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "删除",
+        width: "200rpx",
+        columnName: "del",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "修改",
+        width: "200rpx",
+        columnName: "upd",
+        type: "date",
+        isupd: true
+      },
+      {
+        text: "查询",
+        width: "200rpx",
+        columnName: "sel",
+        type: "text",
+        isupd: true
+      }
+    ],
+    id: "",
+    department_name: "",
+    add: "",
+    del: "",
+    upd: "",
+    sel: "",
+    view_name: "",
+    company: "",
+    did: "",
+    dname: "",
+    dadd: "",
+    ddel: "",
+    dupd: "",
+    dsel: "",
+    vname: "",
+    dcompany: "",
+    sw1: "",
+    bumen: "",
   },
 
   /**
@@ -43,13 +78,161 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
-    _this.tableShow()
+    _this.panduanquanxian()
+    if (_this.data.isdischa == 1) {
+      _this.tableShow()
+      _this.setData({
+
+      })
+      var _this = this
+      var e = ['', '', '']
+      _this.tableShow(e)
+      // _this.panduanquanxian()
+    }
+    //_this.addMK()
+    //_this.
+    //_this.module_info_show(_this.e)
+
+
+    //结束
+  },
+
+  //新增代码
+  //判断权限
+  panduanquanxian: function () {
+    var _this = this
     _this.setData({
-      
+      isdis: 1,
+      isdischa: 1,
+      isdisgai: 1,
+      isdisshan: 1
+    });
+    //读取缓存    
+    var department_list1 = wx.getStorageSync('department_list')
+    var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
+    console.log("department_list1")
+    console.log(paibanbiao_renyuan_bumen1)
+    for (let i = 0; i < department_list1.length; i++) {
+      console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
+      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "部门") {
+        console.log("部门没有添加权限")
+        console.log(department_list1[i])
+        //添加没权限
+        if (department_list1[i].add == "否") {
+          _this.setData({
+            isdis: 2
+          });
+          // console.log("否 isdis："+_this.data.isdis)
+        } else {
+          _this.setData({
+            isdis: 1
+          });
+          // console.log("是 isdis："+_this.data.isdis)
+
+        }
+        //修改没权限
+        if (department_list1[i].upd == "否") {
+          _this.setData({
+            isdisgai: 2
+          });
+        } else {
+          _this.setData({
+            isdisgai: 1
+          });
+
+        }
+        //删除没权限
+        if (department_list1[i].del == "否") {
+          _this.setData({
+            isdisshan: 2
+          });
+        } else {
+          _this.setData({
+            isdisshan: 1
+          });
+
+        }
+        //查询没权限
+        if (department_list1[i].sel == "否") {
+          _this.setData({
+            isdischa: 2
+          });
+        } else {
+          _this.setData({
+            isdischa: 1
+          });
+
+        }
+        console.log(_this.data.isdis)
+
+      }
+    }
+  },
+  // addMK: function () {
+  //   var _this = this
+  //   let user = app.globalData.gongsi;
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_PC',
+  //     data: {
+  //       query: "select name,id from module_type where company = '" + user + "'"
+  //     },
+  //     success: res => {
+  //       var list = res.result.recordset
+  //       console.log(res)
+  //       _this.setData({
+  //         list: list
+  //       })
+  //       wx.hideLoading({
+
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none'
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
+
+  module_info_show: function (e) {
+    var _this = this
+    let user = app.globalData.gongsi;
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select * from(select id,isnull((select name from module_type as t where module_info.type_id=t.id),'') as type_name,isnull(name,'') as name,isnull(cast(num as varchar),'') as num,isnull((select name from module_info as i where module_info.parent_id=i.id),'') as parent from module_info where company = '" + user + "') as p where not p.type_name  is null and p.type_name !='' and p.type_name like '%" + e + "%'"
+      },
+      success: res => {
+        var list_module_info = res.result.recordset
+        console.log(res)
+        _this.setData({
+          list_module_info: list_module_info
+        })
+        wx.hideLoading({
+
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
     })
   },
+
+  // //结束
   //初始数据
-  tableShow:function(){
+  tableShow: function () {
     var _this = this
     let user = app.globalData.gongsi;
     let bumen = app.globalData;
@@ -95,7 +278,7 @@ Page({
       dsel: _this.data.list[e.currentTarget.dataset.index].sel,
       vname: _this.data.list[e.currentTarget.dataset.index].view_name,
       dcompany: _this.data.list[e.currentTarget.dataset.index].company,
-      xzShow:true,
+      xzShow: true,
     })
     console.log(_this.data.did)
   },
@@ -105,29 +288,29 @@ Page({
     _this.setData({
       xzShow: false,
       tjShow: false,
-  })
+    })
   },
-// 修改事件
+  // 修改事件
   upd1: function () {
     var _this = this
     let user = app.globalData.gongsi;
     console.log(_this.data.dadd)
-    if (_this.data.dname != ""  && _this.data.vname != ""&& _this.data.dcompany != ""&& _this.data.did != "") {
+    if (_this.data.dname != "" && _this.data.vname != "" && _this.data.dcompany != "" && _this.data.did != "") {
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
-          query: "update department set department_name='" + _this.data.dname + "',[add]='" + _this.data.dadd + "',del='" + _this.data.ddel + "',upd='" + _this.data.dupd + "', sel='" + _this.data.dsel + "',view_name='" + _this.data.vname + "',company='" + _this.data.dcompany + "' where id='"+ _this.data.did +"'"
+          query: "update department set department_name='" + _this.data.dname + "',[add]='" + _this.data.dadd + "',del='" + _this.data.ddel + "',upd='" + _this.data.dupd + "', sel='" + _this.data.dsel + "',view_name='" + _this.data.vname + "',company='" + _this.data.dcompany + "' where id='" + _this.data.did + "'"
         },
-         success: res => {
+        success: res => {
           _this.setData({
             dname: "",
-            did:"",
+            did: "",
             dadd: "",
             ddel: "",
             dupd: "",
             dsel: "",
             vname: "",
-            dcompany:"",
+            dcompany: "",
           })
           _this.qxShow()
           _this.tableShow()
@@ -174,9 +357,9 @@ Page({
     _this.setData({
       tjShow: true,
     })
-   _this.wlShow()
+    _this.wlShow()
   },
-  wlShow:function(){
+  wlShow: function () {
     var _this = this
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
@@ -206,27 +389,26 @@ Page({
   //添加
   add1: function () {
     var _this = this
-    if (_this.data.dname != ""  && _this.data.vname != "") {
+    if (_this.data.dname != "" && _this.data.vname != "") {
       let user = app.globalData.gongsi;
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
-          query: 
-          "insert department(department_name,view_name,[add],del,upd,sel,company) values('" + _this.data.dname + "','" + _this.data.vname + "','" + _this.data.dadd + "','" + _this.data.ddel + "','" + _this.data.dupd + "','" + _this.data.dsel + "','" + app.globalData.gongsi + "')"
+          query: "insert department(department_name,view_name,[add],del,upd,sel,company) values('" + _this.data.dname + "','" + _this.data.vname + "','" + _this.data.dadd + "','" + _this.data.ddel + "','" + _this.data.dupd + "','" + _this.data.dsel + "','" + app.globalData.gongsi + "')"
         },
         success: res => {
           var list2 = res.result.recordset
           console.log(res)
           _this.setData({
             dname: "",
-            did:"",
+            did: "",
             dadd: "",
             ddel: "",
             dupd: "",
             dsel: "",
             vname: "",
-            dcompany:"",
-            tjShow:false,
+            dcompany: "",
+            tjShow: false,
           })
           _this.qxShow()
           _this.tableShow()
@@ -250,40 +432,39 @@ Page({
           console.log("请求失败！")
         }
       })
-    }else{
+    } else {
       wx.showToast({
         title: '部门名称、页面名称不能为空！',
         icon: 'none'
       })
     }
   },
-  entering:function(){
-    var _this=this
+  entering: function () {
+    var _this = this
     _this.setData({
-      cxShow:true
+      cxShow: true
     })
   },
   // 删除事件
-  del:function(){
+  del: function () {
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: 
-        "delete from department where id ='" + _this.data.did + "'"
+        query: "delete from department where id ='" + _this.data.did + "'"
       },
       success: res => {
         var list2 = res.result.recordset
         console.log(res)
         _this.setData({
           dname: "",
-          did:"",
+          did: "",
           dadd: "",
           ddel: "",
           dupd: "",
           dsel: "",
           vname: "",
-          dcompany:"",
+          dcompany: "",
           tjShow: false
         })
         _this.qxShow()
@@ -311,57 +492,57 @@ Page({
     })
   },
   //switch
-  switch1Change:function(e){
+  switch1Change: function (e) {
     var _this = this
     console.log(e.detail.value)
-    if(e.detail.value==true){
-    _this.setData({
-      dadd:'是'
-    })
-   }else{
-    _this.setData({
-      dadd : '否'
-    })
-   }
+    if (e.detail.value == true) {
+      _this.setData({
+        dadd: '是'
+      })
+    } else {
+      _this.setData({
+        dadd: '否'
+      })
+    }
   },
-  switch2Change:function(e){
+  switch2Change: function (e) {
     var _this = this
     console.log(e.detail.value)
-    if(e.detail.value==true){
-    _this.setData({
-      ddel:'是'
-    })
-   }else{
-    _this.setData({
-      ddel : '否'
-    })
-   }
+    if (e.detail.value == true) {
+      _this.setData({
+        ddel: '是'
+      })
+    } else {
+      _this.setData({
+        ddel: '否'
+      })
+    }
   },
-  switch3Change:function(e){
+  switch3Change: function (e) {
     var _this = this
     console.log(e.detail.value)
-    if(e.detail.value==true){
-    _this.setData({
-      dupd:'是'
-    })
-   }else{
-    _this.setData({
-      dupd: '否'
-    })
-   }
+    if (e.detail.value == true) {
+      _this.setData({
+        dupd: '是'
+      })
+    } else {
+      _this.setData({
+        dupd: '否'
+      })
+    }
   },
-  switch4Change:function(e){
+  switch4Change: function (e) {
     var _this = this
     console.log(e.detail.value)
-    if(e.detail.value==true){
-    _this.setData({
-      dsel:'是'
-    })
-   }else{
-    _this.setData({
-      dsel : '否'
-    })
-   }
+    if (e.detail.value == true) {
+      _this.setData({
+        dsel: '是'
+      })
+    } else {
+      _this.setData({
+        dsel: '否'
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

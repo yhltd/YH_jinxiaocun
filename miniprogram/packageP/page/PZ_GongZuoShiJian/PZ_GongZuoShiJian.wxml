@@ -17,7 +17,7 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="星期二" name="2">
@@ -38,7 +38,7 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="星期三" name="3" >
@@ -59,7 +59,7 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="星期四" name="4" >
@@ -80,7 +80,7 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="星期五" name="5" >
@@ -101,7 +101,7 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="星期六" name="6" >
@@ -122,7 +122,7 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="星期日" name="7" >
@@ -143,13 +143,13 @@
     </view>
     <!-------保存-------->
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1">保存</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save1" disabled="{{isdisgai!=1}}">保存</button>
     </view>
   </van-collapse-item>
   <van-collapse-item title="休息日" name="8" >
   <view wx:for="{{dayOff}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" bindtap="clickView" data-id="{{list_item.id}}" style="font-size: 50rpx;text-align: center;border-bottom: 1rpx solid #f2f2f2;">{{list_item.day_or_reset}}</view>
     <view class="bottom_view" style="height:10%">
-        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">添加</button>
+        <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2" disabled="{{isdis!=1}}" >添加</button>
     </view>
   </van-collapse-item>
 </van-collapse>

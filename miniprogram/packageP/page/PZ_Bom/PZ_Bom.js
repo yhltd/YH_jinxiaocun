@@ -4,6 +4,14 @@ Page({
   /**
    * 页面的初始数据
    */
+  //
+  tableShow: true,
+  delWindow1: false,
+  tjShow: false,
+  rqxzShow1: false,
+  rqxzShow2: false,
+  rqxzShow3: false,
+  //
   tjShow:false,
   xgShow: false,
   cxShow: false,
@@ -29,32 +37,179 @@ Page({
     dw: "",
     ms: "",
     id:"",
+    // 新增代码
+    isdis: '',
+    isdischa: '',
+    isdisgai:'',
+    isdisshan:''
+    //结束
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   var _this=this
-    var e= ['', '', '']
-    _this.tableShow(e)
-  },
-  tableShow:function(e){
+//原先代码
+    // var _this=this 
+    //  var e= ['', '', '']
+    //  _this.tableShow(e)
+//结束
+  
+  //新增代码
+  var _this = this
+  var e= ['', '', '']
+
+  //_this.tableShow(e)
+  
+  _this.panduanquanxian()
+  //判断是否有查看权限
+  if (_this.data.isdischa == 1) {
+    _this.tableShow()
+  }
+  _this.setData({
+
+  })
+
+  //_this.addMK()
+  //_this.
+  //_this.module_info_show(_this.e)
+   
+    
+  //   //结束
+    },
+
+  //新增代码
+       //判断权限
+       panduanquanxian: function () {
+        var _this = this
+        _this.setData({
+          isdis: 1,
+          isdischa:1,
+          isdisgai:1,
+          isdisshan:1
+        });
+        //读取缓存    
+        var department_list1 = wx.getStorageSync('department_list')
+        var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
+        console.log("department_list1")
+        console.log(paibanbiao_renyuan_bumen1)
+        for (let i = 0; i < department_list1.length; i++) {
+          console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
+          if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "BOM") {
+            console.log("BOM没有添加权限")
+            console.log(department_list1[i])
+            //添加没权限
+            if (department_list1[i].add == "否") {
+              _this.setData({
+                isdis: 2            
+              });
+              // console.log("否 isdis："+_this.data.isdis)
+            } else {
+              _this.setData({
+                isdis: 1           
+              });
+             // console.log("是 isdis："+_this.data.isdis)
+    
+            }
+            //修改没权限
+            if (department_list1[i].upd == "否") {
+              _this.setData({           
+                isdisgai:2
+              });
+            } else {
+              _this.setData({           
+                isdisgai:1
+              });
+    
+            }
+            //删除没权限
+            if (department_list1[i].del == "否") {
+              _this.setData({           
+                isdisshan:2
+              });
+              console.log("否 isdisshan："+_this.data.isdisshan)
+            } else {
+              _this.setData({           
+                isdisshan:1
+              });
+              
+              console.log("是 isdisshan："+_this.data.isdisshan)
+            }
+            //查询没权限
+            if (department_list1[i].sel == "否") {
+              _this.setData({           
+                isdischa:2
+              });
+            } else {
+              _this.setData({           
+                isdischa:1
+              });
+    
+            }
+            console.log(_this.data.isdis)
+    
+          }
+        }
+      },
+//初始数据
+tableShow: function () {
+  var _this = this
+  let user = app.globalData.gongsi;
+  wx.cloud.callFunction({
+    name: 'sqlServer_PC',
+    data: {
+      query: "select * from paibanbiao_info where remarks1='" + user + "'"
+    },
+    success: res => {
+      var list = res.result.recordset
+      _this.setData({
+        list: list,
+        listJiQi: list
+      })
+      // console.log(list)
+      wx.hideLoading({
+
+      })
+    },
+    err: res => {
+      console.log("错误!")
+    },
+    fail: res => {
+      wx.showToast({
+        title: '请求失败！',
+        icon: 'none',
+        duration: 3000
+      })
+      console.log("请求失败！")
+    }
+  })
+},
+  
+  module_info_show: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select id,code,name,[type],norms,comment,[size],[unit],isnull((select sum(use_num) from order_bom where bom_id=bom_info.id),0) as [count] from bom_info where company='" + user + "' and code like '%" + e[0] + "%' and name like '%" + e[1] + "%' and [type] like '%" + e[2] +"%'"
+        query: "select * from(select id,isnull((select name from module_type as t where module_info.type_id=t.id),'') as type_name,isnull(name,'') as name,isnull(cast(num as varchar),'') as num,isnull((select name from module_info as i where module_info.parent_id=i.id),'') as parent from module_info where company = '" + user + "') as p where not p.type_name  is null and p.type_name !='' and p.type_name like '%" + e + "%'"
       },
       success: res => {
-          var list = res.result.recordset
-          _this.setData({
-            list: list
-          })
+        var list_module_info = res.result.recordset
+        console.log(res)
+        _this.setData({
+          list_module_info: list_module_info
+        })
         wx.hideLoading({
 
         })
+              //新增
+      wx.showToast({
+        title: '删除成功！',
+        icon: 'none'
+      })
+      _this.tableShow()
+      _this.qxShow()
+      //结束
       },
       err: res => {
         console.log("错误!")
@@ -68,6 +223,57 @@ Page({
       }
     })
   },
+ 
+
+  qxShow: function () {
+    var _this = this
+    _this.setData({
+      delWindow1: false,
+      rqxzShow1: false,
+      rqxzShow2: false,
+      rqxzShow3: false,
+      tjShow: false,
+    })
+  },
+  qxShow2: function () {
+    var _this = this
+    _this.setData({
+      delWindow1: false,
+      rqxzShow1: false,
+      rqxzShow2: false,
+      rqxzShow3: false,
+    })
+  },
+  // //结束
+  // tableShow:function(e){
+  //   var _this = this
+  //   let user = app.globalData.gongsi;
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_PC',
+  //     data: {
+  //       query: "select id,code,name,[type],norms,comment,[size],[unit],isnull((select sum(use_num) from order_bom where bom_id=bom_info.id),0) as [count] from bom_info where company='" + user + "' and code like '%" + e[0] + "%' and name like '%" + e[1] + "%' and [type] like '%" + e[2] +"%'"
+  //     },
+  //     success: res => {
+  //         var list = res.result.recordset
+  //         _this.setData({
+  //           list: list
+  //         })
+  //       wx.hideLoading({
+
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none'
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
@@ -203,7 +409,9 @@ Page({
           })
           _this.qxShow()
           var e = ['', '', '']
-          _this.tableShow(e)
+
+          //_this.tableShow(e)
+
           wx.showToast({
             title: '修改成功！',
             icon: 'none'

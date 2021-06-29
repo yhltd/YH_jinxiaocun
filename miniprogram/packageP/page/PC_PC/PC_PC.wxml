@@ -33,8 +33,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">添加</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box">查询</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx"  disabled="{{isdis!=1}}">添加</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box" disabled="{{isdischa!=1}}">查询</button>
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" style="width: 247rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: -11rpx; top: 0rpx">更多操作</button>
 </view>
 
@@ -49,7 +49,7 @@
   <input bindinput="onInput3" data-column="riqi4" class="input_text_form" bindtap="selRIQI5"   value="{{riqi4}}" type="text" name="riqi4" ></input>
   <view class="vcent">截止时间:</view>
   <input bindinput="onInput3" data-column="riqi5" class="input_text_form" bindtap="selRIQI6"   value="{{riqi5}}" type="text" name="riqi5" ></input>
-  <view class="vcent">订单号</view>
+  <view class="vcent" >>订单号</view>
     <input bindinput="onInput" bindtap="selDDH2" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" disabled="disabled"></input>
     <view class="vcent">所属模块</view>
     <input bindinput="onInput" bindtap="selDDH3" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
@@ -186,10 +186,10 @@
 <!--------------------->
 <!--------删除确认-------->
 <!--------------------->
-<van-dialog
+<van-dialog 
   use-slot
   title="确认删除该排产订单？"
-  show="{{ delWindow1 }}"
+  show="{{ delWindow1 }}" 
   bind:close="onClose" 
   closeOnClickOverlay="true"
   show-confirm-button="true" 

@@ -33,9 +33,9 @@
 <!------------------------->
 <view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">添加</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdis!=1}}">添加</button>
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">查询</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx" disabled="{{isdischa!=1}}">查询</button>
 
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="getExcel"
     style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: -6rpx; top: 0rpx">导出excel</button>
@@ -136,8 +136,8 @@
     <input bindinput="onInput" data-column="xdsl" class="input_text_form" value="{{xdsl}}" type="digit" name="xdsl"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1" disabled="{{isdisgai!=1}}">修改</button>
   </view>
 </van-popup>
 <!------------------------->
@@ -176,8 +176,8 @@
   </view>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">添加</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2" disabled="{{isdis!=1}}">添加</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2" disabled="{{isdisgai!=1}}">修改</button>
   </view>
 </van-popup>
 <!------------------------->
@@ -215,7 +215,7 @@
   </view>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="wltj">添加</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="wltj" disabled="{{isdis!=1}}">添加</button>
   </view>
 </van-popup>
 <!------------------------->
