@@ -6,54 +6,151 @@ Page({
    */
   data: {
     activeKey: 0,
+    isdis: '',
+    isdischa: '',
     list: [],
     list2: [],
     list_module_info: [],
-    actions1:[],
+    actions1: [],
     actions2: [],
-    showWindow1:false,
-    cxShow:false,
-    tjShow:false,
+    showWindow1: false,
+    cxShow: false,
+    tjShow: false,
     xgShow: false,
-    xlShow1:false,
-    xlShow2:false,
+    xlShow1: false,
+    xlShow2: false,
     show: {
       primary: true,
       success: true,
     },
-    title: [{ text: "模块类别", width: "200rpx", columnName: "type_name", type: "digit", isupd: true },
-      { text: "名称", width: "200rpx", columnName: "name", type: "text", isupd: true },
-      { text: "效率/时", width: "200rpx", columnName: "num", type: "text", isupd: true },
-      { text: "父模块", width: "200rpx", columnName: "parent", type: "text", isupd: true },
+    title: [{
+        text: "模块类别",
+        width: "200rpx",
+        columnName: "type_name",
+        type: "digit",
+        isupd: true
+      },
+      {
+        text: "名称",
+        width: "200rpx",
+        columnName: "name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "效率/时",
+        width: "200rpx",
+        columnName: "num",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "父模块",
+        width: "200rpx",
+        columnName: "parent",
+        type: "text",
+        isupd: true
+      },
     ],
     moduleName: '',
-    modalInput:'',
-    empty:"",
+    modalInput: '',
+    empty: "",
     mklb: "",
     mc: "",
     xls: "",
     fmk: "",
-    tjShow2:"",
-    index_:"",
-    fmk_id:""
+    tjShow2: "",
+    index_: "",
+    fmk_id: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var _this=this
-    _this.addMK(),
-    _this.module_info_show('')
+    var _this = this
+    _this.panduanquanxian()
+    if (_this.data.isdischa == 1) {
+      _this.addMK(),
+        _this.module_info_show('')
+    }
   },
 
-  module_info_show: function(e){
+  //权限执行判断方法
+  panduanquanxian: function () {
+    var _this = this
+    _this.setData({
+      isdis: 1,
+      isdischa: 1
+    });
+    //读取缓存    
+    var department_list1 = wx.getStorageSync('department_list')
+    var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
+    console.log("department_list1")
+    console.log(paibanbiao_renyuan_bumen1)
+    for (let i = 0; i < department_list1.length; i++) {
+      console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
+      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "模块单位") {
+        console.log("模块单位没有添加权限")
+        console.log(department_list1[i])
+        //添加没权限
+        if (department_list1[i].add == "否") {
+          _this.setData({
+            isdis: 2
+          });
+        } else {
+          _this.setData({
+            isdis: 1
+          });
+
+        }
+        //查询没权限
+        if (department_list1[i].sel == "否") {
+          _this.setData({
+            isdischa: 2
+          });
+        } else {
+          _this.setData({
+            isdischa: 1
+          });
+
+        }
+        //修改没权限
+        if (department_list1[i].upd == "否") {
+          _this.setData({
+            isdisgai: 2
+          });
+        } else {
+          _this.setData({
+            isdisgai: 1
+          });
+
+        }
+        //删除没权限
+        if (department_list1[i].del == "否") {
+          _this.setData({
+            isdisshan: 2
+          });
+          console.log("否 isdisshan：" + _this.data.isdisshan)
+        } else {
+          _this.setData({
+            isdisshan: 1
+          });
+
+          console.log("是 isdisshan：" + _this.data.isdisshan)
+        }
+        console.log(_this.data.isdis)
+
+      }
+    }
+  },
+  module_info_show: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from(select id,isnull((select name from module_type as t where module_info.type_id=t.id),'') as type_name,isnull(name,'') as name,isnull(cast(num as varchar),'') as num,isnull((select name from module_info as i where module_info.parent_id=i.id),'') as parent from module_info where company = '" + user +"') as p where not p.type_name  is null and p.type_name !='' and p.type_name like '%"+ e +"%'"
+        query: "select * from(select id,isnull((select name from module_type as t where module_info.type_id=t.id),'') as type_name,isnull(name,'') as name,isnull(cast(num as varchar),'') as num,isnull((select name from module_info as i where module_info.parent_id=i.id),'') as parent from module_info where company = '" + user + "') as p where not p.type_name  is null and p.type_name !='' and p.type_name like '%" + e + "%'"
       },
       success: res => {
         var list_module_info = res.result.recordset
@@ -77,7 +174,7 @@ Page({
       }
     })
   },
-  addMK: function(){
+  addMK: function () {
     var _this = this
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
@@ -138,8 +235,8 @@ Page({
     })
     _this.addMK()
   },
-  onInput:function(e){
-    var _this=this
+  onInput: function (e) {
+    var _this = this
     let column = e.currentTarget.dataset.column
     _this.setData({
       [column]: e.detail.value
@@ -160,7 +257,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
-          query: "select id,name from module_info where company='"+ user +"'"
+          query: "select id,name from module_info where company='" + user + "'"
         },
         success: res => {
           var list2 = res.result.recordset
@@ -188,55 +285,55 @@ Page({
       })
     }
   },
-  onClick1:function(){
+  onClick1: function () {
     var _this = this
     _this.setData({
       showWindow1: true
     })
   },
-  save1:function(){
-    var _this=this
+  save1: function () {
+    var _this = this
     let user = app.globalData.gongsi;
     var moduleName = _this.data.moduleName
-    if (moduleName==""){
+    if (moduleName == "") {
       wx.showToast({
         title: '输入不能为空！',
         icon: 'none'
       })
-    }else{
+    } else {
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
-          query: "select count(name) as nameCount from module_type where company='" + user+"' and name='" + moduleName + "'"
+          query: "select count(name) as nameCount from module_type where company='" + user + "' and name='" + moduleName + "'"
         },
         success: res => {
-          if (res.result.recordsets[0][0].nameCount==0){
-      wx.cloud.callFunction({
-        name: 'sqlServer_PC',
-        data: {
-          query: "insert module_type(name,company) values('" + moduleName +"','" + app.globalData.gongsi +"')"
-        },
-        success: res => {
-          var list = res.result.recordset
-          console.log(res)
-          _this.setData({
-            list: list,
-            empty:""
-          })
-          _this.addMK()
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-          }else{
+          if (res.result.recordsets[0][0].nameCount == 0) {
+            wx.cloud.callFunction({
+              name: 'sqlServer_PC',
+              data: {
+                query: "insert module_type(name,company) values('" + moduleName + "','" + app.globalData.gongsi + "')"
+              },
+              success: res => {
+                var list = res.result.recordset
+                console.log(res)
+                _this.setData({
+                  list: list,
+                  empty: ""
+                })
+                _this.addMK()
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none'
+                })
+                console.log("请求失败！")
+              }
+            })
+          } else {
             wx.showToast({
               title: '该工序名已存在！',
               icon: 'none'
@@ -257,9 +354,9 @@ Page({
     }
     _this.addMK()
   },
-  save2:function(){
+  save2: function () {
     var _this = this
-    if (_this.data.type_id != ""  && _this.data.mklb != "" && _this.data.mc != "") {
+    if (_this.data.type_id != "" && _this.data.mklb != "" && _this.data.mc != "") {
       let user = app.globalData.gongsi;
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
@@ -292,17 +389,17 @@ Page({
           console.log("请求失败！")
         }
       })
-    }else{
+    } else {
       wx.showToast({
         title: '模块类别、名称不能为空！',
         icon: 'none'
       })
     }
   },
-  entering:function(){
-    var _this=this
+  entering: function () {
+    var _this = this
     _this.setData({
-      cxShow:true
+      cxShow: true
     })
   },
   inquire: function () {
@@ -317,7 +414,7 @@ Page({
       tjShow: false,
       cxShow: false,
       xgShow: false,
-      empty:"",
+      empty: "",
       mklb: "",
       mc: "",
       xls: "",
@@ -331,16 +428,16 @@ Page({
     var _this = this
     _this.setData({
       cxShow: false,
-      empty:"",
-      moduleName:""
+      empty: "",
+      moduleName: ""
     })
   },
-  select1:function(e){
+  select1: function (e) {
     var _this = this
     _this.setData({
       xlShow1: false
     })
-    if (e.type == 'select'){
+    if (e.type == 'select') {
       _this.setData({
         mklb: e.detail.name,
         type_id: e.detail.id,
@@ -359,7 +456,7 @@ Page({
       })
     }
   },
-  clickView:function(e){
+  clickView: function (e) {
     var _this = this
     var index_ = e.currentTarget.dataset.index;
     _this.setData({
@@ -371,7 +468,7 @@ Page({
       fmk: _this.data.list_module_info[index_].parent
     })
   },
-  del:function(){
+  del: function () {
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
@@ -406,12 +503,12 @@ Page({
       }
     })
   },
-  upd:function(){
+  upd: function () {
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "update module_info set type_id='" + _this.data.type_id + "',name='" + _this.data.mc + "',num='" + _this.data.xls + "',parent_id='" + _this.data.fmk_id +"' where id ='" + _this.data.list_module_info[_this.data.index_].id + "'"
+        query: "update module_info set type_id='" + _this.data.type_id + "',name='" + _this.data.mc + "',num='" + _this.data.xls + "',parent_id='" + _this.data.fmk_id + "' where id ='" + _this.data.list_module_info[_this.data.index_].id + "'"
       },
       success: res => {
         var list2 = res.result.recordset
@@ -450,8 +547,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏

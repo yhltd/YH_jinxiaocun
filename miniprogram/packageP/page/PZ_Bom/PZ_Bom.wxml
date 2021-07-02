@@ -32,10 +32,15 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button>
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">查询</button>
-</view>
 
+<!-- 新代码 -->
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
+<!-- 结束 -->
+  
+	<!--原有代码 <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button> -->
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" 
+   disabled="{{isdischa!=1}}">查询</button>
+</view>
 
 <!------------------------->
 <!---------添加弹窗--------->
@@ -80,8 +85,9 @@
     <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
+    disabled="{{isdisgai!=1}}">修改</button>
   </view>
 </van-popup>
 <!------------------------->

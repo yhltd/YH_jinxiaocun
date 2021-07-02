@@ -8,10 +8,11 @@
   </view>
 </view>
 
+<!-- <button class="btn-primary" hover-class="btn-hover" disabled="{{isdis!=1}}" bindtap="chazhao">查找</button> -->
 
 <van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
   <van-tabbar-item icon="../../images/配置.png">配置表</van-tabbar-item>
-  <van-tabbar-item icon="../../images/订单.png">订单及部门</van-tabbar-item>
+  <van-tabbar-item icon="../../images/订单.png" disabled="{{isdis!=1}}" >订单及部门</van-tabbar-item>
   <van-tabbar-item icon="../../images/排产订单.png">排产及排班</van-tabbar-item>
   <van-tabbar-item icon="../../images/操作-汇总表.png">汇总</van-tabbar-item>
 </van-tabbar>
