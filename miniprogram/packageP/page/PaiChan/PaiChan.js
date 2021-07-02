@@ -5,9 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    active: 2,
+    active: 3,
     showList: [{ text: "排产", url: "../PC_PC/PC_PC" }],
-    showList2: [{ text: "排班", url: "../PaiBan/PaiBan" }]
+    showList2: [{ text: "排班", url: "../PaiBan/PaiBan" }],
+    showList3: [{ text: "人员信息", url: "../PC_RenYuanXinXi/PC_RenYuanXinXi" }],
+    showList4: [{ text: "排班明细", url: "../PC_PaiBanMingXi/PC_PaiBanMingXi" }]
   },
 
   /**
@@ -32,7 +34,7 @@ Page({
       })
     }
   },
-  go: function (e) {
+  go1: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
@@ -41,7 +43,7 @@ Page({
       url: url
     })
   },
-  togo: function (e) {
+  go2: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList2[index].url
@@ -50,6 +52,27 @@ Page({
       url: url
     })
   },
+
+  go3: function (e) {
+    var _this = this;
+    var index = e.currentTarget.dataset.index;
+    var url = _this.data.showList3[index].url
+    var text = _this.data.showList3[index].text
+    wx.navigateTo({
+      url: url
+    })
+  },
+
+  go4: function (e) {
+    var _this = this;
+    var index = e.currentTarget.dataset.index;
+    var url = _this.data.showList4[index].url
+    var text = _this.data.showList4[index].text
+    wx.navigateTo({
+      url: url
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

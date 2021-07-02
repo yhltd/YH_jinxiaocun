@@ -1,0 +1,85 @@
+<!--packageP/page/PC_PaiBanMingXi/PC_PaiBanMingXi.wxml-->
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item"
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
+
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
+</view>
+
+
+<!------------------------->
+<!---------排班操作--------->
+<!------------------------->
+<view class="input_view" hidden="{{handle}}">
+      <button class="bt_form" bindtap="xgPaiBan" hover-class="bt_form_hover">修改排班</button>
+      <button class="bt_form" bindtap="scPaiBan" hover-class="bt_form_hover">删除排班</button>
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>
+
+
+<!------------------------->
+<!---------删除排班--------->
+<!------------------------->
+<van-dialog
+  use-slot
+  title="确认删除该排班？"
+  show="{{ delWindow1 }}"
+  closeOnClickOverlay="true"
+  show-confirm-button="true" 
+  show-cancel-button="true" 
+  bind:confirm="sure1"
+>
+</van-dialog>
+
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="xgShow" show="{{ xgShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">姓名</view>
+    <input bindinput="onInput3" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm"></input>
+    <view class="lables">电话</view>
+    <input bindinput="onInput3" data-column="dh" class="input_text_form" value="{{dh}}" type="number" name="dh"></input>
+    <view class="lables">身份证号</view>
+    <input bindinput="onInput3" data-column="sfzh" class="input_text_form" value="{{sfzh}}" type="idcard" name="sfzh"></input>
+    <view class="lables">部门</view>
+    <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm"></input>
+    <view class="lables">班次</view>
+    <input bindinput="onInput3" data-column="bc" class="input_text_form" value="{{bc}}" type="text" name="bc"></input>
+    <view class="lables">日期</view>
+    <input bindinput="onInput3" data-column="rq" class="input_text_form" value="{{rq}}" type="text" name="rq"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>

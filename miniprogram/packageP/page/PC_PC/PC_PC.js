@@ -694,9 +694,11 @@ Page({
         query: "select oi.id,oi.code,oi.product_name,oi.norms,oi.set_date,oi.company,oi.order_id as name,oi.set_num-sum(isnull(wd.work_num, 0)) as set_num from order_info as oi left join work_detail as wd on oi.id = wd.order_id group by oi.id,oi.code,oi.product_name,oi.norms,oi.set_date,oi.company,oi.order_id,oi.set_num having oi.set_num-sum(isnull(wd.work_num, 0)) > 0"
       },
       success: res => {
+        console.log(res.result.recordset)
         _this.setData({
           actions2: res.result.recordset
         })
+        console.log(_this.data.actions2)
       },
       err: res => {
         console.log("错误!")

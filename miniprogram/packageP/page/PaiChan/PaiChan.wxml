@@ -1,11 +1,19 @@
 <!-- <van-cell is-link title="排产" link-type="navigateTo" url="../PC_PC/PC_PC"/> -->
 
 <view class="list">
-  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
+  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go1" data-index="{{index}}">
     {{item.text}}
     <image class="img" src="../../../images/前往.png"></image>
   </view>
-  <view class="item" hover-class="item_hover" wx:for="{{showList2}}" wx:key="text" bindtap="togo" data-index="{{index}}">
+  <view class="item" hover-class="item_hover" wx:for="{{showList2}}" wx:key="text" bindtap="go2" data-index="{{index}}">
+    {{item.text}}
+    <image class="img" src="../../../images/前往.png"></image>
+  </view>
+  <view class="item" hover-class="item_hover" wx:for="{{showList3}}" wx:key="text" bindtap="go3" data-index="{{index}}">
+    {{item.text}}
+    <image class="img" src="../../../images/前往.png"></image>
+  </view>
+  <view class="item" hover-class="item_hover" wx:for="{{showList4}}" wx:key="text" bindtap="go4" data-index="{{index}}">
     {{item.text}}
     <image class="img" src="../../../images/前往.png"></image>
   </view>
