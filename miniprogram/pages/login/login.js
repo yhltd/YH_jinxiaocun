@@ -381,6 +381,50 @@ var login = function(that,info) {
         })
       }
     })
+
+    //803登录  20210709  胡超
+  }else if(system =="订单追踪系统"){
+    var sql = "select * from user_info where code = '" + info.inputName + "' and pwd = '" + info.inputPwd + "'";
+
+    wx.cloud.callFunction({
+      
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql
+      },
+      success(res) {
+        if(res.result.recordset.length == undefined){
+          wx.showToast({
+            title: '用户密码错误',
+            icon: 'none'
+          })
+        }else{
+          if (res.result.recordset.length > 0) {
+            wx.navigateTo({
+              url: '../../package_tb3999803/pages/index/index?user=' + JSON.stringify(res.result.recordset[0])
+            })
+            wx.showToast({
+              title: '登录成功',
+            })
+          } else {
+            wx.showToast({
+              title: '用户名密码错误',
+              icon: "none"
+            })
+          }
+        }
+      },
+      fail(res) {
+        console.log("失败", res)
+      },
+      complete: function () {
+        that.setData({
+          lock: true
+        })
+      }
+    })
+  //结束
+  
   }else{
     wx.showToast({
       title: '请选择系统',
@@ -580,6 +624,23 @@ Page({
     var _this = this;
     var system = _this.data.systemArray[e.detail.value];
     var arr = "";
+
+    //803登录  20210709  胡超
+    if (system == '订单追踪系统'){
+      _this.setData({
+        system,
+        gongsi : '订单追踪系统',
+        pickerArray: ['订单追踪系统']
+      })
+      return;
+    //结束
+
+    }else{
+      _this.setData({
+        gongsi : "选择公司",
+        pickerArray: []
+      })
+    }
     if(system=="零售管理系统"){
       _this.setData({
         gongsi : "选择店铺"
@@ -647,7 +708,7 @@ Page({
     } else if (system == "云合信用卡管理系统") {
       _this.setData({
         system,
-      })
+      }) 
       wx.showLoading({
         title: '获取公司信息中',
         mask: 'true'
