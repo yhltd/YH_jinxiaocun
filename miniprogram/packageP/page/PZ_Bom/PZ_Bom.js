@@ -64,7 +64,7 @@ Page({
   _this.panduanquanxian()
   //判断是否有查看权限
   if (_this.data.isdischa == 1) {
-    _this.tableShow()
+    _this.tableShow(e)
   }
   _this.setData({
 
@@ -76,7 +76,7 @@ Page({
    
     
   //   //结束
-    },
+},
 
   //新增代码
        //判断权限
@@ -158,7 +158,7 @@ tableShow: function () {
   wx.cloud.callFunction({
     name: 'sqlServer_PC',
     data: {
-      query: "select * from paibanbiao_info where remarks1='" + user + "'"
+      query: "select * from bom_info where company='" + user + "'"
     },
     success: res => {
       var list = res.result.recordset
@@ -166,7 +166,7 @@ tableShow: function () {
         list: list,
         listJiQi: list
       })
-      // console.log(list)
+      console.log(list)
       wx.hideLoading({
 
       })
@@ -410,14 +410,11 @@ tableShow: function () {
           _this.qxShow()
           var e = ['', '', '']
 
-          //_this.tableShow(e)
+          _this.tableShow(e)
 
           wx.showToast({
             title: '修改成功！',
             icon: 'none'
-          })
-          wx.hideLoading({
-
           })
         },
         err: res => {

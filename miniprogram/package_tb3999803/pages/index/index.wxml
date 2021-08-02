@@ -248,6 +248,7 @@
       value="{{page.list[nowOrder].Kong_two}}"
       readonly
     />
+    
     <van-field
       label="出货应收款"
       value="{{page.list[nowOrder].receivable}}"

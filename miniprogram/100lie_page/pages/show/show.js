@@ -6,13 +6,16 @@ Page({
    */
   data: {
     gongsi:'',
-    name:''
+    name:'',
+    user:''
   },
   onLoad: function (options) {
     this.setData({
       gongsi:options.gongsi,
-      name : options.name
+      name : options.name,
+      user : options.user
     })
+    console.log(options)
   },
   //使用人员
  userren:function(){

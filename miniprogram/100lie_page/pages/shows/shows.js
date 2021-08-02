@@ -6,7 +6,8 @@ Page({
    */
   data: {
     gongsi:'',
-    name:''
+    name:'',
+    user:''
   },
 
   /**
@@ -15,7 +16,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       gongsi:options.gongsi,
-      name : options.name
+      name : options.name,
+      user : options.user
     })
   },
   // 公司规定

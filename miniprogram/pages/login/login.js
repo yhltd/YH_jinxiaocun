@@ -200,17 +200,19 @@ var login = function(that,info) {
       }
     })
   }else if(system=="云合分权编辑系统"){
-    var ssql = "select * from baitaoquanxian_renyun where B = '" + that.data.gongsi + "' and E = '" + info.inputPwd + "' and C ='" + info.inputName + "'"
+    var ssql = "select * from baitaoquanxian_renyun where B = '" + that.data.gongsi + "' and E = '" + info.inputPwd + "' and D ='" + info.inputName + "'"
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
         query : ssql
       },
       success(res){       
+        let user = res.result.recordset[0].C
+        console.log(res.result.recordset[0].C)
         if(res.result.recordset.length > 0){
-            if(info.inputName=="管理员"){
+            if(user=="管理员"){
               wx.navigateTo({
-                url: '../../100lie_page/pages/shows/shows?gongsi='+ that.data.gongsi + '&name='+ info.inputName
+                url: '../../100lie_page/pages/shows/shows?gongsi='+ that.data.gongsi + '&name='+ info.inputName + '&user='+ user
               })
               wx.showToast({
                 title: '登录成功',
@@ -218,7 +220,7 @@ var login = function(that,info) {
 
             }else{
               wx.navigateTo({
-                url: '../../100lie_page/pages/show/show?gongsi='+ that.data.gongsi + '&name='+ info.inputName
+                url: '../../100lie_page/pages/show/show?gongsi='+ that.data.gongsi + '&name='+ info.inputName + '&user='+ user
               })
               wx.showToast({
                 title: '登录成功',
