@@ -23,7 +23,7 @@ page {
 .main {
   position: absolute;
   width: 100%;
-  top: 6%;
+  top: 13%;
 }
 
 .shangpin-text {
@@ -87,10 +87,21 @@ left: 46%;
 .bk_ss {
   border: 1px solid #1c60a3;
   border-radius: 29rpx;
-  width: 55%;
+  width: 60%;
   position: absolute;
   left: 21.3%;
   top: 0.5%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
+.bk_ss2 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 60%;
+  position: absolute;
+  left: 21.3%;
+  top: 6%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }

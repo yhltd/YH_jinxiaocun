@@ -24,7 +24,7 @@ Page({
             { text: "描述", width: "400rpx", columnName: "comment", type: "date", isupd: true },
             { text: "大小", width: "200rpx", columnName: "size", type: "text", isupd: true },
             { text: "单位", width: "200rpx", columnName: "unit", type: "date", isupd: true },
-            { text: "使用数量", width: "200rpx", columnName: "count", type: "date", isupd: false }
+            { text: "使用数量", width: "200rpx", columnName: "useNum", type: "date", isupd: false }
           ],
     code:"",  
     name:"",
@@ -152,13 +152,14 @@ Page({
         }
       },
 //初始数据
-tableShow: function () {
+tableShow: function (e) {
   var _this = this
   let user = app.globalData.gongsi;
+  console.log(e)
   wx.cloud.callFunction({
     name: 'sqlServer_PC',
     data: {
-      query: "select * from bom_info where company='" + user + "'"
+      query: "select * from (select row_number() over(order by b.id) as rownum,b.*,isnull((select sum(o.use_num*oi.set_num) from order_bom as o left join order_info as oi on o.order_id = oi.id where o.bom_id = b.id), 0) as useNum from bom_info as b where b.company = '" + user + "' and code like '%" + e[0] + "%' and name like '%" + e[1] + "%' and type like '%" + e[2] + "%') as bom where company='" + user + "'"
     },
     success: res => {
       var list = res.result.recordset
@@ -457,7 +458,7 @@ tableShow: function () {
           })
           _this.qxShow()
           var e = ['', '', '']
-          _this.tableShow(e)
+          _this.tableShow()
           wx.showToast({
             title: '删除成功！',
             icon: 'none'

@@ -1,7 +1,8 @@
-<view class='header'>
-  <view class="dq_y">明细</view>
+<view class='header' style="width: 750rpx; height: 143rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+  <view class="dq_y" style="position: absolute; left: 38rpx; top: 43rpx">明细</view>
   <view class='pm'></view>
   <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <input class='bk_ss2' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi2" placeholder="搜索供货商或客户名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
 </view>
 <view class=' main'>
   <view class='list_ps' wx:for="{{szzhi}}" wx:key="item" wx:for-index='i' data-uid="{{item._id}}" data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'>

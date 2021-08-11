@@ -5,11 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    active: 3,
+    active: 2,
     showList: [{ text: "排产", url: "../PC_PC/PC_PC" }],
     showList2: [{ text: "排班", url: "../PaiBan/PaiBan" }],
     showList3: [{ text: "人员信息", url: "../PC_RenYuanXinXi/PC_RenYuanXinXi" }],
-    showList4: [{ text: "排班明细", url: "../PC_PaiBanMingXi/PC_PaiBanMingXi" }]
+    showList4: [{ text: "排班明细", url: "../PC_PaiBanMingXi/PC_PaiBanMingXi" }],
+    showList5: [{ text: "排产核对", url: "../PaiChanHeDui/PaiChanHeDui" }],
   },
 
   /**
@@ -68,6 +69,16 @@ Page({
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList4[index].url
     var text = _this.data.showList4[index].text
+    wx.navigateTo({
+      url: url
+    })
+  },
+
+  go5: function (e) {
+    var _this = this;
+    var index = e.currentTarget.dataset.index;
+    var url = _this.data.showList5[index].url
+    var text = _this.data.showList5[index].text
     wx.navigateTo({
       url: url
     })

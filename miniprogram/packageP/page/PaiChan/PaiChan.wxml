@@ -17,6 +17,10 @@
     {{item.text}}
     <image class="img" src="../../../images/前往.png"></image>
   </view>
+  <view class="item" hover-class="item_hover" wx:for="{{showList5}}" wx:key="text" bindtap="go5" data-index="{{index}}">
+    {{item.text}}
+    <image class="img" src="../../../images/前往.png"></image>
+  </view>
 </view>
 
 

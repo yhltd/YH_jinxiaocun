@@ -19,8 +19,12 @@ Page({
         url: "../PZ_GongZuoShiJian/PZ_GongZuoShiJian"
       },
       {
-        text: "bom",
+        text: "BOM",
         url: "../PZ_Bom/PZ_Bom"
+      },
+      {
+        text: "账号管理",
+        url: "../ZhangHaoGuanLi/ZhangHaoGuanLi"
       },
     ]
   },

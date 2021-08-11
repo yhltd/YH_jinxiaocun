@@ -45,7 +45,7 @@
 <!------------------------->
 <!---------添加弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
 	<view class="lables">物料编码</view>
     <input bindinput="onInput" data-column="wlbm" class="input_text_form" value="{{wlbm}}" type="text" name="wlbm" ></input>
     <view class="lables">物料名称</view>
@@ -68,7 +68,7 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="xgShow" show="{{ xgShow }}" position="bottom" custom-style="height: 100%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 100%;" >
 	<view class="lables">物料编码</view>
     <input bindinput="onInput" data-column="wlbm" class="input_text_form" value="{{wlbm}}" type="text" name="wlbm" ></input>
     <view class="lables">物料名称</view>

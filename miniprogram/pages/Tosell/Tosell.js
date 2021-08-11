@@ -132,6 +132,83 @@ Page({
     }
 
   },
+
+  xixi2: function(e) {
+    if (e.detail.value == "") {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'"
+        },
+        success(res) {
+          that.setData({
+            szzhi: res.result
+          })
+          console.log(that.data.szzhi)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({
+      //   finduser: finduser,
+      //   gongsi: gongsi,
+
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
+
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.zh_name='" + finduser + "' and yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'and yh_jinxiaocun_mingxi.shou_h like '%" + e.detail.value + "%'"
+        },
+        success(res) {
+          that.setData({
+            szzhi: res.result
+          })
+          console.log(that.data.szzhi)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+      // db.collection("Yh_JinXiaoCun_mingxi").where({      
+      //     finduser: finduser,
+      //     gongsi: gongsi,
+      //     cpname: db.RegExp({
+      //       regexp: e.detail.value,    
+      //     options: 'i',   
+      //     })    
+      // }).get({
+      //   success: res => {
+      //     that.setData({
+      //       szzhi: res.data
+      //     })
+      //   }
+      // })
+
+    }
+
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

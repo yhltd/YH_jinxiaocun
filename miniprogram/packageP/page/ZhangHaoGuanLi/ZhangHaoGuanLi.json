@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-popup": "../../components/popup/index"
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "账号管理"
+}
