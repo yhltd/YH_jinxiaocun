@@ -77,7 +77,9 @@
     <view class="lables">班次</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" value="{{bc}}" type="text" name="bc"></input>
     <view class="lables">日期</view>
-    <input bindinput="onInput3" data-column="rq" class="input_text_form" value="{{rq}}" type="text" name="rq"></input>
+    <picker class="pick" mode="date" value="{{rq}}" data-column_name="rq" bindchange="choiceDate">
+    <input bindinput="onInput3" data-column="rq" class="input_text_form" value="{{rq}}" type="text" name="rq" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>

@@ -49,9 +49,11 @@
 	<view class="lables">订单号</view>
     <input bindinput="onInput" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" ></input>
     <view class="lables">模块</view>
-    <input bindinput="onInput" data-column="mk" class="input_text_form"  value="{{mk}}" type="text" name="mk"></input>
+    <input bindinput="onInput" data-column="mk" class="input_text_form"  value="{{mk}}" type="text" name="mk" disabled="disabled"></input>
     <view class="lables">日期</view>
-    <input bindinput="onInput2" data-column="rq" class="input_text_form" bindtap="selRIQI1" value="{{rq}}" type="date" name="rq"></input>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="rq" class="input_text_form" value="{{rq}}" type="date" name="rq" disabled="disabled"></input>
+  </picker>
     <view class="lables">数量</view>
     <input bindinput="onInput" data-column="sl" class="input_text_form" value="{{sl}}" type="number" name="sl"></input>
   <view class="bottom_view" style="height:10%">
@@ -68,7 +70,9 @@
     <view class="lables">模块</view>
     <input bindinput="onInput" data-column="mk" class="input_text_form"  value="{{mk}}" type="text" name="mk"></input>
     <view class="lables">日期</view>
-    <input bindinput="onInput2" data-column="rq" class="input_text_form" bindtap="selRIQI1" value="{{rq}}" type="date" name="rq"></input>
+    <picker class="pick" mode="date" value="{{rq}}" data-column_name="rq" bindchange="choiceDate">
+    <input bindinput="onInput2" data-column="rq" class="input_text_form" value="{{rq}}" type="date" name="rq" disabled="disabled"></input>
+  </picker>
     <view class="lables">数量</view>
     <input bindinput="onInput" data-column="sl" class="input_text_form" value="{{sl}}" type="number" name="sl"></input>
   <view class="bottom_view" style="height:10%">
@@ -95,14 +99,19 @@
 <!------------------------->
 <!---------日期弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow2" show="{{ rqxzShow1}}" position="bottom" custom-style="height: 60%;" >
+<!-- <van-popup bind:click-overlay="qxShow2" show="{{ rqxzShow1}}" position="bottom" custom-style="height: 60%;" >
 <van-datetime-picker
   type="date"
-  value="{{ currentDate }}"
+  data-column_name="currentDate"
+  bindchange="choiceDate"
   min-date="{{ minDate }}"
   max-date="{{ maxDate }}"
-  bind:input="onInput"
+  value="{{ currentDate }}"
   bind:confirm="onInput2"
   bind:cancel="qxShow2"
 />
-</van-popup>
+<picker class="pick" mode="date" value="{{date}}" data-column_name="empty" bindchange="choiceDate">
+    <input bindinput="onInput2" class="input_text_form2" value="{{empty}}" type="{{dataset_input.input_type}}"
+      name="moduleName" data-column="moduleName" disabled="disabled"></input>
+  </picker>
+</van-popup> -->

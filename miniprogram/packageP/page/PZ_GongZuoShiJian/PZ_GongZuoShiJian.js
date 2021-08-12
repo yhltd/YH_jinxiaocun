@@ -585,6 +585,7 @@ Page({
     this.setData({
       [e.target.dataset.column_name]: e.detail.value
     })
+    console.log(e.detail.value)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

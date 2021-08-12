@@ -41,14 +41,22 @@
 <!-- 更多操作弹窗 -->
 <view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{shiFouChaDan?'true':''}}">
   <view class="vcent">起始时间:</view>
-  <input bindinput="onInput3" data-column="riqi2" class="input_text_form" bindtap="selRIQI3"   value="{{riqi2}}" type="text" name="riqi2" ></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+  <input bindinput="onInput3" data-column="riqi2" class="input_text_form" value="{{riqi2}}" type="text" name="riqi2" disabled="disabled"></input>
+</picker>
   <view class="vcent">截止时间:</view>
-  <input bindinput="onInput3" data-column="riqi3" class="input_text_form" bindtap="selRIQI4"   value="{{riqi3}}" type="text" name="riqi3" ></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi3" bindchange="choiceDate">
+  <input bindinput="onInput3" data-column="riqi3" class="input_text_form" value="{{riqi3}}" type="text" name="riqi3" disabled="disabled"></input>
+</picker>
   <button class="moreDo_view_bt" bindtap="sel3">统计</button>
   <view class="vcent">起始时间:</view>
-  <input bindinput="onInput3" data-column="riqi4" class="input_text_form" bindtap="selRIQI5"   value="{{riqi4}}" type="text" name="riqi4" ></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi4" bindchange="choiceDate">
+  <input bindinput="onInput3" data-column="riqi4" class="input_text_form" value="{{riqi4}}" type="text" name="riqi4" disabled="disabled"></input>
+  </picker>
   <view class="vcent">截止时间:</view>
-  <input bindinput="onInput3" data-column="riqi5" class="input_text_form" bindtap="selRIQI6"   value="{{riqi5}}" type="text" name="riqi5" ></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi5" bindchange="choiceDate">
+  <input bindinput="onInput3" data-column="riqi5" class="input_text_form" value="{{riqi5}}" type="text" name="riqi5" disabled="disabled"></input>
+  </picker>
   <view class="vcent" >>订单号</view>
     <input bindinput="onInput" bindtap="selDDH2" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" disabled="disabled"></input>
     <view class="vcent">所属模块</view>
@@ -322,10 +330,8 @@
 <van-popup bind:click-overlay="qxShow2" show="{{ rqxzShow }}" position="bottom" custom-style="height: 60%;" >
 <van-datetime-picker
   type="datetime"
-  value="{{ currentDate }}"
   min-date="{{ minDate }}"
   max-date="{{ maxDate }}"
-  bind:input="onInput"
   bind:confirm="onInput2"
   bind:cancel="qxShow2"
 />

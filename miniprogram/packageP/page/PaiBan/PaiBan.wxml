@@ -56,9 +56,13 @@
 <!------------------------->
 <van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
   <view class="lables">开始时间:</view>
-  <input bindinput="onInput2" data-column="riqi1" class="input_text_form" bindtap="selRIQI1"   value="{{riqi1}}" type="date" name="riqi1" ></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+  <input bindinput="onInput2" data-column="riqi1" class="input_text_form" value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
+  </picker>
   <view class="lables">结束时间:</view>
-  <input bindinput="onInput3" data-column="riqi2" class="input_text_form" bindtap="selRIQI2"   value="{{riqi2}}" type="date" name="riqi2" ></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+  <input bindinput="onInput3" data-column="riqi2" class="input_text_form" value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
+</picker>
 	  <view class="lables">部门名称</view>
     <input bindinput="onInput4" data-column="dname" class="input_text_form" bindtap="selBM" value="{{dname}}" type="text" name="dname" ></input>
     <view class="lables">分班次</view>
@@ -163,7 +167,9 @@
 <!------------------------->
 <van-popup bind:click-overlay="xgShow" show="{{ xgShow }}" position="bottom" custom-style="height: 100%;" >
 	<view class="lables">创建日期</view>
-    <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi"></input>
+  <picker class="pick" mode="date" value="{{riqi}}" data-column_name="riqi" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
+  </picker>
     <view class="lables">计划名称</view>
     <input bindinput="onInput" data-column="plan_name" class="input_text_form" value="{{plan_name}}" type="number" name="plan_name"></input>
     <view class="lables">人数</view>

@@ -195,8 +195,8 @@ Page({
     animationData_moreDo_view: [],
     minHour: 0,
     maxHour: 60,
-    minDate: new Date(1899, 1, 1).getTime(),
-    maxDate: new Date(2030, 12, 31).getTime(),
+    minDate: new Date(2000, 1, 1).getTime(),
+    maxDate: new Date(2099, 12, 31).getTime(),
     currentDate: new Date().getTime(),
   },
 
@@ -317,6 +317,14 @@ Page({
   //     }
   //   })
   // },
+  choiceDate: function (e) {
+    //e.preventDefault(); 
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value
+    })
+    console.log(e.detail.value)
+  },
+
 
   module_info_show: function (e) {
     var _this = this
@@ -1105,9 +1113,10 @@ Page({
       currentDate: event.detail,
     });
   },
-  onInput2: function () {
+  onInput2: function (event) {
     var _this = this
-    var date = new Date(_this.data.currentDate)
+    console.log(event)
+    var date = new Date(event.detail)
     var Y = date.getFullYear() + '-'
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
     var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())

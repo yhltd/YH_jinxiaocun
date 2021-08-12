@@ -473,6 +473,15 @@ Page({
       [column]: e.detail.value
     })
   },
+
+  choiceDate: function (e) {
+    //e.preventDefault(); 
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value
+    })
+    console.log(e.detail.value)
+  },
+  
   //添加触发
   inquire: function () {
     var _this = this

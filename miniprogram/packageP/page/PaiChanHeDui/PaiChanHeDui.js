@@ -57,6 +57,13 @@ Page({
     currentDate: new Date().getTime(),
   },
 
+  choiceDate: function (e) {
+    //e.preventDefault(); 
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value
+    })
+    console.log(e.detail.value)
+  },
   panduanquanxian: function () {
     var _this = this
     _this.setData({
