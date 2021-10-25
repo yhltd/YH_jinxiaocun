@@ -35,8 +35,8 @@
 <view class="choiceList" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
     <view>
-      <view class="lables">用户名:</view>
-      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="text" name="name"></input>
+      <view class="lables">员工名称:</view>
+      <input class="input_text_form" placeholder="请输入员工名称" value="{{empty}}" type="text" name="name"></input>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

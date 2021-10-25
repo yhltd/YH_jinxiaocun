@@ -47,7 +47,9 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
-    id: ''
+    id: '',
+    lie:"",
+    text_type:""
   },
 
   /**
@@ -101,10 +103,12 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select kaoqinbiao from gongzi_title where kaoqinbiao is not null"
+        query: "select kaoqinbiao from gongzi_title where kaoqinbiao is not null and kaoqinbiao <> ''"
       },
       success: res => {
+        console.log(res.result.recordsets[0]);
         this.setData({
+          
           title: res.result.recordsets[0]
         })
       },
@@ -179,6 +183,8 @@ Page({
       title_year: e.detail.year
     })
 
+    var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month +" and AO = '"+this.data.companyName+"'"
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
@@ -621,8 +627,17 @@ Page({
       })
       return
     }
+    console.log(e)
+    var lie = e.currentTarget.dataset.doinb
+    var text_type
+    if(lie == "AJ" || lie == "AK" || lie == "AL" || lie == "AM" || lie == "AN"){
+      text_type = "number"
+    }else{
+      text_type = "text"
+    }
     var collection = e.currentTarget.dataset
     that.setData({
+      text_type:text_type,
       id: collection.id,
       name: collection.name,
       edit_old: collection.x,

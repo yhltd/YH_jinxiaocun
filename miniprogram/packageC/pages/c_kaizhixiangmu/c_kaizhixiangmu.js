@@ -9,7 +9,7 @@ Page({
     hid_view : false,
     empty : "",
     userInfo : [],
-    
+    this_quanxian:"",
     list : [
       {
         dbName : "ROW_ID",
@@ -68,7 +68,11 @@ Page({
     animationData_input : [],
 
     startTime : 0,
-    endTime : 0
+    endTime : 0,
+    zeng:"",
+    shan:"",
+    gai:""
+    
   },
 
   init : function(){
@@ -133,14 +137,22 @@ Page({
   clickView : function(e){
     var _this = this;
     var dataset = e.currentTarget.dataset
-
-    if(typeof(dataset.value)=="number" || _this.data.endTime - _this.data.startTime >= 350){
-      return;
+      if(typeof(dataset.value)=="number" || _this.data.endTime - _this.data.startTime >= 350){
+        return;
+      }
+    if(_this.data.gai){
+      _this.setData({
+        dataset_input : dataset,
+      })
+      _this.showView(_this,"input");
+    }else{
+      wx.showToast({
+        title: '无修改权限',
+        icon: "none",
+        duration: 1000
+      })
     }
-    _this.setData({
-      dataset_input : dataset,
-    })
-    _this.showView(_this,"input");
+    
   },
 
   bindTouchStart: function(e) {//触碰开始
@@ -204,101 +216,120 @@ Page({
   insert : function(e){
     var _this = this;
     var index = e.currentTarget.dataset.index
-    wx.showModal({
-      title : _this.data.titil[index].text,
-      content : '添加一行？',
-      cancelColor : '#282B33',
-      confirmColor : '#009688',
-      success : res => {
-        if (res.confirm) {
-          
-          wx.showLoading({
-            title: '加载中',
-            mask : 'true'
-          })
-          var sql = ""
-          var list = _this.data.list;
-          if(!updSpace.insert(list[index].dbTable)){
-            wx.showModal({
-              title : '警告',
-              content : '数据库已满，请将数据备份后删除部分数据',
-              showCancel : false,
-              confirmColor : '#009688',
+    console.log(_this.data.zeng)
+    if(_this.data.zeng){
+      wx.showModal({
+        title : _this.data.titil[index].text,
+        content : '添加一行？',
+        cancelColor : '#282B33',
+        confirmColor : '#009688',
+        success : res => {
+          if (res.confirm) {
+            
+            wx.showLoading({
+              title: '加载中',
+              mask : 'true'
             })
-            return
-          }
-
-          wx.cloud.callFunction({
-            name : "sqlServer_cw",
-            data : {
-              query: "insert into "+list[index].dbTable+"(["+list[index].dbName+"],company) values('','"+_this.data.userInfo.company+"');"
-            },
-            success : res=>{
-              wx.hideLoading({
-                success: (res) => {},
+            var sql = ""
+            var list = _this.data.list;
+            if(!updSpace.insert(list[index].dbTable)){
+              wx.showModal({
+                title : '警告',
+                content : '数据库已满，请将数据备份后删除部分数据',
+                showCancel : false,
+                confirmColor : '#009688',
               })
-              _this.init();
-            },
-            err : res =>{
-              wx.showToast({
-                title: "错误",
-                icon : "none"
-              })
+              return
             }
-          })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
+  
+            wx.cloud.callFunction({
+              name : "sqlServer_cw",
+              data : {
+                query: "insert into "+list[index].dbTable+"(["+list[index].dbName+"],company) values('','"+_this.data.userInfo.company+"');"
+              },
+              success : res=>{
+                wx.hideLoading({
+                  success: (res) => {},
+                })
+                _this.init();
+              },
+              err : res =>{
+                wx.showToast({
+                  title: "错误",
+                  icon : "none"
+                })
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
         }
-      }
-    })
+      })
+    }else{
+      wx.showToast({
+        title: '无新增权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
+    
   },
 
   delete : function(e){
     var _this = this;
-    var dataset = e.currentTarget.dataset
-    if(typeof(dataset.value)=="number"){
-      return;
+    if(_this.data.shan){
+      var dataset = e.currentTarget.dataset
+      if(typeof(dataset.value)=="number"){
+        return;
+      }
+  
+      wx.showModal({
+        title : _this.data.titil[dataset.itemindex].text+":"+dataset.value,
+        content : '确定删除么？',
+        cancelColor : '#282B33',
+        confirmColor : '#BC4A4A',
+        success : res=>{
+          if (res.confirm) {
+            var sql = "delete from "+dataset.dbtable+" where id = '"+dataset.id+"'"
+  
+            var arr = _this.data.list[dataset.itemindex].arr
+            arr.splice(dataset.index,1)
+            _this.setData({
+              ["list["+dataset.itemindex+"].arr"] : arr
+            })
+            wx.cloud.callFunction({
+              name : "sqlServer_cw",
+              data : {
+                query: sql
+              },
+              success : res=>{
+                wx.showToast({
+                  title: "删除成功",
+                  icon : "none"
+                })
+                _this.arrangeList()
+                updSpace.del(dataset.dbtable,1)
+              },
+              err : res =>{
+                wx.showToast({
+                  title: "错误",
+                  icon : "none"
+                })
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '无删除权限',
+        icon: "none",
+        duration: 1000
+      })
     }
 
-    wx.showModal({
-      title : _this.data.titil[dataset.itemindex].text+":"+dataset.value,
-      content : '确定删除么？',
-      cancelColor : '#282B33',
-      confirmColor : '#BC4A4A',
-      success : res=>{
-        if (res.confirm) {
-          var sql = "delete from "+dataset.dbtable+" where id = '"+dataset.id+"'"
-
-          var arr = _this.data.list[dataset.itemindex].arr
-          arr.splice(dataset.index,1)
-          _this.setData({
-            ["list["+dataset.itemindex+"].arr"] : arr
-          })
-          wx.cloud.callFunction({
-            name : "sqlServer_cw",
-            data : {
-              query: sql
-            },
-            success : res=>{
-              wx.showToast({
-                title: "删除成功",
-                icon : "none"
-              })
-              _this.arrangeList()
-              updSpace.del(dataset.dbtable,1)
-            },
-            err : res =>{
-              wx.showToast({
-                title: "错误",
-                icon : "none"
-              })
-            }
-          })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
   },
 
   arrangeList : function(){
@@ -336,6 +367,45 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
+    var user = JSON.parse(options.userInfo)
+    var bianhao = user.bianhao
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: "select * from quanxian where bianhao ='" + bianhao + "'"
+      },
+      success: res => {
+        var list = res.result.recordset[0]
+        console.log(list)
+        var shan = true
+        var gai = true
+        var zeng = true
+        if (list.kzxm_delete != "是"){
+          shan = false
+        }
+        if (list.kzxm_update != "是"){
+          gai = false
+        }
+        if (list.kzxm_add != "是"){
+          zeng = false
+        }
+        _this.setData({
+          shan:shan,
+          gai:gai,
+          zeng:zeng
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail : res=>{
+        wx.showToast({
+          title: '请求失败！',
+          icon : 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })

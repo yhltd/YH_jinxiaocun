@@ -32,7 +32,7 @@
 <view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
 
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdischa!=1}}">刷新</button>
 </view>
 
 
@@ -40,8 +40,8 @@
 <!---------排班操作--------->
 <!------------------------->
 <view class="input_view" hidden="{{handle}}">
-      <button class="bt_form" bindtap="xgPaiBan" hover-class="bt_form_hover">修改排班</button>
-      <button class="bt_form" bindtap="scPaiBan" hover-class="bt_form_hover">删除排班</button>
+      <button class="bt_form" bindtap="xgPaiBan" hover-class="bt_form_hover" disabled="{{isdisgai!=1}}">修改排班</button>
+      <button class="bt_form" bindtap="scPaiBan" hover-class="bt_form_hover" disabled="{{isdisshan!=1}}">删除排班</button>
 </view>
 
 <view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>
@@ -82,6 +82,6 @@
     </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1" >修改</button>
   </view>
 </van-popup>

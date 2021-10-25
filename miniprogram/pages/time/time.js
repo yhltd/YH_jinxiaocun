@@ -94,7 +94,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
+        sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "'"
       },
       success(res) {
         console.log("成功", res.result)

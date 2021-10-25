@@ -563,6 +563,9 @@ Page({
       return;
     }
     var $collection = e.currentTarget.dataset
+    if($collection.doinb == 'C'){
+      return
+    }
     that.setData({
       id: $collection.id,
       name: $collection.name,

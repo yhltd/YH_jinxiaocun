@@ -1,0 +1,118 @@
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">
+          {{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
+      <view class="table_main">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0">
+          <view wx:if="{{!examine}}" bindlongtap="moreDo" data-id="{{list_item.id}}" class="list_text">
+            {{list_item.rownum}}</view>
+          <view wx:if="{{examine}}">
+            <checkbox-group bindchange="choice_checkBox_examine" data-id="{{list_item.id}}" wx:if="{{examine}}">
+              <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33" />
+            </checkbox-group>
+          </view>
+        </view>
+
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="name"
+          data-value="{{list_item.name}}" bindtap="clickView" style="width:300rpx" data-input_type="text">
+          <view class="list_text">{{list_item.name}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="pwd"
+          data-value="{{list_item.pwd}}" bindtap="clickView" style="width:300rpx" data-input_type="text">
+          <view class="list_text">{{list_item.pwd}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="do"
+          data-value="{{list_item.do}}" data-input_type="text" bindtap="clickView" style="width:300rpx">
+          <view class="list_text">{{list_item.do}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+
+
+
+</scroll-view>
+
+
+<view class="bottom_view"  >
+  <view style="{{isSelect?'opacity:0.3':'opacity:1'}}">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
+    <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
+    <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+  </view>
+  <view class="backSelect" wx:if="{{isSelect || examine}}" bindtap="backSelect">
+    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
+  </view>
+  <button class="moreDo" bindtap="insert">添加一行</button>
+</view>
+
+
+<view class="upd_countPage_view" animation="{{animationData_countPage}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save_countPage" style="height:100%;width:100%">
+    <input class="upd_countPage_input" placeholder="每页显示条数" name="countPage" value="{{countPage}}" type="number"></input>
+    <button class="upd_countPage_bt" form-type="submit">保存</button>
+  </form>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">
+</view>
+
+
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save">
+    <view wx:if="{{isDate}}">
+      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+    </view>
+    <view style="height: 52%;" wx:if="{{!isDate}}">
+      <view class="input_date_form" wx:for="{{dateArray}}">
+        <input class="input_date" value="{{item.value}}" type="number" name="{{item.name}}" ></input>
+        <view class="input_date_text">{{item.text}}</view>
+      </view>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" bindtap="delete">删除</button>
+  <button class="moreDo_view_bt" bindtap="quanxian">权限</button>
+</view>
+
+<!--客户信息-->
+<!--- 权限 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList2" hidden="{{qx}}">
+  <view style="display:flex; flex-direction:column; min-height: 75%; padding: 10px; margin-bottom: 10px; font-size:30rpx">
+      
+    <view class="section" style="margin-top:30rpx; margin-left:17%;">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker" style="font-size:45rpx">
+          选择页面：{{array[index]}}
+        </view>
+      </picker>
+    </view>
+
+
+   <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:30rpx; margin-left: 30%;" hidden="{{look}}">添加　　<switch  data-column="quanxian_add" name="quanxian_add" checked="{{quanxian_add=='是'?true:false}}" bindchange="switch1Change"></switch></view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:30rpx; margin-left: 30%;" hidden="{{look}}">删除　　<switch data-column="quanxian_delete" name="quanxian_delete" checked="{{quanxian_delete=='是'?true:false}}" bindchange="switch2Change"></switch></view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:30rpx; margin-left: 30%;" hidden="{{look}}">修改　　<switch data-column="quanxian_update" name="quanxian_update" checked="{{quanxian_update=='是'?true:false}}" bindchange="switch3Change"></switch></view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:30rpx; margin-left: 30%;" >查询　　<switch data-column="quanxian_select" name="quanxian_select" checked="{{quanxian_select=='是'?true:false}}" bindchange="switch4Change"></switch></view>
+
+  </view>
+  <view class="bottom_view2">
+    <button class="bottom_bt2" bindtap="inquire_QX">取消</button>
+    <button class="bottom_bt2" bindtap="qxsave">保存</button>
+  </view>
+</scroll-view>

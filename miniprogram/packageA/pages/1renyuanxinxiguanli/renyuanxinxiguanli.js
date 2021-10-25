@@ -29,7 +29,13 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
-    companyName : ""
+    companyName : "",
+    text_type:""
+  },
+
+  onShow:function(){
+    var _this = this
+    _this.baochi()
   },
 
 
@@ -121,13 +127,18 @@ Page({
     var index = that.data.selectIndex;
     var input = that.data.maskWindowInputValue;
     console.log(input)
-
+    var sql = ""
+    if(input == "" || input == undefined){
+      sql = "select top 100 * from gongzi_renyuan where L like '"+that.data.companyName+"%'"
+    }else{
+      sql = "select top 100 * from gongzi_renyuan where B like '%" + input + "%' and L like '"+that.data.companyName+"%'"
+    }
     if (index == 0) {
       //按姓名查询
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_renyuan where B ='" + input + "' and L like '"+that.data.companyName+"%'"
+          query: sql
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -182,6 +193,7 @@ Page({
   onShareAppMessage: function () {
 
   },
+
 
   /*刷新页面 */
   shuaxin: function (e) {

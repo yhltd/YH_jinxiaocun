@@ -32,6 +32,14 @@ Page({
         index: 4,
         name : 'lei_bie',
         fun : 'cplb'
+      },{
+        txet: "数量",
+        index: 5,
+        fun : 'cpsl'
+      },{
+        txet: "金额",
+        index: 6,
+        fun : 'cpsj'
       },
       
     ],
@@ -72,9 +80,10 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: ssql 
+        sql: ssql
       },
       success(res) {
+        console.log(res.result)
         that.setData({
           all: res.result
         })
@@ -215,18 +224,29 @@ Page({
     } else {
       var value4 = that.data.value4
     }
-    var value5 = that.data.value5
     if (that.data.bigImg == undefined) {
       var bigImg = that.data.all[0].mark1
     } else {
       var bigImg = that.data.bigImg
+    }
+
+    if (that.data.value5 == undefined) {
+      var value5 = that.data.all[0].cpsl
+    }else{
+      var value5 = that.data.value5
+    }
+
+    if (that.data.value6 == undefined) {
+      var value6 = that.data.all[0].cpsj
+    }else{
+      var value6 = that.data.value6
     }
     
     var gongsi = app.globalData.gongsi;
     var ssql = "";
     
     if(fun == 'qichu'){
-      ssql = "update yh_jinxiaocun_qichushu set cpid ='" + value0 + "',`cpname` = '" + value1 + "',cplb ='" + value4 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
+      ssql = "update yh_jinxiaocun_qichushu set cpid ='" + value0 + "',`cpname` = '" + value1 + "',cplb ='" + value4 + "',cpsl ='" + value5 + "',cpsj ='" + value6 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
     }else{
       ssql = "update yh_jinxiaocun_jichuziliao set sp_dm ='" + value0 + "',`name` = '" + value1 + "',lei_bie ='" + value4 + "',dan_wei = '" + value2 + "',gs_name='" + gongsi + "',mark1='" + bigImg + "' where id =" + id
     }

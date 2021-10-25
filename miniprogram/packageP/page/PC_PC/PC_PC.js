@@ -126,29 +126,15 @@ Page({
     ],
     title4: [{
         text: "订单号",
-        width: "200rpx",
+        width: "350rpx",
         columnName: "order_id",
         type: "digit",
         isupd: true
       },
       {
-        text: "所属模块",
-        width: "200rpx",
-        columnName: "name",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "已生产数量",
-        width: "200rpx",
+        text: "生产数量",
+        width: "350rpx",
         columnName: "shengchanshuliang",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "未生产数量",
-        width: "400rpx",
-        columnName: "shengyushuliang",
         type: "text",
         isupd: true
       },
@@ -379,6 +365,7 @@ Page({
           if (_this.data.listDingDan[i].order_id == _this.data.listJiQi[j].order_id && _this.data.listDingDan[i].work_start_date == _this.data.listJiQi[j].work_start_date) {
             var e = [date, j]
             let workNum = _this.jinrikegongzuoshuliang(e)
+            workNum = Number(workNum.toFixed(1))
             var list = _this.data.listJiQi
             var Y = date.getFullYear() + '-'
             var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
@@ -452,6 +439,9 @@ Page({
           hours = (riqi3.getMinutes() - date.getMinutes()) / 60 + riqi3.getHours() - date.getHours()
         }
         num = _this.data.listJiQi[e[1]].num * hours
+        if(num < 0){
+          num = 0
+        }
       }
       if (Number.isNaN(num) || num == undefined || num == null) {
         num = 0
@@ -602,6 +592,7 @@ Page({
   selListDingDan: function (e, callback) {
     var _this = this
     let user = app.globalData.gongsi;
+    console.log(e)
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
@@ -646,7 +637,7 @@ Page({
         let index = e.currentTarget.dataset.index;
         let list = _this.data.listJiQi;
         let list3 = [];
-
+        console.log(list)
         for (let item in list[index].list) {
           console.log(item);
           list3.push({
@@ -705,6 +696,7 @@ Page({
     var _this = this
     console.log(_this)
     var e = _this.data.dingDanHao
+    console.log(_this.data.dingDanHao)
     _this.selListGongZuoShiJian(e)
     _this.qxShow()
   },
@@ -777,60 +769,63 @@ Page({
     let riqi3 = _this.data.riqi3;
     let jiqi = _this.data.listJiQi;
     let list3 = [];
-    // console.log(jiqi)
-    // console.log(riqi2);
-    // console.log(jiqi[1].name)
-    // console.log(jiqi[1].list[riqi2]);
-    for (let i = 0; i < jiqi.length; i++) {
-      // console.log(12);
-      for (let item in jiqi[i].list) {
-        // console.log(123);
-        // console.log(item);
-        // console.log(jiqi[i].list[item]);
-        if (item >= riqi2 && item <= riqi3) {
-          list3.push({
-            order_id: jiqi[i].order_id,
-            name: jiqi[i].name,
-            shengchanshuliang: jiqi[i].list[item],
-            shengyushuliang: 0,
-          })
-          //  console.log(list3);
-        } else {
-          list3.push({
-            order_id: jiqi[i].order_id,
-            name: jiqi[i].name,
-            shengchanshuliang: 0,
-            shengyushuliang: jiqi[i].list[item],
-          })
+    let list5 = [];
+    if(riqi2 == ""){
+      riqi2 = "1900-01-01"
+    }
+    if(riqi3 == ""){
+      riqi3 = "2200-12-31"
+    }
+    console.log(riqi2)
+    console.log(riqi3)
+    console.log(jiqi)
+    var danhao1 = []
+    for(let i=0; i<jiqi.length; i++){
+      danhao1.push(jiqi[i].order_id)
+    }
+
+    var danhao = []
+
+    for(let i = 0; i < danhao1.length; i++){
+      if(danhao.indexOf(danhao1[i]) == -1){
+        danhao.push(danhao1[i])
+      }
+    }
+    console.log(danhao)
+
+    for(let i=0;i<danhao.length;i++){
+      var rownum = 0
+      for(let j=0;j<jiqi.length;j++){
+        if(danhao[i] == jiqi[j].order_id){
+          for(var key in jiqi[j].list){
+            if(key >= riqi2 && key <= riqi3){
+              rownum = rownum + parseInt(jiqi[j].list[key])
+            }
+          }
         }
       }
-      let list5 = [];
-      list3.forEach(el => {
-        const res = list5.findIndex(ol => {
-          return el.order_id === ol.order_id, el.name === ol.name;
-        });
-        if (res !== -1) {
-          list5[res].shengyushuliang = parseInt(list5[res].shengyushuliang) + parseInt(el.shengyushuliang);
-          list5[res].shengchanshuliang = parseInt(list5[res].shengchanshuliang) + parseInt(el.shengchanshuliang);
-        } else {
-          list5.push(el);
-        }
-      });
-      console.log(list5);
-      // console.log(list3);
-      _this.setData({
-        xiangqingShow3: true,
-        list5,
-        xiangqingShow2: false,
-        xiangqingShow: false,
-        cxShow: false,
-        delWindow1: false,
-        tjShow: false,
-        tjShow2: false,
-        xlShow1: false,
-        xzmkShow: false
+      list5.push({
+        order_id:danhao[i],
+        shengchanshuliang:rownum
       })
     }
+
+
+
+    console.log(list5);
+    _this.setData({
+      xiangqingShow3: true,
+      list5,
+      xiangqingShow2: false,
+      xiangqingShow: false,
+      cxShow: false,
+      delWindow1: false,
+      tjShow: false,
+      tjShow2: false,
+      xlShow1: false,
+      xzmkShow: false
+    })
+    
   },
   sure1: function () {
     var _this = this
@@ -1025,7 +1020,7 @@ Page({
   selDDH3: function () {
     var _this = this
     _this.setData({
-      xlShow4: true
+      xlShow5: true
     })
   },
   select2: function (e) {
@@ -1085,12 +1080,12 @@ Page({
     var _this = this
     if (e.type == "select") {
       _this.setData({
-        xlShow4: false,
+        xlShow5: false,
         ssmk: e.detail.name,
       })
     } else if (e.type == "close") {
       _this.setData({
-        xlShow4: false,
+        xlShow5: false,
       })
     }
   },
@@ -1346,13 +1341,13 @@ Page({
       })
     }
   },
-  // onInput3: function (e) {
-  //   var _this = this
-  //   let column = e.currentTarget.dataset.column
-  //   _this.setData({
-  //     [column]: e.detail.value
-  //   })
-  // },
+  onInput3: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      [column]: e.detail.value
+    })
+  },
   selListshe: function (e) {
     var _this = this
     let user = app.globalData.gongsi;

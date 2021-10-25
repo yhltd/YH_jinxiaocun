@@ -109,7 +109,7 @@
 <view class="examine_view" animation="{{animationData_examine}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="examine_save">
     <view class="examine_input_view">
-      <input class="examine_input" placeholder="请输入审核人姓名" value="{{empty}}" name="man"></input>
+      <input class="examine_input" placeholder="审核人姓名" disabled="disabled" value="{{shenheren}}" name="man"></input>
       <input class="examine_input" placeholder="请输入操作密码" value="{{empty}}" name="do" type="password"></input>
     </view>
     <view class="examine_bt_view">

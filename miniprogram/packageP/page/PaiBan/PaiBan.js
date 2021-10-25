@@ -550,6 +550,7 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
+        console.log(list)
         _this.setData({
           listBUMEN: list
         })

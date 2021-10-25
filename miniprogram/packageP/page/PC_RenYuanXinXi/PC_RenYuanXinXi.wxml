@@ -31,9 +31,9 @@
 <!------------------------->
 <view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">添加</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdis!=1}}">添加</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdischa!=1}}">刷新</button>
 </view>
 
 
@@ -48,8 +48,8 @@
     <input bindinput="onInput3" data-column="dh" class="input_text_form" value="{{dh}}" type="number" name="dh"></input>
     <view class="lables">身份证号</view>
     <input bindinput="onInput3" data-column="idcard" class="input_text_form" value="{{idcard}}" type="idcard" name="idcard"></input>
-    <view class="lables">部门</view>
-    <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm"></input>
+    <view class="lables" >部门</view>
+    <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm" bindtap="selBM" disabled="true"></input>
     <view class="lables">班次</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" value="{{bc}}" type="text" name="bc"></input>
   <view class="bottom_view" style="height:10%">
@@ -69,7 +69,7 @@
     <view class="lables">身份证号</view>
     <input bindinput="onInput3" data-column="idcard" class="input_text_form" value="{{idcard}}" type="idcard" name="idcard"></input>
     <view class="lables">部门</view>
-    <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm"></input>
+    <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm" bindtap="selBM" disabled="true"></input>
     <view class="lables">班次</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" value="{{bc}}" type="text" name="bc"></input>
   <view class="bottom_view" style="height:10%">
@@ -82,8 +82,8 @@
 <!---------人员操作--------->
 <!------------------------->
 <view class="input_view" hidden="{{handle}}">
-      <button class="bt_form" bindtap="xgRenYuan" hover-class="bt_form_hover">修改人员</button>
-      <button class="bt_form" bindtap="scRenYuan" hover-class="bt_form_hover">删除人员</button>
+      <button class="bt_form" bindtap="xgRenYuan" hover-class="bt_form_hover" disabled="{{isdisgai!=1}}">修改人员</button>
+      <button class="bt_form" bindtap="scRenYuan" hover-class="bt_form_hover" disabled="{{isdisshan!=1}}">删除人员</button>
 </view>
 
 <view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>
@@ -99,3 +99,12 @@
   bind:confirm="sure1"
 >
 </van-dialog>
+
+<!--  查询部门拉选-->
+<van-action-sheet
+  show="{{ rqxzShow3 }}"
+  actions="{{ listBUMEN }}"
+  close-on-click-overlay
+  bind:close="select2"
+  bind:select="select2" 
+/>

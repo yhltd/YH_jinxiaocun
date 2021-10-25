@@ -220,6 +220,7 @@ Page({
   */
   to_bumenxiangqing: function (e) {
     var XD = e.currentTarget.dataset;
+    console.log(e)
     var companyName = this.data.companyName
     console.log(XD)
     var department = XD.department
@@ -616,6 +617,14 @@ Page({
     })
     console.log(value)
     console.log(that.data.selectIndex)
+  },
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      selectText: e.detail.value
+    })
   },
 
   maskWindowOk : function(){

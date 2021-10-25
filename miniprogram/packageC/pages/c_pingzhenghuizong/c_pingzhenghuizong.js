@@ -1,5 +1,5 @@
 const updSpace = require('../../util/updSpace')
-
+const app = getApp();
 Page({
 
   /**
@@ -9,9 +9,10 @@ Page({
     initHidView :　true,
     empty : "",
     userInfo : "",
+    this_quanxian:"",
 
     isDate : true,
-
+    shenheren: "",
     countPage : 50, //每一页显示的数据数据数量
     pageCount : 0, //总页数
     pageNum : 1, //当前页 
@@ -78,7 +79,10 @@ Page({
     isSelect : false,
     examine : false,
     checkItems : [],
-    animationData_examine : []
+    animationData_examine : [],
+    zeng:"",
+    shan:"",
+    gai:"",
   },
 
   getAccountion : function(){
@@ -138,7 +142,6 @@ Page({
 
     var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,vs.money,vs.real,(money-real) as not_get,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs left join Accounting as ac on vs.code = ac.code and ac.company = '"+_this.data.userInfo.company+"' where vs.company = '"+_this.data.userInfo.company+"' ) t "+where+where2
 
-    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
@@ -147,6 +150,7 @@ Page({
       success: res => {
 
         var list = res.result.recordset
+        
         for(var i=0;i<list.length;i++){
           if(list[i].name1!=list[i].name2){
             list[i].name1 +="-"+list[i].name2
@@ -163,7 +167,7 @@ Page({
             list[i].borrowed = 0
           }
         }
-        
+        console.log(list)
         _this.setData({
           list
         })
@@ -179,48 +183,56 @@ Page({
 
   delete: function(e){
     var _this = this;
-    wx.showModal({
-      title : '提示',
-      content : '确定删除吗？',
-      cancelColor: '#009688',
-      confirmColor : '#DD5044',
-      success : res => {
-        if (res.confirm) {
-          let id = e.currentTarget.dataset.id
-          wx.showLoading({
-            title: '加载中',
-            mask : 'true'
-          })
-          var sql = "delete from VoucherSummary where id = '" + id + "';"
-          wx.cloud.callFunction({
-            name : 'sqlServer_cw',
-            data : {
-              query : sql
-            },
-            success : res =>{
-              wx.hideLoading({
-                success: (res)=>{
-                  _this.init();
-                },
-                complete: (res) => {
-                  wx.showToast({
-                    title: '删除成功',
-                    icon : 'success'
-                  })
-                  updSpace.del("VoucherSummary",1)
-                },
-              })
-            },
-            err : res =>{
-              console.log("错误："+res)
-            },
-            fail : res=>{
-              console.log("请求失败！"+res)
-            }
-          })
+    if(_this.data.shan){
+      wx.showModal({
+        title : '提示',
+        content : '确定删除吗？',
+        cancelColor: '#009688',
+        confirmColor : '#DD5044',
+        success : res => {
+          if (res.confirm) {
+            let id = e.currentTarget.dataset.id
+            wx.showLoading({
+              title: '加载中',
+              mask : 'true'
+            })
+            var sql = "delete from VoucherSummary where id = '" + id + "';"
+            wx.cloud.callFunction({
+              name : 'sqlServer_cw',
+              data : {
+                query : sql
+              },
+              success : res =>{
+                wx.hideLoading({
+                  success: (res)=>{
+                    _this.init();
+                  },
+                  complete: (res) => {
+                    wx.showToast({
+                      title: '删除成功',
+                      icon : 'success'
+                    })
+                    updSpace.del("VoucherSummary",1)
+                  },
+                })
+              },
+              err : res =>{
+                console.log("错误："+res)
+              },
+              fail : res=>{
+                console.log("请求失败！"+res)
+              }
+            })
+          }
         }
-      }
-    })
+      })
+    }else{
+      wx.showToast({
+        title: '无删除权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
   },
 
   clickView : function(e){
@@ -263,9 +275,17 @@ Page({
         input_type: "text"
       })
     }
+    if(_this.data.gai){
+      _this.showView(_this,"input");
+    }else{
+      wx.showToast({
+        title: '无修改权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
 
 
-    _this.showView(_this,"input");
   },
 
   show_upd_view : function(e){
@@ -686,11 +706,20 @@ Page({
 
   examine : function(){
     var _this = this;
-    _this.setData({
-      empty : "",
-      examine : true
-    })
-    _this.hidView(_this,"moreDo")
+    if(_this.data.gai){
+      _this.setData({
+        empty : "",
+        examine : true
+      })
+      _this.hidView(_this,"moreDo")
+    }else{
+      wx.showToast({
+        title: '无修改权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
+    
   },
 
   choice_checkBox_examine : function(e){
@@ -715,6 +744,8 @@ Page({
   upd_examine : function(){
     var _this = this;
     var checkItems = _this.data.checkItems;
+    var name = app.globalData.userInfo.name
+    console.log(name)
     if(checkItems==""){
       wx.showToast({
         title: '请选择凭证',
@@ -722,6 +753,10 @@ Page({
       })
       return
     }
+    _this.setData({
+      shenheren:name
+    })
+    _this.data.empty = name
     _this.showView(_this,"examine")
   },
 
@@ -886,7 +921,47 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
+    var _this = this;
+    var user = JSON.parse(options.userInfo)
+    var bianhao = user.bianhao
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: "select * from quanxian where bianhao ='" + bianhao + "'"
+      },
+      success: res => {
+        var list = res.result.recordset[0]
+        console.log(list)
+        var shan = true
+        var gai = true
+        var zeng = true
+        if (list.pzhz_delete != "是"){
+          shan = false
+        }
+        if (list.pzhz_update != "是"){
+          gai = false
+        }
+        if (list.pzhz_add != "是"){
+          zeng = false
+        }
+        _this.setData({
+          shan:shan,
+          gai:gai,
+          zeng:zeng
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail : res=>{
+        wx.showToast({
+          title: '请求失败！',
+          icon : 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+    _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })
   },

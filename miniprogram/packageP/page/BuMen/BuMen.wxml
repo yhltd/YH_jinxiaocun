@@ -32,7 +32,7 @@
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
     style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdis!=1}}">添加</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdischa!=1}}">刷新</button>
 </view>
 <!------------------------->
 <!---------修改弹窗--------->
@@ -42,7 +42,7 @@
 	<view class="lables">部门名称</view>
     <input bindinput="onInput" data-column="dname" class="input_text_form" value="{{dname}}" type="text" name="dname" ></input>
     <view class="lables">页面名称</view>
-    <input bindinput="onInput" data-column="vname" class="input_text_form" value="{{vname}}" type="text" name="vname"></input>
+    <input bindinput="onInput" data-column="vname" class="input_text_form" value="{{vname}}" type="text" name="vname" disabled="true" bindtap="selYM"></input>
    <view class="lables">添加</view>
    <view class="swit">否<switch  data-column="dadd" name="dadd" checked="{{dadd=='是'?true:false}}" bindchange="switch1Change"></switch>是</view>
   <!-- <input bindinput="onInput" data-column="dadd" class="input_text_form" value="{{dadd}}" type="text" name="dadd"></input> -->
@@ -69,7 +69,7 @@
 	  <view class="lables">部门名称</view>
     <input bindinput="onInput" data-column="dname" class="input_text_form" value="{{dname}}" type="text" name="dname" ></input>
     <view class="lables">页面名称</view>
-    <input bindinput="onInput" data-column="vname" class="input_text_form" value="{{vname}}" type="text" name="vname"></input>
+    <input bindinput="onInput" data-column="vname" class="input_text_form" value="{{vname}}" type="text" name="vname" bindtap="selYM" disabled="true"></input>
     <view class="lables">添加</view>
     <view class="swit">否<switch  data-column="dadd" name="dadd" checked="{{dadd=='是'?true:false}}" bindchange="switch1Change"></switch>是</view>
     <!-- <input bindinput="onInput" data-column="dadd" class="input_text_form" value="{{dadd}}" type="text" name="dadd"></input> -->
@@ -87,4 +87,14 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
     </view>
 </van-popup>
+
+
+<!--  查询部门拉选-->
+<van-action-sheet
+  show="{{ rqxzShow3 }}"
+  actions="{{ yemian_name }}"
+  close-on-click-overlay
+  bind:close="select2"
+  bind:select="select2" 
+/>
  

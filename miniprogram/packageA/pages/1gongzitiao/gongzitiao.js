@@ -71,7 +71,7 @@ Page({
   },
 
   getList : function(pageNum,countPage,_this,companyName,where){
-    var sql= "select * from (select *,ROW_NUMBER() over(order by [id]) ROW_ID from [gongzi_gongzimingxi] where BD = '"+companyName+"') t where t.[id] >("+pageNum+"-1)*"+countPage+" and t.[id]<("+pageNum+"*"+countPage+"+1) "+where
+    var sql= "select * from (select *,ROW_NUMBER() over(order by [id]) ROW_ID from [gongzi_gongzimingxi] where BD = '"+companyName+"') t where t.ROW_ID >("+pageNum+"-1)*"+countPage+" and t.ROW_ID<("+pageNum+"*"+countPage+"+1) "+where
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -142,15 +142,23 @@ Page({
   sel : function(){
     var _this = this;
     var bumen = _this.data.options[0].text
-    if(bumen=='请选择'){
-      var where = "and D = '"+zhiwu+"'";
-    }
+    // if(bumen=='请选择'){
+    //   var where = "and D = '"+zhiwu+"'";
+    // }
     var zhiwu = _this.data.options[1].text
-    if(zhiwu=='请选择'){
-      var where = "and C = '"+bumen+"'"
+    // if(zhiwu=='请选择'){
+    //   var where = "and C = '"+bumen+"'"
+    // }
+    var where = ""
+    if(bumen == "请选择" || bumen == ""){
+    }else{
+      where = " and C = '"+bumen+"'";
     }
-
-    var where = "and C = '"+bumen+"' and D = '"+zhiwu+"'";
+    if(zhiwu == "请选择" || zhiwu == ""){
+    }else{
+      where = where + " and D = '"+zhiwu+"'";
+    }
+    // var where = "and C = '"+bumen+"' and D = '"+zhiwu+"'";
     _this.getList(_this.data.pageNum,_this.data.countPage,_this,_this.data.companyName,where);
 
     _this.setData({

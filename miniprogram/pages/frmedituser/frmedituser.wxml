@@ -32,7 +32,7 @@
       </label>
     </radio-group>
 
-    <text>帐账号设置</text>
+    <text>账号设置</text>
     <!-- <view class="button-hover">
       <input placeholder="" type='text' name='Btypetx' value='{{listAll.Btype}}'>{{Btype}}</input>
     </view> -->

@@ -61,7 +61,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,0 as isSelect from yh_jinxiaocun_jichuziliao where zh_name = '" + finduser + "' and gs_name = '" + gongsi + "'"
+        sql: "select *,0 as isSelect from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
       },
       success: res=> {
         that.setData({
@@ -149,7 +149,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "SELECT * from yh_jinxiaocun_jichuziliao where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'"
+          sql: "SELECT * from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
         },
         success(res) {
           that.setData({
@@ -183,7 +183,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "SELECT * from yh_jinxiaocun_jichuziliao where zh_name='" + finduser + "' and gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
+          sql: "SELECT * from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
         },
         success(res) {
           that.setData({

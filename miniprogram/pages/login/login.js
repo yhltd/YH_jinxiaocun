@@ -79,6 +79,8 @@ var login = function(that,info) {
             title: '登录成功',
             icon:'success'
           })
+          app.globalData.userInfo = userInfo
+          console.log(app.globalData.userInfo)
         } else {
           console.log("数据库返回为空！返回res长度为：", res.result.recordset.length)
           wx.showToast({
@@ -102,7 +104,7 @@ var login = function(that,info) {
         })
       }
     })
-  }else if(system=="服务器_jxc"){
+  }else if(system=="云合未来进销存系统"){
     //进销存
     console.log("2")
     wx.cloud.callFunction({
@@ -652,7 +654,7 @@ Page({
         gongsi : "选择公司"
       })
     }
-    if(system=="服务器_jxc"){
+    if(system=="云合未来进销存系统"){
       _this.setData({
         system,
       })

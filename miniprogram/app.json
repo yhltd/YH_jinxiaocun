@@ -82,7 +82,8 @@
         "pages/c_jijiantaizhang_insert/c_jijiantaizhang_insert",
         "pages/c_jijianzongzhang/c_jijianzongzhang",
         "pages/c_liyisunyi/c_liyisunyi",
-        "pages/c_xianjinliuliang/c_xianjinliuliang"
+        "pages/c_xianjinliuliang/c_xianjinliuliang",
+        "pages/c_zhanghaoguanli/c_zhanghaoguanli"
       ]
     },
     {
@@ -146,7 +147,9 @@
         "page/PC_RenYuanXinXi/PC_RenYuanXinXi",
         "page/PC_PaiBanMingXi/PC_PaiBanMingXi",
         "page/ZhangHaoGuanLi/ZhangHaoGuanLi",
-        "page/PaiChanHeDui/PaiChanHeDui"
+        "page/PaiChanHeDui/PaiChanHeDui",
+        "page/BuMen/BuMen",
+        "page/PaiBan/PaiBan"
       ]
     }
   ],

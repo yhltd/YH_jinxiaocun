@@ -110,8 +110,8 @@
       <view class="td" data-index="{{index}}" data-column='CV' data-name='{{item.B}}' bindtap="click" >{{item.CV}}</view>
       <view class="td" data-index="{{index}}" data-column='CW' data-name='{{item.B}}' bindtap="click" >{{item.CW}}</view>
       <view class="td" data-index="{{index}}" data-column='CX' data-name='{{item.B}}' bindtap="click" >{{item.CX}}</view>
-      <view class="td" data-index="{{index}}" data-column='CY' data-name='{{item.B}}' bindtap="click" >{{item.CY}}</view>
-      <view class="td" data-index="{{index}}" data-column='CZ' data-name='{{item.B}}' bindtap="click" >{{item.CZ}}</view>
+      <!-- <view class="td" data-index="{{index}}" data-column='CY' data-name='{{item.B}}' bindtap="click" >{{item.CY}}</view>
+      <view class="td" data-index="{{index}}" data-column='CZ' data-name='{{item.B}}' bindtap="click" >{{item.CZ}}</view> -->
     </view>
   </block>
   </view>

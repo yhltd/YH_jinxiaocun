@@ -44,7 +44,7 @@
   <view bindsubmit="edit_cell" style="text-align: center;">
     <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改内容</view>
     <form bindsubmit="edit_cell">
-      <input name="value" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" value="{{edit_old}}"/>
+      <input name="value" type="{{text_type}}" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" value="{{edit_old}}" />
       <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
     </form>
   </view>
@@ -55,7 +55,7 @@
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="key">
-        <view class="kaoqinbiao {{(item.kaoqinbiao == '姓名')?'xingming':''||(item.kaoqinbiao == '年月')?'no':''||(item.kaoqinbiao == '全勤天数')?'no':''||(item.kaoqinbiao == '实际天数')?'no':''||(item.kaoqinbiao == '请假时间/小时')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''||(item.kaoqinbiao == '迟到天数')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''||(item.kaoqinbiao == '公司')?'no':''}}"
+        <view class="kaoqinbiao {{(item.kaoqinbiao == '姓名')?'xingming':''||(item.kaoqinbiao == '年月')?'no':''||(item.kaoqinbiao == '全勤天数')?'no':''||(item.kaoqinbiao == '实际天数')?'no':''||(item.kaoqinbiao == '请假时间/小时')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''||(item.kaoqinbiao == '迟到天数')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''}}"
           data-kaoqinbiao="{{item.kaoqinbiao}}" data-kaoqinbiao='{{item.kaoqinbiao}}'>
           <view class="cell_label_header centerclass" style="display:flex;flex-direction:column">
             <text style="font-size:; font-weight:bold;">{{item.kaoqinbiao}}</text>
@@ -185,9 +185,6 @@
         </view>
         <view class='td'>
           <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.moth}}' data-name='{{item.name}}' data-id='{{item.id}}' data-x="{{item.AN}}" data-doinb='AN'>{{item.AN}}</view>
-        </view>
-        <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.moth}}' data-name='{{item.name}}' data-id='{{item.id}}' data-x="{{item.AO}}" data-doinb='AO'>{{item.AO}}</view>
         </view>
       </view>
     </block>

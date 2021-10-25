@@ -9,6 +9,7 @@ Page({
     hid_view : false,
     empty : "",
     userInfo : "",
+    this_quanxian:"",
 
     countPage : 20, //每一页显示的数据数据数量
     pageCount : 0, //总页数
@@ -37,7 +38,10 @@ Page({
     animationData_input : [],
 
     isDelete : false,
-    checkItems : []
+    checkItems : [],
+    zeng:"",
+    shan:"",
+    gai:""
   },
 
   init : function(){
@@ -161,8 +165,16 @@ Page({
       upd_db_id,
       input_type
     })
-
-    _this.showView(_this,"input");
+    if(_this.data.gai){
+      _this.showView(_this,"input");
+    }else{
+      wx.showToast({
+        title: '无修改权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
+    
   },
 
   save: function(e){
@@ -284,10 +296,18 @@ Page({
   },
   bindDelete : function(){
     var _this = this;
-    _this.hidView(_this,"moreDo")
-    _this.setData({
-      isDelete : true
-    })
+    if(_this.data.shan){
+      _this.hidView(_this,"moreDo")
+      _this.setData({
+        isDelete : true
+      })
+    }else{
+      wx.showToast({
+        title: '无删除权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
   },
 
   choice_checkBox_delete : function(e){
@@ -377,23 +397,32 @@ Page({
 
   insert : function(){
     var _this = this;
-    _this.hidView(_this,"moreDo")
-    wx.showModal({
-      title : '提示',
-      content : '即将跳转到新增页面',
-      cancelColor : '#282B33',
-      confirmColor : '#009688',
-      success : res => {
-        if(res.confirm){
-          var userInfo = _this.data.userInfo
-          wx.navigateTo({
-            url: '../../pages/c_jijiantaizhang_insert/c_jijiantaizhang_insert?userInfo='+JSON.stringify(userInfo),
-          })
-        }else if(res.cancel){
-          return;
+    if(_this.data.zeng){
+      _this.hidView(_this,"moreDo")
+      wx.showModal({
+        title : '提示',
+        content : '即将跳转到新增页面',
+        cancelColor : '#282B33',
+        confirmColor : '#009688',
+        success : res => {
+          if(res.confirm){
+            var userInfo = _this.data.userInfo
+            wx.navigateTo({
+              url: '../../pages/c_jijiantaizhang_insert/c_jijiantaizhang_insert?userInfo='+JSON.stringify(userInfo),
+            })
+          }else if(res.cancel){
+            return;
+          }
         }
-      }
-    })
+      })
+    }else{
+      wx.showToast({
+        title: '无新增权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
+    
   },
 
   /**
@@ -401,6 +430,45 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
+    var user = JSON.parse(options.userInfo)
+    var bianhao = user.bianhao
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: "select * from quanxian where bianhao ='" + bianhao + "'"
+      },
+      success: res => {
+        var list = res.result.recordset[0]
+        console.log(list)
+        var shan = true
+        var gai = true
+        var zeng = true
+        if (list.jjtz_delete != "是"){
+          shan = false
+        }
+        if (list.jjtz_update != "是"){
+          gai = false
+        }
+        if (list.jjtz_add != "是"){
+          zeng = false
+        }
+        _this.setData({
+          shan:shan,
+          gai:gai,
+          zeng:zeng
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail : res=>{
+        wx.showToast({
+          title: '请求失败！',
+          icon : 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })

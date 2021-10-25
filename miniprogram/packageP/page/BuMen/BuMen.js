@@ -19,7 +19,7 @@ Page({
       },
       {
         text: "页面名称",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "view_name",
         type: "text",
         isupd: true
@@ -63,14 +63,40 @@ Page({
     company: "",
     did: "",
     dname: "",
-    dadd: "",
-    ddel: "",
-    dupd: "",
-    dsel: "",
+    isdis: '',
+    isdischa: '',
+    isdisgai:'',
+    isdisshan:'',
     vname: "",
     dcompany: "",
     sw1: "",
     bumen: "",
+    rqxzShow3: false,
+    yemian_name:[{
+      name:"模块单位"
+    },{
+      name:"工作时间及休息日"
+    },{
+      name:"BOM"
+    },{
+      name:"订单"
+    },{
+      name:"排产"
+    },{
+      name:"排产核对"
+    },{
+      name:"汇总"
+    },{
+      name:"部门"
+    },{
+      name:"人员信息"
+    },{
+      name:"排班"
+    },{
+      name:"排班明细"
+    },{
+      name:"账号管理"
+    }]
   },
 
   /**
@@ -240,7 +266,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from department where company='" + user + "'"
+        query: "select * from department where company='" + user + "' order by department_name"
       },
       success: res => {
         var list = res.result.recordset
@@ -544,6 +570,26 @@ Page({
       })
     }
   },
+
+  selYM: function () {
+    var _this = this
+    _this.setData({
+      rqxzShow3: true
+    })
+  },
+
+  select2: function (e) {
+    var _this = this
+    _this.setData({
+      rqxzShow3: false
+    })
+    if (e.type == 'select') {
+      _this.setData({
+        vname: e.detail.name,
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

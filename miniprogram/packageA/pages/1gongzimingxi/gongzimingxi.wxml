@@ -56,15 +56,17 @@
   <view bindsubmit="edit_cell" style="text-align: center;">
     <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改 {{id}}:{{name}}</view>
     <form bindsubmit="edit_cell">
-      <picker disabled="{{input_type != 'date'}}" mode="date" bindchange="updateDate">
-        <input name="value" type="{{input_type}}" disabled="{{input_type == 'date'}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" placeholder="{{edit_old}}" value="{{edit_old}}"></input>
+      <picker bindchange="bumen_select" disabled="{{mark != 'C'}}" value="{{index}}" range="{{bumen_name}}">
+        <input name="value" type="{{input_type}}" disabled="{{mark == 'C'}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" placeholder="{{edit_old}}" value="{{edit_old}}"></input>
       </picker>
 
       
       <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
     </form>
   </view>
+
 </tui-modal>
+
 
 
 <!--标题栏-->
@@ -341,7 +343,7 @@
 
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="btn-primary" hover-class="btn-hover" disabled="{{!isload}}"  bindtap="leftDrawer">效率
+    <button class="btn-primary" hover-class="btn-hover" disabled="{{!isload}}"  bindtap="leftDrawer">更多功能
     </button>
     <view style="width:10%"></view>
     <button class="btn-primary" hover-class="btn-hover" disabled="{{!isload || result.sel!=1}}"  bindtap="searchBtn">查找</button>
@@ -365,3 +367,4 @@
     <button class="btn-primary" hover-class="btn-hover" bindtap="dayin" data-mode="left">打印当前页</button>
   </view>
 </drawer>
+

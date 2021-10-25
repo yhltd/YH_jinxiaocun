@@ -103,7 +103,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlConnection',
       data: {
-        sql: "select * from yh_jinxiaocun_qichushu where zh_name = '" + zh_name + "' and gs_name = '" + gs_name + "'"
+        sql: "select * from yh_jinxiaocun_qichushu where gs_name = '" + gs_name + "'"
       },
       success: res => {
         var sum = 0;

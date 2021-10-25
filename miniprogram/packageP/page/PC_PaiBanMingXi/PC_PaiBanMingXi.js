@@ -23,8 +23,11 @@ Page({
     sfzh:"",
     bm:"",
     bc:"",
-    rq:""
-
+    rq:"",
+    isdis: '',
+    isdischa: '',
+    isdisgai:'',
+    isdisshan:''
   },
 
   /**
@@ -32,7 +35,81 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
-    _this.tableShow()
+    _this.panduanquanxian()
+    if (_this.data.isdischa == 1) {
+      _this.tableShow()
+    }
+  },
+
+  panduanquanxian: function () {
+    var _this = this
+    _this.setData({
+      isdis: 1,
+      isdischa:1,
+      isdisgai:1,
+      isdisshan:1
+    });
+    //读取缓存    
+    var department_list1 = wx.getStorageSync('department_list')
+    var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
+    console.log(department_list1)
+    console.log(paibanbiao_renyuan_bumen1)
+    for (let i = 0; i < department_list1.length; i++) {
+      console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
+      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "排班明细") {
+        console.log(department_list1[i])
+        //添加没权限
+        if (department_list1[i].add == "否") {
+          _this.setData({
+            isdis: 2            
+          });
+          // console.log("否 isdis："+_this.data.isdis)
+        } else {
+          _this.setData({
+            isdis: 1           
+          });
+         // console.log("是 isdis："+_this.data.isdis)
+
+        }
+        //修改没权限
+        if (department_list1[i].upd == "否") {
+          _this.setData({           
+            isdisgai:2
+          });
+        } else {
+          _this.setData({           
+            isdisgai:1
+          });
+
+        }
+        //删除没权限
+        if (department_list1[i].del == "否") {
+          _this.setData({
+            isdisshan:2
+          });
+          console.log("否 isdisshan："+_this.data.isdisshan)
+        } else {
+          _this.setData({           
+            isdisshan:1
+          });
+          
+          console.log("是 isdisshan："+_this.data.isdisshan)
+        }
+        //查询没权限
+        if (department_list1[i].sel == "否") {
+          _this.setData({           
+            isdischa:2
+          });
+        } else {
+          _this.setData({           
+            isdischa:1
+          });
+
+        }
+        console.log(_this.data.isdis)
+
+      }
+    }
   },
 
   tableShow:function(){

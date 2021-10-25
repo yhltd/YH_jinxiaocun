@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    user:'',
     gongsi:'',
     name:'',
     date1: '',
@@ -48,7 +49,8 @@ Page({
     title:[],
     arr:[],
     titil:[
-      {text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
+      // {text:'A'}, {text:'B'}, 
+      {text:'C'}, {text:'D'}, {text:'E'},
       {text:'F'}, {text:'G'}, {text:'H'}, {text:'I'}, {text:'J'}, {text:'K'}, {text:'L'},
       {text:'M'}, {text:'N'}, {text:'O'}, {text:'P'}, {text:'Q'}, {text:'R'}, {text:'S'},
       {text:'T'}, {text:'U'}, {text:'V'}, {text:'W'}, {text:'X'}, {text:'Y'}, {text:'Z'},
@@ -66,7 +68,8 @@ Page({
       {text:'CV'},  {text:'id'},{text:'公司'}
     ],
     xuan:[
-    {name: 'A', value:'A'}, {name: 'B', value:'B'},{name: 'C', value:'C'},{name: 'D', value:'D'},
+    // {name: 'A', value:'A'}, {name: 'B', value:'B'},
+    {name: 'C', value:'C'},{name: 'D', value:'D'},
     {name: 'E', value:'E'}, {name: 'F', value:'F'},{name: 'G', value:'G'},{name: 'H', value:'H'},
     {name: 'I', value:'I'}, {name: 'J', value:'J'},{name: 'K', value:'K'},{name: 'L', value:'L'},
     {name: 'M', value:'M'}, {name: 'N', value:'N'},{name: 'O', value:'O'},{name: 'P', value:'P'},
@@ -94,7 +97,9 @@ Page({
     {name: 'CQ', value:'CQ'}, {name: 'CR', value:'CR'},{name: 'CS', value:'CS'},{name: 'CT', value:'CT'},
     {name: 'CU', value:'CU'}, {name: 'CV', value:'CV'},{name: 'id', value:'id'}, {name: '公司', value:'公司'}
     ],
-    arr:[{text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
+    arr:[
+      // {text:'A'}, {text:'B'}, 
+  {text:'C'}, {text:'D'}, {text:'E'},
   {text:'F'}, {text:'G'}, {text:'H'}, {text:'I'}, {text:'J'}, {text:'K'}, {text:'L'},
   {text:'M'}, {text:'N'}, {text:'O'}, {text:'P'}, {text:'Q'}, {text:'R'}, {text:'S'},
   {text:'T'}, {text:'U'}, {text:'V'}, {text:'W'}, {text:'X'}, {text:'Y'}, {text:'Z'},
@@ -123,9 +128,11 @@ Page({
   onLoad: function (options) {
     var that=this   
     if(options!=undefined){
+      console.log(options)
       that.setData({
         gongsi:options.gongsi,
-        name:options.name,      
+        name:options.name,
+        user:options.user      
       })
     }
     // var randm=[];
@@ -226,14 +233,26 @@ Page({
   dateclick:function(e){
     var that=this
     var index = that.data.index
-   if(that.data.date1.length==0 || that.data.date2.length==0 || that.data.names[index]==""){
+    console.log(that.data.date1)
+    console.log(that.data.date2)
+    console.log(index)
+   if(that.data.date1.length==0 || that.data.date2.length==0){
+     wx.showToast({
+       title: '必须同时输入开始日期和结束日期。',
+       icon:'none'
+     })
      return;
    }
    that.setData({
     select:false,
     mask:false,
    })
-    var sql = "select * from baitaoquanxian where 公司 = '" + that.data.gongsi + "' and 人员 = '" + that.data.names[index] + "' and 日期  >='" + that.data.date1 + "'and 日期<= '" + that.data.date2 + "'"
+    var sql = "select * from baitaoquanxian where 公司 = '" + that.data.gongsi + "' and 日期  >='" + that.data.date1 + "'and 日期<= '" + that.data.date2 + "'"
+
+   if(index != ""){
+    sql = sql + " and 人员 = '" + that.data.names[index] + "'"
+   }
+
      wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
@@ -352,7 +371,9 @@ click:function(e){
   var clie = e.currentTarget.dataset.clie
   var lie = that.data.lie  
   var info = that.data.info
-  var list=that.data.list  
+  var list=that.data.list
+  console.log(that.data.gongsi)
+  console.log(that.data.user)
   that.setData({
     column,
      idx,
@@ -366,14 +387,14 @@ click:function(e){
       info:list[idx][column]
     })
   }
-  var sqls= "select "+ clie +" from baitaoquanxian_copy1 WHERE quanxian = '" + that.data.gongsi + "' and B = '" + that.data.name + "' "
+  var sqls= "select "+ clie +" from baitaoquanxian_copy1 WHERE quanxian = '" + that.data.gongsi + "' and B = '" + that.data.user + "' "
   wx.cloud.callFunction({
     name: 'sqlServer_117',
     data:{
       query : sqls
     },
     success(res){
-      console.log("res结果:"+res)
+      console.log(res)
       if(res.result.recordset[0][clie]=="√"){      
       var csql = "select " + column + " from baitaoquanxian_copy2 where 公司 = '" + that.data.gongsi + "'"
     
@@ -383,8 +404,8 @@ click:function(e){
           query : csql
         },
         success(res){         
-          if(res.result.recordset[0][column]=="" || res.result.recordset[0][column]== that.data.name ){
-            var sql = "update baitaoquanxian_copy2 set "+ column +"= '" + that.data.name + "' where id = 7 and 公司 = '"+ that.data.gongsi + "';update baitaoquanxian_copy2 set "+ column +"= '" + that.data.gongsi + "' where id = 8 and 公司 = '"+ that.data.gongsi + "';" 
+          if(res.result.recordset[0][column]=="" || res.result.recordset[0][column]== that.data.user ){
+            var sql = "update baitaoquanxian_copy2 set "+ column +"= '" + that.data.user + "' where id = 7 and 公司 = '"+ that.data.gongsi + "';update baitaoquanxian_copy2 set "+ column +"= '" + that.data.gongsi + "' where id = 8 and 公司 = '"+ that.data.gongsi + "';" 
             that.setData({
               input:false,
               mask_up:false,              
@@ -403,7 +424,7 @@ click:function(e){
                 })              
               }
             })
-          }else if(res.result.recordset[0][column]!="" || res.result.recordset[0][column]!= that.data.name ){
+          }else if(res.result.recordset[0][column]!="" || res.result.recordset[0][column]!= that.data.user ){
             that.setData({
               input:true,
               mask_up:true,  
@@ -596,7 +617,9 @@ showlie(){
   wx.removeStorageSync('keytitil')
    wx.removeStorageSync('keylist')  
   var arr=[
-    {text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
+    // {text:'A'}, {text:'B'},
+    {text:'C'}, 
+    {text:'D'}, {text:'E'},
     {text:'F'}, {text:'G'}, {text:'H'}, {text:'I'}, {text:'J'}, {text:'K'}, {text:'L'},
     {text:'M'}, {text:'N'}, {text:'O'}, {text:'P'}, {text:'Q'}, {text:'R'}, {text:'S'},
     {text:'T'}, {text:'U'}, {text:'V'}, {text:'W'}, {text:'X'}, {text:'Y'}, {text:'Z'},
@@ -1262,7 +1285,10 @@ print:function(){
   var xuanz=that.data.xuanz
   var titil=that.data.titil
   var list=that.data.list
-  var arr = [{text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
+  var arr = [
+    // {text:'A'}, {text:'B'}, 
+    {text:'C'},
+   {text:'D'}, {text:'E'},
   {text:'F'}, {text:'G'}, {text:'H'}, {text:'I'}, {text:'J'}, {text:'K'}, {text:'L'},
   {text:'M'}, {text:'N'}, {text:'O'}, {text:'P'}, {text:'Q'}, {text:'R'}, {text:'S'},
   {text:'T'}, {text:'U'}, {text:'V'}, {text:'W'}, {text:'X'}, {text:'Y'}, {text:'Z'},

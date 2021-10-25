@@ -14,6 +14,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       gongsi:options.gongsi,
       name : options.name,
@@ -35,7 +36,7 @@ Page({
   //工作台
   work:function(){
     wx.navigateTo({
-      url: '../work/work?gongsi='+this.data.gongsi + '&name='+ this.data.name
+      url: '../work/work?gongsi='+this.data.gongsi + '&name='+ this.data.name + '&user='+ this.data.user
     })
   },
  //使用人员

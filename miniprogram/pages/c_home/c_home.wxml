@@ -20,13 +20,17 @@
     <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
       <view class="swiper_item">操作密码更改</view>
     </swiper-item>
-    <swiper-item style="display: flex;align-items: center;" item-id="new_user">
+    <!-- <swiper-item style="display: flex;align-items: center;" item-id="new_user">
     <view class="swiper_item">新建用户账号</view>
-    </swiper-item>
+    </swiper-item> -->
   </swiper>
 
   <view hidden="{{function_userInfo!='upd_pwd'}}">
     <form bindsubmit="update_pwd" bindreset="empty">
+      <view class="input_view">
+      <view class="input_text">输入旧密码</view>
+      <input name="name" placeholder="请输入旧密码" name="old_pwd" type="text" value="{{empty}}"></input>
+      </view>
       <view class="input_view">
       <view class="input_text">输入新密码</view>
       <input name="name" placeholder="请输入新密码" name="new_pwd" type="text" value="{{empty}}"></input>

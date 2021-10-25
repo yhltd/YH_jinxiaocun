@@ -18,7 +18,9 @@ Page({
           {text:"科目总账",url:"../../packageC/pages/c_kemuzongzhang/c_kemuzongzheng"},
           {text:"开支科目",url:"../../packageC/pages/c_kaizhixiangmu/c_kaizhixiangmu"},
           {text:"部门设置",url:"../../packageC/pages/c_bumenpeizhi/c_bumenpeizhi"},
-          {text:"账号设置",url:""}
+          {text:"账号管理",url:"../../packageC/pages/c_zhanghaoguanli/c_zhanghaoguanli"},
+          {text:"密码修改",url:""}
+          
         ],
         listHid : false,
         animationData :{}
@@ -58,8 +60,9 @@ Page({
 
     userInfo : "",
     ianimation_userinfo : [],
-
-    list : []
+    bianhao:"",
+    list : [],
+    this_quanxian:"",
   },
 
   choice : function(e){
@@ -113,8 +116,12 @@ Page({
   },
   onLoad : function(options){
     var _this = this;
+    
+    var user = JSON.parse(options.userInfo)
+    var bianhao = user.bianhao
     _this.setData({
-      userInfo : JSON.parse(options.userInfo)
+      userInfo : JSON.parse(options.userInfo),
+      bianhao : bianhao
     })
     _this.getSpace()
     _this.init();
@@ -208,7 +215,192 @@ Page({
     var itemindex = e.currentTarget.dataset.itemindex;
     var index = e.currentTarget.dataset.index;
     var url = _this.data.names[itemindex].list[index].url
-    if(_this.data.names[itemindex].list[index].text=="账号设置"){
+    var sql = "select * from quanxian where bianhao ='" + _this.data.bianhao + "'"
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset[0]
+        _this.setData({
+          this_quanxian:list[0]
+        })
+        if(_this.data.names[itemindex].list[index].text=="科目总账"){
+          console.log(list)
+          if(list.kmzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_kemuzongzhang/c_kemuzongzheng' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="开支科目"){
+          console.log(list)
+          if(list.kzxm_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_kaizhixiangmu/c_kaizhixiangmu' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="部门设置"){
+          console.log(list)
+          if(list.bmsz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_bumenpeizhi/c_bumenpeizhi' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="账号管理"){
+          console.log(list)
+          if(list.zhgl_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_zhanghaoguanli/c_zhanghaoguanli' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="凭证录入"){
+          console.log(list)
+          if(list.pzhz_add == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_pingzhenghuizong_insert/c_pingzhenghuizong_insert' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块新增权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="凭证汇总"){
+          console.log(list)
+          if(list.pzhz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_pingzhenghuizong/c_pingzhenghuizong' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="智能看板"){
+          console.log(list)
+          if(list.znkb_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_zhinengkanban/c_zhinengkanban' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="现金流量"){
+          console.log(list)
+          if(list.xjll_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_xianjinliuliang/c_xianjinliuliang' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="资产负债"){
+          console.log(list)
+          if(list.zcfz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_zichanfuzhai/c_zichanfuzhai' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="利益损益"){
+          console.log(list)
+          if(list.lysy_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_liyisunyi/c_liyisunyi' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="极简台账"){
+          console.log(list)
+          if(list.jjtz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_jijiantaizhang/c_jijiantaizhang' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        if(_this.data.names[itemindex].list[index].text=="极简总账"){
+          console.log(list)
+          if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_jijianzongzhang/c_jijianzongzhang' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          }else{
+            wx.showToast({
+              title: '无此模块查询权限',
+              icon: "none",
+              duration: 1000
+            })
+          }
+        }
+        
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })
+    if(_this.data.names[itemindex].list[index].text=="密码修改"){
       _this.showUserInfo();
       return;
     }
@@ -266,23 +458,23 @@ Page({
       })
       return;
     }
-    if(url==null || url==undefined || url==""){
-      wx.showToast({
-        title: "找不到路径",
-        icon : "none"
-      })
-      return
-    }
-    _this.hidList(100,_this,itemindex)
+    // if(url==null || url==undefined || url==""){
+    //   wx.showToast({
+    //     title: "找不到路径",
+    //     icon : "none"
+    //   })
+    //   return
+    // }
+    // _this.hidList(100,_this,itemindex)
     
-    wx.navigateTo({
-      url : url+"?userInfo="+JSON.stringify(_this.data.userInfo)
-      //_this.data.userInfo
-    })
-    wx.showToast({
-      title: "正在跳转",
-      icon : "none"
-    })
+    // wx.navigateTo({
+    //   url : url+"?userInfo="+JSON.stringify(_this.data.userInfo)
+    //   //_this.data.userInfo
+    // })
+    // wx.showToast({
+    //   title: "正在跳转",
+    //   icon : "none"
+    // })
   },
 
   //跳走初始化数据
@@ -347,6 +539,10 @@ Page({
   update_pwd : function(e){
     var _this = this;
     var rule = [{
+      name: "old_pwd",
+      rule: ["required"],
+      msg: ["请输入旧密码"]
+    },{
       name: "new_pwd",
       rule: ["required"],
       msg: ["请输入新密码"]
@@ -363,11 +559,21 @@ Page({
       })
       return;
     }
+    var oldPwd = e.detail.value.old_pwd
+    console.log(oldPwd)
     var newPwd = e.detail.value.new_pwd
     var againPwd = e.detail.value.again_pwd
     var userInfo = _this.data.userInfo
+    console.log(userInfo)
+    sql = "select * from "
 
-    
+    if(oldPwd != userInfo.pwd){
+      wx.showToast({
+        title: '旧密码错误！',
+        icon : 'none'
+      })
+      return;
+    }
     if(newPwd!=againPwd){
       wx.showToast({
         title: '重复密码错误！',

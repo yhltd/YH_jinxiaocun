@@ -41,7 +41,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
+        sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "'"
       },
       success(res) {
         console.log("成功", res)
@@ -85,7 +85,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_jinhuofang where finduser = '" + finduser + "' and gongsi = '" + gongsi + "'"
+        sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "'"
       },
       success(res) {
         console.log("成功", res)
@@ -201,7 +201,8 @@ Page({
     var that = this;
     that.setData({
       hidden1: !that.data.hidden1,
-      backhidden: false
+      backhidden: false,
+      updIndex: -1
     })
 
 
@@ -228,6 +229,8 @@ Page({
           wx.showToast({
             title: '添加成功',
           })
+          that.onShow()
+          wx.stopPullDownRefresh()
         },
         fail(res) {
           console.log("失败", res)
@@ -272,9 +275,10 @@ Page({
       return;
     }
     var index = e.currentTarget.dataset.index
-
     that.setData({
-      updIndex: index
+      updIndex: index,
+      backhidden: true,
+      hidden1: true
     })
   },
 

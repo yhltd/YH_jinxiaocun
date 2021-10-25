@@ -4,7 +4,7 @@
 <view class='header'>
   <view class="dq_y">进销存</view>
   <view class='pm'></view>
-  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索商品代码" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
 </view>
 <view class='main'>
   <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->

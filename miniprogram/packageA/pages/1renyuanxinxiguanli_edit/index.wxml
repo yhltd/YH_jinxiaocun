@@ -10,7 +10,7 @@
     <tui-list-cell hover="{{false}}">
       <view class="tui-line-cell">
         <view class="tui-title">▹ 部门：</view>
-        <input placeholder-class="phcolor" class="tui-input" name="department" placeholder="请输入部门名" maxlength="50" type="text" value="{{list[0].C}}" />
+        <input placeholder-class="phcolor" class="tui-input" name="department" placeholder="请输入部门名" maxlength="50" type="text" value="{{bumen_insert}}" disabled="true" bindtap="selYM"/>
       </view>
     </tui-list-cell>
     <tui-list-cell hover="{{false}}">
@@ -75,3 +75,11 @@
     </view>
   </form>
 </view>
+
+<van-action-sheet
+  show="{{ rqxzShow3 }}"
+  actions="{{ bumen_name }}"
+  close-on-click-overlay
+  bind:close="select2"
+  bind:select="select2" 
+/>

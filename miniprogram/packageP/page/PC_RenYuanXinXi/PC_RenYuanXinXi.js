@@ -13,6 +13,7 @@ Page({
     bc:"",
     id:"",
     list:[],
+    listBUMEN: [],
     title: 
     [{ text: "姓名", width: "200rpx", columnName: "staff_name", type: "text", isupd: true },
     { text: "电话", width: "250rpx", columnName: "phone_number", type: "text", isupd: true },
@@ -23,7 +24,12 @@ Page({
   tjShow: false,
   handle:true,
   delWindow1:false,
-  xgShow:false
+  xgShow:false,
+  rqxzShow3:false,
+  isdis: '',
+  isdischa: '',
+  isdisgai:'',
+  isdisshan:''
   },
 
   /**
@@ -31,7 +37,82 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
-    _this.tableShow()
+    _this.panduanquanxian()
+    if (_this.data.isdischa == 1) {
+      _this.tableShow()
+      _this.getSystemName()
+    }
+  },
+
+  panduanquanxian: function () {
+    var _this = this
+    _this.setData({
+      isdis: 1,
+      isdischa:1,
+      isdisgai:1,
+      isdisshan:1
+    });
+    //读取缓存    
+    var department_list1 = wx.getStorageSync('department_list')
+    var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
+    console.log(department_list1)
+    console.log(paibanbiao_renyuan_bumen1)
+    for (let i = 0; i < department_list1.length; i++) {
+      console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
+      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "人员信息") {
+        console.log(department_list1[i])
+        //添加没权限
+        if (department_list1[i].add == "否") {
+          _this.setData({
+            isdis: 2            
+          });
+          // console.log("否 isdis："+_this.data.isdis)
+        } else {
+          _this.setData({
+            isdis: 1           
+          });
+         // console.log("是 isdis："+_this.data.isdis)
+
+        }
+        //修改没权限
+        if (department_list1[i].upd == "否") {
+          _this.setData({           
+            isdisgai:2
+          });
+        } else {
+          _this.setData({           
+            isdisgai:1
+          });
+
+        }
+        //删除没权限
+        if (department_list1[i].del == "否") {
+          _this.setData({           
+            isdisshan:2
+          });
+          console.log("否 isdisshan："+_this.data.isdisshan)
+        } else {
+          _this.setData({           
+            isdisshan:1
+          });
+          
+          console.log("是 isdisshan："+_this.data.isdisshan)
+        }
+        //查询没权限
+        if (department_list1[i].sel == "否") {
+          _this.setData({           
+            isdischa:2
+          });
+        } else {
+          _this.setData({           
+            isdischa:1
+          });
+
+        }
+        console.log(_this.data.isdis)
+
+      }
+    }
   },
 
   tableShow:function(){
@@ -242,6 +323,53 @@ Page({
     _this.setData({
       xgShow:true
     })
+  },
+
+  getSystemName: function () {
+    var _this = this;
+    let user = app.globalData.gongsi;
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select distinct department_name as name from paibanbiao_renyuan where company='" + user + "'"
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          listBUMEN: list
+        })
+      },
+      err: res => {
+        console.log("错误!" + res)
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  selBM: function () {
+    var _this = this
+    _this.setData({
+      rqxzShow3: true
+    })
+  },
+
+  select2: function (e) {
+    var _this = this
+    _this.setData({
+      rqxzShow3: false
+    })
+    if (e.type == 'select') {
+      _this.setData({
+        bm: e.detail.name,
+      })
+    }
   },
 
   /**

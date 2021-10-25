@@ -43,7 +43,9 @@ Page({
     mark: '',
     edit_new: '',
     isload : false,
-    companyName : ""
+    companyName : "",
+    bumen_name : [],
+    rqxzShow3:false,
   },
 
   /**
@@ -51,6 +53,7 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
+    _this.selBM()
     _this.setData({
       companyName : options.companyName,
       result : JSON.parse(options.access)
@@ -960,6 +963,38 @@ Page({
     })
     
   },
+  selBM:function(){
+    var _this = this
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query:"select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
+      },
+      success: res => {
+        var bumen = res.result.recordset
+        var bumen2 = []
+        console.log(bumen)
+        for(var i = 0 ; i < bumen.length ; i++){
+          bumen2.push(
+            bumen[i].bumen
+          )
+        }
+        _this.setData({
+          bumen_name:bumen2
+        })
+      },
+  })
+},
+
+bumen_select:function(e){
+  var _this = this
+  var bumen = _this.data.bumen_name[e.detail.value]
+  console.log(bumen)
+  _this.setData({
+    edit_old:bumen
+  })
+}
+
 
 
 })

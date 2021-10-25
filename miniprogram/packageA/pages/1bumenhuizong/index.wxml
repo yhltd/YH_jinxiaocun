@@ -15,7 +15,7 @@
     <view class='maskWindowInputView11'>
       <view hidden="{{!svHidden}}" style="width:88%;margin: auto;">
         <view style="float: left;width: 87%;">
-          <input class="textView" value="{{selectText}}"/>
+          <input class="textView" value="{{selectText}}" bindinput="onInput"/>
         </view>
         <view style="float: left;width: 13%;">
           <view class="selectHead" bindtap="selectTap">V</view>
@@ -63,7 +63,7 @@
     <block wx:for="{{list}}" catchtap='dismissMaskWindow' > 
       <view class='table_main'>
         <view class='td' style="width:120rpx;background-color:white;position: sticky;left: 0;">
-          <view bindtap="to_bumenxiangqing" data-department="{{item.C}}" class="cell_label centerclass">{{item.department}}</view>
+          <view bindtap="to_bumenxiangqing" data-department="{{item.department}}" class="cell_label centerclass">{{item.department}}</view>
         </view>
         <view class='td' >
           <view class="cell_label centerclass">{{item.num}}</view>

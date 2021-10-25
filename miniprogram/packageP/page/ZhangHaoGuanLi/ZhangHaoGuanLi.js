@@ -45,7 +45,7 @@ Page({
     //读取缓存    
     var department_list1 = wx.getStorageSync('department_list')
     var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
-    console.log("department_list1")
+    console.log(department_list1)
     console.log(paibanbiao_renyuan_bumen1)
     for (let i = 0; i < department_list1.length; i++) {
       console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
@@ -148,11 +148,9 @@ Page({
       tjShow:false,
       xgShow: false,
       cxShow:false,
-      ddh: "",
-      mk: "",
-      rq: "",
-      sl: "",
-      id:""
+      zh: "",
+      mm: "",
+      bm: "",
     })
   },
 

@@ -98,6 +98,7 @@ Page({
       _this.setData({
         frmStudfind: true,
         mask_hid: true,
+        empty:""
       })
   },
 
@@ -123,6 +124,7 @@ Page({
     _this.setData({
       frmStudfind: false,
       mask_hid: false,
+      empty:""
     })
   },
   /**

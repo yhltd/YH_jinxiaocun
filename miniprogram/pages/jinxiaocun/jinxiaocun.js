@@ -32,49 +32,30 @@ Page({
     var app = getApp();
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
-
+    console.log(finduser)
+    console.log(gongsi)
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "SELECT *,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.zh_name='" + finduser + "' and yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
+        sql: "select *,(ifnull(jq_cpsl,0)+ifnull(mx_ruku_cpsl,0)-ifnull(mx_chuku_cpsl,0)) as jc_sl,(ifnull(jq_price,0)+ifnull(mx_ruku_price,0)-ifnull(mx_chuku_price,0)) as jc_price from (select jj.mark1,jj.sp_dm,jj.name,jj.lei_bie,sum(jq.cpsl) as jq_cpsl,sum(jq.cpsl*jq.cpsj) as jq_price,mx_ruku.cpsl as mx_ruku_cpsl,mx_ruku.cp_price as mx_ruku_price,mx_chuku.cpsl as mx_chuku_cpsl,mx_chuku.cp_price as mx_chuku_price from yh_jinxiaocun_jichuziliao as jj left join yh_jinxiaocun_qichushu as jq on jj.sp_dm = jq.cpid and jq.gs_name = '" + gongsi + "' left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '入库'  group by jm.sp_dm) as mx_ruku on mx_ruku.sp_dm = jj.sp_dm left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '出库'  group by jm.sp_dm ) as mx_chuku on mx_chuku.sp_dm = jj.sp_dm where jj.gs_name = '" + gongsi + "' GROUP BY jj.sp_dm,jj.name,jj.lei_bie) as jxc "
       },
       success(res) {
         var all = []
         all = res.result;
         var szary = []
         var inserti = 0
-        for (var i = 0; i < all.length; i++) {
-          var pd = false;
-          for (var j = 0; j < szary.length; j++) {
-            if (szary[j].sp_dm == all[i].sp_dm) {
-              pd = true;
-              if (all[i].mxtype == "入库") {
-                szary[j].cpsl = parseInt(szary[j].cpsl) + parseInt(all[i].cpsl) + 1 - 1
-                szary[j].cpsj = parseFloat(szary[j].cpsj) + parseFloat(all[i].cpsj) * parseInt(all[i].cpsl) + 1 - 1
-              } else {
-                szary[j].cpsl = parseInt(szary[j].cpsl) - parseInt(all[i].cpsl) + 1 - 1
-                szary[j].cpsj = parseFloat(szary[j].cpsj) - parseFloat(all[i].cpsj) * parseInt(all[i].cpsl) + 1 - 1
-              }
-              console.log(all[i].cpname + all[i].mxtype + "量为：" + parseInt(all[i].cpsl) + ",目前仓库余量为：" + szary[j].cpsl)
-            }
-          }
-          if (pd == false) {
-            szary[inserti] = all[i]
-            if (all[i].mxtype == "入库") {
-              szary[inserti].cpsl = parseInt(all[i].cpsl) + 1 - 1
-              szary[inserti].cpsj = parseFloat(all[i].cpsj) * parseInt(all[i].cpsl) + 1 - 1
-            } else {
-              szary[inserti].cpsl = -parseInt(all[i].cpsl) + 1 - 1
-              szary[inserti].cpsj = -(parseFloat(all[i].cpsj) * parseInt(all[i].cpsl)) + 1 - 1
-            }
-            console.log(szary[inserti])
-            inserti++
-            // szary[j].sp_dm = all[i].sp_dm
-            // szary[j].cpsl = all[i].cpsl
-            // szary[j].cpsj = all[i].cpsj
-            // szary[i].cplb = all[i].cplb
-          }
+        console.log(all)
+        for(var i = 0; i < all.length; i++){
+          szary.push({
+            mark1:all[i].mark1,
+            name:all[i].name,
+            sp_dm:all[i].sp_dm,
+            cplb:all[i].lei_bie,
+            cpsl:all[i].jc_sl,
+            cpsj:all[i].jc_price
+          })
         }
+
         that.setData({
           szzhi: szary
         })
@@ -127,121 +108,50 @@ Page({
   },
 
   xixi: function(e) {
+    var that = this
+    const db = wx.cloud.database()
+    var app = getApp();
     console.log("xixi:", e)
     wx.showToast({
       title: '正在搜索',
       icon: 'loading',
       duration: 1000
     })
-    if (e.detail.value == "") {
-      var that = this
-      const db = wx.cloud.database()
-      var app = getApp();
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.zh_name='" + finduser + "' and yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
-        },
-        success(res) {
-          var all = []
-          all = res.result;
-          var szary = []
-          var inserti = 0
-          for (var i = 0; i < all.length; i++) {
-            var pd = false;
-            for (var j = 0; j < szary.length; j++) {
-              if (szary[j].sp_dm == all[i].sp_dm) {
-                pd = true;
-                if (all[i].mxtype == "入库") {
-                  szary[j].cpsl = parseInt(szary[j].cpsl) + parseInt(all[i].cpsl) + 1 - 1
-                  szary[j].cpsj = parseFloat(szary[j].cpsj) + parseFloat(all[i].cpsj) + 1 - 1
-                } else {
-                  szary[j].cpsl = parseInt(szary[j].cpsl) - parseInt(all[i].cpsl) + 1 - 1
-                  szary[j].cpsj = parseFloat(szary[j].cpsj) - parseFloat(all[i].cpsj) + 1 - 1
-                }
-                console.log(all[i].cpname + all[i].mxtype + "量为：" + parseInt(all[i].cpsl) + ",目前仓库余量为：" + szary[j].cpsl)
-              }
-            }
-            if (pd == false) {
-              szary[inserti] = all[i]
-              if (all[i].mxtype == "入库") {
-                szary[inserti].cpsl = parseInt(all[i].cpsl) + 1 - 1
-                szary[inserti].cpsj = parseFloat(all[i].cpsj) + 1 - 1
-              } else {
-                szary[inserti].cpsl = -parseInt(all[i].cpsl) + 1 - 1
-                szary[inserti].cpsj = -parseFloat(all[i].cpsj) + 1 - 1
-              }
-              console.log(szary[inserti])
-              inserti++
-            }
-          }
-          that.setData({
-            szzhi: szary
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
+    console.log(finduser)
+    console.log(gongsi)
+    console.log(e)
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select *,(ifnull(jq_cpsl,0)+ifnull(mx_ruku_cpsl,0)-ifnull(mx_chuku_cpsl,0)) as jc_sl,(ifnull(jq_price,0)+ifnull(mx_ruku_price,0)-ifnull(mx_chuku_price,0)) as jc_price from (select jj.mark1,jj.sp_dm,jj.name,jj.lei_bie,sum(jq.cpsl) as jq_cpsl,sum(jq.cpsl*jq.cpsj) as jq_price,mx_ruku.cpsl as mx_ruku_cpsl,mx_ruku.cp_price as mx_ruku_price,mx_chuku.cpsl as mx_chuku_cpsl,mx_chuku.cp_price as mx_chuku_price from yh_jinxiaocun_jichuziliao as jj left join yh_jinxiaocun_qichushu as jq on jj.sp_dm = jq.cpid and jq.gs_name = '" + gongsi + "' left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '入库'  group by jm.sp_dm) as mx_ruku on mx_ruku.sp_dm = jj.sp_dm left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '出库'  group by jm.sp_dm ) as mx_chuku on mx_chuku.sp_dm = jj.sp_dm where jj.gs_name = '" + gongsi + "' GROUP BY jj.sp_dm,jj.name,jj.lei_bie) as jxc where sp_dm like '%" + e.detail.value + "%'"
+      },
+      success(res) {
+        var all = []
+        all = res.result;
+        var szary = []
+        var inserti = 0
+        console.log(all)
+        for(var i = 0; i < all.length; i++){
+          szary.push({
+            mark1:all[i].mark1,
+            name:all[i].name,
+            sp_dm:all[i].sp_dm,
+            cplb:all[i].lei_bie,
+            cpsl:all[i].jc_sl,
+            cpsj:all[i].jc_price
           })
-        },
-        fail(res) {
-          console.log("失败", res)
         }
-      });
-    } else {
-      var that = this
-      const db = wx.cloud.database()
-      var app = getApp();
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          // sql: "SELECT * from yh_jinxiaocun_mingxi where zh_name='" + finduser + "' and gs_name = '" + gongsi + "',cpname='" + db.RegExp({
-          //   regexp: e.detail.value,
-          //   options: 'i',
-          // }) + "'"
-          sql: "SELECT *,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.zh_name='" + finduser + "' and yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and cpname like '%" + e.detail.value + "%'"
-        },
-        success(res) {
-          var all = []
-          all = res.result;
-          var szary = []
-          var inserti = 0
-          for (var i = 0; i < all.length; i++) {
-            var pd = false;
-            for (var j = 0; j < szary.length; j++) {
-              if (szary[j].sp_dm == all[i].sp_dm) {
-                pd = true;
-                if (all[i].mxtype == "入库") {
-                  szary[j].cpsl = parseInt(szary[j].cpsl) + parseInt(all[i].cpsl) + 1 - 1
-                  szary[j].cpsj = parseFloat(szary[j].cpsj) + parseFloat(all[i].cpsj) + 1 - 1
-                } else {
-                  szary[j].cpsl = parseInt(szary[j].cpsl) - parseInt(all[i].cpsl) + 1 - 1
-                  szary[j].cpsj = parseFloat(szary[j].cpsj) - parseFloat(all[i].cpsj) + 1 - 1
-                }
-                console.log(all[i].cpname + all[i].mxtype + "量为：" + parseInt(all[i].cpsl) + ",目前仓库余量为：" + szary[j].cpsl)
-              }
-            }
-            if (pd == false) {
-              szary[inserti] = all[i]
-              if (all[i].mxtype == "入库") {
-                szary[inserti].cpsl = parseInt(all[i].cpsl) + 1 - 1
-                szary[inserti].cpsj = parseFloat(all[i].cpsj) + 1 - 1
-              } else {
-                szary[inserti].cpsl = -parseInt(all[i].cpsl) + 1 - 1
-                szary[inserti].cpsj = -parseFloat(all[i].cpsj) + 1 - 1
-              }
-              console.log(szary[inserti])
-              inserti++
-            }
-          }
-          that.setData({
-            szzhi: szary
-          })
-        },
-        fail(res) {
-          console.log("失败", res)
-        }
-      });
-    }
+
+        that.setData({
+          szzhi: szary
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

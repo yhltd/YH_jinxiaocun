@@ -31,7 +31,10 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
-    companyName : ""
+    companyName : "",
+    text_type:"",
+    lie:"",
+    bumen_name:[]
   },
   
   /**
@@ -39,6 +42,7 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
+    _this.selBM()
     _this.setData({
       companyName : options.companyName,
       result : JSON.parse(options.access)
@@ -302,35 +306,46 @@ Page({
   */
   edit_cell(e) {
     var that = this
-    if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
-      that.setData({
-        edit_new: that.data.edit_old
-      })
-    } else if (e.detail.value.value.length != 0) {
-      that.setData({
-        edit_new: e.detail.value.value
-      })
-    }
-    var sql = "update gongzi_kaoqinmingxi set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "'"
-
-    console.log("选中单元格的信息：", that.data.id, that.data.name, that.data.edit_old) //that.data.edit_old的是单元格修改之前的值
-    console.log("提交成功，得到的值为:", that.data.edit_new,sql)
-
-    //通过云函数修改数据库内容
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: sql
-      },
-      success: res => {
-        console.log('操作成功' ,res)
-
-        that.baochi()
-      },
-      err: res => {
-        console.log("错误!")
+    if(that.data.lie == 'D'){
+      if(e.detail.value.value != "" && e.detail.value.value < 13 && e.detail.value.value > 0){
+      }else{
+        wx.showToast({
+          title: '月份输入不合法',
+          icon : 'none'
+        })
+        return
       }
-    })
+    }
+      if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
+        that.setData({
+          edit_new: that.data.edit_old
+        })
+      } else if (e.detail.value.value.length != 0) {
+        that.setData({
+          edit_new: e.detail.value.value
+        })
+      }
+      var sql = "update gongzi_kaoqinmingxi set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "'"
+  
+      console.log("选中单元格的信息：", that.data.id, that.data.name, that.data.edit_old) //that.data.edit_old的是单元格修改之前的值
+      console.log("提交成功，得到的值为:", that.data.edit_new,sql)
+  
+      //通过云函数修改数据库内容
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log('操作成功' ,res)
+  
+          that.baochi()
+        },
+        err: res => {
+          console.log("错误!")
+        }
+      })
+    
   },
   click_edit(e) {
     var that = this
@@ -341,8 +356,18 @@ Page({
       })
       return;
     }
+    console.log(e)
+    var lie = e.currentTarget.dataset.doinb
+    var text_type = ""
+    if(lie == 'C' || lie == 'D' || lie == 'E' || lie == 'F' || lie == 'G' || lie == 'H' || lie == 'I'){
+      text_type = "number"
+    }else{
+      text_type = "text"
+    }
     var $collection = e.currentTarget.dataset
     that.setData({
+      lie:lie,
+      text_type:text_type,
       input_type : $collection.type,
       id: $collection.id,
       name: $collection.name,
@@ -686,4 +711,36 @@ Page({
       }
     })
   },
+  selBM:function(){
+    var _this = this
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query:"select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
+      },
+      success: res => {
+        var bumen = res.result.recordset
+        var bumen2 = []
+        console.log(bumen)
+        for(var i = 0 ; i < bumen.length ; i++){
+          bumen2.push(
+            bumen[i].bumen
+          )
+        }
+        _this.setData({
+          bumen_name:bumen2
+        })
+      },
+  })
+},
+
+bumen_select:function(e){
+  var _this = this
+  var bumen = _this.data.bumen_name[e.detail.value]
+  console.log(bumen)
+  _this.setData({
+    edit_old:bumen
+  })
+}
+
 })

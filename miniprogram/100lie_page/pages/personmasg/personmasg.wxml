@@ -16,7 +16,7 @@
   <form bindsubmit="save">
     <view>
       <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_name" maxlength="6"></input>
-      <input class="input_text_form" placeholder="请输入账号" value="{{num}}" type="number" name="input_num" maxlength="6"></input>
+      <input class="input_text_form" placeholder="请输入账号" value="{{num}}" type="text" name="input_num" maxlength="6"></input>
       <input class="input_text_form" password="{{true}}" placeholder="请输入密码" value="{{pwd}}" type="text" name="input_pwd" maxlength="6"></input>
     </view>
     <view class="bt_view">  

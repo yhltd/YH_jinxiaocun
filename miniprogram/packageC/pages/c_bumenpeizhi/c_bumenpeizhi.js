@@ -25,7 +25,10 @@ Page({
     animationData_input :[],
 
 
-    animationData_moreDo_view : []
+    animationData_moreDo_view : [],
+    shan:"",
+    gai:"",
+    zeng:""
   },
 
   init : function(){
@@ -136,12 +139,21 @@ Page({
 
   clickView : function(e){
     var _this = this;
-    var dataset = e.currentTarget.dataset
-    _this.setData({
-      dataset_input : dataset
-    })
+    if(_this.data.gai){
+      var dataset = e.currentTarget.dataset
+      _this.setData({
+        dataset_input : dataset
+      })
+  
+      _this.showView(_this,"input");
+    }else{
+      wx.showToast({
+        title: '无修改权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
 
-    _this.showView(_this,"input");
   },
 
   save: function(e){
@@ -188,77 +200,94 @@ Page({
 
   insert : function(){
     var _this = this;
-    _this.hidView(_this,"moreDo")
-    if(!updSpace.insert("Department")){
-      wx.showModal({
-        title : '警告',
-        content : '数据库已满，请将数据备份后删除部分数据',
-        showCancel : false,
-        confirmColor : '#009688',
+    if(_this.data.zeng){
+      _this.hidView(_this,"moreDo")
+      if(!updSpace.insert("Department")){
+        wx.showModal({
+          title : '警告',
+          content : '数据库已满，请将数据备份后删除部分数据',
+          showCancel : false,
+          confirmColor : '#009688',
+        })
+        return;
+      }
+  
+      wx.cloud.callFunction({
+        name : "sqlServer_cw",
+        data : {
+          query: "insert into Department(department,man,company) values('','','"+_this.data.userInfo.company+"')"
+        },
+        success : res=>{
+  
+          _this.init()
+        },
+        err : res =>{
+          wx.showToast({
+            title: "错误",
+            icon : "none"
+          })
+        }
       })
-      return;
+    }else{
+      wx.showToast({
+        title: '无新增权限',
+        icon: "none",
+        duration: 1000
+      })
     }
 
-    wx.cloud.callFunction({
-      name : "sqlServer_cw",
-      data : {
-        query: "insert into Department(department,man,company) values('','','"+_this.data.userInfo.company+"')"
-      },
-      success : res=>{
-
-        _this.init()
-      },
-      err : res =>{
-        wx.showToast({
-          title: "错误",
-          icon : "none"
-        })
-      }
-    })
   },
 
   delete : function(e){
     var _this = this;
     var id = e.currentTarget.dataset.id
     var index  = e.currentTarget.dataset.index
-
-    wx.showModal({
-      title : "提示",
-      content : '确定删除么？',
-      cancelColor : '#282B33',
-      confirmColor : '#BC4A4A',
-      success : res=>{
-        if (res.confirm) {
-          var sql = "delete from Department where id = '"+id+"'"
-          wx.cloud.callFunction({
-            name : "sqlServer_cw",
-            data : {
-              query: sql
-            },
-            success : res=>{
-              wx.showToast({
-                title: "删除成功",
-                icon : "none"
-              })
-              var list = _this.data.list;
-              list.splice(index,1)
-              updSpace.del("Department",1)
-              _this.setData({
-                list
-              })
-            },
-            err : res =>{
-              wx.showToast({
-                title: "错误",
-                icon : "none"
-              })
-            }
-          })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
+    if(_this.data.shan){
+      wx.showModal({
+        title : "提示",
+        content : '确定删除么？',
+        cancelColor : '#282B33',
+        confirmColor : '#BC4A4A',
+        success : res=>{
+          if (res.confirm) {
+            var sql = "delete from Department where id = '"+id+"'"
+            wx.cloud.callFunction({
+              name : "sqlServer_cw",
+              data : {
+                query: sql
+              },
+              success : res=>{
+                wx.showToast({
+                  title: "删除成功",
+                  icon : "none"
+                })
+                var list = _this.data.list;
+                list.splice(index,1)
+                updSpace.del("Department",1)
+                _this.setData({
+                  list
+                })
+              },
+              err : res =>{
+                wx.showToast({
+                  title: "错误",
+                  icon : "none"
+                })
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
         }
-      }
-    })
+      })
+    }else{
+      wx.showToast({
+        title: '无删除权限',
+        icon: "none",
+        duration: 1000
+      })
+    }
+
   },
 
 
@@ -334,6 +363,45 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
+    var user = JSON.parse(options.userInfo)
+    var bianhao = user.bianhao
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: "select * from quanxian where bianhao ='" + bianhao + "'"
+      },
+      success: res => {
+        var list = res.result.recordset[0]
+        console.log(list)
+        var shan = true
+        var gai = true
+        var zeng = true
+        if (list.bmsz_delete != "是"){
+          shan = false
+        }
+        if (list.bmsz_update != "是"){
+          gai = false
+        }
+        if (list.bmsz_add != "是"){
+          zeng = false
+        }
+        _this.setData({
+          shan:shan,
+          gai:gai,
+          zeng:zeng
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail : res=>{
+        wx.showToast({
+          title: '请求失败！',
+          icon : 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })

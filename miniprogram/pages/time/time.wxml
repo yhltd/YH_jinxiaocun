@@ -21,7 +21,7 @@
 <view class='header'>
   <view class='dq_y'>入库</view>
   <view class='pm'></view>
-  <input class='bk_ss' type="number" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="输入入库订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="输入入库订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
 </view>
 <view class='zg'>
   <view class='kongbai'></view>

@@ -258,13 +258,19 @@ Page({
     var index = that.data.selectIndex;
     var input = that.data.maskWindowInputValue;
     console.log(input)
-
+    var sql = ""
+    if(input == "" || input == undefined){
+      sql = "select top 100 * from gongzi_gongzimingxi where BD = '"+that.data.companyName+"'"
+    }else{
+      sql = "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%'and BD = '"+that.data.companyName+"'"
+    }
+    
     if (index == 0) {
       //按姓名查询
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and BD = '"+that.data.companyName+"'"
+          query: sql
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -741,7 +747,7 @@ Page({
     if(that.data.isSearch){
       sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and B = '"+ that.data.maskWindowInputValue+"'"
     }else{
-      sql = "select * from (select id,B,BA,AY,ROW_NUMBER() over(order by [id]) rownumber from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') t where t.[id] between ('" + that.data.page + "'-1)*100 and '" + that.data.page + "'*100"
+      sql = "select * from (select id,B,BA,AY,ROW_NUMBER() over(order by [id]) rownumber from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') t where t.rownumber between ('" + that.data.page + "'-1)*100 and '" + that.data.page + "'*100"
     }
     wx.cloud.callFunction({
       name: 'sqlServer_117',

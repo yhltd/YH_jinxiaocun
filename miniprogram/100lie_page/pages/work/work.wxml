@@ -43,106 +43,106 @@ style="display:{{duoxz.toString().indexOf('A')!=-1? none:flex}}"
     </view>
     <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
     <view class="th" >    
-      <view class="td" data-index="{{index}}" hidden="{{false1}}" data-clie='C' data-column='A' bindtap="click" >{{item.A}}</view>
-      <view class="td" data-index="{{index}}" data-clie='D' data-column='B' bindtap="click" hidden="{{false2}}">{{item.B}}</view>
-      <view class="td" data-index="{{index}}" data-clie='E' data-column='C' bindtap="click" hidden="{{false3}}">{{item.C}}</view>
-      <view class="td" data-index="{{index}}" data-clie='F' data-column='D' bindtap="click" hidden="{{false4}}">{{item.D}}</view>
-      <view class="td" data-index="{{index}}" data-clie='G' data-column='E' bindtap="click" hidden="{{false5}}">{{item.E}}</view>
-      <view class="td" data-index="{{index}}" data-clie='H' data-column='F' bindtap="click" hidden="{{false6}}">{{item.F}}</view>
-      <view class="td" data-index="{{index}}" data-clie='I' data-column='G' bindtap="click" hidden="{{false7}}">{{item.G}}</view>
-      <view class="td" data-index="{{index}}" data-clie='J' data-column='H' bindtap="click" hidden="{{false8}}">{{item.H}}</view>
-      <view class="td" data-index="{{index}}" data-clie='K' data-column='I' bindtap="click" hidden="{{false9}}">{{item.I}}</view>
-      <view class="td" data-index="{{index}}" data-clie='L' data-column='J' bindtap="click" hidden="{{false10}}">{{item.J}}</view>
-      <view class="td" data-index="{{index}}" data-clie='M' data-column='K' bindtap="click" hidden="{{false11}}">{{item.K}}</view>
-      <view class="td" data-index="{{index}}" data-clie='N' data-column='L' bindtap="click" hidden="{{false12}}">{{item.L}}</view>
-      <view class="td" data-index="{{index}}" data-clie='O' data-column='M' bindtap="click" hidden="{{false13}}">{{item.M}}</view>
-      <view class="td" data-index="{{index}}" data-clie='P' data-column='N' bindtap="click" hidden="{{false14}}">{{item.N}}</view>
-      <view class="td" data-index="{{index}}" data-clie='Q' data-column='O' bindtap="click" hidden="{{false15}}">{{item.O}}</view>
-      <view class="td" data-index="{{index}}" data-clie='R' data-column='P' bindtap="click" hidden="{{false16}}">{{item.P}}</view>
-      <view class="td" data-index="{{index}}" data-clie='S' data-column='Q' bindtap="click" hidden="{{false17}}">{{item.Q}}</view>
-      <view class="td" data-index="{{index}}" data-clie='T' data-column='R' bindtap="click" hidden="{{false18}}">{{item.R}}</view>
-      <view class="td" data-index="{{index}}" data-clie='U' data-column='S' bindtap="click" hidden="{{false19}}">{{item.S}}</view>
-      <view class="td" data-index="{{index}}" data-clie='V' data-column='T' bindtap="click" hidden="{{false20}}">{{item.T}}</view>
-      <view class="td" data-index="{{index}}" data-clie='W' data-column='U' bindtap="click" hidden="{{false21}}">{{item.U}}</view>
-      <view class="td" data-index="{{index}}" data-clie='X' data-column='V' bindtap="click" hidden="{{false22}}">{{item.V}}</view>
-      <view class="td" data-index="{{index}}" data-clie='Y' data-column='W' bindtap="click" hidden="{{false23}}">{{item.W}}</view>
-      <view class="td" data-index="{{index}}" data-clie='Z' data-column='X' bindtap="click" hidden="{{false24}}">{{item.X}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AA' data-column='Y'  bindtap="click" hidden="{{false25}}">{{item.Y}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AB' data-column='Z'  bindtap="click" hidden="{{false26}}">{{item.Z}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AC' data-column='AA'  bindtap="click" hidden="{{false27}}">{{item.AA}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AD' data-column='AB'  bindtap="click" hidden="{{false28}}">{{item.AB}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AE' data-column='AC'  bindtap="click" hidden="{{false29}}">{{item.AC}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AF' data-column='AD'  bindtap="click" hidden="{{false30}}">{{item.AD}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AG' data-column='AE'  bindtap="click" hidden="{{false31}}">{{item.AE}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AH' data-column='AF'  bindtap="click" hidden="{{false32}}">{{item.AF}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AI' data-column='AG'  bindtap="click" hidden="{{false33}}">{{item.AG}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AJ' data-column='AH'  bindtap="click" hidden="{{false34}}">{{item.AH}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AK' data-column='AI'  bindtap="click" hidden="{{false35}}">{{item.AI}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AL' data-column='AJ'  bindtap="click" hidden="{{false36}}">{{item.AJ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AM' data-column='AK'  bindtap="click" hidden="{{false37}}">{{item.AK}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AN' data-column='AL'  bindtap="click" hidden="{{false38}}">{{item.AL}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AO' data-column='AM'  bindtap="click" hidden="{{false39}}">{{item.AM}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AP' data-column='AN'  bindtap="click" hidden="{{false40}}">{{item.AN}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AQ' data-column='AO'  bindtap="click" hidden="{{false41}}">{{item.AO}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AR' data-column='AP'  bindtap="click" hidden="{{false42}}">{{item.AP}}</view>
-      <view class="td" data-index="{{index}}" data-clie='ASS' data-column='AQ'  bindtap="click" hidden="{{false43}}">{{item.AQ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AT' data-column='AR'  bindtap="click" hidden="{{false44}}">{{item.AR}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AU' data-column='ASS'  bindtap="click" hidden="{{false45}}">{{item.ASS}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AV' data-column='AT'  bindtap="click" hidden="{{false46}}">{{item.AT}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AW' data-column='AU'  bindtap="click" hidden="{{false47}}">{{item.AU}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AX' data-column='AV'  bindtap="click" hidden="{{false48}}">{{item.AV}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AY' data-column='AW'  bindtap="click" hidden="{{false49}}">{{item.AW}}</view>
-      <view class="td" data-index="{{index}}" data-clie='AZ' data-column='AX'  bindtap="click" hidden="{{false50}}">{{item.AX}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BA' data-column='AY'  bindtap="click" hidden="{{false51}}">{{item.AY}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BB' data-column='AZ'  bindtap="click" hidden="{{false52}}">{{item.AZ}}</view>
-       <view class="td" data-index="{{index}}" data-clie='BC' data-column='BA'  bindtap="click" hidden="{{false53}}">{{item.BA}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BD' data-column='BB'  bindtap="click" hidden="{{false54}}">{{item.BB}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BE' data-column='BC'  bindtap="click" hidden="{{false55}}">{{item.BC}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BF' data-column='BD'  bindtap="click" hidden="{{false56}}">{{item.BD}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BG' data-column='BE'  bindtap="click" hidden="{{false57}}">{{item.BE}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BH' data-column='BF'  bindtap="click" hidden="{{false58}}">{{item.BF}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BI' data-column='BG'  bindtap="click" hidden="{{false59}}">{{item.BG}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BJ' data-column='BH'  bindtap="click" hidden="{{false60}}">{{item.BH}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BK' data-column='BI'  bindtap="click" hidden="{{false61}}">{{item.BI}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BL' data-column='BJ'  bindtap="click" hidden="{{false62}}">{{item.BJ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BM' data-column='BK'  bindtap="click" hidden="{{false63}}">{{item.BK}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BN' data-column='BL'  bindtap="click" hidden="{{false64}}">{{item.BL}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BO' data-column='BM'  bindtap="click" hidden="{{false65}}">{{item.BM}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BP' data-column='BN'  bindtap="click" hidden="{{false66}}">{{item.BN}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BQ' data-column='BO'  bindtap="click" hidden="{{false67}}">{{item.BO}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BR' data-column='BP'  bindtap="click" hidden="{{false68}}">{{item.BP}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BS' data-column='BQ'  bindtap="click" hidden="{{false69}}">{{item.BQ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BT' data-column='BR'  bindtap="click" hidden="{{false70}}">{{item.BR}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BU' data-column='BS'  bindtap="click" hidden="{{false71}}">{{item.BS}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BV' data-column='BT'  bindtap="click" hidden="{{false72}}">{{item.BT}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BW' data-column='BU'  bindtap="click" hidden="{{false73}}">{{item.BU}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BX' data-column='BV'  bindtap="click" hidden="{{false74}}">{{item.BV}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BYY' data-column='BW'  bindtap="click" hidden="{{false75}}">{{item.BW}}</view>
-      <view class="td" data-index="{{index}}" data-clie='BZ' data-column='BX'  bindtap="click" hidden="{{false76}}">{{item.BX}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CA' data-column='BYY'  bindtap="click" hidden="{{false77}}">{{item.BYY}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CB' data-column='BZ'  bindtap="click" hidden="{{false78}}">{{item.BZ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CC' data-column='CA'  bindtap="click" hidden="{{false79}}">{{item.CA}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CD' data-column='CB'  bindtap="click" hidden="{{false80}}">{{item.CB}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CE' data-column='CC'  bindtap="click" hidden="{{false81}}">{{item.CC}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CF' data-column='CD'  bindtap="click" hidden="{{false82}}">{{item.CD}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CG' data-column='CE'  bindtap="click" hidden="{{false83}}">{{item.CE}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CH' data-column='CF'  bindtap="click" hidden="{{false84}}">{{item.CF}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CI' data-column='CG'  bindtap="click" hidden="{{false85}}">{{item.CG}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CJ' data-column='CH'  bindtap="click" hidden="{{false86}}">{{item.CH}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CK' data-column='CI'  bindtap="click" hidden="{{false87}}">{{item.CI}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CL' data-column='CJ'  bindtap="click" hidden="{{false88}}">{{item.CJ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CM' data-column='CK'  bindtap="click" hidden="{{false89}}">{{item.CK}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CN' data-column='CL'  bindtap="click" hidden="{{false90}}">{{item.CL}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CO' data-column='CM'  bindtap="click" hidden="{{false91}}">{{item.CM}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CP' data-column='CN'  bindtap="click" hidden="{{false92}}">{{item.CN}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CQ' data-column='CO'  bindtap="click" hidden="{{false93}}">{{item.CO}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CR' data-column='CP'  bindtap="click" hidden="{{false94}}">{{item.CP}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CS' data-column='CQ'  bindtap="click" hidden="{{false95}}">{{item.CQ}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CT' data-column='CR'  bindtap="click" hidden="{{false96}}">{{item.CR}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CU' data-column='CS'  bindtap="click" hidden="{{false97}}">{{item.CS}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CV' data-column='CT'  bindtap="click" hidden="{{false98}}">{{item.CT}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CW' data-column='CU'  bindtap="click" hidden="{{false99}}">{{item.CU}}</view>
-      <view class="td" data-index="{{index}}" data-clie='CX' data-column='CV'  bindtap="click" hidden="{{false100}}">{{item.CV}}</view>
+      <!-- <view class="td" data-index="{{index}}" hidden="{{false1}}" data-clie='C' data-column='A' bindtap="click" >{{item.A}}</view>
+      <view class="td" data-index="{{index}}" data-clie='D' data-column='B' bindtap="click" hidden="{{false2}}">{{item.B}}</view> -->
+      <view class="td" data-index="{{index}}" data-clie='C' data-column='C' bindtap="click" hidden="{{false3}}">{{item.C}}</view>
+      <view class="td" data-index="{{index}}" data-clie='D' data-column='D' bindtap="click" hidden="{{false4}}">{{item.D}}</view>
+      <view class="td" data-index="{{index}}" data-clie='E' data-column='E' bindtap="click" hidden="{{false5}}">{{item.E}}</view>
+      <view class="td" data-index="{{index}}" data-clie='F' data-column='F' bindtap="click" hidden="{{false6}}">{{item.F}}</view>
+      <view class="td" data-index="{{index}}" data-clie='G' data-column='G' bindtap="click" hidden="{{false7}}">{{item.G}}</view>
+      <view class="td" data-index="{{index}}" data-clie='H' data-column='H' bindtap="click" hidden="{{false8}}">{{item.H}}</view>
+      <view class="td" data-index="{{index}}" data-clie='I' data-column='I' bindtap="click" hidden="{{false9}}">{{item.I}}</view>
+      <view class="td" data-index="{{index}}" data-clie='J' data-column='J' bindtap="click" hidden="{{false10}}">{{item.J}}</view>
+      <view class="td" data-index="{{index}}" data-clie='K' data-column='K' bindtap="click" hidden="{{false11}}">{{item.K}}</view>
+      <view class="td" data-index="{{index}}" data-clie='L' data-column='L' bindtap="click" hidden="{{false12}}">{{item.L}}</view>
+      <view class="td" data-index="{{index}}" data-clie='M' data-column='M' bindtap="click" hidden="{{false13}}">{{item.M}}</view>
+      <view class="td" data-index="{{index}}" data-clie='N' data-column='N' bindtap="click" hidden="{{false14}}">{{item.N}}</view>
+      <view class="td" data-index="{{index}}" data-clie='O' data-column='O' bindtap="click" hidden="{{false15}}">{{item.O}}</view>
+      <view class="td" data-index="{{index}}" data-clie='P' data-column='P' bindtap="click" hidden="{{false16}}">{{item.P}}</view>
+      <view class="td" data-index="{{index}}" data-clie='Q' data-column='Q' bindtap="click" hidden="{{false17}}">{{item.Q}}</view>
+      <view class="td" data-index="{{index}}" data-clie='R' data-column='R' bindtap="click" hidden="{{false18}}">{{item.R}}</view>
+      <view class="td" data-index="{{index}}" data-clie='S' data-column='S' bindtap="click" hidden="{{false19}}">{{item.S}}</view>
+      <view class="td" data-index="{{index}}" data-clie='T' data-column='T' bindtap="click" hidden="{{false20}}">{{item.T}}</view>
+      <view class="td" data-index="{{index}}" data-clie='U' data-column='U' bindtap="click" hidden="{{false21}}">{{item.U}}</view>
+      <view class="td" data-index="{{index}}" data-clie='V' data-column='V' bindtap="click" hidden="{{false22}}">{{item.V}}</view>
+      <view class="td" data-index="{{index}}" data-clie='W' data-column='W' bindtap="click" hidden="{{false23}}">{{item.W}}</view>
+      <view class="td" data-index="{{index}}" data-clie='X' data-column='X' bindtap="click" hidden="{{false24}}">{{item.X}}</view>
+      <view class="td" data-index="{{index}}" data-clie='Y' data-column='Y'  bindtap="click" hidden="{{false25}}">{{item.Y}}</view>
+      <view class="td" data-index="{{index}}" data-clie='Z' data-column='Z'  bindtap="click" hidden="{{false26}}">{{item.Z}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AA' data-column='AA'  bindtap="click" hidden="{{false27}}">{{item.AA}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AB' data-column='AB'  bindtap="click" hidden="{{false28}}">{{item.AB}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AC' data-column='AC'  bindtap="click" hidden="{{false29}}">{{item.AC}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AD' data-column='AD'  bindtap="click" hidden="{{false30}}">{{item.AD}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AE' data-column='AE'  bindtap="click" hidden="{{false31}}">{{item.AE}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AF' data-column='AF'  bindtap="click" hidden="{{false32}}">{{item.AF}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AG' data-column='AG'  bindtap="click" hidden="{{false33}}">{{item.AG}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AH' data-column='AH'  bindtap="click" hidden="{{false34}}">{{item.AH}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AI' data-column='AI'  bindtap="click" hidden="{{false35}}">{{item.AI}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AJ' data-column='AJ'  bindtap="click" hidden="{{false36}}">{{item.AJ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AK' data-column='AK'  bindtap="click" hidden="{{false37}}">{{item.AK}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AL' data-column='AL'  bindtap="click" hidden="{{false38}}">{{item.AL}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AM' data-column='AM'  bindtap="click" hidden="{{false39}}">{{item.AM}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AN' data-column='AN'  bindtap="click" hidden="{{false40}}">{{item.AN}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AO' data-column='AO'  bindtap="click" hidden="{{false41}}">{{item.AO}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AP' data-column='AP'  bindtap="click" hidden="{{false42}}">{{item.AP}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AQ' data-column='AQ'  bindtap="click" hidden="{{false43}}">{{item.AQ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AR' data-column='AR'  bindtap="click" hidden="{{false44}}">{{item.AR}}</view>
+      <view class="td" data-index="{{index}}" data-clie='ASS' data-column='ASS'  bindtap="click" hidden="{{false45}}">{{item.ASS}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AT' data-column='AT'  bindtap="click" hidden="{{false46}}">{{item.AT}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AU' data-column='AU'  bindtap="click" hidden="{{false47}}">{{item.AU}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AV' data-column='AV'  bindtap="click" hidden="{{false48}}">{{item.AV}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AW' data-column='AW'  bindtap="click" hidden="{{false49}}">{{item.AW}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AX' data-column='AX'  bindtap="click" hidden="{{false50}}">{{item.AX}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AY' data-column='AY'  bindtap="click" hidden="{{false51}}">{{item.AY}}</view>
+      <view class="td" data-index="{{index}}" data-clie='AZ' data-column='AZ'  bindtap="click" hidden="{{false52}}">{{item.AZ}}</view>
+       <view class="td" data-index="{{index}}" data-clie='BA' data-column='BA'  bindtap="click" hidden="{{false53}}">{{item.BA}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BB' data-column='BB'  bindtap="click" hidden="{{false54}}">{{item.BB}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BC' data-column='BC'  bindtap="click" hidden="{{false55}}">{{item.BC}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BD' data-column='BD'  bindtap="click" hidden="{{false56}}">{{item.BD}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BE' data-column='BE'  bindtap="click" hidden="{{false57}}">{{item.BE}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BF' data-column='BF'  bindtap="click" hidden="{{false58}}">{{item.BF}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BG' data-column='BG'  bindtap="click" hidden="{{false59}}">{{item.BG}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BH' data-column='BH'  bindtap="click" hidden="{{false60}}">{{item.BH}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BI' data-column='BI'  bindtap="click" hidden="{{false61}}">{{item.BI}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BJ' data-column='BJ'  bindtap="click" hidden="{{false62}}">{{item.BJ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BK' data-column='BK'  bindtap="click" hidden="{{false63}}">{{item.BK}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BL' data-column='BL'  bindtap="click" hidden="{{false64}}">{{item.BL}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BM' data-column='BM'  bindtap="click" hidden="{{false65}}">{{item.BM}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BN' data-column='BN'  bindtap="click" hidden="{{false66}}">{{item.BN}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BO' data-column='BO'  bindtap="click" hidden="{{false67}}">{{item.BO}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BP' data-column='BP'  bindtap="click" hidden="{{false68}}">{{item.BP}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BQ' data-column='BQ'  bindtap="click" hidden="{{false69}}">{{item.BQ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BR' data-column='BR'  bindtap="click" hidden="{{false70}}">{{item.BR}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BS' data-column='BS'  bindtap="click" hidden="{{false71}}">{{item.BS}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BT' data-column='BT'  bindtap="click" hidden="{{false72}}">{{item.BT}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BU' data-column='BU'  bindtap="click" hidden="{{false73}}">{{item.BU}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BV' data-column='BV'  bindtap="click" hidden="{{false74}}">{{item.BV}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BW' data-column='BW'  bindtap="click" hidden="{{false75}}">{{item.BW}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BX' data-column='BX'  bindtap="click" hidden="{{false76}}">{{item.BX}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BYY' data-column='BYY'  bindtap="click" hidden="{{false77}}">{{item.BYY}}</view>
+      <view class="td" data-index="{{index}}" data-clie='BZ' data-column='BZ'  bindtap="click" hidden="{{false78}}">{{item.BZ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CA' data-column='CA'  bindtap="click" hidden="{{false79}}">{{item.CA}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CB' data-column='CB'  bindtap="click" hidden="{{false80}}">{{item.CB}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CC' data-column='CC'  bindtap="click" hidden="{{false81}}">{{item.CC}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CD' data-column='CD'  bindtap="click" hidden="{{false82}}">{{item.CD}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CE' data-column='CE'  bindtap="click" hidden="{{false83}}">{{item.CE}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CF' data-column='CF'  bindtap="click" hidden="{{false84}}">{{item.CF}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CG' data-column='CG'  bindtap="click" hidden="{{false85}}">{{item.CG}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CH' data-column='CH'  bindtap="click" hidden="{{false86}}">{{item.CH}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CI' data-column='CI'  bindtap="click" hidden="{{false87}}">{{item.CI}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CJ' data-column='CJ'  bindtap="click" hidden="{{false88}}">{{item.CJ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CK' data-column='CK'  bindtap="click" hidden="{{false89}}">{{item.CK}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CL' data-column='CL'  bindtap="click" hidden="{{false90}}">{{item.CL}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CM' data-column='CM'  bindtap="click" hidden="{{false91}}">{{item.CM}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CN' data-column='CN'  bindtap="click" hidden="{{false92}}">{{item.CN}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CO' data-column='CO'  bindtap="click" hidden="{{false93}}">{{item.CO}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CP' data-column='CP'  bindtap="click" hidden="{{false94}}">{{item.CP}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CQ' data-column='CQ'  bindtap="click" hidden="{{false95}}">{{item.CQ}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CR' data-column='CR'  bindtap="click" hidden="{{false96}}">{{item.CR}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CS' data-column='CS'  bindtap="click" hidden="{{false97}}">{{item.CS}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CT' data-column='CT'  bindtap="click" hidden="{{false98}}">{{item.CT}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CU' data-column='CU'  bindtap="click" hidden="{{false99}}">{{item.CU}}</view>
+      <view class="td" data-index="{{index}}" data-clie='CV' data-column='CV'  bindtap="click" hidden="{{false100}}">{{item.CV}}</view>
       <view class="td" data-index="{{index}}" hidden="{{false101}}" data-clie='id' >{{item.id}}</view>
       <view class="td" hidden="{{false102}}" >{{gongsi}}</view>
      </view>
@@ -160,8 +160,8 @@ style="display:{{duoxz.toString().indexOf('A')!=-1? none:flex}}"
     </view>
       <block wx:for="{{users}}" wx:for-index="index" wx:key="user" wx:for-item="item">
       <view class="th">
-      <view class="td" data-index="{{index}}" data-clie='A'>{{item.A}}</view>
-      <view class="td" data-index="{{index}}" data-clie='B'>{{item.B}}</view>
+      <!-- <view class="td" data-index="{{index}}" data-clie='A'>{{item.A}}</view>
+      <view class="td" data-index="{{index}}" data-clie='B'>{{item.B}}</view> -->
       <view class="td" data-index="{{index}}" data-clie='C'>{{item.C}}</view>
       <view class="td" data-index="{{index}}" data-clie='D'>{{item.D}}</view>
       <view class="td" data-index="{{index}}" data-clie='E'>{{item.E}}</view>

@@ -79,7 +79,7 @@ Page({
     console.log(paibanbiao_renyuan_bumen1)
     for (let i = 0; i < department_list1.length; i++) {
       console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
-      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "账号管理") {
+      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "排产核对") {
         console.log(department_list1[i])
         //添加没权限
         if (department_list1[i].add == "否") {
@@ -217,7 +217,11 @@ Page({
   inquire: function () {
     var _this = this
     _this.setData({
-      tjShow: true
+      tjShow: true,
+      ddh:"",
+      mk:"",
+      rq:"",
+      sl:""
     })
   },
 
@@ -372,6 +376,8 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
+      ddh:"",
+      mk:""
     })
   },
 

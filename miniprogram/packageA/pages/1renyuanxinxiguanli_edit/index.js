@@ -4,19 +4,29 @@ Page({
     id: -1,
     list: [],
     length : 0,
-    companyName : ""
+    companyName : "",
+    rqxzShow3:false,
+    bumen_name : [],
+    bumen_insert:"",
   },
   onLoad: function (options) {
     var that = this
     console.log("options.id", options.id)
+    that.selBM()
     that.setData({
       id: options.id,
       length : options.length,
       companyName : options.companyName
     })
-    wx.setNavigationBarTitle({
-      title: '修改信息'
-    })
+    if(options.id == undefined){
+      wx.setNavigationBarTitle({
+        title: '添加信息'
+      })
+    }else{
+      wx.setNavigationBarTitle({
+        title: '修改信息'
+      })
+    }
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#4876ff',
@@ -30,6 +40,7 @@ Page({
       success: res => {
         that.setData({
           list: res.result.recordset,
+          bumen_insert:res.result.recordset[0].C
         })
       },
       err: res => {
@@ -155,6 +166,47 @@ Page({
         title: checkRes,
         icon: "none"
       });
+    }
+  },
+
+  selYM: function () {
+    var _this = this
+    _this.setData({
+      rqxzShow3: true
+    })
+  },
+
+  selBM:function(){
+    var _this = this
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query:"select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
+      },
+      success: res => {
+        var bumen = res.result.recordset
+        var bumen2 = []
+        console.log(bumen)
+        for(var i = 0 ; i < bumen.length ; i++){
+          bumen2.push({
+            name: bumen[i].bumen
+          })
+        }
+        _this.setData({
+          bumen_name:bumen2
+        })
+      },
+  })
+},
+  select2: function (e) {
+    var _this = this
+    _this.setData({
+      rqxzShow3: false
+    })
+    if (e.type == 'select') {
+      _this.setData({
+        bumen_insert: e.detail.name,
+      })
     }
   },
 

@@ -36,11 +36,11 @@
   <form bindsubmit="save">
     <view>
       <view class="lables">收卡人:</view>
-      <input class="input_text_form"  value="{{empty}}" type="{{dataset_input.input_type}}" name="skr"></input>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="skr"></input>
       <view class="lables">付款人:</view>
-      <input class="input_text_form"  value="{{empty}}" type="{{dataset_input.input_type}}" name="fkr"></input>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="fkr"></input>
       <view class="lables">持卡人:</view>
-      <input class="input_text_form"  value="{{empty}}" type="{{dataset_input.input_type}}" name="ckr"></input>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="ckr"></input>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

@@ -443,7 +443,9 @@ Page({
       addTable2: true,
       input_hid2: true,
       handle2: true,
-      empty: ""
+      empty:"",
+      zdr:"",
+      hkr:""
     })
   },
 
@@ -458,6 +460,9 @@ Page({
     _this.setData({
       frmStudfind: true,
       mask_hid: true,
+      empty:"",
+      zdr:"",
+      hkr:""
     })
   },
 
@@ -523,10 +528,13 @@ Page({
     _this.setData({
       addTable: true,
       mask_hid: true,
+      empty:"",
+      zdr:"",
+      hkr:""
     })
     }else{
       wx.showToast({
-        title: "必填项不能为空！",
+        title: "前六项不能为空！",
         icon:"none"
       })
     }
@@ -564,6 +572,9 @@ Page({
     _this.setData({
       addTable2: true,
       mask_hid: true,
+      empty:"",
+      zdr:"",
+      hkr:""
     })
     }else{
       wx.showToast({

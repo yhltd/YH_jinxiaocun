@@ -304,7 +304,7 @@
   bind:select="select2" 
 />
 <van-action-sheet
-  show="{{ xlShow4 }}"
+  show="{{ xlShow5 }}"
   actions="{{ ssmkXZ }}"
   close-on-click-overlay
   bind:close="select5"
@@ -320,7 +320,7 @@
 />
 <!--  插单下拉-->
 <van-action-sheet
-  show="{{ xlShow5 }}"
+  show="{{ xlShow4 }}"
   actions="{{ listDingDan }}"
   close-on-click-overlay
   bind:close="select4"

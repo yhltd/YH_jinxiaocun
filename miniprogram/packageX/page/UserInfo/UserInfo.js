@@ -82,7 +82,6 @@ Page({
         mask_hid: false,
       })
     } else {
-      if (dataset_input.column != "account") {
       if (_this.data.sheetqx5.Upd == "1" ){
       _this.setData({
         dataset_input,
@@ -97,7 +96,6 @@ Page({
         })
       }
     }
-    }
   },
 
 
@@ -106,7 +104,7 @@ Page({
       title: '加载中',
       mask: 'true'
     })
-
+    console.log(e)
     var _this = this;
     var view_index = e.currentTarget.dataset.view_index;
     var id = _this.data.list[_this.data.dataset_input.index].id;
@@ -560,7 +558,7 @@ Page({
             })
           }else{
             wx.showToast({
-                  title: "必填项不能为空！",
+                  title: "所有填写项不能为空！",
                   icon: "none"
                 })
           }
