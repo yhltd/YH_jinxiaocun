@@ -531,6 +531,21 @@ Page({
     })
   },
 
+  use_book:function(){
+    var _this = this
+    _this.hidView(_this,"moreDo");
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击更多操作后点击删除项目按钮，选中想要删除的数据点击右下角删除按钮即可删除。\n2.点击更多操作按钮后点击新增项目按钮，在弹出的页面中录入数据点击确定按钮后即可添加。\n3.点击已有数据的对应列，弹出修改窗口，在窗口中录入数据点击确定按钮后即可修改。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -50,7 +50,7 @@
         <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="note"  data-value="{{list_item.note}}" bindtap="clickView" data-input_type="text">
           <view class="list_text">{{list_item.note}}</view>
         </view>
-        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="man" data-value="{{list_item.man}}" bindtap="clickView" data-input_type="text">
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="man" data-value="{{list_item.man}}" data-input_type="text">
           <view class="list_text">{{list_item.man}}</view>
         </view>
         <view class="list_view">
@@ -172,4 +172,5 @@
   <button class="moreDo_view_bt" bindtap="examine">审核</button>
   <button class="moreDo_view_bt" bindtap="showSelect">查询</button>
   <button class="moreDo_view_bt" bindtap="getExcel">生成Excel</button>
+  <button class="moreDo_view_bt" bindtap="use_book">使用说明</button>
 </view>

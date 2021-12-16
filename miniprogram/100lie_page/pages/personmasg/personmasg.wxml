@@ -28,9 +28,11 @@
   
 <button class="bt_form_hover"  bindtap="add">添加</button>
 <button class="bt_form_hover"  bindtap="det">删除</button>
+<button class="bt_form_hover"  bindtap="sel_show">查询</button>
+<button class="bt_form_hover"  bindtap="ref">刷新</button>
 <view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
 <!-- 删除 -->
-  <view class="input_view" hidden="{{input_det}}">
+  <view class="input_view2" hidden="{{input_det}}">
   <form bindsubmit="saves">
     <view>
       <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_detname" maxlength="6"></input>
@@ -41,4 +43,17 @@
     </view>
   </form>
   </view>
-  <view class="masks" bindtap="hid_det" hidden="{{mask_det}}"></view>
+  <view class="mask" bindtap="hid_det" hidden="{{mask_det}}"></view>
+<!-- 查询 -->
+  <view class="input_view2" hidden="{{sel_hid}}">
+  <form bindsubmit="sel">
+    <view>
+      <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_detname" maxlength="6"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_sel" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+  <view class="mask" bindtap="hid_sel" hidden="{{sel_hid}}"></view>

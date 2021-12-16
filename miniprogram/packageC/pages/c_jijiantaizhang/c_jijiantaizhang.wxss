@@ -229,3 +229,94 @@ button{
   z-index: 19;
   transition: all 0.3s ease-in-out;
 }
+
+.date-picker{
+  width: 100%;
+  margin: auto;
+}
+
+.select_view_box{
+  background-color: #FFFFFF;
+  width: 92%;
+  height: 37%;
+  position: fixed;
+  bottom: 0;
+  margin: 4%;
+  border-radius: 20rpx;
+  z-index: 20;
+}
+
+.option{
+  height: auto;
+  width: 100%;
+  margin-top: 4%;  
+  border : none;
+}
+
+
+.option_sv{
+  height: 200rpx;
+  width: 85%;
+  border: 1px solid #282B33;
+  border-radius: 10rpx;
+  position: fixed;
+  background-color: white;
+  z-index: 20;
+  top: 26%;
+  left: 7%;
+}
+.option_text{
+  width: 70%;
+  height: 30px;
+  border: 1rpx solid #282B33;
+  padding-left: 20rpx;
+  margin: auto;
+  border-radius: 10rpx 10rpx 10rpx 10rpx;
+  margin-top: 7%;
+}
+.option_bt{
+  width: 100%;
+  background-color: #282B33;
+  text-align: center;
+  line-height: 71rpx;
+  height: 71rpx;
+  border-radius: 0 10rpx 10rpx 0;
+  color: white;   
+}
+.option_sv_item{
+  width: 92%;
+  border: 1rpx solid #282B33;
+  text-align: center;
+  margin: auto;
+  height: 69rpx;
+  line-height: 69rpx;
+  border-radius: 10rpx;
+  margin-top: 10rpx;
+  font-size: 35rpx;
+}
+
+.select_view{
+  display: flex;
+  align-items: center;
+  height: 16%;
+  margin-bottom: 56rpx;
+}
+.select_view_input{
+  display: inline-flex;
+  border: 5rpx solid #E6E6E6;
+  border-radius: 15rpx;
+  padding-left: 20rpx;
+  width: 30%;
+  margin-left: 8.5%;
+}
+.moreDo_bt_view{
+  display: flex;
+  height: 50%;
+  flex-direction: row;
+  align-items: center;
+}
+.moreDo_bt{
+  width: 24%;
+  background-color: #282B33;
+  color: white;
+}

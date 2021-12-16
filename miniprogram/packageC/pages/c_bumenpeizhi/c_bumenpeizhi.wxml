@@ -48,6 +48,27 @@
 </view>
 
 
+
+
 <view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
   <button class="moreDo_view_bt" bindtap="insert">添加一行</button>
+  <button class="moreDo_view_bt" bindtap="bumen_select">部门查询</button>
+  <button class="moreDo_view_bt" bindtap="use_book">使用说明</button>
 </view> 
+
+
+<view class="mask" bindtap="chaxun_quxiao" hidden="{{chaxun_hidden}}">
+</view>
+
+<view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{chaxun_hidden}}">
+  <form bindsubmit="select">
+    <view class="option">
+      <input class="option_text" value="{{bumenmingcheng}}" bindinput="input" placeholder="请输入部门名称" name="bumenmingcheng"/>
+    </view>
+    <view class="moreDo_bt_view" style="">
+      <button class="moreDo_bt" bindtap="chaxun_quxiao">返回</button>
+      <button class="moreDo_bt" form-type="submit">查询</button>
+    </view>
+  </form>
+</view>
+

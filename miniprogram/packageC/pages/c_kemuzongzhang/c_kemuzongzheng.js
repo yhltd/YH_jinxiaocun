@@ -368,9 +368,30 @@ Page({
   updClass : function(){
     var _this = this;
     var class_id_new = _this.data.class_id_new;
+    var class_name = ""
+    switch(class_id_new){
+      case 1:
+        class_name = "资产类"
+        break;
+      case 2:
+        class_name = "负债类"
+        break;
+      case 3:
+        class_name = "权益类"
+        break;
+      case 4:
+        class_name = "成本类"
+        break;
+      case 5:
+        class_name = "损益类"
+        break;
+    }
+    console.log(class_id_new)
+    
     _this.setData({
       pageNum : 1,
-      class_id : class_id_new
+      class_id : class_id_new,
+      class_name:class_name
     })
     _this.hidView(_this,"updClass")
     if(_this.data.list[class_id_new-1].arr==""){
@@ -616,6 +637,21 @@ Page({
     })
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
+    })
+  },
+
+  use_book:function(){
+    var _this = this
+    _this.hidView(_this,"moreDo");
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击更多操作后点击第一个按钮，可选择科目类别显示对应数据。\n2.点击更多操作后点击整理项目按钮，可刷新当前选择类别的数据。\n3.点击更多操作按钮后点击删除项目按钮，选择已有数据后点击右下角删除按钮即可删除。\n4.选择科目类别后点击已有数据的对应列即可弹出修改窗口。\n5.点击更多操作后点击平衡验证按钮，可验证借贷平衡。\n6.选择对应类别后点击更多操作，在弹出的窗口中点击新增项目按钮，即可添加对应类别的数据。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
     })
   },
 

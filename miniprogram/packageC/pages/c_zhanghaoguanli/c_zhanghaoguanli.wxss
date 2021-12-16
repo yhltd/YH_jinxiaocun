@@ -285,13 +285,13 @@ button{
 }
 
 .moreDo{
-  width: 41%;
+  width: 25%;
   background-color: #282B33;
   color: #E6E6E6;
   height: 75rpx;
   float: left;
   margin-top: 3%;
-  margin-left: 8%;
+  margin-left: 1%;
 }
 
 

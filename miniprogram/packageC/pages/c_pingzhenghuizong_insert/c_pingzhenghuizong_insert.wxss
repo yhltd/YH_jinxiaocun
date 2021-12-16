@@ -3,7 +3,7 @@ page{
 }
 
 view {
-  font-size: 30rpx;
+  font-size: 40rpx;
 }
 button {
   font-size: 30rpx;
@@ -48,13 +48,14 @@ button {
 }
 .option_bt{
   width: 15%;
-  background-color: #282B33;
+  background-color: #009688;
   text-align: center;
-  line-height: 127rpx;
-  height: 127rpx;
+  height: 99rpx;
+  font-weight: bolder;
   border-radius: 0 10rpx 10rpx 0;
   color: white;
-  margin-top: 22rpx;  
+  margin-top: 50rpx;  
+  line-height: 99rpx;
 }
 .option_sv_item{
   width: 92%;
@@ -111,7 +112,7 @@ radio{
   height: 127rpx;
   width: 97%;
   margin: auto;
-  background-color: #282B33;
+  background-color: #009688;
   color: white;
   border-radius: 10rpx;
   border-bottom: 2rpx solid #282B33;
@@ -222,7 +223,7 @@ radio{
 .bt{
   background-color: #009688;
   color: white;
-  width: 224rpx;
+  width: 25%;
   height: 80rpx;
   line-height: 80rpx;
   margin-bottom: 73rpx;  

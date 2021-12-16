@@ -6,6 +6,8 @@ Page({
    */
   data: {
     gongsi:'',
+    lie:'',
+    quanxian:'',
   title:[
  {text:'公司名称',width:"500rpx",colmun:"B",val:''},
 //  {text:'A',width:"200rpx",colmun:"C",val:''},{text:'B',width:"200rpx",colmun:"D",val:''},
@@ -57,7 +59,8 @@ Page({
   onLoad: function (options) {
     if(options!=undefined){
       this.setData({
-        ["title[0].val"]:options.gongsi
+        ["title[0].val"]:options.gongsi,
+        gongsi: options.gongsi
       })
     }
     
@@ -116,6 +119,137 @@ Page({
       
     })  
   }, 
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      [column]: e.detail.value
+    })
+  },
+  quanxian_click:function(){
+    var _this = this
+    var quanxian = _this.data.quanxian
+    console.log(quanxian)
+    if(quanxian == ""){
+      quanxian = "√"
+    }else if(quanxian != ""){
+      quanxian = ""
+    }
+    _this.setData({
+      quanxian : quanxian
+    })
+    console.log(quanxian)
+  },
+
+  sel:function(){
+    var _this = this
+    var lie = _this.data.lie
+    var gongsi = this.data.gongsi
+    var lie_list = ["C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV","CW","CX"]
+    if(lie == "" || lie == undefined){
+      wx.showToast({
+        title: '请输入列号',
+        icon: 'none'
+      })
+      return
+    }
+    lie = lie.toUpperCase()
+    
+    var panduan = lie_list.indexOf(lie)
+    console.log(panduan)
+    if (panduan <= -1){
+      wx.showToast({
+        title: '列号输入不正确',
+        icon: 'none'
+      })
+      return
+    }
+
+    if(lie == "AS"){
+      lie = "ASS"
+    }
+    if(lie == "BY"){
+      lie = "BYY"
+    }
+    var sql = "select " + lie + " from baitaoquanxian_gongsi where B='" + gongsi + "'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data:{
+        query: sql
+      },
+      success(res){        
+       console.log(res)
+       var quanxian_dic = res.result.recordset[0]
+       var quanxian = quanxian_dic[lie]
+       console.log(quanxian)
+       _this.setData({
+         quanxian:quanxian
+       })
+       wx.showToast({
+        title: '查询完成',
+        icon: 'none'
+      })
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })  
+  },
+  upd:function(){
+    var _this = this
+    var _this = this
+    var lie = _this.data.lie
+    var gongsi = _this.data.gongsi
+    var quanxian = _this.data.quanxian
+    var lie_list = ["C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV","CW","CX"]
+    if(lie == "" || lie == undefined){
+      wx.showToast({
+        title: '请输入列号',
+        icon: 'none'
+      })
+      return
+    }
+    lie = lie.toUpperCase()
+    
+    var panduan = lie_list.indexOf(lie)
+    console.log(panduan)
+    if (panduan <= -1){
+      wx.showToast({
+        title: '列号输入不正确',
+        icon: 'none'
+      })
+      return
+    }
+
+    if(lie == "AS"){
+      lie = "ASS"
+    }
+    if(lie == "BY"){
+      lie = "BYY"
+    }
+    var sql = "update baitaoquanxian_gongsi set " + lie + "='" + quanxian + "' where B='" + gongsi + "'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data:{
+        query: sql
+      },
+      success(res){        
+       console.log(res)
+       _this.onLoad()
+       wx.showToast({
+        title: '修改完成',
+        icon: 'none'
+      })
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })  
+  },
+
   // 显示加载
   onReady: function () {
     wx.showLoading({

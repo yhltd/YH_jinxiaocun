@@ -13,7 +13,7 @@ background-color: azure;
 .picker{
 margin-top: 20rpx;
 margin-left: 5rpx;
-font-size: 40rpx;
+font-size: 35rpx;
 font-weight: bold;
 border: 1rpx solid #E6E6E6;
 border-radius: 10rpx;
@@ -24,7 +24,7 @@ align-items: center;
 background: -webkit-linear-gradient(left,rgb(204,199,199),rgb(155,129,129));
 }
 .but{
-  background: -webkit-linear-gradient(left,rgb(204,199,199),rgb(155,129,129));
+  background-color: burlywood; 
   font-size: 40rpx;
    font-weight: bold;
   width: 280rpx;
@@ -43,7 +43,7 @@ margin-top: -205rpx;
   height: 90rpx;
   width: 1500rpx;
   margin-left: 930rpx;
-  margin-top: -223rpx;
+  margin-top: -53rpx;
   font-size: 40rpx;
    font-weight: bold;
 }
@@ -52,14 +52,22 @@ font-size: 40rpx;
 color: brown;
 font-weight: bold;
 margin-left: 1004rpx;
-margin-top: 23rpx;
+margin-top: -300rpx;
+display: flex;
 }
 .text2{
   font-size: 40rpx;
   color: brown;
   font-weight: bold;
-  margin-left:1646rpx;
+  margin-left: 1840rpx;
   margin-top: -170rpx;
+}
+.text3{
+  font-size: 40rpx;
+  color: brown;
+  font-weight: bold;
+  margin-left: 2280rpx;
+  margin-top: -185rpx;
 }
 .button1{
   font-size: 40rpx;
@@ -156,7 +164,7 @@ padding: 0;
  justify-content: center;
  align-items: center;
  overflow-x: auto;
- font-weight: bold;
+ /* font-weight: bold; */
  font-size: 35rpx; 
  flex-wrap: wrap;
 } 

@@ -6,6 +6,12 @@
       <input name="project" placeholder="请输入项目名称" value="{{empty}}"></input>
     </view>
     <view class="input_view">
+      <view class="input_text">日期</view>
+      <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+        <input name="insert_date" placeholder="请输入日期" value="{{insert_date}}"></input>
+      </picker>
+    </view>
+    <view class="input_view">
       <view class="input_text">应收</view>
       <input name="receivable" placeholder="请输入应收" type="number" value="{{empty}}"></input>
     </view>

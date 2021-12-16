@@ -56,6 +56,12 @@
 <view class="bottom_view" style="height:16%">
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">查询</button>
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">所有</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="gengduo_show">更多功能</button>
+</view>
+
+<view class="input_view" hidden="{{handle3}}">
+      <button class="bt_form" bindtap="getExcel" hover-class="bt_form_hover">导出Excel</button>
+      <button class="bt_form" bindtap="use_book" hover-class="bt_form_hover">使用说明</button>
 </view>
 
 <!---------->

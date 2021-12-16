@@ -32,7 +32,7 @@ padding: 0;
 
 } 
 .tr{
-  background-color: aliceblue;
+  background-color: rgb(143, 198, 245);
 }
 /* .det{
      display: flex;
@@ -85,7 +85,7 @@ padding: 0;
   .bt_form{
     background-color: #009688;
     width: 39%;
-    margin-top: 100rpx;
+    margin-top: 4%;
     float: left;
     margin-left: 7%;
     color: white;
@@ -115,10 +115,20 @@ padding: 0;
       position: fixed;
       width: 100%;
       height: 78%;
-      top: 25%;
+      top: 40%;
       background-color: white;
       border-radius: 10rpx 10rpx 0 0;
       box-shadow: 10rpx 10rpx 10rpx black;
       z-index: 20;
       }
+      .input_view2{
+        position: fixed;
+        width: 100%;
+        height: 78%;
+        top: 65%;
+        background-color: white;
+        border-radius: 10rpx 10rpx 0 0;
+        box-shadow: 10rpx 10rpx 10rpx black;
+        z-index: 20;
+        }
      

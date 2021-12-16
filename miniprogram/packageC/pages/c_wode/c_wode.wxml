@@ -1,0 +1,35 @@
+<view class="bg">
+  <view class="head">
+    <view class="headIcon">
+      <image src="../../image/weidenglu_touxiang.png" style="width:70px;height:70px;margin-top:5%"></image>
+    </view>
+    <text class="headIcon" style="margin-top:5%;">{{this_name}}</text>
+  </view>
+</view>
+
+<view class="hr"></view>
+<view class='item' bindtap="go2">
+  <view class="title">账号管理</view>
+  <view class="detail2">
+    <text>></text>
+  </view>
+</view>
+<view class="line"></view>
+
+<view class='item' bindtap="go1">
+  <view class="title">部门设置</view>
+  <view class="detail2">
+    <text>></text>
+  </view>
+</view>
+
+<view class="hr"></view>
+<view class='item' bindtap="go3">
+  <view class="title">退出登录</view>
+  <view class="detail2">
+    <text> ></text>
+  </view>
+</view>
+<view class="line"></view>
+<view class="hr"></view>
+

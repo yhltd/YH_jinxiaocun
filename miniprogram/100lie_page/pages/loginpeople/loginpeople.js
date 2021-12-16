@@ -7,6 +7,7 @@ Page({
   data: {
     gongsi:'',
     name:'',
+    user:'',
   },
 
   /**
@@ -15,7 +16,26 @@ Page({
   onLoad: function (options) {
     this.setData({
       gongsi:options.gongsi,
-      name: options.name
+      name: options.name,
+      user:options.user,
+    })
+  },
+
+  go3:function(){
+    wx.reLaunch({
+      url: '../../../pages/login/login',
+    })
+  },
+  go2:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../work/work?gongsi='+_this.data.gongsi + '&name='+ _this.data.name + '&user='+ _this.data.user
+    })
+  },
+  go1:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../userpeople/userpeople?gongsi='+_this.data.gongsi+ '&name='+ _this.data.name
     })
   },
 

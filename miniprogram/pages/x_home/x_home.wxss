@@ -16,28 +16,28 @@ page{
   height: 12%;
   display: flex;
   align-items: center;
-  background-color: #282B33;
+  background-color: #6699CC;
   border-radius: 0 10px 10px 0;
   font-size: 39rpx;
   font-weight: bold;
   color: white;
   padding-left: 30px;  
   justify-content: space-between;
-  box-shadow: 10rpx 10rpx 20rpx black;
+  box-shadow: 10rpx 10rpx 20rpx #000033;
 }
 .item_hover{
   width: 73%;
   height: 12%;
   display: flex;
   align-items: center;
-  background-color: #009688;
+  background-color: #6699CC;
   border-radius: 0 10px 10px 0;
   font-size: 39rpx;
   font-weight: bold;
   color: white;
   padding-left: 30px;  
   justify-content: space-between;
-  box-shadow: 10rpx 10rpx 20rpx black;
+  box-shadow: 10rpx 10rpx 20rpx #000033;
 }
 .img{
   width: 30px;

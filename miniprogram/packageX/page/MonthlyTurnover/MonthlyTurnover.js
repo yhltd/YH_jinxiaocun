@@ -23,25 +23,26 @@ Page({
     },
     title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit", isupd: true },
     { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text", isupd: true },
-    { text: "付款人", width: "300rpx", columnName: "cardholder", type: "text", isupd: true },
-    { text: "持卡人", width: "250rpx", columnName: "drawee", type: "text", isupd: true },
-    { text: "发卡行", width: "250rpx", columnName: "issuing_bank", type: "text", isupd: true },
+    { text: "付款人", width: "200rpx", columnName: "cardholder", type: "text", isupd: true },
+    { text: "持卡人", width: "200rpx", columnName: "drawee", type: "text", isupd: true },
+    { text: "发卡行", width: "300rpx", columnName: "issuing_bank", type: "text", isupd: true },
     { text: "账单日", width: "200rpx", columnName: "bill_day", type: "date", isupd: true },
-    { text: "还款日", width: "250rpx", columnName: "repayment_date", type: "date", isupd: true },
-      { text: "总金额", width: "250rpx", columnName: "total", type: "digit", isupd: true },
-      { text: "应还款", width: "250rpx", columnName: "repayable", type: "digit", isupd: true },
-      { text: "剩余金额", width: "250rpx", columnName: "balance", type: "digit", isupd: true },
-      { text: "借款金额", width: "250rpx", columnName: "loan", type: "digit", isupd: true },
-      { text: "已还款", width: "250rpx", columnName: "repayment", type: "digit", isupd: true },
-      { text: "已刷金额", width: "250rpx", columnName: "swipe", type: "digit", isupd: true },
-      { text: "未刷金额", width: "250rpx", columnName: "balance_of_credit_card", isupd: true },
-      { text: "总手续费", width: "250rpx", columnName: "the_total_fee", isupd: true },
-      { text: "应收金额", width: "250rpx", columnName: "collected_amount", isupd: true },
-      { text: "利润", width: "250rpx", columnName: "profit", isupd: true },
+    { text: "还款日", width: "200rpx", columnName: "repayment_date", type: "date", isupd: true },
+      { text: "总金额", width: "180rpx", columnName: "total", type: "digit", isupd: true },
+      { text: "应还款", width: "180rpx", columnName: "repayable", type: "digit", isupd: true },
+      { text: "剩余金额", width: "180rpx", columnName: "balance", type: "digit", isupd: true },
+      { text: "借款金额", width: "180rpx", columnName: "loan", type: "digit", isupd: true },
+      { text: "已还款", width: "180rpx", columnName: "repayment", type: "digit", isupd: true },
+      { text: "已刷金额", width: "180rpx", columnName: "swipe", type: "digit", isupd: true },
+      { text: "未刷金额", width: "180rpx", columnName: "balance_of_credit_card", isupd: true },
+      { text: "总手续费", width: "180rpx", columnName: "the_total_fee", isupd: true },
+      { text: "应收金额", width: "180rpx", columnName: "collected_amount", isupd: true },
+      { text: "利润", width: "180rpx", columnName: "profit", isupd: true },
     ],
     input_hid: true,
     frmStudfind: true,
     mask_hid: true,
+    handle3 : true,
   },
 
 
@@ -98,6 +99,7 @@ Page({
       _this.setData({
         frmStudfind: true,
         mask_hid: true,
+        handle3:true,
         empty:""
       })
   },
@@ -127,6 +129,20 @@ Page({
       empty:""
     })
   },
+
+  use_book:function(){
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击全部按钮，页面显示所有数据。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -138,6 +154,71 @@ Page({
       uname: userInfo.uname,
     })
     _this.init();
+  },
+
+  gengduo_show:function(){
+    var _this = this;
+    _this.setData({
+      mask_hid:false,
+      handle3:false
+    })
+  },
+
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.title
+    var cloudList = {
+      name: '排产订单',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: parseInt(title[i].width.split("r")[0]) / 6,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
   },
 
   /**

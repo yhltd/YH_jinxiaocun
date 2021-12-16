@@ -1,3 +1,4 @@
+<image src="../../../images/gongsiguiding.jpg" style="width:94%;margin-top:3%;margin-left:3%;"></image>
 <scroll-view class="scroll" scroll-x="true"scroll-y="true" >
 <view class="table">
 <view class="tr" wx:for="{{title}}" wx:key="index" wx:for-index="index" style="width:{{item.width}}">
@@ -7,3 +8,13 @@
 </view>
 </scroll-view>
  
+<view class="scroll">
+  <view class="lables">列号</view>
+    <input bindinput="onInput" data-column="lie" class="input_text_form" value="{{lie}}" type="text" name="lie" ></input>
+  <view class="lables">权限</view>
+    <input bindtap="quanxian_click" data-column="quanxian" class="input_text_form" value="{{quanxian}}" type="text" name="quanxian" disabled='disabled'></input>
+    <view class="bottom_view" style="height:10%">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd">修改</button>
+    </view>
+</view>

@@ -6,6 +6,7 @@ Page({
    */
   data: {
     gongsi:'',
+    renyuan_name:'',
     titil:[
       {text:'公司'}, {text:'访问人员'},
       //  {text:'A'}, {text:'B'}, 
@@ -103,6 +104,39 @@ update:function(list,index,colmun,names){
   })
 
 },
+
+onInput: function (e) {
+  var _this = this
+  let column = e.currentTarget.dataset.column
+  _this.setData({
+    [column]: e.detail.value
+  })
+},
+
+sel:function(){
+  var _this = this
+  var renyuan = _this.data.renyuan_name
+  var sql="select * from baitaoquanxian_copy1 WHERE quanxian = '" + _this.data.gongsi + "' and B like '%" + renyuan + "%'"
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data:{
+      query : sql
+    },
+    success(res){
+      var list = res.result.recordset
+      _this.setData({
+        list
+      })
+    }
+  })
+},
+
+back:function(){
+  wx.navigateBack({
+    delta: 1
+  })
+},
+
 //显示加载
 onReady: function () {
   wx.showLoading({

@@ -113,9 +113,9 @@
   </block>
     </view>
 </scroll-view>
-<view class="but">
-<button class="delt" bindtap="delt">删除</button>
-<button class="ref" bindtap="ref">刷新</button>
+<view class="bottom_view">
+<!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="delt">删除</button> -->
+<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="ref">刷新</button>
 </view>
 <view class="input_view" hidden="{{input}}">
   <form bindsubmit="save">
@@ -128,3 +128,18 @@
     </view>
   </form>
   </view>
+
+  <view class="scroll">
+  <view class="lables">列号</view>
+    <input bindinput="onInput" data-column="lie" class="input_text_form" value="{{lie}}" type="text" name="lie" ></input>
+  <view class="lables">使用人员</view>
+    <input bindinput="onInput" data-column="renyuan" class="input_text_form" value="{{renyuan}}" type="text" name="renyuan" ></input>
+    <view class="bottom_view" style="height:10%">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del">删除</button>
+    </view>
+</view>
+
+<view class="bottom_view" style="margin-top: 20%;">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="back">返回</button>
+</view>

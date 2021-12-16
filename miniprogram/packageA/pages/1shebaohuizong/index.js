@@ -27,7 +27,7 @@ Page({
     IsLastPage: false,
     svHidden : false,
     selectHid : false,
-    selectText : "请选择",
+    selectText : "",
     id: '',
     name: '',
     edit_old: '',
@@ -438,7 +438,7 @@ selTap : function(e){
   _this.setData({
     svHidden : _this.data.svHidden?false:true,
     selectHid : false,
-    selectText : "请选择",
+    selectText : "",
     selectIndex : index,
     isMaskWindowInputShow : true,
     isMaskWindowInputShow1: true
@@ -651,7 +651,7 @@ choice : function(e){
           list: res.result.recordset,
           svHidden : false,
           selectHid : false,
-          selectText : "请选择",
+          selectText : "",
         })
         that.dismissMaskWindow();
       },

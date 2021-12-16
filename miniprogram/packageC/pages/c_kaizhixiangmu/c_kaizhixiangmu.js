@@ -14,42 +14,42 @@ Page({
       {
         dbName : "ROW_ID",
         dbTable : "",
-        width:"101rpx",
+        width:"102rpx",
         arr : []
       },{
         dbName : "financingExpenditure",
         dbTable : "FinancingExpenditure",
-        width:"401rpx",
+        width:"402rpx",
         arr : []
       },{
         dbName : "financingIncome",
         dbTable : "FinancingIncome",
-        width:"401rpx",
+        width:"402rpx",
         arr : []
       },{
         dbName : "investmentExpenditure",
         dbTable : "InvestmentExpenditure",
-        width:"401rpx",
+        width:"402rpx",
         arr : []
       },{
         dbName : "investmentIncome",
         dbTable : "InvestmentIncome",
-        width:"401rpx",
+        width:"402rpx",
         arr : []
       },{
         dbName : "managementExpenditure",
         dbTable : "ManagementExpenditure",
-        width:"401rpx",
+        width:"402rpx",
         arr : []
       },{
         dbName : "managementIncome",
         dbTable : "ManagementIncome",
-        width:"401rpx",
+        width:"402rpx",
         arr : []
       },{
         dbName : "word",
         dbTable : "VoucherWord",
-        width:"201rpx",
+        width:"202rpx",
         arr : []
       },
     ],
@@ -485,6 +485,19 @@ Page({
   moreDo: function(){
     var _this = this;
     _this.showView(_this,"moreDo")
+  },
+
+  use_book:function(){
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击每列的标题，可在对应列添加一行空数据。\n2.点击表格上的已有数据，可弹出修改窗口。\n3.长按表格上已有数据，可弹出删除对话框。\n4.点击下方同步数据按钮，可刷新表格上的数据。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
   },
 
   /**

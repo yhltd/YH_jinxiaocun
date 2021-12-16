@@ -124,7 +124,7 @@ page{
   margin: auto;
   text-align: center;
   font-size: 41rpx;
-  background-color: #393D49;
+  background-color: #009688;
   color: white;
 }
 .input_view{

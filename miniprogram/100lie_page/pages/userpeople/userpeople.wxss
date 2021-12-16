@@ -118,3 +118,43 @@ left: 120rpx;
     margin-left: 7%;
     color: white;
   } */
+
+  .lables{
+    font-size: 40rpx;
+    margin-left: 90rpx;
+    margin-top: 30rpx;
+  }
+  
+  .input_text_form{
+    border: 5rpx solid #E6E6E6;
+    margin: auto;
+    width: 80%;
+    height: 64rpx;
+    align-items: center;
+    margin-top: 5%;
+    border-radius: 19rpx;
+    padding-left: 3%;
+  }
+  
+  .bottom_view{
+    height: 10%;
+    align-items: center;
+    display: flex;
+    bottom: 2%;
+    margin-top: 10px;
+  }
+  
+  .bt_bottom{
+    width: 35%;
+    background-color: #009688;
+    color: #E6E6E6;
+    margin: auto;
+    margin-top: 5%;
+  }
+  .bt_bottom_hover{
+    width: 35%;
+    background-color: rgb(11, 194, 176);
+    color: #E6E6E6;
+    margin: auto;
+    margin-top: 5%;
+  }

@@ -48,6 +48,7 @@
 
 <view class="bottom_view">
   <button class="init" hover-class="init_hover" bindtap="init">同步数据</button>
+  <button class="init" hover-class="init_hover" bindtap="use_book">使用说明</button>
 </view>
 
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">

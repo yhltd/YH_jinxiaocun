@@ -5,7 +5,7 @@
       <view class="option_view">
         <view class="option">
           <input class="option_text" value="{{options_word.text}}" bindinput="input" data-name="options_word" placeholder="请选择凭证字" name="{{options_word.columnName}}"/>
-          <button class="option_bt" bindtap="selectTap" data-name="options_word">V</button>
+          <button class="option_bt" bindtap="selectTap" data-name="options_word">∨</button>
         </view>
         <scroll-view class="option_sv" hidden="{{options_word.selectHid}}" scroll-y="true">
           <view class="option_sv_item" wx:for="{{options_word.items}}" catchtap="choice" data-index="{{index}}" data-name="options_word">{{item}}</view>
@@ -36,7 +36,7 @@
       <view class="option_view">
         <view class="option">
           <input class="option_text" value="{{options_department.text}}" bindinput="input" data-name="options_department" placeholder="请选择部门" name="{{options_department.columnName}}"/>
-          <button class="option_bt" bindtap="selectTap" data-name="options_department">V</button>
+          <button class="option_bt" bindtap="selectTap" data-name="options_department">∨</button>
         </view>
         <scroll-view class="option_sv" hidden="{{options_department.selectHid}}" scroll-y="true">
           <view class="option_sv_item" wx:for="{{options_department.items}}" catchtap="choice" data-index="{{index}}" data-name="options_department">{{item}}</view>
@@ -48,7 +48,7 @@
       <view class="option_view">
         <view class="option">
           <input class="option_text" value="{{options_expenditure.text}}" bindinput="input" data-name="options_expenditure" placeholder="请选择开支项目" name="{{options_expenditure.columnName}}"/>
-          <button class="option_bt" bindtap="selectTap" data-name="options_expenditure">V</button>
+          <button class="option_bt" bindtap="selectTap" data-name="options_expenditure">∨</button>
         </view>
         <scroll-view class="option_sv" hidden="{{options_expenditure.selectHid}}" scroll-y="true">
           <view class="option_sv_item" wx:for="{{options_expenditure.items}}" catchtap="choice" data-index="{{index}}" data-name="options_expenditure">{{item}}</view>
@@ -71,7 +71,7 @@
     <view class="bottom">
       <button class="bt" form-type="reset" data-type="reset">重置</button>
       <button class="bt" form-type="submit" data-type="submit">保存</button>
-      <button class="bt" form-type="submit" data-type="submitAndReset">保存并重置</button>
+      <button class="bt" form-type="submit" style="width:35%" data-type="submitAndReset">保存并重置</button>
     </view>
   </form>
 </view>

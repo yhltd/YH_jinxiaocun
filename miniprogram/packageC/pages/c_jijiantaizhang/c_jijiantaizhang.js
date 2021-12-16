@@ -10,6 +10,7 @@ Page({
     empty : "",
     userInfo : "",
     this_quanxian:"",
+    chaxun_hidden:true,
 
     countPage : 20, //每一页显示的数据数据数量
     pageCount : 0, //总页数
@@ -19,6 +20,7 @@ Page({
     list : [],
     titil : [
       {text:"序号",width:"100rpx"},
+      {text:"日期",width:"250rpx"},
       {text:"项目",width:"250rpx"},
       {text:"应收",width:"170rpx"},
       {text:"实收",width:"170rpx"},
@@ -59,10 +61,11 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select *,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
+        query: "select id,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
       },
       success: res => {
         var list = res.result.recordset
+        console.log(list)
         _this.setData({
           list : list,
         })
@@ -472,6 +475,117 @@ Page({
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
     })
+  },
+
+  use_book:function(){
+    var _this = this
+    _this.hidView(_this,"moreDo");
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击更多操作后在弹出的窗口中点击删除项目按钮，选中想要删除的数据后点击右下角删除按钮即可删除。\n2.点击更多操作后点击新增项目按钮，在弹出的页面中录入信息点击确定按钮即可添加。\n3.点击页面已有数据的对应列，可弹出修改窗口，录入数据点击确定按钮后即可修改对应位置。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
+  showChoiceMonth1 : function(e){
+    var _this = this;
+    _this.setData({
+      start_date: e.detail.value
+    })
+  },
+  showChoiceMonth2 : function(e){
+    var _this = this;
+    _this.setData({
+      stop_date: e.detail.value
+    })
+  },
+
+  chaxun_show:function(){
+    var _this = this
+    _this.hid_view()
+    _this.setData({
+      chaxun_hidden:false,
+      xiangmumingcheng:"",
+      start_date:"",
+      stop_date:"",
+    })
+  },
+
+  chaxun_quxiao:function(){
+    var _this = this
+    _this.hid_view()
+    _this.setData({
+      chaxun_hidden:true
+    })
+  },
+
+  select:function(e){
+    var _this = this
+    console.log(e.detail.value)
+    var start_date = e.detail.value.start_date
+    var stop_date = e.detail.value.stop_date
+    var xiangmumingcheng = e.detail.value.xiangmumingcheng
+    if(start_date == ''){
+      start_date = "1900-01-01"
+    }
+    if(stop_date == ''){
+      stop_date = "2100-12-31"
+    }
+    if(start_date > stop_date){
+      wx.showToast({
+        title: '开始日期不能大于结束日期',
+        icon:'none',
+        duration: 2000//持续的时间
+      })
+      return
+    }
+
+    wx.showLoading({
+      title : '加载中',
+      mask : 'true'
+    })
+    var userInfo = _this.data.userInfo;
+    var pageNum = _this.data.pageNum;
+    var countPage = _this.data.countPage;
+
+    var sql = "select id,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1) + " and project like '%" + xiangmumingcheng + "%' and insert_date >= '" + start_date + "' and insert_date <= '" + stop_date + "';"
+
+    console.log(sql)
+
+   
+
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          list : list,
+        })
+        wx.hideLoading({
+
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail : res=>{
+        wx.showToast({
+          title: '请求失败！',
+          icon : 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+    _this.chaxun_quxiao()
   },
 
   /**

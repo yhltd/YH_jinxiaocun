@@ -7,6 +7,7 @@
 .bian{
   font-size: 50rpx;
   color: blue;
+
 }
 .text1{
   font-size: 36rpx;
@@ -42,4 +43,12 @@
     justify-content: center;
     align-items: center;
     
+    }
+
+    .img{
+      height: 60px;
+      width: 60px;
+      margin-top: 10px;
+      margin-left: 20px;
+
     }

@@ -1,4 +1,10 @@
-
+<view class="scroll">
+  <view class="lables">访问人员</view>
+    <input bindinput="onInput" data-column="renyuan_name" class="input_text_form" value="{{renyuan_name}}" type="text" name="renyuan_name" ></input>
+    <view class="bottom_view" style="height:10%">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
+    </view>
+</view>
   <scroll-view scroll-y="true" scroll-x="true" class="scroll2">
   <view class="table">
   <view class="th">
@@ -116,3 +122,7 @@
   </block>
   </view>
 </scroll-view>
+
+<view class="bottom_view" style="height:10%">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="back">返回</button>
+</view>

@@ -8,6 +8,7 @@ Page({
     initHidView : false,
     hid_view : false,
     empty : "",
+    insert_date :"",
 
     accounting : "选择科目",
 
@@ -52,7 +53,7 @@ Page({
 
     if(_this.data.accounting != "选择科目"){
       if(result==""){
-        var sql = "insert into SimpleData(accounting,project,receivable,receipts,cope,payment,company) values('"+_this.data.accounting+"','"+form.project+"','"+form.receivable+"','"+form.receipts+"','"+form.cope+"','"+form.payment+"','"+_this.data.userInfo.company+"')"
+        var sql = "insert into SimpleData(accounting,project,insert_date,receivable,receipts,cope,payment,company) values('"+_this.data.accounting+"','"+form.project+"','"+form.insert_date+"','"+form.receivable+"','"+form.receipts+"','"+form.cope+"','"+form.payment+"','"+_this.data.userInfo.company+"')"
 
 
         wx.cloud.callFunction({
@@ -96,6 +97,10 @@ Page({
       name: "project",
       rule: ["required"],
       msg: ["请输入项目名称"]
+    },{
+      name: "insert_date",
+      rule: ["required"], 
+      msg: ["请输入日期"]
     },{
       name: "receivable",
       rule: ["required","isNum"], 
@@ -243,6 +248,13 @@ Page({
     var _this = this;
     _this.hidView(_this,"getCode")
     _this.hidView(_this,"getParentCode")
+  },
+
+  bindDateChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      insert_date: e.detail.value
+    })
   },
 
   /**

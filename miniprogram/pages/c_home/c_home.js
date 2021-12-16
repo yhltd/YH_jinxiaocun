@@ -19,9 +19,10 @@ Page({
           {text:"开支科目",url:"../../packageC/pages/c_kaizhixiangmu/c_kaizhixiangmu"},
           {text:"部门设置",url:"../../packageC/pages/c_bumenpeizhi/c_bumenpeizhi"},
           {text:"账号管理",url:"../../packageC/pages/c_zhanghaoguanli/c_zhanghaoguanli"},
-          {text:"密码修改",url:""}
-          
+          {text:"密码修改",url:""},
+          {text:"我的",url:"../../packageC/pages/c_wode/c_wode"}
         ],
+        src:"../../images/shouye_1.jpg",
         listHid : false,
         animationData :{}
       },{
@@ -32,6 +33,7 @@ Page({
           {id:2,text:"凭证汇总",url:"../../packageC/pages/c_pingzhenghuizong/c_pingzhenghuizong"},
           {id:3,text:"智能看板",url:"../../packageC/pages/c_zhinengkanban/c_zhinengkanban"}
         ],
+        src:"../../images/shouye_2.jpg",
         listHid : false,
         animationData :{}
       },{
@@ -42,6 +44,7 @@ Page({
           {id:2,text:"资产负债",url:"../../packageC/pages/c_zichanfuzhai/c_zichanfuzhai"},
           {id:3,text:"利益损益",url:"../../packageC/pages/c_liyisunyi/c_liyisunyi"},
         ],
+        src:"../../images/shouye_3.jpg",
         listHid : false,
         animationData :{}
       },{
@@ -53,6 +56,7 @@ Page({
           {id:3,text:"使用说明",url:""},
           {id:1,text:"数据空间",url:"../../packageC/pages/c_shujukongjian/c_shujukongjian"},
         ],
+        src:"../../images/shouye_4.jpg",
         listHid : false,
         animationData :{}
       }
@@ -394,7 +398,11 @@ Page({
             })
           }
         }
-        
+        if(_this.data.names[itemindex].list[index].text=="我的"){
+          wx.navigateTo({
+            url: '../../packageC/pages/c_wode/c_wode' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+          })
+        }
       },
       err: res => {
         console.log("错误!")

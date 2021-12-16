@@ -9,11 +9,11 @@ Page({
     hid_view : false,
     empty : "",
     userInfo : "",
-
+    hid_chaxun : true,
     countPage : 20, //每一页显示的数据数据数量
     pageCount : 0, //总页数
     pageNum : 1, //当前页 
-
+    cxShow: false,
     list : [],
     titil : [
       {text:"序号",width:"100rpx"},
@@ -28,7 +28,9 @@ Page({
     animationData_moreDo_view : [],
     shan:"",
     gai:"",
-    zeng:""
+    zeng:"",
+    chaxun_hidden:true,
+    bumenmingcheng:"",
   },
 
   init : function(){
@@ -319,6 +321,12 @@ Page({
             animationData_moreDo_view : animation.export()
           })
           break;
+        case "select":
+          animation.translateY(0).step()
+          _this.setData({
+            animationData_select_view : animation.export()
+          })
+          break;
       }
     },200)
     
@@ -342,6 +350,12 @@ Page({
         animation.translateX(-300).step()
         _this.setData({
           animationData_moreDo_view : animation.export()
+        })
+        break;
+      case "select":
+        animation.translateY(500).step()
+        _this.setData({
+          animationData_select_view : animation.export()
         })
         break;
     }
@@ -404,6 +418,80 @@ Page({
     })
     _this.setData({
       userInfo : JSON.parse(options.userInfo)
+    })
+  },
+
+  bumen_select:function(){
+    var _this = this
+    _this.hidView(_this,"moreDo")
+    _this.setData({
+      chaxun_hidden:false,
+      bumenmingcheng:""
+    })
+  },
+
+  select:function(e){
+    var _this = this
+    console.log(e.detail.value.bumenmingcheng)
+    var bumenmingcheng = e.detail.value.bumenmingcheng
+    wx.showLoading({
+      title : '加载中',
+      mask : 'true'
+    })
+    var userInfo = _this.data.userInfo;
+    var pageNum = _this.data.pageNum;
+    var countPage = _this.data.countPage;
+
+    _this.getPageCount();
+
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: "select * from (select *,row_number() over(order by id) as ROW_ID from Department where company = '"+userInfo.company+"' and department like '%" + bumenmingcheng + "%') as a where a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(res)
+        _this.setData({
+          list
+        })
+        wx.hideLoading({
+
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail : res=>{
+        wx.showToast({
+          title: '请求失败！',
+          icon : 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+    _this.chaxun_quxiao()
+  },
+
+  chaxun_quxiao:function(){
+    var _this = this
+    _this.setData({
+      chaxun_hidden:true
+    })
+  },
+
+  use_book:function(){
+    var _this = this
+    _this.hidView(_this,"moreDo");
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击更多操作后点击添加一行按钮，即可添加一条空数据。\n2.点击更多操作后点击部门查询按钮，在弹出的窗口输入条件点击确定按钮后即可查询。\n3.长按已有数据的序号，在弹出的窗口中点击确定即可删除。\n4.点击已有数据的对应位置，在弹出的窗口中输入信息点击确定按钮即可修改。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
     })
   },
 

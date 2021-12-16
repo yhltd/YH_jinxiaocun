@@ -39,6 +39,14 @@ Page({
     if (_this.data.riqi1 != ""){
         start_date = _this.data.riqi1
         stop_date = _this.data.riqi2
+        if(start_date > stop_date){
+          wx.showToast({
+            title: '开始时间不能大于结束时间',
+            icon: "none",
+            duration: 1000
+          })
+          return
+        }
         console.log(_this.data.dangqian)
         if(_this.data.dangqian == "getAccounting"){
           wx.showToast({

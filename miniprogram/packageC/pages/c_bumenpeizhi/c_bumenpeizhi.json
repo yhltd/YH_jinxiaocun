@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-popup": "../../components/popup/index"
+  },
   "navigationBarBackgroundColor" : "#393D49",
   "navigationBarTitleText" : "部门设置"
 }

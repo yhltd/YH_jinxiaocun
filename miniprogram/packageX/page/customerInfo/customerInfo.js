@@ -29,30 +29,30 @@ Page({
     },
     title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
             { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text",isupd: true},
-            { text: "付款人",width: "300rpx",columnName: "cardholder",type: "text",isupd: true},
-            { text: "持卡人", width: "250rpx", columnName: "drawee", type: "text", isupd: true},
-            { text: "发卡行", width: "250rpx", columnName: "issuing_bank", type: "text", isupd: true},
-            { text: "账单日", width: "200rpx", columnName: "bill_day", type: "date", isupd: true},
+            { text: "付款人",width: "200rpx",columnName: "cardholder",type: "text",isupd: true},
+            { text: "持卡人", width: "200rpx", columnName: "drawee", type: "text", isupd: true},
+            { text: "发卡行", width: "400rpx", columnName: "issuing_bank", type: "text", isupd: true},
+            { text: "账单日", width: "250rpx", columnName: "bill_day", type: "date", isupd: true},
             { text: "还款日", width: "250rpx", columnName: "repayment_date", type: "date", isupd: true},
-      { text: "总金额", width: "250rpx", columnName: "total", type: "digit", isupd: true},
-      { text: "应还款", width: "250rpx", columnName: "repayable", type: "digit", isupd: true},
-      { text: "剩余金额", width: "250rpx", columnName: "balance", type: "digit", isupd: true},
-      { text: "借款金额", width: "250rpx", columnName: "loan", type: "digit", isupd: true},
-      { text: "手续费", width: "250rpx", columnName: "service_charge", type: "digit", isupd: true},
-      { text: "电话号", width: "250rpx", columnName: "telephone", type: "digit", isupd: true},
+      { text: "总金额", width: "200rpx", columnName: "total", type: "digit", isupd: true},
+      { text: "应还款", width: "200rpx", columnName: "repayable", type: "digit", isupd: true},
+      { text: "剩余金额", width: "200rpx", columnName: "balance", type: "digit", isupd: true},
+      { text: "借款金额", width: "200rpx", columnName: "loan", type: "digit", isupd: true},
+      { text: "手续费", width: "200rpx", columnName: "service_charge", type: "digit", isupd: true},
+      { text: "电话号", width: "300rpx", columnName: "telephone", type: "digit", isupd: true},
             { text: "密码", width: "250rpx", columnName: "password", isupd: true},
-            { text: "员工", width: "250rpx", columnName: "staff", isupd: true},
+            { text: "员工", width: "200rpx", columnName: "staff", isupd: true},
             ],
 
     title2: [{ text: "编号", width: "100rpx", columnName: "did", type: "digit", isupd: true },
-              { text: "日期", width: "200rpx", columnName: "date_time", type: "text", isupd: true },
-              { text: "已还款", width: "300rpx", columnName: "repayment", type: "text", isupd: true },
-              { text: "商户", width: "250rpx", columnName: "commercial_tenant", type: "text", isupd: true },
-              { text: "刷卡额", width: "250rpx", columnName: "swipe", type: "text", isupd: true },
+              { text: "日期", width: "250rpx", columnName: "date_time", type: "text", isupd: true },
+              { text: "已还款", width: "200rpx", columnName: "repayment", type: "text", isupd: true },
+              { text: "商户", width: "400rpx", columnName: "commercial_tenant", type: "text", isupd: true },
+              { text: "刷卡额", width: "200rpx", columnName: "swipe", type: "text", isupd: true },
               { text: "费率", width: "200rpx", columnName: "rate", type: "date", isupd: true },
-              { text: "到账金额", width: "250rpx", columnName: "arrival_amount", type: "date", isupd: true },
-      { text: "基础手续费", width: "250rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
-      { text: "其他手续费", width: "250rpx", columnName: "other_service_charge", type: "digit", isupd: true },
+              { text: "到账金额", width: "200rpx", columnName: "arrival_amount", type: "date", isupd: true },
+      { text: "基础手续费", width: "200rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
+      { text: "其他手续费", width: "200rpx", columnName: "other_service_charge", type: "digit", isupd: true },
               
               ],
     input_hid: true,
@@ -64,6 +64,7 @@ Page({
     addTable2: true,
     input_hid2: true,
     handle2: true,
+    handle3:true,
   },
 
 
@@ -156,6 +157,14 @@ Page({
     _this.setData({
       input_hid2: true,
       handle2: true,
+    })
+  },
+
+  gengduo_show:function(){
+    var _this = this;
+    _this.setData({
+      mask_hid:false,
+      handle3:false
     })
   },
 
@@ -443,6 +452,7 @@ Page({
       addTable2: true,
       input_hid2: true,
       handle2: true,
+      handle3:true,
       empty:"",
       zdr:"",
       hkr:""
@@ -678,6 +688,78 @@ Page({
       checkItems
     })
   },
+
+  use_book:function(){
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。\n4.点击序号，在弹出的窗口点击详情即可查看某客户的所有日交易记录。\n5.在弹出的详情窗口点击编号即可删除。\n6.在弹出的详情窗口点击录入即可录入当前客户的日交易记录。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.title
+    var cloudList = {
+      name: '排产订单',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: parseInt(title[i].width.split("r")[0]) / 6,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
+
+
 
 
 

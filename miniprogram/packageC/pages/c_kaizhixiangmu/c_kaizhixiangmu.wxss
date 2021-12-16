@@ -151,14 +151,14 @@ button{
   display: flex;
 }
 .init{
-  width: 80%;
+  width: 40%;
   background-color: #282B33;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
 }
 .init_hover{
-  width: 80%;
+  width: 40%;
   background-color: #2D2D2D;
   color: #E6E6E6;
   height: 75rpx;

@@ -10,6 +10,7 @@ Page({
     mask_hid:true,
     input_det:true,
     mask_det:true,
+    sel_hid:true,
     name: "",
     num: "",
     pwd: "",
@@ -191,6 +192,51 @@ onReady: function () {
     wx.hideLoading()
   }, 1000)
 },
+hid_sel:function(){
+  var _this = this
+  _this.setData({
+    name : "",
+    sel_hid:true
+  })
+},
+sel_show:function(){
+  var _this = this
+  _this.setData({
+    name : "",
+    sel_hid:false
+  })
+},
+sel:function(e){
+  var _this = this
+  var name = e.detail.value.input_detname
+  var sql="select  C, D, E from baitaoquanxian_renyun WHERE B = '" + _this.data.gongsi + "' and c like '%" + name + "%'"
+  console.log(sql)
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data:{
+      query : sql
+    },
+    success(res){
+      var list=res.result.recordset
+      // console.log(ii);
+      // for(var i=1;i<ii;i++){
+      //   var colmun=list[i].colmun
+      //   var val=res.result.recordset[0][colmun]
+      //   list[i].val=val
+      // }
+      _this.setData({
+        list
+      })
+      _this.hid_sel()
+    }
+  })
+
+},
+
+ref:function(){
+  var _this = this
+  _this.onLoad()
+}
 
 
 

@@ -8,6 +8,8 @@ Page({
     gongsi:'',
     name:'',
     info:'',
+    lie:'',
+    renyuan:'',
     input:true,
     titil:[
       {text:'A'}, {text:'B'}, {text:'C'}, {text:'D'}, {text:'E'},
@@ -107,10 +109,125 @@ Page({
     })
 
   },
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      [column]: e.detail.value
+    })
+  },
+  sel:function(){
+    var _this = this
+    var lie = _this.data.lie
+    var gongsi = _this.data.gongsi
+    var lie_list = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV"]
+    if(lie == '' || lie == undefined){
+      wx.showToast({
+        title: '请输入列号',
+        icon: 'none'
+      })
+      return
+    }
+    lie = lie.toUpperCase()
+    var panduan = lie_list.indexOf(lie)
+    console.log(panduan)
+    if (panduan <= -1){
+      wx.showToast({
+        title: '列号输入不正确',
+        icon: 'none'
+      })
+      return
+    }
+    if(lie == "AS"){
+      lie = "ASS"
+    }
+    if(lie == "BY"){
+      lie = "BYY"
+    }
+    var sql = "select " + lie + " from baitaoquanxian_copy2 where 公司 = '" + _this.data.gongsi + "'"
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data:{
+        query: sql
+      },
+      success(res){        
+       console.log(res)
+       var quanxian_dic = res.result.recordset[0]
+       var quanxian = quanxian_dic[lie]
+       console.log(quanxian)
+       _this.setData({
+         renyuan:quanxian
+       })
+       wx.showToast({
+        title: '查询完成',
+        icon: 'none'
+      })
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })  
+  },
+
+  del:function(){
+    var _this = this
+    var lie = _this.data.lie
+    var gongsi = _this.data.gongsi
+    var lie_list = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV"]
+    if(lie == '' || lie == undefined){
+      wx.showToast({
+        title: '请输入列号',
+        icon: 'none'
+      })
+      return
+    }
+    lie = lie.toUpperCase()
+    var panduan = lie_list.indexOf(lie)
+    console.log(panduan)
+    if (panduan <= -1){
+      wx.showToast({
+        title: '列号输入不正确',
+        icon: 'none'
+      })
+      return
+    }
+    if(lie == "AS"){
+      lie = "ASS"
+    }
+    if(lie == "BY"){
+      lie = "BYY"
+    }
+    var sql = "update baitaoquanxian_copy2 set " + lie + "='' where 公司 = '" + _this.data.gongsi + "'"
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data:{
+        query: sql
+      },
+      success(res){        
+       _this.setData({
+         renyuan:''
+       })
+       _this.onLoad()
+       wx.showToast({
+        title: '删除完成',
+        icon: 'none'
+      })
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })  
+  },
   //刷新
   ref:function(){
     var that = this
     that.onLoad()
+  },
+
+  back:function(){
+    wx.navigateBack({
+      delta: 1
+    })
   },
   //显示加载
 // onShow: function () {

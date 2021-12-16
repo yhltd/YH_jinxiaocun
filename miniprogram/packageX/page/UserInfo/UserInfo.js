@@ -65,6 +65,7 @@ Page({
     details: true,
     quanxian: true,
     mask:true,
+    handle3:true,
     show: []
   },
 
@@ -443,6 +444,7 @@ Page({
       input_hid2: true,
       handle2: true,
       quanxian: true,
+      handle3:true,
       empty: "",
       show: [],
       view_id: ''
@@ -644,6 +646,84 @@ Page({
       sheetqx5: sheetqx5,
     })
     _this.init();
+  },
+
+  use_book:function(){
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入对应信息后点击确定按钮即可添加信息。\n3.点击已有数据的序号，在弹出的窗口中点击删除按钮即可删除。\n4.点击已有数据的序号，在弹出的窗口中点击权限按钮，选择对应页面配置权限后点击保存按钮即可修改权限。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
+  gengduo_show:function(){
+    var _this = this;
+    _this.setData({
+      mask_hid:false,
+      handle3:false
+    })
+  },
+
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.title
+    var cloudList = {
+      name: '排产订单',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: parseInt(title[i].width.split("r")[0]) / 6,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
   },
 
   /**

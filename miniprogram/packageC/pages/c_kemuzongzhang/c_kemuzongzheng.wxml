@@ -79,6 +79,7 @@
   <button class="moreDo_view_bt" bindtap="bindDelete">删除项目</button>
   <button class="moreDo_view_bt" bindtap="balanceCheck">平衡验证</button>
   <button class="moreDo_view_bt" bindtap="insert">新增项目</button>
+  <button class="moreDo_view_bt" bindtap="use_book">使用说明</button>
 </view>
 
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">

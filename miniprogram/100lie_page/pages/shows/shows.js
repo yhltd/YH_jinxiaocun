@@ -54,7 +54,7 @@ Page({
  //登录人员
 loginren:function(){
   wx.navigateTo({
-    url: '../loginpeople/loginpeople?gongsi='+this.data.gongsi +'&name='+this.data.name
+    url: '../loginpeople/loginpeople?gongsi='+this.data.gongsi +'&name='+this.data.name +'&user='+this.data.user
   })
 },
 
