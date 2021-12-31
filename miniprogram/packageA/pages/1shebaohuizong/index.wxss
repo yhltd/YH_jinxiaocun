@@ -61,7 +61,7 @@ page {
   width: auto;
   white-space: nowrap;
   margin-top: 0px;
-  height: 75%;
+  height: 85%;
   background-color: #f2f2f2;
 }
 

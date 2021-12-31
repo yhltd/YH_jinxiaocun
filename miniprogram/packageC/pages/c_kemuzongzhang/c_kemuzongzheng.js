@@ -640,6 +640,85 @@ Page({
     })
   },
 
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var class_id = _this.data.class_id
+    var list = _this.data.list[class_id-1].arr
+    for(var i=0;i<list.length;i++){
+      if(list[i].direction){
+        list[i].direction = "借"
+      }else{
+        list[i].direction = "贷"
+      }
+    }
+    var title = [
+      {text:"科目代码",width:"170rpx",columnName: "code"},
+      {text:"科目名称",width:"400rpx",columnName: "name"},
+      {text:"科目等级",width:"180rpx",columnName: "grade"},
+      {text:"科目全称",width:"650rpx",columnName: "name1"},
+      {text:"方向",width:"130rpx",columnName: "direction"},
+      {text:"借贷合计",width:"200rpx",columnName: "money"},
+      {text:"年初借金",width:"250rpx",columnName: "load"},
+      {text:"年初贷金",width:"250rpx",columnName: "borrowed"},
+    ]
+    var cloudList = {
+      name: '科目总账',
+      items: [],
+      header: []
+    }
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: parseInt(title[i].width.split("r")[0]) / 6,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    
+    console.log(cloudList)
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        var fileid =  res.result.fileID
+        console.log(fileid)
+        console.log("获取云储存id")
+        wx.getSavedFileList({
+          success: function(res) {
+              console.log(res.fileList);
+          }
+        });
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+            wx.hideLoading({
+              success: (res) => {},
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
+
   use_book:function(){
     var _this = this
     _this.hidView(_this,"moreDo");

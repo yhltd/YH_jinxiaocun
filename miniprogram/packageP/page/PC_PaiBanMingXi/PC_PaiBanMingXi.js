@@ -16,8 +16,13 @@ Page({
     { text: "日期", width: "200rpx", columnName: "c", type: "text", isupd: true },
     ],
     list:[],
+    
     handle : true,
     xgShow:false,
+    cxShow: false,
+    rqxzShow1: false,
+    xingming:"",
+    bumen:"",
     xm :"",
     dh:"",
     sfzh:"",
@@ -36,8 +41,9 @@ Page({
   onLoad: function (options) {
     var _this = this
     _this.panduanquanxian()
+    var e = ['', '']
     if (_this.data.isdischa == 1) {
-      _this.tableShow()
+      _this.tableShow(e)
     }
   },
 
@@ -112,13 +118,24 @@ Page({
     }
   },
 
-  tableShow:function(){
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
+  },
+
+  tableShow:function(e){
     var _this = this
     let user = app.globalData.gongsi;
+    let xingming = _this.data.xingming;
+    let bumen = _this.data.bumen;
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from paibanbiao_detail where company='" + user + "'"
+        query: "select * from paibanbiao_detail where company='" + user + "' and staff_name like '%"+ xingming +"%' and department_name like '%"+ bumen +"%'"
       },
       success: res => {
         var list = res.result.recordset
@@ -333,5 +350,95 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  entering:function(){
+    var _this=this
+    _this.setData({
+      cxShow:true,
+      xingming:"",
+      bumen:""
+    })
+  },
+  qxShow2: function () {
+    var _this = this
+    _this.setData({
+      xgShow: false,
+    })
+  },
+  sel1:function(){
+    var _this = this
+    var e = [_this.data.xingming,_this.data.bumen]
+    _this.tableShow(e)
+    _this.setData({
+      cxShow:false,
+      xingming:"",
+      bumen:"",
+    })
+  },
+  cxShow3: function () {
+    var _this = this
+    _this.setData({
+      cxShow:false,
+      xingming:"",
+      bumen:"",
+    })
+  },
+
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.title;
+    var cloudList = {
+      name : '排班明细',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
 })

@@ -5,11 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    result :[],
-    input_type : "",
+    result: [],
+    input_type: "",
     maxpagenumber: 0,
     isMaskWindowShow: false,
-    maskWindowList: ['按姓名查询','按部门查询'],
+    maskWindowList: ['按姓名查询', '按部门查询'],
     selectIndex: -1,
     isMaskWindowInputShow: false,
     maskWindowInputValue: '',
@@ -23,6 +23,77 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1: [{
+      text: "姓名",
+      width: 20,
+      columnName: "name",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "年份",
+      width: 20,
+      columnName: "C",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "月份",
+      width: 20,
+      columnName: "D",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "应到",
+      width: 20,
+      columnName: "E",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "实到",
+      width: 20,
+      columnName: "F",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "请假",
+      width: 20,
+      columnName: "G",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "加班",
+      width: 20,
+      columnName: "H",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "迟到",
+      width: 20,
+      columnName: "I",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "部门",
+      width: 20,
+      columnName: "J",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "公司",
+      width: 20,
+      columnName: "K",
+      type: "text",
+      isupd: true
+    },
+  ],
     page: "1",
     IsLastPage: true,
     moth: '',
@@ -31,12 +102,12 @@ Page({
     modal9: false,
     mark: '',
     edit_new: '',
-    companyName : "",
-    text_type:"",
-    lie:"",
-    bumen_name:[]
+    companyName: "",
+    text_type: "",
+    lie: "",
+    bumen_name: []
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -44,8 +115,8 @@ Page({
     var _this = this;
     _this.selBM()
     _this.setData({
-      companyName : options.companyName,
-      result : JSON.parse(options.access)
+      companyName: options.companyName,
+      result: JSON.parse(options.access)
     })
     wx.setNavigationBarTitle({
       title: '考勤记录表'
@@ -60,7 +131,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '1' - 1) * 100) and K = '"+_this.data.companyName+"'"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '1' - 1) * 100) and K = '" + _this.data.companyName + "'"
       },
       success: res => {
         console.log("进入成功")
@@ -103,7 +174,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_kaoqinmingxi  where K = '"+that.data.companyName+"'"
+        query: "select count(id) as maxpagenumber from gongzi_kaoqinmingxi  where K = '" + that.data.companyName + "'"
       },
       success: res => {
         that.setData({
@@ -220,7 +291,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinmingxi where name ='" + input + "' and K = '"+that.data.companyName+"'"
+          query: "select top 100 * from gongzi_kaoqinmingxi where name ='" + input + "' and K = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -239,7 +310,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinmingxi where J ='" + input + "' and K = '"+that.data.companyName+"'"
+          query: "select top 100 * from gongzi_kaoqinmingxi where J ='" + input + "' and K = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("部门查询成功！", res.result)
@@ -255,7 +326,7 @@ Page({
         }
       })
     }
-    
+
 
 
     //点击取消按钮后的操作
@@ -306,69 +377,68 @@ Page({
   */
   edit_cell(e) {
     var that = this
-    if(that.data.lie == 'D'){
-      if(e.detail.value.value != "" && e.detail.value.value < 13 && e.detail.value.value > 0){
-      }else{
+    if (that.data.lie == 'D') {
+      if (e.detail.value.value != "" && e.detail.value.value < 13 && e.detail.value.value > 0) {} else {
         wx.showToast({
           title: '月份输入不合法',
-          icon : 'none'
+          icon: 'none'
         })
         return
       }
     }
-      if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
-        that.setData({
-          edit_new: that.data.edit_old
-        })
-      } else if (e.detail.value.value.length != 0) {
-        that.setData({
-          edit_new: e.detail.value.value
-        })
-      }
-      var sql = "update gongzi_kaoqinmingxi set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "'"
-  
-      console.log("选中单元格的信息：", that.data.id, that.data.name, that.data.edit_old) //that.data.edit_old的是单元格修改之前的值
-      console.log("提交成功，得到的值为:", that.data.edit_new,sql)
-  
-      //通过云函数修改数据库内容
-      wx.cloud.callFunction({
-        name: 'sqlServer_117',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log('操作成功' ,res)
-  
-          that.baochi()
-        },
-        err: res => {
-          console.log("错误!")
-        }
+    if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
+      that.setData({
+        edit_new: that.data.edit_old
       })
-    
+    } else if (e.detail.value.value.length != 0) {
+      that.setData({
+        edit_new: e.detail.value.value
+      })
+    }
+    var sql = "update gongzi_kaoqinmingxi set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "'"
+
+    console.log("选中单元格的信息：", that.data.id, that.data.name, that.data.edit_old) //that.data.edit_old的是单元格修改之前的值
+    console.log("提交成功，得到的值为:", that.data.edit_new, sql)
+
+    //通过云函数修改数据库内容
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log('操作成功', res)
+
+        that.baochi()
+      },
+      err: res => {
+        console.log("错误!")
+      }
+    })
+
   },
   click_edit(e) {
     var that = this
-    if(that.data.result.upd!=1){
+    if (that.data.result.upd != 1) {
       wx.showToast({
         title: '您没有权限',
-        icon : 'none'
+        icon: 'none'
       })
       return;
     }
     console.log(e)
     var lie = e.currentTarget.dataset.doinb
     var text_type = ""
-    if(lie == 'C' || lie == 'D' || lie == 'E' || lie == 'F' || lie == 'G' || lie == 'H' || lie == 'I'){
+    if (lie == 'C' || lie == 'D' || lie == 'E' || lie == 'F' || lie == 'G' || lie == 'H' || lie == 'I') {
       text_type = "number"
-    }else{
+    } else {
       text_type = "text"
     }
     var $collection = e.currentTarget.dataset
     that.setData({
-      lie:lie,
-      text_type:text_type,
-      input_type : $collection.type,
+      lie: lie,
+      text_type: text_type,
+      input_type: $collection.type,
       id: $collection.id,
       name: $collection.name,
       edit_old: $collection.x,
@@ -400,10 +470,10 @@ Page({
 
   click_delete: function (e) {
     var _this = this;
-    if(this.data.result.del!=1){
+    if (this.data.result.del != 1) {
       wx.showToast({
         title: '您没有权限',
-        icon :'none'
+        icon: 'none'
       })
       return;
     }
@@ -424,7 +494,7 @@ Page({
           //点击取消,默认隐藏弹框
           //这里可以callfunction！！！！
         } else {
-          var sql = "delete from gongzi_kaoqinmingxi where id = "+ dbid
+          var sql = "delete from gongzi_kaoqinmingxi where id = " + dbid
           wx.cloud.callFunction({
             name: 'sqlServer_117',
             data: {
@@ -481,7 +551,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '"+that.data.companyName+"';"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '" + that.data.companyName + "';"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -521,7 +591,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '"+that.data.companyName+"'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -656,7 +726,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '"+that.data.companyName+"'"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '" + that.data.companyName + "'"
       },
       success: res => {
         this.setData({
@@ -686,7 +756,7 @@ Page({
         rightDrawer: false
       })
     }
-    
+
     that.baochi()
     wx.showToast({
       title: '同步数据成功',
@@ -700,7 +770,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "insert into gongzi_kaoqinmingxi (name,K) values('请输入','"+that.data.companyName+"')"
+        query: "insert into gongzi_kaoqinmingxi (name,K) values('请输入','" + that.data.companyName + "')"
       },
       success: res => {
         console.log("插入成功")
@@ -711,36 +781,94 @@ Page({
       }
     })
   },
-  selBM:function(){
+  selBM: function () {
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query:"select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
+        query: "select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
       },
       success: res => {
         var bumen = res.result.recordset
         var bumen2 = []
         console.log(bumen)
-        for(var i = 0 ; i < bumen.length ; i++){
+        for (var i = 0; i < bumen.length; i++) {
           bumen2.push(
             bumen[i].bumen
           )
         }
         _this.setData({
-          bumen_name:bumen2
+          bumen_name: bumen2
         })
       },
-  })
-},
+    })
+  },
 
-bumen_select:function(e){
-  var _this = this
-  var bumen = _this.data.bumen_name[e.detail.value]
-  console.log(bumen)
-  _this.setData({
-    edit_old:bumen
-  })
-}
+  bumen_select: function (e) {
+    var _this = this
+    var bumen = _this.data.bumen_name[e.detail.value]
+    console.log(bumen)
+    _this.setData({
+      edit_old: bumen
+    })
+  },
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name: '考勤记录',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
 
 })

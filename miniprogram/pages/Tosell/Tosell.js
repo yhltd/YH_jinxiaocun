@@ -297,6 +297,21 @@ Page({
 
 
   },
+
+  use_book:function(){
+    var _this = this
+    wx.showModal({
+      title: '使用说明',
+      content: '1.头部可根据商品名称、供应商或客户进行出入库明细查询。\n2.长按数据可进行删除。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
   xiugai: function(e) {
     var that = this
     const db = wx.cloud.database()
@@ -326,4 +341,5 @@ Page({
     // })
 
   }
+  
 })

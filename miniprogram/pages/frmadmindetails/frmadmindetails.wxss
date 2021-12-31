@@ -1,10 +1,12 @@
 /* miniprogram/pages/frmadmindetails/frmadmindetails.wxss */
 
 .biao_tou{
-  padding-left: 36%;
-  font-size: 153%;
-  padding-bottom: 6%;
+  padding-left: 20%;
+  font-size: 180%;
+  padding-bottom: 3%;
   font-weight: bold;
+  padding-top: 4%;
+  width: 100%;
 }
 .bei_jing{
   width: 100%;
@@ -33,19 +35,17 @@ font-weight: bold;
 }
 
 .yhwl_logo{
-padding-left: 24%;
-width: 160px;
-height: 120px;
+width: 60px;
+height: 40px;
 display: inline-block;
 overflow: hidden;
-
-
+float: left;
 }
 
 .xq_tp1{
-  width: 280px;
+  width: 70%;
   height: 170px;
-  padding-left: 6%;
+  padding-left: 14%;
   padding-bottom: 3%;
   padding-top: 3%;
 

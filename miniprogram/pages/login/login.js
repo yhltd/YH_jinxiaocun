@@ -212,31 +212,17 @@ var login = function(that,info) {
         let user = res.result.recordset[0].C
         console.log(res.result.recordset[0].C)
         if(res.result.recordset.length > 0){
-            if(user=="管理员"){
-              wx.navigateTo({
-                url: '../../100lie_page/pages/shows/shows?gongsi='+ that.data.gongsi + '&name='+ info.inputName + '&user='+ user
-              })
-              wx.showToast({
-                title: '登录成功',
-              })
-
-            }else{
-              wx.navigateTo({
-                url: '../../100lie_page/pages/show/show?gongsi='+ that.data.gongsi + '&name='+ info.inputName + '&user='+ user
-              })
-              wx.showToast({
-                title: '登录成功',
-              })
-              
-            }
-
-          
+          wx.navigateTo({
+            url: '../../100lie_page/pages/shows/shows?gongsi='+ that.data.gongsi + '&name='+ info.inputName + '&user='+ user
+          })
+          wx.showToast({
+            title: '登录成功',
+          })
         }else{
           wx.showToast({
             title: '用户名密码不对',
             icon:"none"
           })
-
         }
 
       },

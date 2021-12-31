@@ -26,28 +26,28 @@ Page({
       },
       {
         text: "添加",
-        width: "200rpx",
+        width: "120rpx",
         columnName: "add",
         type: "text",
         isupd: true
       },
       {
         text: "删除",
-        width: "200rpx",
+        width: "120rpx",
         columnName: "del",
         type: "text",
         isupd: true
       },
       {
         text: "修改",
-        width: "200rpx",
+        width: "120rpx",
         columnName: "upd",
         type: "date",
         isupd: true
       },
       {
         text: "查询",
-        width: "200rpx",
+        width: "120rpx",
         columnName: "sel",
         type: "text",
         isupd: true

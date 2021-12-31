@@ -21,6 +21,71 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1: [
+      {
+        text: "姓名",
+        width: 20,
+        columnName: "B",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "部门",
+        width: 20,
+        columnName: "C",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "职务",
+        width: 20,
+        columnName: "D",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "身份证号",
+        width: 20,
+        columnName: "E",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "基本工资",
+        width: 20,
+        columnName: "F",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "银行卡号",
+        width: 20,
+        columnName: "G",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "入职时间",
+        width: 20,
+        columnName: "H",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "工龄/年",
+        width: 20,
+        columnName: "K",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "公司",
+        width: 20,
+        columnName: "L",
+        type: "text",
+        isupd: true
+      },
+    ],
     page: "1",
     IsLastPage: false,
     id: '',
@@ -595,6 +660,64 @@ Page({
     var length = this.data.list.length;
     wx.navigateTo({
       url: "../1renyuanjibenxinxi_edit/newRenyuan?listLength="+length
+    })
+  },
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name: '工资明细',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
     })
   },
 })

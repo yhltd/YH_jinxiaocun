@@ -13,10 +13,8 @@ padding: 8px;
   display: flex;
   position: absolute;
   left: 55%;
-margin-top: -17%;
+  margin-top: -15.5%;
   font-size: 62%;
-
-
 }
 .main{
   position: absolute;
@@ -26,7 +24,7 @@ width: 100%;
 
 }
 .shangpin-text{
-  width: 28%;
+  width: 35%;
  font-size: 65%;
 
 }
@@ -81,17 +79,17 @@ left: 46%;
 
 .bk_ss{
   border: 1px solid  #1c60a3;border-radius: 29rpx; 
-  width: 55%;
+  width: 45%;
   position: absolute;
   left: 21.3%;
-  top: 0.5%;
+  top: 2.5%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }
 
 .header{
   background-color: rgb(30,144,255);
-  padding: 5%;
+  padding: 7%;
 
 }
 .ss-text{
@@ -110,8 +108,30 @@ left: 46%;
 .dq_y{
   font-weight: bold;
 position: absolute;
-top: 1%;
+top: 2.5%;
 left: 4%;
 color: white;
 
+}
+
+.button_css{
+  height: 6%;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(95, 101, 119);
+  float: right;
+  font-size: 15px;
+  right: 2%;
+  position: absolute;
+  top: 1%;
+}
+.shangpin-kucun{
+  display: flex;
+  position: absolute;
+  left: 26.5%;
+  margin-top: -12%;
+  font-size: 62%;
 }

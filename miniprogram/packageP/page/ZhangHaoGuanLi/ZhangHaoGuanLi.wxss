@@ -62,7 +62,7 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #C2CBCA;
+  background-color: #24cab7;
   color: white;
   font-weight: bold;
   font-size: 35rpx;   
@@ -139,9 +139,9 @@ button{
   border: 5rpx solid #E6E6E6;
   margin: auto;
   width: 80%;
-  height: 64rpx;
+  height: 84rpx;
   align-items: center;
-  margin-top: 5%;
+  margin-top: 13%;
   border-radius: 19rpx;
   padding-left: 3%;
   margin-bottom:5% ;
@@ -238,7 +238,6 @@ button{
   align-items: center;
   display: flex;
   bottom: 2%;
-  margin-top: 30px;
 }
 .bottom_view2{
   display: flex;

@@ -4,6 +4,7 @@
 	<view class="dq_y">搜索</view>
 	<view class='pm'></view>
 	<input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindinput="select" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+	<button class="button_css" bindtap="use_book">使用说明</button>
 </view>
 
 

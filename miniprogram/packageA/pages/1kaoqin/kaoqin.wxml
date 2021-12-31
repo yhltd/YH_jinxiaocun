@@ -70,7 +70,7 @@
     <block wx:for="{{list}}">
       <view class='table_main'>
         <!--序号 -->
-        <view class='td ' style="background-color:white;position: sticky;left: 0;">
+        <view class='td ' style="background-color:white;position: sticky;left: 0;width:150rpx;">
           <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.moth}}' data-name='{{item.name}}' data-id='{{item.id}}' data-x="{{item.name}}" data-doinb='name'>{{item.name}}</view>
         </view>
         <view class='td'>
@@ -212,7 +212,7 @@
 
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="btn-primary" hover-class="btn-hover" disabled="{{result.upd!=1}}"   bindtap="leftDrawer">效率
+    <button class="btn-primary" hover-class="btn-hover" disabled="{{result.upd!=1}}"   bindtap="leftDrawer">更多功能
     </button>
     <view style="width:10%"></view>
     <button class="btn-primary" disabled="{{result.sel!=1}}" hover-class="btn-hover" bindtap="searchBtn">查找</button>
@@ -238,7 +238,7 @@
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="jiaqi" data-mode="left" data-type="no">当月休假</button>
     <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="dayin" data-mode="left">打印当前页</button>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button>
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="jiaqi" data-mode="left" data-type="chushihua">当月初始化</button>
   </view>

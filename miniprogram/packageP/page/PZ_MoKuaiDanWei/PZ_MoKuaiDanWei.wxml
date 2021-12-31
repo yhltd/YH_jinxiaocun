@@ -2,6 +2,7 @@
 <!------------------------->
 <!---------模块添加--------->
 <!------------------------->
+<view>此处可左右滑动</view>
 <view class="flex-wrp">
 <van-tag wx:if="{{ show.success }}" closeable size="large" id="{{item.id}}" type="primary" color="#d9ecff" text-color="#409EFF" bind:close="onClose" custom-class="custom" wx:for="{{list}}" wx:key="text">{{item.name}}</van-tag>
   <van-button type="small" custom-class="custom2" bind:click="onClick1" >+添加</van-button>
@@ -88,13 +89,13 @@
 <!---------添加弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
-	<view class="lables">模块类别</view>
+	<view class="lables1">模块类别</view>
     <input bindinput="onInput" bindtap="onClick2" data-column="mklb" class="input_text_form" value="{{mklb}}" type="text" name="mklb" disabled="disabled"></input>
-    <view class="lables">名称</view>
+    <view class="lables1">名称</view>
     <input bindinput="onInput" data-column="mc" class="input_text_form" value="{{mc}}" type="text" name="mc"></input>
-    <view class="lables">效率/时</view>
+    <view class="lables1">效率/时</view>
     <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
-    <view class="lables">父模块</view>
+    <view class="lables1">父模块</view>
     <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

@@ -5,8 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    result : [],
-    companyName : "",
+    result: [],
+    companyName: "",
     jiaqi: [],
     jiaqiLength: 0,
 
@@ -16,7 +16,7 @@ Page({
     selectIndex: -1,
     isMaskWindowInputShow: false,
     maskWindowInputValue: '',
-    isSearch : false,
+    isSearch: false,
 
 
     type: 0,
@@ -38,7 +38,282 @@ Page({
     mode: "left",
     scrollTop: null,
     list: [],
-    title: [],
+    excelList:[],
+    title:[],
+    title1: [{
+        text: "姓名",
+        width: 20,
+        columnName: "name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "年",
+        width: 20,
+        columnName: "year",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "月",
+        width: 20,
+        columnName: "moth",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "1",
+        width: 20,
+        columnName: "E",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "2",
+        width: 20,
+        columnName: "F",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "3",
+        width: 20,
+        columnName: "G",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "4",
+        width: 20,
+        columnName: "H",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "5",
+        width: 20,
+        columnName: "I",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "6",
+        width: 20,
+        columnName: "J",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "7",
+        width: 20,
+        columnName: "K",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "8",
+        width: 20,
+        columnName: "L",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "9",
+        width: 20,
+        columnName: "M",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "10",
+        width: 20,
+        columnName: "N",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "11",
+        width: 20,
+        columnName: "O",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "12",
+        width: 20,
+        columnName: "P",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "13",
+        width:20,
+        columnName: "Q",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "14",
+        width: 20,
+        columnName: "R",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "15",
+        width: 20,
+        columnName: "S",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "16",
+        width: 20,
+        columnName: "T",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "17",
+        width: 20,
+        columnName: "U",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "18",
+        width: 20,
+        columnName: "V",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "19",
+        width: 20,
+        columnName: "W",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "30",
+        width: 20,
+        columnName: "X",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "21",
+        width: 20,
+        columnName: "Y",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "22",
+        width: 20,
+        columnName: "Z",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "23",
+        width: 20,
+        columnName: "AA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "24",
+        width: 20,
+        columnName: "AB",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "25",
+        width: 20,
+        columnName: "AC",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "26",
+        width: 20,
+        columnName: "AD",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "27",
+        width: 20,
+        columnName: "AE",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "28",
+        width: 20,
+        columnName: "AF",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "29",
+        width: 20,
+        columnName: "AG",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "30",
+        width: 20,
+        columnName: "AH",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "31",
+        width: 20,
+        columnName: "AI",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "全勤天数",
+        width: 20,
+        columnName: "AJ",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "实际天数",
+        width: 20,
+        columnName: "AK",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "请假时间/小时",
+        width: 20,
+        columnName: "AL",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "加班时间/小时",
+        width: 20,
+        columnName: "AM",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "迟到天数",
+        width: 20,
+        columnName: "AN",
+        type: "text",
+        isupd: true
+      },
+    ],
     page: "1",
     IsLastPage: false,
     moth: '',
@@ -48,21 +323,21 @@ Page({
     mark: '',
     edit_new: '',
     id: '',
-    lie:"",
-    text_type:""
+    lie: "",
+    text_type: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     var _this = this;
     var time = util.newTime(new Date());
     // 再通过setData更改Page()里面的data，动态更新页面的数据
     _this.setData({
       time: time,
-      companyName : options.companyName,
-      result : JSON.parse(options.access)
+      companyName: options.companyName,
+      result: JSON.parse(options.access)
     });
 
     wx.setNavigationBarTitle({
@@ -108,7 +383,7 @@ Page({
       success: res => {
         console.log(res.result.recordsets[0]);
         this.setData({
-          
+
           title: res.result.recordsets[0]
         })
       },
@@ -121,14 +396,14 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
     this.dateTime = this.selectComponent("#tui-dateTime-ctx")
     var that = this
-    
+
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_kaoqinjilu where AO = '"+that.data.companyName+"'"
+        query: "select count(id) as maxpagenumber from gongzi_kaoqinjilu where AO = '" + that.data.companyName + "'"
       },
       success: res => {
         console.log(that.data.companyName);
@@ -145,7 +420,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select day,month,year from gongzi_peizhi where day is not null and gongsi = '"+that.data.companyName+"'"
+        query: "select day,month,year from gongzi_peizhi where day is not null and gongsi = '" + that.data.companyName + "'"
       },
       success: res => {
         console.log("假期:", res.result.recordset.length)
@@ -162,7 +437,7 @@ Page({
 
 
   //月份选择器
-  show: function(e) {
+  show: function (e) {
     this.setData({
       cancelColor: "#888",
       color: "#5677fc",
@@ -175,7 +450,7 @@ Page({
     })
     this.dateTime.show();
   },
-  change: function(e) {
+  change: function (e) {
     var that = this
     console.log(e.detail)
     that.setData({
@@ -183,15 +458,15 @@ Page({
       title_year: e.detail.year
     })
 
-    var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month +" and AO = '"+this.data.companyName+"'"
+    var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + " and AO = '" + this.data.companyName + "'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month +" and AO = '"+this.data.companyName+"'"
+        query: "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + " and AO = '" + this.data.companyName + "'"
       },
       success: res => {
-        console.log('change',res)
+        console.log('change', res)
         if (res.result.recordset.length < 100) {
           that.setData({
             list: res.result.recordset,
@@ -213,42 +488,42 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
 
@@ -256,7 +531,7 @@ Page({
 
 
   /*刷新页面 */
-  shuaxin: function(e) {
+  shuaxin: function (e) {
     var that = this
     //点击关闭左遮罩
     const mode = e.currentTarget.dataset.mode;
@@ -280,10 +555,10 @@ Page({
 
 
   //全勤天数和每年不同的法定休假日写入
-  jiaqi: function(e) {
+  jiaqi: function (e) {
     var that = this
     //点击关闭左遮罩
-    
+
     console.log(that.data.list)
     console.log(that.data.jiaqi)
     const type = e.currentTarget.dataset.type;
@@ -297,7 +572,7 @@ Page({
         rightDrawer: false
       })
     }
-    if(that.data.isSearch){
+    if (that.data.isSearch) {
       wx.showToast({
         title: '请先同步数据',
         icon: 'none'
@@ -358,20 +633,20 @@ Page({
         for (var i = 0; i < monthLength; i++) {
           a = i + xingqi + 6
           if (youbiaokachi[a] == '休') {
-            that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '休' where id =" + that.data.list[loop].id + " and AO = '"+this.data.companyName + "';"
+            that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '休' where id =" + that.data.list[loop].id + " and AO = '" + this.data.companyName + "';"
           }
         }
       } else if (type == 'chushihua') {
         for (var i = 0; i < monthLength; i++) {
           a = i + xingqi + 6
-          that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '" + youbiaokachi[a] + "' where id =" + that.data.list[loop].id + " and AO = '"+this.data.companyName + "';"
+          that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '" + youbiaokachi[a] + "' where id =" + that.data.list[loop].id + " and AO = '" + this.data.companyName + "';"
         }
       }
       for (var ix = 0; ix < jiaqiLength; ix++) {
         if (that.data.list[loop].year == that.data.jiaqi[ix].year) { //判断年份
           if (that.data.list[loop].moth == that.data.jiaqi[ix].month) { //判断月份
             //进行一个月中每天的判断
-            that.data.sql2 = that.data.sql2 + "update gongzi_kaoqinjilu set " + youbiao[that.data.jiaqi[ix].day - 1] + " = '休' where id =" + that.data.list[loop].id + " and AO = '"+this.data.companyName + "';"
+            that.data.sql2 = that.data.sql2 + "update gongzi_kaoqinjilu set " + youbiao[that.data.jiaqi[ix].day - 1] + " = '休' where id =" + that.data.list[loop].id + " and AO = '" + this.data.companyName + "';"
           }
         }
       }
@@ -426,7 +701,7 @@ Page({
   作者：117
   时间：2020/5/22
   */
-  tongji: function(e) {
+  tongji: function (e) {
     var that = this
     //点击关闭左遮罩
     const mode = e.currentTarget.dataset.mode;
@@ -545,7 +820,7 @@ Page({
     //更新实际天数并写入,实际天数=shijitianshu
     for (var ii = 0; ii < length; ii++) {
       //拼接  实际出勤天数的统计 + 请假 + 加班 + 迟到
-      that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set AJ = " + quanqin[ii] + " where id =" + that.data.list[ii].id + " and AO = '" +that.data.companyName + "';" + "update gongzi_kaoqinjilu set AK = " + shijitianshu[ii] + " where id =" + that.data.list[ii].id + " and AO = '" +that.data.companyName + "';" + "update gongzi_kaoqinjilu set AL = " + qingjia[ii] + " where id =" + that.data.list[ii].id + " and AO = '"+ that.data.companyName +"';" + "update gongzi_kaoqinjilu set AM = " + jiaban[ii] + " where id =" + that.data.list[ii].id + " and AO = '"+ that.data.companyName + "';" + "update gongzi_kaoqinjilu set AN = " + chidao[ii] + " where id =" + that.data.list[ii].id + "and AO = '" + that.data.companyName + "';"
+      that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set AJ = " + quanqin[ii] + " where id =" + that.data.list[ii].id + " and AO = '" + that.data.companyName + "';" + "update gongzi_kaoqinjilu set AK = " + shijitianshu[ii] + " where id =" + that.data.list[ii].id + " and AO = '" + that.data.companyName + "';" + "update gongzi_kaoqinjilu set AL = " + qingjia[ii] + " where id =" + that.data.list[ii].id + " and AO = '" + that.data.companyName + "';" + "update gongzi_kaoqinjilu set AM = " + jiaban[ii] + " where id =" + that.data.list[ii].id + " and AO = '" + that.data.companyName + "';" + "update gongzi_kaoqinjilu set AN = " + chidao[ii] + " where id =" + that.data.list[ii].id + "and AO = '" + that.data.companyName + "';"
     }
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -600,7 +875,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "update gongzi_kaoqinjilu set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "' and AO = '" +that.data.companyName+"'"
+        query: "update gongzi_kaoqinjilu set " + that.data.mark + " = '" + that.data.edit_new + "' where id = '" + that.data.id + "' and AO = '" + that.data.companyName + "'"
       },
       success: res => {
         console.log('操作成功')
@@ -620,24 +895,24 @@ Page({
   },
   click_edit(e) {
     var that = this
-    if(that.data.result.upd!= 1){
+    if (that.data.result.upd != 1) {
       wx.showToast({
         title: '您没有权限',
-        icon : 'none'
+        icon: 'none'
       })
       return
     }
     console.log(e)
     var lie = e.currentTarget.dataset.doinb
     var text_type
-    if(lie == "AJ" || lie == "AK" || lie == "AL" || lie == "AM" || lie == "AN"){
+    if (lie == "AJ" || lie == "AK" || lie == "AL" || lie == "AM" || lie == "AN") {
       text_type = "number"
-    }else{
+    } else {
       text_type = "text"
     }
     var collection = e.currentTarget.dataset
     that.setData({
-      text_type:text_type,
+      text_type: text_type,
       id: collection.id,
       name: collection.name,
       edit_old: collection.x,
@@ -653,7 +928,7 @@ Page({
     //清除标记位
     that.setData({
       modal9: false,
-      edit_old : ''
+      edit_old: ''
     })
     console.log("隐藏自定义可输入弹窗！！")
   },
@@ -668,12 +943,12 @@ Page({
   时间：2020/5/20
   */
 
-  click_delete: function(e) {
+  click_delete: function (e) {
     var that = this
-    if(that.data.result.del!=1){
+    if (that.data.result.del != 1) {
       wx.showToast({
         title: '您没有权限',
-        icon : 'none'
+        icon: 'none'
       })
       return;
     }
@@ -691,7 +966,7 @@ Page({
       cancelColor: '', //取消文字的颜色
       confirmText: "删除", //默认是“确定”
       confirmColor: '#DD5044', //确定文字的颜色
-      success: function(res) {
+      success: function (res) {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
           //这里可以callfunction！！！！
@@ -700,7 +975,7 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_117',
             data: {
-              query: "delete from gongzi_kaoqinjilu where id =" + id +" and AO = '" +that.data.companyName+"'"
+              query: "delete from gongzi_kaoqinjilu where id =" + id + " and AO = '" + that.data.companyName + "'"
             },
             success: res => {
               console.log("成功删除")
@@ -716,8 +991,8 @@ Page({
           })
         }
       },
-      fail: function(res) {}, //接口调用失败的回调函数
-      complete: function(res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
     })
 
     //修改之后刷新页面
@@ -732,7 +1007,7 @@ Page({
   时间：2020/5/15
   */
   //内嵌列表查找上一页数据
-  lastpage: function() {
+  lastpage: function () {
     var that = this
     console.log("1:islastpage?:", that.data.IsLastPage)
     //点击上一页，则取消最后一页的状态标记(但是如果是第一页则不取消标记状态，因为第一页又是最后一页的情况存在)
@@ -748,15 +1023,15 @@ Page({
       })
     } else {
       that.data.page--
-        wx.showToast({
-          title: '正在加载第' + that.data.page + '页',
-          icon: 'none',
-          duration: 2500
-        })
+      wx.showToast({
+        title: '正在加载第' + that.data.page + '页',
+        icon: 'none',
+        duration: 2500
+      })
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '"+that.data.companyName+"'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -776,7 +1051,7 @@ Page({
     }
   },
   //内嵌列表查找下一页数据
-  nextpage: function() {
+  nextpage: function () {
     var that = this
     console.log("islastpage?:", that.data.IsLastPage)
     //通过Islastpage判断是否为最后一页
@@ -788,15 +1063,15 @@ Page({
       })
     } else {
       that.data.page++
-        wx.showToast({
-          title: '正在加载第' + that.data.page + '页',
-          icon: 'none',
-          duration: 2500
-        })
+      wx.showToast({
+        title: '正在加载第' + that.data.page + '页',
+        icon: 'none',
+        duration: 2500
+      })
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName+"'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -842,7 +1117,7 @@ Page({
     具体功能详见Thor UI 开发文档
     修改时间：
   */
-  showModal: function() {
+  showModal: function () {
     console.log("触发函数")
     // 显示遮罩层
     // 创建动画实例 
@@ -858,20 +1133,20 @@ Page({
       animationData: animation.export(),
       showModalStatus: true
     })
-    setTimeout(function() {
+    setTimeout(function () {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export()
       })
     }.bind(this), 200)
   },
-  hideModal: function() {
+  hideModal: function () {
     this.setData({
       showModalStatus: false
     })
   },
   //这是从底部弹出的模态窗口的，尚未应用的扩展模块，不要在意
-  getRegion: function(e) {
+  getRegion: function (e) {
     const index = e.currentTarget.dataset.index
     this.setData({
       regionTxt: this.data.regionArr[index],
@@ -902,10 +1177,10 @@ Page({
   },
   leftDrawer() {
     var _this = this;
-    if(_this.data.title_month=="" || _this.data.title_year==""){
+    if (_this.data.title_month == "" || _this.data.title_year == "") {
       wx.showToast({
         title: '请选择年月',
-        icon : "none"
+        icon: "none"
       })
       return;
     }
@@ -931,17 +1206,17 @@ Page({
 
 
   //用于刷新页面时保持页数，或者跳转到某一页
-  baochi: function() {
+  baochi: function () {
     var that = this
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName  +"'"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "'"
       },
       success: res => {
         this.setData({
           list: res.result.recordset,
-          isSearch : false
+          isSearch: false
         })
       },
       err: res => {
@@ -954,7 +1229,7 @@ Page({
 
 
   /*刷新页面 */
-  shuaxin: function(e) {
+  shuaxin: function (e) {
     var that = this
     //点击关闭左遮罩
     const mode = e.currentTarget.dataset.mode;
@@ -975,14 +1250,14 @@ Page({
   },
 
   //查找 ---- 失效！
-  chazhao: function(e) {
+  chazhao: function (e) {
 
     var that = this
     //按照姓名，部门，职务三个查找？e中包含三个数值
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from gongzi_kaoqinjilu where name = '" + that.data.name + "' and moth = '" + that.data.title_month + "' and year = '" + that.data.title_year + "' and AO = '" + that.data.companyName+"'"
+        query: "select top 100 * from gongzi_kaoqinjilu where name = '" + that.data.name + "' and moth = '" + that.data.title_month + "' and year = '" + that.data.title_year + "' and AO = '" + that.data.companyName + "'"
       },
       success: res => {
         console.log("查找成功")
@@ -999,7 +1274,7 @@ Page({
   },
 
   //添加
-  tianjia: function() {
+  tianjia: function () {
     var that = this
     var month = that.data.title_month
     var year = that.data.title_year
@@ -1008,7 +1283,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "insert into gongzi_kaoqinjilu (name,moth,year,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AO) VALUES ('请输入',"+month+","+year+",'-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','"+that.data.companyName+"')"
+          query: "insert into gongzi_kaoqinjilu (name,moth,year,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AO) VALUES ('请输入'," + month + "," + year + ",'-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','" + that.data.companyName + "')"
         },
         success: res => {
           console.log("插入成功")
@@ -1035,19 +1310,19 @@ Page({
   /**
    * 取消操作
    */
-  cancel: function(text) {
+  cancel: function (text) {
     // 实际取消操作
   },
 
   /**
    * 页面查询按钮功能
    */
-  searchBtn: function(e) {
+  searchBtn: function (e) {
     var _this = this;
-    if(_this.data.title_month=="" || _this.data.title_year==""){
+    if (_this.data.title_month == "" || _this.data.title_year == "") {
       wx.showToast({
         title: '请选择年月',
-        icon : "none"
+        icon: "none"
       })
       return;
     }
@@ -1055,17 +1330,17 @@ Page({
   },
 
   //弹框以外区域点击
-  maskWindowBgClick: function(e) {
+  maskWindowBgClick: function (e) {
     this.dismissMaskWindow();
   },
 
   //弹窗区域点击事件
-  clickTap: function(e) {
+  clickTap: function (e) {
 
   },
 
   //切换选择项事件
-  maskWindowTableSelect: function(e) {
+  maskWindowTableSelect: function (e) {
     var index = e.currentTarget.dataset.windowIndex;
     this.setData({
       selectIndex: e.currentTarget.dataset.windowIndex,
@@ -1074,7 +1349,7 @@ Page({
   },
 
   //输入框输入绑定事件
-  maskWindowInput: function(e) {
+  maskWindowInput: function (e) {
     var value = e.detail.value;
     var that = this
     this.setData({
@@ -1085,7 +1360,7 @@ Page({
   },
 
   //点击确定按钮之后的事件
-  maskWindowOk: function(e) {
+  maskWindowOk: function (e) {
     var that = this
     var index = that.data.selectIndex;
     var input = that.data.maskWindowInputValue;
@@ -1116,13 +1391,13 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name ='" + input + "' and AO = '"+that.data.companyName+"'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name like'%" + input + "%' and AO = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
           that.setData({
             list: res.result.recordset,
-            isSearch : true
+            isSearch: true
           })
         },
         err: res => {
@@ -1136,7 +1411,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name ='" + input + "' and moth = '" + month + "' and year = '" + year + "' and AO = '"+that.data.companyName+"'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name like '%" + input + "%' and moth = '" + month + "' and year = '" + year + "' and AO = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -1159,12 +1434,12 @@ Page({
     this.dismissMaskWindow();
   },
 
-  maskWindowCancel: function(e) {
+  maskWindowCancel: function (e) {
     this.dismissMaskWindow();
   },
 
   // 显示蒙版弹窗
-  showMaskWindow: function() {
+  showMaskWindow: function () {
     this.setData({
       isMaskWindowShow: true,
       selectIndex: -1,
@@ -1174,7 +1449,7 @@ Page({
   },
 
   // 隐藏蒙版窗体
-  dismissMaskWindow: function() {
+  dismissMaskWindow: function () {
     this.setData({
       isMaskWindowShow: false,
       selectIndex: -1,
@@ -1188,7 +1463,7 @@ Page({
 
 
   //打印模块
-  dayin: function(e) {
+  dayin: function (e) {
     var that = this
     //点击关闭左遮罩
     const mode = e.currentTarget.dataset.mode;
@@ -1206,5 +1481,64 @@ Page({
       title: '功能尚未开发',
       icon: 'none',
     })
-  }
+  },
+
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name : '考勤表',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:title[i].width,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
 })

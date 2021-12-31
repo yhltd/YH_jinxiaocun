@@ -1,5 +1,6 @@
 <view class="tl_css">
-  <image class="tu_pian_cc" src='/images/huise_logo.jpg'></image>
+  <image class="tu_pian_shezhi" src='/images/shezhi_jxc.jpeg'></image>
+  <!-- <image class="tu_pian_cc" src='/images/huise_logo.jpg'></image> -->
   <view class="mz_css">云和进销存系统</view>
 </view>
 
@@ -59,7 +60,19 @@
   <view class="container">
     <!-- 分割线 -->
     <view class="divLine"></view>
-
   </view>
+
+  <view class="xiao_kuang" bindtap="go3">
+    <navigator class="txbt">
+      <image class="item-image" src='/images/20190805090541.png'></image>
+      <text class="item-text">退出登录</text>
+    </navigator>
+  </view>
+
+  <view class="container">
+    <!-- 分割线 -->
+    <view class="divLine"></view>
+  </view>
+  
 
 </view>

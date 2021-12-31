@@ -119,6 +119,6 @@
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
     <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="dayin" data-mode="left">打印当前页</button>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button>
   </view>
 </drawer>

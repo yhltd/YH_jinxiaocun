@@ -16,6 +16,10 @@ page {
 }
 .xzkhWwb{
   padding: 2%;
+  background-color: rgb(30, 144, 255);
+  font-size: 15px;
+  font-weight: bold;
+  /* background: */
 }
 .xzkhA {
   height: 100%;
@@ -140,7 +144,7 @@ page {
 .xzkh {
   display: flex;
   width: 100%;
-  background-color: white;
+  background-color: rgb(30, 144, 255);
   font-size: 77%;
   flex-direction: column;
 }
@@ -156,7 +160,7 @@ page {
 .header {
   /*----------*/
   background-color: rgb(30, 144, 255);
-  padding: 8%;
+  padding: 15%;
 }
 
 .bk_ss {
@@ -165,7 +169,7 @@ page {
   width: 55%;
   position: absolute;
   left: 21.3%;
-  top: 4%;
+  top: 4.5%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }
@@ -180,9 +184,12 @@ page {
 .tui-picker-content {
   position: absolute;
   top: 0%;
-  font-size: 71%;
-  left: 4%;
-  color: #f8f8f8;
+  font-size: 100%;
+  color: #5b5b5b;
+  /* left: 4%; */
+  font-weight: bold;
+  background: #0bded4;
+  width: 100%;
 }
 
 .dd_text {
@@ -193,7 +200,7 @@ page {
 .dq_y {
   font-weight: bold;
   position: absolute;
-  top: 4%;
+  top: 4.5%;
   left: 6%;
   color: white;
 }

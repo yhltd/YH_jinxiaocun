@@ -15,16 +15,16 @@ width: 100%;
 
 .header {
   background-color: rgb(30, 144, 255);
-  padding: 5%;
+  padding: 7%;
 }
 
 .bk_ss {
   border: 1px solid #1c60a3;
   border-radius: 29rpx;
-  width: 55%;
+  width: 45%;
   position: absolute;
   left: 21.3%;
-  top: 0.5%;
+  top: 2%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }
@@ -102,7 +102,7 @@ justify-content: center;
 .dq_y {
   font-weight: bold;
   position: absolute;
-  top: 1%;
+  top: 2%;
   left: 6%;
   color: white;
 }
@@ -111,4 +111,19 @@ justify-content: center;
     background-color: #1e90ff;
     height: 55rpx;
 
+  }
+
+  .button_css{
+    height: 5%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(95, 101, 119);
+    float: right;
+    font-size: 15px;
+    right: 2%;
+    position: absolute;
+    top: 1%;
   }

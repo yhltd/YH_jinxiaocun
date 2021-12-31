@@ -171,7 +171,24 @@ Page({
       mask: 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.title
+    var title = [
+      { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text", isupd: true },
+      { text: "付款人", width: "200rpx", columnName: "cardholder", type: "text", isupd: true },
+      { text: "持卡人", width: "200rpx", columnName: "drawee", type: "text", isupd: true },
+      { text: "发卡行", width: "300rpx", columnName: "issuing_bank", type: "text", isupd: true },
+      { text: "账单日", width: "200rpx", columnName: "bill_day", type: "date", isupd: true },
+      { text: "还款日", width: "200rpx", columnName: "repayment_date", type: "date", isupd: true },
+      { text: "总金额", width: "180rpx", columnName: "total", type: "number", isupd: true },
+      { text: "应还款", width: "180rpx", columnName: "repayable", type: "number", isupd: true },
+      { text: "剩余金额", width: "180rpx", columnName: "balance", type: "number", isupd: true },
+      { text: "借款金额", width: "180rpx", columnName: "loan", type: "number", isupd: true },
+      { text: "已还款", width: "180rpx", columnName: "repayment", type: "number", isupd: true },
+      { text: "已刷金额", width: "180rpx", columnName: "swipe", type: "number", isupd: true },
+      { text: "未刷金额", width: "180rpx", columnName: "balance_of_credit_card", type: "number", isupd: true },
+      { text: "总手续费", width: "180rpx", columnName: "the_total_fee", type: "number", isupd: true },
+      { text: "应收金额", width: "180rpx", columnName: "collected_amount", type: "number", isupd: true },
+      { text: "利润", width: "180rpx", columnName: "profit", type: "number", isupd: true },
+    ]
     var cloudList = {
       name: '排产订单',
       items: [],

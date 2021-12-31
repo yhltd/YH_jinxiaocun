@@ -2,7 +2,7 @@
 
 <template is="jinhuo" data="{{jinhuo,hidden1}}" />
 <view class="hidden_kh" hidden="{{backhidden}}"></view>
-<view class="dqy_bj"></view>
+<view class="dqy_bj"><button class="button_css" bindtap="use_book">使用说明</button></view>
 <view class="dq_y">进货方资料</view>
 <view class="biao_tou">进货方配置</view>
 

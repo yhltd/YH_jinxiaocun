@@ -74,6 +74,17 @@ Page({
       _this.addMK(),
         _this.module_info_show('')
     }
+    // wx.showModal({
+    //   title: '提示：',
+    //   content: '上方右滑可添加模块',
+    //   showCancel: false, //是否显示取消按钮
+    //   confirmText: "知道了", //默认是“确定”
+    //   confirmColor: '#84B9F2', //确定文字的颜色
+    //   success: function (res) {},
+    //   fail: function (res) {}, //接口调用失败的回调函数
+    //   complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    // })
+    
   },
 
   //权限执行判断方法

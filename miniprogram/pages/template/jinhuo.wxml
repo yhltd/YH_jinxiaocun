@@ -1,7 +1,7 @@
 <template name="jinhuo">
   <view hidden="{{hidden1}}" class='jinhuo'>  
     <button class='guan_bi' bindtap='sp_Close'>
-      <image src="../../images/微信图片_20190805090541.png" class="tp_guanbi"></image>
+      <image src="../../images/20190805090541.png" class="tp_guanbi"></image>
     </button>
     <view style="margin-top: 8%;">
       <view class="lab_xx">名称:</view>

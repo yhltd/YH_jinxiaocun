@@ -1,4 +1,4 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -94,12 +94,11 @@
 <!---------添加弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
-	<view class="lables">物料编码</view>
+	<view class="lables1">物料编码</view>
     <input bindinput="onInput" data-column="code" class="input_text_form" value="{{code}}" type="text" name="code" ></input>
-    <view class="lables">物料名称</view>
+    <view class="lables1">物料名称</view>
     <input bindinput="onInput" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
-    <view class="lables">类别</view>
-    <input bindinput="onInput" data-column="type" class="input_text_form" value="{{type}}" type="text" name="type"></input>
+    <view class="lables1">类别</view>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

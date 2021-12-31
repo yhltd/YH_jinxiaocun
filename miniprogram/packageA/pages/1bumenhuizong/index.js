@@ -26,11 +26,342 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1:[
+      {
+        text: "部门",
+        width: 20,
+        columnName: "department",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "人数",
+        width: 20,
+        columnName: "num",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "基本工资",
+        width: 20,
+        columnName: "G",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "绩效工资",
+        width: 20,
+        columnName: "H",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "岗位工资",
+        width: 20,
+        columnName: "I",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "标准工资",
+        width: 20,
+        columnName: "J",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "跨度工资",
+        width: 20,
+        columnName: "K",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "职称津贴",
+        width: 20,
+        columnName: "L",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "月出勤天数",
+        width: 20,
+        columnName: "M",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "加班时间",
+        width: 20,
+        columnName: "N",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "加班费",
+        width: 20,
+        columnName: "O",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "全勤应发",
+        width: 20,
+        columnName: "P",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "缺勤天数",
+        width: 20,
+        columnName: "Q",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "缺勤扣款",
+        width: 20,
+        columnName: "R",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "迟到天数",
+        width: 20,
+        columnName: "S",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "迟到扣款",
+        width: 20,
+        columnName: "T",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "应发工资",
+        width: 20,
+        columnName: "U",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "社保基数",
+        width: 20,
+        columnName: "V",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "医疗技术",
+        width: 20,
+        columnName: "W",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "公积金基数",
+        width: 20,
+        columnName: "X",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "年金基数",
+        width: 20,
+        columnName: "Y",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业养老",
+        width: 20,
+        columnName: "Z",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业失业",
+        width: 20,
+        columnName: "AA",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业医疗",
+        width: 20,
+        columnName: "AB",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业工伤",
+        width: 20,
+        columnName: "AC",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业生育",
+        width: 20,
+        columnName: "AD",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业公积金",
+        width: 20,
+        columnName: "AE",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业年金",
+        width: 20,
+        columnName: "AF",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "滞纳金",
+        width: 20,
+        columnName: "AG",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "利息",
+        width: 20,
+        columnName: "AH",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业小计",
+        width: 20,
+        columnName: "AI",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人养老",
+        width: 20,
+        columnName: "AJ",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人失业",
+        width: 20,
+        columnName: "AK",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人医疗",
+        width: 20,
+        columnName: "AL",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "大额医疗",
+        width: 20,
+        columnName: "AM",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人公积金",
+        width: 20,
+        columnName: "AN",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人年金4%",
+        width: 20,
+        columnName: "AO",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "滞纳金",
+        width: 20,
+        columnName: "AP",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "利息",
+        width: 20,
+        columnName: "AQ",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人小计",
+        width: 20,
+        columnName: "AR",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "税前工资",
+        width: 20,
+        columnName: "ASA",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "应税工资",
+        width: 20,
+        columnName: "ATA",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "税率",
+        width: 20,
+        columnName: "AU",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "扣除数",
+        width: 20,
+        columnName: "AV",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "代扣个人所得税",
+        width: 20,
+        columnName: "AW",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "1%年金",
+        width: 20,
+        columnName: "AX",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "实发工资",
+        width: 20,
+        columnName: "AY",
+        type: "number",
+        isupd: true
+      },
+    ],
     page: "1",
     
     svHidden : false,
     selectHid : false,
-    selectText : "请选择",
+    selectText : "",
     IsLastPage: false,
     id: '',
     name: '',
@@ -341,7 +672,7 @@ Page({
     _this.setData({
       svHidden : _this.data.svHidden?false:true,
       selectHid : false,
-      selectText : "请选择",
+      selectText : "",
       selectIndex : index,
       isMaskWindowInputShow : true,
       isMaskWindowInputShow1: true
@@ -634,15 +965,16 @@ Page({
     wx.cloud.callFunction({
       name: "sqlServer_117",
       data: {
-        query: "select top 100 C as department,COUNT(id) as num,SUM(CAST(G as float))AS G,SUM(CAST(H as float))as H,SUM(CAST(I as float))as I,SUM(CAST(J as float))as J,SUM(CAST(K as float))as K,SUM(CAST(L as float))as L,SUM(CAST(M as float))as M,SUM(CAST(N as float))as N,SUM(CAST(O as float))as O,SUM(CAST(P as float))as P,SUM(CAST(Q as float))as Q,SUM(CAST(R as float))as R,SUM(CAST(S as float))as S,SUM(CAST(T as float))as T,SUM(CAST(U as float))as U,SUM(CAST(V as float))as V,SUM(CAST(W as float))as W,SUM(CAST(X as float))as X,SUM(CAST(Y as float))as Y,SUM(CAST(Z as float))as Z,SUM(CAST(AA as float))as AA,SUM(CAST(AB as float))as AB,SUM(CAST(AC as float))as AC,SUM(CAST(AD as float))as AD,SUM(CAST(AE as float))as AE,SUM(CAST(AF as float))as AF,SUM(CAST(AG as float))as AG,SUM(CAST(AH as float))as AH,SUM(CAST(AI as float))as AI ,SUM(CAST(AJ as float))as AJ,SUM(CAST(AK as float))as AK,SUM(CAST(AL as float))as AL,SUM(CAST(AM as float))as AM,SUM(CAST(AN as float))as AN,SUM(CAST(AO as float))as AO,SUM(CAST(AP as float))as AP,SUM(CAST(AQ as float))as AQ,SUM(CAST(AR as float))as AR,SUM(CAST(ASA as float))as ASA,SUM(CAST(ATA as float))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as float))as AV,SUM(CAST(AW as float))as AW,SUM(CAST(AX as float))as AX,SUM(CAST(AY as float))as AY from gongzi_gongzimingxi where C = '" + selectText + "' and BD = '"+that.data.companyName+"' GROUP BY C"
+        query: "select top 100 C as department,COUNT(id) as num,SUM(CAST(G as float))AS G,SUM(CAST(H as float))as H,SUM(CAST(I as float))as I,SUM(CAST(J as float))as J,SUM(CAST(K as float))as K,SUM(CAST(L as float))as L,SUM(CAST(M as float))as M,SUM(CAST(N as float))as N,SUM(CAST(O as float))as O,SUM(CAST(P as float))as P,SUM(CAST(Q as float))as Q,SUM(CAST(R as float))as R,SUM(CAST(S as float))as S,SUM(CAST(T as float))as T,SUM(CAST(U as float))as U,SUM(CAST(V as float))as V,SUM(CAST(W as float))as W,SUM(CAST(X as float))as X,SUM(CAST(Y as float))as Y,SUM(CAST(Z as float))as Z,SUM(CAST(AA as float))as AA,SUM(CAST(AB as float))as AB,SUM(CAST(AC as float))as AC,SUM(CAST(AD as float))as AD,SUM(CAST(AE as float))as AE,SUM(CAST(AF as float))as AF,SUM(CAST(AG as float))as AG,SUM(CAST(AH as float))as AH,SUM(CAST(AI as float))as AI ,SUM(CAST(AJ as float))as AJ,SUM(CAST(AK as float))as AK,SUM(CAST(AL as float))as AL,SUM(CAST(AM as float))as AM,SUM(CAST(AN as float))as AN,SUM(CAST(AO as float))as AO,SUM(CAST(AP as float))as AP,SUM(CAST(AQ as float))as AQ,SUM(CAST(AR as float))as AR,SUM(CAST(ASA as float))as ASA,SUM(CAST(ATA as float))as ATA,SUM(CAST(AU as money))as AU,SUM(CAST(AV as float))as AV,SUM(CAST(AW as float))as AW,SUM(CAST(AX as float))as AX,SUM(CAST(AY as float))as AY from gongzi_gongzimingxi where C like '%" + selectText + "%' and BD = '"+that.data.companyName+"' GROUP BY C"
       },
       success: res => {
+        that.data.selectText="";
         console.log("部门查询成功！", res.result)
         that.setData({
           list: res.result.recordset,
           svHidden : false,
           selectHid : false,
-          selectText : "请选择",
+          selectText : "",
         })
         that.dismissMaskWindow();
       },
@@ -692,5 +1024,62 @@ Page({
       }
     })
   },
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name: '工资明细',
+      items: [],
+      header: []
+    }
 
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
 })

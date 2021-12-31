@@ -21,7 +21,7 @@
 	<view class="tui-picker-content">
 		<picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
 			<view class="tui-picker-detail">
-				选择出库日期 （年月日）: {{date}}
+				<text decode="true">&nbsp;&nbsp;</text>选择出库日期 （年月日）: {{date}}
 			</view>
 		</picker>
 	</view>

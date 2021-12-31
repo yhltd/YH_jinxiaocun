@@ -52,7 +52,10 @@ Page({
             sp_dm:all[i].sp_dm,
             cplb:all[i].lei_bie,
             cpsl:all[i].jc_sl,
-            cpsj:all[i].jc_price
+            cpsj:all[i].jc_price,
+            qcsl:all[i].jq_cpsl,
+            rksl:all[i].mx_ruku_cpsl,
+            cksl:all[i].mx_chuku_cpsl,
           })
         }
 
@@ -359,5 +362,20 @@ Page({
 
       cpsljg: ""
     })
-  }
+  },
+
+  use_book:function(){
+    var _this = this
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击搜索框可查询各商品进销存数据。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+
 })

@@ -30,6 +30,29 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1:[
+      {
+        text: "姓名",
+        width: 20,
+        columnName: "B",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "员工银行账号",
+        width: 20,
+        columnName: "BA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "支付金额",
+        width: 20,
+        columnName: "AY",
+        type: "text",
+        isupd: true
+      },
+    ],
     page: "1",
     IsLastPage: false,
     id: '',
@@ -809,5 +832,62 @@ Page({
       }
     })
   },
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name : '报盘',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:title[i].width,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
 })

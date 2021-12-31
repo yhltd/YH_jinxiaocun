@@ -183,43 +183,43 @@
 .item-image {
   width: 60rpx;
   height: 60rpx;
-  margin: 4px 0 0  0;
+  margin: 4px 0 0 0;
 }
 
 .item-text {
   font-size: 98%;
   color: black;
   align-items: center;
-   
-}
-
-.da_kuang{
-
- 
-
-
 
 }
 
-.tu_pian_cc{
+.da_kuang {}
+
+.tu_pian_cc {
   height: 150rpx;
-width: 210rpx;
-padding-left: 34%;
-padding-top: 5%;
-
-
-}
-.mz_css{
-  font-size: 86%;
-padding-left: 34%;
-font-weight: bold;
-
-
+  width: 210rpx;
+  padding-left: 37%;
+  padding-top: 5%;
 }
 
-.tl_css{
-   height: 260rpx;
-  background-color: #eeeeee;
- 
+.mz_css {
+  font-size: 30px;
+  padding-left: 24%;
+  font-weight: bold;
+  color: #ffffff;
+  position: absolute;
+  top: 21%;
+  z-index: 99;
+}
 
+.tl_css {
+  height: 460rpx;
+  /* background-color: #eeeeee; */
+}
+
+.tu_pian_shezhi {
+  height: 33%;
+  width: 100%;
+  position: absolute;
+  z-index: 99;
 }

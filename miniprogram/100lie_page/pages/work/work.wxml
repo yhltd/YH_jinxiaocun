@@ -21,8 +21,8 @@
   </view>
   <view class="text">{{text}}</view>
   <button class="button1" bindtap="jishi">及时同步-打开/关闭</button>
-  <button class="button2" bindtap="baocun">保存</button>
-  <view class="text2">手动保存</view>
+  <button class="button2" bindtap="baocun" style="display:none">保存</button>
+  <view class="text2" style="display:none">手动保存</view>
   <view class="jiahao">
    <image style="width:120rpx; height:120rpx" src="../../../images/jiahao1.png"></image>
   </view>
@@ -283,7 +283,10 @@ style="display:{{duoxz.toString().indexOf('A')!=-1? none:flex}}"
   </view>
    <view class="masks" bindtap="hid_up" hidden="{{mask_up}}"></view>
    <!-- 更多type="primary" -->
-   <button class="geng"  bindtap="mor">更多</button>
+   <view class="bottom_view" style="height:10%">
+    <button class="geng"  bindtap="mor">更多</button>
+    <button class="geng"  bindtap="baocun">保存</button>
+   </view>
    <view class="gengduo" hidden="{{more}}">
     <button class="mor" bindtap="dateGather">数据汇总</button>
     <button class="mor" bindtap="hid">隐藏列</button>

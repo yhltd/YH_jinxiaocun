@@ -709,9 +709,24 @@ Page({
       mask: 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.title
+    var title = [
+      { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text",isupd: true},
+      { text: "付款人",width: "200rpx",columnName: "cardholder",type: "text",isupd: true},
+      { text: "持卡人", width: "200rpx", columnName: "drawee", type: "text", isupd: true},
+      { text: "发卡行", width: "400rpx", columnName: "issuing_bank", type: "text", isupd: true},
+      { text: "账单日", width: "250rpx", columnName: "bill_day", type: "date", isupd: true},
+      { text: "还款日", width: "250rpx", columnName: "repayment_date", type: "date", isupd: true},
+      { text: "总金额", width: "200rpx", columnName: "total", type: "digit", isupd: true},
+      { text: "应还款", width: "200rpx", columnName: "repayable", type: "digit", isupd: true},
+      { text: "剩余金额", width: "200rpx", columnName: "balance", type: "digit", isupd: true},
+      { text: "借款金额", width: "200rpx", columnName: "loan", type: "digit", isupd: true},
+      { text: "手续费", width: "200rpx", columnName: "service_charge", type: "digit", isupd: true},
+      { text: "电话号", width: "300rpx", columnName: "telephone", type: "digit", isupd: true},
+      { text: "密码", width: "250rpx", columnName: "password", isupd: true},
+      { text: "员工", width: "200rpx", columnName: "staff", isupd: true},
+    ]
     var cloudList = {
-      name: '排产订单',
+      name: '客户信息',
       items: [],
       header: []
     }

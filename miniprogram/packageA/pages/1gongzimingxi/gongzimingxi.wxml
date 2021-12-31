@@ -89,7 +89,7 @@
         <block wx:for="{{list}}" wx:key="key" wx:for-index="idx">
           <view class='table_main'>
             <!--序号 -->
-            <view class='td' style='width:101rpx;background-color:white;position: sticky;left: 0;'>
+            <view class='td' style='width:80rpx;background-color:white;position: sticky;left: 0;'>
               <view class="cell_label centerclass" bindlongtap="click_delete" data-id='{{item.id}}' data-name="{{item.B}}">{{idx+1}}</view>
             </view>
 
@@ -364,7 +364,7 @@
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
     <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="dayin" data-mode="left">打印当前页</button>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button>
   </view>
 </drawer>
 

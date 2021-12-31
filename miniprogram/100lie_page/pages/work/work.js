@@ -584,6 +584,13 @@ onReady: function () {
 //更多
 mor:function(){
   var that=this
+  if(that.data.user != "管理员"){
+    wx.showToast({
+      title: '无权限',
+      icon:"none"
+    })
+    return;
+  }
   that.setData({
     more:false,
     mask_up:false

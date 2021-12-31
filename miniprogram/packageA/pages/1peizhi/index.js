@@ -31,6 +31,43 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1: [
+      {
+        text: "考勤项目",
+        width: 20,
+        columnName: "kaoqin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "考勤配置",
+        width: 20,
+        columnName: "kaoqin_peizhi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "假期",
+        width: 20,
+        columnName: "jiaqi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "部门配置",
+        width: 20,
+        columnName: "bumen",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "职务",
+        width: 20,
+        columnName: "zhiwu",
+        type: "text",
+        isupd: true
+      },
+    ],
     page: "1",
     IsLastPage: false,
     id: '',
@@ -785,7 +822,64 @@ Page({
     })
   },
 
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name : '人员信息管理',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:title[i].width,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
 
 
 })

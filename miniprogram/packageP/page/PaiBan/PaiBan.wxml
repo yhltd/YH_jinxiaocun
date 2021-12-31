@@ -1,5 +1,5 @@
 <!--miniprogram/packageP/page/PaiBan/PaiBan.wxml-->
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -31,9 +31,9 @@
 <!------------------------->
 <view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
   <button class="bt_bottom" hover-class="bt_bottom_hover" disabled="{{isdis!=1}}" bindtap="inquire"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">添加</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px">添加</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow" disabled="{{isdischa!=1}}"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx">刷新</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px">刷新</button>
 </view>
 
 <!--------------------->

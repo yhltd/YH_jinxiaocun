@@ -232,7 +232,7 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="selAgain">打印</button>
+  <button class="bt_bottom" bindtap="getExcel">打印</button>
   <button class="bt_bottom" bindtap="selAgain">查询</button>
 </view>
 
@@ -253,6 +253,7 @@
     </view>
     <view class="criteria_view_bottom">
       <button class="bt_save" bindtap="sel" disabled="{{result.sel!=1}}">查询</button>
+      <button class="bt_save" bindtap="back_yemian" disabled="{{result.sel!=1}}">返回</button>
     </view>
   </view>
   

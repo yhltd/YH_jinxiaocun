@@ -92,7 +92,7 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #C2CBCA;
+  background-color: #24cab7;
   color: white;
   font-weight: bold;
   font-size: 35rpx;  
@@ -242,6 +242,7 @@ button{
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
+  top: 25%;
 }
 .bt_bottom_hover{
   width: 42%;
@@ -304,5 +305,10 @@ button{
 .lables{
   font-size: 40rpx;
   margin-left: 90rpx;
-  margin-top: 30rpx;
+  margin-top: 23%;
+}
+.lables1{
+  font-size: 40rpx;
+  margin-left: 90rpx;
+  margin-top: 13%;
 }

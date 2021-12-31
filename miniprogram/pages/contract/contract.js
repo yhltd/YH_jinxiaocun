@@ -310,6 +310,20 @@ Page({
       backhidden: true,
       updIndex: e.currentTarget.dataset.index
     })
-  }
+  },
+
+  use_book:function(){
+    var _this = this
+    wx.showModal({
+      title: '使用说明',
+      content: '1.点击右下角“+”按钮可以添加客户信息。\n2.点击一条数据可以弹出文本框进行修改。\n3.长按数据可删除。',
+      showCancel: false, //是否显示取消按钮
+      confirmText: "知道了", //默认是“确定”
+      confirmColor: '#84B9F2', //确定文字的颜色
+      success: function (res) {},
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
 
 })

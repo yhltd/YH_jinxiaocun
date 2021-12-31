@@ -1,4 +1,5 @@
 
+<view><image src="../images/jinxiaocunshouye.jpeg" style="width:100%;height: 180px;"></image></view>
  <!-- 功能区 -->
 <view class="outer">
   <view data-index="{{item.index}}" bindtap="remove" wx:for="{{list}}" wx:for-item="item" class="contain" wx:key="">

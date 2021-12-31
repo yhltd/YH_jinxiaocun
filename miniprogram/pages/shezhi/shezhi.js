@@ -99,5 +99,11 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  go3:function(){
+    wx.reLaunch({
+      url: '../../pages/login/login',
+    })
+  },
 })

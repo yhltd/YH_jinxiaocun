@@ -28,6 +28,100 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1:[
+      {
+        text: "姓名",
+        width: 20,
+        columnName: "B",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "证件号码",
+        width: 20,
+        columnName: "E",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "税款负担方式",
+        width: 20,
+        columnName: "O",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "收入额",
+        width: 20,
+        columnName: "U",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "基本养老保险",
+        width: 20,
+        columnName: "AI",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "基本医疗保险金",
+        width: 20,
+        columnName: "AK",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "失业保险金",
+        width: 20,
+        columnName: "AN",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "住房公积金",
+        width: 20,
+        columnName: "AO",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "其他",
+        width: 20,
+        columnName: "AP",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "年金（个人部分）",
+        width: 20,
+        columnName: "AQ",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "免税所得",
+        width: 20,
+        columnName: "AR",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "准予扣除的捐赠额",
+        width: 20,
+        columnName: "ASA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "减免税额",
+        width: 20,
+        columnName: "AZ",
+        type: "text",
+        isupd: true
+      },
+      
+    ],
     page: "1",
     IsLastPage: false,
     id: '',
@@ -846,7 +940,66 @@ Page({
 
   aa : function(){
     console.log("sadsadsad")
-  }
+  },
+
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name: '报税',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
 
 })
 

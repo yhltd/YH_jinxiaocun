@@ -1,5 +1,5 @@
 <!--packageP/page/PC_PaiBanMingXi/PC_PaiBanMingXi.wxml-->
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -29,11 +29,29 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
+<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: 1%">
 
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdischa!=1}}">刷新</button>
+    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px" disabled="{{isdischa!=1}}">刷新</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" 
+   disabled="{{isdischa!=1}}" style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px">查询</button>
+   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="getExcel" 
+   disabled="{{isdischa!=1}}" style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px">导出excel</button>
 </view>
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;" >
+	<view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="xingming" class="input_text_form" value="{{xingming}}" type="text" name="xingming" ></input>
+    <view class="lables">部门</view>
+    <input bindinput="onInput" data-column="bumen" class="input_text_form"  value="{{bumen}}" type="text" name="bumen"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="cxShow3">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
 
 
 <!------------------------->

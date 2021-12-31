@@ -3,52 +3,52 @@ Page({
   data: {
     list: [
       {
-        url: "../../images/zhuangyu_03.jpg",
+        url: "../images/rukuguanli.png",
         text: "入库",
         lianjie: "../time/time",
         index: 0
       },
       {
-        url: "../../images/fuhui_03.jpg",
+        url: "../images/chuku.png",
         text: "出库",
         index: 1,
         lianjie: "../remittance/remittance",
       },
       {
-        url: "../../images/caigou_03.jpg",
+        url: "../images/qichukucun.png",
         text: "期初数",
         index: 2,
         lianjie: "../procurement/procurement",
       },
       {
-        url: "../../images/jibiexiao_03.jpg",
+        url: "../images/shoufamingxi.png",
         text: "明细",
         index: 3,
         lianjie: "../Tosell/Tosell",
 
       },
       {
-        url: "../../images/kuwei_03.jpg",
+        url: "../images/jinxiaocun.png",
         text: "进销存",
         index: 4,
         lianjie: "../kucun/kucun",
       },
       {
-        url: "../../images/sun_03.jpg",
+        url: "../images/gys.png",
 
         text: "进货方资料",
         index: 5,
         lianjie: "../Location/Location",
       },
       {
-        url: "../../images/sepal_03.jpg",
+        url: "../images/kehu.png",
         text: "客户资料",
         index: 6,
         lianjie: "../contract/contract",
       },
       {
-        url: "../../images/appa_10.jpg",
-        text: "商品查询",
+        url: "../images/shangpinguanli.png",
+        text: "基础资料",
         index: 7,
         lianjie: "../collection/collection"
       },

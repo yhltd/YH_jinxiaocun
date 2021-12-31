@@ -3,8 +3,9 @@
 
 <view class='header'>
   <view class="dq_y">进销存</view>
-  <view class='pm'></view>
+  <view class='pm'></view> 
   <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索商品代码" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  <button class="button_css" bindtap="use_book">使用说明</button>
 </view>
 <view class='main'>
   <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->
@@ -14,10 +15,19 @@
       <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].cplb}}</text>
     </view>
     <view class='shangpin-jin' data-id="{{i}}">
-      <view class='shangpin-input'>
+      <view class='shangpin-input' style="margin-right: 10px;">
         <text class="Hs">数量：</text>{{szzhi[i].cpsl}}</view>
       <view class='shangpin-input'>
         <text class="Hs">金额：</text>{{szzhi[i].cpsj}}</view>
     </view>
+    <view class='shangpin-kucun' data-id="{{i}}">
+      <view style="margin-right: 15px;">
+        <text class="Hs">期初数：</text>{{szzhi[i].qcsl}}</view>
+      <view style="margin-right: 15px;"> 
+        <text class="Hs">入库数：</text>{{szzhi[i].rksl}}</view>
+      <view>
+        <text class="Hs">出库数：</text>{{szzhi[i].cksl}}</view>
+    </view>
+    
   </view>
 </view>

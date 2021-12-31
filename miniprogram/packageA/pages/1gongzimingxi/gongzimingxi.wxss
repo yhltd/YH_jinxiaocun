@@ -41,7 +41,7 @@ page {
 .th {
   display: flex;
   flex-direction: column;
-  width: 200rpx;
+  width: 170rpx;
   height: 90rpx;
   background: #d2f1f0;
   border-right: 1rpx solid #fff;
@@ -59,7 +59,7 @@ page {
 }
 
 .th.tap {
-  width: 101rpx;
+  width: 80rpx;
   background-color: white;
   border-right: 1rpx solid rgba(218, 217, 217, 1);
   position: sticky;
@@ -105,7 +105,7 @@ page {
 .td {
   display: flex;
   flex-direction: column;
-  width: 200rpx;
+  width: 170rpx;
   /* height: 90rpx; */
   height: 53rpx;
   background: #f0fff0;

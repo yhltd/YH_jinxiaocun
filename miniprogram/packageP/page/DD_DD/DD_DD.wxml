@@ -1,4 +1,4 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -31,7 +31,7 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
+<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top:-3.5%">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
     style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: 0rpx" disabled="{{isdis!=1}}">添加</button>
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering"
@@ -222,9 +222,9 @@
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
-	<view class="lables">产品名称</view>
+	<view class="lables1">产品名称</view>
     <input bindinput="onInput" data-column="product_name" class="input_text_form" value="{{product_name}}" type="product_name" name="code" ></input>
-    <view class="lables">订单号</view>
+    <view class="lables1">订单号</view>
     <input bindinput="onInput" data-column="order_id" class="input_text_form" value="{{order_id}}" type="text" name="order_id"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

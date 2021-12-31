@@ -1,22 +1,19 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view style="height:250px;width:134%">
+    <image src="../../images/hz.jpg" style="width:100%"></image>
+  </view>
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">
+          {{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
-        <view wx:for="{{title}}" 
-              wx:for-item="item" 
-              wx:key="item" 
-              class="list_view" 
-              style="width:{{item.width}}" data-index="{{i}}" 
-              data-column="{{item.columnName}}" 
-              data-value="{{list_item[item.columnName]}}" 
-              data-input_type="{{item.type}}"
-              data-isupd="{{item.isupd}}"
-              bindtap="clickView">
+        <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="list_view" style="width:{{item.width}}"
+          data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}"
+          data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -28,13 +25,34 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%">
-	<!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button> -->
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
+  <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button> -->
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
 </view>
 
 
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
-	<view class="lables">模块类型</view>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;">
+  <swiper circular="true" easing-function="linear" bindchange="changeFunction" style="height: 100%;">
+    <swiper-item style="display: flex;align-items: center;" item-id="upd_pwd">
+      <view class="swiper_item">模块类型(可左右滑动←→)</view>
+      <input bindinput="onInput" bindtap="cx" class="input_text_form1" value="{{modal}}" type="text" name="modal"
+        disabled="disabled" placeholder="请选择模块类型"></input>
+      <view class="bottom_view3" style="height:10%">
+        <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
+        <button class="bt_bottom" bindtap="sel1" style="width:33%">查询</button>
+      </view>
+    </swiper-item>
+
+    <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
+      <view class="swiper_item">订单号(可左右滑动←→)</view>
+      <input bindinput="onInput2" data-column="oid" class="input_text_form1" value="{{oid}}" type="text" name="oid"
+        placeholder="请输入订单号"></input>
+      <view class="bottom_view3" style="height:10%">
+        <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
+        <button class="bt_bottom" bindtap="sel2" style="width:33%">查询</button>
+      </view>
+    </swiper-item>
+  </swiper>
+  <!-- <view class="lables">模块类型</view>
     <input bindinput="onInput" bindtap="cx" class="input_text_form" value="{{modal}}" type="text" name="modal" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
@@ -46,15 +64,10 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel2">查询</button>
-  </view>
+  </view> -->
 </van-popup>
 
 
 <!--  下拉选1-->
-<van-action-sheet
-  show="{{ xlShow1 }}"
-  actions="{{ actions1 }}"
-  close-on-click-overlay
-  bind:close="select1"
-  bind:select="select1" 
-/>
+<van-action-sheet show="{{ xlShow1 }}" actions="{{ actions1 }}" close-on-click-overlay bind:close="select1"
+  bind:select="select1" />

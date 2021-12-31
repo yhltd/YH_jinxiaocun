@@ -300,15 +300,11 @@ Page({
     var class_id = _this.data.class_id
     var list = _this.data.list[class_id-1].arr
     var title = _this.data.titil
-    console.log(_this.data.list)
-    console.log(list)
-    console.log(title)
     var cloudList = {
       name: '资产负债',
       items: [],
       header: []
     }
-
     for (let i = 0; i < title.length; i++) {
       cloudList.header.push({
         item: title[i].text,
@@ -319,7 +315,6 @@ Page({
     }
     cloudList.items = list
     console.log(cloudList)
-
     wx.cloud.callFunction({
       name: 'getExcel',
       data: {
@@ -329,23 +324,25 @@ Page({
         var fileid =  res.result.fileID
         console.log(fileid)
         console.log("获取云储存id")
+        wx.getSavedFileList({
+          success: function(res) {
+              console.log(res.fileList);
+          }
+        });
         wx.cloud.downloadFile({
           fileID: res.result.fileID,
           success: res => {
             console.log("获取临时路径")
-            delCloudFile(fileid)
-            wx.hideLoading({
-              success: (res) => {},
-            })
-            console.log(res.tempFilePath)
             wx.openDocument({
               filePath: res.tempFilePath,
               showMenu: 'true',
               fileType: 'xlsx',
               success: res => {
                 console.log("打开Excel")
-                delCloudFile(fileid)
               }
+            })
+            wx.hideLoading({
+              success: (res) => {},
             })
           }
         })
@@ -421,7 +418,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select * from (select a.name,left(a.code,1) as class,v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'" + start_date + "-01') and v.voucherDate <= convert(date,'"+ stop_date +"-31') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
+        query: "select * from (select a.name,left(a.code,1) as class,v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'" + start_date + "') and v.voucherDate <= convert(date,'"+ stop_date +"') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
       },
       success: res => {
         var list = res.result.recordset

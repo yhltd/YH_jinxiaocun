@@ -1,3 +1,6 @@
+<view style="height:250px;width:100%">
+  <image src="../../images/shijian.jpg" style="width:100%"></image>
+</view>
 <van-collapse value="{{ activeNames }}" bind:change="onChange" accordion>
   <van-collapse-item title="星期一" name="1">
     <!-------早-------->

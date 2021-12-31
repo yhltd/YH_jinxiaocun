@@ -22,7 +22,7 @@ page {
   width: auto;
   white-space: nowrap;
   margin-top: 0px;
-  height: 75%;
+  height: 85%;
   background-color: white;
   border: 1rpx solid rgba(218, 217, 217, 1);
 }
@@ -199,6 +199,9 @@ page {
 .bt_save{
   background-color: #4876FF;
   color: white;
+  width: 40%;
+  float: left;
+  margin-left:22px;
 }
 
 .bottom_view{
@@ -212,5 +215,5 @@ width: 45%;
 background-color: #4876FF;
 color: white;
 margin-left: 27rpx;
-
+margin-top: 5%;
 }

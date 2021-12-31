@@ -310,8 +310,10 @@ button::after {
 
 .search-box input {
   height: 70rpx;
-  padding: 0 40px 0 0.5em;
-  color: #555;
+    padding: 0 40px 0 0.5em;
+    color: #b9b9b9;
+    border: solid;
+    border-width: 1px;
 }
 
 .search-box .icon-sousuo {
@@ -709,7 +711,7 @@ button::after {
   display: flex;
   justify-content: left;
   align-items: center;
-  background-color: #ffe4c4;
+  background-color: #ffcbcb;
   color: red;
   float: left;
 }

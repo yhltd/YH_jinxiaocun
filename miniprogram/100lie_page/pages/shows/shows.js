@@ -23,12 +23,29 @@ Page({
   },
   // 公司规定
   gongsi:function(){
+    var _this = this
+    console.log(_this.data.user)
+    if(_this.data.user != "管理员"){
+      wx.showToast({
+        title: '无权限',
+        icon:"none"
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../companyfix/companyfix?gongsi='+this.data.gongsi 
     })
   },
   //人员规定
   ren:function(){
+    var _this = this
+    if(_this.data.user != "管理员"){
+      wx.showToast({
+        title: '无权限',
+        icon:"none"
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../personfix/personfix?gongsi='+this.data.gongsi 
     })
@@ -42,17 +59,33 @@ Page({
  //使用人员
  userren:function(){
    wx.navigateTo({
-     url: '../userpeople/userpeople?gongsi='+this.data.gongsi+ '&name='+ this.data.name
+     url: '../userpeople/userpeople?gongsi='+this.data.gongsi+ '&name='+ this.data.name+ '&user='+ this.data.user
    })
  },
  //人员管理
  renmasg:function(){
+  var _this = this
+  if(_this.data.user != "管理员"){
+    wx.showToast({
+      title: '无权限',
+      icon:"none"
+    })
+    return;
+  }
    wx.navigateTo({
      url: '../personmasg/personmasg?gongsi='+this.data.gongsi
    })
  },
  //登录人员
 loginren:function(){
+  var _this = this
+  if(_this.data.user != "管理员"){
+    wx.showToast({
+      title: '无权限',
+      icon:"none"
+    })
+    return;
+  }
   wx.navigateTo({
     url: '../loginpeople/loginpeople?gongsi='+this.data.gongsi +'&name='+this.data.name +'&user='+this.data.user
   })

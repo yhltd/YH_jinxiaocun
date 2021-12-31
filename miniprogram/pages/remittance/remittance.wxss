@@ -13,7 +13,7 @@ page {
 .header {
   /*----------*/
   background-color: rgb(30, 144, 255);
-  padding: 8%;
+  padding: 7%;
 }
 
 .bk_ss {
@@ -22,7 +22,7 @@ page {
   width: 55%;
   position: absolute;
   left: 21.3%;
-  top: 4%;
+  top: 6.5%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }
@@ -61,10 +61,14 @@ page {
 }
 
 .xzkhWwb {
-  display: flex;
+  /* display: flex;
   align-items: center;
   height: 44rpx;
-  padding: 10rpx;  
+  padding: 10rpx;   */
+  padding: 2%;
+  background-color: rgb(30, 144, 255);
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .xzkh {
@@ -125,15 +129,18 @@ page {
 .tui-picker-content {
   position: absolute;
   top: 0%;
-  font-size: 71%;
-  left: 4%;
-  color: #f8f8f8
+  font-size: 100%;
+  color: #5b5b5b;
+  /* left: 4%; */
+  font-weight: bold;
+  background: #0bded4;
+  width: 100%;
 }
 
 .dq_y {
   font-weight: bold;
   position: absolute;
-  top: 4%;
+  top: 6.5%;
   left: 6%;
   color: white;
 

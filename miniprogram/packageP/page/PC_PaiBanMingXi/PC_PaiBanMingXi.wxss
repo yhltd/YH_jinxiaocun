@@ -63,7 +63,7 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #C2CBCA;
+  background-color: #24cab7;
   color: white;
   font-weight: bold;
   font-size: 35rpx;   
@@ -315,7 +315,7 @@ button{
 .lables{
   font-size: 40rpx;
   margin-left: 90rpx;
-  margin-top: 10rpx;
+  margin-top: 13%;
 }
 .lables_small{
   font-size: 40rpx;

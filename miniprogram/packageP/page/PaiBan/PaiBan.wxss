@@ -62,7 +62,7 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #C2CBCA;
+  background-color: #24cab7;
   color: white;
   font-weight: bold;
   font-size: 35rpx;   

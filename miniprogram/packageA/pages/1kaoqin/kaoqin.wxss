@@ -87,7 +87,7 @@ page {
 }
 
 .kaoqinbiao.xingming {
-  width: 200rpx;
+  width: 150rpx;
   background-color: white;
   position: sticky;
   top: 0;

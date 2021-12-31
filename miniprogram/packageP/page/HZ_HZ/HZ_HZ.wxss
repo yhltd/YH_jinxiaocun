@@ -54,7 +54,7 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #C2CBCA;
+  background-color:#24cab7;
   color: white;
   font-weight: bold;
   font-size: 35rpx;   
@@ -306,4 +306,38 @@ button{
   font-size: 40rpx;
   margin-left: 90rpx;
   margin-top: 30rpx;
+}
+
+.swiper_item {
+  width: 85%;
+  height: 120rpx;
+  line-height: 120rpx;
+  border: 5rpx solid #E6E6E6;
+  border-radius: 25rpx;
+  margin: auto;
+  text-align: center;
+  font-size: 41rpx;
+  background-color: #009688;
+  color: white;
+  margin-top: 30px;
+}
+
+.input_text_form1 {
+  border: 5rpx solid #E6E6E6;
+  width: 70%;
+  height: 90rpx;
+  align-items: center;
+  margin-top: 5%;
+  border-radius: 19rpx;
+  padding-left: 14%;
+  top: 38%;
+  left: 8%;
+  position: absolute;
+}
+.bottom_view3 {
+  align-items: center;
+  display: flex;
+  top: 70%;
+  position: absolute;
+  width: 100%;
 }

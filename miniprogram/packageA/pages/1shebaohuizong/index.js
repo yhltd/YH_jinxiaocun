@@ -23,6 +23,85 @@ Page({
     scrollTop: null,
     list: [],
     title: [],
+    title1: [
+      {
+        text: "部门",
+        width: 20,
+        columnName: "department",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业养老",
+        width: 20,
+        columnName: "Z",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人养老",
+        width: 20,
+        columnName: "AA",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "养老小计",
+        width: 20,
+        columnName: "COUNT1",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业失业",
+        width: 20,
+        columnName: "AJ",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "个人失业",
+        width: 20,
+        columnName: "AK",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "失业小计",
+        width: 20,
+        columnName: "COUNT2",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业工伤",
+        width: 20,
+        columnName: "AC",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业生育",
+        width: 20,
+        columnName: "AD",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业生育",
+        width: 20,
+        columnName: "COUNT3",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "企业生育",
+        width: 20,
+        columnName: "COUNT4",
+        type: "number",
+        isupd: true
+      },
+    ],
     page: "1",
     IsLastPage: false,
     svHidden : false,
@@ -642,9 +721,10 @@ choice : function(e){
     wx.cloud.callFunction({
       name: "sqlServer_117",
       data: {
-        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having C = '"+input+"' and BD = '"+that.data.companyName+"'"
+        query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having C like '%"+input+"%' and BD = '"+that.data.companyName+"'"
       },
       success: res => {
+        that.data.selected.Name="";
         console.log("部门查询成功！", res.result)
         
         that.setData({
@@ -692,6 +772,64 @@ choice : function(e){
       },
       err: res => {
         console.log("错误!", res)
+      }
+    })
+  },
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name: '工资明细',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
       }
     })
   },

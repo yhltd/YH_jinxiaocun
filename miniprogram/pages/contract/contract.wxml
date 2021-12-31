@@ -1,7 +1,7 @@
 <import src="/pages/template/jinhuo.wxml" />
 <template is="jinhuo" data="{{jinhuo,hidden1}}" />
 <view class="hidden_kh" hidden="{{backhidden}}"></view>
-<view class="dqy_bj"></view>
+<view class="dqy_bj"><button class="button_css" bindtap="use_book">使用说明</button></view>
 <view class="dq_y">客户资料</view>
 <view class="ke_bt">客户配置:</view>
 

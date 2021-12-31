@@ -156,12 +156,26 @@
 .dq_y {
   font-weight: bold;
   position: absolute;
-  top: 0%;
+  top: 2%;
   left: 5%;
   color: #f8f8f8;
 }
 
 .dqy_bj {
   background-color: #1e90ff;
-  height: 55rpx;
+  height: 50px;
 }
+
+.button_css{
+  height: 95%;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color:rgb(95, 101, 119);
+  float: right;
+  font-size: 15px;
+  right: 1%;
+}
+

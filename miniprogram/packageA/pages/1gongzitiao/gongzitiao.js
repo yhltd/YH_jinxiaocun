@@ -12,6 +12,372 @@ Page({
 
     list: [],
     title: [],
+    title1: [
+      {
+        text: "姓名",
+        width: 20,
+        columnName: "B",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "部门",
+        width: 20,
+        columnName: "C",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "岗位",
+        width: 20,
+        columnName: "D",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "身份证号码",
+        width: 20,
+        columnName: "E",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "入职时间",
+        width: 20,
+        columnName: "F",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "基本工资",
+        width: 20,
+        columnName: "G",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "效绩工资",
+        width: 20,
+        columnName: "H",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "岗位工资",
+        width: 20,
+        columnName: "I",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "当月合计工资",
+        width: 20,
+        columnName: "J",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "跨度工资",
+        width: 20,
+        columnName: "K",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "职称津贴",
+        width: 20,
+        columnName: "L",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "月出勤天数",
+        width: 20,
+        columnName: "M",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "加班时间",
+        width: 20,
+        columnName: "N",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "加班费",
+        width: 20,
+        columnName: "O",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "全勤应发",
+        width: 20,
+        columnName: "P",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "缺勤天数",
+        width: 20,
+        columnName: "Q",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "缺勤扣款",
+        width: 20,
+        columnName: "R",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "迟到天数",
+        width: 20,
+        columnName: "S",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "迟到扣款",
+        width: 20,
+        columnName: "T",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "应发工资",
+        width: 20,
+        columnName: "U",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "社保基数",
+        width: 20,
+        columnName: "V",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "医疗技术",
+        width: 20,
+        columnName: "W",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "公积金基数",
+        width: 20,
+        columnName: "X",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "年金基数",
+        width: 20,
+        columnName: "Y",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业养老",
+        width: 20,
+        columnName: "Z",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业失业",
+        width: 20,
+        columnName: "AA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业医疗",
+        width: 20,
+        columnName: "AB",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业工伤",
+        width: 20,
+        columnName: "AC",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业生育",
+        width: 20,
+        columnName: "AD",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业公积金",
+        width: 20,
+        columnName: "AE",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业年金",
+        width: 20,
+        columnName: "AF",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "滞纳金",
+        width: 20,
+        columnName: "AG",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "利息",
+        width: 20,
+        columnName: "AH",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业小计",
+        width: 20,
+        columnName: "AI",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人养老",
+        width: 20,
+        columnName: "AJ",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人失业",
+        width: 20,
+        columnName: "AK",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人医疗",
+        width: 20,
+        columnName: "AL",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人生育",
+        width: 20,
+        columnName: "AM",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人公积金",
+        width: 20,
+        columnName: "AN",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人年金4%",
+        width: 20,
+        columnName: "AO",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "滞纳金",
+        width: 20,
+        columnName: "AP",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "利息",
+        width: 20,
+        columnName: "AQ",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人小计",
+        width: 20,
+        columnName: "AR",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "税前工资",
+        width: 20,
+        columnName: "ASA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "应税工资",
+        width: 20,
+        columnName: "ATA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "税率",
+        width: 20,
+        columnName: "AU",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "扣除数",
+        width: 20,
+        columnName: "AV",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "代扣个人所得税",
+        width: 20,
+        columnName: "AW",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "1%年金",
+        width: 20,
+        columnName: "AX",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "实发工资",
+        width: 20,
+        columnName: "AY",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "验算公式",
+        width: 20,
+        columnName: "AZ",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "银行账号",
+        width: 20,
+        columnName: "BA",
+        type: "text",
+        isupd: true
+      },
+    ],
     companyName :"",
 
     options:[
@@ -172,6 +538,12 @@ Page({
     })
   },
 
+  back_yemian : function(){
+    this.setData({
+      hidMask : true
+    })
+  },
+
   input:function(e){
     var _this =this;
     var index = e.currentTarget.dataset.index
@@ -229,5 +601,64 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  getExcel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title1;
+    console.log(title)
+    var cloudList = {
+      name: '工资明细',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
 })

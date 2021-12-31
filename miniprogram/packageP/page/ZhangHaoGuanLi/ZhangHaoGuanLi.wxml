@@ -1,4 +1,4 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -47,7 +47,7 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 70%;" >
 	<view class="lables">账号</view>
-    <input bindinput="onInput" data-column="zh" class="input_text_form" value="{{zh}}" type="text" name="zh" ></input>
+    <input  bindinput="onInput" data-column="zh" class="input_text_form" value="{{zh}}" type="text" name="zh" ></input>
     <view class="lables">密码</view>
     <input bindinput="onInput" data-column="mm" class="input_text_form" value="{{mm}}" type="text" name="mm"></input>
     <view class="lables">部门</view>
@@ -77,9 +77,9 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
-	<view class="lables">账号</view>
-    <input bindinput="onInput" data-column="zh" class="input_text_form" value="{{zh}}" type="text" name="zh" ></input>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+	<!-- <view class="lables">账号</view> -->
+    <input placeholder="根据账号搜索" bindinput="onInput" data-column="zh" class="input_text_form" value="{{zh}}" type="text" name="zh" style="margin-top:16%"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
