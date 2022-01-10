@@ -30,11 +30,12 @@ Page({
       },
 
     ],
-    AdminIS: null,
+    AdminIS: 'false',
     Btype: null,
     jigoudaima: null,
     gongsi: null,
-    Createdate_i: ""
+    Createdate_i: "",
+    companyName: "",
   },
 
   /**
@@ -43,11 +44,12 @@ Page({
   onLoad: function(options) {
     var that = this;
     var time = util.formatTime(new Date());
-
     this.setData({
-      Createdate_i: time
+      Createdate_i: time,
+      companyName : app.globalData.gongsi
     });
     console.log(that.data.Createdate_i)
+    console.log("公司名称："+that.data.companyName)
   },
 
   /**
@@ -115,7 +117,7 @@ Page({
     if (pass2 != pass) {
       wx.showToast({
         title: '两次密码不一致，请修改',
-        icon: 'success',
+        // icon: 'success',
         duration: 2000
       })
       return
@@ -123,7 +125,7 @@ Page({
     if (uname == "" || pass == "") {
       wx.showToast({
         title: '数据不能为空！',
-        icon: 'success',
+        // icon: 'success',
         duration: 2000
       })
       return
@@ -189,9 +191,18 @@ Page({
   },
   AdminISradioChange(e) {
     // console.log('radio发生change事件，携带value值为：', e.detail.value)
+    var this_ = this
     console.log(e.detail.value)
-    this.setData({
-      AdminIS: e.detail.value
-    });
+    if (e.detail.value=='lock'){
+      this.setData({
+        AdminIS: 'true'
+      });
+    }else{
+      this.setData({
+        AdminIS: 'false'
+      });
+    }
+    
+    console.log(this_.data.AdminIS)
   }
 })

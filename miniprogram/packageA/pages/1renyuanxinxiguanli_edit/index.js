@@ -12,12 +12,13 @@ Page({
   onLoad: function (options) {
     var that = this
     console.log("options.id", options.id)
-    that.selBM()
+    
     that.setData({
       id: options.id,
       length : options.length,
       companyName : options.companyName
     })
+    that.selBM()
     if(options.id == undefined){
       wx.setNavigationBarTitle({
         title: '添加信息'
@@ -181,7 +182,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query:"select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
+        query:"select bumen from gongzi_peizhi where bumen != '-' and bumen != '' and gongsi='" + _this.data.companyName + "' "
       },
       success: res => {
         var bumen = res.result.recordset

@@ -21,14 +21,14 @@ Page({
       return year + "-" + month + "-" + day
     },
     title: [{ text: "编号", width: "100rpx", columnName: "did", type: "digit", isupd: true },
-            { text: "日期", width: "200rpx", columnName: "date_time", type: "text", isupd: true },
-            { text: "已还款", width: "180rpx", columnName: "repayment", type: "text", isupd: true },
-            { text: "商户", width: "250rpx", columnName: "commercial_tenant", type: "text", isupd: true },
-            { text: "刷卡额", width: "180rpx", columnName: "swipe", type: "text", isupd: true },
-            { text: "费率", width: "180rpx", columnName: "rate", type: "date", isupd: true },
-            { text: "到账金额", width: "180rpx", columnName: "arrival_amount", type: "date", isupd: true },
-      { text: "基础手续费", width: "180rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
-      { text: "其他手续费", width: "180rpx", columnName: "other_service_charge", type: "digit", isupd: true },
+            { text: "日期", width: "200rpx", columnName: "date_time", type: "date", isupd: true },
+            { text: "已还款", width: "180rpx", columnName: "repayment", type: "number", isupd: true },
+            { text: "商户", width: "250rpx", columnName: "commercial_tenant", type: "tenumberxt", isupd: true },
+            { text: "刷卡额", width: "180rpx", columnName: "swipe", type: "number", isupd: true },
+            { text: "费率", width: "180rpx", columnName: "rate", type: "number", isupd: true },
+            { text: "到账金额", width: "180rpx", columnName: "arrival_amount", type: "number", isupd: true },
+      { text: "基础手续费", width: "180rpx", columnName: "basics_service_charge", type: "number", isupd: true },
+      { text: "其他手续费", width: "180rpx", columnName: "other_service_charge", type: "number", isupd: true },
       ],
     input_hid: true,
     frmStudfind: true,
@@ -156,7 +156,7 @@ Page({
     var list = _this.data.list;
     var title = _this.data.title
     var cloudList = {
-      name: '排产订单',
+      name: '日交易记录',
       items: [],
       header: []
     }

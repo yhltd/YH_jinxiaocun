@@ -167,16 +167,38 @@ Page({
 
   },
   XzspClick: function() {
-    wx.setStorageSync('type', '0');
-    let szzhi = this.data.szzhi
-    let sz = {}
-    for(let i = 0 ;i< szzhi.length ;i++){
-      sz[szzhi[i].id] = this.data.szsl[i]
+    var that=this;
+    if (that.data.sjkj == "") {
+      console.log(that.data.sjkj, "!!!!!!!!!!!")
+      wx.showModal({
+        title: '提示',
+        content: '请选择出库时间',
+      })
+    }else if (that.data.khname == undefined) {
+      console.log(that.data.khname)
+      wx.showModal({
+        title: '提示',
+        content: '请选择客户',
+      })
+    }else if (that.data.ddh == "") {
+      console.log(that.data.ddh)
+      wx.showModal({
+        title: '提示',
+        content: '请输入订单号',
+      })
+    }else{
+      wx.setStorageSync('type', '0');
+      let szzhi = this.data.szzhi
+      let sz = {}
+      for(let i = 0 ;i< szzhi.length ;i++){
+        sz[szzhi[i].id] = this.data.szsl[i]
+      }
+      wx.setStorageSync('sz', JSON.stringify(sz));
+      wx.navigateTo({
+        url: '/pages/shangpinxuanze/shangpinxuanze',
+      })
     }
-    wx.setStorageSync('sz', JSON.stringify(sz));
-    wx.navigateTo({
-      url: '/pages/shangpinxuanze/shangpinxuanze',
-    })
+    
   },
   querenRk: function() {
     var app = getApp()

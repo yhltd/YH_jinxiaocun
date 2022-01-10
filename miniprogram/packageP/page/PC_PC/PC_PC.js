@@ -1232,7 +1232,7 @@ Page({
         var addCDId = ""
         if (_this.data.sfcd == "是") {
           sfcd = 1
-          addCDId = _this.data.addCDId
+          addCDId = _this.data.addCDIde
         } else {
           sfcd = 0
           addCDId = 0

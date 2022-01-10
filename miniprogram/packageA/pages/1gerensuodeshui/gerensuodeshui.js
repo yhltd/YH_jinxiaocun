@@ -43,6 +43,7 @@ Page({
             list: res.result.recordset,
             IsLastPage: true
           })
+          _this.baochi()
         } else {
           this.setData({
             list: res.result.recordset

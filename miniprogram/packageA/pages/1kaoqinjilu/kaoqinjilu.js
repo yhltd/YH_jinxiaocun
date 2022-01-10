@@ -113,11 +113,12 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
-    _this.selBM()
+    
     _this.setData({
       companyName: options.companyName,
       result: JSON.parse(options.access)
     })
+    _this.selBM()
     wx.setNavigationBarTitle({
       title: '考勤记录表'
     })
@@ -786,7 +787,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select bumen from gongzi_peizhi where bumen != '-' and bumen != '' "
+        query: "select bumen from gongzi_peizhi where bumen != '-' and bumen != '' and gongsi='" + _this.data.companyName + "' "
       },
       success: res => {
         var bumen = res.result.recordset

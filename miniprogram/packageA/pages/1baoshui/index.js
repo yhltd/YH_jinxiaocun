@@ -322,12 +322,12 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "' and BD = '"+that.data.companyName+"'"
+          query: "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%' and BD = '"+that.data.companyName+"'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
           that.setData({
-            list: res.result.recordset
+            list: res.result.recordset,
           })
         },
         err: res => {

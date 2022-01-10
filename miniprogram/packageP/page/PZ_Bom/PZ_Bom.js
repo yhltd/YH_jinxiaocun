@@ -458,7 +458,7 @@ tableShow: function (e) {
           })
           _this.qxShow()
           var e = ['', '', '']
-          _this.tableShow()
+          _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
             icon: 'none'

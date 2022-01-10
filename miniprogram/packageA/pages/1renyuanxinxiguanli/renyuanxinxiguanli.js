@@ -275,13 +275,14 @@ Page({
     })
   },
   onUpdate(e) {
+    var that=this;
     let id = e.currentTarget.dataset.id
     wx.showToast({
       title: '修改编号为' + id + "号的员工",
       icon: 'none'
     })
     wx.navigateTo({
-      url: "../1renyuanxinxiguanli_edit/index?id=" + id,
+      url: "../1renyuanxinxiguanli_edit/index?id=" + id + "&companyName="+that.data.companyName,
     })
   },
 

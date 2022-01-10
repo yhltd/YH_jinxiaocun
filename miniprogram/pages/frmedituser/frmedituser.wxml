@@ -21,7 +21,7 @@
     <text>所属机构</text>
     <input placeholder="请输入确认所属机构" type='text' name='jigoudaima' value='{{listAll.jigoudaima}}'></input>
     <text>所属公司</text>
-    <input placeholder="请输入确认所属公司" type='text' name='gongsi' value='{{listAll.gongsi}}'></input>
+    <input placeholder="请输入确认所属公司" type='text' name='gongsi' value='{{listAll.gongsi}}' disabled='true'></input>
     <text>管理员</text>
     <!-- <view class="button-hover">
       <input placeholder="" type='text' name='AdminIStx' value='{{listAll.AdminIS}}'>{{AdminIS}}</input>

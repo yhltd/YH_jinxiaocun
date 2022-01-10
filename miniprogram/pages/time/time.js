@@ -270,10 +270,38 @@ Page({
   },
 
   xuanshangpin: function() {
-    wx.setStorageSync('type', '1');
-    wx.navigateTo({
-      url: '/pages/shangpinxuanze/shangpinxuanze',
-    })
+    var that = this
+
+    if (that.data.sjkj == "") {
+      console.log(that.data.ddh)
+      wx.showModal({
+        title: '提示',
+        content: '请选择入库时间',
+      })
+
+    } else {
+      if (that.data.all == undefined) { //2020/7/2
+        wx.showModal({
+          title: '提示',
+          content: '请选择进货方',
+        })
+      } else {
+        if (that.data.ddh == "") {
+          console.log(that.data.ddh)
+          wx.showModal({
+            title: '提示',
+            content: '请输入订单号',
+          })
+        } else {
+          
+            wx.setStorageSync('type', '1');
+            wx.navigateTo({
+              url: '/pages/shangpinxuanze/shangpinxuanze',
+            })
+          
+        }
+      }
+    }
   },
 
   querenRk: function() {

@@ -9,7 +9,7 @@ Page({
 
     // 用户信息
     userInfo: {
-      avatarUrl: "/images/avatar_user_0.png",
+      avatarUrl: "/images/login.png",
       bind_account: {
         zxyy_id: "------"
       },
