@@ -57,7 +57,7 @@
     <view class="lables">描述</view>
     <input bindinput="onInput" data-column="ms" class="input_text_form" value="{{ms}}" type="text" name="ms"></input>
     <view class="lables">大小</view>
-    <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="text" name="dx"></input>
+    <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="digit" name="dx"></input>
     <view class="lables">单位</view>
     <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
   <view class="bottom_view" style="height:10%">
@@ -80,7 +80,7 @@
     <view class="lables">描述</view>
     <input bindinput="onInput" data-column="ms" class="input_text_form" value="{{ms}}" type="text" name="ms"></input>
     <view class="lables">大小</view>
-    <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="text" name="dx"></input>
+    <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="digit" name="dx"></input>
     <view class="lables">单位</view>
     <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
   <view class="bottom_view" style="height:10%">

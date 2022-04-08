@@ -36,11 +36,11 @@
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="number" data-x="{{item.kaoqin}}" data-doinb='kaoqin'>{{item.kaoqin}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.kaoqin}}" data-doinb='kaoqin'>{{item.kaoqin}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}'  data-type="number" data-x="{{item.kaoqin_peizhi}}" data-doinb='kaoqin_peizhi'>{{item.kaoqin_peizhi}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}'  data-type="text" data-x="{{item.kaoqin_peizhi}}" data-doinb='kaoqin_peizhi'>{{item.kaoqin_peizhi}}</view>
         </view>
         <view class='td'>
           <view class="cell_label centerclass" bindtap="nianyueri" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-x="{{item.jiaqi}}" data-doinb='jiaqi'>{{item.jiaqi}}</view>

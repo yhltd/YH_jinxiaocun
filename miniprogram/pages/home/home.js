@@ -112,9 +112,16 @@ Page({
         if(res.result.recordset.length!=0){
           var access  = res.result.recordset[0];
         }
-        wx.navigateTo({
-          url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0]
-        })
+        if(index == 9){
+          wx.navigateTo({
+            url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+gongsi
+          })
+        }else{
+          wx.navigateTo({
+            url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0]
+          })
+        }
+        
       }
     })
 

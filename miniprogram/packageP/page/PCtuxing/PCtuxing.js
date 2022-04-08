@@ -19,10 +19,12 @@ Page({
     tubiaox: [],
     tubiaoy: [],
     accounting: [],
+    danhao_list:[],
     animationData_moreDo_view: [],
     gongsi: '',
     yin: true,
     dat: true,
+    xlShow2:false,
     xdrq: "",
     jieshuriqi: "",
     ddh: "",
@@ -68,7 +70,7 @@ Page({
           {
             var options = {
               title: {
-                text: '工作台列使用情况',
+                text: '排产柱状图',
                 show: true
               },
               tooltip: {
@@ -81,7 +83,7 @@ Page({
               grid: {},
               xAxis: [{
                 type: "category",
-                data: ["A", "B", "C", "D"],
+                data: [],
                 axisTick: {
                   alignWithLabel: true
                 }
@@ -91,7 +93,7 @@ Page({
                 splitNumber: "8"
               }],
               series: [{
-                name: "使用",
+                name: "数量",
                 type: "bar",
                 label: {
                   show: "true",
@@ -152,6 +154,38 @@ Page({
       },
 
     })
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select oi.order_id as name from work_detail as wd left join order_info as oi on wd.order_id = oi.id where oi.order_id like '%%' and wd.company='" + user + "'"
+      },
+      success: res => {
+        console.log(res.result.recordsets)
+        that.setData({
+          danhao_list: res.result.recordset
+        })
+      },
+    })
+  },
+  selDDH: function () {
+    var _this = this
+    console.log(_this.data.danhao_list)
+    _this.setData({
+      xlShow2: true
+    })
+  },
+  select2: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      _this.setData({
+        xlShow2: false,
+        ddh: e.detail.name,
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow2: false,
+      })
+    }
   },
   updChart: function (options) {
     this.selectComponent('#mychart-dom-bar').init((canvas, width, height) => {
@@ -191,6 +225,13 @@ Page({
     var enddate = _this.data.jieshuriqi
     var orderno = _this.data.ddh
     var order_model = _this.data.ddmk
+    if(orderno == ''){
+      wx.showToast({
+        title: '请输入订单号！',
+        icon: 'none'
+      })
+      return;
+    }
     console.log("startdate" + startdate + "enddate" + enddate + "orderno" + orderno + "order_model" + order_model)
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
@@ -504,7 +545,7 @@ Page({
     if (_this.data.tubiaox.length > 0) {
       var options = {
         title: {
-          text: '工作台列使用情况',
+          text: '排产柱状图',
           show: true
         },
         tooltip: {
@@ -527,7 +568,7 @@ Page({
           splitNumber: "8"
         }],
         series: [{
-            name: "使用",
+            name: "数量",
             type: "line",
             label: {
               show: "true",
@@ -1086,7 +1127,7 @@ Page({
         var accounting = res.result.recordsets
         var options = {
           title: {
-            text: '工作台列使用情况',
+            text: '排产饼图',
             show: true,
             left: 'center',
             top: '20%'
@@ -1103,26 +1144,11 @@ Page({
             data: ['A', 'B', 'C', 'D']
           },
           series: [{
-            name: "使用",
+            name: "数量",
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
-            data: [{
-                value: '',
-                name: 'A'
-              },
-              {
-                value: '',
-                name: 'B'
-              },
-              {
-                value: '',
-                name: 'C'
-              },
-              {
-                value: '',
-                name: 'D'
-              },
+            data: [
             ],
             emphasis: {
               itemStyle: {
@@ -1140,7 +1166,7 @@ Page({
           console.log(accounting[i].shuliang)
 
           if (accounting[i].shuliang > 0) {
-            options.series[0].data.push(accounting[i].shuliang, accounting[i].riqi)
+            options.series[0].data.push({value:accounting[i].shuliang, name:accounting[i].riqi})
           }
         }
         console.log(options)

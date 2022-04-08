@@ -128,6 +128,11 @@ Page({
         _this.setData({
           list: list,
         })
+        wx.showToast({
+          title: '查询成功！',
+          icon: 'none',
+          duration: 3000
+        })
         // console.log(list)
       },
       err: res => {

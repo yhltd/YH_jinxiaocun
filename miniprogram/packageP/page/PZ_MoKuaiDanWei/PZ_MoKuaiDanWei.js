@@ -470,13 +470,15 @@ Page({
   clickView: function (e) {
     var _this = this
     var index_ = e.currentTarget.dataset.index;
+    
     _this.setData({
       index_: index_,
       xgShow: true,
       mklb: _this.data.list_module_info[index_].type_name,
       mc: _this.data.list_module_info[index_].name,
       xls: _this.data.list_module_info[index_].num,
-      fmk: _this.data.list_module_info[index_].parent
+      fmk: _this.data.list_module_info[index_].parent,
+      type_id:undefined
     })
   },
   del: function () {
@@ -516,10 +518,17 @@ Page({
   },
   upd: function () {
     var _this = this
+    var sql = ""
+    if (_this.data.type_id == undefined ){
+      sql="update module_info set name='" + _this.data.mc + "',num='" + _this.data.xls + "',parent_id='" + _this.data.fmk_id + "' where id ='" + _this.data.list_module_info[_this.data.index_].id + "'"
+    }else{
+      sql = "update module_info set type_id='" + _this.data.type_id + "',name='" + _this.data.mc + "',num='" + _this.data.xls + "',parent_id='" + _this.data.fmk_id + "' where id ='" + _this.data.list_module_info[_this.data.index_].id + "'"
+    }
+
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "update module_info set type_id='" + _this.data.type_id + "',name='" + _this.data.mc + "',num='" + _this.data.xls + "',parent_id='" + _this.data.fmk_id + "' where id ='" + _this.data.list_module_info[_this.data.index_].id + "'"
+        query: sql
       },
       success: res => {
         var list2 = res.result.recordset

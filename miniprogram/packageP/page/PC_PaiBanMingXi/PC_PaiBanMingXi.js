@@ -142,6 +142,11 @@ Page({
         _this.setData({
           list: list,
         })
+        wx.showToast({
+          title: '刷新成功！',
+          icon: 'none',
+          duration: 3000
+        })
         // console.log(list)
       },
       err: res => {
@@ -374,6 +379,11 @@ Page({
       cxShow:false,
       xingming:"",
       bumen:"",
+    })
+    wx.showToast({
+      title: '查询完成！',
+      icon: 'none',
+      duration: 3000
     })
   },
   cxShow3: function () {

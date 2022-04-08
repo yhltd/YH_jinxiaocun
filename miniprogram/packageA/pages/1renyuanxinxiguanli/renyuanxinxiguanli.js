@@ -151,9 +151,9 @@ Page({
     console.log(input)
     var sql = ""
     if(input == "" || input == undefined){
-      sql = "select top 100 * from gongzi_renyuan where L like '"+that.data.companyName+"%'"
+      sql = "select top 100 *,(select count(R_id) from gongzi_renyuanManager where R_id = gongzi_renyuan.id) as num from gongzi_renyuan where L like '"+that.data.companyName+"%'"
     }else{
-      sql = "select top 100 * from gongzi_renyuan where B like '%" + input + "%' and L like '"+that.data.companyName+"%'"
+      sql = "select top 100 *,(select count(R_id) from gongzi_renyuanManager where R_id = gongzi_renyuan.id) as num from gongzi_renyuan where B like '%" + input + "%' and L like '"+that.data.companyName+"%'"
     }
     if (index == 0) {
       //按姓名查询
@@ -164,8 +164,18 @@ Page({
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
+          var list = res.result.recordset
+          for(var i=0;i<list.length;i++){
+            if(list[i].num==12){
+              list[i].num = "全部设置"
+            }else if(list[i].num>0 && list[i].num <12){
+              list[i].num = "部分设置"
+            }else{
+              list[i].num = "未设置"
+            }
+          }
           that.setData({
-            list: res.result.recordset
+            list: list
           })
           that.dismissMaskWindow();
         },

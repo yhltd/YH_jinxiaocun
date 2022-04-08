@@ -57,7 +57,7 @@ Page({
 
     var sql = "select * from (select name,y.sum_month,y.sum_year,a.direction,row_number() over(order by name) as ROW_ID from Accounting as a,(SELECT code,isnull((SELECT sum(money) FROM VoucherSummary WHERE MONTH(voucherDate) = MONTH(GETDATE()) AND code = y.code),0) AS sum_month,isnull((SELECT sum(money) FROM VoucherSummary WHERE YEAR(voucherDate) = YEAR(GETDATE()) AND code = y.code),0) AS sum_year FROM VoucherSummary AS y WHERE company = '"+userInfo.company+"' and YEAR(voucherDate) = YEAR(GETDATE()) GROUP BY y.code) as y where a.code = y.code and a.company = '"+userInfo.company+"' and a.direction = "+class_id+") as t where t.ROW_ID > "+(pageNum-1)*countPage+" and t.ROW_ID < "+(pageNum*countPage+1)
 
-    
+    console.log(sql)
     _this.getPageCount(sql);
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
@@ -249,8 +249,10 @@ Page({
       var monthSum = 0;
       var yearSum = 0
       for(let i=0;i<arr.length;i++){
-        monthSum+=parseInt(arr[i].sum_month)
-        yearSum+=parseInt(arr[i].sum_year)
+        if(arr[i].direction == class_id_new){
+          monthSum+=parseInt(arr[i].sum_month)
+          yearSum+=parseInt(arr[i].sum_year)
+        }
       }
       _this.setData({
         monthSum,
@@ -415,8 +417,8 @@ Page({
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
     var sql = "select * from (select name,y.sum_month,y.sum_year,a.direction,row_number() over(order by name) as ROW_ID from Accounting as a,(SELECT code,isnull((SELECT sum(money) FROM VoucherSummary WHERE voucherDate >= CONVERT(date,'"+ start_date +"'-01) and voucherDate <= CONVERT(date,'" + stop_date + "-31') AND code = y.code),0) AS sum_month,isnull((SELECT sum(money) FROM VoucherSummary WHERE YEAR(voucherDate) = YEAR(CONVERT(date,'" + start_date + "31')) AND code = y.code),0) AS sum_year FROM VoucherSummary AS y WHERE company = '"+userInfo.company+"' and YEAR(voucherDate) = YEAR(CONVERT(date,'" + start_date + "-31')) GROUP BY y.code) as y where a.code = y.code and a.company = '"+userInfo.company+"' and a.direction = "+class_id+") as t where t.ROW_ID > "+(pageNum-1)*countPage+" and t.ROW_ID < "+(pageNum*countPage+1)
-
-    var sql = "select * from (select name,y.sum_month,y.sum_year,a.direction,row_number() over(order by name) as ROW_ID from Accounting as a,(SELECT code,isnull((SELECT sum(money) FROM VoucherSummary WHERE voucherDate >= CONVERT(date,'"+ start_date +"') and voucherDate <= CONVERT(date,'"+ stop_date +"') AND code = y.code),0) AS sum_month,isnull((SELECT sum(money) FROM VoucherSummary WHERE YEAR(voucherDate) = YEAR(CONVERT(date,'"+ start_date +"')) AND code = y.code),0) AS sum_year FROM VoucherSummary AS y WHERE company = '"+userInfo.company+"' and YEAR(voucherDate) = YEAR(CONVERT(date,'"+ start_date +"')) GROUP BY y.code) as y where a.code = y.code and a.company = '"+userInfo.company+"' and a.direction =1) as t where t.ROW_ID > "+(pageNum-1)*countPage+" and t.ROW_ID < "+(pageNum*countPage+1)
+    
+    var sql = "select * from (select name,y.sum_month,y.sum_year,a.direction,row_number() over(order by name) as ROW_ID from Accounting as a,(SELECT code,isnull((SELECT sum(money) FROM VoucherSummary WHERE voucherDate >= CONVERT(date,'"+ start_date +"') and voucherDate <= CONVERT(date,'"+ stop_date +"') AND code = y.code),0) AS sum_month,isnull((SELECT sum(money) FROM VoucherSummary WHERE YEAR(voucherDate) = YEAR(CONVERT(date,'"+ start_date +"')) AND code = y.code),0) AS sum_year FROM VoucherSummary AS y WHERE company = '"+userInfo.company+"' and YEAR(voucherDate) = YEAR(CONVERT(date,'"+ start_date +"')) GROUP BY y.code) as y where a.code = y.code and a.company = '"+userInfo.company+"' and a.direction ="+class_id+") as t where t.ROW_ID > "+(pageNum-1)*countPage+" and t.ROW_ID < "+(pageNum*countPage+1)
     console.log(sql)
     
     wx.cloud.callFunction({
@@ -433,8 +435,11 @@ Page({
         if(list != undefined){
           if(list.length > 0) {
             for(let i=0;i<list.length;i++){
-              monthSum+=parseInt(list[i].sum_month)
-              yearSum+=parseInt(list[i].sum_year)
+              console.log(list[i].direction)
+              if(list[i].direction == class_id){
+                monthSum+=parseInt(list[i].sum_month)
+                yearSum+=parseInt(list[i].sum_year)
+              }
             }
           }
         }

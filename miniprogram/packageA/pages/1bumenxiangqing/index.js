@@ -838,7 +838,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_gongzimingxi where C = '" + department + "') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"'"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_gongzimingxi where C = '" + that.data.department + "') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"'"
       },
       success: res => {
         this.setData({

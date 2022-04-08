@@ -356,6 +356,8 @@ Page({
   // //结束
   chongsuan: function () {
     var _this = this
+    console.log(_this.data.listDingDan)
+    
     for (var i = 0; i < _this.data.listDingDan.length; i++) {
       var num = _this.data.listDingDan[i].work_num
       var x = 0
@@ -592,11 +594,10 @@ Page({
   selListDingDan: function (e, callback) {
     var _this = this
     let user = app.globalData.gongsi;
-    console.log(e)
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select oi.order_id,wd.work_num,wd.row_num,CONVERT(varchar(100), wd.work_start_date, 20) as work_start_date,(select id from order_info where order_info.order_id=oi.order_id) as id,('订单号:'+oi.order_id +'编号:'+ cast(wd.row_num as varchar)+'插单:'+ cast(wd.is_insert as varchar)) as name from work_detail as wd left join order_info as oi on wd.order_id = oi.id where oi.order_id like '%" + e + "%' and wd.company='" + user + "'"
+        query: "select oi.order_id,wd.work_num,wd.row_num,CONVERT(varchar(100), wd.work_start_date, 20) as work_start_date,(select top 1 id from order_info where order_info.order_id=oi.order_id) as id,('订单号:'+oi.order_id +'编号:'+ cast(wd.row_num as varchar)+'插单:'+ cast(wd.is_insert as varchar)) as name from work_detail as wd left join order_info as oi on wd.order_id = oi.id where oi.order_id like '%" + e + "%' and wd.company='" + user + "'"
       },
       success: res => {
         var list = res.result.recordset

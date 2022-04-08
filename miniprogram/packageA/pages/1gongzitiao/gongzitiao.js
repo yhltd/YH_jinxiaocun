@@ -518,11 +518,11 @@ Page({
     var where = ""
     if(bumen == "请选择" || bumen == ""){
     }else{
-      where = " and C = '"+bumen+"'";
+      where = " and C like '%"+bumen+"%'";
     }
     if(zhiwu == "请选择" || zhiwu == ""){
     }else{
-      where = where + " and D = '"+zhiwu+"'";
+      where = where + " and D like '%"+zhiwu+"%'";
     }
     // var where = "and C = '"+bumen+"' and D = '"+zhiwu+"'";
     _this.getList(_this.data.pageNum,_this.data.countPage,_this,_this.data.companyName,where);
