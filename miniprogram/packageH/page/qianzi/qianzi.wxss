@@ -1,0 +1,11 @@
+/* packageH/page/qianzi/qianzi.wxss */
+.container #firstCanvas{
+  width: 100%;
+  height: 500rpx;
+}
+.container .btn{
+  display: flex;
+}
+.container .btn button{
+  width: 50%;
+}

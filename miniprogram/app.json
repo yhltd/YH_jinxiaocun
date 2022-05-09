@@ -8,6 +8,11 @@
     "pages/peizhi/peizhi",
     "pages/time/time",
     "pages/shouye/shouye",
+    "pages/biji/biji",
+    "pages/biji_update/biji_update",
+    "pages/shangpin_jinchu/shangpin_jinchu",
+    "pages/kehu_chuhuo/kehu_chuhuo",
+    "pages/Tosell_update/Tosell_update",
     "pages/kucun/kucun",
     "pages/frmedituser/frmedituser",
     "pages/jinxiaocun/jinxiaocun",
@@ -151,6 +156,14 @@
         "page/PaiChanHeDui/PaiChanHeDui",
         "page/BuMen/BuMen",
         "page/PaiBan/PaiBan"
+      ]
+    },
+    {
+      "root": "packageH",
+      "name": "hetong",
+      "pages": [
+        "page/index/index",
+        "page/qianzi/qianzi"
       ]
     }
     

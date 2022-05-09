@@ -1,0 +1,12 @@
+<template name="biji_foot">    
+
+<view  class="tab-bar" hidden="{{hiddenName}}"  style=" {{tabBar.position=='top'? 'top: 0' : 'bottom: 0'}}; {{tabBar.borderStyle? (tabBar.position=='top'? 'border-bottom: solid 0px '+tabBar.borderStyle + ';' : 'border-top: solid 1px '+tabBar.borderStyle + ';') : ''}}"> 
+
+<view class='tabber'> 
+<view class='jiage'></view>
+<view class='queren' bindtap='querenRk'>添加</view>
+
+</view>
+</view>
+
+</template>

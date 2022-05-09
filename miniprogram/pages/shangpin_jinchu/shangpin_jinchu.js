@@ -37,33 +37,11 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,(ifnull(jq_cpsl,0)+ifnull(mx_ruku_cpsl,0)-ifnull(mx_chuku_cpsl,0)) as jc_sl,(ifnull(jq_price,0)+ifnull(mx_ruku_price,0)-ifnull(mx_chuku_price,0)) as jc_price from (select jj.mark1,jj.sp_dm,jj.name,jj.lei_bie,ifnull(sum(jq.cpsl),0) as jq_cpsl,ifnull(sum(jq.cpsl*jq.cpsj),0) as jq_price,ifnull(mx_ruku.cpsl,0) as mx_ruku_cpsl,ifnull(mx_ruku.cp_price,0) as mx_ruku_price,ifnull(mx_chuku.cpsl,0) as mx_chuku_cpsl,ifnull(mx_chuku.cp_price,0) as mx_chuku_price from yh_jinxiaocun_jichuziliao as jj left join yh_jinxiaocun_qichushu as jq on jj.sp_dm = jq.cpid and jq.gs_name = '" + gongsi + "' left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '入库'  group by jm.sp_dm) as mx_ruku on mx_ruku.sp_dm = jj.sp_dm left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '出库'  group by jm.sp_dm ) as mx_chuku on mx_chuku.sp_dm = jj.sp_dm where jj.gs_name = '" + gongsi + "' GROUP BY jj.sp_dm,jj.name,jj.lei_bie) as jxc "
+        sql: "select mx.sp_dm,mx.cpname,mx.cplb,ifnull(rk.cpsl,0) as ruku_num,ifnull(rk.cp_price,0) as ruku_price,ifnull(ck.cpsl,0) as chuku_num,ifnull(ck.cp_price,0) as chuku_price from (select sp_dm,cpname,cplb from yh_jinxiaocun_mingxi where gs_name = '" + gongsi + "' group by sp_dm,cpname,cplb) as mx left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '" + gongsi + "' group by sp_dm) as rk on mx.sp_dm=rk.sp_dm left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '" + gongsi + "' group by sp_dm) as ck on ck.sp_dm=rk.sp_dm"
       },
       success(res) {
-        var all = []
-        for(var i=0;i<res.result.length;i++){
-          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-        }
-        all = res.result;
-        var szary = []
-        var inserti = 0
-        console.log(all)
-        for(var i = 0; i < all.length; i++){
-          szary.push({
-            mark1:all[i].mark1,
-            name:all[i].name,
-            sp_dm:all[i].sp_dm,
-            cplb:all[i].lei_bie,
-            cpsl:all[i].jc_sl,
-            cpsj:all[i].jc_price,
-            qcsl:all[i].jq_cpsl,
-            rksl:all[i].mx_ruku_cpsl,
-            cksl:all[i].mx_chuku_cpsl,
-          })
-        }
-
         that.setData({
-          szzhi: szary
+          szzhi: res.result
         })
       },
       fail(res) {
@@ -125,33 +103,19 @@ Page({
     })
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
+    var shangpin = e.detail.value
     console.log(finduser)
     console.log(gongsi)
     console.log(e)
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,(ifnull(jq_cpsl,0)+ifnull(mx_ruku_cpsl,0)-ifnull(mx_chuku_cpsl,0)) as jc_sl,(ifnull(jq_price,0)+ifnull(mx_ruku_price,0)-ifnull(mx_chuku_price,0)) as jc_price from (select jj.mark1,jj.sp_dm,jj.name,jj.lei_bie,ifnull(sum(jq.cpsl),0) as jq_cpsl,ifnull(sum(jq.cpsl*jq.cpsj),0) as jq_price,ifnull(mx_ruku.cpsl,0) as mx_ruku_cpsl,ifnull(mx_ruku.cp_price,0) as mx_ruku_price,ifnull(mx_chuku.cpsl,0) as mx_chuku_cpsl,ifnull(mx_chuku.cp_price,0) as mx_chuku_price from yh_jinxiaocun_jichuziliao as jj left join yh_jinxiaocun_qichushu as jq on jj.sp_dm = jq.cpid and jq.gs_name = '" + gongsi + "' left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '入库'  group by jm.sp_dm) as mx_ruku on mx_ruku.sp_dm = jj.sp_dm left join (select jm.sp_dm,sum(jm.cpsl) as cpsl,sum(jm.cpsl*jm.cpsj) as cp_price from yh_jinxiaocun_mingxi as jm where jm.gs_name = '" + gongsi + "' and jm.mxtype = '出库'  group by jm.sp_dm ) as mx_chuku on mx_chuku.sp_dm = jj.sp_dm where jj.gs_name = '" + gongsi + "' GROUP BY jj.sp_dm,jj.name,jj.lei_bie) as jxc where sp_dm like '%" + e.detail.value + "%'"
+        sql: "select mx.sp_dm,mx.cpname,mx.cplb,ifnull(rk.cpsl,0) as ruku_num,ifnull(rk.cp_price,0) as ruku_price,ifnull(ck.cpsl,0) as chuku_num,ifnull(ck.cp_price,0) as chuku_price from (select sp_dm,cpname,cplb from yh_jinxiaocun_mingxi where gs_name = '" + gongsi + "' group by sp_dm,cpname,cplb) as mx left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '" + gongsi + "' group by sp_dm) as rk on mx.sp_dm=rk.sp_dm left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '" + gongsi + "' group by sp_dm) as ck on ck.sp_dm=rk.sp_dm where cpname like '%" + shangpin + "%'"
       },
       success(res) {
-        var all = []
-        all = res.result;
-        var szary = []
-        var inserti = 0
-        console.log(all)
-        for(var i = 0; i < all.length; i++){
-          szary.push({
-            mark1:all[i].mark1,
-            name:all[i].name,
-            sp_dm:all[i].sp_dm,
-            cplb:all[i].lei_bie,
-            cpsl:all[i].jc_sl,
-            cpsj:all[i].jc_price
-          })
-        }
-
+        console.log(res.result)
         that.setData({
-          szzhi: szary
+          szzhi: res.result
         })
       },
       fail(res) {
@@ -371,7 +335,7 @@ Page({
     var _this = this
     wx.showModal({
       title: '使用说明',
-      content: '1.点击搜索框可查询各商品进销存数据。',
+      content: '1.点击搜索框可按商品名汇总。',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
       confirmColor: '#84B9F2', //确定文字的颜色

@@ -52,6 +52,24 @@ Page({
         index: 7,
         lianjie: "../collection/collection"
       },
+      {
+        url: "../images/biji.png",
+        text: "笔记",
+        index: 8,
+        lianjie: "../biji/biji"
+      },
+      {
+        url: "../images/shangpin_jinchu.png",
+        text: "商品进出查询",
+        index: 9,
+        lianjie: "../shangpin_jinchu/shangpin_jinchu"
+      },
+      {
+        url: "../images/kehu_chuhuo.png",
+        text: "客户/供应商查询",
+        index: 10,
+        lianjie: "../kehu_chuhuo/kehu_chuhuo"
+      },
       // {
         
       //   url: "../../images/anQun_03.jpg",
@@ -76,23 +94,10 @@ Page({
   remove: function (e) {
     var that = this
     var idx = e.currentTarget.dataset.index;
-    
-    if (idx == 8) {
-      wx.showModal({
-        title: '提示',
-        content: '该功能尚未开发',
-
-      })
-      
-      // wx.navigateTo({
-      //   url: that.data.list[idx].lianjie,
-      // })
-    } else {
-      console.log(that.data.list[idx].lianjie + '?index=' + idx)
+    console.log(that.data.list[idx].lianjie + '?index=' + idx)
       wx.navigateTo({
         url: that.data.list[idx].lianjie + '?index=' + idx,
       })
-    }
 
   },
   //事件处理函数

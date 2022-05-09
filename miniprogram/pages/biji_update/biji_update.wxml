@@ -1,0 +1,12 @@
+<view class='xinjianshangpin'> 笔记</view>
+<view style="height:6rpx"></view>
+
+<view style="height:30rpx"></view>
+<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item">
+  <view class='xinjian' > {{item.txet}}:
+    <input class="chanpin-input" type="text" data-id="{{item.index}}" bindinput="input" value="{{fun=='qichu'?all[0][item.fun]:all[0][item.name]}}"></input>
+  </view>
+  <view class='divline'> </view>
+</block>
+
+<button class='querenxinjian' bindtap='querenxinjian'>确认</button>

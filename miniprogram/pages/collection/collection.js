@@ -64,6 +64,9 @@ Page({
         sql: "select *,0 as isSelect from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
       },
       success: res=> {
+        for(var i=0;i<res.result.length;i++){
+          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+        }
         that.setData({
           all: res.result,
         })

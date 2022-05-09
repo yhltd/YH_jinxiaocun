@@ -6,9 +6,9 @@
   <button class="button_css" bindtap="use_book">使用说明</button>
 </view>
 <view class=' main'>
-  <view class='list_ps' wx:for="{{szzhi}}" wx:key="item" wx:for-index='i' data-uid="{{item._id}}" data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'>
+  <view class='list_ps' wx:for="{{szzhi}}" wx:key="item" wx:for-index='i' data-uid="{{item._id}}" data-id="{{i}}" bindlongpress="shanchu" bindtap='upd'>
     <view class='shangpin'>
-      <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
+      <image class="shangpin-img" src="{{szzhi[i].mark1}}" mode="widthFix"></image>
 
       <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n<text class="Hs">售价：<text class="red">{{szzhi[i].cpsj}}</text>\n进价：<text class="red">{{szzhi[i].cpjj}}</text>\n类别：<text class="red">{{szzhi[i].cplb}}</text>\n明细类别：<text class="red">{{szzhi[i].mxtype}}</text>     -->
       <!--   

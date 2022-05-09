@@ -1,0 +1,13 @@
+<view class="container">
+  <canvas canvas-id="firstCanvas" id='firstCanvas' bindtouchstart="bindtouchstart" bindtouchmove="bindtouchmove"></canvas>
+  <view class="btn">
+ 
+    <button type="warn" bindtap='clear'>
+      清除
+    </button>
+    <button type="primary"  bindtap='export'>
+      提交
+    </button>
+  </view>
+ 
+</view>

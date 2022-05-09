@@ -36,6 +36,10 @@ Page({
         sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
       },
       success(res) {
+        for(var i=0;i<res.result.length;i++){
+          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+        }
+        console.log(res.result)
         that.setData({
           szzhi: res.result
         })
@@ -70,6 +74,9 @@ Page({
           sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
         },
         success(res) {
+          for(var i=0;i<res.result.length;i++){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
           that.setData({
             szzhi: res.result
           })
@@ -104,6 +111,9 @@ Page({
           sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'and yh_jinxiaocun_mingxi.cpname like '%" + e.detail.value + "%'"
         },
         success(res) {
+          for(var i=0;i<res.result.length;i++){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
           that.setData({
             szzhi: res.result
           })
@@ -146,6 +156,9 @@ Page({
           sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
         },
         success(res) {
+          for(var i=0;i<res.result.length;i++){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
           that.setData({
             szzhi: res.result
           })
@@ -180,6 +193,9 @@ Page({
           sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'and yh_jinxiaocun_mingxi.shou_h like '%" + e.detail.value + "%'"
         },
         success(res) {
+          for(var i=0;i<res.result.length;i++){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
           that.setData({
             szzhi: res.result
           })
@@ -309,6 +325,14 @@ Page({
       success: function (res) {},
       fail: function (res) {}, //接口调用失败的回调函数
       complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+  },
+  upd: function (e) {
+    var _this = this;
+    var id = e.currentTarget.dataset.uid
+    console.log(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: '/pages/Tosell_update/Tosell_update?id=' + id + '&fun=update',
     })
   },
 

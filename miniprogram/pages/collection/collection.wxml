@@ -13,7 +13,7 @@
 <view class="Mymain">
 	<view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='srJg' hidden="{{item.isSelect!=0}}">
 		<view class='shangpin'>
-			<image src='{{all[i].mark1}}' class='shangpin-image'> </image>
+			<image src='{{all[i].mark1}}' class='shangpin-image' mode="widthFix"> </image>
 			<view class='shangpin-text'>
 				<view class='shangpinpm name' data-id="{{i}}">{{all[i].name}}</view>
 				<view class='shangpinpm' data-id="{{i}}">类别：{{all[i].lei_bie}}</view>

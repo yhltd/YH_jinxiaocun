@@ -415,7 +415,12 @@ var login = function(that,info) {
     })
   //结束
   
-  }else{
+  }else if(system =="合同管理系统"){
+    wx.navigateTo({
+      url: '../../packageH/page/qianzi/qianzi'
+    })
+  }
+  else{
     wx.showToast({
       title: '请选择系统',
       icon : 'none'   
@@ -732,7 +737,14 @@ Page({
         system
       })
       arr = ["sqlServer_PC", "select company from user_info GROUP BY company", "company"]
-    }
+    } else if (system == "合同管理系统"){
+      _this.setData({
+        system,
+        gongsi : "合同管理系统",
+        pickerArray: []
+      })
+      return;
+    } 
     _this.getCompanyName(arr)
   },
   out_choice_system : function(){

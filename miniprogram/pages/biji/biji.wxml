@@ -1,0 +1,27 @@
+<!--pages/time/time.wxml-->
+
+<view class="dqy_bj"></view>
+<view class="dq_y">笔记</view>
+<scroll-view class=' main' scroll-y='true'> 
+
+  <view class='list' bindtap="upd" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd" bindlongtap = "del" wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{item.id}}">
+    <view class='shangpin'>
+
+          <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{item.name}}</text>\n商品代码：{{item.sp_dm}}\n类别：{{item.lei_bie}}</text>
+    </view>
+       <view class='shangpin-jin'  data-id="{{i}}" >
+            <view class='shangpin-input'  >单位：{{item.dan_wei}}</view>
+            <view class='shangpin-input'>　备注：{{item.beizhu}}</view>  
+        </view>
+  </view>
+</scroll-view>
+<view class='kongbai'></view>
+<view class='divline'></view>
+
+<view  class='xuan' bindtap='tianjia'> 
+<image class='jiahao'  src='/images/jiahao.png'></image>
+<text decode="emsp">&emsp;&emsp;添加</text>
+  </view>
+
+<view class='divline2'></view>
+

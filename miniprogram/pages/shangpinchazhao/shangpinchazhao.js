@@ -136,51 +136,74 @@ Page({
 
 
 
+  // chooseImage: function(e) {
+  //   let that = this;
+  //   wx.chooseImage({
+  //     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+  //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+  //     success: function(res) {
+  //       wx.showLoading({
+  //         title: '上传中',
+  //       });
+  //       // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+  //       let filePath = res.tempFilePaths[0];
+  //       const name = Math.random() * 1000000;
+  //       const cloudPath = name + filePath.match(/\.[^.]+?$/)[0]
+
+  //       wx.cloud.uploadFile({
+  //         cloudPath: "tupian/" + cloudPath, //云存储图片名字
+
+  //         filePath, //临时路径
+
+  //         success: res => {
+  //           console.log('[上传图片] 成功：', res)
+  //           that.setData({
+  //             bigImg: res.fileID, //云存储图片路径,可以把这个路径存到集合，要用的时候再取出来
+  //           }, wx.showToast({
+  //             title: '图片选择成功',
+  //             'icon': 'none',
+  //             duration: 3000
+  //           }));
+  //           let fileID = res.fileID;
+  //           //把图片存到users集合表
+
+  //           console.log(name1)
+
+  //         },
+  //         fail: e => {
+  //           console.error('[上传图片] 失败：', e)
+  //         },
+  //         complete: () => {
+  //           wx.hideLoading()
+  //         }
+  //       });
+  //     }
+
+  //   })
+  // },
+
   chooseImage: function(e) {
-    let that = this;
+    var that = this
     wx.chooseImage({
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function(res) {
-        wx.showLoading({
-          title: '上传中',
-        });
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        let filePath = res.tempFilePaths[0];
-        const name = Math.random() * 1000000;
-        const cloudPath = name + filePath.match(/\.[^.]+?$/)[0]
-
-        wx.cloud.uploadFile({
-          cloudPath: "tupian/" + cloudPath, //云存储图片名字
-
-          filePath, //临时路径
-
-          success: res => {
-            console.log('[上传图片] 成功：', res)
-            that.setData({
-              bigImg: res.fileID, //云存储图片路径,可以把这个路径存到集合，要用的时候再取出来
-            }, wx.showToast({
-              title: '图片选择成功',
-              'icon': 'none',
-              duration: 3000
-            }));
-            let fileID = res.fileID;
-            //把图片存到users集合表
-
-            console.log(name1)
-
-          },
-          fail: e => {
-            console.error('[上传图片] 失败：', e)
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        });
+      success: res => {
+      wx.getFileSystemManager().readFile({
+        filePath: res.tempFilePaths[0], //选择图片返回的相对路径
+        encoding: 'base64', //编码格式
+        success: res => { //成功的回调
+        console.log('data:image/png;base64,' + res.data)
+        that.setData({
+          bigImg: res.data, //云存储图片路径,可以把这个路径存到集合，要用的时候再取出来
+        }, wx.showToast({
+          title: '图片选择成功',
+          'icon': 'none',
+          duration: 3000
+        }))
+        }
+      })
       }
-
     })
   },
+
   input: function(e) {
     var id = e.currentTarget.dataset.id
     var value = e.detail.value

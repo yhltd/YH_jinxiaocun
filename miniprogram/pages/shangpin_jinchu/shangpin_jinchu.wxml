@@ -1,0 +1,21 @@
+<import src="/pages/template/xiugai.wxml" />
+<template is="xiugai" data="{{xiugai,hidden1,szzh,cpsljg}}" />
+
+<view class='header'>
+  <view class="dq_y">查询</view>
+  <view class='pm'></view> 
+  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  <button class="button_css" bindtap="use_book">使用说明</button>
+</view>
+<view class='main'>
+  <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->
+   <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="" bindtap=''>
+    <view class='shangpin'>
+
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm"></text>商品代码：{{szzhi[i].sp_dm}}\n商品名称：{{szzhi[i].cpname}}\n类别：{{szzhi[i].cplb}}</text>
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm"></text>入库数量：{{szzhi[i].ruku_num}}\n入库金额：{{szzhi[i].ruku_price}}</text>
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm"></text>出库数量：{{szzhi[i].chuku_num}}\n出库金额：{{szzhi[i].chuku_price}}</text>
+    </view>
+    
+  </view>
+</view>
