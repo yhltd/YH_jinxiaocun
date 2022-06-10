@@ -1,0 +1,116 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
+	  <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="full_name" class="input_text_form" value="{{full_name}}" type="text" name="full_name" ></input>
+    <view class="lables">账号</view>
+    <input bindinput="onInput" data-column="user_name" class="input_text_form"  value="{{user_name}}" type="text" name="user_name"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">权限</view>
+    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 82%;" >
+  <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="full_name" class="input_text_form" value="{{full_name}}" type="text" name="full_name" ></input>
+    <view class="lables">账号</view>
+    <input bindinput="onInput" data-column="user_name" class="input_text_form"  value="{{user_name}}" type="text" name="user_name"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">权限</view>
+    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" bindtap="upd1" >修改</button>
+  </view>
+
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" bindtap="del1" >删除</button>
+    <button class="bt_bottom" bindtap="quanxian" >权限</button>
+  </view>
+</van-popup>
+
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;" >
+  <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="full_name" class="input_text_form" value="{{full_name}}" type="text" name="full_name" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+
+<!--客户信息-->
+<!--- 权限 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList2" hidden="{{qx}}">
+  <view style="display:flex; flex-direction:column; min-height: 75%; padding: 10px; margin-bottom: 10px; font-size:30rpx">
+      
+    <view class="section" style="margin-top:30rpx; margin-left:17%;">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker" style="font-size:45rpx">
+          选择页面：{{array[index]}}
+        </view>
+      </picker>
+    </view>
+
+
+   <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left:   19%; " >查询权限：　　是<switch  data-column="quanxian_select" name="quanxian_select" checked="{{quanxian_select=='是'?true:false}}" bindchange="switch4Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}">删除权限：　　是<switch data-column="quanxian_delete" name="quanxian_delete" checked="{{quanxian_delete=='是'?true:false}}" bindchange="switch2Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" >修改权限：　　是<switch data-column="quanxian_update" name="quanxian_update" checked="{{quanxian_update=='是'?true:false}}" bindchange="switch3Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}">添加权限：　　是<switch data-column="quanxian_add" name="quanxian_add" checked="{{quanxian_add=='是'?true:false}}" bindchange="switch1Change"></switch>否</view>
+
+  </view>
+  <view class="bottom_view2">
+    <button class="bottom_bt2" bindtap="inquire_QX">取消</button>
+    <button class="bottom_bt2" bindtap="qxsave">保存</button>
+  </view>
+</scroll-view>

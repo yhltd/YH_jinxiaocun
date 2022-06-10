@@ -1,4 +1,4 @@
-<view class="container">
+<!-- <view class="container">
   <canvas canvas-id="firstCanvas" id='firstCanvas' bindtouchstart="bindtouchstart" bindtouchmove="bindtouchmove"></canvas>
   <view class="btn">
  
@@ -10,7 +10,7 @@
     </button>  
   </view>
  
-</view>
+</view> -->
 <!-- //lewis -->
 <!-- <view class="paper">
 	<canvas class="handWriting" disable-scroll="true" bindtouchstart="touchstart1" bindtouchmove="touchmove1" canvas-id="handWriting1"></canvas>
@@ -40,10 +40,10 @@
     <!-- <button catchtap="subCanvas" class="subBtn">完成</button> -->
 		<button catchtap="saveCanvasAsImg" class="saveBtn">保存</button>
 		<button catchtap="previewCanvasImg" class="previewBtn">预览</button>
-		<button catchtap="uploadSign_yunhanshu" class="uploadBtn">上传</button>
+		<!-- <button catchtap="uploadSign_yunhanshu" class="uploadBtn">上传</button> -->
 
 
-    <button catchtap="subCanvas" class="subBtn">完成</button>
+    <!-- <button catchtap="subCanvas" class="subBtn">完成</button> -->
   </view>
   <view class="handCenter">
     <canvas class="handWriting" disable-scroll="true" bindtouchstart="uploadScaleStart" bindtouchmove="uploadScaleMove"

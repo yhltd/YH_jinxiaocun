@@ -1,0 +1,128 @@
+.main{
+  background-color: #F0F8FF;
+  height: 1091rpx;
+  width: 100%;
+  }
+  .list{
+    /* height: 200rpx; */
+    background-color: white;
+    padding: 10rpx;
+  }
+  .name{
+    font-weight: bold;
+  }
+  
+  .header {
+    background-color: rgb(30, 144, 255);
+    padding: 7%;
+  }
+  
+  .bk_ss {
+    border: 1px solid #1c60a3;
+    border-radius: 29rpx;
+    width: 45%;
+    position: absolute;
+    left: 21.3%;
+    top: 2%;
+    color: #f8f8f8;
+    background-color: #1c60a3;
+  }
+  
+  
+  
+  .jiahao1{
+  width: 40px;
+  height: 40px;
+   border-radius: 100%;
+   position: fixed;
+   bottom: 150rpx;
+   right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   z-index: 9;
+  }
+  
+  .divline{
+    background:#e0e3Da;
+    width:100%;
+    height: 5rpx;
+    margin-top: 2%;
+  
+  }
+  .Mymain{
+    margin-top: -2%;
+  
+  
+  }
+  .shangpin{
+    /* display: flex; */
+  }
+  .shangpin-image{
+    margin-top: 20px;
+    width: 100%;
+    margin-right: 10rpx;
+    border: 1rpx solid #f2f2f2;
+    border-radius: 6rpx;
+  }
+  .shangpinpm{
+    font-size: 30rpx;
+    margin-bottom: 5rpx;
+    width: 500rpx;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .shangpin-text{
+    font-size: 61%;
+  }
+  
+  .shangpin-jin2{
+    margin-top: 10rpx;
+  }
+  
+  .sp_dm{
+    font-size: 25rpx;
+    padding: 5rpx;
+    color: rgb(30, 144, 255);
+    border-top: 1rpx solid #f2f2f2;
+    width: 100%;
+    border-bottom: 1rpx solid #f2f2f2;
+  }
+  
+  .shangpin-shuliang{
+   
+  
+  }
+  .shangpin-input{
+    display: flex;
+  }
+  
+  .dq_y {
+    font-weight: bold;
+    position: absolute;
+    top: 2%;
+    left: 6%;
+    color: white;
+  }
+    .dqy_bj{
+  
+      background-color: #1e90ff;
+      height: 55rpx;
+  
+    }
+  
+    .button_css{
+      height: 5%;
+      width: 25%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgb(255, 255, 255);
+      background-color: rgb(95, 101, 119);
+      float: right;
+      font-size: 15px;
+      right: 2%;
+      position: absolute;
+      top: 1%;
+    }

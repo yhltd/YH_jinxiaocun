@@ -7,6 +7,7 @@
     "pages/home/home",
     "pages/peizhi/peizhi",
     "pages/time/time",
+    "pages/out_in_print/out_in_print",
     "pages/shouye/shouye",
     "pages/biji/biji",
     "pages/biji_update/biji_update",
@@ -163,7 +164,15 @@
       "name": "hetong",
       "pages": [
         "page/index/index",
-        "page/qianzi/qianzi"
+        "page/qianzi/qianzi",
+        "page/contract_manage/contract_manage",
+        "page/contract_png/contract_png",
+        "page/contract_personnel/contract_personnel",
+        "page/contract_personnel_pitcure/contract_personnel_pitcure",
+        "page/contract_my/contract_my",
+        "page/contract_pitcure_select/contract_pitcure_select",
+        "page/contract_pitcure_send/contract_pitcure_send",
+        "page/contract_wode/contract_wode"
       ]
     }
   ],

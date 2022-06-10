@@ -116,14 +116,11 @@ Page({
  
   },
   onLoad: function(options) {
-    console.log(options.id);
-    if (options.id) {
-      wx.showToast({
-        title: '姓名' + options.id,
-        icon: 'success',
-        duration: 2000
-      })
-    }
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      personnel_id : userInfo.id,
+    })
     // lewis
     var context1 = wx.createCanvasContext('handWriting1');
     context1.setStrokeStyle("#000000")
@@ -154,27 +151,27 @@ Page({
     }).exec();
   },
   onShow: function() {
-    let query = wx.createSelectorQuery();
-    const that = this;
-    query.select('#firstCanvas').boundingClientRect();
-    query.exec(function(rect) {
-      let width = rect[0].width;
-      let height = rect[0].height;
-      that.setData({
-        width,
-        height
-      });
-      const context = wx.createCanvasContext('firstCanvas')
-      that.setData({
-        context: context
-      })
-      context.setStrokeStyle('#061A06')
-      context.setLineWidth(2)
-      context.setFontSize(20)
-      let str = "签名区域";
-      context.fillText(str, Math.ceil((width - context.measureText(str).width) / 2), Math.ceil(height / 2) - 20)
-      context.draw()
-    });
+    // let query = wx.createSelectorQuery();
+    // const that = this;
+    // query.select('#firstCanvas').boundingClientRect();
+    // query.exec(function(rect) {
+    //   let width = rect[0].width;
+    //   let height = rect[0].height;
+    //   that.setData({
+    //     width,
+    //     height
+    //   });
+    //   const context = wx.createCanvasContext('firstCanvas')
+    //   that.setData({
+    //     context: context
+    //   })
+    //   context.setStrokeStyle('#061A06')
+    //   context.setLineWidth(2)
+    //   context.setFontSize(20)
+    //   let str = "签名区域";
+    //   context.fillText(str, Math.ceil((width - context.measureText(str).width) / 2), Math.ceil(height / 2) - 20)
+    //   context.draw()
+    // });
   },
   onShareAppMessage: (res) => {
     if (res.from === 'button') {
@@ -788,8 +785,48 @@ uploadSign() {
 
   //保存到相册
   saveCanvasAsImg() {
-    console.log(1212);
-
+    var _this = this
+    wx.canvasToTempFilePath({
+      canvasId: 'handWriting',
+      success: function (res) {
+        var tempFilePath = res.tempFilePath;
+        console.log(res.tempFilePath)
+        wx.getFileSystemManager().readFile({
+          filePath: tempFilePath, //选择图片返回的相对路径
+          encoding: 'base64', //编码格式
+          success: res => { //成功的回调
+            var out_picture = res.data
+            console.log(out_picture)
+            wx.cloud.callFunction({
+              name: 'sqlServer_cw',
+              data: {
+                query: "insert into contract_personnel_pitcure(personnel_id,pitcure) values('"+ _this.data.personnel_id +"','" + out_picture + "')"
+              },
+              success: res => {
+                wx.showToast({
+                  title: '保存成功！',
+                  icon: 'none'
+                })
+                _this.retDraw()
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none'
+                })
+                console.log("请求失败！")
+              }
+            })
+          }
+        })
+      },
+      fail: function (res) {
+        console.log(res);
+      }
+    });
     /*
     		this.canvasToImg( tempImgPath=>{
     			// console.log(tempImgPath, '临时路径');

@@ -1,0 +1,9 @@
+<!--packageH/page/contract_personnel_pitcure/contract_personnel_pitcure.wxml-->
+<view class="Mymain">
+	<view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='srJg'>
+		<view class='shangpin'>
+			<image src='{{all[i].picture}}' class='shangpin-image' mode="widthFix"> </image>
+		</view>
+	</view>
+</view>
+<image class='jiahao1' src='/images/jiahao1.png' bindtap='jiahao1'> </image>

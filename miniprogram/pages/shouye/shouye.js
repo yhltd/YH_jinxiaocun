@@ -70,6 +70,12 @@ Page({
         index: 10,
         lianjie: "../kehu_chuhuo/kehu_chuhuo"
       },
+      {
+        url: "../images/danju_dayin.png",
+        text: "单据打印",
+        index: 11,
+        lianjie: "../out_in_print/out_in_print"
+      },
       // {
         
       //   url: "../../images/anQun_03.jpg",

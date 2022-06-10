@@ -1,2 +1,11 @@
-<!--packageH/page/index/index.wxml-->
-<text>packageH/page/index/index.wxml</text>
+<view class="list">
+  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
+    {{item.text}}
+    <image class="img" src="../../../images/qianwang.png"></image>
+  </view>
+</view>
+
+<van-tabbar active="{{ active }}" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="">主页</van-tabbar-item>
+  <van-tabbar-item icon="" bindtap="go_to">我的</van-tabbar-item>
+</van-tabbar>

@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-tabbar": "../../components/tabbar/index",
+    "van-tabbar-item": "../../components/tabbar-item/index"
+  }
 }

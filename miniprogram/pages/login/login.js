@@ -416,8 +416,48 @@ var login = function(that,info) {
   //结束
   
   }else if(system =="合同管理系统"){
-    wx.navigateTo({
-      url: '../../packageH/page/qianzi/qianzi'
+    console.log("合同管理系统")
+    //合同管理系统
+    var sql = "select * from contract_personnel where user_name = '"+info.inputName+"' and password = '"+info.inputPwd+"' and company = '"+that.data.gongsi+"'"
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: sql
+      },
+      success: res => {
+        if (res.result.recordset.length > 0) {
+          var userInfo = res.result.recordset[0]
+          wx.navigateTo({
+            url: '../../packageH/page/index/index?userInfo='+ JSON.stringify(userInfo)
+          })
+          wx.showToast({
+            title: '登录成功',
+            icon:'success'
+          })
+          app.globalData.userInfo = userInfo
+          console.log(app.globalData.userInfo)
+        } else {
+          console.log("数据库返回为空！返回res长度为：", res.result.recordset.length)
+          wx.showToast({
+            title: '输入有误 请重试',
+            icon: 'none',
+          })
+        }
+      },
+      fail: res => {
+        console.log("小程序连接数据库失败")
+        wx.showToast({
+          title: '连接数据库出错',
+          image: "../../images/icon-no.png",
+          mask: true,
+          duration: 1000
+        })
+      },
+      complete : function(){
+        that.setData({
+          lock : true
+        })
+      }
     })
   }
   else{
@@ -740,10 +780,8 @@ Page({
     } else if (system == "合同管理系统"){
       _this.setData({
         system,
-        gongsi : "合同管理系统",
-        pickerArray: []
       })
-      return;
+      arr = ["sqlServer_cw","select company from contract_personnel GROUP BY company","company"]
     } 
     _this.getCompanyName(arr)
   },
