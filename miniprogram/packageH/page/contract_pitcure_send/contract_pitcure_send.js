@@ -197,7 +197,8 @@ Page({
 
     }).exec();
     console.log('onload_stop')
-    
+    // _this.retDraw() 
+    console.log('13')
   },
   onShow: function() {
     // let query = wx.createSelectorQuery();
@@ -776,8 +777,6 @@ uploadSign() {
   //完成
   subCanvas() {
     // console.log(121);
-
-
     /*		
         this.data.ctx.draw( true, ()=>{
           wx.canvasToTempFilePath({
@@ -786,7 +785,6 @@ uploadSign() {
             quality: 1, //图片质量
             success(res){
     */
-
 
     // console.log(res.tempFilePath, 'canvas生成图片地址');
     /*
@@ -895,33 +893,57 @@ uploadSign() {
     		} );
     */
 
-    wx.canvasToTempFilePath({
-      canvasId: 'handWriting',
-      fileType: 'png',
-      quality: 1, //图片质量
-      success(res) {
-        // console.log(res.tempFilePath, 'canvas生成图片地址');
-        wx.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,
-          success(res) {
+    // wx.canvasToTempFilePath({
+    //   canvasId: 'handWriting',
+    //   fileType: 'png',
+    //   quality: 1, //图片质量
+    //   success(res) {
+    //     // console.log(res.tempFilePath, 'canvas生成图片地址');
+    //     wx.saveImageToPhotosAlbum({
+    //       filePath: res.tempFilePath,
+    //       success(res) {
 
-            wx.showToast({
-              title: '已保存到相册',
-              duration: 2000
-            });
+    //         wx.showToast({
+    //           title: '已保存到相册',
+    //           duration: 2000
+    //         });
 
-          }
-        })
-
-
-      }
-
-    })
+    //       }
+    //     })
+    //   }
+    // })
 
 
 
   },
+//本地
+savelocal() {
+  var _this = this
+  wx.canvasToTempFilePath({
+    canvasId: 'handWriting',
+    fileType: 'jpg',
+    quality: 1, //图片质量
+    success(res) {
+      // console.log(res.tempFilePath, 'canvas生成图片地址');
+      wx.saveImageToPhotosAlbum({
+        filePath: res.tempFilePath,
+        success(res) {
 
+          wx.showToast({
+            title: '已保存到相册',
+            duration: 2000
+          });
+
+        }
+      })
+    }
+
+  })
+
+
+ 
+},
+ 
   //预览
   previewCanvasImg() {
 

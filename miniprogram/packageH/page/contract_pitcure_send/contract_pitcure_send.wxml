@@ -4,6 +4,7 @@
     <button catchtap="retDraw" class="delBtn">读取</button>
 		<button catchtap="saveCanvasAsImg" class="saveBtn">保存</button>
 		<button catchtap="previewCanvasImg" class="previewBtn">预览</button>
+    <button catchtap="savelocal" class="localBtn">下载</button>
   </view>
   <view class="handCenter">
     <canvas class="handWriting" disable-scroll="true" bindtouchstart="uploadScaleStart" bindtouchmove="uploadScaleMove"

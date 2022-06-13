@@ -62,7 +62,7 @@
 
 .delBtn {
   position: absolute;
-  top: 650rpx;
+  top: 50rpx;
   left: 0rpx;
   transform: rotate(90deg);
   color: #666;
@@ -91,7 +91,7 @@
 
 .saveBtn {
   position: absolute;
-  top: 775rpx;
+  top: 150rpx;
   left: 0rpx;
   transform: rotate(90deg);
   color: #666;
@@ -100,7 +100,14 @@
 
 .previewBtn {
   position: absolute;
-  top: 900rpx;
+  top: 250rpx;
+  left: 0rpx;
+  transform: rotate(90deg);
+  color: #666;
+}
+.localBtn {
+  position: absolute;
+  top: 350rpx;
   left: 0rpx;
   transform: rotate(90deg);
   color: #666;
