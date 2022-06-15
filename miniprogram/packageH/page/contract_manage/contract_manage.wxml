@@ -82,7 +82,7 @@
     <input bindinput="onInput" data-column="send_out" class="input_text_form"  value="{{send_out}}" type="text" name="send_out"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" bindtap="upd1" >修改</button>
+    <button class="bt_bottom" bindtap="upd1" >保存</button>
   </view>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" bindtap="del1" >删除</button>

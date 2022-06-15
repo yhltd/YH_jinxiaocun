@@ -286,7 +286,7 @@ Page({
           _this.tableShow(e)
 
           wx.showToast({
-            title: '修改成功！',
+            title: '保存成功！',
             icon: 'none'
           })
         },
@@ -344,41 +344,52 @@ Page({
       })
       return;
     }
-      wx.cloud.callFunction({
-        name: 'sqlServer_cw',
-        data: {
-          query: "delete from contract_manage where id='" + _this.data.id + "'"
-        },
-        success: res => {
-          _this.setData({
-            contract_code:"",
-            contract_name:"",
-            contract_type:"",
-            first_party:"",
-            second_party:"",
-            creation_date:"",
-            send_out:"",
-            id:"",
+    wx.showModal({
+      title: '提示',
+      content: '是否删除此合同？',
+      success: function(res) {
+        if (res.cancel) {
+          return;
+        }else{
+          wx.cloud.callFunction({
+            name: 'sqlServer_cw',
+            data: {
+              query: "delete from contract_manage where id='" + _this.data.id + "'"
+            },
+            success: res => {
+              _this.setData({
+                contract_code:"",
+                contract_name:"",
+                contract_type:"",
+                first_party:"",
+                second_party:"",
+                creation_date:"",
+                send_out:"",
+                id:"",
+              })
+              _this.qxShow()
+              var e = ['','','','1900/1/1','2100/12/31', _this.data.company]
+              _this.tableShow(e)
+              wx.showToast({
+                title: '删除成功！',
+                icon: 'none'
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
           })
-          _this.qxShow()
-          var e = ['','','','1900/1/1','2100/12/31', _this.data.company]
-          _this.tableShow(e)
-          wx.showToast({
-            title: '删除成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
         }
-      })
+      }
+    })
+      
   },
 
   entering:function(){

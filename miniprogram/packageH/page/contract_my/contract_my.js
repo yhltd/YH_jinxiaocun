@@ -120,7 +120,7 @@ Page({
             duration: 3000
           })
         }else{
-          var ee = [userInfo.full_name,'',userInfo.company]
+          var ee = [userInfo.user_name,'',userInfo.company]
           _this.tableShow(ee)
         }
         _this.setData({
@@ -186,13 +186,13 @@ Page({
       picker_select: _this.data.pick_list[e.detail.value].label
     })
     var this_select = _this.data.pick_list[e.detail.value].label
-    var ee = [_this.data.this_full_name,'',_this.data.this_company]
+    var ee = [_this.data.this_user_name,'',_this.data.this_company]
     if(this_select =='我收到的合同'){
-      var ee = [_this.data.this_full_name,'',_this.data.this_company]
+      var ee = [_this.data.this_user_name,'',_this.data.this_company]
     }else if(this_select =='待签字'){
-      var ee = [_this.data.this_full_name,'否',_this.data.this_company]
+      var ee = [_this.data.this_user_name,'否',_this.data.this_company]
     }else if (this_select =='已签字'){
-      var ee = [_this.data.this_full_name,'是',_this.data.this_company]
+      var ee = [_this.data.this_user_name,'是',_this.data.this_company]
     }
 
     if(_this.data.cha == '否'){

@@ -10,8 +10,11 @@ var times = new Date().getTime();
 var codeimg = wx.env.USER_DATA_PATH + '/' + times + '.png';
 Page({
   data: { 
+    canvasWidth:'',
+    canvasHeight:'',
     picture_id:'',
     this_picture:'',
+    qianzi_pitcurenew:'',
     context: null,
     index: 0,
     height: 0,
@@ -124,11 +127,105 @@ Page({
     }))
  
   },
+  //合成图片
+  hechengimge: function () {
+    var _this = this
+    // 给个小提示，正在执行
+    wx.showLoading({
+      title: '合成中',
+      mask: true
+    })
+    console.log(this, '123');
+    // 绘制合成图片到canvas
+    let that = this
+    that.setData({
+      show: false
+    })
+    const ctx = wx.createCanvasContext('handWriting') //让这个先执行
+    ctx.drawImage(that.data.this_picture, 0, 0, 640 ,905) //1、背景图
+    console.log(this, '1、背景图'+that.data.this_picture);
+    ctx.drawImage(that.data.qianzi_pitcurenew, 280, 700, 64, 90) //2、签名图
+     console.log(this, '1、背景图'+that.data.qianzi_pitcurenew);
+    console.log(this, '345');
+    ctx.draw(true, () => {
+      //获取临时缓存合成照片路径，存入data中
+      wx.canvasToTempFilePath({
+        canvasId: 'handWriting',
+        success: function (res) {
+          var tempFilePath = res.tempFilePath;
+          console.log("jieguo:"+tempFilePath)
+          wx.getFileSystemManager().readFile({
+            filePath: tempFilePath, //选择图片返回的相对路径
+            encoding: 'base64', //编码格式
+            success: res => { //成功的回调
+              var out_picture = res.data
+              console.log(out_picture)
+              console.log(_this.data.this_id)
+              wx.cloud.callFunction({
+                name: 'sqlServer_cw',
+                data: {
+                  query: "update contract_picture set picture = '" + out_picture+ "' where id =" + _this.data.this_id
+                },
+                success: res => {
+                  wx.showToast({
+                    title: '保存成功！',
+                    icon: 'none'
+                  })
+                  wx.hideLoading();
+                },
+                err: res => {
+                  console.log("错误!")
+                  wx.hideLoading();
+                },
+                fail: res => {
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none'
+                  })
+                  console.log("请求失败！")
+                  wx.hideLoading();
+                }
+              })
+            }
+          })
+          // wx.showToast({
+          //   title: '成功',
+          //   icon: 'success',
+          //   duration: 2000
+          // })
+        },
+        fail: function (res) {
+          console.log(res);
+          // wx.showToast({
+          //   title: '失败',
+          //   icon: 'error',
+          //   duration: 2000
+          // })
+        }
+      }, this)
+    }
+    
+    )
+  },
+
   onLoad: function(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var this_id = userInfo.id
     console.log(this_id)
+    var myCanvasWidth = ''
+    var myCanvasHeight = ''
+    wx.getSystemInfo({
+      success: function(res) {
+        myCanvasWidth = res.windowWidth - 100
+        myCanvasHeight = res.windowHeight - 300
+      },
+    })
+    this.setData({
+      canvasWidth: myCanvasWidth,
+      canvasHeight: myCanvasHeight
+    })
+
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
@@ -201,6 +298,11 @@ Page({
     console.log('13')
   },
   onShow: function() {
+
+    if (wx.canIUse('hideHomeButton')) {
+      wx.hideHomeButton();
+    }
+
     // let query = wx.createSelectorQuery();
     // const that = this;
     // query.select('#firstCanvas').boundingClientRect();
@@ -833,6 +935,10 @@ uploadSign() {
   //保存到相册
   saveCanvasAsImg() {
     var _this = this
+    wx.showLoading({  // 显示加载中loading效果 
+      title: "加载中",
+      mask: true  //开启蒙版遮罩
+    });
     wx.canvasToTempFilePath({
       canvasId: 'handWriting',
       success: function (res) {
@@ -855,9 +961,11 @@ uploadSign() {
                   title: '保存成功！',
                   icon: 'none'
                 })
+                wx.hideLoading();
               },
               err: res => {
                 console.log("错误!")
+                wx.hideLoading();
               },
               fail: res => {
                 wx.showToast({
@@ -865,6 +973,7 @@ uploadSign() {
                   icon: 'none'
                 })
                 console.log("请求失败！")
+                wx.hideLoading();
               }
             })
           }
@@ -872,8 +981,85 @@ uploadSign() {
       },
       fail: function (res) {
         console.log(res);
+        wx.hideLoading();
       }
     });
+    
+    /*
+    		this.canvasToImg( tempImgPath=>{
+    			// console.log(tempImgPath, '临时路径');
+
+    			wx.saveImageToPhotosAlbum({
+    				filePath: tempImgPath,
+    				success(res) {
+
+    					wx.showToast({
+    						title: '已保存到相册',
+    						duration: 2000
+    					});
+
+    				}
+    			})
+
+    		} );
+    */
+
+    // wx.canvasToTempFilePath({
+    //   canvasId: 'handWriting',
+    //   fileType: 'png',
+    //   quality: 1, //图片质量
+    //   success(res) {
+    //     // console.log(res.tempFilePath, 'canvas生成图片地址');
+    //     wx.saveImageToPhotosAlbum({
+    //       filePath: res.tempFilePath,
+    //       success(res) {
+
+    //         wx.showToast({
+    //           title: '已保存到相册',
+    //           duration: 2000
+    //         });
+
+    //       }
+    //     })
+    //   }
+    // })
+
+
+
+  },
+
+  saveCanvasAsImg1() {
+    var _this = this
+    wx.showLoading({  // 显示加载中loading效果 
+      title: "加载中",
+      mask: true  //开启蒙版遮罩
+    });
+    wx.canvasToTempFilePath({
+      canvasId: 'handWriting',
+      success: function (res) {
+        var tempFilePath = res.tempFilePath;
+        console.log(res.tempFilePath)
+        let pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+            let prevPage = pages[ pages.length - 2 ]; 
+            prevPage.setData({
+              qianzi_pitcure : res.tempFilePath,
+              
+              qianzi_id : _this.data.this_id
+            }),
+            _this.setData({
+              qianzi_pitcurenew: res.tempFilePath  
+            });
+            wx.hideLoading();
+            console.log("hechengimge");
+            _this.hechengimge();
+            console.log("hechengimgeend");
+      },
+      fail: function (res) {
+        console.log(res);
+        wx.hideLoading();
+      }
+    });
+    
     /*
     		this.canvasToImg( tempImgPath=>{
     			// console.log(tempImgPath, '临时路径');
@@ -1079,9 +1265,48 @@ savelocal() {
     var _this = this
     const ctx = wx.createCanvasContext('handWriting')
     console.log(_this.data.this_picture)
-    ctx.drawImage(_this.data.this_picture, 0, 0, 250, 300)
-    ctx.draw()
+    // this.data.ctx.rect(0, 0, 640 ,905);
+    
+    // var oldWidth = "" //图片实际宽度
+    // var oldHeight = "" //图片实际高度
+    // var startX =  0
+    // var startY = 0
+    // var width = _this.data.canvasWidth
+    // var height = _this.data.canvasHeight
+    // var img = _this.data.this_picture
+    // wx.getImageInfo({
+    //   src: _this.data.this_picture,
+    //   success:function(res){
+    //     oldWidth = res.width,
+    //     oldHeight = res.height
+    //     console.log(res.width)
+    //     console.log(res.height)
+    //   }
+    // })
+    // console.log("width:" +oldWidth)
+    // console.log("height:" +oldHeight)
+    // const dw = _this.data.canvasWidth / oldWidth //容器宽度 /图片实际宽度
+    // const dh = _this.data.canvasHeight / oldHeight //容器高度/ 图片实际高度
+    
+    // if (oldWidth > width && oldHeight > height || oldWidth < width && oldHeight < height) { //图片宽高都偏大&宽高都偏小
+    //   if (dw > dh) { //偏宽
+    //     ctx.drawImage(img, 0, (oldHeight - height / dw) / 2, oldWidth, height / dw, startX, startY, width, height)
+    //   } else {
+    //     ctx.drawImage(img, (oldWidth - width / dh) / 2, 0, width / dh, oldHeight, startX, startY, width, height)
+    //   }
+    // } else { //拉伸图片
+    //   if (oldWidth < width) {
+    //     ctx.drawImage(img, 0, (oldHeight - height / dw) / 2, oldWidth, height / dw, startX, startY, width, height)
+    //   } else {
+    //     ctx.drawImage(img, (oldWidth - width / dh) / 2, 0, width / dh, oldHeight, startX, startY, width, height)
+    //   }
+    // }
+
+
+    // ctx.drawImage(_this.data.this_picture, 0, 0, 640 ,905 )
+    // ctx.draw()
     console.log('backew');
+    
   },
 
   backew1() {

@@ -1,8 +1,9 @@
 
-.container #firstCanvas{
+/* .container #firstCanvas{
   width: 100%;
   height: 500rpx;
-}
+} */
+
 .container .btn{
   display: flex;
 }
@@ -12,8 +13,10 @@
 /* //lewis */
 
 .wrapper {
-  width: 100%;
-  height: 95vh;
+  overflow-y:scroll;
+  overflow-x:scroll;
+  width: 800px;
+  height: 905px;
   margin: 30rpx 0;
   overflow: hidden;
   display: flex;
@@ -25,8 +28,11 @@
 
 .handWriting {
   background: #fff;
-  width: 100%;
-  height: 95vh;
+  /* width: 100%;
+  height: 90vh; */
+  width: 640px;
+  height: 905px;
+  
 }
 
 .handRight {
@@ -64,7 +70,7 @@
   position: absolute;
   top: 50rpx;
   left: 0rpx;
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
   color: #666;
 }
 
@@ -93,7 +99,7 @@
   position: absolute;
   top: 150rpx;
   left: 0rpx;
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
   color: #666;
 }
 
@@ -102,14 +108,14 @@
   position: absolute;
   top: 250rpx;
   left: 0rpx;
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
   color: #666;
 }
 .localBtn {
   position: absolute;
   top: 350rpx;
   left: 0rpx;
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
   color: #666;
 }
 
