@@ -15,8 +15,10 @@
 .wrapper {
   overflow-y:scroll;
   overflow-x:scroll;
-  width: 800px;
-  height: 905px;
+  /* width: 800px;
+  height: 905px; */
+  width: 100%;
+  height: 95vh;
   margin: 30rpx 0;
   overflow: hidden;
   display: flex;
@@ -32,6 +34,8 @@
   height: 90vh; */
   width: 640px;
   height: 905px;
+  /* width: 1654px;
+  height: 2338px; */
   
 }
 

@@ -144,7 +144,7 @@ Page({
     const ctx = wx.createCanvasContext('handWriting') //让这个先执行
     ctx.drawImage(that.data.this_picture, 0, 0, 640 ,905) //1、背景图
     console.log(this, '1、背景图'+that.data.this_picture);
-    ctx.drawImage(that.data.qianzi_pitcurenew, 280, 700, 64, 90) //2、签名图
+    ctx.drawImage(that.data.qianzi_pitcurenew, 300, 700, 64, 90) //2、签名图
      console.log(this, '1、背景图'+that.data.qianzi_pitcurenew);
     console.log(this, '345');
     ctx.draw(true, () => {
@@ -289,7 +289,7 @@ Page({
 
       /* 将canvas背景设置为 白底，不设置  导出的canvas的背景为透明 */
       // console.log(this, 'hahah');
-      this.setCanvasBg('#fff');
+      // this.setCanvasBg('#fff');
 
 
     }).exec();
@@ -642,7 +642,7 @@ uploadSign() {
 
     //设置canvas背景
     // this.setCanvasBg("#11119b");
-    this.setCanvasBg("#fff");
+    // this.setCanvasBg("#fff");
     this.backew();
     //lewis 
     // const canvasDom = document.getElementById('handWriting');
@@ -1339,10 +1339,8 @@ savelocal() {
 
   uploadSign_yunhanshu() {
     var that = this;
-    var context1 = that.data.context1;
-   
-    const cloudPath = 'SY_LHDataAnalysis/txt/1.jpg' 
-  
+    var context1 = that.data.context1;   
+    const cloudPath = 'SY_LHDataAnalysis/txt/1.jpg'   
     context1.draw(true, wx.canvasToTempFilePath({
       canvasId: 'handWriting',
       destWidth: 180,
@@ -1381,12 +1379,6 @@ savelocal() {
       }
     }))
   }
-
-
-
-
-
-
 
 
 })
