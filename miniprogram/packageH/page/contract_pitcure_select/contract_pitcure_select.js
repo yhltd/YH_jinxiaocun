@@ -15,7 +15,8 @@ Page({
     all:[],
     qianzi_pitcure:'',
     qianzi_id:'',
-    hetong_pitcure:''
+    hetong_pitcure:'',
+    qianzi_type:'',
   },
 
   /**
@@ -27,6 +28,7 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       hetong_id : userInfo.id,
+      qianzi_type : userInfo.qianzi_type
     })
     console.log(userInfo.id)
     _this.init();
@@ -239,6 +241,7 @@ Page({
           wx.navigateTo({
             url: '../contract_pitcure_send/contract_pitcure_send' + '?userInfo=' + JSON.stringify({
               id : picture_id,
+              qianzi_type: that.data.qianzi_type
             })
           })
 

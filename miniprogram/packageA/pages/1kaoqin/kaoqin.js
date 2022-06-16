@@ -21,13 +21,17 @@ Page({
 
     type: 0,
     startYear: 1980,
-    endYear: 2030,
+    endYear: 2100,
     cancelColor: "#888",
     color: "#5677fc",
     setDateTime: "",
-    title_year: '',
-    title_month: '',
-
+    title_year1: '',
+    title_month1: '',
+    title_year2: '',
+    title_month2: '',
+    title_year3: '',
+    title_month3: '',
+    this_date:'',
 
 
     sql: '',
@@ -437,33 +441,99 @@ Page({
 
 
   //月份选择器
-  show: function (e) {
+  show1: function (e) {
     this.setData({
       cancelColor: "#888",
       color: "#5677fc",
       setDateTime: "",
       startYear: 1980,
-      endYear: 2030
+      endYear: 2100,
+      this_date:1
     })
     this.setData({
       type: 3 //选的是第三个类型的🔨UI
     })
     this.dateTime.show();
   },
+  show2: function (e) {
+    this.setData({
+      cancelColor: "#888",
+      color: "#5677fc",
+      setDateTime: "",
+      startYear: 1980,
+      endYear: 2100,
+      this_date:2
+    })
+    this.setData({
+      type: 3 //选的是第三个类型的🔨UI
+    })
+    this.dateTime.show();
+  },
+
+  show3: function (e) {
+    this.setData({
+      cancelColor: "#888",
+      color: "#5677fc",
+      setDateTime: "",
+      startYear: 1980,
+      endYear: 2100,
+      this_date:3
+    })
+    this.setData({
+      type: 3 //选的是第三个类型的🔨UI
+    })
+    this.dateTime.show();
+  },
+
   change: function (e) {
     var that = this
     console.log(e.detail)
-    that.setData({
-      title_month: e.detail.month,
-      title_year: e.detail.year
-    })
+    var month = e.detail.month
+    console.log(month.length)
+    if(month.length == 1){
+      month = "0" + month
+    }
+    console.log(month)
+    if (that.data.this_date == 1){
+      that.setData({
+        title_month1: month,
+        title_year1: e.detail.year
+      })
+    }else if(that.data.this_date == 2){
+      that.setData({
+        title_month2: month,
+        title_year2: e.detail.year
+      })
+    }else if(that.data.this_date == 3){
+      that.setData({
+        title_month3: month,
+        title_year3: e.detail.year
+      })
+    }
+    
+    var title_year1 = that.data.title_year1
+    var title_year2 = that.data.title_year2
+    var title_year3 = that.data.title_year3
+    var title_month1 = that.data.title_month1
+    var title_month2 = that.data.title_month2
+    var title_month3 = that.data.title_month3
+    
 
-    var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + " and AO = '" + this.data.companyName + "'"
+    if (title_year1 == ''){
+      title_year1 = "1900"
+      title_month1 = "01"
+    }
+    if (title_year2 == ''){
+      title_year2 = "2100"
+      title_month2 = "12"
+    }
+    if(that.data.this_date ==1 || that.data.this_date ==2){
+      var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + " and AO = '" + this.data.companyName + "'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + " and AO = '" + this.data.companyName + "'"
+        query: sql
       },
       success: res => {
         console.log('change', res)
@@ -483,7 +553,30 @@ Page({
         console.log("错误!")
       }
     })
-
+    }else if(that.data.this_date ==3){
+      console.log(title_month3)
+      if (title_month3 != '' && title_year3 != '') {
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "insert into gongzi_kaoqinjilu (name,moth,year,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AO) VALUES ('请输入','" + title_month3 + "','" + title_year3 + "','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','" + that.data.companyName + "')"
+          },
+          success: res => {
+            console.log("插入成功")
+            that.baochi()
+          },
+          err: res => {
+            console.log("错误!", res)
+          }
+        })
+      } else {
+        wx.showToast({
+          title: '请先选择年月份',
+          icon: 'none',
+          duration: 2200,
+        })
+      }
+    }
   },
   /**
    * 生命周期函数--监听页面显示
@@ -1028,10 +1121,27 @@ Page({
         icon: 'none',
         duration: 2500
       })
+
+      var title_year1 = that.data.title_year1
+      var title_year2 = that.data.title_year2
+      var title_month1 = that.data.title_month1
+      var title_month2 = that.data.title_month2
+
+      if (title_year1 == ''){
+        title_year1 = "1900"
+        title_month1 = "01"
+      }
+      if (title_year2 == ''){
+        title_year2 = "2100"
+        title_month2 = "12"
+      }
+
+      var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
+
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
+          query: sql
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -1068,10 +1178,27 @@ Page({
         icon: 'none',
         duration: 2500
       })
+
+      var title_year1 = that.data.title_year1
+      var title_year2 = that.data.title_year2
+      var title_month1 = that.data.title_month1
+      var title_month2 = that.data.title_month2
+
+      if (title_year1 == ''){
+        title_year1 = "1900"
+        title_month1 = "01"
+      }
+      if (title_year2 == ''){
+        title_year2 = "2100"
+        title_month2 = "12"
+      }
+
+      var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
+
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
+          query: sql
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -1211,7 +1338,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year = " + that.data.title_year + "and moth =" + that.data.title_month + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "'"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + that.data.title_year1 + that.data.title_moth1 +"and year+moth <=" + that.data.title_year2 + that.data.title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "'"
       },
       success: res => {
         this.setData({
@@ -1365,27 +1492,20 @@ Page({
     var index = that.data.selectIndex;
     var input = that.data.maskWindowInputValue;
     console.log(input)
-    var month = that.data.title_month
-    if (month == "01") {
-      month = 1
-    } else if (month == "02") {
-      month = 2
-    } else if (month == "03") {
-      month = 3
-    } else if (month == "04") {
-      month = 4
-    } else if (month == "05") {
-      month = 5
-    } else if (month == "06") {
-      month = 6
-    } else if (month == "07") {
-      month = 7
-    } else if (month == "08") {
-      month = 8
-    } else if (month == "09") {
-      month = 9
+
+    var title_year1 = that.data.title_year1
+    var title_year2 = that.data.title_year2
+    var title_month1 = that.data.title_month1
+    var title_month2 = that.data.title_month2
+
+    if (title_year1 == ''){
+      title_year1 = "1900"
+      title_month1 = "01"
     }
-    var year = that.data.title_year
+    if (title_year2 == ''){
+      title_year2 = "2100"
+      title_month2 = "12"
+    }
     if (index == 0) {
       //按姓名查询
       wx.cloud.callFunction({
@@ -1411,7 +1531,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name like '%" + input + "%' and moth = '" + month + "' and year = '" + year + "' and AO = '" + that.data.companyName + "'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name like '%" + input + "%' and year+moth >= '" +title_year1 + title_month1 + "' and year+moth <= '" + title_year2 + title_month2 + "' and AO = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)

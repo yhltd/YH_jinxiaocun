@@ -155,7 +155,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select id,contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,case when send_judge = '' then '否' else send_judge end as send_judge from contract_manage where send_out = '" + ee[0] + "' and send_judge like '%" + ee[1] + "%' and company = '"+ ee[2] +"'"
+        query: "select id,contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,case when send_judge = '' then '否' else send_judge end as send_judge from contract_manage where (send_out = '" + ee[0] + "' or first_party = '" + ee[0] + "') and send_judge like '%" + ee[1] + "%' and company = '"+ ee[2] +"'"
       },
       success: res => {
         var list = res.result.recordset
@@ -214,7 +214,16 @@ Page({
     var _this = this
     var send_judge = _this.data.list[e.currentTarget.dataset.index].send_judge
     var id = _this.data.list[e.currentTarget.dataset.index].id
-    
+    var first_party = _this.data.list[e.currentTarget.dataset.index].first_party
+    var second_party = _this.data.list[e.currentTarget.dataset.index].send_out
+    var qianzi_type = ''
+    console.log(_this.data.this_user_name)
+    if(_this.data.this_user_name == first_party){
+      qianzi_type = "甲"
+    }else{
+      qianzi_type = "乙"
+    }
+    console.log(qianzi_type)
     if(_this.data.gai == '否'){
       wx.showToast({
         title: '没有修改权限！',
@@ -247,6 +256,7 @@ Page({
             wx.navigateTo({
               url: '../contract_pitcure_select/contract_pitcure_select' + '?userInfo=' + JSON.stringify({
                 id : id,
+                qianzi_type:qianzi_type
               })
             })
            } else if(res.cancel) {

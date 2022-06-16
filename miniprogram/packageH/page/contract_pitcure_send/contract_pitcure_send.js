@@ -144,7 +144,13 @@ Page({
     const ctx = wx.createCanvasContext('handWriting') //让这个先执行
     ctx.drawImage(that.data.this_picture, 0, 0, 640 ,905) //1、背景图
     console.log(this, '1、背景图'+that.data.this_picture);
-    ctx.drawImage(that.data.qianzi_pitcurenew, 300, 700, 64, 90) //2、签名图
+    console.log(_this.data.qianzi_type)
+    if(_this.data.qianzi_type =='甲'){
+      ctx.drawImage(that.data.qianzi_pitcurenew, 120, 700, 64, 90) //2、签名图
+    }else{
+      ctx.drawImage(that.data.qianzi_pitcurenew, 300, 700, 64, 90) //2、签名图
+    }
+    
      console.log(this, '1、背景图'+that.data.qianzi_pitcurenew);
     console.log(this, '345');
     ctx.draw(true, () => {
@@ -264,6 +270,7 @@ Page({
     })
     _this.setData({
       picture_id : userInfo.id,
+      qianzi_type : userInfo.qianzi_type
     })
     // lewis
     var context1 = wx.createCanvasContext('handWriting1');
