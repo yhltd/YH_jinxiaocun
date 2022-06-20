@@ -25,6 +25,56 @@
         <input placeholder-class="phcolor" class="tui-input" name="idcard" placeholder="请输入身份证号码" maxlength="50" type="text" value="{{list[0].E}}" />
       </view>
     </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 民族：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="minzu" placeholder="请输入民族" maxlength="50" type="text" value="{{list[0].M}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 籍贯：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="jiguan" placeholder="请输入籍贯" maxlength="50" type="text" value="{{list[0].N}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 手机号：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="shoujihao" placeholder="请输入手机号" maxlength="50" type="number" value="{{list[0].O}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 学历：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="xueli" placeholder="请输入学历" maxlength="50" type="text" value="{{list[0].P}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 出生日期：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="chushengriqi" placeholder="请输入出生日期" maxlength="50" type="text" value="{{list[0].Q}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 婚姻状况：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="hunyinzhuangkuang" placeholder="请输入婚姻状况" maxlength="50" type="text" value="{{list[0].R}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 就职状态：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="jiuzhizhuangtai" placeholder="请输入就职状态" maxlength="50" type="text" value="{{list[0].S}}" />
+      </view>
+    </tui-list-cell>
+
     <tui-list-cell hover="{{false}}">
       <view class="tui-line-cell">
         <view class="tui-title">▹ 基本工资：</view>

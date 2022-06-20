@@ -29,13 +29,15 @@ Page({
 
   init: function(){
     var _this = this
-
+    console.log("select * from contract_picture where contract_id = '" + _this.data.hetong_id + "'")
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
         query: "select * from contract_picture where contract_id = '" + _this.data.hetong_id + "'"
       }, 
       success: res => {
+        console.log('查询成功')
+        console.log(res)
         var list = res.result.recordset
         for(var i=0;i<list.length;i++){
           list[i].picture = "data:image/jpeg;base64," + list[i].picture.replace(/[\r\n]/g, '')
@@ -49,6 +51,7 @@ Page({
         console.log("错误!")
       },
       fail: res => {
+        console.log(res)
         wx.showToast({
           title: '请求失败！',
           icon: 'none',
@@ -148,7 +151,11 @@ Page({
       success(res) {
         console.log(res.tempFilePaths);
         var this_picture = res.tempFilePaths
-        var out_picture = []
+        let size = this_picture.every(item => {
+          return item.size <= 1000000
+        })
+        if(true){
+          var out_picture = []
         for(var i=0;i<this_picture.length;i++){
           wx.getFileSystemManager().readFile({
             filePath: this_picture[i], //选择图片返回的相对路径
@@ -194,6 +201,13 @@ Page({
             }
           })
         }
+        }else{
+          wx.showToast({
+            title: '上传图片不能超过1M！',
+            icon: 'none'
+          })
+        }
+        
       }
     })
   },

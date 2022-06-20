@@ -354,7 +354,7 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_cw',
             data: {
-              query: "delete from contract_manage where id='" + _this.data.id + "'"
+              query: "delete from contract_manage where id='" + _this.data.id + "';delete from contract_manage where contract_id ='" + _this.data.id + "';"
             },
             success: res => {
               _this.setData({

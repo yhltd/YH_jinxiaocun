@@ -55,6 +55,10 @@ page {
   width: 300rpx;
 }
 
+.th.change1 {
+  width: 400rpx;
+}
+
 .th.tap {
   width: 101rpx;
   background-color: white;

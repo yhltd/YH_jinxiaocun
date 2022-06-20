@@ -2,13 +2,9 @@
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
   "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
   "setting": {
-    "urlCheck": false,
-    "es6": true,
+    "urlCheck": true,
+    "es6": false,
     "postcss": true,
     "preloadBackgroundData": false,
     "minified": true,
@@ -28,9 +24,7 @@
     },
     "bundle": false,
     "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
-    "enhance": false,
+    "enhance": true,
     "uglifyFileName": false,
     "compileHotReLoad": false,
     "useIsolateContext": true,
@@ -41,29 +35,24 @@
     "disableUseStrict": false,
     "useStaticServer": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "lazyloadPlaceholderEnable": false,
+    "ignoreUploadUnusedFiles": true
   },
-  "appid": "wxf3c03c2a0c59d299",
-  "projectname": "YH_jinxiaocun",
-  "libVersion": "2.17.0",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "compileType": "miniprogram",
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide",
-          "query": ""
-        }
-      ]
-    }
-  },
+  "condition": {},
   "srcMiniprogramRoot": "miniprogram/",
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "libVersion": "2.24.5",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wxf3c03c2a0c59d299"
 }

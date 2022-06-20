@@ -5,8 +5,9 @@
       <icon type="search" size='13' color='#999'></icon>
       <text> 请选择查询项目(单选)</text>
     </view>
-    <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index===0}}'>
+    <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index%2===0}}'>
       <view class="maskWindowText {{index == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index}}'>{{maskWindowList[index]}}</view>
+      <view class="maskWindowText {{index+1 == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index+1}}'>{{maskWindowList[index+1]}}</view>
     </view>
     <!--条件查询结果显示区域！-->
 
@@ -44,7 +45,7 @@
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="">
-        <view class="th {{(item.renyuanjibenxinxi == '身份证号')?'change':''||(item.renyuanjibenxinxi == '银行卡号')?'change':''||(item.renyuanjibenxinxi == '编号')?'tap_120':''}}" data-renyuanjibenxinxi='{{item.renyuanjibenxinxi}}' style="{{item.renyuanjibenxinxi=='编号'?'position:sticky;top:0;left:0':''}}">
+        <view class="th {{(item.renyuanjibenxinxi == '身份证号')?'change':''||(item.renyuanjibenxinxi == '银行卡号')?'change':''||(item.renyuanjibenxinxi == '编号')?'tap_120':''||(item.renyuanjibenxinxi == '籍贯')?'change':''||(item.renyuanjibenxinxi == '手机号')?'change':''||(item.renyuanjibenxinxi == '公司')?'change1':''}}" data-renyuanjibenxinxi='{{item.renyuanjibenxinxi}}' style="{{item.renyuanjibenxinxi=='编号'?'position:sticky;top:0;left:0':''}}">
           <view class="cell_label centerclass">
             <text style="font-size:; font-weight:bold;">{{item.renyuanjibenxinxi}}</text>
           </view>
@@ -72,6 +73,29 @@
         <view class='td' style="width:300rpx">
           <view class="cell_label centerclass">{{item.E}}</view>
         </view>
+
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.M}}</view>
+        </view>
+        <view class='td' style="width:300rpx">
+          <view class="cell_label centerclass">{{item.N}}</view>
+        </view>
+        <view class='td' style="width:300rpx">
+          <view class="cell_label centerclass">{{item.O}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.P}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.Q}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.R}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.S}}</view>
+        </view>
+
         <view class='td'>
           <view class="cell_label centerclass">{{item.F}}</view>
         </view>
@@ -90,7 +114,7 @@
         <view class='td'>
           <view class="cell_label centerclass">{{item.K}}</view>
         </view>
-        <view class='td'>
+        <view class='td' style="width:400rpx">
           <view class="cell_label centerclass">{{item.L}}</view>
         </view>
       </view>

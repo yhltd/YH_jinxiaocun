@@ -6,7 +6,7 @@ Page({
   data: {
     result : [],
     isMaskWindowShow: false,
-    maskWindowList: [' 查询姓名'],
+    maskWindowList: ['查询姓名','查询手机号'],
     selectIndex: -1,
     isMaskWindowInputShow: false,
     isMaskWindowInputShow1: false,
@@ -139,7 +139,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select renyuanjibenxinxi from gongzi_title where renyuanjibenxinxi is not null"
+        query: "select renyuanjibenxinxi from gongzi_title where renyuanjibenxinxi is not null and renyuanjibenxinxi !=''"
       },
       success: res => {
         this.setData({
@@ -602,10 +602,18 @@ Page({
   maskWindowOk: function (e) {
     var _this = this;
     var value = _this.data.maskWindowInputValue;
+    var index = _this.data.selectIndex
+    var sql = ""
+    if(index == 0){
+      sql = "select top 100 * from gongzi_renyuan where B like '%"+value+"%' and L = '"+_this.data.companyName+"'"
+    }else if(index == 1){
+      sql = "select top 100 * from gongzi_renyuan where O like '%"+value+"%' and L = '"+_this.data.companyName+"'"
+    }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from gongzi_renyuan where B = '"+value+"' and L = '"+_this.data.companyName+"'"
+        query: sql
       },
       success: res => {
         if (res.result.recordset.length < 100) {

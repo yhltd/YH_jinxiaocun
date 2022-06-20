@@ -9,7 +9,7 @@ Page({
     companyName: "",
     jiaqi: [],
     jiaqiLength: 0,
-
+    kaoqin_array:['出勤','请假','迟到'],
     maxpagenumber: 0,
     isMaskWindowShow: false,
     maskWindowList: ['全局姓名查询', '当月姓名查询'],
@@ -17,7 +17,7 @@ Page({
     isMaskWindowInputShow: false,
     maskWindowInputValue: '',
     isSearch: false,
-
+    picker_disabled:'true',
 
     type: 0,
     startYear: 1980,
@@ -397,6 +397,15 @@ Page({
     })
 
   },
+
+  bindPickerChange: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      edit_old: _this.data.kaoqin_array[e.detail.value]
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -952,6 +961,7 @@ Page({
   */
   edit_cell(e) {
     var that = this
+    console.log(that.data.edit_old)
     if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
       that.setData({
         edit_new: that.data.edit_old
@@ -998,10 +1008,15 @@ Page({
     console.log(e)
     var lie = e.currentTarget.dataset.doinb
     var text_type
+    var picker_disabled = true
     if (lie == "AJ" || lie == "AK" || lie == "AL" || lie == "AM" || lie == "AN") {
       text_type = "number"
     } else {
       text_type = "text"
+    }
+
+    if (lie == "E" || lie == "F" || lie == "G" || lie == "H" || lie == "I" || lie == "J" || lie == "K" || lie == "L" || lie == "M" || lie == "N" || lie == "O" || lie == "P" || lie == "Q" || lie == "R" || lie == "S" || lie == "T" || lie == "U" || lie == "V" || lie == "W" || lie == "X" || lie == "Y" || lie == "Z" || lie == "AA" || lie == "AB" || lie == "AC" || lie == "AD" || lie == "AE" || lie == "AF" || lie == "AG" || lie == "AH" || lie == "AI") {
+      var picker_disabled = false
     }
     var collection = e.currentTarget.dataset
     that.setData({
@@ -1010,7 +1025,8 @@ Page({
       name: collection.name,
       edit_old: collection.x,
       mark: collection.doinb, //这个值是传过来的该列在mssql数据库的【列标】，也是json数组中的标记位，因为标记为不能取到，所以只能一个一个在WXML中定义，然后传值（老板说json取不到标记位，我现在时间紧迫没时间研究，等有空了重看代码的时候再研究！）
-      modal9: true
+      modal9: true,
+      picker_disabled:picker_disabled
     })
     console.log(that.data.id, that.data.name, that.data.edit_old, that.data.modal9)
     console.log("对应数据库中查找的标记位为:", that.data.mark)

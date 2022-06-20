@@ -430,7 +430,11 @@ Page({
     edit_new: '',
     isload: false,
     companyName: "",
+    pick_list : [],
     bumen_name: [],
+    shebao_name: [],
+    gongjijin_name : [],
+    zhiwu_name : [],
     rqxzShow3: false,
   },
 
@@ -1354,10 +1358,11 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select bumen from gongzi_peizhi where bumen != '-' and bumen != '' and gongsi = '" + _this.data.companyName + "' "
+        query: "select bumen from gongzi_peizhi where bumen != '-' and bumen != '' and gongsi = '" + _this.data.companyName + "';" + "select kaoqin from gongzi_peizhi where kaoqin != '-' and kaoqin != '' and gongsi = '" + _this.data.companyName + "';" +"select kaoqin_peizhi from gongzi_peizhi where kaoqin_peizhi != '-' and kaoqin_peizhi != '' and gongsi = '" + _this.data.companyName + "';"+"select zhiwu from gongzi_peizhi where zhiwu != '-' and zhiwu != '' and gongsi = '" + _this.data.companyName + "';"
       },
       success: res => {
-        var bumen = res.result.recordset
+        console.log(res.result)
+        var bumen = res.result.recordsets[0]
         var bumen2 = []
         console.log(bumen)
         for (var i = 0; i < bumen.length; i++) {
@@ -1365,8 +1370,35 @@ Page({
             bumen[i].bumen
           )
         }
+        var shebao = res.result.recordsets[1]
+        var shebao2 = []
+        console.log(bumen)
+        for (var i = 0; i < shebao.length; i++) {
+          shebao2.push(
+            shebao[i].kaoqin
+          )
+        }
+        var gongjijin = res.result.recordsets[2]
+        var gongjijin2 = []
+        console.log(bumen)
+        for (var i = 0; i < gongjijin.length; i++) {
+          gongjijin2.push(
+            gongjijin[i].kaoqin_peizhi
+          )
+        }
+        var zhiwu = res.result.recordsets[3]
+        var zhiwu2 = []
+        for (var i = 0; i < zhiwu.length; i++) {
+          zhiwu2.push(
+            zhiwu[i].zhiwu
+          )
+        }
+        console.log(zhiwu2)
         _this.setData({
-          bumen_name: bumen2
+          bumen_name: bumen2,
+          shebao_name: shebao2,
+          gongjijin_name : gongjijin2,
+          zhiwu_name : zhiwu2
         })
       },
     })
@@ -1374,7 +1406,17 @@ Page({
 
   bumen_select: function (e) {
     var _this = this
-    var bumen = _this.data.bumen_name[e.detail.value]
+    var mark = _this.data.mark
+    if(mark == 'C'){
+      var bumen = _this.data.bumen_name[e.detail.value]
+    }else if(mark == 'D'){
+      var bumen = _this.data.zhiwu_name[e.detail.value]
+    }else if(mark == 'V'){
+      var bumen = _this.data.shebao_name[e.detail.value]
+    }else if(mark == 'X'){
+      var bumen = _this.data.gongjijin_name[e.detail.value]
+    }
+    
     console.log(bumen)
     _this.setData({
       edit_old: bumen

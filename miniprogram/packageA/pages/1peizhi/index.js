@@ -33,26 +33,26 @@ Page({
     title: [],
     title1: [
       {
-        text: "考勤项目",
+        text: "社保基数",
         width: 20,
         columnName: "kaoqin",
         type: "text",
         isupd: true
       },
       {
-        text: "考勤配置",
+        text: "公积金基数",
         width: 20,
         columnName: "kaoqin_peizhi",
         type: "text",
         isupd: true
       },
-      {
-        text: "假期",
-        width: 20,
-        columnName: "jiaqi",
-        type: "text",
-        isupd: true
-      },
+      // {
+      //   text: "假期",
+      //   width: 20,
+      //   columnName: "jiaqi",
+      //   type: "text",
+      //   isupd: true
+      // },
       {
         text: "部门配置",
         width: 20,
@@ -61,7 +61,7 @@ Page({
         isupd: true
       },
       {
-        text: "职务",
+        text: "职务配置",
         width: 20,
         columnName: "zhiwu",
         type: "text",
@@ -149,12 +149,13 @@ Page({
     })
     console.log('onLoad')
 
+    // query: "select top 100 isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi where gongsi = '"+_this.data.companyName+"'"
 
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
         //用isnull来判断
-        query: "select top 100 isnull((year+'-'+month+'-'+day),'-') as jiaqi,* from gongzi_peizhi where gongsi = '"+_this.data.companyName+"'"
+        query: "select top 100 * from gongzi_peizhi where gongsi = '"+_this.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功")
@@ -177,9 +178,10 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select peizhi from gongzi_title where peizhi is not null "
+        query: "select peizhi from gongzi_title where peizhi is not null and peizhi != ''"
       },
       success: res => {
+        console.log(res.result.recordsets[0])
         this.setData({
           title: res.result.recordsets[0]
         })
