@@ -1976,9 +1976,9 @@ Page({
         this.data.canvas.width = this.data.TW
         this.data.canvas.height = this.data.TH
         // 创建一个图片对象
-        console.log('dd' + _this.data.image)
+        console.log('dd ' + _this.data.image_old)
         const image = this.data.canvas.createImage();
-        image.src = _this.data.image
+        image.src = _this.data.image_old
         this.setData({
           image: image,
        })
@@ -1997,13 +1997,13 @@ Page({
       height: this.data.TEH,
       destWidth: this.data.TEW,
       destHeight: this.data.TEH,
-      fileType:'jpg',
-      quality:0.7,
+      quality:1,
+      fileType:'png',
       success: function (res) {
         var tempFilePath = res.tempFilePath;
         console.log("jieguo:"+tempFilePath)
         const name = Math.random() * 1000000;
-        const cloudPath = name + filePath.match(/\.[^.]+?$/)[0]
+        const cloudPath = name + tempFilePath.match(/\.[^.]+?$/)[0]
         // wx.getFileSystemManager().readFile({
         //   filePath: tempFilePath, //选择图片返回的相对路径
         //   encoding: 'base64', //编码格式
@@ -2011,17 +2011,16 @@ Page({
         //     var out_picture = res.data
         //     console.log(out_picture)
         //     console.log(_this.data.this_id)
-
         wx.cloud.uploadFile({
           cloudPath: "contract_pitcure/" + cloudPath, //云存储图片名字
-          tempFilePath, //临时路径
+          filePath:tempFilePath, //临时路径
           success: res => {
             console.log('[上传图片] 成功：', res)
             let fileID = res.fileID;
             wx.cloud.callFunction({
               name: 'sqlServer_cw',
               data: {
-                query: "update contract_picture set picture = '" + "contract_pitcure/" + cloudPath+ "' where id =" + _this.data.this_id
+                query: "update contract_picture set picture = '" + fileID + "' where id =" + _this.data.this_id
               },
               success: res => {
                 wx.showToast({
