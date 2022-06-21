@@ -348,15 +348,17 @@ Page({
       title: '提示',
       content: '是否删除此合同？',
       success: function(res) {
+        console.log( _this.data.id )
         if (res.cancel) {
           return;
         }else{
           wx.cloud.callFunction({
             name: 'sqlServer_cw',
             data: {
-              query: "delete from contract_manage where id='" + _this.data.id + "';delete from contract_manage where contract_id ='" + _this.data.id + "';"
+              query: "delete from contract_manage where id='" + _this.data.id + "';delete from contract_pitcure where contract_id ='" + _this.data.id + "';"
             },
             success: res => {
+              console.log(res)
               _this.setData({
                 contract_code:"",
                 contract_name:"",

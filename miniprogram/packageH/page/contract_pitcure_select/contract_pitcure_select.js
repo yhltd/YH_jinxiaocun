@@ -45,9 +45,9 @@ Page({
       }, 
       success: res => {
         var list = res.result.recordset
-        for(var i=0;i<list.length;i++){
-          list[i].picture = "data:image/jpeg;base64," + list[i].picture.replace(/[\r\n]/g, '')
-        }
+        // for(var i=0;i<list.length;i++){
+        //   list[i].picture = "data:image/jpeg;base64," + list[i].picture.replace(/[\r\n]/g, '')
+        // }
         _this.setData({
           all: list
         })

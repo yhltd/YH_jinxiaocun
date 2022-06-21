@@ -31,8 +31,15 @@
     <!-- <canvas class="handWriting" disable-scroll="true" bindtouchstart="uploadScaleStart" bindtouchmove="uploadScaleMove" 
       bindtouchend="uploadScaleEnd" bindtap="mouseDown" canvas-id="handWriting" id="handWriting">
     </canvas> -->
-    <canvas  id="Canvas" canvas-id="myCanvas" type="2d" disable-scroll="false" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" class="handWriting"
+    <!-- <canvas  id="Canvas" canvas-id="myCanvas" type="2d" disable-scroll="false" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" class="handWriting"
       style="width:{{TW}};height:{{TH}};">
-    </canvas>
+    </canvas> -->
+
+    <canvas type="2d" id="Canvas"
+    bindtouchstart="touchStart"
+  bindtouchmove="touchMove"
+  bindtouchend="touchEnd"
+  style="width: {{TW}}px;height:{{TH}}px;position: absolute;"
+></canvas>
   </view>
 </view>

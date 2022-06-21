@@ -1396,31 +1396,390 @@ const fs = wx.getFileSystemManager();
 var times = new Date().getTime();
 var codeimg = wx.env.USER_DATA_PATH + '/' + times + '.png';
 
+// Page({
+//   data: {
+//     // Cimg: "../../images/1.png",
+//     pen: 3, //画笔粗细默认值
+//     color: '#cc0033', //画笔颜色默认值
+//     canvas: null,
+//     ctx: null,
+//     ImgWidth: '',
+//     ImgHeight: '',
+//     text: "null",
+//     text1: "null",
+//     canvas_width:'',
+//     canvas_height:'',
+//     TEW:'',
+//     TEH:'',
+//   },
+//   startX: 0, //保存X坐标轴变量
+//   startY: 0, //保存y坐标轴变量
+//   startX_2: 0, //保存第二X坐标轴变量
+//   startY_2: 0, //保存第二y坐标轴变量
+//   isClear: false, //是否启用橡皮擦标记
+//   ini_distance: null, //两点距离
+//   dustance: null,
+//   tempFilePath: null, //临时图片保存路径
+//   // 在页面初次渲染完成生命周期获取操作canvas的上下文对象
+//   onLoad : function(options){
+//     var _this = this
+//     var canvas_height = ''
+//     var canvas_width = ''
+//     var userInfo = JSON.parse(options.userInfo)
+//     var this_id = userInfo.id
+//     console.log(this_id)
+
+//     wx.cloud.callFunction({
+//       name: 'sqlServer_cw',
+//       data: {
+//         query: "select * from contract_picture where id = " + this_id 
+//       }, 
+//       success: res => {
+//         console.log(res.result.recordset)
+//         var list = res.result.recordset[0].picture
+//         fs.writeFile({
+//           filePath: codeimg,
+//           data: list,
+//           encoding: 'base64',
+//           success: (res) => {
+//             //写入成功了的话，新的图片路径就能用了
+//             console.log(res)
+//             console.log(codeimg)
+//             wx.getImageInfo({
+//               src: codeimg,
+//               success:function(res){
+//                 canvas_width = res.width,
+//                 canvas_height = res.height
+//                 _this.setData({
+//                   canvas_width : canvas_width,
+//                   canvas_height : canvas_height,
+//                   ImgWidth : canvas_width,
+//                   ImgHeight : canvas_height,
+//                   TW:canvas_width,
+//                   TH:canvas_height,
+//                   TEW:canvas_width,
+//                   TEH:canvas_height,
+//                   Cimg: codeimg,
+//                   Cimg_old:codeimg,
+//                   this_id:this_id,
+//                   picture_id : userInfo.id,
+//                   qianzi_type : userInfo.qianzi_type,
+//                   image : codeimg
+//                 })
+//                 console.log(res.width)
+//                 console.log(res.height)
+//                 _this.onReady()
+//               }
+//             })
+//           }
+//         });
+//       },
+//       err: res => {
+//         console.log("错误!")
+//       },
+//       fail: res => {
+//         wx.showToast({
+//           title: '请求失败！',
+//           icon: 'none',
+//           duration: 3000
+//         })
+//         console.log("请求失败！")
+//       }
+//     })
+
+//   },
+//   onReady() {
+//     var _this = this
+//     console.log('onReady_start')
+//     const query = wx.createSelectorQuery()
+//     query.select('#Canvas')
+//       .fields({ node: true, size: true })
+//       .exec((res) => {
+//         const canvas = res[0].node
+//         const ctx = canvas.getContext('2d')
+//         canvas.width = _this.data.canvas_width
+//         canvas.height = _this.data.canvas_height
+//         ctx.clearRect(0,0,canvas._width,canvas._height);
+//         ctx.beginPath();
+//       const bg = canvas.createImage()
+//       bg.src = this.data.Cimg_old
+//       _this.setData({
+//         Cimg : this.data.Cimg_old,
+//         image : this.data.Cimg_old
+//       })
+//       bg.onload = () => {
+//         ctx.drawImage(bg, 0, 0, _this.data.canvas_width, _this.data.canvas_height)
+//       }
+//         this.setData({ canvas, ctx })
+//       })
+//   },
+
+//   // settest: function (){
+//   //   var _this = this;
+//   //   wx.canvasToTempFilePath({
+//   //     //这里写canvas为获取或者创建的canvas对象 不要按照文档里写canvasId ，否则会有fail canvas is empty 的报错
+//   //       canvas:this.data.canvas, 
+//   //       width: this.data.TEW,
+//   //       height: this.data.TEH,
+//   //       destWidth: this.data.TEW,
+//   //       destHeight: this.data.TEH,
+//   //       quality:1,
+//   //       success: function (res) {
+//   //         const image = _this.data.canvas.createImage();
+//   //         image.src = res.tempFilePath;
+//   //         _this.setData({
+//   //           Cimg: res.tempFilePath,
+//   //         })
+//   //       },
+//   //       fail:function(res){
+//   //           console.log(res)    
+//   //       }
+//   //   })
+//   // },
+
+//   settest: function (){
+//     var _this = this;
+//     wx.canvasToTempFilePath({
+//         canvas:this.data.canvas, 
+//         width: this.data.TEW,
+//       height: this.data.TEH,
+//       destWidth: this.data.TEW,
+//       destHeight: this.data.TEH,
+//       quality:1,
+//         success: function (res) {
+//           const image = _this.data.canvas.createImage();
+//           image.src = res.tempFilePath;
+//           _this.setData({
+//               image: image,
+//               Cimg: res.tempFilePath,
+//           })
+//         },
+//         fail:function(res){
+//             console.log(res)    
+//         }
+//     })
+//   },
+
+//   //手指触摸动作开始
+//   touchStart: function (e) {
+//     //得到触摸点的坐标
+//     this.startX = e.touches[0].x
+//     this.startY = e.touches[0].y
+//     this.context = this.data.ctx;
+//     if (e.touches.length == 1) {
+//       this.context.fillStyle = this.data.color
+//       this.context.lineWidth = this.data.pen
+//       this.context.lineCap = 'round' // 让线条圆润 
+//       this.context.beginPath()
+//     }
+//     if(e.touches.length == 2){
+//       let xMove = e.touches[1].x - e.touches[0].x;
+//       let yMove = e.touches[1].y - e.touches[0].y;
+//       console.log("touchStart" + xMove,yMove)
+//       this.setData({
+//         distance: Math.sqrt(xMove * xMove + yMove * yMove),
+//       })
+//     }
+//   },
+
+//   // touchStart(e) {
+//   //           //得到触摸点的坐标
+//   //           this.startX = e.touches[0].x
+//   //           this.startY = e.touches[0].y
+//   //           this.context = this.data.ctx;
+//   //           if (e.touches.length == 1) {
+//   //               this.context.fillStyle = this.data.color
+//   //               this.context.lineWidth = this.data.pen
+//   //               this.context.lineCap = 'round' // 让线条圆润 
+//   //               this.context.beginPath()
+//   //           }
+  
+//   //     if(e.touches.length == 2){
+//   //       let xMove = e.touches[1].x - e.touches[0].x;
+//   //       let yMove = e.touches[1].y - e.touches[0].y;
+//   //       this.setData({
+//   //         distance: Math.sqrt(xMove * xMove + yMove * yMove),
+//   //      })
+//   //     }
+//   //   },
+
+//   touchMove(e) {
+//     this.context = this.data.ctx;
+//     if (e.touches.length == 1) {
+//         var startX1 = e.touches[0].x
+//         var startY1 = e.touches[0].y
+//           this.context.moveTo(this.startX, this.startY)
+//           this.context.lineTo(startX1, startY1)
+//           this.context.stroke()
+//           this.startX = startX1;
+//           this.startY = startY1;
+//     }
+//     if(e.touches.length == 2){
+//      //this.data.ctx.clearRect(0, 0, 10000, 10000)
+//       let xMove = e.touches[1].x - e.touches[0].x;
+//       let yMove = e.touches[1].y - e.touches[0].y;
+//       console.log("touchMove" + xMove,yMove)
+//       let distance = Math.sqrt(xMove * xMove + yMove * yMove);
+//       let distanceDiff = distance - this.data.distance;
+      
+//       this.imgsize(distanceDiff);
+//     }
+//   },
+
+//   imgsize:function (distance){
+//     return new Promise( async (resolve, reject) => {
+//       const image = this.data.canvas.createImage();
+//       image.src = this.data.Cimg
+//       //image.src =  this.data.imgsrc ;
+//       //
+//       // 创建一个图片对象
+//      let distanceDiff = parseInt(distance);
+//      if((this.data.TW + (distanceDiff)) >this.data.canvas_width || (this.data.TH + (distanceDiff)) >this.data.canvas_height){
+
+//         this.setData({
+//             TW: (this.data.TEW  + (distanceDiff)),
+//             TH: (this.data.TEH  + (distanceDiff)),
+//             text:distanceDiff,
+//         })
+//         this.data.canvas.width = this.data.TW
+//         this.data.canvas.height = this.data.TH
+//         console.log(this.data.image)
+//         this.data.ctx.drawImage(this.data.image, 0, 0, (this.data.TW ), (this.data.TH ))
+//      }
+//   })
+//   },
+
+//   //手指触摸动作结束
+//   touchEnd(e) {
+//     console.log("touchEnd" + this.data.TW,this.data.TH)
+//     this.setData({
+//       TEW:(this.data.TW),
+//       TEH:(this.data.TH)
+//     })
+//     this.settest();
+//   },
+
+//     //预览
+//   previewCanvasImg() {
+//     wx.canvasToTempFilePath({
+//       canvas:this.data.canvas, 
+//       width: this.data.TEW,
+//       height: this.data.TEH,
+//       destWidth: this.data.TEW,
+//       destHeight: this.data.TEH,
+//       fileType: 'jpg',
+//       quality: 1, //图片质量
+//       success(res) {
+//         // console.log(res.tempFilePath, 'canvas生成图片地址');
+//         wx.previewImage({
+//           urls: [res.tempFilePath], //预览图片 数组
+//         })
+//       }
+//     })
+//   },
+
+//   //本地
+// savelocal() {
+//   var _this = this
+//   wx.canvasToTempFilePath({
+//     canvas:this.data.canvas, 
+//     width: this.data.TEW,
+//     height: this.data.TEH,
+//     destWidth: this.data.TEW,
+//     destHeight: this.data.TEH,
+//     fileType: 'jpg',
+//     quality: 1, //图片质量
+//     success(res) {
+//       // console.log(res.tempFilePath, 'canvas生成图片地址');
+//       wx.saveImageToPhotosAlbum({
+//         filePath: res.tempFilePath,
+//         success(res) {
+//           wx.showToast({
+//             title: '已保存到相册',
+//             duration: 2000
+//           });
+//         }
+//       })
+//     }
+//   })
+// },
+
+//   saveCanvasAsImg1() {
+//     var _this = this
+//     wx.canvasToTempFilePath({
+//       canvas:this.data.canvas, 
+//       width: this.data.TEW,
+//       height: this.data.TEH,
+//       destWidth: this.data.TEW,
+//       destHeight: this.data.TEH,
+//       success: function (res) {
+//         var tempFilePath = res.tempFilePath;
+//         console.log("jieguo:"+tempFilePath)
+//         wx.getFileSystemManager().readFile({
+//           filePath: tempFilePath, //选择图片返回的相对路径
+//           encoding: 'base64', //编码格式
+//           success: res => { //成功的回调
+//             var out_picture = res.data
+//             console.log(out_picture)
+//             console.log(_this.data.this_id)
+//             wx.cloud.callFunction({
+//               name: 'sqlServer_cw',
+//               data: {
+//                 query: "update contract_picture set picture = '" + out_picture+ "' where id =" + _this.data.this_id
+//               },
+//               success: res => {
+//                 wx.showToast({
+//                   title: '保存成功！',
+//                   icon: 'none'
+//                 })
+//                 wx.hideLoading();
+//               },
+//               err: res => {
+//                 console.log("错误!")
+//                 wx.hideLoading();
+//               },
+//               fail: res => {
+//                 wx.showToast({
+//                   title: '请求失败！',
+//                   icon: 'none'
+//                 })
+//                 console.log("请求失败！")
+//                 wx.hideLoading();
+//               }
+//             })
+//           }
+//         })
+//       }
+//     })
+//   },
+
+// })
+
 Page({
   data: {
-    // Cimg: "../../images/1.png",
-    pen: 3, //画笔粗细默认值
-    color: '#cc0033', //画笔颜色默认值
+    imgsrc: '',
     canvas: null,
     ctx: null,
-    ImgWidth: '',
-    ImgHeight: '',
-    text: "null",
-    text1: "null",
-    canvas_width:'',
-    canvas_height:'',
-    TEW:'',
-    TEH:'',
+    image:null,
+    distance:null,
+    tempImg:null,
+    text:"null",
+    pen: 3, //画笔粗细默认值
+    color: '#cc0033', //画笔颜色默认值
+    TW:400,
+    TH:400,
+    TEW:400,
+    TEH:400,
   },
+
   startX: 0, //保存X坐标轴变量
   startY: 0, //保存y坐标轴变量
   startX_2: 0, //保存第二X坐标轴变量
   startY_2: 0, //保存第二y坐标轴变量
-  isClear: false, //是否启用橡皮擦标记
   ini_distance: null, //两点距离
   dustance: null,
   tempFilePath: null, //临时图片保存路径
-  // 在页面初次渲染完成生命周期获取操作canvas的上下文对象
+  context:null,
   onLoad : function(options){
     var _this = this
     var canvas_height = ''
@@ -1437,34 +1796,32 @@ Page({
       success: res => {
         console.log(res.result.recordset)
         var list = res.result.recordset[0].picture
-        fs.writeFile({
-          filePath: codeimg,
-          data: list,
-          encoding: 'base64',
-          success: (res) => {
+        wx.cloud.downloadFile({
+          fileID: list, // 文件 ID
+          success: res => {
             //写入成功了的话，新的图片路径就能用了
             console.log(res)
-            console.log(codeimg)
+            console.log(res.tempFilePath)
+            var tempfilepath = res.tempFilePath
             wx.getImageInfo({
-              src: codeimg,
+              src: res.tempFilePath,
               success:function(res){
+                console.log(res)
                 canvas_width = res.width,
                 canvas_height = res.height
                 _this.setData({
-                  canvas_width : canvas_width,
-                  canvas_height : canvas_height,
-                  ImgWidth : canvas_width,
-                  ImgHeight : canvas_height,
-                  TW:canvas_width,
-                  TH:canvas_height,
-                  TEW:canvas_width,
-                  TEH:canvas_height,
-                  Cimg: codeimg,
-                  Cimg_old:codeimg,
+                  TW:res.width,
+                  TH:res.height,
+                  TEW:res.width,
+                  TEH:res.height,
+                  canvas_width:canvas_width,
+                  canvas_height:canvas_height,
+                  image:tempfilepath,
+                  image_old:tempfilepath,
                   this_id:this_id,
                   picture_id : userInfo.id,
                   qianzi_type : userInfo.qianzi_type,
-                  image : codeimg
+                  image : tempfilepath
                 })
                 console.log(res.width)
                 console.log(res.height)
@@ -1488,60 +1845,57 @@ Page({
     })
 
   },
+
+  // 在页面初次渲染完成生命周期获取操作canvas的上下文对象
   onReady() {
     var _this = this
-    console.log('onReady_start')
     const query = wx.createSelectorQuery()
     query.select('#Canvas')
       .fields({ node: true, size: true })
       .exec((res) => {
         const canvas = res[0].node
         const ctx = canvas.getContext('2d')
-        canvas.width = _this.data.canvas_width
-        canvas.height = _this.data.canvas_height
-        ctx.clearRect(0,0,canvas._width,canvas._height);
-        ctx.beginPath();
-      const bg = canvas.createImage()
-      bg.src = this.data.Cimg_old
-      _this.setData({
-        Cimg : this.data.Cimg_old,
-        image : this.data.Cimg_old
-      })
-      bg.onload = () => {
-        ctx.drawImage(bg, 0, 0, _this.data.canvas_width, _this.data.canvas_height)
-      }
         this.setData({ canvas, ctx })
       })
+      _this.chooseImages()
   },
 
-  // settest: function (){
-  //   var _this = this;
-  //   wx.canvasToTempFilePath({
-  //     //这里写canvas为获取或者创建的canvas对象 不要按照文档里写canvasId ，否则会有fail canvas is empty 的报错
-  //       canvas:this.data.canvas, 
-  //       width: this.data.TEW,
-  //       height: this.data.TEH,
-  //       destWidth: this.data.TEW,
-  //       destHeight: this.data.TEH,
-  //       quality:1,
-  //       success: function (res) {
-  //         const image = _this.data.canvas.createImage();
-  //         image.src = res.tempFilePath;
-  //         _this.setData({
-  //           Cimg: res.tempFilePath,
-  //         })
-  //       },
-  //       fail:function(res){
-  //           console.log(res)    
-  //       }
-  //   })
-  // },
+  imgsize:function (distance){
+    var _this = this
+    return new Promise( async (resolve, reject) => {
+      // const imgInfo = await wx.getImageInfo({ src: _this.data.image })
 
+      // 创建一个图片对象
+     let distanceDiff = parseInt(distance);
+     if((this.data.TW + (distanceDiff)) > this.data.canvas_width || (this.data.TH + (distanceDiff)) > this.data.canvas_height){
+        this.setData({
+            TW: (this.data.TEW  + (distanceDiff)),
+            TH: (this.data.TEH  + (distanceDiff)),
+        })
+        this.data.canvas.width = this.data.TW
+        this.data.canvas.height = this.data.TH
+        this.data.ctx.drawImage(this.data.image, 0, 0, (this.data.TW ), (this.data.TH ))
+     }
+  })
+  },
+
+    // else{
+  //     this.setData({
+  //         TEW: (this.data.TEW + (distanceDiff)),
+  //         TEH: (this.data.TEH + (distanceDiff)),
+  //         text:2,
+
+  //     })
+  //       this.data.ctx.drawImage(this.data.image, 0, 0, (this.data.TEW ), (this.data.TEH))
+  //    }
+
+
+  //存储为图片型
   settest: function (){
     var _this = this;
     wx.canvasToTempFilePath({
-        canvas:this.data.canvas, 
-        width: this.data.TEW,
+      canvas:this.data.canvas, 
+      width: this.data.TEW,
       height: this.data.TEH,
       destWidth: this.data.TEW,
       destHeight: this.data.TEH,
@@ -1551,7 +1905,6 @@ Page({
           image.src = res.tempFilePath;
           _this.setData({
               image: image,
-              Cimg: res.tempFilePath,
           })
         },
         fail:function(res){
@@ -1560,48 +1913,27 @@ Page({
     })
   },
 
-  //手指触摸动作开始
-  touchStart: function (e) {
-    //得到触摸点的坐标
-    this.startX = e.touches[0].x
-    this.startY = e.touches[0].y
-    this.context = this.data.ctx;
-    if (e.touches.length == 1) {
-      this.context.fillStyle = this.data.color
-      this.context.lineWidth = this.data.pen
-      this.context.lineCap = 'round' // 让线条圆润 
-      this.context.beginPath()
-    }
+  touchStart(e) {
+          //得到触摸点的坐标
+          this.startX = e.touches[0].x
+          this.startY = e.touches[0].y
+          this.context = this.data.ctx;
+          if (e.touches.length == 1) {
+              this.context.fillStyle = this.data.color
+              this.context.lineWidth = this.data.pen
+              this.context.lineCap = 'round' // 让线条圆润 
+              this.context.beginPath()
+          }
+
     if(e.touches.length == 2){
       let xMove = e.touches[1].x - e.touches[0].x;
       let yMove = e.touches[1].y - e.touches[0].y;
       this.setData({
         distance: Math.sqrt(xMove * xMove + yMove * yMove),
-      })
+     })
     }
   },
-
-  touchStart(e) {
-            //得到触摸点的坐标
-            this.startX = e.touches[0].x
-            this.startY = e.touches[0].y
-            this.context = this.data.ctx;
-            if (e.touches.length == 1) {
-                this.context.fillStyle = this.data.color
-                this.context.lineWidth = this.data.pen
-                this.context.lineCap = 'round' // 让线条圆润 
-                this.context.beginPath()
-            }
   
-      if(e.touches.length == 2){
-        let xMove = e.touches[1].x - e.touches[0].x;
-        let yMove = e.touches[1].y - e.touches[0].y;
-        this.setData({
-          distance: Math.sqrt(xMove * xMove + yMove * yMove),
-       })
-      }
-    },
-
   touchMove(e) {
     this.context = this.data.ctx;
     if (e.touches.length == 1) {
@@ -1623,58 +1955,107 @@ Page({
       this.imgsize(distanceDiff);
     }
   },
-
-  imgsize:function (distance){
-    return new Promise( async (resolve, reject) => {
-      const image = this.data.canvas.createImage();
-      image.src = this.data.Cimg
-      //image.src =  this.data.imgsrc ;
-      //
-      // 创建一个图片对象
-     let distanceDiff = parseInt(distance);
-     if((this.data.TW + (distanceDiff)) >this.data.canvas_width || (this.data.TH + (distanceDiff)) >this.data.canvas_height){
-
-        this.setData({
-            TW: (this.data.TEW  + (distanceDiff)),
-            TH: (this.data.TEH  + (distanceDiff)),
-            text:distanceDiff,
-        })
-        this.data.canvas.width = this.data.TW
-        this.data.canvas.height = this.data.TH
-        this.data.ctx.drawImage(this.data.image, 0, 0, (this.data.TW ), (this.data.TH ))
-     }
-  })
-  },
-
-  //手指触摸动作结束
   touchEnd(e) {
+  
     this.setData({
       TEW:(this.data.TW),
-      TEH:(this.data.TH)
+        TEH:(this.data.TH)
     })
     this.settest();
   },
 
-    //预览
-  previewCanvasImg() {
+  async chooseImages() {
+    await this.addWatermark()
+  },
+  addWatermark(tempFilePath) {
+    var _this = this
+    return new Promise( async (resolve, reject) => {
+        // 获取图片信息
+        // const imgInfo = await wx.getImageInfo({ src: "../../images/1.png" })
+        // 设置canvas宽高
+        this.data.canvas.width = this.data.TW
+        this.data.canvas.height = this.data.TH
+        // 创建一个图片对象
+        console.log('dd' + _this.data.image)
+        const image = this.data.canvas.createImage();
+        image.src = _this.data.image
+        this.setData({
+          image: image,
+       })
+        this.data.image = image;
+        image.onload = () => {
+          this.data.ctx.drawImage(image, 0, 0, _this.data.canvas_width,  _this.data.canvas_height)
+        }
+    })
+  },
+
+    saveCanvasAsImg1() {
+    var _this = this
     wx.canvasToTempFilePath({
       canvas:this.data.canvas, 
       width: this.data.TEW,
       height: this.data.TEH,
       destWidth: this.data.TEW,
       destHeight: this.data.TEH,
-      fileType: 'jpg',
-      quality: 1, //图片质量
-      success(res) {
-        // console.log(res.tempFilePath, 'canvas生成图片地址');
-        wx.previewImage({
-          urls: [res.tempFilePath], //预览图片 数组
-        })
+      fileType:'jpg',
+      quality:0.7,
+      success: function (res) {
+        var tempFilePath = res.tempFilePath;
+        console.log("jieguo:"+tempFilePath)
+        const name = Math.random() * 1000000;
+        const cloudPath = name + filePath.match(/\.[^.]+?$/)[0]
+        // wx.getFileSystemManager().readFile({
+        //   filePath: tempFilePath, //选择图片返回的相对路径
+        //   encoding: 'base64', //编码格式
+        //   success: res => { //成功的回调
+        //     var out_picture = res.data
+        //     console.log(out_picture)
+        //     console.log(_this.data.this_id)
+
+        wx.cloud.uploadFile({
+          cloudPath: "contract_pitcure/" + cloudPath, //云存储图片名字
+          tempFilePath, //临时路径
+          success: res => {
+            console.log('[上传图片] 成功：', res)
+            let fileID = res.fileID;
+            wx.cloud.callFunction({
+              name: 'sqlServer_cw',
+              data: {
+                query: "update contract_picture set picture = '" + "contract_pitcure/" + cloudPath+ "' where id =" + _this.data.this_id
+              },
+              success: res => {
+                wx.showToast({
+                  title: '保存成功！',
+                  icon: 'none'
+                })
+                wx.hideLoading();
+              },
+              err: res => {
+                console.log("错误!")
+                wx.hideLoading();
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none'
+                })
+                console.log("请求失败！" + res)
+                wx.hideLoading();
+              }
+            })
+            //把图片存到users集合表
+          },
+          fail: e => {
+            console.error('[上传图片] 失败：', e)
+          }
+        });
+        //   }
+        // })
       }
     })
   },
 
-  //本地
+    //本地
 savelocal() {
   var _this = this
   wx.canvasToTempFilePath({
@@ -1700,54 +2081,23 @@ savelocal() {
   })
 },
 
-  saveCanvasAsImg1() {
-    var _this = this
+    //预览
+  previewCanvasImg() {
     wx.canvasToTempFilePath({
       canvas:this.data.canvas, 
       width: this.data.TEW,
       height: this.data.TEH,
       destWidth: this.data.TEW,
       destHeight: this.data.TEH,
-      success: function (res) {
-        var tempFilePath = res.tempFilePath;
-        console.log("jieguo:"+tempFilePath)
-        wx.getFileSystemManager().readFile({
-          filePath: tempFilePath, //选择图片返回的相对路径
-          encoding: 'base64', //编码格式
-          success: res => { //成功的回调
-            var out_picture = res.data
-            console.log(out_picture)
-            console.log(_this.data.this_id)
-            wx.cloud.callFunction({
-              name: 'sqlServer_cw',
-              data: {
-                query: "update contract_picture set picture = '" + out_picture+ "' where id =" + _this.data.this_id
-              },
-              success: res => {
-                wx.showToast({
-                  title: '保存成功！',
-                  icon: 'none'
-                })
-                wx.hideLoading();
-              },
-              err: res => {
-                console.log("错误!")
-                wx.hideLoading();
-              },
-              fail: res => {
-                wx.showToast({
-                  title: '请求失败！',
-                  icon: 'none'
-                })
-                console.log("请求失败！")
-                wx.hideLoading();
-              }
-            })
-          }
+      fileType: 'jpg',
+      quality: 1, //图片质量
+      success(res) {
+        // console.log(res.tempFilePath, 'canvas生成图片地址');
+        wx.previewImage({
+          urls: [res.tempFilePath], //预览图片 数组
         })
       }
     })
   },
 
 })
-
