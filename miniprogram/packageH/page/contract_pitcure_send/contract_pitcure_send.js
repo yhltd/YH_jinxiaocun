@@ -152,6 +152,7 @@ Page({
      * 导出图片
      */
     onExport() {
+      var _this=this;
         CanvasDrag.export()
             .then((filePath) => {
                 console.log(filePath);
@@ -234,8 +235,9 @@ Page({
     },
 
     yunhanshu(){
-      console.log('云函数')
+  
       var _this = this
+      console.log('云函数'+_this.data.fileID)
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
