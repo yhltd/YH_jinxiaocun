@@ -14,13 +14,13 @@ Page({
     title_gangwei: '全选',
     time: '',
     isMaskWindowShow: false,
-    maskWindowList: [' 查询姓名'],
+    maskWindowList: ['查询日期'],
     selectIndex: -1,
     isMaskWindowInputShow: false,
     isMaskWindowInputShow1: false,
     maskWindowInputValue: '',
-
-
+    start_date:'',
+    stop_date:'',
     maxpagenumber: 0,
     showModalStatus: false,
     animationData: "",
@@ -182,6 +182,22 @@ Page({
     })
   },
 
+  bindDateChange1: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      start_date: e.detail.value
+    })
+    console.log(this.data.start_date)
+  },
+
+  bindDateChange2: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      stop_date: e.detail.value
+    })
+    console.log(this.data.stop_date)
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
@@ -281,12 +297,17 @@ Page({
     var index = that.data.selectIndex;
     var input = that.data.maskWindowInputValue;
     console.log(input)
-    var sql = ""
-    if(input == "" || input == undefined){
-      sql = "select top 100 * from gongzi_gongzimingxi where BD = '"+that.data.companyName+"'"
-    }else{
-      sql = "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%'and BD = '"+that.data.companyName+"'"
+    var start_date = that.data.start_date
+    var stop_date = that.data.stop_date
+    if(start_date == ''){
+      start_date = '1900-01-01'
     }
+    if(stop_date == ''){
+      stop_date = '2100-12-31'
+    }
+    console.log(start_date)
+    console.log(stop_date)
+    var sql = "select top 100 * from gongzi_gongzimingxi where BD = '"+that.data.companyName+"' and BC != '' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
     
     if (index == 0) {
       //按姓名查询
@@ -296,7 +317,7 @@ Page({
           query: sql
         },
         success: res => {
-          console.log("姓名查询成功！", res.result)
+          console.log("日期查询成功！", res.result)
           that.setData({
             list: res.result.recordset,
             isSearch : true
@@ -324,7 +345,9 @@ Page({
       selectIndex: -1,
       isMaskWindowInputShow: false,
       isMaskWindowInputShow1: false,
-      maskWindowInputValue: ""
+      maskWindowInputValue: "",
+      start_date:'',
+      stop_date:'',
     })
   },
 
@@ -589,10 +612,22 @@ Page({
         icon: 'none',
         duration: 2500
       })
+
+      var start_date = that.data.start_date
+      var stop_date = that.data.stop_date
+      if(start_date == ''){
+        start_date = '1900-01-01'
+      }
+      if(stop_date == ''){
+        stop_date = '2100-12-31'
+      }
+      console.log(start_date)
+      console.log(stop_date)
+
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -633,10 +668,22 @@ Page({
       this.setData({
         isLoad : false
       })
+
+    var start_date = that.data.start_date
+    var stop_date = that.data.stop_date
+    if(start_date == ''){
+      start_date = '1900-01-01'
+    }
+    if(stop_date == ''){
+      stop_date = '2100-12-31'
+    }
+    console.log(start_date)
+    console.log(stop_date)
+
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -767,8 +814,20 @@ Page({
   baochi: function () {
     var that = this
     var sql = "";
+
+    var start_date = that.data.start_date
+    var stop_date = that.data.stop_date
+    if(start_date == ''){
+      start_date = '1900-01-01'
+    }
+    if(stop_date == ''){
+      stop_date = '2100-12-31'
+    }
+    console.log(start_date)
+    console.log(stop_date)
+
     if(that.data.isSearch){
-      sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and B = '"+ that.data.maskWindowInputValue+"'"
+      sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BA,AY from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BC >= '"+ start_date +"' and BC <='"+ stop_date +"'"
     }else{
       sql = "select * from (select id,B,BA,AY,ROW_NUMBER() over(order by [id]) rownumber from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') t where t.rownumber between ('" + that.data.page + "'-1)*100 and '" + that.data.page + "'*100"
     }

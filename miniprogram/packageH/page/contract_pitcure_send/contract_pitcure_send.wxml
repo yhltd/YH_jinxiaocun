@@ -1,45 +1,16 @@
-<!-- 
-  <view class="wrapper">
-  <view class="handBtn">
-    <button catchtap="retDraw" class="delBtn">重写</button>
-		<button catchtap="saveCanvasAsImg1" class="saveBtn">确认</button>
-		<button catchtap="previewCanvasImg" class="previewBtn">预览</button>
-    <button catchtap="savelocal" class="localBtn">下载</button>
-  </view>
-  <view class="handCenter">
-    <canvas class="handWriting" disable-scroll="true" bindtouchstart="uploadScaleStart" bindtouchmove="uploadScaleMove" 
-      bindtouchend="uploadScaleEnd" bindtap="mouseDown" canvas-id="handWriting" id="handWriting">
-    </canvas>
-  </view>
-  <view class="handRight">
-  <view class="handRight">
-    <view class="handTitle">手写板</view>
-  </view>
-  </view>
-</view> -->
+<canvas-drag id="canvas-drag" graph="{{graph}}" width="{{width}}" height="{{height}}" enableUndo="{{false}}"></canvas-drag>
+<!-- <view class="btn" bindtap="onAddImage">添加图片</view>
+<view class="btn" bindtap="onAddTest">添加测试图片</view>
+<view class="btn" bindtap="onAddText">添加文字</view>
+<view class="btn" bindtap="onExport">导出图片</view>
+<view class="btn" bindtap="onChangeColor">改变文字颜色</view>
+<view class="btn" bindtap="onChangeBgColor">改变背景颜色</view>
+<view class="btn" bindtap="onChangeBgImage">改变背景照片</view>
+<view class="btn" bindtap="onExportJSON">导出模板</view>
+<view class="btn" bindtap="onImport">导入默认模板</view> -->
+<view class="btn" bindtap="onClearCanvas">清空画布</view>
+<!-- <view class="btn" bindtap="onUndo">后退</view> -->
+<view class="btn" bindtap="qianzi_show">打开签字画板</view>
+<view class="btn" bindtap="saveAs">保存</view>
 
-
-
-  <view class="wrapper">
-  <view class="handBtn">
-    <button catchtap="onReady" class="delBtn">重写</button>
-		<button catchtap="saveCanvasAsImg1" class="saveBtn">确认</button>
-		<button catchtap="previewCanvasImg" class="previewBtn">预览</button>
-    <button catchtap="savelocal" class="localBtn">下载</button>
-  </view>
-  <view class="handCenter" style="width:{{canvas_height}};height:{{canvas_height}};">
-    <!-- <canvas class="handWriting" disable-scroll="true" bindtouchstart="uploadScaleStart" bindtouchmove="uploadScaleMove" 
-      bindtouchend="uploadScaleEnd" bindtap="mouseDown" canvas-id="handWriting" id="handWriting">
-    </canvas> -->
-    <!-- <canvas  id="Canvas" canvas-id="myCanvas" type="2d" disable-scroll="false" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" class="handWriting"
-      style="width:{{TW}};height:{{TH}};">
-    </canvas> -->
-
-    <canvas type="2d" id="Canvas"
-    bindtouchstart="touchStart"
-  bindtouchmove="touchMove"
-  bindtouchend="touchEnd"
-  style="width: {{TW}}px;height:{{TH}}px;position: absolute;"
-></canvas>
-  </view>
-</view>
+<signature id="signature" bind:saveToImage="saveToImage"></signature>

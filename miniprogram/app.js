@@ -11,6 +11,7 @@ App({
     finduser: "",
     passwod: "",
     adminis: "",
+    file_path_linshi:'',
     userInfo: null,
     header: {
       'Cookie': ''

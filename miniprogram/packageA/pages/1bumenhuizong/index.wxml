@@ -34,6 +34,14 @@
   </view>
 </view>
 
+<!--日期选择按钮及遮罩-->
+<view>
+  <button class="btn_yearmonth " hover-class="btn_yearmonth-hover" bindtap="show1">▷ ▷ ▷ 开始时间选择：{{title_year1}}年{{title_month1}}月 ◁ ◁ ◁</button>
+  <button class="btn_yearmonth " hover-class="btn_yearmonth-hover" bindtap="show2">▷ ▷ ▷ 结束时间选择：{{title_year2}}年{{title_month2}}月 ◁ ◁ ◁</button>
+</view>
+
+<tui-datetime id="tui-dateTime-ctx" type="{{type}}" startYear="{{startYear}}" endYear="{{endYear}}" cancelColor="{{cancelColor}}" color="{{color}}" setDateTime="{{setDateTime}}" bindconfirm="change"></tui-datetime>
+
 <!--可输入遮罩层-->
 <tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
   <view bindsubmit="edit_cell" style="text-align: center;">
@@ -52,7 +60,7 @@
       <block wx:for="{{title}}">
         <view class="th {{(item.bumenhuizong == '部门')?'tap_120':''}}" data-bumenhuizong='{{item.bumenhuizong}}' style="{{item.bumenhuizong=='部门'?' position: sticky;top: 0;left: 0;':''}}">
           <view class="cell_label_header centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.bumenhuizong}}</text>
+            <text style=" font-weight:bold;">{{item.bumenhuizong}}</text>
           </view>
         </view>
       </block>

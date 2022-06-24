@@ -1,6 +1,9 @@
 {
   "usingComponents": {
     "drawer": "../../../components/drawer/drawer",
-    "tui-modal": "../../../components/modal/modal"
+    "tui-modal": "../../../components/modal/modal",
+    "tui-button": "../../../components/extend/button/button",
+    "tui-datetime": "../../../components/dateTime/dateTime",
+    "tui-icon": "../../../components/icon/icon"
   }
 }

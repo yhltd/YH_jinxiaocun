@@ -436,6 +436,7 @@ Page({
     gongjijin_name : [],
     zhiwu_name : [],
     rqxzShow3: false,
+    nowDate:'',
   },
 
   /**
@@ -497,6 +498,22 @@ Page({
         console.log("错误!")
       }
     })
+
+
+    const formatData = date => {
+      const year = date.getFullYear()
+      const month = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+      return year + '-' + month + '-' + day
+      // return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+    }
+    this.setData({
+      nowDate: formatData(new Date())
+    })
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -1324,7 +1341,7 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_117',
             data: {
-              query: "insert into gongzi_gongzimingxi (B,BD) values('请输入','" + that.data.companyName + "')"
+              query: "insert into gongzi_gongzimingxi (B,BC,BD) values('请输入','" + that.data.nowDate + "','" + that.data.companyName + "')"
             },
             success: res => {
               console.log("插入成功")

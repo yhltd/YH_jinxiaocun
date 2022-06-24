@@ -130,6 +130,42 @@ Page({
             list: res.result.recordset
           })
         }
+
+        const formatData = date => {
+          const year = date.getFullYear()
+          const month = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+          const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+          const hour = date.getHours()
+          const minute = date.getMinutes()
+          const second = date.getSeconds()
+          return year + '-' + month + '-' + day
+          // return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+        }
+
+        var name = ''
+        for(var i=0;i<res.result.recordset.length;i++){
+          var this_date = res.result.recordset[i].Q
+          this_date = this_date.split("-")
+          var today = formatData(new Date())
+          today = today.split("-")
+          if(this_date.length == 3){
+            if(this_date[1] == today[1] && this_date[2] == today[2]){
+              if(name == ''){
+                name = res.result.recordset[i].B
+              }else{
+                name = name + "、" + res.result.recordset[i].B
+              }
+            }
+          }
+          console.log(name)
+          if(name != ''){
+            wx.showToast({
+              title: '今天是 ' + name + ' 的生日',
+              icon: 'none',
+              duration: 5000
+            })
+          }
+        }
       },
       err: res => {
         console.log("错误!")

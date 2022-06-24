@@ -4,7 +4,8 @@ Page({
   data: {
     id: '',
     list: [],
-    companyName : ""
+    companyName : "",
+    nowDate : '',
   },
   onLoad: function (options) {
     var that = this
@@ -36,6 +37,7 @@ Page({
         console.log("错误!")
       }
     })
+
   },
   formSubmit: function (e) {
     var that = this

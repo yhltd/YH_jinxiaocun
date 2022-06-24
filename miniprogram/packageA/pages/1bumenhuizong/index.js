@@ -448,11 +448,109 @@ Page({
 
 
   },
+
+    //月份选择器
+    show1: function (e) {
+      this.setData({
+        cancelColor: "#888",
+        color: "#5677fc",
+        setDateTime: "",
+        startYear: 1980,
+        endYear: 2100,
+        this_date:1
+      })
+      this.setData({
+        type: 3 //选的是第三个类型的🔨UI
+      })
+      this.dateTime.show();
+    },
+    show2: function (e) {
+      this.setData({
+        cancelColor: "#888",
+        color: "#5677fc",
+        setDateTime: "",
+        startYear: 1980,
+        endYear: 2100,
+        this_date:2
+      })
+      this.setData({
+        type: 3 //选的是第三个类型的🔨UI
+      })
+      this.dateTime.show();
+    },
+
+
+    change: function (e) {
+      var that = this
+      console.log(e.detail)
+      var month = e.detail.month
+      console.log(month.length)
+      if(month.length == 1){
+        month = "0" + month
+      }
+      console.log(month)
+      if (that.data.this_date == 1){
+        that.setData({
+          title_month1: month,
+          title_year1: e.detail.year
+        })
+      }else if(that.data.this_date == 2){
+        that.setData({
+          title_month2: month,
+          title_year2: e.detail.year
+        })
+      }
+      
+      var title_year1 = that.data.title_year1
+      var title_year2 = that.data.title_year2
+      var title_month1 = that.data.title_month1
+      var title_month2 = that.data.title_month2
+      
+  
+      if (title_year1 == ''){
+        title_year1 = "1900"
+        title_month1 = "01"
+      }
+      if (title_year2 == ''){
+        title_year2 = "2100"
+        title_month2 = "12"
+      }
+      if(that.data.this_date ==1 || that.data.this_date ==2){
+        var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + " and AO = '" + this.data.companyName + "'"
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log('change', res)
+          if (res.result.recordset.length < 100) {
+            that.setData({
+              list: res.result.recordset,
+              IsLastPage: true
+            })
+            console.log(that.data.list)
+          } else {
+            that.setData({
+              list: res.result.recordset
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        }
+      })
+      }
+    },
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
     var that = this
+    this.dateTime = this.selectComponent("#tui-dateTime-ctx")
     wx.showModal({
       title: '❤ 小贴士 ❤',
       content: '点击‘部门’列可以跳转到相应部门的‘部门详情表’',

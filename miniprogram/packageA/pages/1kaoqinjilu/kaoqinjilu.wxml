@@ -8,13 +8,18 @@
     </view>
     <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index%2===0}}'>
       <view class="maskWindowText {{index == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index}}'>{{maskWindowList[index]}}</view>
-      <view class="maskWindowText {{index + 1 == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index+1}}'>{{maskWindowList[index+1]}}</view>
+      <!-- <view class="maskWindowText {{index + 1 == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index+1}}'>{{maskWindowList[index+1]}}</view> -->
       <!--条件查询结果显示区域！-->
 
     </view>
     <view style="height:30rpx"></view>
     <view class='maskWindowInputView'>
-      <input class='maskWindowInput' maxlength='100' placeholder='请输入查询内容' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput'></input>
+      <picker mode="date" value="{{date}}" fields="month" start="1900-01" end="2100-12" bindchange="bindDateChange1">
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入开始年月' hidden='{{!isMaskWindowInputShow}}' value="{{start_date}}"></input>
+      </picker>
+      <picker mode="date" value="{{date}}" fields="month" start="1900-01" end="2100-12" bindchange="bindDateChange2">
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入结束年月' hidden='{{!isMaskWindowInputShow}}' value="{{stop_date}}"></input>
+      </picker>
     </view>
     <view class='maskWindowBtnView'>
       <view class='maskWindowBtn' hover-class="btn-hover" catchtap='maskWindowCancel' style="background: #ededed;color: #999 !important;">取消</view>
@@ -43,9 +48,9 @@
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="key">
-        <view class="th {{(item.kaoqinjilu == '身份证号码')?'change':''||(item.kaoqinjilu == '银行账号')?'change':''||(item.kaoqinjilu == '序号')?'tap_120':''}}" style="{{item.kaoqinjilu=='序号'?'position: sticky;top: 0;left: 0;':''}}" data-kaoqinjilu='{{item.kaoqinjilu}}'>
+        <view class="th {{(item.kaoqinjilu == '身份证号码')?'change':''||(item.kaoqinjilu == '银行账号')?'change':''||(item.kaoqinjilu == '序号')?'tap_120':''}}" style="{{item.kaoqinjilu=='序号'?'position: sticky;top: 0;left: 0;':item.kaoqinjilu=='公司'?'width:250px;':''}}" data-kaoqinjilu='{{item.kaoqinjilu}}'>
           <view class="cell_label_header centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.kaoqinjilu}}</text>
+            <text style="font-weight:bold;">{{item.kaoqinjilu}}</text>
           </view>
         </view>
       </block>
@@ -65,39 +70,39 @@
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.C}}" data-doinb='C' data-type="number">{{item.C}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.year}}" data-doinb='year' data-type="number">{{item.year}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.D}}" data-doinb='D' data-type="number">{{item.D}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.moth}}" data-doinb='moth' data-type="number">{{item.moth}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.E}}" data-doinb='E' data-type="number">{{item.E}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.AJ}}" data-doinb='AJ' data-type="number">{{item.AJ}}</view>
         </view>
 
         <view class='td' >
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.F}}" data-doinb='F' data-type="number">{{item.F}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.AK}}" data-doinb='AK' data-type="number">{{item.AK}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.G}}" data-doinb='G' data-type="number">{{item.G}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.AL}}" data-doinb='AL' data-type="number">{{item.AL}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.H}}" data-doinb='H' data-type="number">{{item.H}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.AM}}" data-doinb='AM' data-type="number">{{item.AM}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.I}}" data-doinb='I' data-type="number">{{item.I}}</view>
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.AN}}" data-doinb='AN' data-type="number">{{item.AN}}</view>
         </view>
 
-        <view class='td'>
+        <!-- <view class='td'>
           <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.J}}" data-doinb='J' data-type="text">{{item.J}}</view>
-        </view>
+        </view> -->
 
-        <view class='td'>
-          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.K}}" data-doinb='K' data-type="text">{{item.K}}</view>
+        <view class='td' style="width: 250px;">
+          <view class="cell_label centerclass" bindtap="click_edit" data-moth='{{item.D}}' data-name='{{item.name}}' data-id="{{item.id}}" data-x="{{item.AO}}" data-doinb='AO' data-type="text" >{{item.AO}}</view>
         </view>
       </view>
     </block>
@@ -128,8 +133,8 @@
     </button>
     <view style="width:10%"></view>
     <button class="btn-primary" hover-class="btn-hover" disabled="{{result.sel!=1}}" bindtap="searchBtn">查找</button>
-    <view style="width:10%"></view>
-    <button class="btn-primary" hover-class="btn-hover" disabled="{{result.add!=1}}" bindtap="tianjia">添加</button>
+    <!-- <view style="width:10%"></view> -->
+    <!-- <button class="btn-primary" hover-class="btn-hover" disabled="{{result.add!=1}}" bindtap="tianjia">添加</button> -->
     <view style="width:5%"></view>
   </view>
 </view>

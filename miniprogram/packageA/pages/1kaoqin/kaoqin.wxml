@@ -61,8 +61,8 @@
         <view class="kaoqinbiao {{(item.kaoqinbiao == '姓名')?'xingming':''||(item.kaoqinbiao == '年月')?'no':''||(item.kaoqinbiao == '全勤天数')?'no':''||(item.kaoqinbiao == '实际天数')?'no':''||(item.kaoqinbiao == '请假时间/小时')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''||(item.kaoqinbiao == '迟到天数')?'no':''||(item.kaoqinbiao == '加班时间/小时')?'no':''}}"
           data-kaoqinbiao="{{item.kaoqinbiao}}" data-kaoqinbiao='{{item.kaoqinbiao}}'>
           <view class="cell_label_header centerclass" style="display:flex;flex-direction:column">
-            <text style="font-size:; font-weight:bold;">{{item.kaoqinbiao}}</text>
-            <text style="font-size:; font-weight:bold;">{{week}}</text>
+            <text style="font-weight:bold;">{{item.kaoqinbiao}}</text>
+            <text style="font-weight:bold;">{{week}}</text>
           </view>
         </view>
       </block>

@@ -78,7 +78,7 @@
           <block wx:for="{{title}}" wx:key="key">
             <view class="th {{(item.gongzimingxi == '身份证号码')?'change':''||(item.gongzimingxi == '银行账号')?'change':''||(item.gongzimingxi == '序号')?'tap':''}}"  data-gongzimingxi='{{item.gongzimingxi}}'>
               <view class="cell_label_header centerclass">
-                <text style="font-size:; font-weight:bold;">{{item.gongzimingxi}}</text>
+                <text style="font-weight:bold;">{{item.gongzimingxi}}</text>
               </view>
             </view>
           </block>

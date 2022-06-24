@@ -1,0 +1,15 @@
+<!--packageH/components/signature/signature.wxml-->
+<view class="signature-modal" hidden="{{hideModal}}">
+  <view class="modal-mask" bindtap="closeModal"></view>
+  <view class="modal-content-area">
+    <view class="modal-title">签名板</view>
+    <view class="modal-content">
+      <canvas canvas-id="signature" class="modal-canvas" disable-scroll="{{true}}" id="handWriting" bindtouchstart="scaleStart"
+        bindtouchmove="scaleMove" bindtouchend="scaleEnd" ></canvas>
+      <view class="modal-bottom">
+        <view class="modal-btn modal-clear" bindtap="clearCanvas">清除</view>
+        <view class="modal-btn modal-confirm" bindtap="saveToImage">确认</view>
+      </view>
+    </view>
+  </view>
+</view>
