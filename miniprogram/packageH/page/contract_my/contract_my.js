@@ -120,7 +120,14 @@ Page({
             duration: 3000
           })
         }else{
-          var ee = [userInfo.user_name,'',userInfo.company]
+          if(userInfo.qianzi == '待签字'){
+            var ee = [userInfo.user_name,'否',userInfo.company]
+            _this.setData({
+              picker_select:'待签字'
+            })
+          }else{
+            var ee = [userInfo.user_name,'',userInfo.company]
+          }
           _this.tableShow(ee)
         }
         _this.setData({
@@ -234,15 +241,16 @@ Page({
     }
 
     console.log(id)
-    if (send_judge == '是'){
-      wx.showToast({
-        title:"此合同已过签字",
-        icon: 'none',//图标，支持"success"、"loading" 
-        duration: 1500,//提示的延迟时间，单位毫秒，默认：1500 
-        mask: true,//是否显示透明蒙层，防止触摸穿透，默认：false 
-      })
-      return;
-    }else{
+    // if (send_judge == '是'){
+    //   wx.showToast({
+    //     title:"此合同已过签字",
+    //     icon: 'none',//图标，支持"success"、"loading" 
+    //     duration: 1500,//提示的延迟时间，单位毫秒，默认：1500 
+    //     mask: true,//是否显示透明蒙层，防止触摸穿透，默认：false 
+    //   })
+    //   return;
+    // }
+    // else{
       wx.showModal({
         title: '提示',
         content: '确定跳转到签字？',
@@ -256,7 +264,8 @@ Page({
             wx.navigateTo({
               url: '../contract_pitcure_select/contract_pitcure_select' + '?userInfo=' + JSON.stringify({
                 id : id,
-                qianzi_type:qianzi_type
+                qianzi_type:qianzi_type,
+                send_judge:send_judge
               })
             })
            } else if(res.cancel) {
@@ -264,7 +273,7 @@ Page({
            }
         },
      })
-    }
+    // }
 
   },
 

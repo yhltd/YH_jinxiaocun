@@ -2,5 +2,7 @@
   "usingComponents": {
     "van-tabbar": "../../components/tabbar/index",
     "van-tabbar-item": "../../components/tabbar-item/index"
-  }
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "合同管理系统"
 }

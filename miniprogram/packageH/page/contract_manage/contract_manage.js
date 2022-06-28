@@ -17,8 +17,11 @@ Page({
     rqxzShow1: false,
     xgShow: false,
     cxShow: false,
+    judge_array:['是','否'],
     list: [],
-    title: [{
+    send_judge:'',
+    title: [
+      {
         text: "合同编码",
         width: "275rpx",
         columnName: "contract_code",
@@ -71,6 +74,13 @@ Page({
         text: "签字人",
         width: "200rpx",
         columnName: "send_out",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "是否关闭",
+        width: "200rpx",
+        columnName: "send_judge",
         type: "text",
         isupd: true
       },
@@ -144,7 +154,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select * from contract_manage where contract_code like '%" + e[0] + "%' and contract_name like '%" + e[1] + "%' and contract_type like '%" + e[2] + "%' and creation_date between '" + e[3] + "' and '" + e[4] + "' and company = '" + e[5] + "'"
+        query: "select * from contract_manage where contract_code like '%" + e[0] + "%' and contract_name like '%" + e[1] + "%' and contract_type like '%" + e[2] + "%' and creation_date between '" + e[3] + "' and '" + e[4] + "' and company = '" + e[5] + "' and (first_party ='" + _this.data.user_name + "' or creator ='" + _this.data.user_name + "' or send_out ='" + _this.data.user_name + "')"
       },
       success: res => {
         var list = res.result.recordset
@@ -197,6 +207,7 @@ Page({
       second_party:"",
       creation_date:"",
       send_out:"",
+      send_judge:""
     })
   },
 
@@ -206,6 +217,14 @@ Page({
     _this.setData({
       currentDate: e.detail,
       [column]: e.detail.value
+    })
+  },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      send_judge: _this.data.judge_array[e.detail.value]
     })
   },
 
@@ -264,11 +283,11 @@ Page({
 
   upd1:function(){
     var _this = this
-    if (_this.data.contract_code != "" && _this.data.contract_name != "" && _this.data.contract_type != "" && _this.data.first_party != "" && _this.data.second_party != "" && _this.data.creation_date != "" && _this.data.send_out != ""){
+    if (_this.data.contract_code != "" && _this.data.contract_name != "" && _this.data.contract_type != "" && _this.data.first_party != "" && _this.data.second_party != "" && _this.data.creation_date != "" && _this.data.send_out != "" && _this.data.send_judge != ""){
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
-          query: "update contract_manage set contract_code='" + _this.data.contract_code + "',contract_name='" + _this.data.contract_name + "',contract_type='" + _this.data.contract_type + "',first_party='" + _this.data.first_party + "',second_party='" + _this.data.second_party + "',creation_date='" + _this.data.creation_date + "',send_out='" + _this.data.send_out + "' where company='" + _this.data.company + "' and id='" + _this.data.id +"'"
+          query: "update contract_manage set contract_code='" + _this.data.contract_code + "',contract_name='" + _this.data.contract_name + "',contract_type='" + _this.data.contract_type + "',first_party='" + _this.data.first_party + "',second_party='" + _this.data.second_party + "',creation_date='" + _this.data.creation_date + "',send_out='" + _this.data.send_out + "',send_judge='" + _this.data.send_judge + "' where company='" + _this.data.company + "' and id='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
@@ -279,6 +298,7 @@ Page({
             second_party:"",
             creation_date:"",
             send_out:"",
+            send_judge:"",
             id:"",
           })
           _this.qxShow()
@@ -320,7 +340,7 @@ Page({
       })
       return;
     }
-
+    console.log(_this.data.list[e.currentTarget.dataset.index].send_judge)
     _this.setData({
       contract_code: _this.data.list[e.currentTarget.dataset.index].contract_code, 
       contract_name: _this.data.list[e.currentTarget.dataset.index].contract_name,
@@ -330,6 +350,7 @@ Page({
       creation_date: _this.data.list[e.currentTarget.dataset.index].creation_date,
       send_out: _this.data.list[e.currentTarget.dataset.index].send_out,
       id: _this.data.list[e.currentTarget.dataset.index].id,
+      send_judge: _this.data.list[e.currentTarget.dataset.index].send_judge,
       xgShow:true,
     })
   },

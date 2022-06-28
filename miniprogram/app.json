@@ -172,7 +172,8 @@
         "page/contract_my/contract_my",
         "page/contract_pitcure_select/contract_pitcure_select",
         "page/contract_pitcure_send/contract_pitcure_send",
-        "page/contract_wode/contract_wode"
+        "page/contract_wode/contract_wode",
+        "page/contract_guanyugongsi/contract_guanyugongsi"
       ]
     }
   ],

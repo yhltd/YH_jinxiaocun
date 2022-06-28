@@ -2,20 +2,69 @@
 <view class="bg">
   <view class="head">
     <view class="headIcon">
-      <image src="../../images/weidenglu_touxiang.png" style="width:70px;height:70px;margin-top:5%"></image>
+      <image src="../../images/touxiang.png" style="width:70px;height:70px;margin-top:5%"></image>
     </view>
     <text class="headIcon" style="margin-top:5%;">{{this_name}}</text>
   </view>
 </view>
 
 <view class="hr"></view>
-<view class='item' bindtap="go3">
-  <view class="title">退出登录</view>
+
+<view class='item'>
+  
+  <view class="title">
+    <image src="../../images/zhanghaoguanli.png" class="images_st"></image>
+  登录账号：</view>
+  <view class="detail2">
+    <text>{{this_username}}</text>
+  </view>
+</view>
+
+<view class='item'>
+  <view class="title">
+    <image src="../../images/quanxian.png" class="images_st"></image>
+  权限：</view>
+  <view class="detail2">
+    <text>{{this_power}}</text>
+  </view>
+</view>
+
+<view class='item'>
+  <view class="title">
+    <image src="../../images/gongsi.png" class="images_st"></image>
+  所属公司：</view>
+  <view class="detail2">
+    <text>{{this_company}}</text>
+  </view>
+</view>
+
+<view class='item'>
+  <view class="title">
+    <image src="../../images/banben.png" class="images_st"></image>
+  系统版本号：</view>
+  <view class="detail2">
+    <text>1.0.0</text>
+  </view>
+</view>
+
+<view class="hr"></view>
+<view class='item' bindtap="go4">
+  <view class="title">关于我们</view>
   <view class="detail2">
     <text> ></text>
   </view>
 </view>
 <view class="line"></view>
 <view class="hr"></view>
+
+
+<view class='item' bindtap="go3">
+  <view class="title">退出登录</view>
+  <view class="detail2">
+    <text> ></text>
+  </view>
+</view>
+
+<view class="line"></view>
 
 

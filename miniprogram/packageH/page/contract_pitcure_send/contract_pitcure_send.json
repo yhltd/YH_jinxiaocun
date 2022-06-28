@@ -2,5 +2,7 @@
   "usingComponents": {
     "canvas-drag": "../../components/canvas-drag/index",
     "signature" : "../../components/signature/signature"
-  }
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "合同签字"
 }

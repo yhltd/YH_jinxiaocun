@@ -10,6 +10,7 @@ Page({
     this_user_id:'',
     this_company:'',
     this_full_name:'',
+    power_array:['管理员','用户'],
     tableShow: true,
     delWindow1: false,
     tjShow: false,
@@ -112,6 +113,14 @@ Page({
     
   },
 
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      power: _this.data.power_array[e.detail.value]
+    })
+  },
+
   tableShow: function (e) {
     var _this = this
     wx.cloud.callFunction({
@@ -184,6 +193,7 @@ Page({
   add1: function () {
     var _this = this
     if (_this.data.full_name != "" && _this.data.user_name != "" && _this.data.password != "" && _this.data.power != "") {
+      
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
@@ -196,10 +206,16 @@ Page({
           for (var key in this_id){
             id_value = this_id[key]
           }
+          var sql = ""
+          if(_this.data.power =='管理员'){
+            sql ="insert into contract_personnel_power(personnel_id,gerenzhongxin_sel,gerenzhongxin_upd,hetongguanli_sel,hetongguanli_del,hetongguanli_upd,hetongguanli_add,zhanghuzhongxin_sel,zhanghuzhongxin_del,zhanghuzhongxin_upd,zhanghuzhongxin_add,yinzhangguanli_sel,yinzhangguanli_del,yinzhangguanli_upd,yinzhangguanli_add,hetongguanli_dow) values('" + id_value + "','是','是','是','是','是','是','是','是','是','是','是','是','是','是','是')"
+          }else{
+            sql = "insert into contract_personnel_power(personnel_id,gerenzhongxin_sel,gerenzhongxin_upd,hetongguanli_sel,hetongguanli_del,hetongguanli_upd,hetongguanli_add,zhanghuzhongxin_sel,zhanghuzhongxin_del,zhanghuzhongxin_upd,zhanghuzhongxin_add,yinzhangguanli_sel,yinzhangguanli_del,yinzhangguanli_upd,yinzhangguanli_add,hetongguanli_dow) values('" + id_value + "','是','是','否','否','否','否','否','否','否','否','否','否','否','否','否')"
+          }
           wx.cloud.callFunction({
             name: 'sqlServer_cw',
             data: {
-              query: "insert into contract_personnel_power(personnel_id,gerenzhongxin_sel,gerenzhongxin_upd,hetongguanli_sel,hetongguanli_del,hetongguanli_upd,hetongguanli_add,zhanghuzhongxin_sel,zhanghuzhongxin_del,zhanghuzhongxin_upd,zhanghuzhongxin_add,yinzhangguanli_sel,yinzhangguanli_del,yinzhangguanli_upd,yinzhangguanli_add) values('" + id_value + "','是','是','是','是','是','是','是','是','是','是','是','是','是','是')"
+              query: sql
             },
             success: res => {
               console.log("权限添加成功")
@@ -374,28 +390,35 @@ Page({
     var gai
     var cha
     var look
+    var dow
+    var this_dow
     if(e.detail.value==0){
       gai = list.gerenzhongxin_upd
       cha = list.gerenzhongxin_sel
       look = true
+      dow = true
     }else if(e.detail.value==1){
       zeng = list.hetongguanli_add
       shan = list.hetongguanli_del
       gai = list.hetongguanli_upd
       cha = list.hetongguanli_sel
+      this_dow = list.hetongguanli_dow
       look = false
+      dow = false
     }else if(e.detail.value==2){
       zeng = list.zhanghuzhongxin_add
       shan = list.zhanghuzhongxin_del
       gai = list.zhanghuzhongxin_upd
       cha = list.zhanghuzhongxin_sel
       look = false
+      dow = true
     }else if(e.detail.value==3){
       zeng = list.yinzhangguanli_add
       shan = list.yinzhangguanli_del
       gai = list.yinzhangguanli_upd
       cha = list.yinzhangguanli_sel
       look = false
+      dow = true
     }
     // }else if(e.detail.value==4){
     //   zeng = list.pzhz_add
@@ -434,7 +457,9 @@ Page({
       quanxian_delete:shan,
       quanxian_update:gai,
       quanxian_select:cha,
-      look:look
+      quanxian_dow:this_dow,
+      look:look,
+      dow:dow
     })
     
     console.log(list)
@@ -442,6 +467,7 @@ Page({
     console.log(_this.data.quanxian_delete)
     console.log(_this.data.quanxian_update)
     console.log(_this.data.quanxian_select)
+    console.log(_this.data.quanxian_dow)
   },
 
   quanxian: function () {
@@ -462,6 +488,7 @@ Page({
             quanxian_update:res.result.recordset[0].gerenzhongxin_upd,
             quanxian_select:res.result.recordset[0].gerenzhongxin_sel,
             look:true,
+            dow:true
           })
           console.log(_this.data.this_quanxian)
           _this.qxShow()
@@ -879,11 +906,35 @@ Page({
         
   },
 
+  switch5Change: function (e) {
+    var _this = this
+    var list = _this.data.this_quanxian
+    console.log(e.detail.value)
+    if (e.detail.value == true) {
+      if(_this.data.index==1){
+        list.hetongguanli_dow = '是'
+        _this.setData({
+          quanxian_dow:'是',
+          this_quanxian:list,
+        })
+      }
+    }else{
+      if(_this.data.index==1){
+        list.hetongguanli_dow = '否'
+        _this.setData({
+          quanxian_dow:'否',
+          this_quanxian:list,
+        })
+      }
+    }
+        
+  },
+
   qxsave:function(){
 
     var _this = this
     var list = _this.data.this_quanxian
-    var sql = "update contract_personnel_power set gerenzhongxin_sel ='" + (list.gerenzhongxin_sel == null ? "否" : list.gerenzhongxin_sel)  + "',gerenzhongxin_upd ='" + (list.gerenzhongxin_upd == null ? "否" :list.gerenzhongxin_upd) + "',hetongguanli_sel ='" + (list.hetongguanli_sel == null ? "否" : list.hetongguanli_sel) + "',hetongguanli_del = '" + (list.hetongguanli_del == null ? "否" : list.hetongguanli_del) + "',hetongguanli_upd ='" + (list.hetongguanli_upd == null ? "否" : list.hetongguanli_upd) + "',hetongguanli_add ='" + (list.hetongguanli_add == null ? "否" : list.hetongguanli_add) + "',zhanghuzhongxin_sel ='" + (list.zhanghuzhongxin_sel == null ? "否" : list.zhanghuzhongxin_sel) + "',zhanghuzhongxin_del ='" + (list.zhanghuzhongxin_del == null ? "否" : list.zhanghuzhongxin_del) + "',zhanghuzhongxin_upd ='" + (list.zhanghuzhongxin_upd == null ? "否" : list.zhanghuzhongxin_upd) + "',zhanghuzhongxin_add ='" + (list.zhanghuzhongxin_add == null ? "否" : list.zhanghuzhongxin_add) + "',yinzhangguanli_sel ='" + (list.yinzhangguanli_sel == null ? "否" : list.yinzhangguanli_sel) + "',yinzhangguanli_del ='" + (list.yinzhangguanli_del == null ? "否" : list.yinzhangguanli_del) + "',yinzhangguanli_upd ='" + (list.yinzhangguanli_upd == null ? "否" : list.yinzhangguanli_upd) + "',yinzhangguanli_add ='" + (list.yinzhangguanli_add == null ? "否" : list.yinzhangguanli_add) + "' where personnel_id ='" + _this.data.id + "';"
+    var sql = "update contract_personnel_power set gerenzhongxin_sel ='" + (list.gerenzhongxin_sel == null ? "否" : list.gerenzhongxin_sel)  + "',gerenzhongxin_upd ='" + (list.gerenzhongxin_upd == null ? "否" :list.gerenzhongxin_upd) + "',hetongguanli_sel ='" + (list.hetongguanli_sel == null ? "否" : list.hetongguanli_sel) + "',hetongguanli_del = '" + (list.hetongguanli_del == null ? "否" : list.hetongguanli_del) + "',hetongguanli_upd ='" + (list.hetongguanli_upd == null ? "否" : list.hetongguanli_upd) + "',hetongguanli_add ='" + (list.hetongguanli_add == null ? "否" : list.hetongguanli_add) + "',zhanghuzhongxin_sel ='" + (list.zhanghuzhongxin_sel == null ? "否" : list.zhanghuzhongxin_sel) + "',zhanghuzhongxin_del ='" + (list.zhanghuzhongxin_del == null ? "否" : list.zhanghuzhongxin_del) + "',zhanghuzhongxin_upd ='" + (list.zhanghuzhongxin_upd == null ? "否" : list.zhanghuzhongxin_upd) + "',zhanghuzhongxin_add ='" + (list.zhanghuzhongxin_add == null ? "否" : list.zhanghuzhongxin_add) + "',yinzhangguanli_sel ='" + (list.yinzhangguanli_sel == null ? "否" : list.yinzhangguanli_sel) + "',yinzhangguanli_del ='" + (list.yinzhangguanli_del == null ? "否" : list.yinzhangguanli_del) + "',yinzhangguanli_upd ='" + (list.yinzhangguanli_upd == null ? "否" : list.yinzhangguanli_upd) + "',yinzhangguanli_add ='" + (list.yinzhangguanli_add == null ? "否" : list.yinzhangguanli_add) + "',hetongguanli_dow ='" + (list.hetongguanli_dow == null ? "否" : list.hetongguanli_dow) + "' where personnel_id ='" + _this.data.id + "';"
 
     console.log(sql)
 

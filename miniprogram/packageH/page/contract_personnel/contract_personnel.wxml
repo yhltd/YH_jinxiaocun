@@ -43,7 +43,9 @@
     <view class="lables">密码</view>
     <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
     <view class="lables">权限</view>
-    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{power_array}}">
+      <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" bindtap="qxShow">取消</button>
     <button class="bt_bottom" bindtap="add1">添加</button>
@@ -62,7 +64,9 @@
     <view class="lables">密码</view>
     <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
     <view class="lables">权限</view>
-    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{power_array}}">
+      <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" bindtap="qxShow">取消</button>
     <button class="bt_bottom" bindtap="upd1" >修改</button>
@@ -107,6 +111,7 @@
     <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}">删除权限：　　是<switch data-column="quanxian_delete" name="quanxian_delete" checked="{{quanxian_delete=='是'?true:false}}" bindchange="switch2Change"></switch>否</view>
     <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" >修改权限：　　是<switch data-column="quanxian_update" name="quanxian_update" checked="{{quanxian_update=='是'?true:false}}" bindchange="switch3Change"></switch>否</view>
     <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}">添加权限：　　是<switch data-column="quanxian_add" name="quanxian_add" checked="{{quanxian_add=='是'?true:false}}" bindchange="switch1Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{dow}}">下载合同：　　是<switch data-column="quanxian_dow" name="quanxian_dow" checked="{{quanxian_dow=='是'?true:false}}" bindchange="switch5Change"></switch>否</view>
 
   </view>
   <view class="bottom_view2">

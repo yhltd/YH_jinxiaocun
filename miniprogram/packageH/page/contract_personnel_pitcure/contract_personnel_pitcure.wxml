@@ -6,4 +6,6 @@
 		</view>
 	</view>
 </view>
-<image class='jiahao1' src='/images/jiahao1.png' bindtap='jiahao1'> </image>
+<image class='jiahao1' src='/images/jiahao1.png' bindtap='jiahao1'>
+</image>
+

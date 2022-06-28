@@ -17,6 +17,7 @@ Page({
     qianzi_id:'',
     hetong_pitcure:'',
     qianzi_type:'',
+    send_judge:'',
   },
 
   /**
@@ -28,7 +29,8 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       hetong_id : userInfo.id,
-      qianzi_type : userInfo.qianzi_type
+      qianzi_type : userInfo.qianzi_type,
+      send_judge:userInfo.send_judge
     })
     console.log(userInfo.id)
     _this.init();
@@ -74,56 +76,6 @@ Page({
 
   },
 
-  //合成图片
-  hechengimge: function () {
-    // 给个小提示，正在执行
-    var _this = this
-    wx.showLoading({
-      title: '合成中',
-      mask: true
-    })
-    console.log(this, '123');
-    // 绘制合成图片到canvas
-    let that = this
-    that.setData({
-      show: false
-    })
-    const ctx = wx.createCanvasContext('handWriting') //让这个先执行
-    ctx.drawImage(_this.data.hetong_pitcure, 0, 0, (750 / 2), (1000 / 2)) //1、背景图
-    console.log(this, '1、背景图'+_this.data.hetong_pitcure);
-    ctx.drawImage(_this.data.qianzi_pitcure, 50, 400, 100, 30) //2、签名图
-    console.log(this, '2、签名图'+_this.data.qianzi_pitcure);
-    console.log(this, '345');
-    ctx.draw(true, () => {
-      console.log(this, 'panduan1');
-      //获取临时缓存合成照片路径，存入data中
-      wx.canvasToTempFilePath({
-        canvasId: 'handWriting',
-        success: function (res) {
-          console.log(this, 'panduan2');
-          var tempFilePath = res.tempFilePath;
-          console.log(tempFilePath)
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000
-          })
-        },
-        fail: function (res) {
-          console.log(this, 'panduan3');
-          console.log(res);
-          wx.showToast({
-            title: '失败',
-            icon: 'error',
-            duration: 2000
-          })
-        }
-      }, this)
-    }
-    
-    )
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -133,62 +85,6 @@ Page({
     console.log(that.data.qianzi_pitcure)
     console.log(that.data.qianzi_id)
     that.init();
-    // if(that.data.qianzi_id != ''){
-    //   console.log('panduan1')
-    //   for(var i=0;i<_this.data.all.length;i++){
-    //     if(_this.data.all[i].id == that.data.qianzi_id){
-    //       console.log('panduan2')
-    //       var str = _this.data.all[i].picture;
-    //       str = str.replace('data:image/jpeg;base64,','')
-    //       console.log(str)
-    //       fs.writeFile({
-    //         filePath: codeimg,
-    //         data: str,
-    //         encoding: 'base64',
-    //         success: (res) => {
-    //           //写入成功了的话，新的图片路径就能用了
-    //           console.log(res)
-    //           console.log(codeimg)
-    //           _this.setData({
-    //             hetong_pitcure: codeimg
-    //           })
-    //           _this.hechengimge();
-    //           // const ctx = wx.createCanvasContext('handWriting') //让这个先执行
-    //           // ctx.drawImage(codeimg, 0, 0, (750 / 2), (1000 / 2)) //1、背景图
-    //           // ctx.drawImage(_this.data.qianzi_pitcure, 50, 400, 100, 30) //
-    //           // ctx.draw(true, () => {
-    //           //   console.log('panduan3')
-    //           //   //获取临时缓存合成照片路径，存入data中
-    //           //   wx.canvasToTempFilePath({
-    //           //     canvasId: 'handWriting',
-    //           //     success: function (res) {
-    //           //       console.log('panduan4')
-    //           //       var tempFilePath = res.tempFilePath;
-    //           //       console.log(tempFilePath)
-    //           //       wx.showToast({
-    //           //         title: '成功',
-    //           //         icon: 'success',
-    //           //         duration: 2000
-    //           //       })
-    //           //     },
-    //           //     fail: function (res) {
-    //           //       console.log('panduan5')
-    //           //       console.log(res);
-    //           //       wx.showToast({
-    //           //         title: '失败',
-    //           //         icon: 'error',
-    //           //         duration: 2000
-    //           //       })
-    //           //     }
-    //           //   }, this)
-    //           // }
-    //           // )
-
-    //         }
-    //       });
-    //     }
-    //   }
-    // }
   },
 
   /**
@@ -231,18 +127,50 @@ Page({
     var id = e.currentTarget.dataset.id
     console.log(id)
     console.log(that.data.all)
+    console.log(that.data.send_judge)
+    if(that.data.send_judge =='是'){
+      wx.showToast({
+        title:"此合同已过签字",
+        icon: 'none',//图标，支持"success"、"loading" 
+        duration: 1500,//提示的延迟时间，单位毫秒，默认：1500 
+        mask: true,//是否显示透明蒙层，防止触摸穿透，默认：false 
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '是否在此图片上签字？',
+        success: function(res) {
+          if (res.confirm) {
+            
+            var picture_id = that.data.all[id].id
+            wx.navigateTo({
+              url: '../contract_pitcure_send/contract_pitcure_send' + '?userInfo=' + JSON.stringify({
+                id : picture_id,
+                qianzi_type: that.data.qianzi_type
+              })
+            })
+  
+          } else if (res.cancel) {
+            return false;
+          }
+        }
+      })
+    }
+
+  },
+
+  yulan:function(e){
+    var that = this
+    var id = e.currentTarget.dataset.id
     wx.showModal({
       title: '提示',
-      content: '是否在此图片上签字？',
+      content: '是否查看此图片？',
       success: function(res) {
         if (res.confirm) {
           
-          var picture_id = that.data.all[id].id
-          wx.navigateTo({
-            url: '../contract_pitcure_send/contract_pitcure_send' + '?userInfo=' + JSON.stringify({
-              id : picture_id,
-              qianzi_type: that.data.qianzi_type
-            })
+          var this_picture = that.data.all[id].picture
+          wx.previewImage({
+            urls: [this_picture], //预览图片 数组
           })
 
         } else if (res.cancel) {
@@ -250,6 +178,6 @@ Page({
         }
       }
     })
-  },
+  }
 
 })

@@ -8,9 +8,15 @@
 <view class="btn" bindtap="onChangeBgImage">改变背景照片</view>
 <view class="btn" bindtap="onExportJSON">导出模板</view>
 <view class="btn" bindtap="onImport">导入默认模板</view> -->
-<view class="btn" bindtap="onClearCanvas">清空画布</view>
+<!-- <view class="btn" bindtap="onClearCanvas">清空画布</view> -->
 <!-- <view class="btn" bindtap="onUndo">后退</view> -->
-<view class="btn" bindtap="qianzi_show">打开签字画板</view>
-<view class="btn" bindtap="saveAs">保存</view>
+<!-- <view class="btn" bindtap="qianzi_show">打开签字画板</view>
+<view class="btn" bindtap="saveAs">保存</view> -->
+
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" bindtap="onClearCanvas" >清空</button>
+    <button class="bt_bottom" bindtap="qianzi_show" >签字画板</button>
+    <button class="bt_bottom" bindtap="saveAs" >保存</button>
+</view>
 
 <signature id="signature" bind:saveToImage="saveToImage"></signature>

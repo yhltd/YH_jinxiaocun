@@ -119,3 +119,17 @@
       position: absolute;
       top: 1%;
     }
+
+
+    .jiahao2{
+      width: 40px;
+      height: 40px;
+       border-radius: 100%;
+       position: fixed;
+       bottom: 300rpx;
+       right: 20rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+       z-index: 9;
+      }

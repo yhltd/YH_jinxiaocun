@@ -228,4 +228,64 @@ Page({
     })
   },
 
+
+  jiahao2(){
+    var _this = this
+    wx.showModal({
+      title: '提示',
+      content: '是否下载合同图片？',
+      success: function(res) {
+        if (res.confirm) {
+          for(var i=0;i< _this.data.all.length;i++){
+            console.log(_this.data.all[i].picture)
+            wx.cloud.downloadFile({
+              fileID :_this.data.all[i].picture,
+              filePath: wx.env.USER_DATA_PATH,
+              success(res) {
+                console.log(res)
+                wx.saveImageToPhotosAlbum({
+                  filePath: res.tempFilePath, //图片文件路径
+                  success: function (data) {
+                      console.log(data)
+                  },
+                })
+              }
+            })
+            
+          }
+
+          wx.showToast({
+            title: '下载完成',
+            icon: 'none'
+          })
+
+        } else if (res.cancel) {
+          return false;
+        }
+      }
+    })
+  },
+
+
+  yulan:function(e){
+    var that = this
+    var id = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '提示',
+      content: '是否查看此图片？',
+      success: function(res) {
+        if (res.confirm) {
+          
+          var this_picture = that.data.all[id].picture
+          wx.previewImage({
+            urls: [this_picture], //预览图片 数组
+          })
+
+        } else if (res.cancel) {
+          return false;
+        }
+      }
+    })
+  }
+
 })

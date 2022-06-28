@@ -80,6 +80,11 @@
     </picker>
     <view class="lables">签字人</view>
     <input bindinput="onInput" data-column="send_out" class="input_text_form"  value="{{send_out}}" type="text" name="send_out"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{judge_array}}">
+      <view class="lables">是否关闭</view>
+    <input bindinput="onInput" data-column="send_judge" class="input_text_form"  value="{{send_judge}}" type="text" name="send_judge" disabled="disabled"></input>
+    </picker>
+
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" bindtap="qxShow">取消</button>
     <button class="bt_bottom" bindtap="upd1" >保存</button>

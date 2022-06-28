@@ -6,3 +6,20 @@
   border:solid 1px #dfdfdf;
   border-radius: 10rpx;
 }
+
+.bottom_view{
+  height: 10%;
+  align-items: center;
+  display: flex;
+  bottom: 2%;
+  margin-top: 30px;
+}
+
+.bt_bottom{
+  width: 32%;
+  background-color: #282B33;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+  margin-top: -1%;
+}

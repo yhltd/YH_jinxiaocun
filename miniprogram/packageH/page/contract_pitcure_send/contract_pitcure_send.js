@@ -43,11 +43,19 @@ Page({
                   console.log(canvas_width + ' ' + canvas_height)
                   wx.getSystemInfo({
                     success: (res) => {
+                      var pingmu_height = (res.safeArea.height * 0.7)* (750 / wx.getSystemInfoSync().windowWidth);
                       var this_width = res.safeArea.width * (750 / wx.getSystemInfoSync().windowWidth);
                       console.log(this_width)
                       var this_bili = canvas_width / this_width
                       console.log('宽度比例' + this_bili)
                       var this_height =parseInt(canvas_height / this_bili) 
+
+                      if(this_height > pingmu_height){
+                        this_bili = canvas_height / pingmu_height
+                        this_width = parseInt(canvas_width / this_bili) 
+                        this_height = pingmu_height
+                      }
+
                       console.log(this_height)
                       _this.setData({
                         height: this_height,
@@ -152,6 +160,10 @@ Page({
      * 导出图片
      */
     onExport() {
+      wx.showLoading({
+        title:'保存中',
+        mask:true,//此时遮罩层起作用
+    })
       var _this=this;
         CanvasDrag.export()
             .then((filePath) => {
@@ -171,6 +183,8 @@ Page({
                     })
                     console.log(_this.data.fileID)
                     _this.yunhanshu()
+                    wx.hideLoading();
+                    
                     // wx.cloud.callFunction({
                     //   name: 'sqlServer_cw',
                     //   data: {
@@ -202,6 +216,7 @@ Page({
                   },
                   fail: e => {
                     console.error('[上传图片] 失败：', e)
+                    wx.hideLoading();
                   }
                 });
                 // wx.saveImageToPhotosAlbum({
@@ -219,6 +234,7 @@ Page({
             })
             .catch((e) => {
                 console.error(e);
+                wx.hideLoading();
             })
             console.log('end')
     },
@@ -250,6 +266,9 @@ Page({
             icon: 'none'
           })
           wx.hideLoading();
+          wx.navigateBack({
+            delta: 1
+          });
         },
         err: res => {
           console.log("错误!"+res)

@@ -12,25 +12,25 @@ Page({
     active:'1',
     userInfo: [],
     showList: [
-      {
-        text: "个人中心",
-        url: "../contract_my/contract_my"
-      },
-       {
-        text: "合同管理",
-        url: "../contract_manage/contract_manage"
-      }, {
-        text: "账户中心",
-        url: "../contract_personnel/contract_personnel"
-      }, 
       // {
-      //   text: "印章管理",
-      //   url: "../contract_personnel_pitcure/contract_personnel_pitcure"
+      //   text: "个人中心",
+      //   url: "../contract_my/contract_my"
+      // },
+      //  {
+      //   text: "合同管理",
+      //   url: "../contract_manage/contract_manage"
+      // }, {
+      //   text: "账户中心",
+      //   url: "../contract_personnel/contract_personnel"
       // }, 
-      {
-        text: "退出",
-        url: 　""
-      }
+      // // {
+      // //   text: "印章管理",
+      // //   url: "../contract_personnel_pitcure/contract_personnel_pitcure"
+      // // }, 
+      // {
+      //   text: "退出",
+      //   url: 　""
+      // }
     ]
   },
   go: function (e) {
@@ -72,6 +72,20 @@ Page({
         id : _this.data.id,
         company : _this.data.company,
         full_name : _this.data.full_name,
+        power:_this.data.power
+      })
+    })
+  },
+  go_qianzi:function(){
+    var _this = this
+    wx.navigateTo({
+      url: "../contract_my/contract_my" + '?userInfo=' + JSON.stringify({
+        user_name : _this.data.user_name,
+        id : _this.data.id,
+        company : _this.data.company,
+        full_name : _this.data.full_name,
+        power:_this.data.power,
+        qianzi: '待签字'
       })
     })
   },
@@ -91,57 +105,111 @@ Page({
       power:userInfo.power
     })
     var show_list = []
-    if(userInfo.power == '管理员'){
-      show_list = [
-        {
-          text: "个人中心",
-          url: "../contract_my/contract_my"
-        },
-         {
-          text: "合同管理",
-          url: "../contract_manage/contract_manage"
-        }, {
-          text: "账户中心",
-          url: "../contract_personnel/contract_personnel"
-        }, 
-        // {
-        //   text: "印章管理",
-        //   url: "../contract_personnel_pitcure/contract_personnel_pitcure"
-        // }, 
-        {
-          text: "退出",
-          url: 　""
-        }
-      ]
-    }else{
-      show_list = [
-        {
-          text: "个人中心",
-          url: "../contract_my/contract_my"
-        },
-        //  {
-        //   text: "合同管理",
-        //   url: "../contract_manage/contract_manage"
-        // }, {
-        //   text: "账户中心",
-        //   url: "../contract_personnel/contract_personnel"
-        // }, 
-        // {
-        //   text: "印章管理",
-        //   url: "../contract_personnel_pitcure/contract_personnel_pitcure"
-        // }, 
-        {
-          text: "退出",
-          url: 　""
-        }
-      ]
-    }
+    _this.quanxian_get()
+    // if(userInfo.power == '管理员'){
+    //   show_list = [
+    //     {
+    //       text: "个人中心",
+    //       url: "../contract_my/contract_my"
+    //     },
+    //      {
+    //       text: "合同管理",
+    //       url: "../contract_manage/contract_manage"
+    //     }, {
+    //       text: "账户中心",
+    //       url: "../contract_personnel/contract_personnel"
+    //     }, 
+    //     // {
+    //     //   text: "印章管理",
+    //     //   url: "../contract_personnel_pitcure/contract_personnel_pitcure"
+    //     // }, 
+    //     {
+    //       text: "退出",
+    //       url: 　""
+    //     }
+    //   ]
+    // }else{
+    //   show_list = [
+    //     {
+    //       text: "个人中心",
+    //       url: "../contract_my/contract_my"
+    //     },
+    //     //  {
+    //     //   text: "合同管理",
+    //     //   url: "../contract_manage/contract_manage"
+    //     // }, {
+    //     //   text: "账户中心",
+    //     //   url: "../contract_personnel/contract_personnel"
+    //     // }, 
+    //     // {
+    //     //   text: "印章管理",
+    //     //   url: "../contract_personnel_pitcure/contract_personnel_pitcure"
+    //     // }, 
+    //     {
+    //       text: "退出",
+    //       url: 　""
+    //     }
+    //   ]
+    // }
 
-    _this.setData({
-      showList : show_list,
+    // _this.setData({
+    //   showList : show_list,
+    // })
+
+
+  },
+
+  quanxian_get(){
+    var _this = this
+    var sql = "select * from contract_personnel_power where personnel_id ='" + _this.data.id + "'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset[0]
+        var show_list = []
+        if(list.gerenzhongxin_sel == '是'){
+          show_list.push({
+            text: "个人中心",
+            url: "../contract_my/contract_my"
+          })
+        }
+        if(list.hetongguanli_sel == '是'){
+          show_list.push({
+            text: "合同管理",
+            url: "../contract_manage/contract_manage"
+          })
+        }
+        if(list.zhanghuzhongxin_sel == '是'){
+          show_list.push({
+            text: "账户中心",
+            url: "../contract_personnel/contract_personnel"
+          })
+        }
+        show_list.push({
+          text: "退出",
+          url: ""
+        })
+        _this.setData({
+          showList:show_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
-
-
   },
 
   /**

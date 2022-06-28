@@ -11,6 +11,10 @@
   display: flex;
   justify-content: center;
 }
+.images_st{
+  width:20px;
+  height:20px
+}
 
 .login {
   display: flex;

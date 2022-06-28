@@ -161,7 +161,7 @@
       <view style="width: 0;margin-left: 6%;">~</view>
       <input class="select_view_input" type="number" value="{{empty}}" placeholder="月" name="month"/>
     </view>
-    <view class="moreDo_bt_view" style="">
+    <view class="moreDo_bt_view">
       <button class="moreDo_bt" bindtap="hid_view">返回</button>
       <button class="moreDo_bt" form-type="submit">查询</button>
     </view>

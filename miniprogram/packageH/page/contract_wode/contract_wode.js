@@ -9,6 +9,9 @@ Page({
     userInfo:"",
     bianhao:"",
     this_name:"",
+    this_company:'',
+    this_username:'',
+    this_power:''
   },
 
   /**
@@ -21,13 +24,22 @@ Page({
     _this.setData({
       userInfo : JSON.parse(options.userInfo),
       this_name:user.full_name,
-      bianhao:user.bianhao
+      bianhao:user.bianhao,
+      this_company:user.company,
+      this_username:user.user_name,
+      this_power:user.power
     })
   },
 
   go3:function(){
     wx.reLaunch({
       url: '../../../pages/login/login',
+    })
+  },
+
+  go4:function(){
+    wx.navigateTo({
+      url: '../contract_guanyugongsi/contract_guanyugongsi',
     })
   },
 
