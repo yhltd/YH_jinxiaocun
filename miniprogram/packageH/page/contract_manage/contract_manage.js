@@ -242,7 +242,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
-          query: "insert into contract_manage(contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,send_judge) values('" + _this.data.contract_code + "','" + _this.data.contract_name + "','" + _this.data.contract_type + "','" + _this.data.first_party + "','" + _this.data.second_party + "','" + _this.data.full_name + "','" + _this.data.creation_date + "','" + _this.data.send_out + "','" + _this.data.company + "','否')"
+          query: "insert into contract_manage(contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,send_judge) values('" + _this.data.contract_code + "','" + _this.data.contract_name + "','" + _this.data.contract_type + "','" + _this.data.first_party + "','" + _this.data.second_party + "','" + _this.data.user_name + "','" + _this.data.creation_date + "','" + _this.data.send_out + "','" + _this.data.company + "','否')"
         },
         success: res => {
           _this.setData({

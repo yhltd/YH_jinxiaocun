@@ -378,6 +378,95 @@ Page({
         isupd: true
       },
     ],
+
+    title2: [
+      {
+        text: "姓名",
+        width: 20,
+        columnName: "B",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "部门",
+        width: 20,
+        columnName: "C",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "岗位",
+        width: 20,
+        columnName: "D",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "基本工资",
+        width: 20,
+        columnName: "G",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人养老",
+        width: 20,
+        columnName: "AJ",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人失业",
+        width: 20,
+        columnName: "AK",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人医疗",
+        width: 20,
+        columnName: "AL",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人生育",
+        width: 20,
+        columnName: "AM",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人公积金",
+        width: 20,
+        columnName: "AN",
+        type: "text",
+        isupd: true
+      },
+      
+      {
+        text: "税前工资",
+        width: 20,
+        columnName: "ASA",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "代扣个人所得税",
+        width: 20,
+        columnName: "AW",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "实发工资",
+        width: 20,
+        columnName: "AY",
+        type: "text",
+        isupd: true
+      }
+    ],
+
     companyName :"",
 
     options:[
@@ -611,7 +700,7 @@ Page({
     })
     var list = _this.data.list;
     console.log(list)
-    var title = _this.data.title1;
+    var title = _this.data.title2;
     console.log(title)
     var cloudList = {
       name: '工资明细',

@@ -47,7 +47,7 @@
     <form bindsubmit="edit_cell">
       <picker bindchange="bindPickerChange" value="{{index}}" range="{{kaoqin_array}}" disabled="{{picker_disabled}}">
         <input name="value" type="{{text_type}}" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" value="{{edit_old}}" disabled="{{picker_disabled==true?false:true}}"/>
-        <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
+        <button form-type="submit" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
       </picker>
     </form>
   </view>

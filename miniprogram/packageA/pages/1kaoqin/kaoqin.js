@@ -382,7 +382,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select kaoqinbiao from gongzi_title where kaoqinbiao is not null and kaoqinbiao <> ''"
+        query: "select kaoqinbiao from gongzi_title where kaoqinbiao is not null and kaoqinbiao != ''"
       },
       success: res => {
         console.log(res.result.recordsets[0]);
@@ -537,7 +537,7 @@ Page({
       title_month2 = "12"
     }
     if(that.data.this_date ==1 || that.data.this_date ==2){
-      var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + " and AO = '" + this.data.companyName + "'"
+      var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + " and AO = '" + this.data.companyName + "' order by year,moth"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -989,6 +989,7 @@ Page({
           edit_old: "",
           edit_new: "",
         })
+        that.hide9()
         that.baochi()
       },
       err: res => {
@@ -1037,7 +1038,7 @@ Page({
     //清除标记位
     that.setData({
       modal9: false,
-      edit_old: ''
+      // edit_old: ''
     })
     console.log("隐藏自定义可输入弹窗！！")
   },
@@ -1152,7 +1153,7 @@ Page({
         title_month2 = "12"
       }
 
-      var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
+      var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "' order by year,moth"
 
       wx.cloud.callFunction({
         name: 'sqlServer_117',
@@ -1209,7 +1210,7 @@ Page({
         title_month2 = "12"
       }
 
-      var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "'"
+      var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO = '" + that.data.companyName + "' order by year,moth"
 
       wx.cloud.callFunction({
         name: 'sqlServer_117',
@@ -1354,7 +1355,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + that.data.title_year1 + that.data.title_moth1 +"and year+moth <=" + that.data.title_year2 + that.data.title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "'"
+        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + that.data.title_year1 + that.data.title_moth1 +"and year+moth <=" + that.data.title_year2 + that.data.title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "' order by year,moth"
       },
       success: res => {
         this.setData({
@@ -1400,7 +1401,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from gongzi_kaoqinjilu where name = '" + that.data.name + "' and moth = '" + that.data.title_month + "' and year = '" + that.data.title_year + "' and AO = '" + that.data.companyName + "'"
+        query: "select top 100 * from gongzi_kaoqinjilu where name = '" + that.data.name + "' and moth = '" + that.data.title_month + "' and year = '" + that.data.title_year + "' and AO = '" + that.data.companyName + "' order by year,moth"
       },
       success: res => {
         console.log("查找成功")
@@ -1527,7 +1528,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name like'%" + input + "%' and AO = '" + that.data.companyName + "'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name like'%" + input + "%' and AO = '" + that.data.companyName + "' order by year,moth"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -1547,7 +1548,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_kaoqinjilu where name like '%" + input + "%' and year+moth >= '" +title_year1 + title_month1 + "' and year+moth <= '" + title_year2 + title_month2 + "' and AO = '" + that.data.companyName + "'"
+          query: "select top 100 * from gongzi_kaoqinjilu where name like '%" + input + "%' and year+moth >= '" +title_year1 + title_month1 + "' and year+moth <= '" + title_year2 + title_month2 + "' and AO = '" + that.data.companyName + "' order by year,moth"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
