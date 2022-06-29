@@ -159,10 +159,11 @@ Page({
 
   tableShow: function (ee) {
     var _this = this
+    console.log("select id,contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,case when send_judge = '' then '否' else send_judge end as send_judge from contract_manage where (send_out = '" + ee[0] + "' or first_party = '" + ee[0] + "' or creator = '" + ee[0] + "') and send_judge like '%" + ee[1] + "%' and company = '"+ ee[2] +"'")
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select id,contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,case when send_judge = '' then '否' else send_judge end as send_judge from contract_manage where (send_out = '" + ee[0] + "' or first_party = '" + ee[0] + "') and send_judge like '%" + ee[1] + "%' and company = '"+ ee[2] +"'"
+        query: "select id,contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,case when send_judge = '' then '否' else send_judge end as send_judge from contract_manage where (send_out = '" + ee[0] + "' or first_party = '" + ee[0] + "' or creator = '" + ee[0] + "') and send_judge like '%" + ee[1] + "%' and company = '"+ ee[2] +"'"
       },
       success: res => {
         var list = res.result.recordset
