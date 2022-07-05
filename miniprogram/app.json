@@ -27,7 +27,6 @@
     "pages/home/home",
     "pages/peizhi/peizhi",
     "pages/time/time",
-    "pages/out_in_print/out_in_print",
     "pages/frmedituser/frmedituser",
     "pages/index/index",
     "pages/frmadminform/frmadminform",
@@ -174,6 +173,13 @@
         "page/contract_pitcure_send/contract_pitcure_send",
         "page/contract_wode/contract_wode",
         "page/contract_guanyugongsi/contract_guanyugongsi"
+      ]
+    },
+    {
+      "root": "packageJ",
+      "name": "jinxiaocun",
+      "pages": [
+        "page/out_in_print/out_in_print"
       ]
     }
   ],

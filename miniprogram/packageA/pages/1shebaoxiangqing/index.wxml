@@ -70,7 +70,7 @@
       <block wx:for="{{title}}">
         <view class="th {{(item.shebaoxiangqing == '序号')?'tap':''}}" data-shebaoxiangqing='{{item.shebaoxiangqing}}'>
           <view class="cell_label centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.shebaoxiangqing}}</text>
+            <text style="font-weight:bold;">{{item.shebaoxiangqing}}</text>
           </view>
         </view>
       </block>
@@ -123,7 +123,9 @@
         <view class='td'>
           <view class="cell_label centerclass">{{item.COUNT4}}</view>
         </view>
-
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.BC}}' data-type="number" data-x="{{item.BC}}" data-doinb='BC'>{{item.BC}}</view>
+        </view>
       </view>
     </block>
   </view>

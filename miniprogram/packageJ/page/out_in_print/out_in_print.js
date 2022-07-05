@@ -1,5 +1,5 @@
 var toArrayBuffer = require('to-array-buffer');
-var Buffer = require('buffer/').Buffer;
+var Buffer = require('/buffer').Buffer;
 const app = getApp();
 Page({
 

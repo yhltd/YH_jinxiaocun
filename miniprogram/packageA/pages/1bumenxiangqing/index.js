@@ -97,9 +97,10 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select bumenxiangqing from gongzi_title where bumenxiangqing is not null"
+        query: "select bumenxiangqing from gongzi_title where bumenxiangqing is not null and bumenxiangqing !=''"
       },
       success: res => {
+        console.log(res.result.recordsets[0])
         this.setData({
           title: res.result.recordsets[0]
         })

@@ -68,7 +68,7 @@
       <block wx:for="{{title}}">
         <view class="th {{(item.bumenxiangqing == '序号')?'tap':''}}" data-bumenxiangqing='{{item.bumenxiangqing}}' style="{{item.bumenxiangqing=='序号'?'position:sticky;left:0;top : 0':''}}">
           <view class="cell_label_header centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.bumenxiangqing}}</text>
+            <text style="font-weight:bold;">{{item.bumenxiangqing}}</text>
           </view>
         </view>
       </block>
@@ -225,6 +225,9 @@
         </view>
         <view class='td'>
           <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AY}}" data-doinb='AY'>{{item.AY}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.BC}}' data-type="date" data-x="{{item.BC}}" data-doinb='BC'>{{item.BC}}</view>
         </view>
 
       </view>

@@ -76,6 +76,12 @@ Page({
       text: "工资条",
       index: 11,
       lianjie: "../1gongzitiao/gongzitiao"
+    },
+    {
+      url: "../../images/dangan.png",
+      text: "员工档案",
+      index: 12,
+      lianjie: "../1gongzitiao/gongzitiao"
     }
     ],
     iconList: [{

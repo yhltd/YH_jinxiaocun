@@ -69,10 +69,11 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select TOP 100 id,B,C,D,Z,AJ,(Z+AJ)AS COUNT1,AA,AK,(AA+AK)AS COUNT2,AC,AD,(Z+AA+AC+AD)AS COUNT3,(AJ + AK)AS COUNT4 from gongzi_gongzimingxi where C = '" + department + "' and BD = '"+this.data.companyName+"'"
+        query: "select TOP 100 id,B,C,D,Z,AJ,(Z+AJ)AS COUNT1,AA,AK,(AA+AK)AS COUNT2,AC,AD,(Z+AA+AC+AD)AS COUNT3,(AJ + AK)AS COUNT4,BC from gongzi_gongzimingxi where C = '" + department + "' and BD = '"+this.data.companyName+"'"
       },
       success: res => {
         console.log("进入成功")
+        console.log(res.result.recordset)
         if (res.result.recordset.length < 100) {
           this.setData({
             list: res.result.recordset,
