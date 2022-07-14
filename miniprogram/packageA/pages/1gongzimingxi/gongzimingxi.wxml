@@ -90,230 +90,224 @@
           <view class='table_main'>
             <!--序号 -->
             <view class='td' style='width:80rpx;background-color:white;position: sticky;left: 0;'>
-              <view class="cell_label centerclass" bindlongtap="click_delete" data-id='{{item.id}}' data-name="{{item.B}}">{{idx+1}}</view>
+              <view class="cell_label centerclass" bindlongtap="click_delete" bindtap="click_update" data-id='{{item.id}}' data-name="{{item.B}}">{{idx+1}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name="{{item.B}}" data-type="text" data-x="{{item.B}}" data-doinb='B'>{{item.B}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name="{{item.B}}" data-type="text" data-x="{{item.B}}" data-doinb='B'>{{item.B}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="text" data-x="{{item.C}}" data-doinb='C'>{{item.C}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="text" data-x="{{item.C}}" data-doinb='C'>{{item.C}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="text" data-x="{{item.D}}" data-doinb='D'>{{item.D}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="text" data-x="{{item.D}}" data-doinb='D'>{{item.D}}</view>
             </view>
 
             <view class='td' style="width:300rpx;">
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.E}}" data-doinb='E'>{{item.E}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.E}}" data-doinb='E'>{{item.E}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="date" data-x="{{item.F}}" data-doinb='F'>{{item.F}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="date" data-x="{{item.F}}" data-doinb='F'>{{item.F}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.G}}" data-doinb='G'>{{item.G}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.G}}" data-doinb='G'>{{item.G}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.H}}" data-doinb='H'>{{item.H}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.H}}" data-doinb='H'>{{item.H}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.I}}" data-doinb='I'>{{item.I}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.I}}" data-doinb='I'>{{item.I}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.J}}" data-doinb='J'>{{item.J}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.J}}" data-doinb='J'>{{item.J}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.K}}" data-doinb='K'>{{item.K}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.K}}" data-doinb='K'>{{item.K}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.L}}" data-doinb='L'>{{item.L}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.L}}" data-doinb='L'>{{item.L}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.M}}" data-doinb='M'>{{item.M}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.M}}" data-doinb='M'>{{item.M}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.N}}" data-doinb='N'>{{item.N}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.N}}" data-doinb='N'>{{item.N}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}'  data-type="number" data-x="{{item.O}}" data-doinb='O'>{{item.O}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}'  data-type="number" data-x="{{item.O}}" data-doinb='O'>{{item.O}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.P}}" data-doinb='P'>{{item.P}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.P}}" data-doinb='P'>{{item.P}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.Q}}" data-doinb='Q'>{{item.Q}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.Q}}" data-doinb='Q'>{{item.Q}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.R}}" data-doinb='R'>{{item.R}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.R}}" data-doinb='R'>{{item.R}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.S}}" data-doinb='S'>{{item.S}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.S}}" data-doinb='S'>{{item.S}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.T}}" data-doinb='T'>{{item.T}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.T}}" data-doinb='T'>{{item.T}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.U}}" data-doinb='U'>{{item.U}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.U}}" data-doinb='U'>{{item.U}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.V}}" data-doinb='V'>{{item.V}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.V}}" data-doinb='V'>{{item.V}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.W}}" data-doinb='W'>{{item.W}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.W}}" data-doinb='W'>{{item.W}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.X}}" data-doinb='X'>{{item.X}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.X}}" data-doinb='X'>{{item.X}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.Y}}" data-doinb='Y'>{{item.Y}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.Y}}" data-doinb='Y'>{{item.Y}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.Z}}" data-doinb='Z'>{{item.Z}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.Z}}" data-doinb='Z'>{{item.Z}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AA}}" data-doinb='AA'>{{item.AA}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AA}}" data-doinb='AA'>{{item.AA}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AB}}" data-doinb='AB'>{{item.AB}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AB}}" data-doinb='AB'>{{item.AB}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AC}}" data-doinb='AC'>{{item.AC}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AC}}" data-doinb='AC'>{{item.AC}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AD}}" data-doinb='AD'>{{item.AD}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AD}}" data-doinb='AD'>{{item.AD}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AE}}" data-doinb='AE'>{{item.AE}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AE}}" data-doinb='AE'>{{item.AE}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AF}}" data-doinb='AF'>{{item.AF}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AF}}" data-doinb='AF'>{{item.AF}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-type="number" data-x="{{item.AG}}" data-doinb='AG'>{{item.AG}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-type="number" data-x="{{item.AG}}" data-doinb='AG'>{{item.AG}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AH}}" data-doinb='AH'>{{item.AH}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AH}}" data-doinb='AH'>{{item.AH}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AI}}" data-doinb='AI'>{{item.AI}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AI}}" data-doinb='AI'>{{item.AI}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AJ}}" data-doinb='AJ'>{{item.AJ}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AJ}}" data-doinb='AJ'>{{item.AJ}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AK}}" data-doinb='AK'>{{item.AK}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AK}}" data-doinb='AK'>{{item.AK}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AL}}" data-doinb='AL'>{{item.AL}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AL}}" data-doinb='AL'>{{item.AL}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AM}}" data-doinb='AM'>{{item.AM}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AM}}" data-doinb='AM'>{{item.AM}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AN}}" data-doinb='AN'>{{item.AN}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AN}}" data-doinb='AN'>{{item.AN}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AO}}" data-doinb='AO'>{{item.AO}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AO}}" data-doinb='AO'>{{item.AO}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AP}}" data-doinb='AP'>{{item.AP}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AP}}" data-doinb='AP'>{{item.AP}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AQ}}" data-doinb='AQ'>{{item.AQ}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AQ}}" data-doinb='AQ'>{{item.AQ}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AR}}" data-doinb='AR'>{{item.AR}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AR}}" data-doinb='AR'>{{item.AR}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.ASA}}" data-doinb='ASA'>{{item.ASA}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.ASA}}" data-doinb='ASA'>{{item.ASA}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.ATA}}" data-doinb='ATA'>{{item.ATA}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.ATA}}" data-doinb='ATA'>{{item.ATA}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AU}}" data-doinb='AU'>{{item.AU}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AU}}" data-doinb='AU'>{{item.AU}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AV}}" data-doinb='AV'>{{item.AV}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AV}}" data-doinb='AV'>{{item.AV}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AW}}" data-doinb='AW'>{{item.AW}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AW}}" data-doinb='AW'>{{item.AW}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AX}}" data-doinb='AX'>{{item.AX}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AX}}" data-doinb='AX'>{{item.AX}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AY}}" data-doinb='AY'>{{item.AY}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AY}}" data-doinb='AY'>{{item.AY}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AZ}}" data-doinb='AZ'>{{item.AZ}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.AZ}}" data-doinb='AZ'>{{item.AZ}}</view>
             </view>
 
             <view class='td' style="width:300rpx;">
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.BA}}" data-doinb='BA'>{{item.BA}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.BA}}" data-doinb='BA'>{{item.BA}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="date" data-x="{{item.BB}}" data-doinb='BB'>{{item.BB}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="date" data-x="{{item.BB}}" data-doinb='BB'>{{item.BB}}</view>
             </view>
 
             <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="date" data-x="{{item.BC}}" data-doinb='BC'>{{item.BC}}</view>
+              <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-type="date" data-x="{{item.BC}}" data-doinb='BC'>{{item.BC}}</view>
             </view>
-
-            <view class='td'>
-              <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="text" data-x="{{item.BD}}" data-doinb='BD'>{{item.BD}}</view>
-            </view>
-
-
 
           </view>
         </block>

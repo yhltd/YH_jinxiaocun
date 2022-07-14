@@ -36,7 +36,7 @@
 			<block wx:for="{{title}}" wx:key="">
 				<view class="th {{(item.renyuanxinxiguanli == '编号')?'tap_120':''||(item.renyuanxinxiguanli == '操作栏')?'change_x':''}}" data-renyuanxinxiguanli='{{item.renyuanxinxiguanli}}'>
 					<view class="cell_label_header centerclass">
-						<text style="font-size:; font-weight:bold;">{{item.renyuanxinxiguanli}}</text>
+						<text style="font-weight:bold;">{{item.renyuanxinxiguanli}}</text>
 					</view>
 				</view>
 			</block>

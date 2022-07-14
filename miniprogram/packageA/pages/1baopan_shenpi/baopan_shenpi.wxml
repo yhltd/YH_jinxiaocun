@@ -51,9 +51,9 @@
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="">
-        <view class="th {{(item.baopan == '员工银行账号')?'change':''||(item.baopan == '序号')?'tap_120':''}}" data-baopan='{{item.baopan}}'>
+        <view class="th {{(item.shenpijilu == '员工银行账号')?'change':''||(item.shenpijilu == '序号')?'tap_120':''}}" data-baopan='{{item.shenpijilu}}'>
           <view class="cell_label_header centerclass">
-            <text style=" font-weight:bold;">{{item.baopan}}</text>
+            <text style=" font-weight:bold;">{{item.shenpijilu}}</text>
           </view>
         </view>
       </block>
@@ -65,25 +65,28 @@
       <view class='table_main'>
         <!--序号 -->
         <view class='td' style='width:120rpx;background-color:white;position: sticky;left: 0;'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name="{{item.B}}">{{idx+1}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name="{{item.B}}" bindtap="click_update" bindlongtap="click_delete">{{idx+1}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.B}}" data-name="{{item.B}}" data-doinb='B' data-type="text">{{item.B}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.B}}" data-name="{{item.B}}" data-doinb='B' data-type="text">{{item.shifa_gongzi}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.BA}}" data-type="number" data-doinb='BA'>{{item.BC}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.BA}}" data-type="number" data-doinb='BA'>{{item.geren_zhichu}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.AY}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.qiye_zhichu}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.M}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.yuangong_renshu}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.geren}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.quanqin_tianshu}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.qiye}}</view>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.shenpiren}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-name='{{item.B}}' data-x="{{item.AY}}" data-type="number" data-doinb='AY'>{{item.riqi}}</view>
         </view>
       </view>
     </block>
@@ -114,7 +117,7 @@
     <button class="btn-primary" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="leftDrawer">更多功能
     </button>
     <view style="width:10%"></view>
-    <button class="btn-primary" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="searchBtn" disabled="{{result.sel!=1}}">查找</button>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="searchBtn">查找</button>
     <view style="width:5%"></view>
   </view>
 
@@ -130,11 +133,5 @@
     <button class="btn-primary-back" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">点击返回</button>
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="shenpi_insert" data-mode="left">审批录入</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="shenpi_goto" data-mode="left">审批明细</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button>
   </view>
 </drawer>

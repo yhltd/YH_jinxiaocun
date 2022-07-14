@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "tui-list-cell": "../../../components/list-cell/list-cell",
+    "van-action-sheet": "../../components/action-sheet/index"
+  }
+}

@@ -57,7 +57,10 @@
     <tui-list-cell hover="{{false}}">
       <view class="tui-line-cell">
         <view class="tui-title">▹ 出生日期：</view>
-        <input placeholder-class="phcolor" class="tui-input" name="chushengriqi" placeholder="请输入出生日期" maxlength="50" type="text" value="{{list[0].Q}}" />
+        <picker mode="date" bindchange="updateDate" data-column="Q">
+          <input placeholder-class="phcolor" class="tui-input" name="chushengriqi" placeholder="请输入出生日期" maxlength="50" type="text" disabled="true" value="{{list[0].Q}}" />
+        </picker>
+        
       </view>
     </tui-list-cell>
 
@@ -81,6 +84,14 @@
         <input placeholder-class="phcolor" class="tui-input" name="money" placeholder="请输入基本工资" maxlength="50" type="text" value="{{list[0].F}}" />
       </view>
     </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 绩效工资：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="AC" placeholder="请输入绩效工资" maxlength="50" type="text" value="{{list[0].AC}}" />
+      </view>
+    </tui-list-cell>
+
     <tui-list-cell hover="{{false}}">
       <view class="tui-line-cell">
         <view class="tui-title">▹ 银行卡号：</view>
@@ -90,7 +101,9 @@
     <tui-list-cell hover="{{false}}">
       <view class="tui-line-cell">
         <view class="tui-title">▹ 入职时间：</view>
-        <input placeholder-class="phcolor" class="tui-input" name="date" placeholder="请输入入职时间" maxlength="50" type="text" value="{{list[0].H}}" />
+        <picker mode="date" bindchange="updateDate" data-column="H">
+          <input placeholder-class="phcolor" class="tui-input" name="date" placeholder="请输入入职时间" maxlength="50" type="text" disabled="true" value="{{list[0].H}}" />
+        </picker>
       </view>
     </tui-list-cell>
     <tui-list-cell hover="{{false}}">
@@ -121,6 +134,7 @@
 
     <view class="tui-btn-box">
       <button class="btn-primary" hover-class="btn-hover" formType="submit">提交数据</button>
+      <button class="btn-primary" hover-class="btn-hover" disabled="{{gengduo_panduan}}" style="margin-top: 30rpx;" bindtap="gengduo_goto">更多</button>
       <button class="btn-primary btn-gray" hover-class="btn-gray-hover" formType="reset">重置输入</button>
     </view>
   </form>

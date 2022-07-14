@@ -142,8 +142,12 @@ Page({
     
     ctx.setTextAlign('center')
     ctx.setFillStyle('#000000')
-    ctx.setFontSize(21)   
-    ctx.fillText('出库单', width / 2, 35)
+    ctx.setFontSize(21)
+    if(out_in_type == '入库'){
+      ctx.fillText('入库单', width / 2, 35)
+    }else{
+      ctx.fillText('出库单', width / 2, 35)
+    }
     ctx.setFontSize(17)   
     ctx.setTextAlign('left')
     ctx.fillText('订单号：'+list[0].orderid, 0, 75)

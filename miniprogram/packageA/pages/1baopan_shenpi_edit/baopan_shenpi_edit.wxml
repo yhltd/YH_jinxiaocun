@@ -1,0 +1,58 @@
+<view class="container">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 实发工资：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="shifa_gongzi" placeholder="请输入实发工资" maxlength="50" type="text" value="{{list[0].shifa_gongzi}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 个人支出：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="geren_zhichu" placeholder="请输入个人支出" maxlength="50" type="text" value="{{list[0].geren_zhichu}}"/>
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 企业支出：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="qiye_zhichu" placeholder="请输入企业支出" maxlength="50" type="text" value="{{list[0].qiye_zhichu}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 员工人数：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="yuangong_renshu" placeholder="请输入员工人数" maxlength="50" type="text" value="{{list[0].yuangong_renshu}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 全勤天数：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="quanqin_tianshu" placeholder="请输入全勤天数" maxlength="50" type="text" value="{{list[0].quanqin_tianshu}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 审批人：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="shenpiren" placeholder="请输入审批人" maxlength="50" type="text" value="{{list[0].shenpiren}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 审批日期：</view>
+        <picker mode="date" bindchange="updateDate" data-column="riqi">
+          <input placeholder-class="phcolor" class="tui-input" name="riqi" placeholder="请输入审批日期" maxlength="50" type="date" value="{{list[0].riqi}}" />
+        </picker>
+      </view>
+    </tui-list-cell>
+    <view class="tui-tips">出现问题？请联系我们</view>
+
+    <view class="tui-btn-box">
+      <button class="btn-primary" hover-class="btn-hover" formType="submit">提交数据</button>
+      <button class="btn-primary btn-gray" hover-class="btn-gray-hover" formType="reset">重置输入</button>
+    </view>
+  </form>
+</view>

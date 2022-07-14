@@ -1,0 +1,71 @@
+<view class="container">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 现住址：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="T" placeholder="请输入现住址" maxlength="50" type="text" value="{{list[0].T}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 家庭地址：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="U" placeholder="请输入家庭地址" maxlength="50" type="text" value="{{list[0].U}}"/>
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 银行卡支行：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="V" placeholder="请输入银行卡支行" maxlength="50" type="text" value="{{list[0].V}}" />
+      </view>
+    </tui-list-cell>
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 是否购买社保：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="W" placeholder="请输入是否购买社保" maxlength="50" type="text" value="{{list[0].W}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 公积金账号：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="X" placeholder="请输入公积金账号" maxlength="50" type="text" value="{{list[0].X}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 社保账号：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="Y" placeholder="请输入社保账号" maxlength="50" type="text" value="{{list[0].Y}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 劳动合同签订有效期限：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="Z" placeholder="请输入劳动合同签订有效期限" maxlength="50" type="text" value="{{list[0].Z}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 劳动合同第二次续签：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="AA" placeholder="请输入劳动合同第二次续签" maxlength="50" type="text" value="{{list[0].AA}}" />
+      </view>
+    </tui-list-cell>
+
+    <tui-list-cell hover="{{false}}">
+      <view class="tui-line-cell">
+        <view class="tui-title">▹ 备注：</view>
+        <input placeholder-class="phcolor" class="tui-input" name="AB" placeholder="请输入备注" maxlength="50" type="text" value="{{list[0].AB}}"/>
+      </view>
+    </tui-list-cell>
+
+    <view class="tui-tips">出现问题？请联系我们</view>
+
+    <view class="tui-btn-box">
+      <button class="btn-primary" hover-class="btn-hover" formType="submit">提交数据</button>
+      <button class="btn-primary btn-gray" hover-class="btn-gray-hover" formType="reset">重置输入</button>
+    </view>
+  </form>
+</view>

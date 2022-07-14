@@ -1065,6 +1065,50 @@ Page({
 
   },
 
+  click_update: function (e) {
+    var that = this
+    if (that.data.result.upd != 1) {
+      wx.showToast({
+        title: '您没有权限',
+        icon: 'none'
+      })
+      return;
+    }
+    var $collection = e.currentTarget.dataset
+    var id = $collection.id
+    var name = $collection.name
+    console.log(id)
+    wx.showModal({
+      title: '警告',
+      content: '正在修改姓名为' + name + "的数据\r\n请选择操作",
+      showCancel: true, //是否显示取消按钮
+      cancelText: "取消", //默认是“取消”
+      cancelColor: '#84B9F2', //取消文字的颜色
+      confirmText: "确定", //默认是“确定”
+      confirmColor: '#DD5044', //确定文字的颜色
+      success: function (res) {
+        if (res.cancel) {
+          //点击取消,默认隐藏弹框
+          //这里可以callfunction！！！！
+        } else {
+          //点击修改
+          wx.navigateTo({
+            url: '../1gongzimingxi_edit/index?companyName=' + that.data.companyName + '&id=' + id
+          })
+          wx.showToast({
+            title: '正在跳转',
+            icon: 'none'
+          })
+        }
+      },
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+
+    //修改之后刷新页面
+
+  },
+
 
 
 
@@ -1327,35 +1371,53 @@ Page({
   //添加
   tianjia: function () {
     var that = this
+    // wx.showModal({
+    //   title: '提醒',
+    //   content: "◀◀快速添加将直接添加一行\r\n详细添加将跳转到添加页面▶▶",
+    //   showCancel: true, //是否显示取消按钮
+    //   cancelText: "快速添加", //默认是“取消”
+    //   cancelColor: '', //取消文字的颜色
+    //   confirmText: "详细添加", //默认是“确定”
+    //   confirmColor: '#84B9F2', //确定文字的颜色
+    //   success: function (res) {
+    //     if (res.cancel) {
+    //       //点击取消,默认隐藏弹框
+    //       wx.cloud.callFunction({
+    //         name: 'sqlServer_117',
+    //         data: {
+    //           query: "insert into gongzi_gongzimingxi (B,BC,BD) values('请输入','" + that.data.nowDate + "','" + that.data.companyName + "')"
+    //         },
+    //         success: res => {
+    //           console.log("插入成功")
+    //           that.setData({
+    //             list: res.result.recordset
+    //           })
+    //           that.baochi();
+    //         },
+    //         err: res => {
+    //           console.log("错误!", res)
+    //         }
+    //       })
+    //     } else {
+    //       //点击跳转到详细添加页
+    //       wx.navigateTo({
+    //         url: '../1gongzimingxi_edit/index?companyName=' + that.data.companyName
+    //       })
+    //       wx.showToast({
+    //         title: '正在跳转',
+    //         icon: 'none'
+    //       })
+    //     }
+    //   },
+    //   fail: function (res) {}, //接口调用失败的回调函数
+    //   complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    // })
+
     wx.showModal({
-      title: '提醒',
-      content: "◀◀快速添加将直接添加一行\r\n详细添加将跳转到添加页面▶▶",
-      showCancel: true, //是否显示取消按钮
-      cancelText: "快速添加", //默认是“取消”
-      cancelColor: '', //取消文字的颜色
-      confirmText: "详细添加", //默认是“确定”
-      confirmColor: '#84B9F2', //确定文字的颜色
-      success: function (res) {
-        if (res.cancel) {
-          //点击取消,默认隐藏弹框
-          wx.cloud.callFunction({
-            name: 'sqlServer_117',
-            data: {
-              query: "insert into gongzi_gongzimingxi (B,BC,BD) values('请输入','" + that.data.nowDate + "','" + that.data.companyName + "')"
-            },
-            success: res => {
-              console.log("插入成功")
-              that.setData({
-                list: res.result.recordset
-              })
-              that.baochi();
-            },
-            err: res => {
-              console.log("错误!", res)
-            }
-          })
-        } else {
-          //点击跳转到详细添加页
+      title: '提示',
+      content: '是否添加工资明细？',
+      success: function(res) {
+        if (res.confirm) {
           wx.navigateTo({
             url: '../1gongzimingxi_edit/index?companyName=' + that.data.companyName
           })
@@ -1363,10 +1425,10 @@ Page({
             title: '正在跳转',
             icon: 'none'
           })
+        } else if (res.cancel) {
+          return false;
         }
-      },
-      fail: function (res) {}, //接口调用失败的回调函数
-      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+      }
     })
 
   },

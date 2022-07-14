@@ -45,9 +45,9 @@
   <view class='table'>
     <view class='table_header'>
       <block wx:for="{{title}}" wx:key="">
-        <view class="th {{(item.renyuanjibenxinxi == '身份证号')?'change':''||(item.renyuanjibenxinxi == '银行卡号')?'change':''||(item.renyuanjibenxinxi == '编号')?'tap_120':''||(item.renyuanjibenxinxi == '籍贯')?'change':''||(item.renyuanjibenxinxi == '手机号')?'change':''||(item.renyuanjibenxinxi == '公司')?'change1':''}}" data-renyuanjibenxinxi='{{item.renyuanjibenxinxi}}' style="{{item.renyuanjibenxinxi=='编号'?'position:sticky;top:0;left:0':''}}">
+        <view class="th {{(item.renyuanjibenxinxi == '身份证号')?'change':''||(item.renyuanjibenxinxi == '银行卡号')?'change':''||(item.renyuanjibenxinxi == '编号')?'tap_120':''||(item.renyuanjibenxinxi == '籍贯')?'change':''||(item.renyuanjibenxinxi == '手机号')?'change':''||(item.renyuanjibenxinxi == '劳务合同签订有效期限')?'change':''||(item.renyuanjibenxinxi == '劳务合同第二次续签')?'change':''}}" data-renyuanjibenxinxi='{{item.renyuanjibenxinxi}}' style="{{item.renyuanjibenxinxi=='编号'?'position:sticky;top:0;left:0':''}}">
           <view class="cell_label centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.renyuanjibenxinxi}}</text>
+            <text style=" font-weight:bold;">{{item.renyuanjibenxinxi}}</text>
           </view>
         </view>
       </block>
@@ -75,6 +75,18 @@
         </view>
 
         <view class='td'>
+          <view class="cell_label centerclass">{{item.F}}</view>
+        </view>
+        <view class='td' style="width:300rpx">
+          <view class="cell_label centerclass">{{item.G}}</view>
+        </view>
+        <view class='td' >
+          <view class="cell_label centerclass">{{item.H}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.K}}</view>
+        </view>
+        <view class='td'>
           <view class="cell_label centerclass">{{item.M}}</view>
         </view>
         <view class='td' style="width:300rpx">
@@ -83,39 +95,45 @@
         <view class='td' style="width:300rpx">
           <view class="cell_label centerclass">{{item.O}}</view>
         </view>
-        <view class='td'>
-          <view class="cell_label centerclass">{{item.P}}</view>
-        </view>
+
         <view class='td'>
           <view class="cell_label centerclass">{{item.Q}}</view>
         </view>
-        <view class='td'>
+        <view class='td' >
           <view class="cell_label centerclass">{{item.R}}</view>
         </view>
         <view class='td'>
           <view class="cell_label centerclass">{{item.S}}</view>
         </view>
-
         <view class='td'>
-          <view class="cell_label centerclass">{{item.F}}</view>
+          <view class="cell_label centerclass">{{item.AC}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.T}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.U}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.V}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.W}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.X}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.Y}}</view>
         </view>
         <view class='td' style="width:300rpx">
-          <view class="cell_label centerclass">{{item.G}}</view>
+          <view class="cell_label centerclass">{{item.Z}}</view>
+        </view>
+        <view class='td' style="width:300rpx">
+          <view class="cell_label centerclass">{{item.AA}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.H}}</view>
-        </view>
-        <view class='td'>
-          <view class="cell_label centerclass">{{item.I}}</view>
-        </view>
-        <view class='td'>
-          <view class="cell_label centerclass">{{item.J}}</view>
-        </view>
-        <view class='td'>
-          <view class="cell_label centerclass">{{item.K}}</view>
-        </view>
-        <view class='td' style="width:400rpx">
-          <view class="cell_label centerclass">{{item.L}}</view>
+          <view class="cell_label centerclass">{{item.AB}}</view>
         </view>
       </view>
     </block>

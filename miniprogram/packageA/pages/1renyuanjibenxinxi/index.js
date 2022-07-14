@@ -77,14 +77,109 @@ Page({
         columnName: "K",
         type: "text",
         isupd: true
-      },
-      {
-        text: "公司",
+      },{
+        text: "民族",
         width: 20,
-        columnName: "L",
+        columnName: "M",
         type: "text",
         isupd: true
-      },
+      },{
+        text: "籍贯",
+        width: 20,
+        columnName: "N",
+        type: "text",
+        isupd: true
+      },{
+        text: "手机号",
+        width: 20,
+        columnName: "O",
+        type: "text",
+        isupd: true
+      },{
+        text: "学历",
+        width: 20,
+        columnName: "P",
+        type: "text",
+        isupd: true
+      },{
+        text: "出生日期",
+        width: 20,
+        columnName: "Q",
+        type: "text",
+        isupd: true
+      },{
+        text: "婚姻状况",
+        width: 20,
+        columnName: "R",
+        type: "text",
+        isupd: true
+      },{
+        text: "就职状态",
+        width: 20,
+        columnName: "S",
+        type: "text",
+        isupd: true
+      },{
+        text: "绩效工资",
+        width: 20,
+        columnName: "AC",
+        type: "text",
+        isupd: true
+      },{
+        text: "现住址",
+        width: 20,
+        columnName: "T",
+        type: "text",
+        isupd: true
+      },{
+        text: "家庭地址",
+        width: 20,
+        columnName: "U",
+        type: "text",
+        isupd: true
+      },{
+        text: "银行卡支行",
+        width: 20,
+        columnName: "V",
+        type: "text",
+        isupd: true
+      },{
+        text: "是否购买社保",
+        width: 20,
+        columnName: "W",
+        type: "text",
+        isupd: true
+      },{
+        text: "公积金账号",
+        width: 20,
+        columnName: "X",
+        type: "text",
+        isupd: true
+      },{
+        text: "社保账号",
+        width: 20,
+        columnName: "Y",
+        type: "text",
+        isupd: true
+      },{
+        text: "劳动合同签订有效期限",
+        width: 20,
+        columnName: "Z",
+        type: "text",
+        isupd: true
+      },{
+        text: "劳动合同第二次续签",
+        width: 20,
+        columnName: "AA",
+        type: "text",
+        isupd: true
+      },{
+        text: "备注",
+        width: 20,
+        columnName: "AB",
+        type: "text",
+        isupd: true
+      }
     ],
     page: "1",
     IsLastPage: false,

@@ -82,13 +82,12 @@ Page({
     _this.setData({
       isLoad : false,
       companyName : options.companyName,
-      result : JSON.parse(options.access)
     })
     console.log(_this.data.result)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+_this.data.companyName+"'"
+        query: "select top 100 id,shifa_gongzi,geren_zhichu,qiye_zhichu,yuangong_renshu,quanqin_tianshu,shenpiren,riqi from gongzi_shenpi where gongsi = '"+_this.data.companyName+"'"
       },
       success: res => {
         console.log(res.result)
@@ -113,9 +112,10 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select baopan from gongzi_title where baopan is not null "
+        query: "select shenpijilu from gongzi_title where shenpijilu is not null "
       },
       success: res => {
+        console.log(res.result)
         this.setData({
           title: res.result.recordsets[0]
         })
@@ -168,7 +168,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_gongzimingxi where BD = '"+that.data.companyName+"'"
+        query: "select count(id) as maxpagenumber from gongzi_shenpi where gongsi = '"+that.data.companyName+"'"
       },
       success: res => {
         that.setData({
@@ -307,7 +307,7 @@ Page({
     }
     console.log(start_date)
     console.log(stop_date)
-    var sql = "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+that.data.companyName+"' and BC != '' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
+    var sql = "select top 100 id,shifa_gongzi,geren_zhichu,qiye_zhichu,yuangong_renshu,quanqin_tianshu,shenpiren,riqi from gongzi_shenpi where gongsi = '"+that.data.companyName+"' and riqi != '' and riqi >='" + start_date + "' and riqi <='" + stop_date + "'"
     
     if (index == 0) {
       //按姓名查询
@@ -531,19 +531,12 @@ Page({
 
   click_delete: function (e) {
     var _this = this;
-    if(_this.data.result.del!=1){
-      wx.showToast({
-        title: '您没有权限',
-        icon : 'none'
-      })
-      return;
-    }
     var $collection = e.currentTarget.dataset
     var id = $collection.id
     var name = $collection.name
     wx.showModal({
       title: '操作选择',
-      content: '姓名为' + name + "，序号为" + id + "的成员被选中\r\n请选择操作",
+      content: '确认删除此条记录?',
       showCancel: true, //是否显示取消按钮
       cancelText: "取消", //默认是“取消”
       cancelColor: '', //取消文字的颜色
@@ -557,11 +550,11 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_117',
             data: {
-              query: "DELETE from gongzi_gongzimingxi where id = " + id
+              query: "DELETE from gongzi_shenpi where id = " + id
             },
             success: res => {
               wx.showToast({
-                title: '删除编号'+id+"的员工",
+                title: '已删除',
                 icon :"none"
               })
               _this.baochi();
@@ -569,6 +562,35 @@ Page({
             err: res => {
               console.log("错误!", res)
             }
+          })
+        }
+      },
+      fail: function (res) {}, //接口调用失败的回调函数
+      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
+
+    //修改之后刷新页面
+  },
+
+  click_update: function (e) {
+    var _this = this;
+    var $collection = e.currentTarget.dataset
+    var id = $collection.id
+    var name = $collection.name
+    wx.showModal({
+      title: '操作选择',
+      content: '确认修改此条记录?',
+      showCancel: true, //是否显示取消按钮
+      cancelText: "取消", //默认是“取消”
+      cancelColor: '', //取消文字的颜色
+      confirmText: "确定", //默认是“确定”
+      confirmColor: '#DD5044', //确定文字的颜色
+      success: function (res) {
+        if (res.cancel) {
+        } else {
+          //跳转修改
+          wx.navigateTo({
+            url:'../1baopan_shenpi_edit/baopan_shenpi_edit?companyName=' + _this.data.companyName + "&id=" + id
           })
         }
       },
@@ -627,7 +649,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,shifa_gongzi,geren_zhichu,qiye_zhichu,yuangong_renshu,quanqin_tianshu,shenpiren,riqi from gongzi_shenpi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
         },
         success: res => {
           console.log("上一页进入成功：第" + this.data.page + "页")
@@ -683,7 +705,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BD = '"+that.data.companyName+"' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
+          query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,shifa_gongzi,geren_zhichu,qiye_zhichu,yuangong_renshu,quanqin_tianshu,shenpiren,riqi from gongzi_shenpi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and gongsi = '"+that.data.companyName+"' and riqi >='" + start_date + "' and riqi <='" + stop_date + "'"
         },
         success: res => {
           console.log("返回长度", res.result)
@@ -827,9 +849,9 @@ Page({
     console.log(stop_date)
 
     if(that.data.isSearch){
-      sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and BC >= '"+ start_date +"' and BC <='"+ stop_date +"'"
+      sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, id,shifa_gongzi,geren_zhichu,qiye_zhichu,yuangong_renshu,quanqin_tianshu,shenpiren,riqi from gongzi_shenpi where gongsi = '"+that.data.companyName+"') temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and riqi >= '"+ start_date +"' and riqi <='"+ stop_date +"'"
     }else{
-      sql = "select * from (select id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye,ROW_NUMBER() over(order by [id]) rownumber from gongzi_gongzimingxi where BD = '"+that.data.companyName+"') t where t.rownumber between ('" + that.data.page + "'-1)*100 and '" + that.data.page + "'*100"
+      sql = "select * from (select id,shifa_gongzi,geren_zhichu,qiye_zhichu,yuangong_renshu,quanqin_tianshu,shenpiren,riqi,ROW_NUMBER() over(order by [id]) rownumber from gongzi_shenpi where gongsi = '"+that.data.companyName+"') t where t.rownumber between ('" + that.data.page + "'-1)*100 and '" + that.data.page + "'*100"
     }
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -845,10 +867,7 @@ Page({
         console.log("错误!", res)
       }
     })
-
-
   },
-
 
   /*刷新页面 */
   shuaxin: function (e) {
@@ -873,113 +892,4 @@ Page({
       icon: 'none'
     })
   },
-
-  //添加
-  tianjia: function () {
-    var that = this
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "insert into gongzi_gongzimingxi (B,BD) values('请输入','"+that.data.companyName+"')"
-      },
-      success: res => {
-        console.log("插入成功")
-        that.baochi()
-      },
-      err: res => {
-        console.log("错误!", res)
-      }
-    })
-  },
-  getExcel : function(){
-    var _this = this;
-    wx.showLoading({
-      title: '打开Excel中',
-      mask : 'true'
-    })
-    var list = _this.data.list;
-    console.log(list)
-    var title = _this.data.title1;
-    console.log(title)
-    var cloudList = {
-      name : '报盘',
-      items : [],
-      header : []
-    }
-
-    for(let i=0;i<title.length;i++){
-      cloudList.header.push({
-        item:title[i].text,
-        type:title[i].type,
-        width:title[i].width,
-        columnName:title[i].columnName
-      })
-    }
-    cloudList.items = list
-    console.log(cloudList)
-
-    wx.cloud.callFunction({
-      name:'getExcel',
-      data:{
-        list : cloudList
-      },
-      success: function(res){
-        console.log("获取云储存id")
-        wx.cloud.downloadFile({
-          fileID : res.result.fileID,
-          success : res=> {
-            console.log("获取临时路径")
-            wx.hideLoading({
-              success: (res) => {},
-            })
-            console.log(res.tempFilePath)
-            wx.openDocument({
-              filePath: res.tempFilePath,
-              showMenu : 'true',
-              fileType : 'xlsx',
-              success : res=> {
-                console.log("打开Excel")
-              }
-            })
-          }
-        })
-      },
-      fail : res=> {
-        console.log(res)
-      }
-    })
-  },
-
-  shenpi_insert:function(){
-    var _this = this
-    if(_this.data.list.length > 0){
-      var shifa = 0
-      var geren = 0
-      var qiye = 0
-      var yuangong = 0
-      var quanqin = 0
-      var this_list = _this.data.list
-      for(var i=0;i<this_list.length;i++){
-        shifa = shifa + this_list[i].AY * 1
-        geren = geren + this_list[i].geren * 1
-        qiye = qiye + this_list[i].qiye * 1
-        yuangong = yuangong + 1
-        quanqin = quanqin + this_list[i].M * 1
-      }
-      wx.navigateTo({
-        url: '../1baopan_shenpi_edit/baopan_shenpi_edit?companyName=' + _this.data.companyName + '&shifa=' + shifa + '&geren=' + geren  + '&qiye=' + qiye + '&yuangong=' + yuangong + '&quanqin=' + quanqin 
-      })
-    }else{
-      wx.showToast({
-        title: `无数据，无需审批`,
-        icon: 'none',
-      })
-    }
-  },
-  shenpi_goto:function(){
-    var _this = this
-    wx.navigateTo({
-      url:'../1baopan_shenpi/baopan_shenpi?companyName=' + _this.data.companyName
-    })
-  }
 })

@@ -43,8 +43,7 @@
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/frmadmindetails/frmadmindetails",
-    "pages/frmadminsysm/frmadminsysm",
-    "100lie_page"
+    "pages/frmadminsysm/frmadminsysm"
   ],
   "subpackages": [
     {
@@ -68,7 +67,10 @@
         "pages/1gerensuodeshui/gerensuodeshui",
         "pages/1baoshui/index",
         "pages/1gongzitiao/gongzitiao",
-        "pages/1renyuanxinxiguanli_edit_access/access"
+        "pages/1renyuanxinxiguanli_edit_access/access",
+        "pages/1renyuanxinxiguanli_gengduo/renyuanxinxiguanli_gengduo",
+        "pages/1baopan_shenpi_edit/baopan_shenpi_edit",
+        "pages/1baopan_shenpi/baopan_shenpi"
       ]
     },
     {
