@@ -9,28 +9,22 @@
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
       <view class="table_main">
         <view class="list_view" style="width:300rpx">
-          <view class="list_text">{{list_item.kehu}}</view>
+          <view class="list_text">{{list_item.zhaiyao1}}</view>
         </view>
         <view class="list_view" style="width:300rpx">
-          <view class="list_text">{{list_item.project}}</view>
+          <view class="list_text">{{list_item.kehu1}}</view>
         </view>
         <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.yingshou}}</view>
+          <view class="list_text">{{list_item.jine1}}</view>
+        </view>
+        <view class="list_view" style="width:300rpx">
+          <view class="list_text">{{list_item.zhaiyao2}}</view>
+        </view>
+        <view class="list_view" style="width:300rpx">
+          <view class="list_text">{{list_item.kehu2}}</view>
         </view>
         <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.shishou}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.weishou}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.yingfu}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.shifu}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.weifu}}</view>
+          <view class="list_text">{{list_item.jine2}}</view>
         </view>
       </view>
     </block>
@@ -49,10 +43,12 @@
 <view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{chaxun_hidden}}">
   <form bindsubmit="select">
     <view class="option">
-      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kehu_list}}">
-        <input class="option_text" value="{{kehu}}" bindinput="input" placeholder="客户/供应商" name="kehu" disabled='disabled'/>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{leixing_list}}">
+        <input class="option_text" value="{{leixing}}" bindinput="input" placeholder="报表类型" name="leixing" disabled='disabled'/>
       </picker>
-        <input class="option_text" value="{{project}}" bindinput="input" placeholder="项目" name="project"/>
+      <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+        <input class="option_text" value="{{shijian}}" bindinput="input" placeholder="时间" name="shijian"/>
+      </picker>
     </view>
     <view class="moreDo_bt_view">
       <button class="moreDo_bt" bindtap="chaxun_quxiao">返回</button>

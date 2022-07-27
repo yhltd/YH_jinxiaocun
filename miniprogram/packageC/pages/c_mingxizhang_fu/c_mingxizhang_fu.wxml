@@ -9,25 +9,22 @@
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
       <view class="table_main">
         <view class="list_view" style="width:300rpx">
+          <view class="list_text">{{list_item.insert_date}}</view>
+        </view>
+        <view class="list_view" style="width:300rpx">
           <view class="list_text">{{list_item.kehu}}</view>
+        </view>
+        <view class="list_view" style="width:300rpx">
+          <view class="list_text">{{list_item.accounting}}</view>
         </view>
         <view class="list_view" style="width:300rpx">
           <view class="list_text">{{list_item.project}}</view>
         </view>
         <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.yingshou}}</view>
+          <view class="list_text">{{list_item.cope}}</view>
         </view>
         <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.shishou}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.weishou}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.yingfu}}</view>
-        </view>
-        <view class="list_view" style="width:200rpx">
-          <view class="list_text">{{list_item.shifu}}</view>
+          <view class="list_text">{{list_item.payment}}</view>
         </view>
         <view class="list_view" style="width:200rpx">
           <view class="list_text">{{list_item.weifu}}</view>
@@ -50,9 +47,14 @@
   <form bindsubmit="select">
     <view class="option">
       <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kehu_list}}">
-        <input class="option_text" value="{{kehu}}" bindinput="input" placeholder="客户/供应商" name="kehu" disabled='disabled'/>
+        <input class="option_text" value="{{kehu}}" bindinput="input" placeholder="往来单位" name="kehu" disabled='disabled'/>
       </picker>
-        <input class="option_text" value="{{project}}" bindinput="input" placeholder="项目" name="project"/>
+      <picker mode="date" value="{{date}}" bindchange="bindDateChange2">
+        <input class="option_text" value="{{start_date}}" bindinput="input" placeholder="开始日期" name="start_date" disabled='disabled'/>
+      </picker>
+      <picker mode="date" value="{{date}}" bindchange="bindDateChange3">
+        <input class="option_text" value="{{stop_date}}" bindinput="input" placeholder="结束日期" name="stop_date" disabled='disabled'/>
+      </picker>
     </view>
     <view class="moreDo_bt_view">
       <button class="moreDo_bt" bindtap="chaxun_quxiao">返回</button>

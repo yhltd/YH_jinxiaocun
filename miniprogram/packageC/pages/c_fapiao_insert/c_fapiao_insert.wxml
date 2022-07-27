@@ -1,41 +1,39 @@
 <view class="all">
   <form bindsubmit="save" bindreset="reset">
-    <view class="code_input_view" bindtap="showGetCode" name="accounting" value="">{{accounting}}</view>
-    <view class="input_view">
-      <view class="input_text">项目名称</view>
-      <input name="project" placeholder="请输入项目名称" value="{{empty}}"></input>
-    </view>
+    <view class="code_input_view" bindtap="showGetCode" name="type" value="">{{accounting}}</view>
     <view class="input_view">
       <view class="input_text">日期</view>
       <picker mode="date" value="{{date}}" bindchange="bindDateChange">
-        <input name="insert_date" placeholder="请输入日期" value="{{insert_date}}"></input>
+        <input name="riqi" placeholder="请输入日期" value="{{riqi}}"></input>
       </picker>
-    </view>
-    <view class="input_view">
-      <view class="input_text">客户/供应商</view>
-      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kehu_list}}">
-        <input name="kehu" placeholder="请输入客户/供应商" value="{{kehu}}" disabled="false"></input>
-      </picker>
-    </view>
-    <view class="input_view">
-      <view class="input_text">应收</view>
-      <input name="receivable" placeholder="请输入应收" type="number" value="{{empty}}"></input>
-    </view>
-    <view class="input_view">
-      <view class="input_text">实收</view>
-      <input name="receipts" placeholder="请输入实收" type="number" value="{{empty}}"></input>
-    </view>
-    <view class="input_view">
-      <view class="input_text">应付</view>
-      <input name="cope" placeholder="请输入应付" type="number" value="{{empty}}"></input>
-    </view>
-    <view class="input_view">
-      <view class="input_text">实付</view>
-      <input name="payment" placeholder="请输入实付" type="number" value="{{empty}}"></input>
     </view>
     <view class="input_view">
       <view class="input_text">摘要</view>
-      <input name="zhaiyao" placeholder="请输入摘要" type="text" value="{{empty}}"></input>
+      <input name="zhaiyao" placeholder="请输入摘要" type="text" value="{{zhaiyao}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">往来单位</view>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kehu_list}}">
+        <input name="unit" placeholder="请输入往来单位" type="text" disabled="false" value="{{unit}}" ></input>
+      </picker>
+    </view>
+    <view class="input_view">
+      <view class="input_text">发票种类</view>
+      <picker bindchange="bindPickerChange2" value="{{index}}" range="{{zhonglei_list}}">
+        <input name="invoice_type" placeholder="请输入发票种类" type="text" disabled="false" value="{{invoice_type}}"></input>
+      </picker>
+    </view>
+    <view class="input_view">
+      <view class="input_text">发票号码</view>
+      <input name="invoice_no" placeholder="请输入发票号码" type="text" value="{{invoice_no}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">金额</view>
+      <input name="jine" placeholder="请输入金额" type="number" value="{{jine}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">备注</view>
+      <input name="remarks" placeholder="请输入备注" type="text" value="{{remarks}}"></input>
     </view>
     <view class="bottom">
       <button class="bt" form-type="reset" data-type="reset">重置</button>

@@ -1,0 +1,55 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}" wx:key="text">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}"
+          data-index="{{index}}"
+          bindtap="insert"
+        >{{item.text}}</view>
+      </block>
+    </view> 
+    <view class="table_list">
+      <view class="list_row" wx:for="{{list}}" wx:for-item="list_items" wx:key="dbName" wx:for-index="i" style="width:{{list_items.width}};{{list_items.dbName=='ROW_ID'?'position:sticky;left:0':''}}">
+        <view class="table_main" wx:for="{{list_items.arr}}" wx:for-item="list_item" wx:key="id" wx:for-index="j">
+          <view class="list_view" 
+            data-itemIndex="{{i}}" 
+            data-index="{{j}}" 
+            data-id="{{list_item.id}}" 
+            data-dbName="{{list_items.dbName}}" 
+            data-dbTable="{{list_items.dbTable}}" 
+            data-value="{{list_item[list_items.dbName]}}" 
+            data-input_type="text"
+            data-time="{{lastTapTime}}"
+            catchtap = "clickView"
+            bindlongtap = "delete"
+            bindtouchstart='bindTouchStart' 
+            bindtouchend='bindTouchEnd'
+          >
+            <view class="list_text">{{list_item[list_items.dbName]}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="bottom_view">
+  <button class="init" hover-class="init_hover" bindtap="init">同步数据</button>
+  <button class="init" hover-class="init_hover" bindtap="use_book">使用说明</button>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>

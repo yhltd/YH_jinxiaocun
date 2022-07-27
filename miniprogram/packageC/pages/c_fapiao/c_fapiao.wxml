@@ -15,38 +15,29 @@
             </checkbox-group>
           </view>
         </view>
-        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="insert_date" data-value="{{list_item.insert_date}}" bindtap="clickView" data-input_type="text">
-          <view class="list_text">{{list_item.insert_date}}</view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="type" data-value="{{list_item.type}}" data-input_type="text">
+          <view class="list_text">{{list_item.type}}</view>
         </view>
-        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="kehu" data-value="{{list_item.kehu}}" bindtap="clickView" data-input_type="text">
-          <view class="list_text">{{list_item.kehu}}</view>
-        </view>
-        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="project" data-value="{{list_item.project}}" bindtap="clickView" data-input_type="text">
-          <view class="list_text">{{list_item.project}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="receivable" data-value="{{list_item.receivable}}" bindtap="clickView" data-input_type="number">
-          <view class="list_text">{{list_item.receivable}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="receipts" data-value="{{list_item.receipts}}" bindtap="clickView" data-input_type="number">
-          <view class="list_text">{{list_item.receipts}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.notget1}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="cope" data-value="{{list_item.cope}}" bindtap="clickView" data-input_type="number">
-          <view class="list_text">{{list_item.cope}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="payment" data-value="{{list_item.payment}}" bindtap="clickView" data-input_type="number">
-          <view class="list_text">{{list_item.payment}}</view>
-        </view>
-        <view class="list_view" style="width:170rpx">
-          <view class="list_text">{{list_item.notget2}}</view>
-        </view>
-        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="accounting" data-value="{{list_item.accounting}}" bindtap="clickView" data-input_type="text">
-          <view class="list_text">{{list_item.accounting}}</view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="riqi" data-value="{{list_item.riqi}}" bindtap="clickView" data-input_type="date">
+          <view class="list_text">{{list_item.riqi}}</view>
         </view>
         <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="zhaiyao" data-value="{{list_item.zhaiyao}}" bindtap="clickView" data-input_type="text">
           <view class="list_text">{{list_item.zhaiyao}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="unit" data-value="{{list_item.unit}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.unit}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="invoice_type" data-value="{{list_item.invoice_type}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.invoice_type}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="invoice_no" data-value="{{list_item.invoice_no}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.invoice_no}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="jine" data-value="{{list_item.jine}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.jine}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="remarks" data-value="{{list_item.remarks}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.remarks}}</view>
         </view>
       </view>
     </block>
@@ -57,7 +48,9 @@
   <form bindsubmit="save">
     <view>
       <view class="input_message" wx:if="{{message_input!=''}}">提示：{{message_input}}</view>
-      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+      <picker display="{{xiala_panduan==0?false:true}}" mode="{{xiala_panduan==1?'date':''}}" bindchange="bindPickerChange" value="{{xiala_panduan==1?date:index}}" range="{{xiala_panduan==2?kehu_list:xiala_panduan==3?zhonglei_list:''}}">
+        <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+      </picker>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
@@ -83,6 +76,7 @@
   <button class="moreDo_view_bt" bindtap="bindDelete">删除项目</button>
   <button class="moreDo_view_bt" bindtap="insert">新增项目</button>
   <button class="moreDo_view_bt" bindtap="chaxun_show">查询</button>
+  <button class="moreDo_view_bt" bindtap="getExcel">生成Excel</button>
   <button class="moreDo_view_bt" bindtap="use_book">使用说明</button>
 </view>
 
@@ -95,7 +89,7 @@
 <view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{chaxun_hidden}}">
   <form bindsubmit="select">
     <view class="option">
-      <input class="option_text" value="{{xiangmumingcheng}}" bindinput="input" placeholder="请输入项目名称" name="xiangmumingcheng"/>
+      <input class="option_text" value="{{xiangmumingcheng}}" bindinput="input" placeholder="请输入往来单位" name="xiangmumingcheng"/>
       <picker class="date-picker" mode="date"  bindchange="showChoiceMonth1">
         <input class="option_text" value="{{start_date}}" bindinput="input" placeholder="请输入开始日期" name="start_date" disabled='disabled'/>
       </picker>

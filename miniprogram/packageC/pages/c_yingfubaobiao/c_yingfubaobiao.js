@@ -1,4 +1,3 @@
-// miniprogram/packageC/pages/c_xianjinliuliang/c_xianjinliuliang.js
 Page({
 
   /**
@@ -13,78 +12,73 @@ Page({
     chaxun_hidden:true,
     list : {},
     titil : [
-      {text:"客户/供应商",width:"300rpx",type:"text",columnName:"kehu"},
+      {text:"往来单位",width:"300rpx",type:"text",columnName:"kehu"},
       {text:"项目",width:"300rpx",type:"text",columnName:"project"},
-      {text:"应收",width:"200rpx",type:"number",columnName:"yingshou"},
-      {text:"实收",width:"200rpx",type:"number",columnName:"shishou"},
-      {text:"未收",width:"200rpx",type:"number",columnName:"weishou"},
-      {text:"应付",width:"200rpx",type:"number",columnName:"yingfu"},
-      {text:"实付",width:"200rpx",type:"number",columnName:"shifu"},
-      {text:"未付",width:"200rpx",type:"number",columnName:"weifu"},
+      {text:"摘要",width:"300rpx",type:"text",columnName:"zhaiyao"},
+      {text:"应付",width:"200rpx",type:"number",columnName:"jine1"},
+      {text:"往来单位",width:"300rpx",type:"text",columnName:"unit"},
+      {text:"发票种类",width:"300rpx",type:"text",columnName:"invoice_type"},
+      {text:"发票号",width:"300rpx",type:"text",columnName:"invoice_no"},
+      {text:"金额",width:"200rpx",type:"number",columnName:"jine2"},
     ],
-
     animationData_choice : []
   },
 
-  
+  get_list:function(list){
+    console.log(list)
+    var _this = this
+    var ret_list = []
+    var list1 = list[0]
+    var list2 = list[1]
 
-
-  init : function(){
-    wx.showLoading({
-      title : '加载中',
-      mask : 'true'
-    })
-    var _this = this;
-    var userInfo = _this.data.userInfo;
-
-    wx.cloud.callFunction({
-      name: 'sqlServer_cw',
-      data: {
-        query: "select kehu,project,sum(receivable) as yingshou,sum(receipts) as shishou, sum(receivable) - sum(receipts) as weishou,sum(cope) as yingfu,sum(payment) as shifu,sum(cope)-sum(payment) as weifu from SimpleData where company ='"+ userInfo.company +"' and kehu like '%%' and project like '%%' group BY kehu,project"
-      },
-      success: res => {
-        var list = res.result.recordset
-        _this.setData({
-          list,
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      complete: res => {
-        wx.hideLoading({
-          success: (res) => {},
+    if(list1.length >= list2.length){
+      for(var i=0; i<list1.length; i++){
+        ret_list.push({
+          kehu:list1[i].kehu,
+          project:list1[i].project,
+          zhaiyao:list1[i].zhaiyao,
+          jine1:list1[i].jine1,
+          unit:'',
+          invoice_type:'',
+          invoice_no:'',
+          jine2:''
         })
       }
-    })
-  },
+      for(var i=0; i<list2.length; i++){
+        ret_list[i].unit = list2[i].unit
+        ret_list[i].invoice_type = list2[i].invoice_type
+        ret_list[i].invoice_no = list2[i].invoice_no
+        ret_list[i].jine2 = list2[i].jine2
+      }
+    }else{
+      for(var i=0; i<list2.length; i++){
+        ret_list.push({
+          kehu:'',
+          project:'',
+          zhaiyao:'',
+          jine1:'',
+          unit:list2[i].unit,
+          invoice_type:list2[i].invoice_type,
+          invoice_no:list2[i].invoice_no,
+          jine2:list2[i].jine2
+        })
+      }
+      for(var i=0; i<list1.length; i++){
+        ret_list[i].kehu = list1[i].kehu
+        ret_list[i].project = list1[i].project
+        ret_list[i].zhaiyao = list1[i].zhaiyao
+        ret_list[i].jine1 = list1[i].jine1
+      }
+    }
 
-
-  showChoiceMonth1 : function(e){
-    var _this = this;
-    _this.setData({
-      start_date: e.detail.value
-    })
-  },
-  showChoiceMonth2 : function(e){
-    var _this = this;
-    _this.setData({
-      stop_date: e.detail.value
-    })
-  },
-
-  getMonth: function(){
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() > 8 ? date.getMonth()+1 : '0' + (date.getMonth()+1);
-    return year + '-' + month;
+    return ret_list
   },
 
   use_book:function(){
     var _this = this
     wx.showModal({
       title: '使用说明',
-      content: '1.点击左下角按钮，输入条件点击确定按钮后即可按条件查询。',
+      content: '1.点击左下角查询按钮，输入条件点击确定按钮后即可按条件查询。',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
       confirmColor: '#84B9F2', //确定文字的颜色
@@ -98,8 +92,6 @@ Page({
     var _this = this
     _this.setData({
       chaxun_hidden:false,
-      kehu:"",
-      project:"",
     })
   },
 
@@ -117,15 +109,29 @@ Page({
       mask : 'true'
     })
     var form = e.detail.value
+    if(form.kehu==''){
+      wx.showToast({
+        title: '请选择往来单位',
+        icon:'none'
+      })
+      return
+    }
+    if(form.start_date==''){
+      form.start_date='1900-01-01'
+    }
+    if(form.stop_date==''){
+      form.stop_date='2100-12-31'
+    }
     var userInfo = _this.data.userInfo;
-    console.log("select kehu,project,sum(receivable) as yingshou,sum(receipts) as shishou, sum(receivable) - sum(receipts) as weishou,sum(cope) as yingfu,sum(payment) as shifu,sum(cope)-sum(payment) as weifu from SimpleData where company ='"+ userInfo.company +"' and kehu like '%"+ _this.data.kehu +"%' and project like '%" + form.project + "%' group BY kehu,project")
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select kehu,project,sum(receivable) as yingshou,sum(receipts) as shishou, sum(receivable) - sum(receipts) as weishou,sum(cope) as yingfu,sum(payment) as shifu,sum(cope)-sum(payment) as weifu from SimpleData where company ='"+ userInfo.company +"' and kehu like '%"+ _this.data.kehu +"%' and project like '%" + form.project + "%' group BY kehu,project"
+        query: "select kehu,project,zhaiyao,cope as jine1 from SimpleData where company='" + userInfo.company + "' and kehu='" + form.kehu + "' and convert(varchar(20),insert_date,120)>='" + form.start_date + "' and convert(varchar(20),insert_date,120)<='" + form.stop_date + "';select unit,invoice_type,invoice_no,jine as jine2 from invoice where company='" + userInfo.company + "' and unit='" + form.kehu + "' and type='进项发票' and riqi>='" + form.start_date + "' and riqi<='" + form.stop_date + "';"
       },
       success: res => {
-        var list = res.result.recordset
+        var list = res.result.recordsets
+        console.log(res.result.recordsets)
+        list = _this.get_list(list)
         _this.setData({
           list,
         })
@@ -154,7 +160,6 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
 
     var sql = "select invoice_type from InvoicePeizhi where company ='" + userInfo.company + "';select kehu from KehuPeizhi where company ='" + userInfo.company + "';"
-    console.log(sql)
     wx.cloud.callFunction({
       name : 'sqlServer_cw',
       data : {
@@ -162,8 +167,6 @@ Page({
       },
       success : res => {
         var this_list = res.result.recordsets
-        console.log(res.result)
-        console.log(this_list)
         var kehu_select = res.result.recordsets[1]
         var zhonglei_select = res.result.recordsets[0]
         var kehu = []
@@ -191,6 +194,22 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     _this.setData({
       kehu: _this.data.kehu_list[e.detail.value]
+    })
+  },
+
+  bindDateChange2: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      start_date: e.detail.value
+    })
+  },
+
+  bindDateChange3: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      stop_date: e.detail.value
     })
   },
 
@@ -262,11 +281,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var _this = this;
-    _this.setData({
-      month: _this.getMonth()
-    })
-    _this.init()
+
   },
 
   /**
@@ -303,4 +318,8 @@ Page({
   onShareAppMessage: function () {
 
   }
+
+  
+  
 })
+

@@ -712,7 +712,7 @@ Page({
                           this_list[0].AW = this_list[0].ASA * this_shuilv
                           this_list[0].AR = this_list[0].G * 1 + this_list[0].H * 1 + this_list[0].AJ * 1 + this_list[0].AK * 1 + this_list[0].AL * 1 + this_list[0].AM * 1 + this_list[0].AN * 1 + this_list[0].AO * 1
                           this_list[0].AI = this_list[0].Z * 1 + this_list[0].AA * 1 + this_list[0].AB * 1 + this_list[0].AC * 1 + this_list[0].AD * 1 + this_list[0].AE * 1 + this_list[0].AF * 1 
-                          this_list[0].AY = this_list[0].ATA * 1 - this_list[0].AJ * 1 - this_list[0].AK * 1 - this_list[0].AL * 1 - this_list[0].AM * 1 - this_list[0].AN * 1 - this_list[0].AO * 1 - this_list[0].AW * 1
+                          this_list[0].AY = this_list[0].ATA * 1 - this_list[0].AJ * 1 - this_list[0].AK * 1 - this_list[0].AL * 1 - this_list[0].AM * 1 - this_list[0].AN * 1 - this_list[0].AO * 1
                           this_list[0].U = this_list[0].G * 1 + this_list[0].H * 1 - this_list[0].AJ * 1 - this_list[0].AK * 1 - this_list[0].AL * 1 - this_list[0].AM * 1 - this_list[0].AN * 1 - this_list[0].AO * 1 - this_list[0].AW * 1
                           this_list[0].J = this_list[0].AY * 1 + this_list[0].O * 1 - this_list[0].R * 1 - this_list[0].T * 1
                           that.setData({

@@ -53,8 +53,16 @@ Page({
         list:[
           {id:1,text:"极简台账",url:"../../packageC/pages/c_jijiantaizhang/c_jijiantaizhang"},
           {id:2,text:"极简总账",url:"../../packageC/pages/c_jijianzongzhang/c_jijianzongzhang"},
-          {id:3,text:"使用说明",url:""},
-          {id:1,text:"数据空间",url:"../../packageC/pages/c_shujukongjian/c_shujukongjian"},
+          {id:3,text:"极简配置",url:"../../packageC/pages/c_jijianpeizhi/c_jijianpeizhi"},
+          {id:4,text:"发票",url:"../../packageC/pages/c_fapiao/c_fapiao"},
+          {id:5,text:"报表",url:"../../packageC/pages/c_baobiao/c_baobiao"},
+          {id:6,text:"应付明细账",url:"../../packageC/pages/c_mingxizhang_fu/c_mingxizhang_fu"},
+          {id:7,text:"应收明细账",url:"../../packageC/pages/c_mingxizhang_shou/c_mingxizhang_shou"},
+          {id:8,text:"利润",url:"../../packageC/pages/c_mingxizhang_shou/c_mingxizhang_shou"},
+          {id:9,text:"应收报表",url:"../../packageC/pages/c_yingshoubaobiao/c_yingshoubaobiao"},
+          {id:10,text:"应付报表",url:"../../packageC/pages/c_yingfubaobiao/c_yingfubaobiao"},
+          {id:11,text:"使用说明",url:""},
+          {id:12,text:"数据空间",url:"../../packageC/pages/c_shujukongjian/c_shujukongjian"},
         ],
         src:"../../images/shouye_4.jpg",
         listHid : false,
@@ -397,6 +405,118 @@ Page({
               duration: 1000
             })
           }
+        }
+        if(_this.data.names[itemindex].list[index].text=="发票"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_fapiao/c_fapiao' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="极简配置"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_jijianpeizhi/c_jijianpeizhi' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="报表"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_baobiao/c_baobiao' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="应付明细账"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_mingxizhang_fu/c_mingxizhang_fu' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="应收明细账"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_mingxizhang_shou/c_mingxizhang_shou' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="利润"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_lirun/c_lirun' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="应付报表"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_yingfubaobiao/c_yingfubaobiao' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+        if(_this.data.names[itemindex].list[index].text=="应收报表"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_yingshoubaobiao/c_yingshoubaobiao' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
         }
         if(_this.data.names[itemindex].list[index].text=="我的"){
           wx.navigateTo({

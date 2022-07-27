@@ -19,19 +19,20 @@ Page({
 
     list : [],
     titil : [
-      {text:"序号",width:"100rpx"},
-      {text:"日期",width:"250rpx"},
-      {text:"客户",width:"250rpx"},
-      {text:"项目",width:"250rpx"},
-      {text:"应收",width:"170rpx"},
-      {text:"实收",width:"170rpx"},
-      {text:"未收",width:"170rpx"},
-      {text:"应付",width:"170rpx"},
-      {text:"实付 ",width:"170rpx"},
-      {text:"未付",width:"170rpx"},
-      {text:"科目",width:"250rpx"},
-      {text:"摘要",width:"250rpx"},
+      {text:"序号",width:"100rpx",type:"number",columnName:"ROW_ID"},
+      {text:"类型",width:"250rpx",type:"text",columnName:"type"},
+      {text:"日期",width:"250rpx",type:"date",columnName:"riqi"},
+      {text:"摘要",width:"250rpx",type:"text",columnName:"zhaiyao"},
+      {text:"往来单位",width:"250rpx",type:"text",columnName:"unit"},
+      {text:"发票种类",width:"250rpx",type:"text",columnName:"invoice_type"},
+      {text:"发票号码",width:"250rpx",type:"text",columnName:"invoice_no"},
+      {text:"金额 ",width:"250rpx",type:"number",columnName:"jine"},
+      {text:"备注",width:"250rpx",type:"text",columnName:"remarks"},
     ],
+
+    kehu_list:[],
+    zhonglei_list:[],
+    xiala_panduan:0,
 
     value_input : "",
     index_input : "",
@@ -57,13 +58,12 @@ Page({
     var userInfo = _this.data.userInfo;
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
-
+    
     _this.getPageCount();
-
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select id,kehu,zhaiyao,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
+        query: "select * from(select id,type,riqi,zhaiyao,unit,invoice_type,invoice_no,jine,remarks,ROW_NUMBER() over(order by id) as ROW_ID,company from Invoice ) as a where a.company = '"+_this.data.userInfo.company+"' and a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
       },
       success: res => {
         var list = res.result.recordset
@@ -95,11 +95,9 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select count(*) as pageCount from SimpleData where company = '"+_this.data.userInfo.company+"'"
+        query: "select count(*) as pageCount from Invoice where company = '"+_this.data.userInfo.company+"'"
       },
       success: res => {
-
-
         var list = res.result.recordset
         var countPage = _this.data.countPage;
         var pageCount = Math.ceil(list[0].pageCount/countPage);
@@ -162,13 +160,23 @@ Page({
     var message = e.currentTarget.dataset.message
     var value = e.currentTarget.dataset.value;
     var input_type = e.currentTarget.dataset.input_type;
+    var panduan = 0
+    if(column=="riqi"){
+      panduan = 1
+    }else if(column == "unit"){
+      panduan = 2
+    }else if(column == "invoice_type"){
+      panduan = 3
+    }
     _this.setData({
       value_input : value,
       index_input : index,
       column_input : column,
       message_input : message,
       upd_db_id,
-      input_type
+      input_type,
+      empty:'',
+      xiala_panduan:panduan
     })
     if(_this.data.gai){
       _this.showView(_this,"input");
@@ -357,7 +365,7 @@ Page({
             title: '加载中',
             mask : 'true'
           })
-          var sql = "delete from SimpleData where id in ("
+          var sql = "delete from Invoice where id in ("
           for(var i=0;i<checkItems.length;i++){
             if(i==checkItems.length-1){
               sql += checkItems[i]+")"
@@ -380,7 +388,7 @@ Page({
                     title: '删除成功',
                     icon : 'success'
                   })
-                  updSpace.del("SimpleData",checkItems.length)
+                  updSpace.del("Invoice",checkItems.length)
                 },
               })
             },
@@ -413,7 +421,7 @@ Page({
           if(res.confirm){
             var userInfo = _this.data.userInfo
             wx.navigateTo({
-              url: '../../pages/c_jijiantaizhang_insert/c_jijiantaizhang_insert?userInfo='+JSON.stringify(userInfo),
+              url: '../../pages/c_fapiao_insert/c_fapiao_insert?userInfo='+JSON.stringify(userInfo),
             })
           }else if(res.cancel){
             return;
@@ -436,7 +444,11 @@ Page({
   onLoad: function (options) {
     var _this = this;
     var user = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo : JSON.parse(options.userInfo),
+    })
     var bianhao = user.bianhao
+    var userInfo = JSON.parse(options.userInfo)
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
@@ -474,9 +486,58 @@ Page({
         console.log("请求失败！")
       }
     })
-    _this.setData({
-      userInfo : JSON.parse(options.userInfo)
+
+    var sql = "select invoice_type from InvoicePeizhi where company ='" + userInfo.company + "';select kehu from KehuPeizhi where company ='" + userInfo.company + "';"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name : 'sqlServer_cw',
+      data : {
+        query : sql
+      },
+      success : res => {
+        var this_list = res.result.recordsets
+        console.log(res.result)
+        console.log(this_list)
+        var kehu_select = res.result.recordsets[1]
+        var zhonglei_select = res.result.recordsets[0]
+        var kehu = []
+        var zhonglei = []
+        for(var i=0; i< kehu_select.length; i++){
+          kehu.push(
+            kehu_select[i].kehu
+          )
+        }
+        for(var i=0; i< zhonglei_select.length; i++){
+          zhonglei.push(
+            zhonglei_select[i].invoice_type
+          )
+        }
+        _this.setData({
+          userInfo : JSON.parse(options.userInfo),
+          kehu_list : kehu,
+          zhonglei_list : zhonglei
+        })
+      }
     })
+
+  },
+
+  bindPickerChange: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    if(_this.data.xiala_panduan==1){
+      this.setData({
+        empty: e.detail.value
+      })
+    }else if(_this.data.xiala_panduan==2){
+      this.setData({
+        empty: _this.data.kehu_list[e.detail.value]
+      })
+    }else if(_this.data.xiala_panduan==3){
+      this.setData({
+        empty: _this.data.zhonglei_list[e.detail.value]
+      })
+    }
   },
 
   use_book:function(){
@@ -555,11 +616,9 @@ Page({
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
 
-    var sql = "select id,kehu,zhaiyao,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1) + " and project like '%" + xiangmumingcheng + "%' and insert_date >= '" + start_date + " 00:00:00.000' and insert_date <= '" + stop_date + " 23:59:59.000';"
+    var sql = "select * from(select id,type,riqi,zhaiyao,unit,invoice_type,invoice_no,jine,remarks,ROW_NUMBER() over(order by id) as ROW_ID,company from Invoice ) as a where company = '"+_this.data.userInfo.company+"' and a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1) + " and unit like '%" + xiangmumingcheng + "%' and riqi >= '" + start_date + "' and riqi <= '" + stop_date + "';"
 
     console.log(sql)
-
-   
 
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
@@ -588,6 +647,63 @@ Page({
       }
     })
     _this.chaxun_quxiao()
+  },
+
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      name : '极简总账',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
   },
 
   /**

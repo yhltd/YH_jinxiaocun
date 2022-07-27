@@ -91,7 +91,16 @@
         "pages/c_liyisunyi/c_liyisunyi",
         "pages/c_xianjinliuliang/c_xianjinliuliang",
         "pages/c_zhanghaoguanli/c_zhanghaoguanli",
-        "pages/c_wode/c_wode"
+        "pages/c_wode/c_wode",
+        "pages/c_fapiao/c_fapiao",
+        "pages/c_fapiao_insert/c_fapiao_insert",
+        "pages/c_jijianpeizhi/c_jijianpeizhi",
+        "pages/c_baobiao/c_baobiao",
+        "pages/c_mingxizhang_shou/c_mingxizhang_shou",
+        "pages/c_mingxizhang_fu/c_mingxizhang_fu",
+        "pages/c_lirun/c_lirun",
+        "pages/c_yingfubaobiao/c_yingfubaobiao",
+        "pages/c_yingshoubaobiao/c_yingshoubaobiao"
       ]
     },
     {

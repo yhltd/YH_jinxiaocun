@@ -4,18 +4,26 @@ Page({
    * 页面的初始数据
    */
   data: {
+    kehu_list:[],
+    zhonglei_list:[],
     userInfo : [],
     initHidView : false,
     hid_view : false,
     empty : "",
     insert_date :"",
 
-    accounting : "选择科目",
+    accounting : "选择类型",
 
     getAccountingItems : [
       {
-        text : "科目名称",
-        list : []
+        text : "发票类型",
+        list : [{
+          class:1,
+          className:'进项发票'
+        },{
+          class:2,
+          className:'销项发票'
+        }]
       }
     ],
   },
@@ -25,9 +33,6 @@ Page({
    */
   onLoad: function (options) {
     var _this = this;
-    _this.setData({
-      userInfo : JSON.parse(options.userInfo)
-    })
     var userInfo = JSON.parse(options.userInfo)
 
     var sql = "select invoice_type from InvoicePeizhi where company ='" + userInfo.company + "';select kehu from KehuPeizhi where company ='" + userInfo.company + "';"
@@ -56,31 +61,45 @@ Page({
           )
         }
         _this.setData({
+          userInfo : JSON.parse(options.userInfo),
           kehu_list : kehu,
           zhonglei_list : zhonglei
         })
       }
     })
-    
-    _this.getAccountingItems()
+
+    // _this.getAccountingItems()
   },
 
   bindPickerChange1: function(e) {
     var _this = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
     _this.setData({
-      kehu: _this.data.kehu_list[e.detail.value]
+      unit: _this.data.kehu_list[e.detail.value]
     })
   },
+
+  bindPickerChange2: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      invoice_type: _this.data.zhonglei_list[e.detail.value]
+    })
+  },
+
 
 
   reset : function(){
     var _this = this;
     _this.setData({
-      empty : "",
-      kehu:"",
-      insert_date:"",
-      accounting : '选择科目',
+      riqi : "",
+      zhaiyao : "",
+      unit : "",
+      invoice_type : "",
+      invoice_no : "",
+      jine : "",
+      remarks : "",
+      accounting : '选择类型',
     })
   },
 
@@ -94,9 +113,9 @@ Page({
     var form = e.detail.value;
     var result = _this.checkFrom(form)
 
-    if(_this.data.accounting != "选择科目"){
+    if(_this.data.accounting != "选择类型"){
       if(result==""){
-        var sql = "insert into SimpleData(accounting,project,insert_date,receivable,receipts,cope,payment,kehu,zhaiyao,company) values('"+_this.data.accounting+"','"+form.project+"','"+form.insert_date+"','"+form.receivable+"','"+form.receipts+"','"+form.cope+"','"+form.payment+"','"+form.kehu+"','"+form.zhaiyao+"','"+_this.data.userInfo.company+"')"
+        var sql = "insert into Invoice(type,riqi,zhaiyao,unit,invoice_type,invoice_no,jine,remarks,company) values('"+_this.data.accounting+"','"+form.riqi+"','"+form.zhaiyao+"','"+form.unit+"','"+form.invoice_type+"','"+form.invoice_no+"','"+form.jine+"','"+form.remarks+"','"+_this.data.userInfo.company+"')"
 
 
         wx.cloud.callFunction({
@@ -128,7 +147,7 @@ Page({
       }
     }else{
       wx.showToast({
-        title: '请选择科目代码',
+        title: '请选择发票类型',
         icon : 'none'
       })
     }
@@ -137,37 +156,29 @@ Page({
   checkFrom : function(form){
     var formValidation = require("../../../components/utils/formValidation.js")
     var rules = [{
-      name: "project",
+      name: "zhaiyao",
       rule: ["required"],
-      msg: ["请输入项目名称"]
+      msg: ["请输入摘要"]
     },{
-      name: "insert_date",
+      name: "riqi",
       rule: ["required"], 
       msg: ["请输入日期"]
     },{
-      name: "kehu",
+      name: "unit",
       rule: ["required"], 
-      msg: ["请输入客户/供应商"]
+      msg: ["请输入往来单位"]
     },{
-      name: "receivable",
-      rule: ["required","isNum"], 
-      msg: ["请输入应收","请输入正确的应收"]
-    },{
-      name: "receipts",
-      rule: ["required","isNum"], 
-      msg: ["请输入实收","请输入正确的实收"]
-    },{
-      name: "cope",
-      rule: ["required","isNum"], 
-      msg: ["请输入应付","请输入正确的应付"]
-    },{
-      name: "payment",
-      rule: ["required","isNum"], 
-      msg: ["请输入实付","请输入正确的实付"]
-    },{
-      name: "zhaiyao",
+      name: "invoice_type",
       rule: ["required"], 
-      msg: ["请输入摘要"]
+      msg: ["请输入发票种类"]
+    },{
+      name: "invoice_no",
+      rule: ["required"], 
+      msg: ["请输入发票号码"]
+    },{
+      name: "jine",
+      rule: ["required","isNum"], 
+      msg: ["请输入金额","请输入正确的金额"]
     }]
     return formValidation.validation(form,rules)
   },
@@ -199,28 +210,6 @@ Page({
 
     _this.setData({
       accounting : class_id
-    })
-  },
-
-  getAccountingItems : function(){
-    var _this = this;
-    var sql = "select accounting from SimpleAccounting where company = '"+_this.data.userInfo.company+"'"
-
-    wx.cloud.callFunction({
-      name : 'sqlServer_cw',
-      data : {
-        query : sql
-      },
-      success : res => {
-        var getAccountingItems = _this.data.getAccountingItems
-        for(let i=1;i<=res.result.recordset.length;i++){
-          getAccountingItems[0].list.push({class:i,className:res.result.recordset[i-1].accounting})
-        }
-        console.log(getAccountingItems)
-        _this.setData({
-          getAccountingItems
-        })
-      }
     })
   },
 
@@ -279,7 +268,7 @@ Page({
           _this.setData({
             animationData_getCode : animation.export()
           })
-          if(_this.data.accounting == '选择科目'){
+          if(_this.data.accounting == '选择类型'){
             _this.setData({
               accounting: _this.data.getAccountingItems[0].list[0].className
             })
@@ -304,7 +293,7 @@ Page({
   bindDateChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      insert_date: e.detail.value
+      riqi: e.detail.value
     })
   },
 
