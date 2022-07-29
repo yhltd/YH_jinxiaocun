@@ -1,4 +1,4 @@
-<image class="background" mode="widthFix" src="../images/zhanghaoguanli.jpeg"></image>
+<image class="background" mode="widthFix" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/zhanghaoguanli.jpeg"></image>
 <view class="search-box row-box {{searchClass}}">
 
   <input placeholder="按名字搜索" placeholderClass="search-placeholder" bindtap="searchFocus" bindblur="searchBlur" confirm-type="search" bindinput="searchKey"></input>
@@ -26,7 +26,7 @@
     <view class="four-list-icon">
 
       <view bindtap="navgiate" data-page="askList/askList?type=PatAlive" data-pro="put">
-        <image src="/images/iconfont-iconfont-new.png"></image>
+        <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/iconfont-iconfont-new.png"></image>
         <navigator url='/pages/frmadminform/frmadminform'>
           <text>新建</text>
         </navigator>
@@ -48,7 +48,7 @@
       <view class="list-content-left">{{item.name}}</view>
       <view class="list-content-right">{{item.Btype}}</view>
       <view class="list-content-right">
-        <image style="width: 50rpx;height: 50rpx;" bindtap="navgiate2" data-id="{{item._id}}" src="/images/039aca64ea8386f7b6f814cfad13c979.png"/>
+        <image style="width: 50rpx;height: 50rpx;" bindtap="navgiate2" data-id="{{item._id}}" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/039aca64ea8386f7b6f814cfad13c979.png"/>
       </view>
     </view>
   </block>

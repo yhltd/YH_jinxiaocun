@@ -31,27 +31,27 @@ Page({
     ],
     views: [
       {
-        image_url: "../../../images/rili.png",
+        image_url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rili.png",
         index: 1,
         text: "客户信息",
         function: [0, 1, 2, 3]
       }, {
-        image_url: "../../../images/renyuanxinxiguanli.png",
+        image_url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/renyuanxinxiguanli.png",
         index: 2,
         text: "日交易记录",
         function: [-1, -1, -1, 3]
       }, {
-        image_url: "../../../images/baopan.png",
+        image_url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/baopan.png",
         index: 3,
         text: "月交易记录",
         function: [-1, -1, -1, 3]
       }, {
-        image_url: "../../../images/shezhi.png",
+        image_url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shezhi.png",
         index: 4,
         text: "统计交易金额",
         function: [-1, -1, -1, 3]
       }, {
-        image_url: "../../../images/gerenxinxi.png",
+        image_url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gerenxinxi.png",
         index: 5,
         text: "员工信息",
         function: [0, 1, 2, 3]

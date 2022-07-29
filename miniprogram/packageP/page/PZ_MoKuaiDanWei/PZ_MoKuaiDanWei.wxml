@@ -36,7 +36,7 @@
     <input bindinput="onInput" data-column="mc" class="input_text_form" value="{{mc}}" type="text" name="mc"></input>
     <view class="lables">效率/时</view>
     <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
-    <view class="lables">父模块</view>
+    <view class="lables">父模块(选择已有模块作为父模块)</view>
     <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
@@ -95,7 +95,7 @@
     <input bindinput="onInput" data-column="mc" class="input_text_form" value="{{mc}}" type="text" name="mc"></input>
     <view class="lables1">效率/时</view>
     <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
-    <view class="lables1">父模块</view>
+    <view class="lables1">父模块(选择已有模块作为父模块)</view>
     <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

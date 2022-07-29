@@ -3,23 +3,23 @@
 <view class="list">
   <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go1" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="../../../images/qianwang.png"></image>
+    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
   </view>
   <view class="item" hover-class="item_hover" wx:for="{{showList2}}" wx:key="text" bindtap="go2" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="../../../images/qianwang.png"></image>
+    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
   </view>
   <view class="item" hover-class="item_hover" wx:for="{{showList3}}" wx:key="text" bindtap="go3" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="../../../images/qianwang.png"></image>
+    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
   </view>
   <view class="item" hover-class="item_hover" wx:for="{{showList4}}" wx:key="text" bindtap="go4" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="../../../images/qianwang.png"></image>
+    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
   </view>
   <view class="item" hover-class="item_hover" wx:for="{{showList5}}" wx:key="text" bindtap="go5" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="../../../images/qianwang.png"></image>
+    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
   </view>
 </view>
 

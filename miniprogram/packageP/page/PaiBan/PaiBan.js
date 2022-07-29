@@ -1099,7 +1099,7 @@ Page({
             _this.qxShow()
             _this.tableShow()
             wx.showToast({
-              title: '排班成功！',
+              title: '排班成功！请到排班明细表中查看明细。',
               icon: 'none',
               duration: 3000
             })

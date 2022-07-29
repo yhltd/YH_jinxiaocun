@@ -62,6 +62,7 @@
     <view class="vcent">所属模块</view>
     <input bindinput="onInput" bindtap="selDDH3" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
   <button class="moreDo_view_bt" bindtap="picture">生成图表</button>
+  <button class="moreDo_view_bt" bindtap="set_gongshi">日生产公式</button>
 </view>
 <!-- 背景 -->
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{shiFouChaDan?'true':''}}">

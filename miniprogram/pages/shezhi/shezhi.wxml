@@ -1,5 +1,5 @@
 <view class="tl_css">
-  <image class="tu_pian_shezhi" src='/images/shezhi_jxc.jpeg'></image>
+  <image class="tu_pian_shezhi" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shezhi_jxc.jpeg'></image>
   <!-- <image class="tu_pian_cc" src='/images/huise_logo.jpg'></image> -->
   <view class="mz_css">云和进销存系统</view>
 </view>
@@ -7,7 +7,7 @@
 <view class="da_kuang">
   <view class="xiao_kuang">
     <navigator class="txbt" url='/pages/frmgerenxinxi/frmgerenxinxi'>
-      <image class="item-image" src="/images/yonghu.png"></image>
+      <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/yonghu.png"></image>
       <text class="item-text">个人信息</text>
     </navigator>
   </view>
@@ -41,7 +41,7 @@
   <!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
   <view class="xiao_kuang">
     <view class="txbt" bindtap="goUserManager">
-      <image class="item-image" src="/images/timecard.png"></image>
+      <image class="item-image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/timecard.png"></image>
       <text class="item-text">管理人员</text>
     </view>
   </view>
@@ -52,7 +52,7 @@
   <view class="xiao_kuang">
     <navigator class="txbt" url='/pages/frmadmindetails/frmadmindetails'>
 
-      <image class="item-image" src='/images/xiangqing.jpg'></image>
+      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/xiangqing.jpg'></image>
       <text class="item-text">公司详情</text>
     </navigator>
   </view>
@@ -64,7 +64,7 @@
 
   <view class="xiao_kuang" bindtap="go3">
     <navigator class="txbt">
-      <image class="item-image" src='/images/20190805090541.png'></image>
+      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/20190805090541.png'></image>
       <text class="item-text">退出登录</text>
     </navigator>
   </view>

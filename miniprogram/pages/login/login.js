@@ -93,7 +93,7 @@ var login = function(that,info) {
         console.log("小程序连接数据库失败")
         wx.showToast({
           title: '连接数据库出错',
-          image: "../../images/icon-no.png",
+          image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
           mask: true,
           duration: 1000
         })
@@ -140,7 +140,7 @@ var login = function(that,info) {
           console.log("密码错误")
           wx.showToast({
             title: '密码错误',
-            image: "../../images/icon-no.png",
+            image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
             mask: true,
             duration: 1000
           })
@@ -341,6 +341,13 @@ var login = function(that,info) {
         //app.paichan_user.gongsi = that.data.gongsi
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
+          if(userInfo.state != '正常'){
+            wx.showToast({
+              title: '此账号已被锁定',
+              icon: 'none'
+            })
+            return;
+          }
           wx.navigateTo({
             url: '../../packageP/page/PeiZhiBiao/PeiZhiBiao'
           })
@@ -448,7 +455,7 @@ var login = function(that,info) {
         console.log("小程序连接数据库失败")
         wx.showToast({
           title: '连接数据库出错',
-          image: "../../images/icon-no.png",
+          image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
           mask: true,
           duration: 1000
         })

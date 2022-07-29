@@ -22,7 +22,7 @@ Page({
           {text:"密码修改",url:""},
           {text:"我的",url:"../../packageC/pages/c_wode/c_wode"}
         ],
-        src:"../../images/shouye_1.jpg",
+        src:"cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shouye_1.jpg",
         listHid : false,
         animationData :{}
       },{
@@ -33,7 +33,7 @@ Page({
           {id:2,text:"凭证汇总",url:"../../packageC/pages/c_pingzhenghuizong/c_pingzhenghuizong"},
           {id:3,text:"智能看板",url:"../../packageC/pages/c_zhinengkanban/c_zhinengkanban"}
         ],
-        src:"../../images/shouye_2.jpg",
+        src:"cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shouye_2.jpg",
         listHid : false,
         animationData :{}
       },{
@@ -44,7 +44,7 @@ Page({
           {id:2,text:"资产负债",url:"../../packageC/pages/c_zichanfuzhai/c_zichanfuzhai"},
           {id:3,text:"利益损益",url:"../../packageC/pages/c_liyisunyi/c_liyisunyi"},
         ],
-        src:"../../images/shouye_3.jpg",
+        src:"cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shouye_3.jpg",
         listHid : false,
         animationData :{}
       },{
@@ -64,7 +64,7 @@ Page({
           {id:11,text:"使用说明",url:""},
           {id:12,text:"数据空间",url:"../../packageC/pages/c_shujukongjian/c_shujukongjian"},
         ],
-        src:"../../images/shouye_4.jpg",
+        src:"cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shouye_4.jpg",
         listHid : false,
         animationData :{}
       }

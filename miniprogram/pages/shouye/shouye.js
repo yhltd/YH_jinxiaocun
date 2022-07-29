@@ -3,75 +3,75 @@ Page({
   data: {
     list: [
       {
-        url: "../images/rukuguanli.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rukuguanli.png",
         text: "入库",
         lianjie: "../time/time",
         index: 0
       },
       {
-        url: "../images/chuku.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/chuku.png",
         text: "出库",
         index: 1,
         lianjie: "../remittance/remittance",
       },
       {
-        url: "../images/qichukucun.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qichukucun.png",
         text: "期初数",
         index: 2,
         lianjie: "../procurement/procurement",
       },
       {
-        url: "../images/shoufamingxi.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shoufamingxi.png",
         text: "明细",
         index: 3,
         lianjie: "../Tosell/Tosell",
 
       },
       {
-        url: "../images/jinxiaocun.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jinxiaocun.png",
         text: "进销存",
         index: 4,
         lianjie: "../kucun/kucun",
       },
       {
-        url: "../images/gys.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gys.png",
 
         text: "进货方资料",
         index: 5,
         lianjie: "../Location/Location",
       },
       {
-        url: "../images/kehu.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/kehu.png",
         text: "客户资料",
         index: 6,
         lianjie: "../contract/contract",
       },
       {
-        url: "../images/shangpinguanli.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shangpinguanli.png",
         text: "基础资料",
         index: 7,
         lianjie: "../collection/collection"
       },
       {
-        url: "../images/biji.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/biji.png",
         text: "笔记",
         index: 8,
         lianjie: "../biji/biji"
       },
       {
-        url: "../images/shangpin_jinchu.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shangpin_jinchu.png",
         text: "商品进出查询",
         index: 9,
         lianjie: "../shangpin_jinchu/shangpin_jinchu"
       },
       {
-        url: "../images/kehu_chuhuo.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/kehu_chuhuo.png",
         text: "客户/供应商查询",
         index: 10,
         lianjie: "../kehu_chuhuo/kehu_chuhuo"
       },
       {
-        url: "../images/danju_dayin.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/danju_dayin.png",
         text: "单据打印",
         index: 11,
         lianjie: "../../packageJ/page/out_in_print/out_in_print"

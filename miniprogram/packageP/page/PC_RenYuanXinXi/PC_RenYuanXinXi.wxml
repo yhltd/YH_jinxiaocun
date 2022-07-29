@@ -50,7 +50,7 @@
     <input bindinput="onInput3" data-column="idcard" class="input_text_form" value="{{idcard}}" type="idcard" name="idcard"></input>
     <view class="lables" >部门</view>
     <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm" bindtap="selBM" disabled="true"></input>
-    <view class="lables">班次</view>
+    <view class="lables">班次(此班次只作为记录)</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" value="{{bc}}" type="text" name="bc"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
@@ -70,7 +70,7 @@
     <input bindinput="onInput3" data-column="idcard" class="input_text_form" value="{{idcard}}" type="idcard" name="idcard"></input>
     <view class="lables">部门</view>
     <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm" bindtap="selBM" disabled="true"></input>
-    <view class="lables">班次</view>
+    <view class="lables">班次(此班次只作为记录)</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" value="{{bc}}" type="text" name="bc"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

@@ -59,6 +59,7 @@ Page({
 
   choiceDate: function (e) {
     //e.preventDefault(); 
+    
     this.setData({
       [e.target.dataset.column_name]: e.detail.value
     })
@@ -141,7 +142,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from order_check where company = '" + user + "' and order_number like '%" + e[0] + "%' and moudle like '%" + e[1] + "%'"
+        query: "select * from order_check where company = '" + user + "' and order_number like '%" + e[0] + "%' and moudle like '%" + e[1] + "%' and riqi >='" + e[2] + "' and riqi <='" + e[3] + "'"
       },
       success: res => {
         var list = res.result.recordset
@@ -171,7 +172,7 @@ Page({
   onLoad: function (options) {
     var _this = this
     this.panduanquanxian()
-    var e = ['', '']
+    var e = ['', '','1900-01-01','2100-12-31']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
@@ -256,7 +257,7 @@ Page({
             sl: ""
           })
           _this.qxShow()
-          var e = ['', '']
+          var e = ['', '','1900-01-01','2100-12-31']
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -311,7 +312,7 @@ Page({
             id: "",
           })
           _this.qxShow()
-          var e = ['','']
+          var e = ['', '','1900-01-01','2100-12-31']
           _this.tableShow(e)
 
           wx.showToast({
@@ -352,7 +353,7 @@ Page({
             bm:""
           })
           _this.qxShow()
-          var e = ['','']
+          var e = ['', '','1900-01-01','2100-12-31']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -377,13 +378,25 @@ Page({
     _this.setData({
       cxShow:true,
       ddh:"",
-      mk:""
+      mk:"",
+      riqi1:'',
+      riqi2:'',
     })
   },
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.ddh,_this.data.mk]
+    if(_this.data.riqi1==''){
+      _this.setData({
+        riqi1:'1900-01-01'
+      })
+    }
+    if(_this.data.riqi2==''){
+      _this.setData({
+        riqi2:'2100-12-31'
+      })
+    }
+    var e = [_this.data.ddh,_this.data.mk,_this.data.riqi1,_this.data.riqi2]
     _this.tableShow(e)
     _this.qxShow()
   },

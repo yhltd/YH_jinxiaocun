@@ -8,76 +8,76 @@ Page({
   data: {
     id : 0,
     list: [{
-        url: "../../images/rili.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rili.png",
         text: "考勤表",
         lianjie: "../../packageA/pages/1kaoqin/kaoqin",
         index: 1,
         hid : true
       },{
-        url: "../../images/renyuanxinxiguanli.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/renyuanxinxiguanli.png",
         text: "人员信息管理",
         index: 2,
         hid : true,
         lianjie: "../../packageA/pages/1renyuanxinxiguanli/renyuanxinxiguanli",
       },{
 
-        url: "../../images/baopan.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/baopan.png",
         text: "报盘",
         index: 3,
         hid : true,
         lianjie: "../../packageA/pages/1baopan/baopan"
       },{
-        url: "../../images/shezhi.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shezhi.png",
         text: "配置表",
         index: 4,
         hid : true,
         lianjie: "../../packageA/pages/1peizhi/index",
       },{
-        url: "../../images/gongzimingxi.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzimingxi.png",
         text: "工资明细",
         index: 5,
         hid : true,
         lianjie: "../../packageA/pages/1gongzimingxi/gongzimingxi",
       },{
 
-        url: "../../images/baoshui.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/baoshui.png",
         text: "报税",
         index: 6,
         hid : true,
         lianjie: "../../packageA/pages/1baoshui/index"
       },{
-        url: "../../images/kaoqinjilu.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/kaoqinjilu.png",
         text: "考勤记录",
         index: 7,
         hid : true,
         lianjie: "../../packageA/pages/1kaoqinjilu/kaoqinjilu",
       },{
-        url: "../../images/bumenhuizong.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/bumenhuizong.png",
         text: "部门汇总",
         index: 8,
         hid : true,
         lianjie: "../../packageA/pages/1bumenhuizong/index",
       },{
 
-        url: "../../images/shebao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shebao.png",
         text: "社保",
         index: 9,
         hid : true,
         lianjie: "../../packageA/pages/1shebaohuizong/index"
       },{
-        url: "../../images/gerenxinxi.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gerenxinxi.png",
         text: "个人信息",
         index: 10,
         hid : true,
         lianjie: "../../packageA/pages/1renyuanjibenxinxi/index",
       },{
-        url: "../../images/gerensuodeshui.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gerensuodeshui.png",
         text: "个人所得税",
         index: 11,
         hid : true,
         lianjie: "../../packageA/pages/1gerensuodeshui/gerensuodeshui"
       },{
-        url: "../../images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
         text: "工资条",
         index: 12,
         hid : true,

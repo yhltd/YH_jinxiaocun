@@ -204,6 +204,7 @@ Page({
       // _this.tableShow(e)
       //  _this.panduanquanxian()
     }
+    console.log(_this.data.list)
     //_this.addMK()
     //_this.
     //_this.module_info_show(_this.e)
@@ -1613,6 +1614,14 @@ Page({
       more: true,
       mask_up: true,
     })
+  },
+  
+  set_gongshi:function(){
+      wx.showToast({
+        title: '日生产数=当日可工作小时数*生产模块效率',
+        icon: 'none',
+        duration:3000,
+      })
   },
 
   /**

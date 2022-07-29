@@ -7,7 +7,7 @@
 
 <view class='divline2'></view>  
 <view wx:for="{{all}}" bindlongpress='shanchu' bindtap='ke' data-id="{{all[i]._id}}" wx:key="" wx:for-index='i' data-index="{{i}}" class='jinhuofan'>
-  <image class='kh_tx' src='/images/kuhu.png'> </image>
+  <image class='kh_tx' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/kuhu.png'> </image>
   <!-- <view bindtap='ke' data-id="{{all[i].beizhu}}" class="ke_hu">客户序号:{{i+1}}
 </view> -->
   <view class="zheng_kuai">
@@ -32,5 +32,5 @@
 
 
 <button class="tianjia" bindtap='tianjia'>
-  <image class='jiahao1' src='/images/jiahao1.png'> </image>
+  <image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao1.png'> </image>
 </button>

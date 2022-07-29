@@ -47,7 +47,7 @@
     <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
   </view>
   <view class="backSelect" wx:if="{{isDelete}}" bindtap="backDelete">
-    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
+    <image class="backSelect_image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/backSelect1.jpg"></image>
   </view>
   <button class="moreDo" bindtap="{{isDelete?'delete':'moreDo'}}">{{isDelete?'删除':'更多操作'}}</button>
 </view>

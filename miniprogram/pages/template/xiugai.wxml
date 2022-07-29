@@ -23,7 +23,7 @@
     <button bindtap='tjjg' style="font-size: 92%;position: absolute;left: 21%;background-color: #1e90ff;height: 63rpx;width: 58%;height: 63rpx;top: 50%;">提交</button>
     <button bindtap='spClose' style="position: absolute;left: 83%;top: 0%;">
      
-    <image src="../../images/20190805090541.png" class="tp_guanbi" style="height: 75rpx; width: 75rpx"></image>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/20190805090541.png" class="tp_guanbi" style="height: 75rpx; width: 75rpx"></image>
     
     
     </button> 

@@ -4,7 +4,7 @@
 
   <view class="container">
     <view class="userinfo">
-      <image class="userinfo-avatar" src="../../images/login.png" background-size="cover"></image>
+      <image class="userinfo-avatar" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/login.png" background-size="cover"></image>
       <text class="userinfo-nickname">请登录</text>
     </view>
   </view>

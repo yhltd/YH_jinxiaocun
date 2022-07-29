@@ -9,62 +9,62 @@ Page({
 
     views : [
       {
-        image_url : "../../../images/rili.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rili.png",
         index : 1,
         text : "考勤表",
         function : [0,1,2,3,4]
       },{
-        image_url : "../../../images/renyuanxinxiguanli.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/renyuanxinxiguanli.png",
         index : 2,
         text : "人员信息管理",
         function : [0,1,2,3,4]
       },{
-        image_url : "../../../images/baopan.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/baopan.png",
         index : 3,
         text : "报盘",
         function : [-1,1,2,3,4]
       },{
-        image_url : "../../../images/shezhi.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shezhi.png",
         index : 4,
         text : "配置表",
         function : [0,1,2,-1,4]
       },{
-        image_url : "../../../images/gongzimingxi.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzimingxi.png	",
         index : 5,
         text : "工资明细",
         function : [0,1,2,3,4]
       },{
-        image_url : "../../../images/baoshui.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/baoshui.png",
         index : 6,
         text : "报税",
         function : [-1,-1,2,3,4]
       },{
-        image_url : "../../../images/kaoqinjilu.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/kaoqinjilu.png",
         index : 7,
         text : "考勤记录",
         function : [0,1,2,3,4]
       },{
-        image_url : "../../../images/bumenhuizong.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/bumenhuizong.png",
         index : 8,
         text : "部门汇总",
         function : [-1,-1,2,3,4]
       },{
-        image_url : "../../../images/shebao.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shebao.png",
         index : 9,
         text : "社保",
         function : [-1,-1,2,3,4]
       },{
-        image_url : "../../../images/gerenxinxi.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gerenxinxi.png",
         index : 10,
         text : "个人信息",
         function : [-1,-1,-1,3,4]
       },{
-        image_url : "../../../images/gerensuodeshui.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gerensuodeshui.png",
         index : 11,
         text : "个人所得税",
         function : [-1,-1,-1,-1,4]
       },{
-        image_url : "../../../images/gongzitiao.png",
+        image_url : "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
         index : 12,
         text : "工资条",
         function : [-1,-1,-1,-1,4]

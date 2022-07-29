@@ -48,7 +48,7 @@
     <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
   </view>
   <view class="backSelect" wx:if="{{isSelect || examine}}" bindtap="backSelect">
-    <image class="backSelect_image" src="../../image/backSelect1.jpg"></image>
+    <image class="backSelect_image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/backSelect1.jpg"></image>
   </view>
   <button class="moreDo" bindtap="insert">添加一行</button>
   <button class="moreDo" bindtap="use_book">使用说明</button>
@@ -106,10 +106,10 @@
     </view>
 
 
-   <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left:   19%; " ><image src="../../image/查询.png" style="height:25px; width:25px; position: absolute;top:18.1%; left:14%;"></image>查询权限：　　是<switch  data-column="quanxian_select" name="quanxian_select" checked="{{quanxian_select=='是'?true:false}}" bindchange="switch4Change"></switch>否</view>
-    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}"><image src="../../image/删除.png" style="height:25px; width:25px; position: absolute;top:30.6%; left:14%;"></image>删除权限：　　是<switch data-column="quanxian_delete" name="quanxian_delete" checked="{{quanxian_delete=='是'?true:false}}" bindchange="switch2Change"></switch>否</view>
-    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}"><image src="../../image/修改.png" style="height:25px; width:25px; position: absolute;top:43.4%; left:14%;"></image>修改权限：　　是<switch data-column="quanxian_update" name="quanxian_update" checked="{{quanxian_update=='是'?true:false}}" bindchange="switch3Change"></switch>否</view>
-    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}"><image src="../../image/添加.png" style="height:25px; width:25px; position: absolute;top:56.3%; left:14%;"></image>添加权限：　　是<switch data-column="quanxian_add" name="quanxian_add" checked="{{quanxian_add=='是'?true:false}}" bindchange="switch1Change"></switch>否</view>
+   <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left:   19%; " ><image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/查询.png" style="height:25px; width:25px; position: absolute;top:18.1%; left:14%;"></image>查询权限：　　是<switch  data-column="quanxian_select" name="quanxian_select" checked="{{quanxian_select=='是'?true:false}}" bindchange="switch4Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}"><image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/删除.png" style="height:25px; width:25px; position: absolute;top:30.6%; left:14%;"></image>删除权限：　　是<switch data-column="quanxian_delete" name="quanxian_delete" checked="{{quanxian_delete=='是'?true:false}}" bindchange="switch2Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}"><image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/修改.png" style="height:25px; width:25px; position: absolute;top:43.4%; left:14%;"></image>修改权限：　　是<switch data-column="quanxian_update" name="quanxian_update" checked="{{quanxian_update=='是'?true:false}}" bindchange="switch3Change"></switch>否</view>
+    <view class="swit" style="margin-top:60rpx; padding: 10px; margin-bottom: 10px; font-size:20px; margin-left: 19%;" hidden="{{look}}"><image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/添加.png" style="height:25px; width:25px; position: absolute;top:56.3%; left:14%;"></image>添加权限：　　是<switch data-column="quanxian_add" name="quanxian_add" checked="{{quanxian_add=='是'?true:false}}" bindchange="switch1Change"></switch>否</view>
 
   </view>
   <view class="bottom_view2">

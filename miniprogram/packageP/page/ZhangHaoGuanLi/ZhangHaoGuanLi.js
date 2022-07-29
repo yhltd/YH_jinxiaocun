@@ -21,6 +21,7 @@ Page({
     title: [{ text: "账号", width: "275rpx", columnName: "user_code", type: "digit", isupd: true },
             { text: "密码", width: "275rpx", columnName: "password", type: "text", isupd: true },
             { text: "部门", width: "200rpx", columnName: "department_name", type: "text", isupd: true },
+            { text: "状态", width: "200rpx", columnName: "state", type: "text", isupd: true },
           ],
     zh:"",
     mm:"",
@@ -30,7 +31,8 @@ Page({
     isdis: '',
     isdischa: '',
     isdisgai:'',
-    isdisshan:''
+    isdisshan:'',
+    zhuangtai_list:['正常','禁用']
     //结束
   },
 
@@ -135,6 +137,13 @@ Page({
     })
   },
 
+  bindPickerChange: function(e) {
+    var _this = this
+    this.setData({
+      zt: _this.data.zhuangtai_list[e.detail.value]
+    })
+  },
+
   inquire:function(){
     var _this = this
     _this.setData({
@@ -151,6 +160,7 @@ Page({
       zh: "",
       mm: "",
       bm: "",
+      zt:"",
     })
   },
 
@@ -190,17 +200,18 @@ Page({
   add1:function(){
     var _this=this
     let user = app.globalData.gongsi;
-    if (_this.data.zh != "" && _this.data.mm != "" && _this.data.bm !=""){
+    if (_this.data.zh != "" && _this.data.mm != "" && _this.data.bm !="" && _this.data.zt !=""){
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "insert into user_info(user_code,password,department_name,company) values('" + _this.data.zh + "','" + _this.data.mm + "','" + _this.data.bm + "','" + user +"')"
+        query: "insert into user_info(user_code,password,department_name,company,state) values('" + _this.data.zh + "','" + _this.data.mm + "','" + _this.data.bm + "','" + user + "','" + _this.data.zt + "')"
       },
       success: res => {
         _this.setData({
           zh:"",
           mm:"",
-          bm:""
+          bm:"",
+          zt:"",
         })
         _this.qxShow()
         var e = ['']
@@ -258,18 +269,18 @@ Page({
   upd1:function(){
     var _this = this
     let user = app.globalData.gongsi;
-    if (_this.data.zh != "" && _this.data.mm != "" && _this.data.bm !="") {
+    if (_this.data.zh != "" && _this.data.mm != "" && _this.data.bm !="" && _this.data.zt !="") {
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
-          query: "update user_info set user_code='" + _this.data.zh + "',password='" + _this.data.mm + "',department_name='" + _this.data.bm + "' where company='" + user + "' and id='" + _this.data.id +"'"
+          query: "update user_info set user_code='" + _this.data.zh + "',password='" + _this.data.mm + "',department_name='" + _this.data.bm + "',state='" + _this.data.zt + "' where company='" + user + "' and id='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
-            ddh: "",
-            mk: "",
-            rq: "",
-            sl: "",
+            zh: "",
+            mm: "",
+            bm: "",
+            zt: "",
             id:""
           })
           _this.qxShow()

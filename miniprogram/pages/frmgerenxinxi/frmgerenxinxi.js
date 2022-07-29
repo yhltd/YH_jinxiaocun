@@ -9,7 +9,7 @@ Page({
 
     // 用户信息
     userInfo: {
-      avatarUrl: "/images/login.png",
+      avatarUrl: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/login.png",
       bind_account: {
         zxyy_id: "------"
       },
