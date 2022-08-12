@@ -166,7 +166,9 @@
         "page/ZhangHaoGuanLi/ZhangHaoGuanLi",
         "page/PaiChanHeDui/PaiChanHeDui",
         "page/BuMen/BuMen",
-        "page/PaiBan/PaiBan"
+        "page/PaiBan/PaiBan",
+        "page/PC_mp4/PC_mp4",
+        "page/PCtuxing/PCtuxing"
       ]
     },
     {

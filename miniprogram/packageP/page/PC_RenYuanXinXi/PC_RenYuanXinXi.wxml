@@ -29,11 +29,12 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
+<view class="bottom_view">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px" disabled="{{isdis!=1}}">添加</button>
+     disabled="{{isdis!=1}}">添加</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px" disabled="{{isdischa!=1}}">刷新</button>
+    disabled="{{isdischa!=1}}">刷新</button>
+    <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
 </view>
 
 

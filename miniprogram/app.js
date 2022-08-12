@@ -35,6 +35,12 @@ App({
       usedSpace : 0,
       allSpace : 0
     },
+    //排产系统用来计算用户数据库容量
+    spaceList_pc : {
+      list_table : [],
+      usedSpace : 0,
+      allSpace : 0
+    },
     //零售管理系统用来计算用户数据库容量
     spaceList_z : {
       list_table : [],

@@ -29,11 +29,10 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view" style="height: 10%; position: relative; left: 0rpx; top: -1rpx">
-  <button class="bt_bottom" hover-class="bt_bottom_hover" disabled="{{isdis!=1}}" bindtap="inquire"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px">添加</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow" disabled="{{isdischa!=1}}"
-    style="width: 209rpx; height: 73rpx; display: block; box-sizing: border-box; position: relative; left: 11rpx; top: -30px">刷新</button>
+<view class="bottom_view">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" disabled="{{isdis!=1}}" bindtap="inquire">添加</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow" disabled="{{isdischa!=1}}">刷新</button>
+    <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
 </view>
 
 <!--------------------->
@@ -55,23 +54,27 @@
 <!---------添加弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
-  <view class="lables">开始时间:</view>
+  <view class="lables">*开始时间:</view>
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
   <input bindinput="onInput2" data-column="riqi1" class="input_text_form" value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
   </picker>
-  <view class="lables">结束时间:</view>
+  <view class="lables">*结束时间:</view>
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
   <input bindinput="onInput3" data-column="riqi2" class="input_text_form" value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
 </picker>
-	  <view class="lables">部门名称</view>
+	  <view class="lables">*部门名称:</view>
     <input bindinput="onInput4" data-column="dname" class="input_text_form" bindtap="selBM" value="{{dname}}" type="text" name="dname" disabled="true"></input>
-    <view class="lables">分班次</view>
+    <view class="lables">*轮换方式:</view>
     <input bindinput="onInput" data-column="fbanci" class="input_text_form" bindtap="selFBC" value="{{fbanci}}" type="number" name="fbanci" disabled="true"></input>
-    <view class="lables">周末分组 </view>
-    <input bindinput="onInput" data-column="zmfz" class="input_text_form" value="{{zmfz}}" type="number" name="zmfz"></input>
-    <view class="lables">轮换天数</view>  
+    <view class="lables" >队伍数量:</view>
+    <input bindinput="onInput" data-column="dwsl" class="input_text_form" value="{{dwsl}}" type="number" name="dwsl" ></input>
+    <view class="lables">*每日班次数量:</view>
+    <input bindinput="onInput" data-column="bc" class="input_text_form" value="{{bc}}" type="number" name="bc"></input>
+    <view class="lables" >轮换数:</view>
     <input bindinput="onInput" data-column="lzts" class="input_text_form" value="{{lzts}}" type="number" name="lzts"></input>
-    <view class="lables">计划名称</view>
+    <view class="lables">休息日:</view>
+    <input bindinput="onInput" data-column="xxr" class="input_text_form" value="{{xxr}}" type="text" name="xxr"></input>
+    <view class="lables">*计划名称</view>
     <input bindinput="onInput" data-column="jhmc" class="input_text_form" value="{{jhmc}}" type="text" name="jhmc"></input>
     <!-- 下方部门信息 -->
     <scroll-view class="sv_list2" scroll-x="true" scroll-y="true" >
@@ -104,7 +107,7 @@
 </scroll-view>
     <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">开始排班</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">开始排班</button>
     </view>
 </van-popup>
 

@@ -238,14 +238,13 @@ button{
   align-items: center;
   display: flex;
   bottom: 2%;
-  margin-top: 30px;
 }
 .bottom_view2{
   display: flex;
   bottom: 2%;
 }
 .bt_bottom{
-  width: 42%;
+  width: 30%;
   background-color: #282B33;
   color: #E6E6E6;
   height: 75rpx;
@@ -253,7 +252,7 @@ button{
   margin-top: 5%;
 }
 .bt_bottom_hover{
-  width: 42%;
+  width: 30%;
   background-color: #2D2D2D;
   color: #E6E6E6;
   height: 75rpx;

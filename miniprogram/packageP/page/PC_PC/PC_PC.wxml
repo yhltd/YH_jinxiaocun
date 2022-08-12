@@ -33,9 +33,9 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%">
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx"  disabled="{{isdis!=1}}">添加</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box" disabled="{{isdischa!=1}}">查询</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" style="width: 247rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: -11rpx; top: 0rpx">更多操作</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"   disabled="{{isdis!=1}}">添加</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering"  disabled="{{isdischa!=1}}">查询</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" >更多操作</button>
 </view>
 
 <!-- 更多操作弹窗 -->
@@ -63,6 +63,7 @@
     <input bindinput="onInput" bindtap="selDDH3" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
   <button class="moreDo_view_bt" bindtap="picture">生成图表</button>
   <button class="moreDo_view_bt" bindtap="set_gongshi">日生产公式</button>
+  <button class="moreDo_view_bt" bindtap="goto_yanshi">演示</button>
 </view>
 <!-- 背景 -->
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{shiFouChaDan?'true':''}}">

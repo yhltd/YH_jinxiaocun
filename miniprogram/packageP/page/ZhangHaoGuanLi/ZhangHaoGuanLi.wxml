@@ -40,6 +40,8 @@
 	<!--原有代码 <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">添加</button> -->
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" 
    disabled="{{isdischa!=1}}">查询</button>
+
+   <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
 </view>
 
 <!------------------------->

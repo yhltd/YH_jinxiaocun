@@ -26,6 +26,10 @@ Page({
         text: "账号管理",
         url: "../ZhangHaoGuanLi/ZhangHaoGuanLi"
       },
+      {
+        text: "数据空间",
+        url: ""
+      },
     ]
   },
 
@@ -36,9 +40,80 @@ Page({
     var _this = this
     _this.tableShow()
     _this.renyuanbumen()
-    // _this.panduanquanxian()
+    _this.getSpace()
+
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "exec sp_spaceused 'bom_info';exec sp_spaceused 'department';exec sp_spaceused 'holiday_config';exec sp_spaceused 'module_info';exec sp_spaceused 'module_type';exec sp_spaceused 'order_check';exec sp_spaceused 'order_info';exec sp_spaceused 'paibanbiao_detail';exec sp_spaceused 'paibanbiao_info';exec sp_spaceused 'paibanbiao_renyuan';exec sp_spaceused 'time_config';exec sp_spaceused 'user_info';exec sp_spaceused 'user_info1';exec sp_spaceused 'user_info';exec sp_spaceused 'work_detail';exec sp_spaceused 'work_detail1';exec sp_spaceused 'work_detail2';"
+      },
+      success: res => {
+        var list = res.result.recordsets
+        console.log(res.result)
+        var list_space = []
+
+        for(let i=0;i<list.length;i++){
+          list_space.push({name:list[i][0].name,size:Math.ceil(list[i][0].reserved.split(" ")[0]/list[i][0].rows)})
+        }
+        app.globalData.spaceList_pc.list_table = list_space
+        _this.getPro(list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+    })
 
   },
+
+  getPro : function(list){
+    var _this = this;
+    let company = app.globalData.gongsi;
+
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from bom_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from department;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from holiday_config;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from module_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from module_type;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from order_check;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from order_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from paibanbiao_detail;select convert(float,count(case remarks1 when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from paibanbiao_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from paibanbiao_renyuan;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from time_config;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from user_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from user_info1;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from user_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from work_detail;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from user_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from work_detail1;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from user_info;select convert(float,count(case company when '"+company+"' then 1 else null end))/convert(float,count(id)) as proportion from work_detail2;"
+      },
+      success: res => {
+        var lists = res.result.recordsets
+        var useSpase = 0
+        for(let i=0;i<list.length;i++){
+          useSpase += parseInt(list[i][0].reserved.split("K")[0])*Math.ceil(lists[i][0].proportion)
+        }
+        app.globalData.spaceList_pc.usedSpace = useSpase
+        console.log("判断数据空间")
+        if(app.globalData.spaceList_pc.allSpace == app.globalData.spaceList_pc.usedSpace){
+          wx.showToast({
+            title: '数据空间不足！',
+            icon: 'none'
+          })
+          wx.reLaunch({
+            url: '../../../pages/login/login',
+          })
+          
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+    })
+  },
+
+  getSpace : function(){
+    var _this = this;
+    let company = app.globalData.gongsi;
+    var mark4 = 0;
+    wx.cloud.callFunction({
+      name : 'sqlServer_system',
+      data : {
+        query : "SELECT mark4 from control_soft_time where name = '"+company+"' and soft_name = '排产'"
+      },
+      success : res=> {
+        app.globalData.spaceList_pc.allSpace = res.result.recordset[0].mark4*1024
+      }
+    })
+  },
+
   //获取权限
   tableShow: function () {
     var _this = this
@@ -160,9 +235,30 @@ Page({
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
-    wx.navigateTo({
-      url: url
-    })
+    if(url != ''){
+      wx.navigateTo({
+        url: url
+      })
+    }else{
+      if(app.globalData.spaceList_pc.list_table=="" || app.globalData.spaceList_pc.usedSpace==0 || app.globalData.allSpace == 0){
+        wx.showToast({
+          title: '正在加载',
+          icon : 'none'
+        })
+        return
+      }
+      var usedSpace = app.globalData.spaceList_pc.usedSpace
+      var allSpace = app.globalData.spaceList_pc.allSpace
+      console.log(usedSpace + "  " + allSpace)
+      wx.showModal({
+        title : '已用空间：'+Math.ceil(usedSpace/allSpace*100)+'%',
+        content : '剩余空间：'+Math.floor((allSpace-usedSpace)/1024)+'MB',
+        showCancel : false,
+        cancelColor	: '#009688'
+      })
+      return;
+    }
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -157,6 +157,10 @@
   </van-collapse-item>
 </van-collapse>
 
+<view class="bottom_view" style="height:10%">
+  <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
+</view>
+
 
 <!--------------------->
 <!--------添加窗体-------->

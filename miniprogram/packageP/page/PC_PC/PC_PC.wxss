@@ -265,7 +265,7 @@ button {
 }
 
 .bt_bottom {
-  width: 42%;
+  width: 30%;
   background-color: #282B33;
   color: #E6E6E6;
   height: 75rpx;
@@ -274,7 +274,7 @@ button {
 }
 
 .bt_bottom_hover {
-  width: 42%;
+  width: 30%;
   background-color: #2D2D2D;
   color: #E6E6E6;
   height: 75rpx;

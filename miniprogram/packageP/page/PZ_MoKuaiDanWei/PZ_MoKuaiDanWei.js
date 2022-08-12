@@ -86,6 +86,11 @@ Page({
     // })
     
   },
+  goto_yanshi: function(){
+    wx.navigateTo({
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      }) 
+  },
 
   //权限执行判断方法
   panduanquanxian: function () {

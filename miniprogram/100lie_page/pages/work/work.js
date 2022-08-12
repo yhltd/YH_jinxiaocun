@@ -162,6 +162,7 @@ Page({
       // wx.removeStorageSync('keytitil')
       // wx.removeStorageSync('keylist')    
     var ssql = "select * from baitaoquanxian where 公司 = '" + that.data.gongsi + "' "
+    console.log(ssql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
@@ -169,6 +170,7 @@ Page({
       },
       success(res){
         var list = res.result.recordset      
+        console.log(list)
         that.setData({
           list
         })

@@ -25,17 +25,14 @@ Page({
     listRenYuan: [],
     systemArray: [],
     listfbc: [{
-        name: "1"
+        name: "不轮换"
       },
       {
-        name: "2"
+        name: "隔天轮换"
       },
       {
-        name: "3"
+        name: "隔周轮换"
       },
-      {
-        name: "4"
-      }
     ],
     title: [{
         text: "创建日期",
@@ -149,10 +146,14 @@ Page({
         onOff: true
       })
     }
-    _this.setData({
-
-    })
   },
+
+  goto_yanshi: function(){
+    wx.navigateTo({
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      }) 
+  },
+  
   //判断权限
   panduanquanxian: function () {
     var _this = this
@@ -340,6 +341,8 @@ Page({
       tjShow: false,
       handle: true,
       xgShow: false,
+      paiban_add_show1:'none',
+      paiban_add_show2:'none',
       riqi: "",
       plan_name: "",
       renshu: "",
@@ -488,6 +491,14 @@ Page({
     _this.setData({
       list2: [],
       tjShow: true,
+      riqi1:'',
+      riqi2:'',
+      dname:'',
+      fbanci:'',
+      bc:'',
+      xxr:'',
+      lzts:'',
+      jhmc:'',
     })
     _this.getSystemName()
 
@@ -1133,6 +1144,580 @@ Page({
       }
     }
   },
+
+  add2: function(){
+    var _this = this
+    var company = app.globalData.gongsi;
+    //判断基础信息填写情况
+    if(_this.data.riqi1 == '' || _this.data.riqi2 == '' || _this.data.dname == '' || _this.data.fbanci == '' || _this.data.jhmc == '' || _this.data.bc == ''){
+      wx.showToast({
+        title: '信息填写不全，请检查',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
+    var list_RenYuan = []
+    var list2 = _this.data.list2
+    var listRenYuan = _this.data.listRenYuan
+    for (var i = 0; i < listRenYuan.length; i++) {
+      if (listRenYuan[i].panduan == true) {
+        for (var j = 0; j < list2.length; j++) {
+          if (listRenYuan[i].id == list2[j].id) {
+            list_RenYuan.push({
+              staff_name: list2[j].staff_name,
+              phone_number: list2[j].phone_number,
+              id_number: list2[j].id_number,
+              department_name: list2[j].department_name,
+              banci: list2[j].banci
+            })
+          }
+        }
+      }
+    }
+
+    if(_this.data.fbanci == '不轮换'){
+
+      if(list_RenYuan.length == 0){
+        wx.showToast({
+          title: '未选择排班人员',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }else if(list_RenYuan.length < _this.data.bc * 1){
+        wx.showToast({
+          title: '人员不足，无法分成' + _this.data.bc + '个班次',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }else if(_this.data.bc * 1 < 1){
+        wx.showToast({
+          title: '每日至少需要一个班次',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+  
+      var list_fenban_renyuan = []
+      for(var i=1;i<=_this.data.bc;i++){
+        list_fenban_renyuan.push([])
+      }
+
+      console.log(list_RenYuan.length)
+      var this_ban = 0
+      for(var i=0; i<list_RenYuan.length; i++){
+        console.log(this_ban)
+        list_fenban_renyuan[this_ban].push({
+          staff_name: list_RenYuan[i].staff_name,
+          phone_number: list_RenYuan[i].phone_number,
+          id_number: list_RenYuan[i].id_number,
+          department_name: list_RenYuan[i].department_name,
+          banci: list_RenYuan[i].banci
+        })
+        this_ban = this_ban + 1
+        if(this_ban == _this.data.bc * 1){
+          this_ban = 0
+        }
+      }
+
+      var xiuxiri = _this.data.xxr
+      var xiuxiri = xiuxiri.split(',')
+      var start_date = _this.data.riqi1
+      var stop_date = _this.data.riqi2
+      var rq = start_date.split("-")
+      start_date = new Date(rq[0], rq[1] - 1, rq[2])
+      rq = stop_date.split("-")
+      stop_date = new Date(rq[0], rq[1] - 1, rq[2])
+      var paiban_day = Math.floor((stop_date - start_date) / 1000 / 60 / 60 / 24)
+      var paiban_list = []
+      var myDate = new Date()
+      var yy = myDate.getFullYear()
+      var mm = myDate.getMonth() + 1
+      var dd = myDate.getDate()
+      var ss = myDate.getSeconds()
+      if (mm < 10) {
+        mm = "0" + mm
+      }
+      if (dd < 10) {
+        dd = "0" + dd
+      }
+      if (ss < 10) {
+        ss = "0" + ss
+      }
+      var paibanbiao_id = yy + mm + dd + ss
+      var now_date = yy + "-" + mm + "-" + dd
+
+      var start_date = _this.data.riqi1
+      var rq = start_date.split("-")
+
+      //循环排班总天数
+      for (var k = 0; k <= paiban_day; k++) {
+        var today_date = new Date(rq[0], rq[1] - 1, parseInt(rq[2], 10) + parseInt(k, 10))
+        _this.get_week(today_date)
+        var xxr_panduan = true
+        for(var i=0; i<xiuxiri.length; i++){
+          if(parseInt(_this.data.this_week) == parseInt(xiuxiri[i])){
+            console.log('跳过休息日')
+            xxr_panduan = false
+            break;
+          }
+        }
+        if(xxr_panduan == false){
+          continue;
+        }
+        var yy = today_date.getFullYear()
+        var mm = today_date.getMonth() + 1
+        var dd = today_date.getDate()
+        if (mm < 10) {
+          mm = "0" + mm
+        }
+        if (dd < 10) {
+          dd = "0" + dd
+        }
+        var temp_date = yy + "-" + mm + "-" + dd
+        //循环班次
+        for(var i=0; i<list_fenban_renyuan.length; i++){
+          var this_list = list_fenban_renyuan[i]
+          //循环队伍
+          for(var j=0; j<this_list.length; j++){
+            paiban_list.push({
+              staff_name: this_list[j].staff_name,
+              phone_number: this_list[j].phone_number,
+              id_number: this_list[j].id_number,
+              department_name: this_list[j].department_name,
+              banci: this_list[j].banci,
+              company: company,
+              b:'班次' + (i * 1 + 1),
+              c: temp_date,
+              e: paibanbiao_id
+            })
+          }
+        }
+      }
+
+      console.log(paiban_list)
+      
+      var sql = "insert into paibanbiao_info(paibanbiao_detail_id,riqi,renshu,plan_name,department_name,remarks1,remarks2) values("+ paibanbiao_id + ",'" + now_date + "','"+ (listRenYuan.length) + "','" + _this.data.jhmc + "','" + _this.data.dname + "','" + company + "','" + paibanbiao_id +"');"
+
+      for(var i=0; i<paiban_list.length; i++){
+        sql = sql + "insert into paibanbiao_detail(staff_name,phone_number,banci,department_name,id_number,company,b,c,e) values('" + paiban_list[i].staff_name + "','" + paiban_list[i].phone_number + "','" + paiban_list[i].banci + "','" + paiban_list[i].department_name + "','" + paiban_list[i].id_number + "','" + paiban_list[i].company + "','" + paiban_list[i].b + "','" + paiban_list[i].c + "','" + paiban_list[i].e + "');"
+      }
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_PC',
+        data: {
+          query: sql
+        },
+        success: res => {
+          _this.setData({
+            onOff: true,
+            riqi: "",
+            plan_name: "",
+            renshu: "",
+            department_name: "",
+            id: "",
+          })
+          _this.qxShow()
+          _this.tableShow()
+          wx.showToast({
+            title: '排班成功！请到排班明细表中查看明细。',
+            icon: 'none',
+            duration: 3000
+          })
+        },
+        err: res => {
+          console.log("错误!")
+          _this.setData({
+            onOff: true,
+          })
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+          _this.setData({
+            onOff: true,
+          })
+        }
+      })
+
+    }else if(_this.data.fbanci == '隔天轮换'){
+
+      if(_this.data.dwsl == ''){
+        wx.showToast({
+          title: '未填写队伍数量',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
+
+      if(_this.data.lzts == ''){
+        wx.showToast({
+          title: '未填写轮换数',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
+
+      if(list_RenYuan.length == 0){
+        wx.showToast({
+          title: '未选择排班人员',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }else if(list_RenYuan.length < _this.data.bc * _this.data.dwsl){
+        wx.showToast({
+          title: '人员不足，无法分成' + _this.data.bc * _this.data.dwsl + '个班次',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }else if(_this.data.bc * 1 < 1){
+        wx.showToast({
+          title: '每日至少需要一个班次',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+
+      var list_fenban_renyuan = []
+      for(var i=1;i<=_this.data.dwsl;i++){
+        list_fenban_renyuan.push([])
+      }
+
+      console.log(list_RenYuan.length)
+      var this_ban = 0
+      for(var i=0; i<list_RenYuan.length; i++){
+        console.log(this_ban)
+        list_fenban_renyuan[this_ban].push({
+          staff_name: list_RenYuan[i].staff_name,
+          phone_number: list_RenYuan[i].phone_number,
+          id_number: list_RenYuan[i].id_number,
+          department_name: list_RenYuan[i].department_name,
+          banci: list_RenYuan[i].banci,
+          b:''
+        })
+        this_ban = this_ban + 1
+        if(this_ban == _this.data.dwsl * 1){
+          this_ban = 0
+        }
+      }
+      
+      for(var i=0; i<list_fenban_renyuan.length; i++){
+        this_ban = 1
+        var this_list = list_fenban_renyuan[i]
+        for(var j=0; j<this_list.length; j++){
+          this_list[j].b = '班次' + this_ban
+          this_ban = this_ban + 1
+          if(this_ban > _this.data.bc * 1){
+            this_ban = 1
+          }
+        }
+        list_fenban_renyuan[i] = this_list
+      }
+
+
+      var start_date = _this.data.riqi1
+      var stop_date = _this.data.riqi2
+      var rq = start_date.split("-")
+      start_date = new Date(rq[0], rq[1] - 1, rq[2])
+      rq = stop_date.split("-")
+      stop_date = new Date(rq[0], rq[1] - 1, rq[2])
+      var paiban_day = Math.floor((stop_date - start_date) / 1000 / 60 / 60 / 24)
+      var paiban_list = []
+      var myDate = new Date()
+      var yy = myDate.getFullYear()
+      var mm = myDate.getMonth() + 1
+      var dd = myDate.getDate()
+      var ss = myDate.getSeconds()
+      if (mm < 10) {
+        mm = "0" + mm
+      }
+      if (dd < 10) {
+        dd = "0" + dd
+      }
+      if (ss < 10) {
+        ss = "0" + ss
+      }
+      var paibanbiao_id = yy + mm + dd + ss
+      var now_date = yy + "-" + mm + "-" + dd
+
+      //循环排班总天数
+      var this_day = 1
+      var this_dui = 0
+      var sql = "insert into paibanbiao_info(paibanbiao_detail_id,riqi,renshu,plan_name,department_name,remarks1,remarks2) values("+ paibanbiao_id + ",'" + now_date + "','"+ (listRenYuan.length) + "','" + _this.data.jhmc + "','" + _this.data.dname + "','" + company + "','" + paibanbiao_id +"');"
+
+      var start_date = _this.data.riqi1
+      var rq = start_date.split("-")
+      for (var k = 0; k <= paiban_day; k++) {
+        var today_date = new Date(rq[0], rq[1] - 1, parseInt(rq[2], 10) + parseInt(k, 10))
+        _this.get_week(today_date)
+        var yy = today_date.getFullYear()
+        var mm = today_date.getMonth() + 1
+        var dd = today_date.getDate()
+        if (mm < 10) {
+          mm = "0" + mm
+        }
+        if (dd < 10) {
+          dd = "0" + dd
+        }
+        var temp_date = yy + "-" + mm + "-" + dd
+        
+        var this_dui_list = list_fenban_renyuan[this_dui]
+        for(var i=0; i<this_dui_list.length; i++){
+          sql = sql + "insert into paibanbiao_detail(staff_name,phone_number,banci,department_name,id_number,company,b,c,e,f) values('" + this_dui_list[i].staff_name + "','" + this_dui_list[i].phone_number + "','" + this_dui_list[i].banci + "','" + this_dui_list[i].department_name + "','" + this_dui_list[i].id_number + "','" + company + "','" + this_dui_list[i].b + "','" + temp_date + "','" + paibanbiao_id + "','" + '队伍' + (this_dui * 1 + 1) + "');"
+        }
+
+        this_day = this_day + 1
+        if(this_day > _this.data.lzts){
+          this_day = 1
+          this_dui = this_dui + 1
+        }
+        if(this_dui >= _this.data.dwsl){
+          this_dui = 0
+        }
+        
+      }
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_PC',
+        data: {
+          query: sql
+        },
+        success: res => {
+          _this.setData({
+            onOff: true,
+            riqi: "",
+            plan_name: "",
+            renshu: "",
+            department_name: "",
+            id: "",
+          })
+          _this.qxShow()
+          _this.tableShow()
+          wx.showToast({
+            title: '排班成功！请到排班明细表中查看明细。',
+            icon: 'none',
+            duration: 3000
+          })
+        },
+        err: res => {
+          console.log("错误!")
+          _this.setData({
+            onOff: true,
+          })
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+          _this.setData({
+            onOff: true,
+          })
+        }
+      })
+
+    }else if(_this.data.fbanci == '隔周轮换'){
+      
+      if(list_RenYuan.length == 0){
+        wx.showToast({
+          title: '未选择排班人员',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }else if(list_RenYuan.length < _this.data.bc * _this.data.dwsl){
+        wx.showToast({
+          title: '人员不足，无法分成' + _this.data.bc * _this.data.dwsl + '个班次',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }else if(_this.data.bc * 1 < 1){
+        wx.showToast({
+          title: '每日至少需要一个班次',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
+
+      var list_fenban_renyuan = []
+      for(var i=1;i<=_this.data.dwsl;i++){
+        list_fenban_renyuan.push([])
+      }
+
+      console.log(list_RenYuan.length)
+      var this_ban = 0
+      for(var i=0; i<list_RenYuan.length; i++){
+        console.log(this_ban)
+        list_fenban_renyuan[this_ban].push({
+          staff_name: list_RenYuan[i].staff_name,
+          phone_number: list_RenYuan[i].phone_number,
+          id_number: list_RenYuan[i].id_number,
+          department_name: list_RenYuan[i].department_name,
+          banci: list_RenYuan[i].banci,
+          b:''
+        })
+        this_ban = this_ban + 1
+        if(this_ban == _this.data.dwsl * 1){
+          this_ban = 0
+        }
+      }
+      
+      for(var i=0; i<list_fenban_renyuan.length; i++){
+        this_ban = 1
+        var this_list = list_fenban_renyuan[i]
+        for(var j=0; j<this_list.length; j++){
+          this_list[j].b = '班次' + this_ban
+          this_ban = this_ban + 1
+          if(this_ban > _this.data.bc * 1){
+            this_ban = 1
+          }
+        }
+        list_fenban_renyuan[i] = this_list
+      }
+      console.log(list_fenban_renyuan)
+
+      var start_date = _this.data.riqi1
+      var stop_date = _this.data.riqi2
+      var rq = start_date.split("-")
+      start_date = new Date(rq[0], rq[1] - 1, rq[2])
+      rq = stop_date.split("-")
+      stop_date = new Date(rq[0], rq[1] - 1, rq[2])
+      var paiban_day = Math.floor((stop_date - start_date) / 1000 / 60 / 60 / 24)
+      var paiban_list = []
+      var myDate = new Date()
+      var yy = myDate.getFullYear()
+      var mm = myDate.getMonth() + 1
+      var dd = myDate.getDate()
+      var ss = myDate.getSeconds()
+      if (mm < 10) {
+        mm = "0" + mm
+      }
+      if (dd < 10) {
+        dd = "0" + dd
+      }
+      if (ss < 10) {
+        ss = "0" + ss
+      }
+      var paibanbiao_id = yy + mm + dd + ss
+      var now_date = yy + "-" + mm + "-" + dd
+
+      var start_date = _this.data.riqi1
+      var rq = start_date.split("-")
+
+      var today_date = new Date(rq[0], rq[1] - 1, parseInt(rq[2], 10))
+      console.log(today_date)
+      _this.get_week(today_date)
+      var sql = "insert into paibanbiao_info(paibanbiao_detail_id,riqi,renshu,plan_name,department_name,remarks1,remarks2) values("+ paibanbiao_id + ",'" + now_date + "','"+ (listRenYuan.length) + "','" + _this.data.jhmc + "','" + _this.data.dname + "','" + company + "','" + paibanbiao_id +"');"
+      console.log(_this.data.this_week)
+      var this_week = _this.data.this_week
+      var this_week_num = 1
+      var this_dui = 0
+      for (var k = 0; k <= paiban_day; k++) {
+        var today_date = new Date(rq[0], rq[1] - 1, parseInt(rq[2], 10) + parseInt(k, 10))
+        _this.get_week(today_date)
+        var yy = today_date.getFullYear()
+        var mm = today_date.getMonth() + 1
+        var dd = today_date.getDate()
+        if (mm < 10) {
+          mm = "0" + mm
+        }
+        if (dd < 10) {
+          dd = "0" + dd
+        }
+        var temp_date = yy + "-" + mm + "-" + dd
+
+        var this_dui_list = list_fenban_renyuan[this_dui]
+        for(var i=0; i<this_dui_list.length; i++){
+          sql = sql + "insert into paibanbiao_detail(staff_name,phone_number,banci,department_name,id_number,company,b,c,e,f) values('" + this_dui_list[i].staff_name + "','" + this_dui_list[i].phone_number + "','" + this_dui_list[i].banci + "','" + this_dui_list[i].department_name + "','" + this_dui_list[i].id_number + "','" + company + "','" + this_dui_list[i].b + "','" + temp_date + "','" + paibanbiao_id + "','" + '队伍' + (this_dui * 1 + 1) + "');"
+        }
+
+        this_week = this_week + 1
+        if(this_week > 7){
+          this_week = 1
+          this_week_num = this_week_num + 1
+        }
+        if(this_week_num > _this.data.lzts * 1){
+          this_week_num = 1
+          this_dui = this_dui + 1
+        }
+        if(this_dui >= _this.data.dwsl){
+          this_dui = 0
+        }
+        console.log(this_week + " " + this_week_num + " " + this_dui)
+
+      }
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_PC',
+        data: {
+          query: sql
+        },
+        success: res => {
+          _this.setData({
+            onOff: true,
+            riqi: "",
+            plan_name: "",
+            renshu: "",
+            department_name: "",
+            id: "",
+          })
+          _this.qxShow()
+          _this.tableShow()
+          wx.showToast({
+            title: '排班成功！请到排班明细表中查看明细。',
+            icon: 'none',
+            duration: 3000
+          })
+        },
+        err: res => {
+          console.log("错误!")
+          _this.setData({
+            onOff: true,
+          })
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+          _this.setData({
+            onOff: true,
+          })
+        }
+      })
+    }
+
+  },
+
+  get_week: function(dates){
+    var _this = this
+    let show_day = new Array('7', '1', '2', '3', '4', '5', '6');
+    let date = new Date(dates);
+    date.setDate(date.getDate());
+    let day = date.getDay();
+    _this.setData({
+      this_week:show_day[day]
+    })
+  },
+
+  
 
 
   diyizhou_panban_lunhuanzhi: function () {

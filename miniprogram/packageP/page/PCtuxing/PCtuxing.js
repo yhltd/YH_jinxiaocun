@@ -1,5 +1,5 @@
 // import * as echarts from '../../../ec-canvas/echarts'
-import * as echarts from '../ec-canvasnew/echarts'
+import * as echarts from '../../components/ec-canvas/echarts'
 
 const app = getApp();
 // var Chart = null;

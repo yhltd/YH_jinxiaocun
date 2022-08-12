@@ -1,0 +1,2 @@
+<!--packageP/page/PC_mp4/PC_mp4.wxml-->
+<video src="{{this_url}}" binderror="videoErrorCallback" style="width: 100%;height:600px;"></video>

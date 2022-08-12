@@ -213,6 +213,12 @@ Page({
     //   //结束
   },
 
+  goto_yanshi: function(){
+    wx.navigateTo({
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      }) 
+  },
+
   //新增代码
   //判断权限
   panduanquanxian: function () {
@@ -226,13 +232,12 @@ Page({
     //读取缓存    
     var department_list1 = wx.getStorageSync('department_list')
     var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
-    console.log("department_list1")
-    console.log(paibanbiao_renyuan_bumen1)
+
+
     for (let i = 0; i < department_list1.length; i++) {
-      console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
+
       if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "排产") {
-        console.log("排产没有添加权限")
-        console.log(department_list1[i])
+
         //添加没权限
         if (department_list1[i].add == "否") {
           _this.setData({
@@ -251,12 +256,11 @@ Page({
           _this.setData({
             isdisshan: 2
           });
-          console.log("否 isdisshan：" + _this.data.isdisshan)
         } else {
           _this.setData({
             isdisshan: 1
           });
-          console.log("是 isdisshan：" + _this.data.isdisshan)
+
         }
         //查询没权限
         if (department_list1[i].sel == "否") {
@@ -269,7 +273,6 @@ Page({
           });
 
         }
-        console.log(_this.data.isdis)
 
       }
     }
@@ -307,7 +310,7 @@ Page({
   choiceDate: function (e) {
     //e.preventDefault(); 
     this.setData({
-      [e.target.dataset.column_name]: e.detail.value
+      [e.target.dataset.column_name]: e.detail.value 
     })
     console.log(e.detail.value)
   },
@@ -358,54 +361,230 @@ Page({
   chongsuan: function () {
     var _this = this
     console.log(_this.data.listDingDan)
-    
-    for (var i = 0; i < _this.data.listDingDan.length; i++) {
-      var num = _this.data.listDingDan[i].work_num
-      var x = 0
-      var date = new Date(_this.data.listDingDan[i].work_start_date)
-      do {
-        for (var j = 0; j < _this.data.listJiQi.length; j++) {
-          if (_this.data.listDingDan[i].order_id == _this.data.listJiQi[j].order_id && _this.data.listDingDan[i].work_start_date == _this.data.listJiQi[j].work_start_date) {
-            var e = [date, j]
-            let workNum = _this.jinrikegongzuoshuliang(e)
-            workNum = Number(workNum.toFixed(1))
-            var list = _this.data.listJiQi
-            var Y = date.getFullYear() + '-'
-            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-            var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    console.log(_this.data.listJiQi)
+    console.log(_this.data.listMeiTianShiJian)
+    // for (var i = 0; i < _this.data.listDingDan.length; i++) {
+    //   var num = _this.data.listDingDan[i].work_num
+    //   var x = 0
+    //   var date = new Date(_this.data.listDingDan[i].work_start_date)
+    //   do {
+    //     for (var j = 0; j < _this.data.listJiQi.length; j++) {
+    //       if (_this.data.listDingDan[i].order_id == _this.data.listJiQi[j].order_id && _this.data.listDingDan[i].work_start_date == _this.data.listJiQi[j].work_start_date) {
+    //         var e = [date, j]
+    //         let workNum = _this.jinrikegongzuoshuliang(e)
+    //         workNum = Number(workNum.toFixed(1))
+    //         var list = _this.data.listJiQi
+    //         var Y = date.getFullYear() + '-'
+    //         var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+    //         var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
 
 
-            var list2 = []
-            if (_this.data.listJiQi[j]['list'] == undefined) {
-              _this.data.listJiQi[j]['list']
-            } else {
-              list2 = _this.data.listJiQi[j]['list']
+    //         var list2 = []
+    //         if (_this.data.listJiQi[j]['list'] == undefined) {
+    //           _this.data.listJiQi[j]['list']
+    //         } else {
+    //           list2 = _this.data.listJiQi[j]['list']
+    //         }
+    //         if (num >= 0) {
+    //           list2[Y + M + D] = num - workNum >= 0 ? workNum : num
+    //           num = num - workNum
+    //           list[j]['list'] = list2
+    //           _this.setData({
+    //             listJiQi: list
+    //           })
+    //         }
+    //         x = x + 1
+    //       }
+    //     }
+    //     date = new Date(Y + M + D + " 00:00:00")
+    //     date = new Date(date.setDate(date.getDate() + 1));
+    //     var jixu
+    //     if (num > 0) {
+    //       jixu = true
+    //     } else {
+    //       jixu = false
+    //     }
+    //     if (x == 0) {
+    //       jixu = false
+    //     }
+    //   } while (jixu)
+    // }
+
+    var this_dingdan = ""
+    for(var i=0; i<_this.data.listJiQi.length; i++){
+      if(this_dingdan == ""){
+        this_dingdan = _this.data.listJiQi[i].order_id + "," + _this.data.listJiQi[i].work_start_date
+      }else{
+        this_dingdan = this_dingdan + "`" + _this.data.listJiQi[i].order_id + "," + _this.data.listJiQi[i].work_start_date
+      }
+    }
+    //订单去重，用于循环取同一订单同时生产的模块
+    this_dingdan = this_dingdan.split("`")
+    this_dingdan = _this.arr1(this_dingdan)
+
+    //模块去重，用于记录模块结束工作时间和当日剩余时长
+    var this_mokuai = ""
+    for(var i=0; i<_this.data.listJiQi.length; i++){
+      if(this_mokuai == ""){
+        this_mokuai = _this.data.listJiQi[i].name 
+      }else{
+        this_mokuai = this_mokuai + "`" + _this.data.listJiQi[i].name
+      }
+    }
+    this_mokuai = this_mokuai.split("`")
+    this_mokuai = _this.arr1(this_mokuai)
+    var mokuai_list = []
+    for(var i=0; i<this_mokuai.length; i++){
+      mokuai_list.push({
+        name:this_mokuai[i],
+        stop_date:'',
+        user_hour:''
+      })
+    }
+    //循环订单
+    for(var i=0; i<this_dingdan.length; i++){
+      var this_dingdan_jiqi = []
+      //循环机器，取相同订单号的机器
+      for(var j=0; j<_this.data.listJiQi.length; j++){
+        if(this_dingdan[i] == _this.data.listJiQi[j].order_id + "," + _this.data.listJiQi[j].work_start_date){
+          var this_jiqi = _this.data.listJiQi[j]
+          this_dingdan_jiqi.push({
+            list:_this.data.listJiQi[j].list,
+            name:_this.data.listJiQi[j].name,
+            num:_this.data.listJiQi[j].num,
+            order_id:_this.data.listJiQi[j].order_id,
+            row_num:_this.data.listJiQi[j].row_num,
+            work_num:_this.data.listJiQi[j].work_num,
+            work_start_date:_this.data.listJiQi[j].work_start_date,
+            list_jiqi_num : j
+          })
+        }
+      }
+      //如果没有机器，跳过此条订单
+      if(this_dingdan_jiqi.length == 0){
+        continue;
+      }
+      //订单总生产数量
+      var zong_shengchan_num = this_dingdan_jiqi[0].work_num
+      //订单开始时间
+      var dingdan_start_date_chuo = new Date(this_dingdan_jiqi[0].work_start_date)
+      var dingdan_start_date = this_dingdan_jiqi[0].work_start_date
+      dingdan_start_date = dingdan_start_date.split(" ")[0]
+      console.log(dingdan_start_date)
+      //当日生产数量
+      
+      do{
+        var day_num = 0
+        var day_num_list = []
+          //循环判断每日每个模块应生产数量
+        for(var j=0; j<this_dingdan_jiqi.length; j++){
+          for(var k=0; k<mokuai_list.length; k++){
+            //判断模块停止生产时间
+            if(this_dingdan_jiqi[j].name == mokuai_list[k].name){
+              if(mokuai_list[k].stop_date == "" || mokuai_list[k].stop_date <= dingdan_start_date){
+                var week = dingdan_start_date_chuo.getDay()
+                if (week == 0) {
+                  week = 7
+                }
+                //如果模块停止时间和订单开始时间相同
+                if(mokuai_list[k].stop_date == dingdan_start_date){
+                  day_num = day_num + (_this.data.listMeiTianShiJian[week] - mokuai_list[k].user_hour) * this_dingdan_jiqi[j].num
+                  var today_num = (_this.data.listMeiTianShiJian[week] - mokuai_list[k].user_hour) * this_dingdan_jiqi[j].num
+                  var today_hour = (_this.data.listMeiTianShiJian[week] - mokuai_list[k].user_hour)
+                }else if(mokuai_list[k].stop_date < dingdan_start_date){
+                  day_num = day_num + (_this.data.listMeiTianShiJian[week]) * this_dingdan_jiqi[j].num
+                  var today_num = (_this.data.listMeiTianShiJian[week]) * this_dingdan_jiqi[j].num
+                  var today_hour = (_this.data.listMeiTianShiJian[week])
+                }else{
+                  day_num = day_num + 0
+                  var today_num = 0
+                  var today_hour = 0
+                }
+                day_num_list.push({
+                  name: mokuai_list[k].name,
+                  today_num: today_num,
+                  today_hour: today_hour,
+                  hour_num: this_dingdan_jiqi[j].num,
+                  this_shengchan_hour:'',
+                  this_shengchan_num:'',
+                  this_date:dingdan_start_date,
+                })
+              }
             }
-            if (num >= 0) {
-              list2[Y + M + D] = num - workNum >= 0 ? workNum : num
-              num = num - workNum
-              list[j]['list'] = list2
-              _this.setData({
-                listJiQi: list
-              })
-            }
-            x = x + 1
           }
         }
-        date = new Date(Y + M + D + " 00:00:00")
-        date = new Date(date.setDate(date.getDate() + 1));
-        var jixu
-        if (num > 0) {
-          jixu = true
-        } else {
-          jixu = false
+        for(var j=0; j<day_num_list.length; j++){
+          if(day_num_list[j].today_num >= zong_shengchan_num){
+            console.log('当日此'+ day_num_list[j].name +'模块可完成生产')
+            var shijian = zong_shengchan_num / day_num_list[j].hour_num
+            day_num_list[j].this_shengchan_hour = shijian
+            day_num_list[j].this_shengchan_num = zong_shengchan_num
+            zong_shengchan_num = 0 
+            break;
+          }else{
+            var shijian = day_num_list[j].today_hour
+            day_num_list[j].this_shengchan_hour = shijian
+            var today_num = day_num_list[j].today_num
+            day_num_list[j].this_shengchan_num = today_num
+            zong_shengchan_num = zong_shengchan_num - today_num
+          }
         }
-        if (x == 0) {
-          jixu = false
+        console.log(day_num_list)
+        for(var j=0; j<day_num_list.length; j++){
+          if(day_num_list[j].this_shengchan_hour != '' && day_num_list[j].this_shengchan_hour != 0){
+            if(this_dingdan_jiqi[j].list == undefined || this_dingdan_jiqi[j].list == ''){
+              var shengchan_list = []
+            }else{
+              var shengchan_list = this_dingdan_jiqi[j]['list']
+            }
+            shengchan_list[day_num_list[j].this_date] = day_num_list[j].this_shengchan_num
+            // shengchan_list.push({
+            //   riqi:day_num_list[j].this_date, 
+            //   shuliang:day_num_list[j].this_shengchan_num
+            // })
+
+            this_dingdan_jiqi[j]['list'] = shengchan_list
+            for(var k=0; k<mokuai_list.length; k++){
+              if(day_num_list[j].name == mokuai_list[k].name && day_num_list[j].this_shengchan_hour != '' &&  day_num_list[j].this_shengchan_hour != 0){
+                if(day_num_list[j].this_shengchan_hour < day_num_list[j].today_hour){
+                  mokuai_list[k].stop_date = day_num_list[j].this_date
+                  mokuai_list[k].user_hour =  mokuai_list[k].user_hour * 1 + day_num_list[j].this_shengchan_hour * 1 
+                  break;
+                }else{
+                  mokuai_list[k].stop_date = day_num_list[j].this_date
+                  mokuai_list[k].user_hour = 0
+                }
+                
+              }
+            }
+          }
         }
-      } while (jixu)
+        console.log(this_dingdan_jiqi)
+
+        var dingdan_start_date_chuo = new Date(dingdan_start_date_chuo.setDate(dingdan_start_date_chuo.getDate() + 1));
+        var Y = dingdan_start_date_chuo.getFullYear() + '-'
+        var M = (dingdan_start_date_chuo.getMonth() + 1 < 10 ? '0' + (dingdan_start_date_chuo.getMonth() + 1) : dingdan_start_date_chuo.getMonth() + 1) + '-'
+        var D = (dingdan_start_date_chuo.getDate() < 10 ? '0' + dingdan_start_date_chuo.getDate() : dingdan_start_date_chuo.getDate())
+        var dingdan_start_date = Y + M + D
+
+      }while(zong_shengchan_num > 0)
+      
+      console.log(this_dingdan_jiqi)
+      console.log(_this.data.listJiQi)
+      for(var j=0; j<_this.data.listJiQi.length; j++){
+        for(var k=0; k<this_dingdan_jiqi.length; k++){
+          if(_this.data.listJiQi[j].order_id == this_dingdan_jiqi[k].order_id && _this.data.listJiQi[j].work_start_date == this_dingdan_jiqi[k].work_start_date && _this.data.listJiQi[j].name == this_dingdan_jiqi[k].name){
+            _this.data.listJiQi[j].list = this_dingdan_jiqi[k].list
+          }
+        }
+      }
+
+
     }
+
   },
+
+
   jinrikegongzuoshuliang: function (e) {
     var _this = this
     var num = 0
@@ -458,6 +637,18 @@ Page({
     }
     return num
   },
+
+  arr1:function (array) {
+    var arr = []; //一个新的数组存放去重后的结果
+    for (var i = 0; i < array.length; i++) {
+        if (arr.indexOf(array[i]) == -1) { //indexof()方法判断在数组中的位置，若不存在，返回-1
+            arr.push(array[i]);
+        }
+    }
+    return arr;
+  },
+
+
   selListGongZuoShiJian: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
@@ -467,7 +658,6 @@ Page({
         query: "select week,morning_start,morning_end,noon_start,noon_end,night_start,night_end from  time_config Where company='" + user + "' order by week"
       },
       success: res => {
-
         var list = res.result.recordset
         var listMeiTianShiJian = []
         var x = 0
@@ -490,7 +680,6 @@ Page({
           }
         }
         _this.setData({
-
           listGongZuoShiJian: list,
           listMeiTianShiJian: listMeiTianShiJian
         })
@@ -567,7 +756,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select oi.order_id,mi.name,mi.num,wd.work_num,wd.row_num,CONVERT(varchar(100), wd.work_start_date, 20) as work_start_date from work_detail as wd left join order_info as oi on wd.order_id = oi.id left join work_module as wm on wd.id = wm.work_id left join module_info as mi on wm.module_id = mi.id where oi.order_id like '%" + e + "%' and wd.company='" + user + "' and (select count(id) from work_module where work_id=wd.id)>0 and mi.num>0 group by oi.order_id,mi.name,mi.num,wd.work_num,wd.work_start_date,wd.row_num,wd.is_insert order by wd.row_num,wd.is_insert,wd.work_start_date asc"
+        query: "select oi.order_id,mi.name,mi.num,wd.work_num,wd.row_num,CONVERT(varchar(100), wd.work_start_date, 20) as work_start_date,'' as list from work_detail as wd left join order_info as oi on wd.order_id = oi.id left join work_module as wm on wd.id = wm.work_id left join module_info as mi on wm.module_id = mi.id where oi.order_id like '%" + e + "%' and wd.company='" + user + "' and (select count(id) from work_module where work_id=wd.id)>0 and mi.num>0 group by oi.order_id,mi.name,mi.num,wd.work_num,wd.work_start_date,wd.row_num,wd.is_insert order by wd.row_num,wd.is_insert,wd.work_start_date asc"
       },
       success: res => {
         var list = res.result.recordset
