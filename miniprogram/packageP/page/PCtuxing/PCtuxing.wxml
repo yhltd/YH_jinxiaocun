@@ -13,27 +13,19 @@
     <view class="bottom_view" style="height:10%">
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="clearlpmg" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">清空</button>
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box">查询</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" style="width: 247rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: -11rpx; top: 0rpx">更多操作</button>
+  <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" style="width: 247rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: -11rpx; top: 0rpx">更多操作</button> -->
 </view>
 <view class="but">
-  <!-- <button class="put" bindtap="bi">饼图</button> -->
-  <button class="put" bindtap="users">饼图</button>
-  <button class="zput" bindtap="entering">柱状图</button>
-  <!-- //暂时无法实现 -->
-  <!-- <button class="zput" bindtap="zhexian">折线图</button> -->
-    <view class="picure" hidden="{{yin}}">
-    <button class="user" bindtap="users">使用</button>
-    <!-- <button class="user" bindtap="zhexian_users1">折线使用</button> -->
-    <!-- <button class="nuser" bindtap="nuser">未使用</button> -->
-    </view>
+  <button class="put" bindtap="pie_refresh">饼图</button>
+  <button class="zput" bindtap="category_refresh">柱状图</button>
 </view>
 <!--  订单号下拉选-->
 <van-action-sheet
   show="{{ xlShow2 }}"
-  actions="{{ danhao_list }}"
+  actions="{{danhao_list}}"
   close-on-click-overlay
   bind:close="select2"
   bind:select="select2" 
 />
-<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ec}}"></ec-canvas>
+<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ecage}}"></ec-canvas>
 <ec-canvas id="businessTrend" class='mychart-businessTrend' canvas-id="mychart-businessTrend" ec="{{ line_ec }}"></ec-canvas>

@@ -9,7 +9,7 @@
           {{item.text}}</view>
       </block>
     </view>
-    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+    <block class="list_row" wx:for="{{list_mk}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
         <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="list_view" style="width:{{item.width}}"
           data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}"
@@ -50,6 +50,23 @@
       <view class="bottom_view3" style="height:10%">
         <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
         <button class="bt_bottom" bindtap="sel2" style="width:33%">查询</button>
+      </view>
+    </swiper-item>
+
+    <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
+      <view class="swiper_item">日期区间(可左右滑动←→)</view>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+        <input bindinput="onInput2" data-column="riqi1" class="input_text_form1" value="{{riqi1}}" type="text" name="riqi1" style="margin-top: 0%;"
+        placeholder="请输入开始日期"></input>
+      </picker>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+        <input bindinput="onInput2" data-column="riqi2" class="input_text_form1" value="{{riqi2}}" type="text" name="riqi2" style="margin-top: 15%;"
+      placeholder="请输入结束日期"></input>
+      </picker>
+      
+      <view class="bottom_view3" style="height:10%">
+        <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
+        <button class="bt_bottom" bindtap="sel3" style="width:33%">查询</button>
       </view>
     </swiper-item>
   </swiper>

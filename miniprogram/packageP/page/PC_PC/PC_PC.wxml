@@ -48,21 +48,11 @@
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi3" bindchange="choiceDate">
   <input bindinput="onInput3" data-column="riqi3" class="input_text_form" value="{{riqi3}}" type="text" name="riqi3" disabled="disabled"></input>
 </picker>
+  <button class="moreDo_view_bt" bindtap="add_piliang" disabled="{{isdis!=1}}">批量添加</button>
   <button class="moreDo_view_bt" bindtap="sel3">统计</button>
-  <view class="vcent">起始时间:</view>
-  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi4" bindchange="choiceDate">
-  <input bindinput="onInput3" data-column="riqi4" class="input_text_form" value="{{riqi4}}" type="text" name="riqi4" disabled="disabled"></input>
-  </picker>
-  <view class="vcent">截止时间:</view>
-  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi5" bindchange="choiceDate">
-  <input bindinput="onInput3" data-column="riqi5" class="input_text_form" value="{{riqi5}}" type="text" name="riqi5" disabled="disabled"></input>
-  </picker>
-  <view class="vcent" >>订单号</view>
-    <input bindinput="onInput" bindtap="selDDH2" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" disabled="disabled"></input>
-    <view class="vcent">所属模块</view>
-    <input bindinput="onInput" bindtap="selDDH3" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
-  <button class="moreDo_view_bt" bindtap="picture">生成图表</button>
+  <button class="moreDo_view_bt" bindtap="onChar">生成图表</button>
   <button class="moreDo_view_bt" bindtap="set_gongshi">日生产公式</button>
+  <button class="moreDo_view_bt" bindtap="leixing_refresh">{{paichan_leixing}}</button>
   <button class="moreDo_view_bt" bindtap="goto_yanshi">演示</button>
 </view>
 <!-- 背景 -->
@@ -244,6 +234,10 @@
     <input bindinput="onInput3" data-column="pcsl" class="input_text_form" value="{{pcsl}}" type="digit" name="cpmc"></input>
     <view class="lables">开始生产日期</view>
     <input bindinput="onInput3" data-column="xdrq" bindtap="selRIQI" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq" disabled="disabled"></input>
+    <view class="lables">预计完成日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="wcrq" bindchange="choiceDate">
+      <input bindinput="onInput3" data-column="wcrq" class="input_text_form" value="{{wcrq}}" type="text" name="wcrq" disabled="disabled"></input>
+    </picker>
     <view class="lables">是否插单</view>
     <input bindinput="onInput3" data-column="sfcd" bindtap="selSFCD"  class="input_text_form" value="{{sfcd}}" type="text" name="sfcd" disabled="disabled"></input>
     <view class="lables" hidden="{{shiFouChaDan}}" >插至此单后</view>
@@ -254,12 +248,25 @@
   </view>
 </van-popup>
 
+<!------------------------->
+<!---------批量添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="tjShow" show="{{ pltjShow }}" position="bottom" custom-style="height: 100%;" >
+	<view class="lables">订单号</view>
+    <input bindinput="onInput3" bindtap="selplDDH" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh" disabled="disabled"></input>
+    <view class="lables">所属模块</view>
+    <input bindinput="onInput3" bindtap="selSSMK" data-column="ssmk" class="input_text_form" value="{{ssmk}}" type="text" name="ssmk" disabled="disabled"></input>
+    <view class="lables">开始生产日期</view>
+    <input bindinput="onInput3" data-column="xdrq" bindtap="selRIQI" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq" disabled="disabled"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add_piliang_dingdan">添加</button>
+  </view>
+</van-popup>
+
 
 
 <van-popup bind:click-overlay="qxShow2" show="{{ xzmkShow }}" position="bottom" custom-style="height: 60%;" >
-<view class="weui-cells__title van-ellipsis">
-  多选（已选：{{countries}}）
-</view>
 <view class="weui-cells weui-cells_after-title">
   <checkbox-group data-name="countries" bindchange="onCheckboxChange" >
     <label 
@@ -275,10 +282,35 @@
       </view>
     </label>
   </checkbox-group>
+
 </view>
     <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">确定</button>
+  </view>
+</van-popup>
+
+<van-popup bind:click-overlay="qxShow2" show="{{ xzddShow }}" position="bottom" custom-style="height: 60%;" >
+<view class="weui-cells weui-cells_after-title">
+  <checkbox-group data-name="countries" bindchange="onCheckboxChange2" >
+    <label 
+      class="weui-cell weui-check__label"
+      wx:for="{{actions2}}" 
+      wx:key="id" 
+      wx:for-item="item" 
+      wx:for-index="i"
+    >
+      <view class="weui-cell__bd">{{item.name + "   生产数量:" + item.set_num}}</view>
+      <view class="weui-cell__hd">
+        <checkbox value="{{item.id}}" color="red" style="color:red"/>
+      </view>
+    </label>
+  </checkbox-group>
+
+</view>
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add_dd">确定</button>
   </view>
 </van-popup>
 

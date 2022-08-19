@@ -380,11 +380,11 @@ button {
 
 .moreDo_view_bt {
   width: 90%;
-  height: 100rpx;
+  /* height: 80rpx; */
   background-color: #009688;
   color: white;
   font-size: 37rpx;
-  margin-top: 45rpx;
+  margin-top: 20rpx;
   line-height: 100rpx;
 }
 
