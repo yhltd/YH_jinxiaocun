@@ -633,6 +633,42 @@ Page({
     })
   },
 
+  quanxuan: function () {
+    var _this = this
+    var list = _this.data.listRenYuan
+    var list2 = _this.data.list2
+    for (let i = 0; i < list.length; i++) {
+        list[i].panduan = true
+    }
+    for (let i = 0; i < list2.length; i++) {
+      list2[i].panduan = true
+  }
+  console.log(list)
+  console.log(list2)
+    _this.setData({
+      listRenYuan: list,
+      list2:list2
+    })
+  },
+
+  quxiao: function () {
+    var _this = this
+    var list = _this.data.listRenYuan
+    var list2 = _this.data.list2
+    for (let i = 0; i < list.length; i++) {
+        list[i].panduan = false
+    }
+    for (let i = 0; i < list2.length; i++) {
+      list2[i].panduan = false
+  }
+  console.log(list)
+  console.log(list2)
+    _this.setData({
+      listRenYuan: list,
+      list2:list2
+    })
+  },
+
   upd1: function () {
     var _this = this
     wx.cloud.callFunction({

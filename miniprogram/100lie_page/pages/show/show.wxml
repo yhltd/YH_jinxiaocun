@@ -2,6 +2,7 @@
 <view class="text1">使用云合小程序在线协同办公管理系统</view>
 <view class="button">
 <button class="but" bindtap="gongsi">公司规定</button>
+<button class="but" bindtap="bumen">部门设置</button>
 <button class="but" bindtap="ren">人员规定</button>
 <button class="but" bindtap="work">工作台</button>
 </view>

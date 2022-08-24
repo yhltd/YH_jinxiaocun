@@ -244,16 +244,16 @@ button{
   bottom: 2%;
 }
 .bt_bottom{
-  width: 30%;
-  background-color: #282B33;
+  width: 24%;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
   margin-top: 5%;
 }
 .bt_bottom_hover{
-  width: 30%;
-  background-color: #2D2D2D;
+  width: 24%;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;

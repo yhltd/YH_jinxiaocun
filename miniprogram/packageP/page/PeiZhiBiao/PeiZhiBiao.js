@@ -8,6 +8,7 @@ Page({
   data: {
     list: [],
     isdis:'',
+    handle:true,
     renyuan_list: [],
     active: 0,
     showList: [{
@@ -63,6 +64,13 @@ Page({
       },
     })
 
+  },
+
+  hid_view: function () {
+    var _this = this
+    _this.setData({
+      handle: true
+    })
   },
 
   getPro : function(list){
@@ -250,12 +258,17 @@ Page({
       var usedSpace = app.globalData.spaceList_pc.usedSpace
       var allSpace = app.globalData.spaceList_pc.allSpace
       console.log(usedSpace + "  " + allSpace)
-      wx.showModal({
-        title : '已用空间：'+Math.ceil(usedSpace/allSpace*100)+'%',
-        content : '剩余空间：'+Math.floor((allSpace-usedSpace)/1024)+'MB',
-        showCancel : false,
-        cancelColor	: '#009688'
+      _this.setData({
+        usedSpace:Math.ceil(usedSpace/allSpace*100),
+        allSpace:Math.floor((allSpace-usedSpace)/1024),
+        handle:false
       })
+      // wx.showModal({
+      //   title : '已用空间：'+Math.ceil(usedSpace/allSpace*100)+'%',
+      //   content : '剩余空间：'+Math.floor((allSpace-usedSpace)/1024)+'MB',
+      //   showCancel : false,
+      //   cancelColor	: '#009688'
+      // })
       return;
     }
     

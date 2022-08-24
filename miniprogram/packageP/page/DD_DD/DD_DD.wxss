@@ -168,7 +168,7 @@ button{
 }
 
 .bt_form{
-  background-color: #282B33;
+  background-color: #009688;
   width: 39%;
   margin-top: 4%;
   float: left;
@@ -236,7 +236,7 @@ button{
 }
 .bt_bottom{
   width: 18%;
-  background-color: #282B33;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
@@ -244,7 +244,7 @@ button{
 }
 .bt_bottom_hover{
   width: 23%;
-  background-color: #2D2D2D;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;

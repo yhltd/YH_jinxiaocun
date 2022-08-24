@@ -20,3 +20,12 @@
   <van-tabbar-item icon="../../images/paichan.png">排产及排班</van-tabbar-item>
   <van-tabbar-item icon="../../images/caozuo-huizong.png">汇总</van-tabbar-item>
 </van-tabbar>
+
+<view class="input_view" hidden="{{handle}}" style="margin: 0 auto;text-align: center;">
+  <view class="progress-box" style="margin-top: 10rpx;">
+    <view>剩余空间：{{allSpace}}MB</view>
+    <progress percent="{{100- usedSpace}}" show-info stroke-width="3" style="height: 100rpx;"></progress>
+  </view>
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>

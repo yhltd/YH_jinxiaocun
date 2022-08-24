@@ -97,7 +97,7 @@ page{
   position: fixed;
   width: 100%;
   height: 90%;
-  top: 10%;
+  top: 25%;
   background-color: white;
   border-radius: 10rpx 10rpx 0 0;
   box-shadow: 10rpx 10rpx 10rpx black;

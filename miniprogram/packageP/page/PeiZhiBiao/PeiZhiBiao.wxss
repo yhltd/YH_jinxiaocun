@@ -57,3 +57,38 @@ page{
 .beijing_css{
   height: 100%;
 }
+
+.input_view{
+  position: fixed;
+  width: 90%;
+  height: auto;
+  top: 25%;
+  background-color: white;
+  border-radius: 10rpx;
+  box-shadow: 10rpx 10rpx 10rpx black;
+  z-index: 20;
+  left:5%;
+}
+
+.mask {
+  visibility: visible;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 19;
+  transition: all 0.3s ease-in-out;
+}
+
+.bt_form{
+  background-color: #009688;
+  width: 39%;
+  margin-top: 4%;
+  float: left;
+  margin-left: 7%;
+  color: white;
+  margin-bottom: 38rpx
+}

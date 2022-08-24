@@ -1,13 +1,17 @@
-<scroll-view class="scroll" scroll-y="true">
+<scroll-view class="scroll" scroll-x="true" scroll-y="true">
 <view class="table">
 <view class="th" wx:for="{{titil}}" wx:key="text" wx:for-item="item" >
   <view class="tr">{{item.text}}</view>
 </view>
 <view class="th" wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item" >
-  <view class="td" >{{gongsi}}</view>
-  <view class="td" data-index="{{index}}" >{{item.C}}</view>
-  <view class="td" data-index="{{index}}" >{{item.D}}</view>
-  <view class="td" data-index="{{index}}" >{{item.E}}</view>
+  <view class="td" bindlongpress="delete" data-index="{{index}}" >{{item.C}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.D}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.E}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.zhuangtai}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.bumen}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.email}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.phone}}</view>
+  <view class="td" bindtap="update" data-index="{{index}}" >{{item.bianhao}}</view>
 </view>
 </view>
 </scroll-view>
@@ -17,7 +21,40 @@
     <view>
       <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_name" maxlength="6"></input>
       <input class="input_text_form" placeholder="请输入账号" value="{{num}}" type="text" name="input_num" maxlength="6"></input>
-      <input class="input_text_form" password="{{true}}" placeholder="请输入密码" value="{{pwd}}" type="text" name="input_pwd" maxlength="6"></input>
+      <input class="input_text_form" placeholder="请输入密码" value="{{pwd}}" type="text" name="input_pwd" maxlength="6"></input>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入账号状态" value="{{zhuangtai}}" type="text" name="input_zhuangtai" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange2" value="{{index}}" range="{{department_list}}">
+        <input class="input_text_form" placeholder="请输入部门" value="{{bumen}}" type="text" name="input_bumen" disabled="disabled"></input>
+      </picker>
+      <input class="input_text_form" placeholder="请输入邮箱" value="{{email}}" type="text" name="input_email"></input>
+      <input class="input_text_form" placeholder="请输入电话号" value="{{phone}}" type="text" name="input_phone"></input>
+      <input class="input_text_form" placeholder="请输入员工编号" value="{{bianhao}}" type="text" name="input_bianhao"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+
+  <!-- 修改 -->
+<view class="input_view" hidden="{{upd_hid}}">
+  <form bindsubmit="upd">
+    <view>
+      <input class="input_text_form" placeholder="请输入姓名" value="{{name}}" type="text" name="input_name" maxlength="6"></input>
+      <input class="input_text_form" placeholder="请输入账号" value="{{num}}" type="text" name="input_num" maxlength="6"></input>
+      <input class="input_text_form" placeholder="请输入密码" value="{{pwd}}" type="text" name="input_pwd" maxlength="6"></input>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入账号状态" value="{{zhuangtai}}" type="text" name="input_zhuangtai" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange2" value="{{index}}" range="{{department_list}}">
+        <input class="input_text_form" placeholder="请输入部门" value="{{bumen}}" type="text" name="input_bumen" disabled="disabled"></input>
+      </picker>
+      <input class="input_text_form" placeholder="请输入邮箱" value="{{email}}" type="text" name="input_email"></input>
+      <input class="input_text_form" placeholder="请输入电话号" value="{{phone}}" type="text" name="input_phone"></input>
+      <input class="input_text_form" placeholder="请输入员工编号" value="{{bianhao}}" type="text" name="input_bianhao"></input>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
@@ -27,9 +64,7 @@
   </view>
   
 <button class="bt_form_hover"  bindtap="add">添加</button>
-<button class="bt_form_hover"  bindtap="det">删除</button>
 <button class="bt_form_hover"  bindtap="sel_show">查询</button>
-<button class="bt_form_hover"  bindtap="ref">刷新</button>
 <view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
 <!-- 删除 -->
   <view class="input_view2" hidden="{{input_det}}">

@@ -14,10 +14,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      gongsi:options.gongsi,
-      name: options.name,
-      user:options.user,
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo,
     })
   },
 

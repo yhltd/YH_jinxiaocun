@@ -14,85 +14,60 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-    this.setData({
-      gongsi:options.gongsi,
-      name : options.name,
-      user : options.user
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo,
     })
   },
   // 公司规定
   gongsi:function(){
     var _this = this
-    console.log(_this.data.user)
-    if(_this.data.user != "管理员"){
-      wx.showToast({
-        title: '无权限',
-        icon:"none"
-      })
-      return;
-    }
     wx.navigateTo({
-      url: '../companyfix/companyfix?gongsi='+this.data.gongsi 
+      url: '../companyfix/companyfix?userInfo='+JSON.stringify(_this.data.userInfo)
     })
   },
+
+  // 部门设置
+  bumen:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../management/management?userInfo='+JSON.stringify(_this.data.userInfo)
+    })
+  },
+
   //人员规定
   ren:function(){
     var _this = this
-    if(_this.data.user != "管理员"){
-      wx.showToast({
-        title: '无权限',
-        icon:"none"
-      })
-      return;
-    }
     wx.navigateTo({
-      url: '../personfix/personfix?gongsi='+this.data.gongsi 
+      url: '../personfix/personfix?userInfo='+JSON.stringify(_this.data.userInfo)
     })
   },
   //工作台
   work:function(){
     wx.navigateTo({
-      url: '../work/work?gongsi='+this.data.gongsi + '&name='+ this.data.name + '&user='+ this.data.user
+      url: '../work/work?userInfo='+JSON.stringify(_this.data.userInfo)
     })
   },
  //使用人员
  userren:function(){
    wx.navigateTo({
-     url: '../userpeople/userpeople?gongsi='+this.data.gongsi+ '&name='+ this.data.name+ '&user='+ this.data.user
+     url: '../userpeople/userpeople?userInfo='+JSON.stringify(_this.data.userInfo)
    })
  },
  //人员管理
  renmasg:function(){
   var _this = this
-  if(_this.data.user != "管理员"){
-    wx.showToast({
-      title: '无权限',
-      icon:"none"
-    })
-    return;
-  }
    wx.navigateTo({
-     url: '../personmasg/personmasg?gongsi='+this.data.gongsi
+     url: '../personmasg/personmasg?userInfo='+JSON.stringify(_this.data.userInfo)
    })
  },
  //登录人员
 loginren:function(){
   var _this = this
-  if(_this.data.user != "管理员"){
-    wx.showToast({
-      title: '无权限',
-      icon:"none"
-    })
-    return;
-  }
   wx.navigateTo({
-    url: '../loginpeople/loginpeople?gongsi='+this.data.gongsi +'&name='+this.data.name +'&user='+this.data.user
+    url: '../loginpeople/loginpeople?userInfo='+JSON.stringify(_this.data.userInfo)
   })
 },
-
-
-
-
 
 })

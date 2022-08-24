@@ -8,8 +8,9 @@ Page({
     gongsi:'',
     renyuan_name:'',
     titil:[
-      {text:'公司'}, {text:'访问人员'},
-      //  {text:'A'}, {text:'B'}, 
+      // {text:'公司'},
+       {text:'访问人员'},
+       {text:'A'}, {text:'B'}, 
        {text:'C'}, {text:'D'}, {text:'E'},
       {text:'F'}, {text:'G'}, {text:'H'}, {text:'I'}, {text:'J'}, {text:'K'}, {text:'L'},
       {text:'M'}, {text:'N'}, {text:'O'}, {text:'P'}, {text:'Q'}, {text:'R'}, {text:'S'},
@@ -25,22 +26,25 @@ Page({
       {text:'CA'}, {text:'CB'}, {text:'CC'}, {text:'CD'}, {text:'CE'}, {text:'CF'}, {text:'CG'},
       {text:'CH'}, {text:'CI'}, {text:'CJ'}, {text:'CK'}, {text:'CL'}, {text:'CM'}, {text:'CN'},
       {text:'CO'}, {text:'CP'}, {text:'CQ'}, {text:'CR'}, {text:'CS'}, {text:'CT'}, {text:'CU'},
-      {text:'CV'}, {text:'CW'}, {text:'CX'}, 
+      {text:'CV'}
+      // , {text:'CW'}, {text:'CX'}, 
     ],
     list:[],
-
+    handle : true,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this
+    var that = this
+    var userInfo = JSON.parse(options.userInfo)
     if(options!=undefined){
       that.setData({
-        gongsi:options.gongsi
+        gongsi:userInfo.B,
+        userInfo:userInfo
       })
-    }  
+    }
     var sql="select * from baitaoquanxian_copy1 WHERE quanxian = '" + that.data.gongsi + "' "
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -79,6 +83,68 @@ click:function(e){
     }
     })
 },
+
+click_view:function(e){
+  var _this = this
+  _this.setData({
+    id: _this.data.list[e.currentTarget.dataset.index].id,
+    handle:false,
+  })
+},
+
+quanxian_piliang1(){
+  var _this = this
+  console.log(_this.data.id)
+  var sql = "update baitaoquanxian_copy1 set C='√',D='√',E='√',F='√',G='√',H='√',I='√',J='√',K='√',L='√',M='√',N='√',O='√',P='√',Q='√',R='√',S='√',T='√',U='√',V='√',W='√',X='√',Y='√',Z='√',AA='√',AB='√',AC='√',AD='√',AE='√',AF='√',AG='√',AH='√',AI='√',AJ='√',AK='√',AL='√',AM='√',AN='√',AO='√',AP='√',AQ='√',AR='√',ASS='√',AT='√',AU='√',AV='√',AW='√',AX='√',AY='√',AZ='√',BA='√',BB='√',BC='√',BD='√',BE='√',BF='√',BG='√',BH='√',BI='√',BJ='√',BK='√',BL='√',BM='√',BN='√',BO='√',BP='√',BQ='√',BR='√',BS='√',BT='√',BU='√',BV='√',BW='√',BX='√',BYY='√',BZ='√',CA='√',CB='√',CC='√',CD='√',CE='√',CF='√',CG='√',CH='√',CI='√',CJ='√',CK='√',CL='√',CM='√',CN='√',CO='√',CP='√',CQ='√',CR='√',CS='√',CT='√',CU='√',CV='√',CW='√',CX='√' where id=" + _this.data.id + ";"
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data:{
+      query: sql
+    },
+    success(res){
+      wx.showToast({
+        title: '全部勾选完成',
+        icon:"none"
+      })
+      _this.setData({
+        handle: true
+      })
+      _this.onLoad()
+    }
+  })
+},
+
+quanxian_piliang2(){
+  var _this = this
+  console.log(_this.data.id)
+  var sql = "update baitaoquanxian_copy1 set C='',D='',E='',F='',G='',H='',I='',J='',K='',L='',M='',N='',O='',P='',Q='',R='',S='',T='',U='',V='',W='',X='',Y='',Z='',AA='',AB='',AC='',AD='',AE='',AF='',AG='',AH='',AI='',AJ='',AK='',AL='',AM='',AN='',AO='',AP='',AQ='',AR='',ASS='',AT='',AU='',AV='',AW='',AX='',AY='',AZ='',BA='',BB='',BC='',BD='',BE='',BF='',BG='',BH='',BI='',BJ='',BK='',BL='',BM='',BN='',BO='',BP='',BQ='',BR='',BS='',BT='',BU='',BV='',BW='',BX='',BYY='',BZ='',CA='',CB='',CC='',CD='',CE='',CF='',CG='',CH='',CI='',CJ='',CK='',CL='',CM='',CN='',CO='',CP='',CQ='',CR='',CS='',CT='',CU='',CV='',CW='',CX='' where id=" + _this.data.id + ";"
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data:{
+      query: sql
+    },
+    success(res){
+      wx.showToast({
+        title: '全部取消勾选完成',
+        icon:"none"
+      })
+      _this.setData({
+        handle: true
+      })
+      _this.onLoad()
+    }
+  })
+},
+
+hid_view(){
+  var _this = this
+  _this.setData({
+    handle: true
+  })
+},
+
+
+
 update:function(list,index,colmun,names){
   var that=this
   if(list[index][colmun]=="√"){

@@ -56,11 +56,11 @@
     <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
       <view class="swiper_item">日期区间(可左右滑动←→)</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
-        <input bindinput="onInput2" data-column="riqi1" class="input_text_form1" value="{{riqi1}}" type="text" name="riqi1" style="margin-top: 0%;"
+        <input bindinput="onInput2" data-column="riqi1" class="input_text_form1" value="{{riqi1}}" type="text" name="riqi1" style="margin-top: 0%;" disabled="disabled"
         placeholder="请输入开始日期"></input>
       </picker>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
-        <input bindinput="onInput2" data-column="riqi2" class="input_text_form1" value="{{riqi2}}" type="text" name="riqi2" style="margin-top: 15%;"
+        <input bindinput="onInput2" data-column="riqi2" class="input_text_form1" value="{{riqi2}}" type="text" name="riqi2" style="margin-top: 15%;" disabled="disabled"
       placeholder="请输入结束日期"></input>
       </picker>
       

@@ -118,8 +118,41 @@
         "pages/personmasg/personmasg",
         "pages/loginpeople/loginpeople",
         "pages/gather/gather",
-        "pages/picture/picture"
-      ]
+        "pages/picture/picture",
+        "pages/management/management"
+      ],
+      "tabBar": {
+        "color": "#999",
+            "selectedColor": "#3D98FF",
+            "backgroundColor": "#fff",
+            "borderStyle": "white",
+        "list": [
+          {
+            "selectedIconPath": "images/home.png",
+            "iconPath": "images/home.png",
+            "pagePath": "pages/index/index",
+            "text": "公司"
+          },
+          {
+            "selectedIconPath": "images/addressBook.png",
+            "iconPath": "images/addressBook.png",
+            "pagePath": "pages/addressBook/addressBook",
+            "text": "人员"
+          },
+          {
+            "selectedIconPath": "images/addressBook.png",
+            "iconPath": "images/addressBook.png",
+            "pagePath": "pages/addressBook/addressBook",
+            "text": "操作"
+          },
+          {
+            "selectedIconPath": "images/sms.png",
+            "iconPath": "images/sms.png",
+            "pagePath": "pages/sms/sms",
+            "text": "我的"
+          }
+        ]
+      }
     },
     {
       "root": "packageZ",

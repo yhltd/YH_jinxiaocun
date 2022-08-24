@@ -1,7 +1,8 @@
-<view class="text"><image class="img" style="vertical-align: middle;" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/weidenglu_touxiang.png"></image><text class="bian" style="vertical-align: middle;margin-left: 10px;">{{user}}</text></view>
+<view class="text"><image class="img" style="vertical-align: middle;" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/weidenglu_touxiang.png"></image><text class="bian" style="vertical-align: middle;margin-left: 10px;">{{userInfo.C}}</text></view>
 <view class="text1" style="margin-top: 15px;">欢迎使用云合协同办公管理系统</view>
 <view class="button">
 <button class="but" bindtap="gongsi">公司规定</button>
+<button class="but" bindtap="bumen">部门设置</button>
 <button class="but" bindtap="ren">人员规定</button>
 <button class="but" bindtap="work">工作台</button>
 </view>

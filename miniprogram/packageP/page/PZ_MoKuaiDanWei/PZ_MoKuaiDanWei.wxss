@@ -238,7 +238,7 @@ button{
 }
 .bt_bottom{
   width: 33%;
-  background-color: #282B33;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
@@ -246,7 +246,7 @@ button{
 }
 .bt_bottom_hover{
   width: 33%;
-  background-color: #2D2D2D;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;

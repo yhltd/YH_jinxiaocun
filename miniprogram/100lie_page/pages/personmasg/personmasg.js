@@ -7,6 +7,7 @@ Page({
   data: {
     gongsi:'',
     input_hid:true,
+    upd_hid:true,
     mask_hid:true,
     input_det:true,
     mask_det:true,
@@ -16,27 +17,32 @@ Page({
     pwd: "",
     detname:'',
     titil:[
-      {text:'公司'},
       {text:'姓名'},
       {text:'账号'},
-      {text:'密码'}
+      {text:'密码'},
+      {text:'账号状态'},
+      {text:'部门'},
+      {text:'邮箱'},
+      {text:'电话号'},
+      {text:'员工编号'},
     ],
-    list:[
-    ],
-
+    list:[],
+    zhuangtai_list:['正常','锁定'],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (options){
     var that = this
+    var userInfo = JSON.parse(options.userInfo)
     if(options!=undefined){
       that.setData({
-        gongsi:options.gongsi
+        gongsi:userInfo.B,
+        userInfo:userInfo
       })
     }   
-    var sql="select  C, D, E from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
+    var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
@@ -44,36 +50,83 @@ Page({
       },
       success(res){
         var list=res.result.recordset
-        // console.log(ii);
-        // for(var i=1;i<ii;i++){
-        //   var colmun=list[i].colmun
-        //   var val=res.result.recordset[0][colmun]
-        //   list[i].val=val
-        // }
         that.setData({
           list
         })
-       
       }
-
-
     })
 
+    var sql="select department_name from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' group by department_name"
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data:{
+        query : sql
+      },
+      success(res){
+        var list=res.result.recordset
+        var department_list = []
+        for(var i=0; i<list.length; i++){
+          if(list[i].department_name != '' &&list[i].department_name != undefined){
+            department_list.push(list[i].department_name)
+          }
+        }
+        console.log(department_list)
+        that.setData({
+          department_list
+        })
+      }
+    })
   },
   //添加
-  add:function() {
+  add:function(){
     var that=this
     that.setData({
       input_hid:false,
       mask_hid:false,
-
     })
 },
-hid_view:function() {
+
+
+
+bindPickerChange1: function(e) {
+  var _this = this
+  _this.setData({
+    zhuangtai: _this.data.zhuangtai_list[e.detail.value]
+  })
+},
+
+bindPickerChange2: function(e) {
+  var _this = this
+  _this.setData({
+    bumen: _this.data.department_list[e.detail.value]
+  })
+},
+
+  //修改
+  update:function(e){
+  var _this = this
+  var list = _this.data.list
+  var index= e.currentTarget.dataset.index
+  _this.setData({
+    upd_hid:false,
+    mask_hid:false,
+    name:list[index].C,
+    num:list[index].D,
+    pwd:list[index].E,
+    zhuangtai:list[index].zhuangtai,
+    bumen:list[index].bumen,
+    email:list[index].email,
+    phone:list[index].phone,
+    bianhao:list[index].bianhao,
+    id:list[index].id,
+  })
+},
+hid_view:function(){
   var that=this
   that.setData({
     input_hid:true,
     mask_hid:true,
+    upd_hid:true,
   })
 },
 hid_det:function() {
@@ -90,10 +143,15 @@ save:function(e){
     name:e.detail.value.input_name,
     num: e.detail.value.input_num,
     pwd: e.detail.value.input_pwd,
+    zhuangtai:e.detail.value.input_zhuangtai,
+    bumen:e.detail.value.input_bumen,
+    email:e.detail.value.input_email,
+    phone:e.detail.value.input_phone,
+    bianhao:e.detail.value.input_bianhao,
   })
-  if(that.data.name.length==0||that.data.pwd.length==0||that.data.num.length==0){
+  if(that.data.name.length==0||that.data.pwd.length==0||that.data.num.length==0||that.data.zhuangtai.length==0||that.data.bumen.length==0){
     wx.showToast({
-      title: '名字密码账号不能为空',
+      title: '前五项不能为空',
       icon:"none"
     })
     return;
@@ -107,7 +165,9 @@ if(that.data.name==list[i].C){
   return;
 }
 }
-  var sql="insert into  baitaoquanxian_renyun (B,C, D, E) values ('" + that.data.gongsi + "','"+that.data.name+ "','"+that.data.num+"','"+that.data.pwd+"');insert into  baitaoquanxian_copy1 (quanxian,B) values('" + that.data.gongsi + "','"+that.data.name+"')"
+  var this_time = getCurrentTime();
+
+  var sql="insert into baitaoquanxian_renyun (B,C,D,E,zhuangtai,bumen,email,phone,bianhao,renyuan_id) values ('" + that.data.gongsi + "','"+that.data.name+ "','"+that.data.num+"','"+that.data.pwd+"','"+that.data.zhuangtai+"','"+that.data.bumen+"','"+that.data.email+"','"+that.data.phone+"','"+that.data.bianhao+"','"+this_time+"');insert into  baitaoquanxian_copy1 (quanxian,B,renyuan_id) values('" + that.data.gongsi + "','"+that.data.name+"','"+this_time+"')"
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
@@ -127,6 +187,58 @@ if(that.data.name==list[i].C){
   })
   that.onLoad ()
 },
+
+upd:function(e){
+  var that=this
+  var list=that.data.list
+  that.setData({
+    name:e.detail.value.input_name,
+    num: e.detail.value.input_num,
+    pwd: e.detail.value.input_pwd,
+    zhuangtai:e.detail.value.input_zhuangtai,
+    bumen:e.detail.value.input_bumen,
+    email:e.detail.value.input_email,
+    phone:e.detail.value.input_phone,
+    bianhao:e.detail.value.input_bianhao,
+  })
+  if(that.data.name.length==0||that.data.pwd.length==0||that.data.num.length==0||that.data.zhuangtai.length==0||that.data.bumen.length==0){
+    wx.showToast({
+      title: '前五项不能为空',
+      icon:"none"
+    })
+    return;
+  }
+for( var i =0; i<list.length;i++){
+  if(that.data.name==list[i].C && that.data.id != list[i].id){
+    wx.showToast({
+      title: '该姓名已存在',
+      icon:"none"
+    })
+    return;
+  }
+}
+  var sql="update baitaoquanxian_renyun set C='" + that.data.name + "',D='"+that.data.num+"',E='"+that.data.pwd+"',zhuangtai='"+that.data.zhuangtai+"',bumen='"+that.data.bumen+"',email='"+that.data.email+"',phone='"+that.data.phone+"',bianhao='"+that.data.bianhao+"' where id="+that.data.id
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data:{
+        query : sql
+      },
+      success(res){       
+          wx.showToast({
+            title: '修改成功',
+            icon:'success'
+          })
+         that.onLoad()        
+      }
+    })   
+  that.setData({
+    input_hid:true,
+    mask_hid:true,
+    upd_hid:true,
+  })
+  that.onLoad()
+},
+
 // 删除
 det:function(){
   var that=this
@@ -143,46 +255,37 @@ det_view:function() {
 
   })
 },
-saves:function(e){
-  var that=this
-  that.setData({
-    detname:e.detail.value.input_detname
-  })
-var sql="DELETE FROM baitaoquanxian_renyun WHERE C = '" +that.data.detname + "' AND B = '" + that.data.gongsi + "';DELETE FROM baitaoquanxian_copy1 WHERE quanxian = '"+ that.data.gongsi +"' and B = '" +that.data.detname + "' "
-wx.cloud.callFunction({
-  name: 'sqlServer_117',
-  data:{
-    query : sql
-  },
- success(res){
-    for( var i =0; i<that.data.list.length;i++){
-      if(that.data.detname==that.data.list[i].C ){
-        wx.showToast({
-          title: '删除成功',
-          icon:'success'
-        })
-      }
-    }
-    that.onLoad()   
- }
-})
-that.setData({
-  input_det:true,
-    mask_det:true,
-})
-},
-//显示加载
-// onShow: function () {
-//   wx.showLoading({
-//     title: '加载中',
-//     mask : 'true'
-//   }) 
-//   setTimeout(function () {
-//     wx.hideLoading()
-//   }, 1000)
-  
 
-// },
+delete:function(e){
+  var _this = this
+  var list = _this.data.list
+  var index= e.currentTarget.dataset.index
+  if(list[index].renyuan_id != '' && list[index].renyuan_id != undefined){
+    wx.showModal({
+      title: '提示',
+      content: '是否删除此条账号？',
+      success: function(res) {
+        if (res.confirm) {
+          var sql="DELETE FROM baitaoquanxian_renyun WHERE renyuan_id = '" +list[index].renyuan_id + "';DELETE FROM baitaoquanxian_copy1 WHERE renyuan_id = '"+ list[index].renyuan_id + "'"
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data:{
+              query: sql
+            },
+            success(res){
+              wx.showToast({
+                title: '删除成功',
+                icon:"none"
+              })
+              _this.onLoad()
+            }
+          })
+        }
+      }
+    })
+  }
+},
+
 onReady: function () {
   wx.showLoading({
     title: '加载中',
@@ -209,7 +312,7 @@ sel_show:function(){
 sel:function(e){
   var _this = this
   var name = e.detail.value.input_detname
-  var sql="select  C, D, E from baitaoquanxian_renyun WHERE B = '" + _this.data.gongsi + "' and c like '%" + name + "%'"
+  var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id from baitaoquanxian_renyun WHERE B = '" + _this.data.gongsi + "' and C like '%" + name + "%'"
   console.log(sql)
   wx.cloud.callFunction({
     name: 'sqlServer_117',
@@ -218,12 +321,6 @@ sel:function(e){
     },
     success(res){
       var list=res.result.recordset
-      // console.log(ii);
-      // for(var i=1;i<ii;i++){
-      //   var colmun=list[i].colmun
-      //   var val=res.result.recordset[0][colmun]
-      //   list[i].val=val
-      // }
       _this.setData({
         list
       })
@@ -237,9 +334,26 @@ ref:function(){
   var _this = this
   _this.onLoad()
 }
-
-
-
-
-
 })
+
+function repair(i){
+  if (i >= 0 && i <= 9) {
+      return "0" + i;
+  } else {
+      return i;
+  }
+}
+
+function getCurrentTime() {
+  var date = new Date();//当前时间
+  var year = date.getFullYear() //返回指定日期的年份
+  var month = repair(date.getMonth() + 1);//月
+  var day = repair(date.getDate());//日
+  var hour = repair(date.getHours());//时
+  var minute = repair(date.getMinutes());//分
+  var second = repair(date.getSeconds());//秒
+  
+  //当前时间 
+  var curTime = year + month + day + hour + minute + second;
+  return curTime;
+}

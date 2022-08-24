@@ -209,22 +209,27 @@ var login = function(that,info) {
         query : ssql
       },
       success(res){       
-        let user = res.result.recordset[0].C
-        console.log(res.result.recordset[0].C)
         if(res.result.recordset.length > 0){
+          let user = res.result.recordset[0]
+          if(user.zhuangtai != '正常'){
+            wx.showToast({
+              title: '此账号已被锁定',
+              icon:"none"
+            })
+            return;
+          }
           wx.navigateTo({
-            url: '../../100lie_page/pages/shows/shows?gongsi='+ that.data.gongsi + '&name='+ info.inputName + '&user='+ user
+            url: '../../100lie_page/pages/shows/shows?userInfo='+JSON.stringify(user)
           })
           wx.showToast({
             title: '登录成功',
           })
         }else{
           wx.showToast({
-            title: '用户名密码不对',
+            title: '用户名或密码错误',
             icon:"none"
           })
         }
-
       },
       fail(res) {
         console.log("失败", res)

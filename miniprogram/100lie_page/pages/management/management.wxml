@@ -1,0 +1,91 @@
+<scroll-view class="scroll" scroll-x="true" scroll-y="true">
+<view class="table">
+<view class="th" wx:for="{{titil}}" wx:key="text" wx:for-item="item" >
+  <view class="tr" style="width:{{item.width}};">{{item.text}}</view>
+</view>
+<view class="th" wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item" >
+  <view class="td" style="width:200rpx;" bindlongpress="delete" data-index="{{index}}" >{{item.department_name}}</view>
+  <view class="td" style="width:300rpx;" bindtap="update" data-index="{{index}}" >{{item.view_name}}</view>
+  <view class="td" style="width:100rpx;" bindtap="update" data-index="{{index}}" >{{item.ins}}</view>
+  <view class="td" style="width:100rpx;" bindtap="update" data-index="{{index}}" >{{item.del}}</view>
+  <view class="td" style="width:100rpx;" bindtap="update" data-index="{{index}}" >{{item.upd}}</view>
+  <view class="td" style="width:100rpx;" bindtap="update" data-index="{{index}}" >{{item.sel}}</view>
+</view>
+</view>
+</scroll-view>
+<!-- 添加 -->
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="save">
+    <view>
+      <input class="input_text_form" placeholder="请输入部门名称" value="{{department_name}}" type="text" name="input_department_name" ></input>
+      <picker bindchange="bindPickerChange5" value="{{index}}" range="{{view_list}}">
+        <input class="input_text_form" placeholder="请输入页面名称" value="{{view_name}}" type="text" name="input_view_name" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入增加权限" value="{{ins}}" type="text" name="input_ins" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange2" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入删除权限" value="{{del}}" type="text" name="input_del" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange3" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入修改权限" value="{{upd}}" type="text" name="input_upd" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange4" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入查询权限" value="{{sel}}" type="text" name="input_sel" disabled="disabled"></input>
+      </picker>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+
+  <!-- 修改 -->
+<view class="input_view" hidden="{{upd_hid}}">
+  <form bindsubmit="upd">
+    <view>
+      <input class="input_text_form" placeholder="请输入部门名称" value="{{department_name}}" type="text" name="input_department_name" ></input>
+      <picker bindchange="bindPickerChange5" value="{{index}}" range="{{view_list}}">
+        <input class="input_text_form" placeholder="请输入页面名称" value="{{view_name}}" type="text" name="input_view_name" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入增加权限" value="{{ins}}" type="text" name="input_ins" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange2" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入删除权限" value="{{del}}" type="text" name="input_del" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange3" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入修改权限" value="{{upd}}" type="text" name="input_upd" disabled="disabled"></input>
+      </picker>
+      <picker bindchange="bindPickerChange4" value="{{index}}" range="{{zhuangtai_list}}">
+        <input class="input_text_form" placeholder="请输入查询权限" value="{{sel}}" type="text" name="input_sel" disabled="disabled"></input>
+      </picker>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+  
+<button class="bt_form_hover"  bindtap="add">添加</button>
+<button class="bt_form_hover"  bindtap="sel_show">查询</button>
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
+
+  <view class="mask" bindtap="hid_det" hidden="{{mask_det}}"></view>
+<!-- 查询 -->
+  <view class="input_view2" hidden="{{sel_hid}}">
+  <form bindsubmit="sel">
+    <view>
+      <picker bindchange="bindPickerChange6" value="{{index}}" range="{{department_list}}">
+        <input class="input_text_form" placeholder="请输入部门名称" value="{{department_name}}" type="text" name="input_department_name" disabled="disabled" ></input>
+      </picker>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_sel" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+  </view>
+  <view class="mask" bindtap="hid_sel" hidden="{{sel_hid}}"></view>

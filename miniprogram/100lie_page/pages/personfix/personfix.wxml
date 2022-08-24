@@ -1,9 +1,6 @@
 <view class="scroll">
-  <view class="lables">访问人员</view>
+  <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="renyuan_name" class="input_text_form" value="{{renyuan_name}}" type="text" name="renyuan_name" ></input>
-    <view class="bottom_view" style="height:10%">
-      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
-    </view>
 </view>
   <scroll-view scroll-y="true" scroll-x="true" class="scroll2">
   <view class="table">
@@ -14,8 +11,8 @@
   </view>
   <block wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
     <view class="th">
-      <view class="td" >{{gongsi}}</view>
-      <view class="td" data-index="{{index}}" >{{item.B}}</view>
+      <!-- <view class="td" >{{gongsi}}</view> -->
+      <view class="td" data-index="{{index}}" bindtap="click_view">{{item.B}}</view>
       <view class="td" data-index="{{index}}" data-column='C' data-name='{{item.B}}' bindtap="click" >{{item.C}}</view>
       <view class="td" data-index="{{index}}" data-column='D' data-name='{{item.B}}' bindtap="click" >{{item.D}}</view>
       <view class="td" data-index="{{index}}" data-column='E' data-name='{{item.B}}' bindtap="click" >{{item.E}}</view>
@@ -124,5 +121,16 @@
 </scroll-view>
 
 <view class="bottom_view" style="height:10%">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="back">返回</button>
 </view>
+
+<!------------------------->
+<!---------批量设置权限--------->
+<!------------------------->
+<view class="input_view" hidden="{{handle}}">
+      <button class="bt_form" bindtap="quanxian_piliang1" >全部勾选</button>
+      <button class="bt_form" bindtap="quanxian_piliang2" >全部取消</button>
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>

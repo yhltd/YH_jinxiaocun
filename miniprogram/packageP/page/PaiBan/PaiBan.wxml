@@ -99,14 +99,16 @@
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
         <checkbox-group data-id="{{list_item.id}}" bindchange="RenYuanChange">
-          <checkbox value="{{list_item.id}}"></checkbox>
+          <checkbox value="{{list_item.id}}" checked="{{list_item.panduan}}"></checkbox>
         </checkbox-group>
       </view>
     </block>
   </view>
 </scroll-view>
     <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消排班</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="quanxuan">人员全选</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="quxiao">取消全选</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">开始排班</button>
     </view>
 </van-popup>
