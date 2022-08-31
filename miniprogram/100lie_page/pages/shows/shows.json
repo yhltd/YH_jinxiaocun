@@ -1,4 +1,9 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-tabbar": "../../components/tabbar/index",
+    "van-tabbar-item": "../../components/tabbar-item/index",
+    "van-cell": "../../components/cell/index",
+    "van-cell-group": "../../components/cell-group/index"
+  },
   "navigationBarTitleText": "云合分权编辑系统"
 }

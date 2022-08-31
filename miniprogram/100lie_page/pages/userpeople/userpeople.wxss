@@ -185,7 +185,7 @@ left: 120rpx;
     margin: auto;
     margin-top: 5%; */
     width: 41%;
-    background-color: #282B33;
+    background-color: #009688;
     color: #E6E6E6;
     /* height: 100rpx; */
     float: left;
@@ -194,7 +194,7 @@ left: 120rpx;
   }
   .bt_bottom_hover{
     width: 35%;
-    background-color: rgb(11, 194, 176);
+    background-color:#009688;
     color: #E6E6E6;
     margin: auto;
     margin-top: 5%;

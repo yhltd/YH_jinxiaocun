@@ -45,29 +45,64 @@ Page({
    */
   onLoad: function (options) {
     var that=this
+    var _this = this
     if(options!=undefined){
+      var userInfo = JSON.parse(options.userInfo)
       that.setData({
-        gongsi:options.gongsi,
+        gongsi:userInfo.B,
         name:options.name,
         user:options.user,
+        userInfo:userInfo,
       })
     }
-   
-    var sql = "select * from baitaoquanxian_copy2 where 公司 = '" + that.data.gongsi + "' "
+    
+    var sql="select ins,del,upd,sel from baitaoquanxian_department where company = '" + _this.data.userInfo.B + "' and department_name ='" + _this.data.userInfo.bumen + "' and view_name='公司数据分析'"
+    var that =this
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
         query : sql
       },
-      success(res){
-        var list = res.result.recordset
-        that.setData({
-          list,
-          id:list[0].id
-        })
+      success(res){     
+        var quanxian = res.result.recordset
+        if(quanxian == []){
+          wx.showToast({
+            title: '未读取到部门权限信息，请联系管理员',
+            icon:"none"
+          })
+          return;
+        }else{
+          _this.setData({
+            zeng:quanxian[0].ins,
+            shan:quanxian[0].del,
+            gai:quanxian[0].upd,
+            cha:quanxian[0].sel,
+          })
+
+          if(_this.data.cha != '是'){
+            wx.showToast({
+              title: '无查询权限',
+              icon:"none"
+            })
+            return;
+          }
+          var sql = "select * from baitaoquanxian_copy2 where 公司 = '" + that.data.gongsi + "' "
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data:{
+              query : sql
+            },
+            success(res){
+              var list = res.result.recordset
+              that.setData({
+                list,
+                id:list[0].id
+              })
+            }
+          })
+        }
       }
     })
-   
 
   },
 
@@ -76,6 +111,15 @@ Page({
     var list=_this.data.list
     var index= e.currentTarget.dataset.index
     var colmun=e.currentTarget.dataset.column
+
+    if(_this.data.gai != '是'){
+      wx.showToast({
+        title: '无修改权限',
+        icon:"none"
+      })
+      return;
+    }
+
     if(list[index][colmun] != '' && list[index][colmun] != undefined){
       wx.showModal({
         title: '提示',

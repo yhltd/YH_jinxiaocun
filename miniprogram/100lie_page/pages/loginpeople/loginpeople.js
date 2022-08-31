@@ -26,18 +26,28 @@ Page({
       url: '../../../pages/login/login',
     })
   },
-  go2:function(){
-    var _this = this
-    wx.navigateTo({
-      url: '../work/work?gongsi='+_this.data.gongsi + '&name='+ _this.data.name + '&user='+ _this.data.user
-    })
+
+  onChange: function (event) {
+    var _this = this;
+    if (event.detail == 0) {
+      wx.redirectTo({
+        url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 1) {
+      wx.redirectTo({
+        url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 2) {
+      wx.redirectTo({
+        url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 3) {
+      wx.redirectTo({
+        url: '../loginpeople/loginpeople?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    }
   },
-  go1:function(){
-    var _this = this
-    wx.navigateTo({
-      url: '../userpeople/userpeople?gongsi='+_this.data.gongsi+ '&name='+ _this.data.name
-    })
-  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

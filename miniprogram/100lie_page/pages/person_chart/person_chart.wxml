@@ -1,0 +1,25 @@
+<view class="lables">选择开始日期</view>
+<picker class="pick" mode="date" value="{{xdrq}}" data-column_name="xdrq" bindchange="choiceDate">
+  <input bindinput="onInput" data-column="xdrq" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq"  disabled="disabled"></input>
+</picker>
+<view class="lables">选择结束日期</view>
+<picker class="pick" mode="date" value="{{jieshuriqi}}" data-column_name="jieshuriqi" bindchange="choiceDate">
+  <input bindinput="onInput" data-column="jieshuriqi" class="input_text_form" value="{{jieshuriqi}}" type="text" name="jieshuriqi"  disabled="disabled"></input>
+</picker>
+
+<view class="lables">选择人员</view>
+<picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="person_name" range="{{person_list}}">
+  <input bindinput="onInput" data-column="person_name" class="input_text_form" value="{{person_name}}" type="text" name="person_name"  disabled="disabled"></input>
+</picker>
+
+<view class="lables">选择查询列</view>
+<picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="this_column" range="{{column_list}}">
+  <input bindinput="onInput" data-column="this_column" class="input_text_form" value="{{this_column}}" type="text" name="this_column"  disabled="disabled"></input>
+</picker>
+<view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="clearlpmg" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">清空</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" disabled="{{cha=='是'?'':'disabled'}}" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box">查询</button>
+</view>
+
+
+<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ecage}}"></ec-canvas>

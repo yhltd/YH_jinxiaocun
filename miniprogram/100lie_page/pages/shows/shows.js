@@ -7,12 +7,26 @@ Page({
   data: {
     gongsi:'',
     name:'',
-    user:''
+    user:'',
+    showList: [{
+      text: "工作台",
+      url: '../work_bench/work_bench'
+    },
+    {
+      text: "工作台权限设置",
+      url: '../companyfix/companyfix'
+    },
+    {
+      text: "部门权限设置",
+      url: '../management/management'
+    },
+    {
+      text: "公司数据分析",
+      url: "../company_chart/company_chart"
+    },
+  ]
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
@@ -20,54 +34,37 @@ Page({
       userInfo:userInfo,
     })
   },
-  // 公司规定
-  gongsi:function(){
-    var _this = this
-    wx.navigateTo({
-      url: '../companyfix/companyfix?userInfo='+JSON.stringify(_this.data.userInfo)
-    })
-  },
 
-  // 部门设置
-  bumen:function(){
-    var _this = this
-    wx.navigateTo({
-      url: '../management/management?userInfo='+JSON.stringify(_this.data.userInfo)
+onChange: function (event) {
+  var _this = this;
+  if (event.detail == 0) {
+    wx.redirectTo({
+      url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
     })
-  },
+  } else if (event.detail == 1) {
+    wx.redirectTo({
+      url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+    })
+  } else if (event.detail == 2) {
+    wx.redirectTo({
+      url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
+    })
+  } else if (event.detail == 3) {
+    wx.redirectTo({
+      url: '../loginpeople/loginpeople?userInfo='+JSON.stringify(_this.data.userInfo)
+    })
+  }
+},
 
-  //人员规定
-  ren:function(){
-    var _this = this
+go: function (e) {
+  var _this = this;
+  var index = e.currentTarget.dataset.index;
+  var url = _this.data.showList[index].url
+  if(url != ''){
     wx.navigateTo({
-      url: '../personfix/personfix?userInfo='+JSON.stringify(_this.data.userInfo)
+      url: url + "?userInfo="+JSON.stringify(_this.data.userInfo)
     })
-  },
-  //工作台
-  work:function(){
-    wx.navigateTo({
-      url: '../work/work?userInfo='+JSON.stringify(_this.data.userInfo)
-    })
-  },
- //使用人员
- userren:function(){
-   wx.navigateTo({
-     url: '../userpeople/userpeople?userInfo='+JSON.stringify(_this.data.userInfo)
-   })
- },
- //人员管理
- renmasg:function(){
-  var _this = this
-   wx.navigateTo({
-     url: '../personmasg/personmasg?userInfo='+JSON.stringify(_this.data.userInfo)
-   })
- },
- //登录人员
-loginren:function(){
-  var _this = this
-  wx.navigateTo({
-    url: '../loginpeople/loginpeople?userInfo='+JSON.stringify(_this.data.userInfo)
-  })
+  }
 },
 
 })

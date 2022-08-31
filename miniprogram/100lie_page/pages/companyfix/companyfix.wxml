@@ -14,7 +14,7 @@
   <view class="lables">权限</view>
     <input bindtap="quanxian_click" data-column="quanxian" class="input_text_form" value="{{quanxian}}" type="text" name="quanxian" disabled='disabled'></input>
     <view class="bottom_view" style="height:10%">
-      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
-      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd">修改</button>
+      <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
+      <button class="bt_bottom" disabled="{{gai=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="upd">修改</button>
     </view>
 </view>

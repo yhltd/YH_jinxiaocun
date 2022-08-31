@@ -607,8 +607,6 @@ Page({
         query: "select count(id) as [count] from VoucherSummary where company='"+_this.data.userInfo.company+"'"
       },
       success: res => {
-
-
         var list = res.result.recordset
         var countPage = _this.data.countPage;
         var pageCount = Math.ceil(list[0].count/countPage);

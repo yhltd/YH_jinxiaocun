@@ -1,0 +1,13 @@
+<view class="list">
+  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
+    {{item.text}}
+    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
+  </view>
+</view>
+
+<van-tabbar active="{{ 2 }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../images/gongsi.png">公司</van-tabbar-item>
+  <van-tabbar-item icon="../../images/renyuan.png">人员</van-tabbar-item>
+  <van-tabbar-item icon="../../images/caozuo.png">操作</van-tabbar-item>
+  <van-tabbar-item icon="../../images/wode.png">我的</van-tabbar-item>
+</van-tabbar>

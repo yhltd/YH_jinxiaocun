@@ -1,0 +1,434 @@
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" hidden="{{item.hidden}}" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
+      <view class="table_main">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0"  >
+          <view wx:if="{{!examine}}" bindlongtap="delete" data-id="{{list_item.id}}" class="list_text">{{list_item.ROW_ID}}</view>
+          <view wx:if="{{examine}}">
+            <checkbox-group bindchange="choice_checkBox_examine" data-id="{{list_item.id}}" wx:if="{{examine}}">
+              <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
+            </checkbox-group>
+          </view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="人员" data-value="{{list_item['人员']}}" style="width:200rpx" data-input_type="text">
+          <view class="list_text">{{list_item['人员']}}</view>
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="日期" data-value="{{list_item['日期']}}" style="width:220rpx">
+          <view class="list_text">{{list_item["日期"]}}</view> 
+        </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="a最后修改日期" data-value="{{list_item['a最后修改日期']}}" style="width:220rpx">
+          <view class="list_text">{{list_item["a最后修改日期"]}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[4].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="A" data-value="{{list_item.A}}" bindtap="{{quanxian_list.C == '√'?'clickView':''}}" style="{{quanxian_list.C == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.A}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[5].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="B" data-value="{{list_item.B}}" bindtap="{{quanxian_list.D == '√'?'clickView':''}}" style="{{quanxian_list.D == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.B}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[6].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="C" data-value="{{list_item.C}}" bindtap="{{quanxian_list.E == '√'?'clickView':''}}" style="{{quanxian_list.E == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.C}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[7].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="D" data-value="{{list_item.D}}" bindtap="{{quanxian_list.F == '√'?'clickView':''}}" style="{{quanxian_list.F == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.D}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[8].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="E" data-value="{{list_item.E}}" bindtap="{{quanxian_list.G == '√'?'clickView':''}}" style="{{quanxian_list.G == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.E}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[9].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="F" data-value="{{list_item.F}}" bindtap="{{quanxian_list.H == '√'?'clickView':''}}" style="{{quanxian_list.H == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.F}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[10].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="G" data-value="{{list_item.G}}" bindtap="{{quanxian_list.I == '√'?'clickView':''}}" style="{{quanxian_list.I == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.G}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[11].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="H" data-value="{{list_item.H}}" bindtap="{{quanxian_list.J == '√'?'clickView':''}}" style="{{quanxian_list.J == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.H}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[12].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="I" data-value="{{list_item.I}}" bindtap="{{quanxian_list.K == '√'?'clickView':''}}" style="{{quanxian_list.K == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.I}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[13].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="J" data-value="{{list_item.J}}" bindtap="{{quanxian_list.L == '√'?'clickView':''}}" style="{{quanxian_list.L == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.J}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[14].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="K" data-value="{{list_item.K}}" bindtap="{{quanxian_list.M == '√'?'clickView':''}}" style="{{quanxian_list.M == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.K}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[15].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="L" data-value="{{list_item.L}}" bindtap="{{quanxian_list.N == '√'?'clickView':''}}" style="{{quanxian_list.N == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.L}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[16].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="M" data-value="{{list_item.M}}" bindtap="{{quanxian_list.O == '√'?'clickView':''}}" style="{{quanxian_list.O == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.M}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[17].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="N" data-value="{{list_item.N}}" bindtap="{{quanxian_list.P == '√'?'clickView':''}}" style="{{quanxian_list.P == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.N}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[18].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="O" data-value="{{list_item.O}}" bindtap="{{quanxian_list.Q == '√'?'clickView':''}}" style="{{quanxian_list.Q == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.O}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[19].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="P" data-value="{{list_item.P}}" bindtap="{{quanxian_list.R == '√'?'clickView':''}}" style="{{quanxian_list.R == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.P}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[20].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="Q" data-value="{{list_item.Q}}" bindtap="{{quanxian_list.S == '√'?'clickView':''}}" style="{{quanxian_list.S == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.Q}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[21].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="R" data-value="{{list_item.R}}" bindtap="{{quanxian_list.T == '√'?'clickView':''}}" style="{{quanxian_list.T == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.R}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[22].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="S" data-value="{{list_item.S}}" bindtap="{{quanxian_list.U == '√'?'clickView':''}}" style="{{quanxian_list.U == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.S}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[23].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="T" data-value="{{list_item.T}}" bindtap="{{quanxian_list.V == '√'?'clickView':''}}" style="{{quanxian_list.V == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.T}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[24].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="U" data-value="{{list_item.U}}" bindtap="{{quanxian_list.W == '√'?'clickView':''}}" style="{{quanxian_list.W == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.U}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[25].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="V" data-value="{{list_item.V}}" bindtap="{{quanxian_list.X == '√'?'clickView':''}}" style="{{quanxian_list.X == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.V}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[26].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="W" data-value="{{list_item.W}}" bindtap="{{quanxian_list.Y == '√'?'clickView':''}}" style="{{quanxian_list.Y == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.W}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[27].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="X" data-value="{{list_item.X}}" bindtap="{{quanxian_list.Z == '√'?'clickView':''}}" style="{{quanxian_list.Z == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.X}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[28].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="Y" data-value="{{list_item.Y}}" bindtap="{{quanxian_list.AA == '√'?'clickView':''}}" style="{{quanxian_list.AA == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.Y}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[29].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="Z" data-value="{{list_item.Z}}" bindtap="{{quanxian_list.AB == '√'?'clickView':''}}" style="{{quanxian_list.AB == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.Z}}</view>
+        </view>
+
+        <view class="list_view" hidden="{{titil[30].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AA" data-value="{{list_item.AA}}" bindtap="{{quanxian_list.AC == '√'?'clickView':''}}" style="{{quanxian_list.AC == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AA}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[31].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AB" data-value="{{list_item.AB}}" bindtap="{{quanxian_list.AD == '√'?'clickView':''}}" style="{{quanxian_list.AD == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AB}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[32].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AC" data-value="{{list_item.AC}}" bindtap="{{quanxian_list.AE == '√'?'clickView':''}}" style="{{quanxian_list.AE == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AC}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[33].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AD" data-value="{{list_item.AD}}" bindtap="{{quanxian_list.AF == '√'?'clickView':''}}" style="{{quanxian_list.AF == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AD}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[34].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AE" data-value="{{list_item.AE}}" bindtap="{{quanxian_list.AG == '√'?'clickView':''}}" style="{{quanxian_list.AG == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AE}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[35].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AF" data-value="{{list_item.AF}}" bindtap="{{quanxian_list.AH == '√'?'clickView':''}}" style="{{quanxian_list.AH == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AF}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[36].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AG" data-value="{{list_item.AG}}" bindtap="{{quanxian_list.AI == '√'?'clickView':''}}" style="{{quanxian_list.AI == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AG}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[37].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AH" data-value="{{list_item.AH}}" bindtap="{{quanxian_list.AJ == '√'?'clickView':''}}" style="{{quanxian_list.AJ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AH}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[38].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AI" data-value="{{list_item.AI}}" bindtap="{{quanxian_list.AK == '√'?'clickView':''}}" style="{{quanxian_list.AK == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AI}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[39].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AJ" data-value="{{list_item.AJ}}" bindtap="{{quanxian_list.AL == '√'?'clickView':''}}" style="{{quanxian_list.AL == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AJ}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[40].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AK" data-value="{{list_item.AK}}" bindtap="{{quanxian_list.AM == '√'?'clickView':''}}" style="{{quanxian_list.AM == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AK}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[41].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AL" data-value="{{list_item.AL}}" bindtap="{{quanxian_list.AN == '√'?'clickView':''}}" style="{{quanxian_list.AN == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AL}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[42].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AM" data-value="{{list_item.AM}}" bindtap="{{quanxian_list.AO == '√'?'clickView':''}}" style="{{quanxian_list.AO == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AM}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[43].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AN" data-value="{{list_item.AN}}" bindtap="{{quanxian_list.AP == '√'?'clickView':''}}" style="{{quanxian_list.AP == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AN}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[44].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AO" data-value="{{list_item.AO}}" bindtap="{{quanxian_list.AQ == '√'?'clickView':''}}" style="{{quanxian_list.AQ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AO}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[45].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AP" data-value="{{list_item.AP}}" bindtap="{{quanxian_list.AR == '√'?'clickView':''}}" style="{{quanxian_list.AR == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AP}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[46].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AQ" data-value="{{list_item.AQ}}" bindtap="{{quanxian_list.ASS == '√'?'clickView':''}}" style="{{quanxian_list.ASS == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AQ}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[47].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AR" data-value="{{list_item.AR}}" bindtap="{{quanxian_list.AT == '√'?'clickView':''}}" style="{{quanxian_list.AT == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AR}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[48].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="ASS" data-value="{{list_item.ASS}}" bindtap="{{quanxian_list.AU == '√'?'clickView':''}}" style="{{quanxian_list.AU == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.ASS}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[49].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AT" data-value="{{list_item.AT}}" bindtap="{{quanxian_list.AV == '√'?'clickView':''}}" style="{{quanxian_list.AV == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AT}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[50].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AU" data-value="{{list_item.AU}}" bindtap="{{quanxian_list.AW == '√'?'clickView':''}}" style="{{quanxian_list.AW == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AU}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[51].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AV" data-value="{{list_item.AV}}" bindtap="{{quanxian_list.AX == '√'?'clickView':''}}" style="{{quanxian_list.AX == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AV}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[52].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AW" data-value="{{list_item.AW}}" bindtap="{{quanxian_list.AY == '√'?'clickView':''}}" style="{{quanxian_list.AY == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AW}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[53].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AX" data-value="{{list_item.AX}}" bindtap="{{quanxian_list.AZ == '√'?'clickView':''}}" style="{{quanxian_list.AZ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AX}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[54].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AY" data-value="{{list_item.AY}}" bindtap="{{quanxian_list.BA == '√'?'clickView':''}}" style="{{quanxian_list.BA == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AY}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[55].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AZ" data-value="{{list_item.AZ}}" bindtap="{{quanxian_list.BB == '√'?'clickView':''}}" style="{{quanxian_list.BB == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.AZ}}</view>
+        </view>
+
+        <view class="list_view" hidden="{{titil[56].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BA" data-value="{{list_item.BA}}" bindtap="{{quanxian_list.BC == '√'?'clickView':''}}" style="{{quanxian_list.BC == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BA}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[57].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BB" data-value="{{list_item.BB}}" bindtap="{{quanxian_list.BD == '√'?'clickView':''}}" style="{{quanxian_list.BD == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BB}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[58].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BC" data-value="{{list_item.BC}}" bindtap="{{quanxian_list.BE == '√'?'clickView':''}}" style="{{quanxian_list.BE == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BC}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[59].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BD" data-value="{{list_item.BD}}" bindtap="{{quanxian_list.BF == '√'?'clickView':''}}" style="{{quanxian_list.BF == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BD}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[60].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BE" data-value="{{list_item.BE}}" bindtap="{{quanxian_list.BG == '√'?'clickView':''}}" style="{{quanxian_list.BG == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BE}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[61].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BF" data-value="{{list_item.BF}}" bindtap="{{quanxian_list.BH == '√'?'clickView':''}}" style="{{quanxian_list.BH == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BF}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[62].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BG" data-value="{{list_item.BG}}" bindtap="{{quanxian_list.BI == '√'?'clickView':''}}" style="{{quanxian_list.BI == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BG}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[63].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BH" data-value="{{list_item.BH}}" bindtap="{{quanxian_list.BJ == '√'?'clickView':''}}" style="{{quanxian_list.BJ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BH}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[64].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BI" data-value="{{list_item.BI}}" bindtap="{{quanxian_list.BK == '√'?'clickView':''}}" style="{{quanxian_list.BK == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BI}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[65].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BJ" data-value="{{list_item.BJ}}" bindtap="{{quanxian_list.BL == '√'?'clickView':''}}" style="{{quanxian_list.BL == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BJ}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[66].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BK" data-value="{{list_item.BK}}" bindtap="{{quanxian_list.BM == '√'?'clickView':''}}" style="{{quanxian_list.BM == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BK}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[67].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BL" data-value="{{list_item.BL}}" bindtap="{{quanxian_list.BN == '√'?'clickView':''}}" style="{{quanxian_list.BN == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BL}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[68].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BM" data-value="{{list_item.BM}}" bindtap="{{quanxian_list.BO == '√'?'clickView':''}}" style="{{quanxian_list.BO == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BM}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[69].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BN" data-value="{{list_item.BN}}" bindtap="{{quanxian_list.BP == '√'?'clickView':''}}" style="{{quanxian_list.BP == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BN}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[70].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BO" data-value="{{list_item.BO}}" bindtap="{{quanxian_list.BQ == '√'?'clickView':''}}" style="{{quanxian_list.BQ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BO}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[71].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BP" data-value="{{list_item.BP}}" bindtap="{{quanxian_list.BR == '√'?'clickView':''}}" style="{{quanxian_list.BR == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BP}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[72].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BQ" data-value="{{list_item.BQ}}" bindtap="{{quanxian_list.BS == '√'?'clickView':''}}" style="{{quanxian_list.BS == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BQ}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[73].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BR" data-value="{{list_item.BR}}" bindtap="{{quanxian_list.BT == '√'?'clickView':''}}" style="{{quanxian_list.BT == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BR}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[74].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BS" data-value="{{list_item.BS}}" bindtap="{{quanxian_list.BU == '√'?'clickView':''}}" style="{{quanxian_list.BU == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BS}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[75].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BT" data-value="{{list_item.BT}}" bindtap="{{quanxian_list.BV == '√'?'clickView':''}}" style="{{quanxian_list.BV == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BT}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[76].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BU" data-value="{{list_item.BU}}" bindtap="{{quanxian_list.BW == '√'?'clickView':''}}" style="{{quanxian_list.BW == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BU}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[77].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BV" data-value="{{list_item.BV}}" bindtap="{{quanxian_list.BX == '√'?'clickView':''}}" style="{{quanxian_list.BX == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BV}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[78].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BW" data-value="{{list_item.BW}}" bindtap="{{quanxian_list.BYY == '√'?'clickView':''}}" style="{{quanxian_list.BYY == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BW}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[79].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BX" data-value="{{list_item.BX}}" bindtap="{{quanxian_list.BZ == '√'?'clickView':''}}" style="{{quanxian_list.BZ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BX}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[80].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BY" data-value="{{list_item.BYY}}" bindtap="{{quanxian_list.CA == '√'?'clickView':''}}" style="{{quanxian_list.CA == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BYY}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[81].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BZ" data-value="{{list_item.BZ}}" bindtap="{{quanxian_list.CB == '√'?'clickView':''}}" style="{{quanxian_list.CB == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.BZ}}</view>
+        </view>
+
+        <view class="list_view" hidden="{{titil[82].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CA" data-value="{{list_item.CA}}" bindtap="{{quanxian_list.CC == '√'?'clickView':''}}" style="{{quanxian_list.CC == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CA}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[83].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CB" data-value="{{list_item.CB}}" bindtap="{{quanxian_list.CD == '√'?'clickView':''}}" style="{{quanxian_list.CD == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CB}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[84].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CC" data-value="{{list_item.CC}}" bindtap="{{quanxian_list.CE == '√'?'clickView':''}}" style="{{quanxian_list.CE == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CC}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[85].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CD" data-value="{{list_item.CD}}" bindtap="{{quanxian_list.CF == '√'?'clickView':''}}" style="{{quanxian_list.CF == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CD}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[86].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CE" data-value="{{list_item.CE}}" bindtap="{{quanxian_list.CG == '√'?'clickView':''}}" style="{{quanxian_list.CG == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CE}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[87].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CF" data-value="{{list_item.CF}}" bindtap="{{quanxian_list.CH == '√'?'clickView':''}}" style="{{quanxian_list.CH == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CF}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[88].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CG" data-value="{{list_item.CG}}" bindtap="{{quanxian_list.CI == '√'?'clickView':''}}" style="{{quanxian_list.CI == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CG}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[89].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CH" data-value="{{list_item.CH}}" bindtap="{{quanxian_list.CJ == '√'?'clickView':''}}" style="{{quanxian_list.CJ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CH}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[90].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CI" data-value="{{list_item.CI}}" bindtap="{{quanxian_list.CK == '√'?'clickView':''}}" style="{{quanxian_list.CK == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CI}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[91].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CJ" data-value="{{list_item.CJ}}" bindtap="{{quanxian_list.CL == '√'?'clickView':''}}" style="{{quanxian_list.CL == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CJ}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[92].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CK" data-value="{{list_item.CK}}" bindtap="{{quanxian_list.CM == '√'?'clickView':''}}" style="{{quanxian_list.CM == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CK}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[93].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CL" data-value="{{list_item.CL}}" bindtap="{{quanxian_list.CN == '√'?'clickView':''}}" style="{{quanxian_list.CN == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CL}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[94].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CM" data-value="{{list_item.CM}}" bindtap="{{quanxian_list.CO == '√'?'clickView':''}}" style="{{quanxian_list.CO == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CM}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[95].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CN" data-value="{{list_item.CN}}" bindtap="{{quanxian_list.CP == '√'?'clickView':''}}" style="{{quanxian_list.CP == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CN}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[96].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CO" data-value="{{list_item.CO}}" bindtap="{{quanxian_list.CQ == '√'?'clickView':''}}" style="{{quanxian_list.CQ == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CO}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[97].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CP" data-value="{{list_item.CP}}" bindtap="{{quanxian_list.CR == '√'?'clickView':''}}" style="{{quanxian_list.CR == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CP}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[98].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CQ" data-value="{{list_item.CQ}}" bindtap="{{quanxian_list.CS == '√'?'clickView':''}}" style="{{quanxian_list.CS == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CQ}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[99].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CR" data-value="{{list_item.CR}}" bindtap="{{quanxian_list.CT == '√'?'clickView':''}}" style="{{quanxian_list.CT == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CR}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[100].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CS" data-value="{{list_item.CS}}" bindtap="{{quanxian_list.CU == '√'?'clickView':''}}" style="{{quanxian_list.CU == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CS}}</view>
+        </view>
+        <view class="list_view"  hidden="{{titil[101].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CT" data-value="{{list_item.CT}}" bindtap="{{quanxian_list.CV == '√'?'clickView':''}}" style="{{quanxian_list.CV == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CT}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[102].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CU" data-value="{{list_item.CU}}" bindtap="{{quanxian_list.CW == '√'?'clickView':''}}" style="{{quanxian_list.CW == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CU}}</view>
+        </view>
+        <view class="list_view" hidden="{{titil[103].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CV" data-value="{{list_item.CV}}" bindtap="{{quanxian_list.CX == '√'?'clickView':''}}" style="{{quanxian_list.CX == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
+          <view class="list_text">{{list_item.CV}}</view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save">
+    <view wx:if="{{isDate}}">
+      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+    </view>
+    <view style="height: 52%;" wx:if="{{!isDate}}">
+      <view class="input_date_form" wx:for="{{dateArray}}">
+        <input class="input_date" value="{{item.value}}" type="number" name="{{item.name}}" ></input>
+        <view class="input_date_text">{{item.text}}</view>
+      </view>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="upd_code_view" animation="{{animationData_upd_code}}" hidden="{{initHidView?initHidView:''}}">
+  <view class="upd_area1">
+    <block wx:for="{{accounting}}">
+      <button class="bt_upd_code" hover-class="bt_upd_code_hover" data-index="{{index}}" bindtap="choice_item">{{item.text}}</button>
+    </block>
+  </view>
+  <view class="upd_area2">
+    <scroll-view class="sv_upd_code" scroll-y="true">
+      <view class="sv_upd_header">
+        <view class="upd_text1">科目代码</view>
+        <view class="upd_text2">科目名称</view>
+      </view>
+      <view wx:for="{{accounting_arr}}" class="sv_upd_show" hover-class="sv_upd_show_hover" bindtap="choice_item_upd" data-code="{{item.code}}" data-name="{{item.name}}" style="{{index==0?'margin-top:11%':''}}">
+        <view class="upd_text1">{{item.code}}</view>
+        <view class="upd_text2">{{item.name}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<view class="examine_view" animation="{{animationData_examine}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="examine_save">
+    <view class="examine_input_view">
+      <input class="examine_input" placeholder="审核人姓名" disabled="disabled" value="{{shenheren}}" name="man"></input>
+      <input class="examine_input" placeholder="请输入操作密码" value="{{empty}}" name="do" type="password"></input>
+    </view>
+    <view class="examine_bt_view">
+      <button class="examine_bt" form-type="submit">确定</button>
+    </view>
+  </form>
+  
+</view>
+
+<view class="upd_countPage_view" animation="{{animationData_countPage}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save_countPage" style="height:100%;width:100%">
+    <input class="upd_countPage_input" placeholder="每页显示条数" name="countPage" value="{{countPage}}" type="number"></input>
+    <button class="upd_countPage_bt" form-type="submit">保存</button>
+  </form>
+</view>
+
+<view class="bottom_view"  >
+  <view style="{{isSelect?'opacity:0.3':'opacity:1'}}">
+    <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
+    <view class="page_bottom" bindtap="{{cha=='是'?'show_updPageCount':''}}">{{pageNum}}/{{pageCount}}</view>
+    <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+  </view>
+  <view class="backSelect" wx:if="{{isSelect || examine}}" bindtap="backSelect">
+    <image class="backSelect_image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/backSelect1.jpg"></image>
+  </view>
+  <button class="moreDo" bindtap="{{examine?'upd_examine':'moreDo'}}">{{examine?'审核':'更多操作'}}</button>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">
+</view>
+
+<view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="select">
+    <view class="option">
+      <input class="option_text" value="{{xiangmumingcheng}}" bindinput="input" placeholder="请输入人员姓名" name="person_name"/>
+      <picker class="date-picker" mode="date"  bindchange="showChoiceMonth1">
+        <input class="option_text" value="{{start_date}}" bindinput="input" placeholder="请输入开始日期" name="start_date" disabled='disabled'/>
+      </picker>
+      <picker class="date-picker" mode="date"  bindchange="showChoiceMonth2">
+        <input class="option_text" value="{{stop_date}}" bindinput="input" placeholder="请输入结束日期" name="stop_date" disabled='disabled'/>
+      </picker>
+    </view>
+    <view class="moreDo_bt_view">
+      <button class="moreDo_bt" bindtap="hid_view">返回</button>
+      <button class="moreDo_bt" form-type="submit">查询</button>
+    </view>
+  </form>
+</view>
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" disabled="{{zeng=='是'?'':'disabled'}}" bindtap="insert">添加一行</button>
+  <button class="moreDo_view_bt" disabled="{{cha=='是'?'':'disabled'}}" bindtap="showSelect">查询</button>
+  <button class="moreDo_view_bt" disabled="{{cha=='是'?'':'disabled'}}" bindtap="getExcel">生成Excel</button>
+  <!-- <button class="moreDo_view_bt" bindtap="use_book">使用说明</button> -->
+</view>

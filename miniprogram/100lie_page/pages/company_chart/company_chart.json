@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "ec-canvas" : "../ec-canvas/ec-canvas"
+  },
+  "navigationBarTitleText": "公司数据分析"
+}

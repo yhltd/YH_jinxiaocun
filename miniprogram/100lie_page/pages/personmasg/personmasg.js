@@ -35,47 +35,84 @@ Page({
    */
   onLoad: function (options){
     var that = this
+    var _this = this
     var userInfo = JSON.parse(options.userInfo)
     if(options!=undefined){
       that.setData({
         gongsi:userInfo.B,
         userInfo:userInfo
       })
-    }   
-    var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
+    }
+
+    var sql="select ins,del,upd,sel from baitaoquanxian_department where company = '" + _this.data.userInfo.B + "' and department_name ='" + _this.data.userInfo.bumen + "' and view_name='人员管理'"
+    var that =this
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
         query : sql
       },
-      success(res){
-        var list=res.result.recordset
-        that.setData({
-          list
-        })
+      success(res){     
+        var quanxian = res.result.recordset
+        if(quanxian == []){
+          wx.showToast({
+            title: '未读取到部门权限信息，请联系管理员',
+            icon:"none"
+          })
+          return;
+        }else{
+          _this.setData({
+            zeng:quanxian[0].ins,
+            shan:quanxian[0].del,
+            gai:quanxian[0].upd,
+            cha:quanxian[0].sel,
+          })
+
+          if(_this.data.cha != '是'){
+            wx.showToast({
+              title: '无查询权限',
+              icon:"none"
+            })
+            return;
+          }
+          var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data:{
+              query : sql
+            },
+            success(res){
+              var list=res.result.recordset
+              that.setData({
+                list
+              })
+            }
+          })
+
+          var sql="select department_name from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' group by department_name"
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data:{
+              query : sql
+            },
+            success(res){
+              var list=res.result.recordset
+              var department_list = []
+              for(var i=0; i<list.length; i++){
+                if(list[i].department_name != '' &&list[i].department_name != undefined){
+                  department_list.push(list[i].department_name)
+                }
+              }
+              console.log(department_list)
+              that.setData({
+                department_list
+              })
+            }
+          })
+        }
       }
     })
 
-    var sql="select department_name from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' group by department_name"
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data:{
-        query : sql
-      },
-      success(res){
-        var list=res.result.recordset
-        var department_list = []
-        for(var i=0; i<list.length; i++){
-          if(list[i].department_name != '' &&list[i].department_name != undefined){
-            department_list.push(list[i].department_name)
-          }
-        }
-        console.log(department_list)
-        that.setData({
-          department_list
-        })
-      }
-    })
+    
   },
   //添加
   add:function(){
@@ -107,6 +144,15 @@ bindPickerChange2: function(e) {
   var _this = this
   var list = _this.data.list
   var index= e.currentTarget.dataset.index
+
+  if(_this.data.shan != '是'){
+    wx.showToast({
+      title: '无删除权限',
+      icon:"none"
+    })
+    return;
+  }
+
   _this.setData({
     upd_hid:false,
     mask_hid:false,
@@ -260,6 +306,15 @@ delete:function(e){
   var _this = this
   var list = _this.data.list
   var index= e.currentTarget.dataset.index
+
+  if(_this.data.shan != '是'){
+    wx.showToast({
+      title: '无删除权限',
+      icon:"none"
+    })
+    return;
+  }
+
   if(list[index].renyuan_id != '' && list[index].renyuan_id != undefined){
     wx.showModal({
       title: '提示',

@@ -69,8 +69,8 @@
   </form>
   </view>
   
-<button class="bt_form_hover"  bindtap="add">添加</button>
-<button class="bt_form_hover"  bindtap="sel_show">查询</button>
+<button class="bt_form_hover" disabled="{{zeng=='是'?'':'disabled'}}"  bindtap="add">添加</button>
+<button class="bt_form_hover" disabled="{{cha=='是'?'':'disabled'}}" bindtap="sel_show">查询</button>
 <view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
 
   <view class="mask" bindtap="hid_det" hidden="{{mask_det}}"></view>

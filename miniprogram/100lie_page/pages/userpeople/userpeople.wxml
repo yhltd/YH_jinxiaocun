@@ -161,5 +161,5 @@
 
 <view class="bottom_view">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="use_book">使用说明</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="piliang_jiechu">一键解除</button>
+  <button class="bt_bottom" disabled="{{gai=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="piliang_jiechu">一键解除</button>
 </view>

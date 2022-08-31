@@ -68,29 +68,6 @@
 </view>
 
 <view class="hr"></view>
-<view class="hr"></view>
-
-<view class='item' bindtap="go2">
-  <view class="title">
-    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzuotai.png" class="images_st"></image>
-  工作台</view>
-  <view class="detail2">
-    <text>></text>
-  </view>
-</view>
-<view class="line"></view>
-
-<view class='item' bindtap="go1">
-  <view class="title">
-    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shiyongrenyuan.png" class="images_st"></image>
-  使用人员</view>
-  <view class="detail2">
-    <text>></text>
-  </view>
-</view>
-
-<view class="hr"></view>
-<view class="hr"></view>
 
 <view class='item' bindtap="go3">
   <view class="title">
@@ -102,4 +79,11 @@
 </view>
 <view class="line"></view>
 <view class="hr"></view>
+
+<van-tabbar active="{{ 3 }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../images/gongsi.png">公司</van-tabbar-item>
+  <van-tabbar-item icon="../../images/renyuan.png">人员</van-tabbar-item>
+  <van-tabbar-item icon="../../images/caozuo.png">操作</van-tabbar-item>
+  <van-tabbar-item icon="../../images/wode.png">我的</van-tabbar-item>
+</van-tabbar>
 

@@ -126,15 +126,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this   
-    if(options!=undefined){
-      console.log(options)
-      that.setData({
-        gongsi:options.gongsi,
-        name:options.name,
-        user:options.user      
-      })
-    }
+    var _this = this
+    var that = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo,
+      gongsi:userInfo.B,
+      name:userInfo.C,
+      user:userInfo.C
+    })
     // var randm=[];
     // for (var ii=0;ii<6;ii++){
     //   var num =Math.floor( Math.random()*33)+1    

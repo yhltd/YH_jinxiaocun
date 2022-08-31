@@ -107,8 +107,9 @@
       "root": "100lie_page",
       "name": "100lie",
       "pages": [
-        "pages/show/show",
         "pages/shows/shows",
+        "pages/shows2/shows2",
+        "pages/shows3/shows3",
         "pages/companyfix/companyfix",
         "pages/personfix/personfix",
         "pages/work/work",
@@ -119,40 +120,11 @@
         "pages/loginpeople/loginpeople",
         "pages/gather/gather",
         "pages/picture/picture",
-        "pages/management/management"
-      ],
-      "tabBar": {
-        "color": "#999",
-            "selectedColor": "#3D98FF",
-            "backgroundColor": "#fff",
-            "borderStyle": "white",
-        "list": [
-          {
-            "selectedIconPath": "images/home.png",
-            "iconPath": "images/home.png",
-            "pagePath": "pages/index/index",
-            "text": "公司"
-          },
-          {
-            "selectedIconPath": "images/addressBook.png",
-            "iconPath": "images/addressBook.png",
-            "pagePath": "pages/addressBook/addressBook",
-            "text": "人员"
-          },
-          {
-            "selectedIconPath": "images/addressBook.png",
-            "iconPath": "images/addressBook.png",
-            "pagePath": "pages/addressBook/addressBook",
-            "text": "操作"
-          },
-          {
-            "selectedIconPath": "images/sms.png",
-            "iconPath": "images/sms.png",
-            "pagePath": "pages/sms/sms",
-            "text": "我的"
-          }
-        ]
-      }
+        "pages/management/management",
+        "pages/company_chart/company_chart",
+        "pages/person_chart/person_chart",
+        "pages/work_bench/work_bench"
+      ]
     },
     {
       "root": "packageZ",
