@@ -157,7 +157,46 @@ var login = function(that,info) {
         })
       }
     })
-  } else if(system=="零售管理系统"){
+  }else if(system=="云合教务管理系统"){
+    //进销存
+    console.log("2")
+    wx.cloud.callFunction({
+      name: "sql_jiaowu",
+      data: {
+        sql: "select * from teacher where Company = '" + that.data.gongsi + "' and `Password` = '" + that.data.pwd + "' and `UserName` ='" + that.data.name + "'"
+      },
+      success(res) {
+        console.log("成功", res)
+        if (res.result.length > 0) {
+          var userInfo = res.result[0]
+          console.log(userInfo)
+          wx.navigateTo({
+            url: '../../package_jiaowu/pages/shows/shows?userInfo='+JSON.stringify(userInfo)
+          })
+        } else {
+          console.log("密码错误")
+          wx.showToast({
+            title: '密码错误',
+            image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
+            mask: true,
+            duration: 1000
+          })
+        }
+        wx.hideNavigationBarLoading(); //隐藏加载
+        wx.stopPullDownRefresh();
+      },
+      fail(res) {
+        console.log("失败", res)
+      },
+      complete : function(){
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  }
+  
+  else if(system=="零售管理系统"){
     wx.showLoading({
       title: '正在登录',
       mask: true
@@ -735,7 +774,43 @@ Page({
           console.log(res)
         }
       })
-    }else if(system=="云合人事管理系统"){
+    }if(system=="云合教务管理系统"){
+      _this.setData({
+        system,
+      })
+      wx.showLoading({
+        title: '获取公司信息中',
+        mask : 'true'
+      })
+      var _this = this;
+      wx.cloud.callFunction({
+        name: "sql_jiaowu",
+        data: {
+          sql: "select Company from teacher GROUP BY Company"
+        },
+        success: res => {
+          console.log(res);
+          var list = []
+          for(var i=0;i<res.result.length;i++){
+            list.push(res.result[i].Company)
+          }
+          _this.setData({
+            pickerArray : list
+          })
+          wx.hideLoading({
+            success: (res) => {},
+          })
+          return;
+        },
+        err: res => {
+          console.log("错误!", res)
+        },
+        fail:res=>{
+          console.log(res)
+        }
+      })
+    }
+    else if(system=="云合人事管理系统"){
       _this.setData({
         system
       })
@@ -818,6 +893,8 @@ Page({
   },
 
   formLogin: function(e) {
+    var _this = this
+
     if(this.data.system=="云合未来财务系统"){
       getCompanyTime(this,e.detail.value,'财务')
     }else if(this.data.system=="云合排产管理系统"){
