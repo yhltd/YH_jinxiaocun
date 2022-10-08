@@ -198,7 +198,12 @@
       "root": "package_jiaowu",
       "name": "jiaowu",
       "pages": [
-        "pages/shows/shows"
+        "pages/shows/shows",
+        "pages/zhgl/zhgl",
+        "pages/shezhi/shezhi",
+        "pages/jiaofei/jiaofei",
+        "pages/keshi/keshi",
+        "pages/shouzhi/shouzhi"
       ]
     },
     {

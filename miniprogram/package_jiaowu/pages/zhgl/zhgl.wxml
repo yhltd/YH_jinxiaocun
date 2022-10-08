@@ -1,0 +1,114 @@
+<!--package_jiaowu/pages/zhgl/zhgl.wxml-->
+<!-- <text>package_jiaowu/pages/zhgl/zhgl.wxml</text> -->
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
+  <button class="bt_bottom" bindtap="entering" 
+   disabled="{{isdischa!=1}}">查询</button>
+   <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
+</view>
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
+	  <view class="lables">登录名</view>
+    <input bindinput="onInput" data-column="dlm" class="input_text_form" value="{{dlm}}" type="text" name="dlm" ></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="mm" class="input_text_form"  value="{{mm}}" type="text" name="mm"></input>
+    <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" ></input>
+    <view class="lables">用户类别</view>
+    <input bindinput="onInput" data-column="yhlb" class="input_text_form" value="{{yhlb}}" type="text" name="yhlb" ></input>
+    <view class="lables">年龄</view>
+    <input bindinput="onInput" data-column="nl" class="input_text_form" value="{{nl}}" type="text" name="nl" ></input>
+    <view class="lables">电话</view>
+    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
+    <view class="lables">家庭住址</view>
+    <input bindinput="onInput" data-column="jtzz" class="input_text_form" value="{{jtzz}}" type="text" name="jtzz" ></input>  
+    <view class="lables">身份证号</view>
+    <input bindinput="onInput" data-column="sfzh" class="input_text_form" value="{{sfzh}}" type="text" name="sfzh" ></input>
+    <view class="lables">学历</view>
+    <input bindinput="onInput" data-column="xl" class="input_text_form" value="{{xl}}" type="text" name="xl" ></input>
+    <view class="lables">状态</view>
+    <input bindinput="onInput" data-column="zt" class="input_text_form" value="{{zt}}" type="text" name="zt" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 82%;" >
+	  <view class="lables">登录名</view>
+    <input bindinput="onInput" data-column="dlm" class="input_text_form" value="{{dlm}}" type="text" name="dlm" ></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="mm" class="input_text_form"  value="{{mm}}" type="text" name="mm"></input>
+    <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" ></input>
+    <view class="lables">用户类别</view>
+    <input bindinput="onInput" data-column="yhlb" class="input_text_form" value="{{yhlb}}" type="text" name="yhlb" ></input>
+    <view class="lables">年龄</view>
+    <input bindinput="onInput" data-column="nl" class="input_text_form" value="{{nl}}" type="text" name="nl" ></input>
+    <view class="lables">电话</view>
+    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
+    <view class="lables">家庭住址</view>
+    <input bindinput="onInput" data-column="jtzz" class="input_text_form" value="{{jtzz}}" type="text" name="jtzz" ></input>  
+    <view class="lables">身份证号</view>
+    <input bindinput="onInput" data-column="sfzh" class="input_text_form" value="{{sfzh}}" type="text" name="sfzh" ></input>
+    <view class="lables">学历</view>
+    <input bindinput="onInput" data-column="xl" class="input_text_form" value="{{xl}}" type="text" name="xl" ></input>
+    <view class="lables">状态</view>
+    <input bindinput="onInput" data-column="zt" class="input_text_form" value="{{zt}}" type="text" name="zt" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
+    disabled="{{isdisgai!=1}}">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
+	<view class="lables1">登录名</view>
+    <input bindinput="onInput" data-column="dlm" class="input_text_form" value="{{dlm}}" type="text" name="dlm" ></input>
+    <view class="lables1">姓名</view>
+    <input bindinput="onInput" data-column="xm" class="input_text_form"  value="{{xm}}" type="text" name="xm"></input>
+    <view class="lables1">电话</view>
+    <input bindinput="onInput" data-column="dh" class="input_text_form"  value="{{dh}}" type="text" name="dh"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
