@@ -105,9 +105,6 @@
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
     </picker>
-    <view class="lables">收入金额</view>
-    <input bindinput="onInput" data-column="srje" class="input_text_form"  value="{{srje}}" type="text" name="srje"></input>
-    
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

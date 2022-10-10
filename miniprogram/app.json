@@ -203,7 +203,13 @@
         "pages/shezhi/shezhi",
         "pages/jiaofei/jiaofei",
         "pages/keshi/keshi",
-        "pages/shouzhi/shouzhi"
+        "pages/shouzhi/shouzhi",
+        "pages/jiaoshixinxi/jiaoshixinxi",
+        "pages/jiaoshigongzi/jiaoshigongzi",
+        "pages/jiaoshikeshitongji/jiaoshikeshitongji",
+        "pages/jiaoshikebiao/jiaoshikebiao",
+        "pages/xueshengxinxi/xueshengxinxi",
+        "pages/qianfeixueyuan/qianfeixueyuan"
       ]
     },
     {

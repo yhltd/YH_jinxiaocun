@@ -68,7 +68,7 @@ Page({
         columnName: "handle",
         type: "text",
         isupd: true
-      },
+      },      
     ],
     rq: "",
     srje: "",
@@ -178,6 +178,9 @@ Page({
       success: res => {
         console.log(res.result)
         var list = res.result
+        for(var i=0; i<list.length; i++){
+          list[i].rgdate = list[i].rgdate.split("T")[0]
+        }
         _this.setData({
           list: list
         })
@@ -204,7 +207,7 @@ Page({
   onLoad: function (options) {
     var _this = this
     this.panduanquanxian()
-    var e = ['', '']
+    var e = ['1900-01-01', '2100-12-31']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
@@ -268,6 +271,11 @@ Page({
     })
   },
 
+
+
+
+
+
   add1: function () {
     var _this = this
     let user = app.globalData.gongsi;
@@ -286,6 +294,9 @@ Page({
           sql: "insert into income(rgdate,money,msort,mremark,paid,psort,premark,handle) values('" + _this.data.rq + "','" + _this.data.srje + "','" + _this.data.srfl + "','" + _this.data.srbz + "','" + _this.data.zcje +"','" + _this.data.zcfl +"','" + _this.data.zcbz +"','" + _this.data.jsr + "')"
         },
         success: res => {
+          
+
+
           _this.setData({
             rq: "",
             srje: "",
@@ -326,6 +337,7 @@ Page({
   clickView:function(e){
     var _this = this
     _this.setData({
+      id: _this.data.list[e.currentTarget.dataset.index].ID,
       rq: _this.data.list[e.currentTarget.dataset.index].rgdate, 
       srje: _this.data.list[e.currentTarget.dataset.index].money,
       srfl: _this.data.list[e.currentTarget.dataset.index].msort,
@@ -334,7 +346,7 @@ Page({
       zcfl: _this.data.list[e.currentTarget.dataset.index].psort,
       zcbz: _this.data.list[e.currentTarget.dataset.index].premark,
       jsr: _this.data.list[e.currentTarget.dataset.index].handle,
-      id: _this.data.list[e.currentTarget.dataset.index].id,
+      
       xgShow:true,
     })
   },
@@ -346,7 +358,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "update income set rgdate='" + _this.data.rq + "',money='" + _this.data.srje + "',msort='" + _this.data.srfl + "',mremark='" + _this.data.srbz + "',paid='" + _this.data.zcje + "',psort='" + _this.data.zcfl + "',premark='" + _this.data.zcbz + "',handle='" + _this.data.jsr + "' where id='" + _this.data.id +"'"
+          sql: "update income set rgdate='" + _this.data.rq + "',money='" + _this.data.srje + "',msort='" + _this.data.srfl + "',mremark='" + _this.data.srbz + "',paid='" + _this.data.zcje + "',psort='" + _this.data.zcfl + "',premark='" + _this.data.zcbz + "',handle='" + _this.data.jsr + "' where ID='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
@@ -392,7 +404,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "delete from income where id='" + _this.data.id + "'"
+          sql: "delete from income where ID='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({
@@ -456,7 +468,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**

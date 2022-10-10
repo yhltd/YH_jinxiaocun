@@ -14,54 +14,102 @@ Page({
   data: {
     list: [],
     title: [{
-        text: "日期",
+        text: "教师姓名",
         width: "200rpx",
-        columnName: "riqi",
+        columnName: "t_name",
         type: "text",
         isupd: true
       },
       {
-        text: "学生姓名",
+        text: "性别",
         width: "200rpx",
-        columnName: "student_name",
+        columnName: "sex",
         type: "text",
         isupd: true
       },
       {
-        text: "培训课程",
+        text: "身份证号码",
         width: "200rpx",
-        columnName: "course",
+        columnName: "id_code",
         type: "text",
         isupd: true
       },
       {
-        text: "课时",
+        text: "民族",
         width: "200rpx",
-        columnName: "keshi",
+        columnName: "minzu",
         type: "text",
         isupd: true
       },
       {
-        text: "责任教师",
+        text: "生日",
         width: "200rpx",
-        columnName: "teacher_name",
+        columnName: "birthday",
         type: "text",
         isupd: true
       },
       {
-        text: "每节课时金额",
+        text: "职位",
         width: "200rpx",
-        columnName: "jine",
+        columnName: "post",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "学历",
+        width: "200rpx",
+        columnName: "education",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "联系电话",
+        width: "200rpx",
+        columnName: "phone",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "入职日期",
+        width: "200rpx",
+        columnName: "rz_riqi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "在职状态",
+        width: "200rpx",
+        columnName: "state",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "社保情况",
+        width: "200rpx",
+        columnName: "shebao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "地址",
+        width: "200rpx",
+        columnName: "address",
         type: "text",
         isupd: true
       },
     ],
-    rq: "",
-    xsxm: "",
-    pxks: "",
-    ks: "",
-    zrjs: "",
-    mjksje: "",
+    jsxm: "",
+    xb: "",
+    sfzhm: "",
+    mz: "",
+    sr: "",
+    zw: "",
+    xl: "",
+    lxdh: "",
+    rzrq: "",
+    zzzt: "",
+    sbqk: "",
+    dz: "",
     // 新增代码
     isdis: '',
     isdischa: '',
@@ -157,14 +205,12 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from keshi_detail where teacher_name like '%" + e[0] + "%' and course like '%" + e[1] + "%' and riqi >='" + e[2] + "' and riqi <='" + e[3] + "'"
+        sql: "select * from teacherinfo where t_name like '%" + e[0] + "%'"
       },
       success: res => {
         console.log(res.result)
         var list = res.result
-        for(var i=0; i<list.length; i++){
-          list[i].riqi = list[i].riqi.split("T")[0]
-        }
+        
         _this.setData({
           list: list
         })
@@ -191,7 +237,7 @@ Page({
   onLoad: function (options) {
     var _this = this
     this.panduanquanxian()
-    var e = ['', '','1900-01-01','2100-12-31']
+    var e = ['']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
@@ -258,29 +304,41 @@ Page({
   add1: function () {
     var _this = this
     let user = app.globalData.gongsi;
-    console.log(_this.data.rq)
-    console.log(_this.data.xsxm)
-    console.log(_this.data.pxks)
-    console.log(_this.data.ks)
-    console.log(_this.data.zrjs)
-    console.log(_this.data.mjksje)
-    if (_this.data.xsxm != "" && _this.data.zrjs != "" && _this.data.ks != "") {
+    console.log(_this.data.jsxm)
+    console.log(_this.data.xb)
+    console.log(_this.data.sfzhm)
+    console.log(_this.data.mz)
+    console.log(_this.data.sr)
+    console.log(_this.data.zw)
+    console.log(_this.data.xl)
+    console.log(_this.data.lxdh)
+    console.log(_this.data.rzrq)
+    console.log(_this.data.zzzt)
+    console.log(_this.data.sbqk)
+    console.log(_this.data.dz)
+    if (_this.data.jsxm != "") {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into keshi_detail(riqi,student_name,course,keshi,teacher_name,jine) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.pxks + "','" + _this.data.ks + "','" + _this.data.zrjs + "','" + _this.data.mjksje +  "')"
+          sql: "insert into teacherinfo(t_name,sex,id_code,minzu,birthday,post,education,phone,rz_riqi,state,shebao,address) values('" + _this.data.jsxm + "','" + _this.data.xb + "','" + _this.data.sfzhm + "','" + _this.data.mz + "','" + _this.data.sr + "','" + _this.data.zw + "','" + _this.data.xl + "','" + _this.data.lxdh + "','" + _this.data.rzrq + "','" + _this.data.zzzt + "','" + _this.data.sbqk + "','" + _this.data.dz +  "')"
         },
         success: res => {
           _this.setData({
-            rq: "",
-            xsxm: "",
-            pxks: "",
-            ks: "",
-            zrjs: "",
-            mjksje: "",
+            jsxm: "",
+            xb: "",
+            sfzhm: "",
+            mz: "",
+            sr: "",
+            zw: "",
+            xl: "",
+            lxdh: "",
+            rzrq: "",
+            zzzt: "",
+            sbqk: "",
+            dz: "",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -309,12 +367,19 @@ Page({
   clickView:function(e){
     var _this = this
     _this.setData({
-      rq: _this.data.list[e.currentTarget.dataset.index].riqi, 
-      xsxm: _this.data.list[e.currentTarget.dataset.index].student_name,
-      pxks: _this.data.list[e.currentTarget.dataset.index].course,
-      ks: _this.data.list[e.currentTarget.dataset.index].keshi,
-      zrjs: _this.data.list[e.currentTarget.dataset.index].teacher_name,
-      mjksje: _this.data.list[e.currentTarget.dataset.index].jine,
+      jsxm: _this.data.list[e.currentTarget.dataset.index].t_name, 
+      xb: _this.data.list[e.currentTarget.dataset.index].sex,
+      sfzhm: _this.data.list[e.currentTarget.dataset.index].id_code,
+      mz: _this.data.list[e.currentTarget.dataset.index].minzu,
+      sr: _this.data.list[e.currentTarget.dataset.index].birthday,
+      zw: _this.data.list[e.currentTarget.dataset.index].post,
+      xl: _this.data.list[e.currentTarget.dataset.index].education, 
+      lxdh: _this.data.list[e.currentTarget.dataset.index].phone,
+      rzrq: _this.data.list[e.currentTarget.dataset.index].rz_riqi,
+      zzzt: _this.data.list[e.currentTarget.dataset.index].state,
+      sbqk: _this.data.list[e.currentTarget.dataset.index].shebao,
+      dz: _this.data.list[e.currentTarget.dataset.index].address,
+      
       id: _this.data.list[e.currentTarget.dataset.index].id,
       xgShow:true,
     })
@@ -323,23 +388,29 @@ Page({
   upd1:function(){
     var _this = this
     let user = app.globalData.gongsi;
-    if (_this.data.xsxm != "" && _this.data.zrjs != "" && _this.data.ks != "") {
+    if (_this.data.t_name != "" ) {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "update keshi_detail set riqi='" + _this.data.rq + "',student_name='" + _this.data.xsxm + "',course='" + _this.data.pxks + "',keshi='" + _this.data.ks + "',teacher_name='" + _this.data.zrjs + "',jine='" + _this.data.mjksje + "' where id='" + _this.data.id +"'"
+          sql: "update teacherinfo set t_name='" + _this.data.jsxm + "',sex='" + _this.data.xb + "',id_code='" + _this.data.sfzhm + "',minzu='" + _this.data.mz + "',birthday='" + _this.data.sr + "',post='" + _this.data.zw + "',education='" + _this.data.xl + "',phone='" + _this.data.lxdh + "',rz_riqi='" + _this.data.rzrq + "',state='" + _this.data.zzzt + "',shebao='" + _this.data.sbqk + "',address='" + _this.data.dz + "' where id='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
-            rq: "",
-            xsxm: "",
-            pxks: "",
-            ks: "",
-            zrjs: "",
-            mjksje: "",
+            jsxm: "",
+            xb: "",
+            sfzhm: "",
+            mz: "",
+            sr: "",
+            zw: "",
+            xl: "",
+            lxdh: "",
+            rzrq: "",
+            zzzt: "",
+            sbqk: "",
+            dz: "",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['']
           _this.tableShow(e)
 
           wx.showToast({
@@ -371,19 +442,25 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "delete from keshi_detail where id='" + _this.data.id + "'"
+          sql: "delete from teacherinfo where id='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({
-            rq: "",
-            xsxm: "",
-            pxks: "",
-            ks: "",
-            zrjs: "",
-            mjksje: "",
+            jsxm: "",
+            xb: "",
+            sfzhm: "",
+            mz: "",
+            sr: "",
+            zw: "",
+            xl: "",
+            lxdh: "",
+            rzrq: "",
+            zzzt: "",
+            sbqk: "",
+            dz: "",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -407,10 +484,8 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      zrjs:"",
-      ks:"",
-      riqi1:'',
-      riqi2:'',
+      jsxm:"",
+      
     })
   },
 
@@ -426,7 +501,7 @@ Page({
         riqi2:'2100-12-31'
       })
     }
-    var e = [_this.data.zrjs,_this.data.ks,_this.data.riqi1,_this.data.riqi2]
+    var e = [_this.data.jsxm]
     _this.tableShow(e)
     _this.qxShow()
   },

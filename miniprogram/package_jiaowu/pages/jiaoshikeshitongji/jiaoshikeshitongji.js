@@ -14,49 +14,42 @@ Page({
   data: {
     list: [],
     title: [{
-        text: "日期",
-        width: "200rpx",
-        columnName: "riqi",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "学生姓名",
-        width: "200rpx",
-        columnName: "student_name",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "培训课程",
-        width: "200rpx",
-        columnName: "course",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "课时",
-        width: "200rpx",
-        columnName: "keshi",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "责任教师",
+        text: "教师姓名",
         width: "200rpx",
         columnName: "teacher_name",
         type: "text",
         isupd: true
       },
       {
-        text: "每节课时金额",
+        text: "课程名称",
+        width: "200rpx",
+        columnName: "course",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "上课课时",
+        width: "200rpx",
+        columnName: "keshi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "每节金额",
         width: "200rpx",
         columnName: "jine",
         type: "text",
         isupd: true
       },
+      {
+        text: "工资核算",
+        width: "200rpx",
+        columnName: "gongzihesuan",
+        type: "text",
+        isupd: true
+      },
     ],
-    rq: "",
+    jsxm: "",
     xsxm: "",
     pxks: "",
     ks: "",
@@ -157,14 +150,12 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from keshi_detail where teacher_name like '%" + e[0] + "%' and course like '%" + e[1] + "%' and riqi >='" + e[2] + "' and riqi <='" + e[3] + "'"
+        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where teacher_name like '%" + e[0] + "%'and riqi >='" + e[1] + "' and riqi <='" + e[2] + "'"
       },
       success: res => {
         console.log(res.result)
         var list = res.result
-        for(var i=0; i<list.length; i++){
-          list[i].riqi = list[i].riqi.split("T")[0]
-        }
+        
         _this.setData({
           list: list
         })
@@ -191,7 +182,7 @@ Page({
   onLoad: function (options) {
     var _this = this
     this.panduanquanxian()
-    var e = ['', '','1900-01-01','2100-12-31']
+    var e = ['', '1900-01-01','2100-12-31']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
@@ -243,6 +234,9 @@ Page({
       rq:"",
       sl:""
     })
+    wx.navigateTo({
+      url: "../jiaoshikebiao/jiaoshikebiao"
+    })
   },
 
   qxShow: function () {
@@ -280,7 +274,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['', '1900-01-01','2100-12-31']
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -339,7 +333,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['', '1900-01-01','2100-12-31']
           _this.tableShow(e)
 
           wx.showToast({
@@ -383,7 +377,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['', '1900-01-01','2100-12-31']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -407,8 +401,7 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      zrjs:"",
-      ks:"",
+      jsxm:"",
       riqi1:'',
       riqi2:'',
     })
@@ -426,7 +419,7 @@ Page({
         riqi2:'2100-12-31'
       })
     }
-    var e = [_this.data.zrjs,_this.data.ks,_this.data.riqi1,_this.data.riqi2]
+    var e = [_this.data.jsxm,_this.data.riqi1,_this.data.riqi2]
     _this.tableShow(e)
     _this.qxShow()
   },

@@ -17,6 +17,14 @@ Page({
         url: "../shezhi/shezhi"
       },
       {
+        text: "学生信息",
+        url: "../xueshengxinxi/xueshengxinxi"
+      },
+      {
+        text: "教师信息",
+        url: "../jiaoshixinxi/jiaoshixinxi"
+      },
+      {
         text: "缴费记录",
         url: "../jiaofei/jiaofei"
       },
@@ -27,6 +35,18 @@ Page({
       {
         text: "收支明细",
         url: "../shouzhi/shouzhi"
+      },
+      {
+        text: "欠费学员",
+        url: "../qianfeixueyuan/qianfeixueyuan"
+      },
+      {
+        text: "教师工资",
+        url: "../jiaoshigongzi/jiaoshigongzi"
+      },
+      {
+        text: "教师课时统计",
+        url: "../jiaoshikeshitongji/jiaoshikeshitongji"
       },
       {
         text: "账号管理",

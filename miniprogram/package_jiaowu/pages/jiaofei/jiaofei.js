@@ -170,6 +170,9 @@ Page({
       success: res => {
         console.log(res.result)
         var list = res.result
+        for(var i=0; i<list.length; i++){
+          list[i].ksdate = list[i].ksdate.split("T")[0]
+        }
         _this.setData({
           list: list
         })
@@ -196,7 +199,7 @@ Page({
   onLoad: function (options) {
     var _this = this
     this.panduanquanxian()
-    var e = ['', '']
+    var e = ['1900-01-01', '2100-12-31','']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
@@ -270,7 +273,7 @@ Page({
     console.log(_this.data.jffs)
     console.log(_this.data.sfr)
     console.log(_this.data.bz)
-    if (_this.data.rq != "" && _this.data.xsxm != "" ) {
+    if (_this.data.xsxm != "" && _this.data.rq != ""  ) {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
@@ -287,7 +290,7 @@ Page({
             bz:"",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['1900-01-01', '2100-12-31','']
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -331,7 +334,7 @@ Page({
   upd1:function(){
     var _this = this
     let user = app.globalData.gongsi;
-    if (_this.data.dlm != "" && _this.data.mm != "" && _this.data.xm != "" && _this.data.dh != "") {
+    if (_this.data.xsxm != "" && _this.data.rq != "" ) {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
@@ -348,7 +351,7 @@ Page({
             bz:"",
           })
           _this.qxShow()
-          var e = ['', '','']
+          var e = ['1900-01-01', '2100-12-31','']
           _this.tableShow(e)
 
           wx.showToast({
@@ -392,7 +395,7 @@ Page({
             bz:"",
           })
           _this.qxShow()
-          var e = ['', '','']
+          var e = ['1900-01-01', '2100-12-31','']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',

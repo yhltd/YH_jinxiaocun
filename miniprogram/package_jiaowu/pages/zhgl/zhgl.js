@@ -349,7 +349,7 @@ Page({
   clickView:function(e){
     var _this = this
     _this.setData({
-      id: _this.data.list[e.currentTarget.dataset.index].id, 
+      id: _this.data.list[e.currentTarget.dataset.index].ID, 
       dlm: _this.data.list[e.currentTarget.dataset.index].UserName, 
       mm: _this.data.list[e.currentTarget.dataset.index].Password, 
       xm: _this.data.list[e.currentTarget.dataset.index].RealName, 
@@ -371,7 +371,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "update teacher set UserName='" + _this.data.dlm + "',Password='" + _this.data.mm + "',RealName='" + _this.data.xm + "',UseType='" + _this.data.yhlb + " ',Age='" + _this.data.nl + " ',Phone='" + _this.data.dh + " ',Home='" + _this.data.jtzz + " ',photo='" + _this.data.sfzh + " ',Education='" + _this.data.xl + " ',state='" + _this.data.zt + " ' where id='" + _this.data.id +"'"
+          sql: "update teacher set UserName='" + _this.data.dlm + "',Password='" + _this.data.mm + "',RealName='" + _this.data.xm + "',UseType='" + _this.data.yhlb + " ',Age='" + _this.data.nl + " ',Phone='" + _this.data.dh + " ',Home='" + _this.data.jtzz + " ',photo='" + _this.data.sfzh + " ',Education='" + _this.data.xl + " ',state='" + _this.data.zt + " ' where ID='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
@@ -418,7 +418,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "delete from teacher where id='" + _this.data.id + "'"
+          sql: "delete from teacher where ID='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({
