@@ -66,7 +66,7 @@
       <block wx:for="{{title}}">
         <view class="th {{(item.shebaohuizong == '部门')?'tap_120':''}}" data-shebaohuizong='{{item.shebaohuizong}}' style="{{item.shebaohuizong=='部门'?'position:sticky;top:0;left:0':''}}">
           <view class="cell_label_header centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.shebaohuizong}}</text>
+            <text style="font-weight:bold;">{{item.shebaohuizong}}</text>
           </view>
         </view>
       </block>

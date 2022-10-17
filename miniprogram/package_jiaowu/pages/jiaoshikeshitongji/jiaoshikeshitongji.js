@@ -146,11 +146,11 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where teacher_name like '%" + e[0] + "%'and riqi >='" + e[1] + "' and riqi <='" + e[2] + "'"
+        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where teacher_name like '%" + e[0] + "%'and riqi >='" + e[1] + "' and riqi <='" + e[2] + "' and Company='"+user+"'"
       },
       success: res => {
         console.log(res.result)
@@ -175,12 +175,71 @@ Page({
       }
     })
   },
+  getExcel : function(){ 
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      name : '极简总账',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['', '1900-01-01','2100-12-31']
     if (_this.data.isdischa == 1) {
@@ -234,11 +293,15 @@ Page({
       rq:"",
       sl:""
     })
+    
+  },
+  kebiao:function(){
+    var _this = this
     wx.navigateTo({
-      url: "../jiaoshikebiao/jiaoshikebiao"
+      
+      url: "../jiaoshikebiao/jiaoshikebiao?userInfo="+JSON.stringify(_this.data.userInfo)
     })
   },
-
   qxShow: function () {
     var _this = this
     _this.setData({
@@ -251,7 +314,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.rq)
     console.log(_this.data.xsxm)
     console.log(_this.data.pxks)
@@ -262,7 +325,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into keshi_detail(riqi,student_name,course,keshi,teacher_name,jine) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.pxks + "','" + _this.data.ks + "','" + _this.data.zrjs + "','" + _this.data.mjksje +  "')"
+          sql: "insert into keshi_detail(riqi,student_name,course,keshi,teacher_name,jine,Company) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.pxks + "','" + _this.data.ks + "','" + _this.data.zrjs + "','" + _this.data.mjksje +  "','"+user+"')"
         },
         success: res => {
           _this.setData({

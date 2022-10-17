@@ -78,6 +78,11 @@ Page({
     zcfl: "",
     zcbz: "",
     jsr: "",
+
+    ljsr:"",
+    ljzc:"",
+    xfsr:"",
+    ljjy:"",
     // 新增代码
     isdis: '',
     isdischa: '',
@@ -169,11 +174,11 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "'"
+        sql: "select * from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
       },
       success: res => {
         console.log(res.result)
@@ -200,17 +205,175 @@ Page({
       }
     })
   },
+  getExcel : function(){ 
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      name : '极简总账',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    let user = userInfo.Company;
+    _this.setData({
+      userInfo:userInfo
+    })
+    
     this.panduanquanxian()
     var e = ['1900-01-01', '2100-12-31']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
+
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select sum(money) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
+      },
+      success: res => {
+        var list = res.result
+        _this.setData({
+          ljsr:list
+        })
+        console.log(res.result)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select sum(paid) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
+      },
+      success: res => {
+        var list = res.result
+        _this.setData({
+          ljzc:list
+        })
+        console.log(res.result)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select sum(money) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'and msort='学费'"
+      },
+      success: res => {
+        var list = res.result
+        _this.setData({
+          xfsr:list
+        })
+        console.log(res.result)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select sum(money)-sum(paid) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
+      },
+      success: res => {
+        var list = res.result
+        _this.setData({
+          ljjy:list
+        })
+        console.log(res.result)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   onInput: function (e) {
@@ -278,7 +441,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.rq)
     console.log(_this.data.srje)
     console.log(_this.data.srfl)
@@ -291,7 +454,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into income(rgdate,money,msort,mremark,paid,psort,premark,handle) values('" + _this.data.rq + "','" + _this.data.srje + "','" + _this.data.srfl + "','" + _this.data.srbz + "','" + _this.data.zcje +"','" + _this.data.zcfl +"','" + _this.data.zcbz +"','" + _this.data.jsr + "')"
+          sql: "insert into income(rgdate,money,msort,mremark,paid,psort,premark,handle,Company) values('" + _this.data.rq + "','" + _this.data.srje + "','" + _this.data.srfl + "','" + _this.data.srbz + "','" + _this.data.zcje +"','" + _this.data.zcfl +"','" + _this.data.zcbz +"','" + _this.data.jsr + "','"+user+"')"
         },
         success: res => {
           
@@ -444,6 +607,13 @@ Page({
       cxShow:true,
       riqi1:'',
       riqi2:'',
+    })
+  },
+  tubiao:function(){
+    var _this = this
+    wx.navigateTo({
+      
+      url: "../tubiao/tubiao?userInfo="+JSON.stringify(_this.data.userInfo)
     })
   },
 

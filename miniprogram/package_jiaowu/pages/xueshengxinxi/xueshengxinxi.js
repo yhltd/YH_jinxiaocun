@@ -121,10 +121,6 @@ Page({
     bj:"",
     dh:"",    
     xf:"",
-    yjf:"",
-    wjf:"",
-    ysks:"",
-    syks:"",
     zks:"",
     zt:"",
     
@@ -223,7 +219,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "SELECT RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,( SELECT SUM( CASE WHEN realname = student.realname THEN paid ELSE 0 END ) FROM payment ) mall,Fee - Cost AS Nocost,( SELECT SUM( CASE WHEN student_name = student.realname AND course = student.Course THEN keshi ELSE 0 END ) FROM keshi_detail ) nall,Allhour - HOUR AS Nohour,Allhour,Type FROM student WHERE RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
+        sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid else 0 end) from payment ) mall ,Fee -Cost as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,Allhour - Hour as Nohour,Allhour,Type FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
       },
       success: res => {
         console.log(res.result)
@@ -250,17 +246,77 @@ Page({
       }
     })
   },
+  getExcel : function(){ 
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      name : '极简总账',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['','', '','1900-01-01','2100-12-31']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
+
   },
 
   onInput: function (e) {
@@ -323,7 +379,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.xsxm)
     console.log(_this.data.xb)
     console.log(_this.data.bmrq)
@@ -342,7 +398,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into student(RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,Allhour,Type)values('" + _this.data.xsxm + "','" + _this.data.xb + "'，'" + _this.data.bmrq + "'，'" + _this.data.pxkc + "'，'" + _this.data.zrjs + "'，'" + _this.data.bj + "'，'" + _this.data.dh + "'，'" + _this.data.xf + "'，'" + _this.data.zks + "'，'" + _this.data.zt + "')"
+          sql: "insert into student(RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,Allhour,Type,Company)values('" + _this.data.xsxm + "','" + _this.data.xb + "','" + _this.data.bmrq + "','" + _this.data.pxkc + "','" + _this.data.zrjs + "','" + _this.data.bj + "','" + _this.data.dh + "','" + _this.data.xf + "','" + _this.data.zks + "','" + _this.data.zt + "','"+user+"')"
         },
         success: res => {
           _this.setData({
@@ -352,7 +408,7 @@ Page({
             pxkc: "",
             zrjs: "",
             bj:"",
-            dh:"",
+            dh:"",    
             xf:"",
             yjf:"",
             wjf:"",
@@ -390,8 +446,9 @@ Page({
 
   clickView:function(e){
     var _this = this
+    console.log(_this.data.list[e.currentTarget.dataset.index].ID)
     _this.setData({
-      id: _this.data.list[e.currentTarget.dataset.index].ID, 
+      id: _this.data.list[e.currentTarget.dataset.index].ID,
       xsxm: _this.data.list[e.currentTarget.dataset.index].RealName, 
       xb: _this.data.list[e.currentTarget.dataset.index].Sex, 
       bmrq: _this.data.list[e.currentTarget.dataset.index].rgdate, 
@@ -427,7 +484,7 @@ Page({
             pxkc: "",
             zrjs: "",
             bj:"",
-            dh:"",
+            dh:"",    
             xf:"",
             yjf:"",
             wjf:"",
@@ -478,7 +535,7 @@ Page({
             pxkc: "",
             zrjs: "",
             bj:"",
-            dh:"",
+            dh:"",    
             xf:"",
             yjf:"",
             wjf:"",

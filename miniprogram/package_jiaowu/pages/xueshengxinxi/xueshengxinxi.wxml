@@ -33,9 +33,9 @@
 <!------------------------->
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <button class="bt_bottom" bindtap="entering" 
-   disabled="{{isdischa!=1}}">查询</button>
-   <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
+  <button class="bt_bottom" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
+  <button class="bt_bottom" bindtap="getExcel" disabled="{{isdischa!=1}}">导出Excel</button>
+   <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->
 <!---------添加弹窗--------->
@@ -59,14 +59,14 @@
     <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
     <view class="lables">学费</view>
     <input bindinput="onInput" data-column="xf" class="input_text_form" value="{{xf}}" type="text" name="xf" ></input>
-    <view class="lables">已缴费</view>
+    <!-- <view class="lables">已缴费</view>
     <input bindinput="onInput" data-column="yjf" class="input_text_form" value="{{yjf}}" type="text" name="yjf" ></input>
     <view class="lables">未交费</view>
     <input bindinput="onInput" data-column="wjf" class="input_text_form" value="{{wjf}}" type="text" name="wjf" ></input>
     <view class="lables">已上课时</view>
     <input bindinput="onInput" data-column="ysks" class="input_text_form" value="{{ysks}}" type="text" name="ysks" ></input>
     <view class="lables">剩余课时</view>
-    <input bindinput="onInput" data-column="syks" class="input_text_form" value="{{syks}}" type="text" name="syks" ></input>
+    <input bindinput="onInput" data-column="syks" class="input_text_form" value="{{syks}}" type="text" name="syks" ></input> -->
     <view class="lables">总课时</view>
     <input bindinput="onInput" data-column="zks" class="input_text_form" value="{{zks}}" type="text" name="zks" ></input>
     <view class="lables">状态</view>
@@ -98,14 +98,14 @@
     <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
     <view class="lables">学费</view>
     <input bindinput="onInput" data-column="xf" class="input_text_form" value="{{xf}}" type="text" name="xf" ></input>
-    <view class="lables">已缴费</view>
+    <!-- <view class="lables">已缴费</view>
     <input bindinput="onInput" data-column="yjf" class="input_text_form" value="{{yjf}}" type="text" name="yjf" ></input>
     <view class="lables">未交费</view>
     <input bindinput="onInput" data-column="wjf" class="input_text_form" value="{{wjf}}" type="text" name="wjf" ></input>
     <view class="lables">已上课时</view>
     <input bindinput="onInput" data-column="ysks" class="input_text_form" value="{{ysks}}" type="text" name="ysks" ></input>
     <view class="lables">剩余课时</view>
-    <input bindinput="onInput" data-column="syks" class="input_text_form" value="{{syks}}" type="text" name="syks" ></input>
+    <input bindinput="onInput" data-column="syks" class="input_text_form" value="{{syks}}" type="text" name="syks" ></input> -->
     <view class="lables">总课时</view>
     <input bindinput="onInput" data-column="zks" class="input_text_form" value="{{zks}}" type="text" name="zks" ></input>
     <view class="lables">状态</view>

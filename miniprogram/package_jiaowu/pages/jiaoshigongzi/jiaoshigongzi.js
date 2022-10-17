@@ -146,11 +146,11 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where riqi like '%" + e[0] + "%'"
+        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where riqi like '%" + e[0] + "%' and Company='"+user+"'"
       },
       success: res => {
         console.log(res.result)
@@ -181,6 +181,10 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['']
     if (_this.data.isdischa == 1) {
@@ -248,7 +252,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.rq)
     console.log(_this.data.xsxm)
     console.log(_this.data.pxks)
@@ -259,7 +263,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into keshi_detail(riqi,student_name,course,keshi,teacher_name,jine) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.pxks + "','" + _this.data.ks + "','" + _this.data.zrjs + "','" + _this.data.mjksje +  "')"
+          sql: "insert into keshi_detail(riqi,student_name,course,keshi,teacher_name,jine,Company) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.pxks + "','" + _this.data.ks + "','" + _this.data.zrjs + "','" + _this.data.mjksje +  "','"+user+"')"
         },
         success: res => {
           _this.setData({
@@ -313,7 +317,7 @@ Page({
 
   upd1:function(){
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     if (_this.data.xsxm != "" && _this.data.zrjs != "" && _this.data.ks != "") {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',

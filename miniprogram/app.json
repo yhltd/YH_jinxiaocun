@@ -209,7 +209,11 @@
         "pages/jiaoshikeshitongji/jiaoshikeshitongji",
         "pages/jiaoshikebiao/jiaoshikebiao",
         "pages/xueshengxinxi/xueshengxinxi",
-        "pages/qianfeixueyuan/qianfeixueyuan"
+        "pages/qianfeixueyuan/qianfeixueyuan",
+        "pages/kaoqinbiao/kaoqinbiao",
+        "pages/jine/jine",
+        "pages/quanxian/quanxian",
+        "pages/tubiao/tubiao"
       ]
     },
     {

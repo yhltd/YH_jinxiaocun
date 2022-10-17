@@ -161,11 +161,11 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from payment where ksdate >='" + e[0] + "'and ksdate <='" + e[1] + "' and realname like '%" + e[2] + "%'"
+        sql: "select * from payment where Company = '" + user + "' and ksdate >='" + e[0] + "'and ksdate <='" + e[1] + "' and realname like '%" + e[2] + "%'"
       },
       success: res => {
         console.log(res.result)
@@ -192,12 +192,130 @@ Page({
       }
     })
   },
+  getExcel : function(){ 
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      name : '极简总账',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
+  dayin: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list;
+    console.log(list)
+    var title = _this.data.title2;
+    console.log(title)
+    var cloudList = {
+      name: '工资明细',
+      items: [], 
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: title[i].width,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this
+    // let user = _this.data.userInfo.Company;
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['1900-01-01', '2100-12-31','']
     if (_this.data.isdischa == 1) {
@@ -265,7 +383,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.rq)
     console.log(_this.data.xsxm)
     console.log(_this.data.djje)
@@ -277,7 +395,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into payment(ksdate,realname,paid,money,paiment,keeper,remark) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.djje + "','" + _this.data.xfje + "','" + _this.data.jffs + "','" + _this.data.sfr +"','" + _this.data.bz  +"')"
+          sql: "insert into payment(ksdate,realname,paid,money,paiment,keeper,remark,Company) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.djje + "','" + _this.data.xfje + "','" + _this.data.jffs + "','" + _this.data.sfr +"','" + _this.data.bz  +"','"+user+"')"
         },
         success: res => {
           _this.setData({

@@ -649,7 +649,7 @@ Page({
     _this.chaxun_quxiao()
   },
 
-  getExcel : function(){
+  getExcel : function(){ 
     var _this = this;
     wx.showLoading({
       title: '打开Excel中',

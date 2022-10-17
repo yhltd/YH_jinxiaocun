@@ -14,92 +14,65 @@ Page({
   data: {
     list: [],
     title: [{
-      text: "登录名",
-      width: "200rpx",
-      columnName: "UserName",
-      type: "text",
-      isupd: true
-    },
-    {
-      text: "密码",
-      width: "200rpx",
-      columnName: "Password",
-      type: "text",
-      isupd: true
-    },
-    {
       text: "姓名",
       width: "200rpx",
-      columnName: "RealName",
+      columnName: "s_name",
       type: "text",
       isupd: true
     },
     {
-      text: "用户类别",
+      text: "页面名称",
       width: "200rpx",
-      columnName: "UseType",
+      columnName: "view_name",
       type: "text",
       isupd: true
     },
     {
-      text: "年龄",
+      text: "增",
       width: "200rpx",
-      columnName: "Age",
+      columnName: "add",
       type: "text",
       isupd: true
     },
     {
-      text: "电话",
+      text: "删",
       width: "200rpx",
-      columnName: "Phone",
+      columnName: "del",
       type: "text",
       isupd: true
     },
     {
-      text: "家庭住址",
+      text: "改",
       width: "200rpx",
-      columnName: "Home",
+      columnName: "upd",
       type: "text",
       isupd: true
     },
     {
-      text: "身份证号",
+      text: "查",
       width: "200rpx",
-      columnName: "photo",
+      columnName: "sel",
       type: "text",
       isupd: true
     },
-    {
-      text: "学历",
-      width: "200rpx",
-      columnName: "Education",
-      type: "text",
-      isupd: true
-    },
-    {
-      text: "状态",
-      width: "200rpx",
-      columnName: "state",  
-      type: "text",
-      isupd: true
-    },
+    
     ],
-    dlm: "",
-    mm: "",
+    view_list:['学生信息','教师信息','权限管理','用户管理','缴费记录','课时统计','收支明细','欠费学员','教师工资','教师课时统计','考勤表','教师课表','设置'],
+    view_list1:['√',' '],
+    view_list2:['√',' '],
+    view_list3:['√',' '],
+    view_list4:['√',' '],
     xm: "",
-    yhlb: "",
-    nl: "",
-    dh:"",
-    jtzz:"",
-    sfzh:"",
-    xl:"",
-    zt:"",
+    ymmc: "",
+    zeng: "",
+    shan: "",
+    gai: "",
+    cha:"",
     // 新增代码
     isdis: '',
     isdischa: '',
     isdisgai: '',
     isdisshan: '',
-    isdisquanxian:'',
     minDate: new Date(1900, 1, 1).getTime(),
     maxDate: new Date(2100, 12, 31).getTime(),
     currentDate: new Date().getTime(),
@@ -119,8 +92,7 @@ Page({
       isdis: 1,
       isdischa: 1,
       isdisgai: 1,
-      isdisshan: 1,
-      isdisquanxian:1
+      isdisshan: 1
     });
     //读取缓存    
     var department_list1 = wx.getStorageSync('department_list')
@@ -188,13 +160,11 @@ Page({
   tableShow: function (e) {
     var _this = this
     let user = _this.data.userInfo.Company;
-    console.log(_this.data.dlm)
-    console.log(_this.data.xm)
-    console.log(_this.data.dh)
+    let namee = _this.data.userInfo;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from teacher where UserName like '%" + e[0] + "%' and RealName like '%" + e[1] + "%' and Phone like '%" + e[2] + "%' and Company='"+user+"'"
+        sql: "select p.id,t_id,view_name,`add`,del,upd,sel,RealName as s_name from power as p left join teacher as t on p.t_id=t.ID  where p.company ='"+user+"'"
       },
       success: res => {
         console.log(res.result)
@@ -218,76 +188,54 @@ Page({
       }
     })
   },
-  getExcel : function(){ 
-    var _this = this;
-    wx.showLoading({
-      title: '打开Excel中',
-      mask : 'true'
-    })
-    var list = _this.data.list;
-    var title = _this.data.titil
-    var cloudList = {
-      name : '极简总账',
-      items : [],
-      header : []
-    }
 
-    for(let i=0;i<title.length;i++){
-      cloudList.header.push({
-        item:title[i].text,
-        type:title[i].type,
-        width:parseInt(title[i].width.split("r")[0])/10,
-        columnName:title[i].columnName
-      })
-    }
-    cloudList.items = list
-    console.log(cloudList)
-
-    wx.cloud.callFunction({
-      name:'getExcel',
-      data:{
-        list : cloudList
-      },
-      success: function(res){
-        console.log("获取云储存id")
-        wx.cloud.downloadFile({
-          fileID : res.result.fileID,
-          success : res=> {
-            console.log("获取临时路径")
-            wx.hideLoading({
-              success: (res) => {},
-            })
-            console.log(res.tempFilePath)
-            wx.openDocument({
-              filePath: res.tempFilePath,
-              showMenu : 'true',
-              fileType : 'xlsx',
-              success : res=> {
-                console.log("打开Excel")
-              }
-            })
-          }
-        })
-      },
-      fail : res=> {
-        console.log(res)
-      }
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this
+    // let user = _this.data.userInfo.Company;
     var userInfo = JSON.parse(options.userInfo)
+    
     _this.setData({
       userInfo:userInfo
     })
     this.panduanquanxian()
-    var e = ['','','']
+    var e = ['']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
+    
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select ID,RealName from teacher"
+      },
+      success: res => {
+        console.log(res.result)
+        var name_list = res.result
+        var name=[]
+        for (var i = 0; i < name_list.length; i++) {
+          name.push(name_list[i].RealName)
+        }
+        _this.setData({
+          name_list:name_list,
+          name:name
+        })
+      },
+      
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   onInput: function (e) {
@@ -351,37 +299,30 @@ Page({
   add1: function () {
     var _this = this
     let user = _this.data.userInfo.Company;
-    console.log(_this.data.dlm)
-    console.log(_this.data.mm)
+    console.log(_this.data.id)
     console.log(_this.data.xm)
-    console.log(_this.data.yhlb)
-    console.log(_this.data.nl)
-    console.log(_this.data.dh)
-    console.log(_this.data.jtzz)
-    console.log(_this.data.sfzh)
-    console.log(_this.data.xl)
-    console.log(_this.data.zt)
-    if (_this.data.dlm != "" && _this.data.mm != "" && _this.data.xm != "" && _this.data.dh != "") {
+    console.log(_this.data.ymmc)
+    console.log(_this.data.zeng)
+    console.log(_this.data.shan)
+    console.log(_this.data.gai)
+    console.log(_this.data.cha)
+    if (_this.data.xm != "" ) {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into teacher(UserName,Password,RealName,UseType,Age,Phone,Home,photo,Education,state,Company) values('" + _this.data.dlm + "','" + _this.data.mm + "','" + _this.data.xm + "','" + _this.data.yhlb + "','" + _this.data.nl + "','" + _this.data.dh +"','" + _this.data.jtzz +"','" + _this.data.sfzh +"','" + _this.data.xl +"','" + _this.data.zt +"','"+user+"')"
+          sql: "insert into power (t_id,view_name,`add`,del,upd,sel,company) values('"+_this.data.id+"','"+_this.data.ymmc+"','"+_this.data.zeng+"','"+_this.data.shan+"','"+_this.data.gai+"','"+_this.data.cha+"','"+user+"')"
         },
         success: res => {
           _this.setData({
-            dlm: "",
-            mm: "",
             xm: "",
-            yhlb: "",
-            nl: "",
-            dh:"",
-            jtzz:"",
-            sfzh:"",
-            xl:"",
-            zt:"",
+            ymmc: "",
+            zeng: "",
+            shan: "",
+            gai: "",
+            cha:"",
           })
           _this.qxShow()
-          var e = ['','','']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -410,45 +351,84 @@ Page({
   clickView:function(e){
     var _this = this
     _this.setData({
-      id: _this.data.list[e.currentTarget.dataset.index].ID, 
-      dlm: _this.data.list[e.currentTarget.dataset.index].UserName, 
-      mm: _this.data.list[e.currentTarget.dataset.index].Password, 
-      xm: _this.data.list[e.currentTarget.dataset.index].RealName, 
-      yhlb: _this.data.list[e.currentTarget.dataset.index].UseType, 
-      nl: _this.data.list[e.currentTarget.dataset.index].Age, 
-      dh:_this.data.list[e.currentTarget.dataset.index].Phone, 
-      jtzz:_this.data.list[e.currentTarget.dataset.index].Home, 
-      sfzh:_this.data.list[e.currentTarget.dataset.index].photo, 
-      xl:_this.data.list[e.currentTarget.dataset.index].Education, 
-      zt:_this.data.list[e.currentTarget.dataset.index].state, 
+      id: _this.data.list[e.currentTarget.dataset.index].id, 
+      xm: _this.data.list[e.currentTarget.dataset.index].s_name, 
+      t_id: _this.data.list[e.currentTarget.dataset.index].t_id, 
+      ymmc: _this.data.list[e.currentTarget.dataset.index].view_name, 
+      zeng: _this.data.list[e.currentTarget.dataset.index].add, 
+      shan: _this.data.list[e.currentTarget.dataset.index].del, 
+      gai: _this.data.list[e.currentTarget.dataset.index].upd, 
+      cha: _this.data.list[e.currentTarget.dataset.index].sel, 
       xgShow:true,
+    })
+  },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var t_id = _this.data.name_list[e.detail.value].ID
+    var name = _this.data.name_list[e.detail.value].RealName
+    console.log(t_id + "  " + name+" "+zeng)
+    _this.setData({
+      t_id: t_id,
+      xm:name,
+      zeng:zeng
+    })
+  },
+
+  bindPickerChange2: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      ymmc:_this.data.view_list[e.detail.value]
+    })
+  },
+  bindPickerChange3: function(e) {
+    var _this = this
+    _this.setData({
+      zeng:_this.data.view_list1[e.detail.value]
+    })
+    console.log(e.detail.value)
+  },
+  bindPickerChange4: function(e) {
+    var _this = this
+    _this.setData({
+      shan:_this.data.view_list2[e.detail.value]
+    })
+  },
+  bindPickerChange5: function(e) {
+    var _this = this
+    _this.setData({
+      gai:_this.data.view_list3[e.detail.value]
+    })
+  },
+  bindPickerChange6: function(e) {
+    var _this = this
+    _this.setData({
+      cha:_this.data.view_list4[e.detail.value]
     })
   },
 
   upd1:function(){
     var _this = this
     let user = app.globalData.gongsi;
-    if (_this.data.dlm != "" && _this.data.mm != "" && _this.data.xm != "" && _this.data.dh != "") {
+    if (_this.data.xm != "") {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "update teacher set UserName='" + _this.data.dlm + "',Password='" + _this.data.mm + "',RealName='" + _this.data.xm + "',UseType='" + _this.data.yhlb + " ',Age='" + _this.data.nl + " ',Phone='" + _this.data.dh + " ',Home='" + _this.data.jtzz + " ',photo='" + _this.data.sfzh + " ',Education='" + _this.data.xl + " ',state='" + _this.data.zt + " ' where ID='" + _this.data.id +"'"
+          sql: "update power set view_name='"+_this.data.ymmc+"', `add`='"+_this.data.zeng+"',del='"+_this.data.shan+"',upd='"+_this.data.gai+"',sel='"+_this.data.cha+"' where id='"+_this.data.id+"'"
         },
         success: res => {
           _this.setData({
-            dlm: "",
-            mm: "",
             xm: "",
-            yhlb: "",
-            nl: "",
-            dh:"",
-            jtzz:"",
-            sfzh:"",
-            xl:"",
-            zt:"",
+            ymmc: "",
+            zeng: "",
+            shan: "",
+            gai: "",
+            cha:"",
           })
           _this.qxShow()
-          var e = ['', '','']
+          var e = ['']
           _this.tableShow(e)
 
           wx.showToast({
@@ -479,23 +459,20 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "delete from teacher where ID='" + _this.data.id + "'"
+          sql: "delete from power where id='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({
-            dlm: "",
-            mm: "",
-            xm: "",
-            yhlb: "",
-            nl: "",
-            dh:"",
-            jtzz:"",
-            sfzh:"",
-            xl:"",
-            zt:"",
+            rq: "",
+            xsxm: "",
+            djje: "",
+            xfje: "",
+            jffs: "",
+            sfr:"",
+            bz:"",
           })
           _this.qxShow()
-          var e = ['', '','']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -519,22 +496,12 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      dlm:"",
-      xm:"",
-      dh:'',
+      ymmc:'',
     })
   },
-  kebiao:function(){
-    var _this = this
-    wx.navigateTo({
-      
-      url: "../quanxian/quanxian?userInfo="+JSON.stringify(_this.data.userInfo)
-    })
-  },
-  
   sel1:function(){
     var _this = this
-    var e = [_this.data.dlm,_this.data.xm,_this.data.dh]
+    var e = [_this.data.ymmc]
     _this.tableShow(e)
     _this.qxShow()
   },

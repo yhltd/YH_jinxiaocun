@@ -704,7 +704,7 @@ Page({
     console.log(title)
     var cloudList = {
       name: '工资明细',
-      items: [],
+      items: [], 
       header: []
     }
 

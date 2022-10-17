@@ -201,11 +201,11 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from teacherinfo where t_name like '%" + e[0] + "%'"
+        sql: "select * from teacherinfo where company ='"+user+"' and t_name like '%" + e[0] + "%'"
       },
       success: res => {
         console.log(res.result)
@@ -236,6 +236,10 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['']
     if (_this.data.isdischa == 1) {
@@ -303,7 +307,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.jsxm)
     console.log(_this.data.xb)
     console.log(_this.data.sfzhm)
@@ -320,7 +324,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into teacherinfo(t_name,sex,id_code,minzu,birthday,post,education,phone,rz_riqi,state,shebao,address) values('" + _this.data.jsxm + "','" + _this.data.xb + "','" + _this.data.sfzhm + "','" + _this.data.mz + "','" + _this.data.sr + "','" + _this.data.zw + "','" + _this.data.xl + "','" + _this.data.lxdh + "','" + _this.data.rzrq + "','" + _this.data.zzzt + "','" + _this.data.sbqk + "','" + _this.data.dz +  "')"
+          sql: "insert into teacherinfo(t_name,sex,id_code,minzu,birthday,post,education,phone,rz_riqi,state,shebao,address,company) values('" + _this.data.jsxm + "','" + _this.data.xb + "','" + _this.data.sfzhm + "','" + _this.data.mz + "','" + _this.data.sr + "','" + _this.data.zw + "','" + _this.data.xl + "','" + _this.data.lxdh + "','" + _this.data.rzrq + "','" + _this.data.zzzt + "','" + _this.data.sbqk + "','" + _this.data.dz +  "','"+user+"')"
         },
         success: res => {
           _this.setData({
@@ -387,7 +391,7 @@ Page({
 
   upd1:function(){
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     if (_this.data.t_name != "" ) {
       wx.cloud.callFunction({
         name: 'sql_jiaowu',

@@ -178,6 +178,10 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['', '']
     if (_this.data.isdischa == 1) {

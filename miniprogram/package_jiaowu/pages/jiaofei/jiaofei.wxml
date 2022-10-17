@@ -10,7 +10,7 @@
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
         <view wx:for="{{title}}" 
-              wx:for-item="item" 
+              wx:for-item="item"  
               wx:key="item" 
               class="list_view" 
               style="width:{{item.width}}" data-index="{{i}}" 
@@ -32,10 +32,11 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <button class="bt_bottom" bindtap="entering" 
-   disabled="{{isdischa!=1}}">查询</button>
-   <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
+  <button class="bt_bottom" style=" width: 20%;" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
+  <button class="bt_bottom" style=" width: 20%;" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
+  <button class="bt_bottom" bindtap="getExcel" disabled="{{isdischa!=1}}">导出Excel</button>
+  <button class="bt_bottom" style=" width: 20%;" bindtap="dayin" disabled="{{isdischa!=1}}">打印</button>
+   <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->
 <!---------添加弹窗--------->

@@ -33,9 +33,8 @@
 <!------------------------->
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <!-- <button class="bt_bottom" bindtap="entering" 
-   disabled="{{isdischa!=1}}">查询</button> -->
-   <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
+  <!-- <button class="bt_bottom" bindtap="entering" disabled="{{isdischa!=1}}">权限管理</button> -->
+   <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->
 <!---------添加弹窗--------->

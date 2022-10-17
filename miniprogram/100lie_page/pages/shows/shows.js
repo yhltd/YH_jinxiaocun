@@ -54,7 +54,7 @@ onChange: function (event) {
       url: '../loginpeople/loginpeople?userInfo='+JSON.stringify(_this.data.userInfo)
     })
   }
-},
+}, 
 
 go: function (e) {
   var _this = this;

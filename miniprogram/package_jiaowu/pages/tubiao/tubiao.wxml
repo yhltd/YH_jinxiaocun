@@ -1,0 +1,3 @@
+<ec-canvas id="mychart-dom-bar"  ec="{{ec}}">
+</ec-canvas>
+<button class="zput" bindtap="category_refresh">柱状图</button>

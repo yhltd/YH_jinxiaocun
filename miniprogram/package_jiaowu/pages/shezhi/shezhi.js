@@ -155,14 +155,14 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.dlm)
     console.log(_this.data.xm)
     console.log(_this.data.dh)
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from shezhi "
+        sql: "select * from shezhi where Company='"+user+"'"
       },
       success: res => {
         console.log(res.result)
@@ -192,6 +192,10 @@ Page({
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
     var e = ['', '','1900-01-01','2100-12-31']
     if (_this.data.isdischa == 1) {
@@ -259,7 +263,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.course)
     console.log(_this.data.teacher)
     console.log(_this.data.type)
@@ -270,7 +274,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into shezhi(course,teacher,type,paiment,msort,psort) values('" + _this.data.kclb + "','" + _this.data.zrjs + "','" + _this.data.ztsd + "','" + _this.data.jffs + "','" + _this.data.srfs + "','" + _this.data.zcfl +"')"
+          sql: "insert into shezhi(course,teacher,type,paiment,msort,psort,Company) values('" + _this.data.kclb + "','" + _this.data.zrjs + "','" + _this.data.ztsd + "','" + _this.data.jffs + "','" + _this.data.srfs + "','" + _this.data.zcfl +"','"+user+"')"
         },
         success: res => {
           _this.setData({
@@ -406,12 +410,13 @@ Page({
 
   entering:function(){
     var _this=this
-    _this.setData({
-      cxShow:true,
-      dlm:"",
-      xm:"",
-      dh:'',
-    })
+    // _this.setData({
+    //   cxShow:true,
+    //   dlm:"",
+    //   xm:"",
+    //   dh:'',
+    // })
+    
   },
   sel1:function(){
     var _this = this

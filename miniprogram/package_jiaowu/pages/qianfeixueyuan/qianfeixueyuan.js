@@ -23,7 +23,7 @@ Page({
     {
       text: "欠费金额",
       width: "200rpx",
-      columnName: "Sex",
+      columnName: "Nocost",
       type: "text",
       isupd: true
     },
@@ -172,18 +172,18 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    let user = app.globalData.gongsi;
-    console.log(_this.data.dlm)
-    console.log(_this.data.xm)
-    console.log(_this.data.dh)
+    let user = _this.data.userInfo.Company;
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * student shezhi "
+        sql: "select * from student where Nocost is not null and Nocost>0 and RealName like '%" + _this.data.xsxm + "%' and Company='"+user+"'"
       },
       success: res => {
         console.log(res.result)
         var list = res.result
+        for(var i=0; i<list.length; i++){
+          list[i].rgdate = list[i].rgdate.split("T")[0]
+        }
         _this.setData({
           list: list
         })
@@ -203,14 +203,73 @@ Page({
       }
     })
   },
+  getExcel : function(){ 
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.titil
+    var cloudList = {
+      name : '极简总账',
+      items : [],
+      header : []
+    }
 
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
     this.panduanquanxian()
-    var e = ['', '','1900-01-01','2100-12-31']
+    var e = ['']
     if (_this.data.isdischa == 1) {
       _this.tableShow(e)
     }
@@ -276,7 +335,7 @@ Page({
 
   add1: function () {
     var _this = this
-    let user = app.globalData.gongsi;
+    let user = _this.data.userInfo.Company;
     console.log(_this.data.xsxm)
     console.log(_this.data.xb)
     console.log(_this.data.bmrq)
@@ -295,7 +354,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into student(course,teacher,type,paiment,msort,psort) values('" + _this.data.kclb + "','" + _this.data.zrjs + "','" + _this.data.ztsd + "','" + _this.data.jffs + "','" + _this.data.srfs + "','" + _this.data.zcfl +"')"
+          sql: "insert into student(course,teacher,type,paiment,msort,psort,Company) values('" + _this.data.kclb + "','" + _this.data.zrjs + "','" + _this.data.ztsd + "','" + _this.data.jffs + "','" + _this.data.srfs + "','" + _this.data.zcfl +"','"+user+"')"
         },
         success: res => {
           _this.setData({
@@ -315,7 +374,7 @@ Page({
             zt:"",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -390,7 +449,7 @@ Page({
             zt:"",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['']
           _this.tableShow(e)
 
           wx.showToast({
@@ -441,7 +500,7 @@ Page({
             zt:"",
           })
           _this.qxShow()
-          var e = ['', '','1900-01-01','2100-12-31']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -466,14 +525,11 @@ Page({
     _this.setData({
       cxShow:true,
       xsxm:"",
-      zrjs:"",
-      riqi1:'',
-      riqi2:'',
     })
   },
   sel1:function(){
     var _this = this
-    var e = [_this.data.xsxm,_this.data.zrjs,_this.data.riqi1,_this.date.riqi2]
+    var e = [_this.data.xsxm]
     _this.tableShow(e)
     _this.qxShow()
   },
