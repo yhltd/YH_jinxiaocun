@@ -32,8 +32,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <button class="bt_bottom" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
+  <button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
    <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->
@@ -73,7 +73,7 @@
     <input bindinput="onInput" data-column="xq" class="input_text_form" value="{{xq}}" type="text" name="xq" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" >删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
     disabled="{{isdisgai!=1}}">修改</button>
   </view>

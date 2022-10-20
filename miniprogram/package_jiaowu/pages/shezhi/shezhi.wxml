@@ -32,9 +32,7 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <!-- <button class="bt_bottom" bindtap="entering" disabled="{{isdischa!=1}}">权限管理</button> -->
-   <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
+  <button class="bt_bottom" bindtap="inquire" >添加</button>
 </view>
 <!------------------------->
 <!---------添加弹窗--------->
@@ -75,29 +73,7 @@
     <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
-    disabled="{{isdisgai!=1}}">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
-<!------------------------->
-<!---------查询弹窗--------->
-<!------------------------->
-<!-- <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
-	<view class="lables">课程列表</view>
-    <input bindinput="onInput" data-column="kclb" class="input_text_form" value="{{kclb}}" type="text" name="kclb" ></input>
-    <view class="lables">责任教师</view>
-    <input bindinput="onInput" data-column="zrjs" class="input_text_form"  value="{{zrjs}}" type="text" name="zrjs"></input>
-    <view class="lables">状态设定</view>
-    <input bindinput="onInput" data-column="ztsd" class="input_text_form" value="{{ztsd}}" type="text" name="ztsd" ></input>
-    <view class="lables">缴费方式</view>
-    <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" ></input>
-    <view class="lables">收入方式</view>
-    <input bindinput="onInput" data-column="srfs" class="input_text_form" value="{{srfs}}" type="text" name="srfs" ></input>
-    <view class="lables">支出分类</view>
-    <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" ></input>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
-  </view>
-</van-popup> -->

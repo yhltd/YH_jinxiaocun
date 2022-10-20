@@ -66,76 +66,6 @@ Page({
     })
     console.log(e.detail.value)
   },
-  panduanquanxian: function () {
-    var _this = this
-    _this.setData({
-      isdis: 1,
-      isdischa: 1,
-      isdisgai: 1,
-      isdisshan: 1
-    });
-    //读取缓存    
-    var department_list1 = wx.getStorageSync('department_list')
-    var paibanbiao_renyuan_bumen1 = wx.getStorageSync('paibanbiao_renyuan_bumen')
-    console.log("department_list1")
-    console.log(paibanbiao_renyuan_bumen1)
-    for (let i = 0; i < department_list1.length; i++) {
-      console.log(department_list1[i].department_name + "ffff" + paibanbiao_renyuan_bumen1)
-      if (department_list1[i].department_name == paibanbiao_renyuan_bumen1 && department_list1[i].view_name == "排产核对") {
-        console.log(department_list1[i])
-        //添加没权限
-        if (department_list1[i].add == "否") {
-          _this.setData({
-            isdis: 2
-          });
-          // console.log("否 isdis："+_this.data.isdis)
-        } else {
-          _this.setData({
-            isdis: 1
-          });
-          // console.log("是 isdis："+_this.data.isdis)
-
-        }
-        //修改没权限
-        if (department_list1[i].upd == "否") {
-          _this.setData({
-            isdisgai: 2
-          });
-        } else {
-          _this.setData({
-            isdisgai: 1
-          });
-
-        }
-        //删除没权限
-        if (department_list1[i].del == "否") {
-          _this.setData({
-            isdisshan: 2
-          });
-          console.log("否 isdisshan：" + _this.data.isdisshan)
-        } else {
-          _this.setData({
-            isdisshan: 1
-          });
-
-          console.log("是 isdisshan：" + _this.data.isdisshan)
-        }
-        //查询没权限
-        if (department_list1[i].sel == "否") {
-          _this.setData({
-            isdischa: 2
-          });
-        } else {
-          _this.setData({
-            isdischa: 1
-          });
-
-        }
-        console.log(_this.data.isdis)
-
-      }
-    }
-  },
 
   tableShow: function (e) {
     var _this = this
@@ -182,11 +112,56 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-    this.panduanquanxian()
-    var e = ['', '']
-    if (_this.data.isdischa == 1) {
-      _this.tableShow(e)
-    }
+
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='教师课表'"
+      },
+      success: res => {
+        console.log(res.result)
+        var list = res.result
+        var zeng = 0
+        var shan = 0
+        var gai = 0
+        var cha = 0
+        if(list.length > 0){
+          zeng = list[0].add
+          shan = list[0].del
+          gai = list[0].upd
+          cha = list[0].sel
+        }
+        _this.setData({
+          quanxian_zeng:zeng,
+          quanxian_shan:shan,
+          quanxian_gai:gai,
+          quanxian_cha:cha,
+        })
+        if(cha == '√'){
+          var e = ['', '']
+          _this.tableShow(e)
+        }else{
+          wx.showToast({
+            title: '无查询权限！',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+    
   },
 
   onInput: function (e) {
@@ -228,6 +203,16 @@ Page({
 
   inquire: function () {
     var _this = this
+
+    if(_this.data.quanxian_zeng != '√'){
+      wx.showToast({
+        title: '无新增权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
     _this.setData({
       tjShow: true,
       ddh:"",
@@ -297,6 +282,15 @@ Page({
 
   clickView:function(e){
     var _this = this
+
+    if(_this.data.quanxian_gai != '√'){
+      wx.showToast({
+        title: '无修改权限！',
+        icon: 'none'
+      })
+      return;
+    }
+
     _this.setData({
       js: _this.data.list[e.currentTarget.dataset.index].teacher, 
       kc: _this.data.list[e.currentTarget.dataset.index].course,
@@ -354,6 +348,16 @@ Page({
 
   del1:function(){
     var _this = this
+
+    if(_this.data.quanxian_shan != '√'){
+      wx.showToast({
+        title: '无删除权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
@@ -389,6 +393,16 @@ Page({
 
   entering:function(){
     var _this=this
+
+    if(_this.data.quanxian_cha != '√'){
+      wx.showToast({
+        title: '无查询权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
     _this.setData({
       cxShow:true,
       js:"",

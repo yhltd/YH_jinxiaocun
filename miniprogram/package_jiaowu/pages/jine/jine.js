@@ -10,7 +10,7 @@ Page({
     isdis:'',
     handle:true,
     renyuan_list: [],
-    active: 0,
+    active: 1,
     showList: [
       
       {

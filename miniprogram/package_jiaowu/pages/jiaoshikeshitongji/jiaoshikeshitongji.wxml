@@ -32,9 +32,9 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="kebiao" disabled="{{isdis!=1}}" >添加课表</button>
-  <button class="bt_bottom" style=" width: 20%;" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
-  <button class="bt_bottom" bindtap="getExcel" disabled="{{isdischa!=1}}">导出Excel</button>
+  <button class="bt_bottom" bindtap="kebiao">添加课表</button>
+  <button class="bt_bottom" style=" width: 20%;" bindtap="entering">查询</button>
+  <button class="bt_bottom" bindtap="getExcel">导出Excel</button>
    <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->

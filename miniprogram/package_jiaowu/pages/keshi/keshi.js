@@ -249,11 +249,111 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-    this.panduanquanxian()
-    var e = ['', '','1900-01-01','2100-12-31']
-    if (_this.data.isdischa == 1) {
-      _this.tableShow(e)
-    }
+
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='课时统计'"
+      },
+      success: res => {
+        console.log(res.result)
+        var list = res.result
+        var zeng = 0
+        var shan = 0
+        var gai = 0
+        var cha = 0
+        if(list.length > 0){
+          zeng = list[0].add
+          shan = list[0].del
+          gai = list[0].upd
+          cha = list[0].sel
+        }
+        _this.setData({
+          quanxian_zeng:zeng,
+          quanxian_shan:shan,
+          quanxian_gai:gai,
+          quanxian_cha:cha,
+        })
+        if(cha == '√'){
+          var e = ['', '','1900-01-01','2100-12-31']
+          _this.tableShow(e)
+        }else{
+          wx.showToast({
+            title: '无查询权限！',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select * from shezhi where Company = '" + userInfo.Company + "'"
+      },
+      success: res => {
+        console.log(res.result)
+        var list = res.result
+        var kecheng = []
+        var jiaoshi = []
+        for(var i=0; i<list.length; i++){
+          if(list[i].course != '' && list[i].course != null && list[i].course != undefined){
+            kecheng.push(list[i].course)
+          }
+          if(list[i].teacher != '' && list[i].teacher != null && list[i].teacher != undefined){
+            jiaoshi.push(list[i].teacher)
+          }
+        }
+        _this.setData({
+          kecheng_list: kecheng,
+          jiaoshi_list : jiaoshi,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+  },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var pxks = _this.data.kecheng_list[e.detail.value]
+    console.log(pxks)
+    _this.setData({
+      pxks: pxks,
+    })
+  },
+
+  bindPickerChange2: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var zrjs = _this.data.jiaoshi_list[e.detail.value]
+    console.log(zrjs)
+    _this.setData({
+      zrjs: zrjs,
+    })
   },
 
   onInput: function (e) {
@@ -295,12 +395,22 @@ Page({
 
   inquire: function () {
     var _this = this
+    if(_this.data.quanxian_zeng != '√'){
+      wx.showToast({
+        title: '无新增权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      rq: "",
+      xsxm: "",
+      pxks: "",
+      ks: "",
+      zrjs: "",
+      mjksje: "",
     })
   },
 
@@ -367,6 +477,13 @@ Page({
 
   clickView:function(e){
     var _this = this
+    if(_this.data.quanxian_gai != '√'){
+      wx.showToast({
+        title: '无修改权限！',
+        icon: 'none'
+      })
+      return;
+    }
     _this.setData({
       rq: _this.data.list[e.currentTarget.dataset.index].riqi, 
       xsxm: _this.data.list[e.currentTarget.dataset.index].student_name,
@@ -427,6 +544,14 @@ Page({
 
   del1:function(){
     var _this = this
+    if(_this.data.quanxian_shan != '√'){
+      wx.showToast({
+        title: '无删除权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
@@ -464,6 +589,14 @@ Page({
 
   entering:function(){ 
     var _this=this
+    if(_this.data.quanxian_cha != '√'){
+      wx.showToast({
+        title: '无查询权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
     _this.setData({
       cxShow:true,
       zrjs:"",

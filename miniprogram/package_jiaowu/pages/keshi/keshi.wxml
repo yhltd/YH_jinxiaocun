@@ -32,10 +32,10 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom"style=" width: 20%;" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <button class="bt_bottom"style=" width: 20%;" bindtap="entering" disabled="{{isdischa!=1}}">查询</button>
-  <button class="bt_bottom" bindtap="getExcel" disabled="{{isdischa!=1}}">导出Excel</button>
-  <button class="bt_bottom"style=" width: 20%;" bindtap="kqb" disabled="{{isdischa!=1}}">考勤表</button>
+  <button class="bt_bottom"style=" width: 20%;" bindtap="inquire" >添加</button>
+  <button class="bt_bottom"style=" width: 20%;" bindtap="entering">查询</button>
+  <button class="bt_bottom" bindtap="getExcel">导出Excel</button>
+  <button class="bt_bottom"style=" width: 20%;" bindtap="kqb">考勤表</button>
    <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->
@@ -48,12 +48,16 @@
     </picker>
     <view class="lables">学生姓名</view>
     <input bindinput="onInput" data-column="xsxm" class="input_text_form"  value="{{xsxm}}" type="text" name="xsxm"></input>
-    <view class="lables">培训课时</view>
-    <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" ></input>
+    <view class="lables">培训课程</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kecheng_list}}">
+      <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" disabled="disabled"></input>
+    </picker>
     <view class="lables">课时</view>
     <input bindinput="onInput" data-column="ks" class="input_text_form" value="{{ks}}" type="text" name="ks" ></input>
     <view class="lables">责任教师</view>
-    <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" ></input>
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{jiaoshi_list}}">
+      <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" disabled="disabled"></input>
+    </picker>
     <view class="lables">每节课时金额</view>
     <input bindinput="onInput" data-column="mjksje" class="input_text_form" value="{{mjksje}}" type="text" name="mjksje" ></input>
   <view class="bottom_view" style="height:10%">
@@ -71,30 +75,33 @@
     </picker>
     <view class="lables">学生姓名</view>
     <input bindinput="onInput" data-column="xsxm" class="input_text_form"  value="{{xsxm}}" type="text" name="xsxm"></input>
-    <view class="lables">培训课时</view>
-    <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" ></input>
+    <view class="lables">培训课程</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kecheng_list}}">
+      <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" disabled="disabled"></input>
+    </picker>
     <view class="lables">课时</view>
     <input bindinput="onInput" data-column="ks" class="input_text_form" value="{{ks}}" type="text" name="ks" ></input>
     <view class="lables">责任教师</view>
-    <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" ></input>
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{jiaoshi_list}}">
+      <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" disabled="disabled"></input>
+    </picker>
     <view class="lables">每节课时金额</view>
     <input bindinput="onInput" data-column="mjksje" class="input_text_form" value="{{mjksje}}" type="text" name="mjksje" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
-    disabled="{{isdisgai!=1}}">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
-	<view class="lables1">起始日期</view>
+	<view class="lables">起始日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
     </picker>
-    <view class="lables1">结束日期</view>
+    <view class="lables">结束日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
     </picker>

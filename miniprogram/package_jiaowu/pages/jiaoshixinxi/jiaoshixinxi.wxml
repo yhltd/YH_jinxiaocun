@@ -32,9 +32,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="inquire" disabled="{{isdis!=1}}" >添加</button>
-  <button class="bt_bottom" bindtap="entering" 
-   disabled="{{isdischa!=1}}">查询</button>
+  <button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering">查询</button>
    <!-- <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button> -->
 </view>
 <!------------------------->
@@ -44,7 +43,9 @@
     <view class="lables">教师姓名</view>
     <input bindinput="onInput" data-column="jsxm" class="input_text_form"  value="{{jsxm}}" type="text" name="jsxm"></input>
     <view class="lables">性别</view>
-    <input bindinput="onInput" data-column="xb" class="input_text_form" value="{{xb}}" type="text" name="xb" ></input>
+    <picker bindchange="bindPickerChange4" value="{{index}}" range="{{xingbie_list}}">
+      <input bindinput="onInput" data-column="xb" class="input_text_form" value="{{xb}}" type="text" name="xb" disabled="disabled"></input>
+    </picker>
     <view class="lables">身份证号码</view>
     <input bindinput="onInput" data-column="sfzhm" class="input_text_form" value="{{sfzhm}}" type="text" name="sfzhm" ></input>
     <view class="lables">民族</view>
@@ -81,7 +82,9 @@
   <view class="lables">教师姓名</view>
     <input bindinput="onInput" data-column="jsxm" class="input_text_form"  value="{{jsxm}}" type="text" name="jsxm"></input>
     <view class="lables">性别</view>
-    <input bindinput="onInput" data-column="xb" class="input_text_form" value="{{xb}}" type="text" name="xb" ></input>
+    <picker bindchange="bindPickerChange4" value="{{index}}" range="{{xingbie_list}}">
+      <input bindinput="onInput" data-column="xb" class="input_text_form" value="{{xb}}" type="text" name="xb" disabled="disabled"></input>
+    </picker>
     <view class="lables">身份证号码</view>
     <input bindinput="onInput" data-column="sfzhm" class="input_text_form" value="{{sfzhm}}" type="text" name="sfzhm" ></input>
     <view class="lables">民族</view>
@@ -108,15 +111,14 @@
     <input bindinput="onInput" data-column="dz" class="input_text_form" value="{{dz}}" type="text" name="dz" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
-    disabled="{{isdisgai!=1}}">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
 	  <view class="lables">教师姓名</view>
     <input bindinput="onInput" data-column="jsxm" class="input_text_form" value="{{jsxm}}" type="text" name="jsxm" ></input>
   <view class="bottom_view" style="height:10%">
