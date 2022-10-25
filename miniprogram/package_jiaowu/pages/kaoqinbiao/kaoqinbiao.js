@@ -63,8 +63,8 @@ Page({
     shiba:"",shijiu: "",ershi: "",ershiyi: "",ershier: "",ershisan: "",ershisi:"",ershiwu:"",
     ershiliu: "",ershiqi: "",ershiba:"",ershijiu:"",sanshi:"",sanshiyi:"",
     // 新增代码
-    view_list:['1','2','3','4','5','6','7','8','9','10','11','12'],
-    view_list1:['出勤','旷工','请假'],
+    view_list:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    view_list1:['出勤','缺勤','请假'],
     isdis: '',
     isdischa: '',
     isdisgai: '',
@@ -370,12 +370,12 @@ Page({
     var value = e.currentTarget.dataset.value;
     var input_type = e.currentTarget.dataset.input_type;
     var panduan = 0
-    if(column=="riqi"){
+    if(column=="s_name" || column=="nian"){
+      panduan = 0
+    }else if(column == "yue"){
       panduan = 1
-    }else if(column == "unit"){
+    }else{
       panduan = 2
-    }else if(column == "invoice_type"){
-      panduan = 3
     }
     _this.setData({
       value_input : value,
@@ -389,6 +389,20 @@ Page({
     })
      _this.showView(_this,"input");
    },
+
+   bindPickerChange: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    if(_this.data.xiala_panduan==1){
+      this.setData({
+        empty: _this.data.view_list[e.detail.value]
+      })
+    }else if(_this.data.xiala_panduan==2){
+      this.setData({
+        empty: _this.data.view_list1[e.detail.value]
+      })
+    }
+  },
 
   save: function(e){
     var _this = this;
@@ -472,7 +486,6 @@ Page({
     var animation = wx.createAnimation({
       duration : 300
     })
-
     _this.setData({
       hid_view : false
     })
@@ -549,6 +562,7 @@ Page({
             ershiliu: "",ershiqi: "",ershiba:"",ershijiu:"",sanshi:"",sanshiyi:"",
           })
           _this.qxShow()
+          _this.hid_view()
           var e = ['']
           _this.tableShow(e)
           wx.showToast({

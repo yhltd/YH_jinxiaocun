@@ -44,14 +44,17 @@
     <view class="lables">教师</view>
     <input bindinput="onInput" data-column="js" class="input_text_form"  value="{{js}}" type="text" name="js"></input>
     <view class="lables">课程</view>
-    <input bindinput="onInput" data-column="kc" class="input_text_form" value="{{kc}}" type="text" name="kc" ></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kecheng_list}}">
+      <input bindinput="onInput" data-column="kc" class="input_text_form" value="{{kc}}" type="text" name="kc" disabled="disabled"></input>
+    </picker>
     <view class="lables">日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rq" class="input_text_form"  value="{{rq}}" type="date" name="rq" disabled="disabled"></input>
     </picker>
     <view class="lables">星期</view>
-    <input bindinput="onInput" data-column="xq" class="input_text_form" value="{{xq}}" type="text" name="xq" ></input>
-    
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{week_list}}">
+      <input bindinput="onInput" data-column="xq" class="input_text_form" value="{{xq}}" type="text" name="xq" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -64,18 +67,21 @@
   <view class="lables">教师</view>
     <input bindinput="onInput" data-column="js" class="input_text_form"  value="{{js}}" type="text" name="js"></input>
     <view class="lables">课程</view>
-    <input bindinput="onInput" data-column="kc" class="input_text_form" value="{{kc}}" type="text" name="kc" ></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kecheng_list}}">
+      <input bindinput="onInput" data-column="kc" class="input_text_form" value="{{kc}}" type="text" name="kc" disabled="disabled"></input>
+    </picker>
     <view class="lables">日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rq" class="input_text_form"  value="{{rq}}" type="date" name="rq" disabled="disabled"></input>
     </picker>
     <view class="lables">星期</view>
-    <input bindinput="onInput" data-column="xq" class="input_text_form" value="{{xq}}" type="text" name="xq" ></input>
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{week_list}}">
+      <input bindinput="onInput" data-column="xq" class="input_text_form" value="{{xq}}" type="text" name="xq" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" >删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
-    disabled="{{isdisgai!=1}}">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
 <!------------------------->

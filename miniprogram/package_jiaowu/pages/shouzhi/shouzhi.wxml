@@ -48,13 +48,17 @@
     <view class="lables">收入金额</view>
     <input bindinput="onInput" data-column="srje" class="input_text_form"  value="{{srje}}" type="text" name="srje"></input>
     <view class="lables">收入分类</view>
-    <input bindinput="onInput" data-column="srfl" class="input_text_form" value="{{srfl}}" type="text" name="srfl" ></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{fenlei_list}}">
+      <input bindinput="onInput" data-column="srfl" class="input_text_form" value="{{srfl}}" type="text" name="srfl" disabled="disabled"></input>
+    </picker>
     <view class="lables">收入备注</view>
     <input bindinput="onInput" data-column="srbz" class="input_text_form" value="{{srbz}}" type="text" name="srbz" ></input>
     <view class="lables">支出金额</view>
     <input bindinput="onInput" data-column="zcje" class="input_text_form" value="{{zcje}}" type="text" name="zcje" ></input>
     <view class="lables">支出分类</view>
-    <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" ></input>
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{fenlei_list}}">
+      <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" disabled="disabled"></input>
+    </picker>
     <view class="lables">支出备注</view>
     <input bindinput="onInput" data-column="zcbz" class="input_text_form" value="{{zcbz}}" type="text" name="zcbz" ></input>
     <view class="lables">经手人</view>
@@ -69,19 +73,23 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 82%;" >
   <view class="lables">日期</view>
-  <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" bindchange="choiceDate">
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rq" class="input_text_form"  value="{{rq}}" type="date" name="rq" disabled="disabled"></input>
     </picker>
     <view class="lables">收入金额</view>
     <input bindinput="onInput" data-column="srje" class="input_text_form"  value="{{srje}}" type="text" name="srje"></input>
     <view class="lables">收入分类</view>
-    <input bindinput="onInput" data-column="srfl" class="input_text_form" value="{{srfl}}" type="text" name="srfl" ></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{fenlei_list}}">
+      <input bindinput="onInput" data-column="srfl" class="input_text_form" value="{{srfl}}" type="text" name="srfl" disabled="disabled"></input>
+    </picker>
     <view class="lables">收入备注</view>
     <input bindinput="onInput" data-column="srbz" class="input_text_form" value="{{srbz}}" type="text" name="srbz" ></input>
     <view class="lables">支出金额</view>
     <input bindinput="onInput" data-column="zcje" class="input_text_form" value="{{zcje}}" type="text" name="zcje" ></input>
     <view class="lables">支出分类</view>
-    <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" ></input>
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{fenlei_list}}">
+      <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" disabled="disabled"></input>
+    </picker>
     <view class="lables">支出备注</view>
     <input bindinput="onInput" data-column="zcbz" class="input_text_form" value="{{zcbz}}" type="text" name="zcbz" ></input>
     <view class="lables">经手人</view>
@@ -89,19 +97,18 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" >删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
-    disabled="{{isdisgai!=1}}">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
-	<view class="lables1">起始日期</view>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+	<view class="lables">起始日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
     </picker>
-    <view class="lables1">结束日期</view>
+    <view class="lables">结束日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
     </picker>

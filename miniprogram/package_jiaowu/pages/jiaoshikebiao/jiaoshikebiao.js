@@ -47,7 +47,7 @@ Page({
     kc: "",
     rq: "",
     xq: "",
-    
+    week_list:['星期一','星期二','星期三','星期四','星期五','星期六','星期天'],
     // 新增代码
     isdis: '',
     isdischa: '',
@@ -161,6 +161,37 @@ Page({
       }
     })
 
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select * from shezhi where Company = '" + userInfo.Company + "'"
+      },
+      success: res => {
+        console.log(res.result)
+        var list = res.result
+        var kecheng = []
+        for(var i=0; i<list.length; i++){
+          if(list[i].course != '' && list[i].course != null && list[i].course != undefined){
+            kecheng.push(list[i].course)
+          }
+        }
+        _this.setData({
+          kecheng_list: kecheng,
+        })
+
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
     
   },
 
@@ -194,6 +225,26 @@ Page({
     })
   },
 
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var pxkc = _this.data.kecheng_list[e.detail.value]
+    console.log(pxkc)
+    _this.setData({
+      kc: pxkc,
+    })
+  },
+
+  bindPickerChange2: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var week = _this.data.week[e.detail.value]
+    console.log(pxkc)
+    _this.setData({
+      xq: week,
+    })
+  },
+
   selRIQI1: function () {
     var _this = this
     _this.setData({
@@ -215,10 +266,10 @@ Page({
 
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      js: "",
+      kc: "",
+      rq: "",
+      xq: "",
     })
   },
 
@@ -228,7 +279,11 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      js: "",
+      kc: "",
+      rq: "",
+      xq: "",
     })
   },
 
@@ -407,7 +462,6 @@ Page({
       cxShow:true,
       js:"",
       kc:'',
-      
     })
   },
 

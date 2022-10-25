@@ -113,14 +113,30 @@ Page({
       success: res => {
         console.log(res.result)
         var list = res.result
+        var shouru_sum = 0
+        var zhichu_sum = 0
+        var xuefei_sum = 0
+        var jieyu = 0
         for(var i=0; i<list.length; i++){
           list[i].rgdate = list[i].rgdate.split("T")[0]
+          if(list[i].money != '' && list[i].money != null){
+            shouru_sum = shouru_sum + list[i].money * 1
+          }
+          if(list[i].paid != '' && list[i].paid != null){
+            zhichu_sum = zhichu_sum + list[i].paid * 1
+          }
+          if(list[i].msort == '学费'){
+            xuefei_sum = xuefei_sum + list[i].money * 1
+          }
         }
+        jieyu = shouru_sum - zhichu_sum
+        var huizong_list = [shouru_sum,zhichu_sum,xuefei_sum,jieyu]
+        console.log(huizong_list)
         _this.setData({
-          list: list
+          list: list,
+          huizong_list:huizong_list
         })
         console.log(list)
-
       },
       err: res => {
         console.log("错误!")
@@ -142,9 +158,9 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.titil
+    var title = _this.data.title
     var cloudList = {
-      name : '极简总账',
+      name : '收支统计',
       items : [],
       header : []
     }
@@ -253,14 +269,21 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select sum(money) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
+        sql: "select * from shezhi where Company = '" + userInfo.Company + "'"
       },
       success: res => {
-        var list = res.result
-        _this.setData({
-          ljsr:list
-        })
         console.log(res.result)
+        var list = res.result
+        var fenlei = []
+        for(var i=0; i<list.length; i++){
+          if(list[i].msort != '' && list[i].msort != null && list[i].msort != undefined){
+            fenlei.push(list[i].msort)
+          }
+        }
+        _this.setData({
+          fenlei_list: fenlei,
+        })
+
       },
       err: res => {
         console.log("错误!")
@@ -274,78 +297,7 @@ Page({
         console.log("请求失败！")
       }
     })
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select sum(paid) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
-      },
-      success: res => {
-        var list = res.result
-        _this.setData({
-          ljzc:list
-        })
-        console.log(res.result)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select sum(money) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'and msort='学费'"
-      },
-      success: res => {
-        var list = res.result
-        _this.setData({
-          xfsr:list
-        })
-        console.log(res.result)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select sum(money)-sum(paid) from income where rgdate >='" + e[0] + "' and rgdate <='" + e[1] + "' and Company='" + user + "'"
-      },
-      success: res => {
-        var list = res.result
-        _this.setData({
-          ljjy:list
-        })
-        console.log(res.result)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+
   },
 
   onInput: function (e) {
@@ -356,6 +308,27 @@ Page({
       [column]: e.detail.value
     })
   },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var fenlei = _this.data.fenlei_list[e.detail.value]
+    console.log(fenlei)
+    _this.setData({
+      srfl: fenlei,
+    })
+  },
+
+  bindPickerChange2: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var fenlei = _this.data.fenlei_list[e.detail.value]
+    console.log(fenlei)
+    _this.setData({
+      zcfl: fenlei,
+    })
+  },
+
 
   onInput2: function () {
     var _this = this
@@ -396,13 +369,16 @@ Page({
       })
       return;
     }
-
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      rq: "",
+      srje: "",
+      srfl: "",
+      srbz: "",
+      zcje: "",
+      zcfl: "",
+      zcbz: "",
+      jsr: "",
     })
   },
 
@@ -412,7 +388,15 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      rq: "",
+      srje: "",
+      srfl: "",
+      srbz: "",
+      zcje: "",
+      zcfl: "",
+      zcbz: "",
+      jsr: "",
     })
   },
 
@@ -631,7 +615,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: "../tubiao/tubiao?userInfo="+JSON.stringify(_this.data.userInfo)
+      url: "../tubiao/tubiao?userInfo="+JSON.stringify(_this.data.userInfo) + "&huizong_list=" + JSON.stringify(_this.data.huizong_list)
     })
   },
 

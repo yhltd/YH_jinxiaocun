@@ -262,10 +262,12 @@ Page({
 
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      xm: "",
+      ymmc: "",
+      zeng: "",
+      shan: "",
+      gai: "",
+      cha:"",
     })
   },
 
@@ -275,7 +277,13 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      xm: "",
+      ymmc: "",
+      zeng: "",
+      shan: "",
+      gai: "",
+      cha:"",
     })
   },
 
@@ -358,11 +366,10 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     var t_id = _this.data.name_list[e.detail.value].ID
     var name = _this.data.name_list[e.detail.value].RealName
-    console.log(t_id + "  " + name+" "+zeng)
+    console.log(t_id + "  " + name)
     _this.setData({
       t_id: t_id,
       xm:name,
-      zeng:zeng
     })
   },
 

@@ -84,8 +84,7 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1"
-    disabled="{{isdisgai!=1}}">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
 <!------------------------->

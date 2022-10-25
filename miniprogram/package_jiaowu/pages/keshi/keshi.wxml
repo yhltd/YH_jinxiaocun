@@ -96,7 +96,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
 	<view class="lables">起始日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
@@ -107,7 +107,7 @@
     </picker>
     <view class="lables">责任教师</view>
     <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" ></input>
-    <view class="lables">培训课时</view>
+    <view class="lables">培训课程</view>
     <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

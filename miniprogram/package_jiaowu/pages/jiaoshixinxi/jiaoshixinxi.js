@@ -303,7 +303,19 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      jsxm: "",
+      xb: "",
+      sfzhm: "",
+      mz: "",
+      sr: "",
+      zw: "",
+      xl: "",
+      lxdh: "",
+      rzrq: "",
+      zzzt: "",
+      sbqk: "",
+      dz: "",
     })
   },
 

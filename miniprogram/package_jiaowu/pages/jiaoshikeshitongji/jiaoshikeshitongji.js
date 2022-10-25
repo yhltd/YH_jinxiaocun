@@ -112,9 +112,9 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.titil
+    var title = _this.data.title
     var cloudList = {
-      name : '极简总账',
+      name : '教师课时统计',
       items : [],
       header : []
     }
@@ -271,7 +271,13 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      rq: "",
+      xsxm: "",
+      pxks: "",
+      ks: "",
+      zrjs: "",
+      mjksje: "",
     })
   },
 

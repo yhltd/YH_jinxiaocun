@@ -129,9 +129,9 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.titil
+    var title = _this.data.title
     var cloudList = {
-      name : '极简总账',
+      name : '缴费记录',
       items : [],
       header : []
     }
@@ -349,10 +349,13 @@ Page({
 
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      rq: "",
+      xsxm: "",
+      djje: "",
+      xfje: "",
+      jffs: "",
+      sfr:"",
+      bz:"",
     })
   },
 
@@ -362,7 +365,14 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      rq: "",
+      xsxm: "",
+      djje: "",
+      xfje: "",
+      jffs: "",
+      sfr:"",
+      bz:"",
     })
   },
 

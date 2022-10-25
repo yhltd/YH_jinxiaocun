@@ -140,9 +140,9 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.titil
+    var title = _this.data.title
     var cloudList = {
-      name : '极简总账',
+      name : '欠费学员',
       items : [],
       header : []
     }
@@ -292,10 +292,20 @@ Page({
     var _this = this
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      xsxm: "",
+      xb: "",
+      bmrq: "",
+      pxkc: "",
+      zrjs: "",
+      bj:"",
+      dh:"",
+      xf:"",
+      yjf:"",
+      wjf:"",
+      ysks:"",
+      syks:"",
+      zks:"",
+      zt:"",
     })
   },
 
@@ -305,7 +315,21 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      xsxm: "",
+      xb: "",
+      bmrq: "",
+      pxkc: "",
+      zrjs: "",
+      bj:"",
+      dh:"",
+      xf:"",
+      yjf:"",
+      wjf:"",
+      ysks:"",
+      syks:"",
+      zks:"",
+      zt:"",
     })
   },
 

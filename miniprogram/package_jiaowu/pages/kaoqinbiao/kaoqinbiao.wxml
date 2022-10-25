@@ -65,8 +65,7 @@
   <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
     <form bindsubmit="save">
       <view>
-        <view class="input_message" wx:if="{{message_input!=''}}">提示：{{message_input}}</view>
-        <picker display="{{xiala_panduan==0?false:true}}" mode="{{xiala_panduan==1?'date':''}}" bindchange="bindPickerChange" value="{{xiala_panduan==1?date:index}}" range="{{xiala_panduan==2?kehu_list:xiala_panduan==3?zhonglei_list:''}}">
+        <picker display="{{xiala_panduan==0?false:true}}" bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?view_list:xiala_panduan==2?view_list1:''}}">
           <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
         </picker>
       </view>
@@ -94,3 +93,6 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>

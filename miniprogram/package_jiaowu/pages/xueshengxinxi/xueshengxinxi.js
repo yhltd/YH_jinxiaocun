@@ -124,6 +124,9 @@ Page({
     xf:"",
     zks:"",
     zt:"",
+    ckpx:"",
+    riqi1:'',
+    riqi2:'',
     
     // 新增代码
     quanxian_zeng:0,
@@ -150,7 +153,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid else 0 end) from payment ) mall ,Fee -Cost as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,Allhour - Hour as Nohour,Allhour,Type FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
+        sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid else 0 end) from payment ) mall ,Fee -Cost as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull(Hour,0) as Nohour,Allhour,Type FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
       },
       success: res => {
         console.log(res.result)
@@ -184,9 +187,9 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.titil
+    var title = _this.data.title
     var cloudList = {
-      name : '极简总账',
+      name : '学生信息',
       items : [],
       header : []
     }
@@ -447,7 +450,21 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      xsxm: "",
+      xb: "",
+      bmrq: "",
+      pxkc: "",
+      zrjs: "",
+      bj:"",
+      dh:"",    
+      xf:"",
+      yjf:"",
+      wjf:"",
+      ysks:"",
+      syks:"",
+      zks:"",
+      zt:"",
     })
   },
 
@@ -677,7 +694,15 @@ Page({
   },
   sel1:function(){
     var _this = this
-    var e = [_this.data.xsxm,_this.data.zrjs,_this.data.ckpx,_this.data.riqi1,_this.date.riqi2]
+    var riqi1 = _this.data.riqi1
+    var riqi2 = _this.data.riqi2
+    if(riqi1 == ''){
+      riqi1 = "1900-01-01"
+    }
+    if(riqi2 == ''){
+      riqi2 = "2100-12-31"
+    }
+    var e = [_this.data.xsxm,_this.data.zrjs,_this.data.ckpx,riqi1,riqi2]
     _this.tableShow(e)
     _this.qxShow()
   },

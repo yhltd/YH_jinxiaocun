@@ -228,10 +228,12 @@ Page({
 
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      kclb: "",
+      zrjs: "",
+      ztsd: "",
+      jffs: "",
+      srfs: "",
+      zcfl:"",
     })
   },
 
@@ -241,7 +243,13 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      kclb: "",
+      zrjs: "",
+      ztsd: "",
+      jffs: "",
+      srfs: "",
+      zcfl:"",
     })
   },
 

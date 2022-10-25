@@ -208,10 +208,12 @@ Page({
     var _this = this
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      rq: "",
+      xsxm: "",
+      pxks: "",
+      ks: "",
+      zrjs: "",
+      mjksje: "",
     })
   },
 
@@ -221,7 +223,13 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      rq: "",
+      xsxm: "",
+      pxks: "",
+      ks: "",
+      zrjs: "",
+      mjksje: "",
     })
   },
 

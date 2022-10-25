@@ -84,6 +84,7 @@ Page({
       isupd: true
     },
     ],
+    zhuangtai_list:['正常','禁用'],
     dlm: "",
     mm: "",
     xm: "",
@@ -154,9 +155,9 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.titil
+    var title = _this.data.title
     var cloudList = {
-      name : '极简总账',
+      name : '账号管理',
       items : [],
       header : []
     }
@@ -264,6 +265,16 @@ Page({
 
   },
 
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var zhuangtai = _this.data.zhuangtai_list[e.detail.value]
+    console.log(zhuangtai)
+    _this.setData({
+      zt: zhuangtai,
+    })
+  },
+
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
@@ -315,10 +326,16 @@ Page({
 
     _this.setData({
       tjShow: true,
-      ddh:"",
-      mk:"",
-      rq:"",
-      sl:""
+      dlm: "",
+      mm: "",
+      xm: "",
+      yhlb: "",
+      nl: "",
+      dh:"",
+      jtzz:"",
+      sfzh:"",
+      xl:"",
+      zt:"",
     })
   },
 
@@ -328,7 +345,17 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      currentDate: new Date().getTime(),
+      dlm: "",
+      mm: "",
+      xm: "",
+      yhlb: "",
+      nl: "",
+      dh:"",
+      jtzz:"",
+      sfzh:"",
+      xl:"",
+      zt:"",
     })
   },
 
