@@ -153,7 +153,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid else 0 end) from payment ) mall ,Fee -Cost as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull(Hour,0) as Nohour,Allhour,Type FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
+        sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid else 0 end) from payment ) mall ,ifnull(ifnull(Fee,0) -ifnull(Cost,0),0) as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull(Hour,0) as Nohour,Allhour,Type FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
       },
       success: res => {
         console.log(res.result)

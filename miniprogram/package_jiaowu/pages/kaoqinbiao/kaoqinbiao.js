@@ -370,6 +370,7 @@ Page({
     var value = e.currentTarget.dataset.value;
     var input_type = e.currentTarget.dataset.input_type;
     var panduan = 0
+    console.log(column)
     if(column=="s_name" || column=="nian"){
       panduan = 0
     }else if(column == "yue"){

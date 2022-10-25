@@ -49,7 +49,7 @@
     <!-- <input bindinput="onInput" data-column="nian" class="input_text_form" value="{{nian}}" type="text" name="nian" ></input> -->
     <view class="lables">月</view>
     <picker bindchange="bindPickerChange2" value="{{index}}" range="{{view_list}}">
-      <input bindinput="onInput" data-column="yue" class="input_text_form" value="{{yue}}" type="text" name="yue" ></input>
+      <input bindinput="onInput" data-column="yue" class="input_text_form" value="{{yue}}" type="text" name="yue" disabled="disabled"></input>
     </picker>
     
   <view class="bottom_view" style="height:10%">
@@ -65,15 +65,14 @@
   <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
     <form bindsubmit="save">
       <view>
-        <picker display="{{xiala_panduan==0?false:true}}" bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?view_list:xiala_panduan==2?view_list1:''}}">
-          <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?view_list:xiala_panduan==2?view_list1:''}}" disabled="{{xiala_panduan==0}}">
+          <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new" disabled="{{xiala_panduan==0?false:true}}"></input>
         </picker>
       </view>
       <view class="bottom_view">  
         <button class="bt_bottom" style="width: 20%;" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
         <button class="bt_bottom" style="width: 20%;" form-type="submit" hover-class="bt_form_hover">确定</button>
         <button class="bt_bottom" style="width: 20%;" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-        <!-- <button class="bt_bottom" style="width: 20%;" hover-class="bt_bottom_hover" bindtap="upd1" disabled="{{isdisgai!=1}}">修改</button> -->
       </view>
     </form>
   </view>

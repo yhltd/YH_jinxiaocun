@@ -129,6 +129,11 @@ Page({
       success: res => {
         console.log(res.result)
         var list = res.result
+        for(var i=0; i<list.length; i++){
+          if(list[i].UseType == null){
+            list[i].UseType = ""
+          }
+        }
         _this.setData({
           list: list
         })

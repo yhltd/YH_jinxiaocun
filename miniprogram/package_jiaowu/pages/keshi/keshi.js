@@ -631,7 +631,7 @@ Page({
         riqi2:'2100-12-31'
       })
     }
-    var e = [_this.data.zrjs,_this.data.ks,_this.data.riqi1,_this.data.riqi2]
+    var e = [_this.data.zrjs,_this.data.pxks,_this.data.riqi1,_this.data.riqi2]
     _this.tableShow(e)
     _this.qxShow()
   },

@@ -460,7 +460,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "update payment set ksdate='" + _this.data.rq + "',realname='" + _this.data.xsxm + "',paid='" + _this.data.djje + "',money='" + _this.data.xfje + " ',paiment='" + _this.data.jffs + " ',keeper='" + _this.data.sfr + "  ',remark='" + _this.data.bz + " ' where id='" + _this.data.id + "'"
+          sql: "update payment set ksdate='" + _this.data.rq + "',realname='" + _this.data.xsxm + "',paid='" + _this.data.djje + "',money='" + _this.data.xfje + "',paiment='" + _this.data.jffs + "',keeper='" + _this.data.sfr + "',remark='" + _this.data.bz + "' where id='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({
