@@ -214,7 +214,7 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = "select * from customerInfo where (customer like '%" + e[0] + "%' or pinyin like '%" + e[0] + "%') and leibie like '%" + e[1] + "%' and area like '%" + e[2] + "%'"
-    if (_this.data.userInfo.power != '管理员'){
+    if (_this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '审核员'){
       sql = sql + " and salesman ='" + _this.data.userInfo.name + "'"
     }
     console.log(sql)
@@ -257,7 +257,7 @@ Page({
 
   clickView:function(e){
     var _this = this
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -286,7 +286,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -451,7 +451,7 @@ Page({
 
   del1:function(){
     var _this = this
-    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -529,7 +529,7 @@ Page({
 
   goto_file: function () {
     var _this = this
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',

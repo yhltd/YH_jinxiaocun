@@ -87,6 +87,8 @@
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
     </picker>
+    <view class="lables">有效性</view>
+    <input bindinput="onInput" data-column="validity" class="input_text_form" value="{{validity}}" type="text" name="validity" disabled="disabled"></input>
     <view class="lables">仓库</view>
     <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="warehouse" range="{{warehouse_list}}">
       <input bindinput="onInput" data-column="warehouse" class="input_text_form"  value="{{warehouse}}" type="text" name="warehouse" disabled="disabled"></input>
@@ -146,8 +148,8 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow2" show="{{ xgShow2 }}" position="bottom" custom-style="height: 25%;" >
     <view class="lables">{{update_name[this_column]}}</view>
-    <picker class="pick" mode="date" value="{{date}}" data-column_name="this_value" bindchange="choiceDate" disabled="{{this_column == 'product_date'?false:true}}">
-      <input bindinput="onInput" data-column="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" disabled="{{this_column == 'product_date'?true:false}}">></input>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="this_value" bindchange="choiceDate" disabled="{{this_column == 'product_date'||this_column == 'validity'?false:true}}">
+      <input bindinput="onInput" data-column="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" disabled="{{this_column == 'product_date'||this_column == 'validity'?true:false}}">></input>
     </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>

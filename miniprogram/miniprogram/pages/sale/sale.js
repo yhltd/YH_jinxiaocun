@@ -350,6 +350,13 @@ Page({
         isupd: true
       },
       {
+        text: "折扣率",
+        width: "200rpx",
+        columnName: "discount",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "小计",
         width: "200rpx",
         columnName: "xiaoji",
@@ -371,6 +378,7 @@ Page({
     sale_type:"发货类型",
     price:'销售单价',
     num:"数量",
+    discount:"折扣率",
     xiaoji:"小计",
     remarks:"备注",
     warehouse:'发出仓库',
@@ -671,7 +679,7 @@ Page({
 
   selSH: function () {
     var _this = this  
-    if(_this.data.userInfo.power != '管理员'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '此账号无权限审核数据！',
         icon: 'none',
@@ -689,7 +697,7 @@ Page({
     var sql = ""
     if(_this.data.tiaojian != undefined){
       sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + _this.data.tiaojian[2] + "') and convert(date,sa.riqi)<=convert(date,'" + _this.data.tiaojian[2] + "') and (customer ='" + _this.data.tiaojian[1] + "') and sale_state = '审核中' and salesman = '" + _this.data.tiaojian[3] + "' order by sa.riqi desc,customer,sale_type"
-    }else if(_this.data.userInfo.power == '管理员'){
+    }else if(_this.data.userInfo.power == '管理员'&& _this.data.userInfo.power != '审核员'){
       sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' order by sa.riqi desc,customer,sale_type"
     }else{
       sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' and salesman = '" + _this.data.userInfo.name + "' order by sa.riqi desc,customer,sale_type"
@@ -751,6 +759,7 @@ Page({
       spec: '',
       unit: '',
       price: '',
+      discount:'1',
       xiaoji:'',
       pihao: '',
       num: '',
@@ -765,7 +774,7 @@ Page({
   clickView:function(e){
     var _this = this
     if(e.currentTarget.dataset.column != 'sale_state'){
-      if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'){
+      if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
         wx.showToast({
           title: '无权限！',
           icon: 'none',
@@ -773,7 +782,7 @@ Page({
         })
         return;
       }
-      if(_this.data.list[e.currentTarget.dataset.index].sale_state == '审核通过' && _this.data.userInfo.state_upd != '是' && _this.data.userInfo.power != '管理员'){
+      if(_this.data.list[e.currentTarget.dataset.index].sale_state == '审核通过' && _this.data.userInfo.state_upd != '是' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
         wx.showToast({
           title: '此账号无权限修改审核通过的数据！',
           icon: 'none',
@@ -797,6 +806,7 @@ Page({
         spec: _this.data.list[e.currentTarget.dataset.index].spec,
         unit: _this.data.list[e.currentTarget.dataset.index].unit,
         price: _this.data.list[e.currentTarget.dataset.index].price,
+        discount: _this.data.list[e.currentTarget.dataset.index].discount,
         xiaoji: _this.data.list[e.currentTarget.dataset.index].xiaoji,
         pihao: _this.data.list[e.currentTarget.dataset.index].pihao,
         num: _this.data.list[e.currentTarget.dataset.index].num,
@@ -807,7 +817,7 @@ Page({
         xgShow:true,
       })
     }else{
-      if(_this.data.userInfo.power != '管理员'){
+      if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
         wx.showToast({
           title: '非管理员账号无审核权限！',
           icon: 'none',
@@ -951,7 +961,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -975,6 +985,7 @@ Page({
       spec: '',
       unit: '',
       price: '',
+      discount:'',
       xiaoji:'',
       pihao: '',
       num: '',
@@ -1075,6 +1086,7 @@ Page({
             spec: '',
             unit: '',
             price: '',
+            discount:'',
             xiaoji:'',
             pihao: '',
             num: '',
@@ -1157,6 +1169,7 @@ Page({
           spec: '',
           unit: '',
           price: '',
+          discount:'',
           xiaoji:'',
           pihao: '',
           num: '',
@@ -1190,7 +1203,7 @@ Page({
 
   del1:function(){
     var _this = this
-    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -1219,6 +1232,7 @@ Page({
             spec: '',
             unit: '',
             price: '',
+            discount:'',
             xiaoji:'',
             pihao: '',
             num: '',
@@ -1299,6 +1313,7 @@ Page({
           attribute: e.detail.attribute,
           price:e.detail.price,
           num:'',
+          discount:'1'*0.01,
           xiaoji:'',
           remarks:'',
         })
@@ -1386,7 +1401,7 @@ Page({
     var _this = this
     var add_list = _this.data.add_list
     add_list[_this.data.id][_this.data.this_column] = _this.data.this_value
-    add_list[_this.data.id].xiaoji = add_list[_this.data.id].price * add_list[_this.data.id].num
+    add_list[_this.data.id].xiaoji = add_list[_this.data.id].price * add_list[_this.data.id].num * add_list[_this.data.id].discount
     _this.setData({
       add_list:add_list
     })
@@ -1485,6 +1500,7 @@ Page({
             spec: '',
             unit: '',
             price: '',
+            discount: '',
             xiaoji:'',
             pihao: '',
             num: '',

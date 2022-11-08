@@ -17,6 +17,7 @@ Page({
     list: [],
     update_name:{
       product_date:"产品生产日期",
+      validity:"有效期",
       pihao:"批号",
       num:"数量",
       remarks:"备注",
@@ -26,6 +27,13 @@ Page({
         text: "日期",
         width: "200rpx",
         columnName: "riqi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "有效期",
+        width: "200rpx",
+        columnName: "validity",
         type: "text",
         isupd: true
       },
@@ -124,6 +132,27 @@ Page({
         isupd: true
       },
       {
+        text: "有效期",
+        width: "230rpx",
+        columnName: "validity",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "数量",
+        width: "200rpx",
+        columnName: "num",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "批号",
+        width: "300rpx",
+        columnName: "pihao",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "产品名称",
         width: "450rpx",
         columnName: "product_name",
@@ -145,23 +174,9 @@ Page({
         isupd: true
       },
       {
-        text: "批号",
-        width: "300rpx",
-        columnName: "pihao",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "单位",
         width: "200rpx",
         columnName: "unit",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "数量",
-        width: "200rpx",
-        columnName: "num",
         type: "text",
         isupd: true
       },
@@ -292,12 +307,12 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select rk.id,rk.riqi,rk.warehouse,rk.staff,rk.product_id,rk.pihao,rk.num,rk.remarks,rk.state,pd.product_name,pd.spec,pd.unit,pd.attribute,rk.product_date,pd.pinhao from ruku as rk left join product as pd on rk.product_id = pd.id where CONVERT(date,rk.riqi) >= CONVERT(date,'" + e[0] + "') and CONVERT(date,rk.riqi) <= CONVERT(date,'" + e[1] + "') and pd.product_name like '%" + e[2] + "%' and rk.state like '%" + e[3] + "%' and rk.pihao like '%" + e[4] + "%'"
-    if (_this.data.userInfo.power != '管理员'){
+    var sql = "select rk.id,rk.riqi,rk.warehouse,rk.staff,rk.product_id,rk.pihao,rk.num,rk.remarks,rk.state,rk.validity,pd.product_name,pd.spec,pd.unit,pd.attribute,rk.product_date,pd.pinhao from ruku as rk left join product as pd on rk.product_id = pd.id where CONVERT(date,rk.riqi) >= CONVERT(date,'" + e[0] + "') and CONVERT(date,rk.riqi) <= CONVERT(date,'" + e[1] + "') and pd.product_name like '%" + e[2] + "%' and rk.state like '%" + e[3] + "%' and rk.pihao like '%" + e[4] + "%'"
+    if (_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       sql = sql + " and rk.staff ='" + _this.data.userInfo.name + "'"
     }
     if(_this.data.tiaojian != undefined){
-      sql = "select rk.id,rk.riqi,rk.warehouse,rk.staff,rk.product_id,rk.pihao,rk.num,rk.remarks,rk.state,pd.product_name,pd.spec,pd.unit,pd.attribute,rk.product_date,pd.pinhao from ruku as rk left join product as pd on rk.product_id = pd.id where CONVERT(date,rk.riqi) >= CONVERT(date,'" + _this.data.tiaojian[2] + "') and CONVERT(date,rk.riqi) <= CONVERT(date,'" + _this.data.tiaojian[2] + "') and rk.state = '审核中' and rk.staff ='" + _this.data.tiaojian[3] + "'"
+      sql = "select rk.id,rk.riqi,rk.warehouse,rk.staff,rk.product_id,rk.pihao,rk.num,rk.remarks,rk.state,rk.validity,pd.product_name,pd.spec,pd.unit,pd.attribute,rk.product_date,pd.pinhao from ruku as rk left join product as pd on rk.product_id = pd.id where CONVERT(date,rk.riqi) >= CONVERT(date,'" + _this.data.tiaojian[2] + "') and CONVERT(date,rk.riqi) <= CONVERT(date,'" + _this.data.tiaojian[2] + "') and rk.state = '审核中' and rk.staff ='" + _this.data.tiaojian[3] + "'"
     }
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
@@ -356,7 +371,7 @@ Page({
 
   clickView:function(e){
     var _this = this
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -364,7 +379,7 @@ Page({
       })
       return;
     }
-    if(_this.data.userInfo.power != '管理员' && _this.data.userInfo.state_upd != '是' && _this.data.list[e.currentTarget.dataset.index].state == '审核通过'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员' && _this.data.userInfo.state_upd != '是' && _this.data.list[e.currentTarget.dataset.index].state == '审核通过'){
       wx.showToast({
         title: '此账号无权限修改审核通过的数据！',
         icon: 'none',
@@ -375,6 +390,7 @@ Page({
     _this.setData({
       id: _this.data.list[e.currentTarget.dataset.index].id,
       riqi: _this.data.list[e.currentTarget.dataset.index].riqi, 
+      validity: _this.data.list[e.currentTarget.dataset.index].validity,
       warehouse: _this.data.list[e.currentTarget.dataset.index].warehouse,
       staff: _this.data.list[e.currentTarget.dataset.index].staff,
       product_id: _this.data.list[e.currentTarget.dataset.index].product_id,
@@ -430,7 +446,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -443,6 +459,7 @@ Page({
       tjShow: true,
       id:'',
       riqi: getNowDate(), 
+      validity:'',
       warehouse: '',
       staff:'',
       product_id:'',
@@ -505,13 +522,13 @@ Page({
     //   })
     //   return;
     // }
-      var sql1 = "insert into ruku(riqi,warehouse,staff,product_id,pihao,num,remarks,product_date,state) values "
+      var sql1 = "insert into ruku(riqi,validity,warehouse,staff,product_id,pihao,num,remarks,product_date,state) values "
       var sql2 = ""
       for(var i=0; i< _this.data.add_list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.riqi + "','" + _this.data.warehouse + "','" + _this.data.userInfo.name + "','" + _this.data.add_list[i].product_id + "','" + _this.data.add_list[i].pihao + "','" + _this.data.add_list[i].num + "','" + _this.data.add_list[i].remarks + "','" + _this.data.add_list[i].product_date + "','审核中')"
+          sql2 = "('" + _this.data.riqi + "','"+ _this.data.add_list[i].validity+"','" + _this.data.warehouse + "','" + _this.data.userInfo.name + "','" + _this.data.add_list[i].product_id + "','" + _this.data.add_list[i].pihao + "','" + _this.data.add_list[i].num + "','" + _this.data.add_list[i].remarks + "','" + _this.data.add_list[i].product_date + "','审核中')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.riqi + "','" + _this.data.warehouse + "','" + _this.data.userInfo.name + "','" + _this.data.add_list[i].product_id + "','" + _this.data.add_list[i].pihao + "','" + _this.data.add_list[i].num + "','" + _this.data.add_list[i].remarks + "','" + _this.data.add_list[i].product_date + "','审核中')"
+          sql2 = sql2 + ",('" + _this.data.riqi + "','"+ _this.data.add_list[i].validity+"','" + _this.data.warehouse + "','" + _this.data.userInfo.name + "','" + _this.data.add_list[i].product_id + "','" + _this.data.add_list[i].pihao + "','" + _this.data.add_list[i].num + "','" + _this.data.add_list[i].remarks + "','" + _this.data.add_list[i].product_date + "','审核中')"
         }
       }
       var sql = sql1 + sql2
@@ -525,6 +542,7 @@ Page({
           _this.setData({
             id:'',
             riqi: '', 
+            validity:'',
             warehouse: '',
             staff:'',
             product_id:'',
@@ -579,12 +597,13 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query: "update ruku set riqi='" + _this.data.riqi + "',warehouse='" + _this.data.warehouse + "',staff='" + _this.data.staff + "',product_id=" + _this.data.product_id + ",pihao='" + _this.data.pihao + "',num='" + _this.data.num + "',remarks='" + _this.data.remarks + "',product_date='" + _this.data.product_date + "',state='审核中' where id=" + _this.data.id 
+        query: "update ruku set riqi='" + _this.data.riqi + "',validity='"+ _this.data.validity+"',warehouse='" + _this.data.warehouse + "',staff='" + _this.data.staff + "',product_id=" + _this.data.product_id + ",pihao='" + _this.data.pihao + "',num='" + _this.data.num + "',remarks='" + _this.data.remarks + "',product_date='" + _this.data.product_date + "',state='审核中' where id=" + _this.data.id 
       },
       success: res => {
         _this.setData({
           id:'',
           riqi: '', 
+          validity:'',
           warehouse: '',
           staff:'',
           product_id:'',
@@ -621,7 +640,7 @@ Page({
 
   del1:function(){
     var _this = this
-    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -638,6 +657,7 @@ Page({
           _this.setData({
             id:'',
             riqi: '', 
+            validity:'',
             warehouse: '',
             staff:'',
             product_id:'',
@@ -721,6 +741,7 @@ Page({
           pihao:'',
           remarks:'',
           product_date:'',
+          validity:'',
         })
         _this.setData({
           xlShow4: false,
@@ -756,6 +777,7 @@ Page({
           _this.setData({
             id:'',
             riqi: '', 
+            validity:'',
             warehouse: '',
             staff:'',
             product_id:'',
@@ -817,7 +839,7 @@ Page({
 
   selSH: function () {
     var _this = this  
-    if(_this.data.userInfo.power != '管理员'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '此账号无权限审核数据！',
         icon: 'none',

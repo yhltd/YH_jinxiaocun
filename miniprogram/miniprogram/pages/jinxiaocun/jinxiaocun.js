@@ -45,7 +45,7 @@ Page({
     var url = _this.data.showList[index].url
     var view_name = _this.data.showList[index].text
     var quanxian = ''
-    if(_this.data.userInfo.power != '管理员'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       for(var i=0; i<_this.data.userPower.length; i++){
         if(view_name == _this.data.userPower[i].view_name){
           quanxian={
@@ -57,7 +57,7 @@ Page({
         }
       }
     }
-    if(quanxian == '' && _this.data.userInfo.power != '管理员'){
+    if(quanxian == '' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -65,7 +65,7 @@ Page({
       })
       return;
     }
-    if(quanxian.cha != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(quanxian.cha != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',

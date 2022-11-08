@@ -203,7 +203,7 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = "select kaipiao.id,kaipiao.customer_id,kehu.customer,kaipiao.riqi,kaipiao.unit,kaipiao.jine,kaipiao.remarks,kehu.salesman,kehu.leibie,kehu.customer_num,kehu.area,kaipiao.nameofarticle,kaipiao.unitprice,kaipiao.thebillingnumber,kaipiao.shuihao,kaipiao.address,kaipiao.phone,kaipiao.yinhang,kaipiao.zhanghu,kaipiao.state from invoice as kaipiao left join (select id,customer,salesman,leibie,customer_num,area from customerInfo)as kehu on kaipiao.customer_id = kehu.id where convert(date,kaipiao.riqi) >= convert(date,'"+ e[0] +"') and convert(date,kaipiao.riqi) <= convert(date,'"+ e[1] +"') and kehu.customer like '%"+ e[2] +"%' order by kaipiao.riqi desc"
-    if (_this.data.userInfo.power != '管理员'){
+    if (_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       sql = "select kaipiao.id,kaipiao.customer_id,kehu.customer,kaipiao.riqi,kaipiao.unit,kaipiao.jine,kaipiao.remarks,kehu.salesman,kehu.leibie,kehu.customer_num,kehu.area,kaipiao.nameofarticle,kaipiao.unitprice,kaipiao.thebillingnumber,kaipiao.shuihao,kaipiao.address,kaipiao.phone,kaipiao.yinhang,kaipiao.zhanghu,kaipiao.state from invoice as kaipiao left join (select id,customer,salesman,leibie,customer_num,area from customerInfo)as kehu on kaipiao.customer_id = kehu.id where convert(date,kaipiao.riqi) >= convert(date,'"+ e[0] +"') and convert(date,kaipiao.riqi) <= convert(date,'"+ e[1] +"') and kehu.customer like '%"+ e[2] +"%' and kehu.salesman ='" + _this.data.userInfo.name + "' order by kaipiao.riqi desc"
     }
     wx.cloud.callFunction({
@@ -253,9 +253,17 @@ Page({
 
   clickView:function(e){
     var _this = this
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员' && _this.data.userInfo.state_upd != '是' && _this.data.list[e.currentTarget.dataset.index].state == '审核通过'){
+      wx.showToast({
+        title: '此账号无权限修改审核通过的数据！',
         icon: 'none',
         duration: 3000
       })
@@ -283,7 +291,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -439,7 +447,7 @@ Page({
 
   del1:function(){
     var _this = this
-    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'){
+    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -558,7 +566,7 @@ Page({
   },
   selSH: function () {
     var _this = this  
-    if(_this.data.userInfo.power != '管理员'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
       wx.showToast({
         title: '此账号无权限审核数据！',
         icon: 'none',
