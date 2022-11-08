@@ -510,8 +510,70 @@ var login = function(that,info) {
         })
       }
     })
-  }
-  else{
+  }else if(system =="浙江省磐安外贸药业"){
+    console.log(system)
+    var sql = "select * from userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_zhejiang',
+      data:{
+        query : sql
+      },
+      success : res =>{
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length == 0){
+          wx.showToast({
+            title: '用户名或密码错误',
+            icon:'none',
+          })
+          return;
+        }else{
+          var user_list = list[0]
+          var sql = "select * from userPower where user_id=" + user_list.id
+          wx.cloud.callFunction({
+            name: 'sqlserver_zhejiang',
+            data:{
+              query : sql
+            },
+            success : res =>{
+              var list = res.result.recordset
+              console.log(user_list)
+              console.log(list)
+              wx.navigateTo({
+                url:'../../miniprogram/pages/peizhi/peizhi?userInfo='+JSON.stringify(user_list) + "&userPower=" + JSON.stringify(list)
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              console.log(res)
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  //结束
+  
+  }else{
     wx.showToast({
       title: '请选择系统',
       icon : 'none'   
@@ -724,6 +786,13 @@ Page({
       return;
     //结束
 
+    }else if(system == '浙江省磐安外贸药业'){
+      _this.setData({
+        system,
+        gongsi : '浙江省磐安外贸药业',
+        pickerArray: ['浙江省磐安外贸药业']
+      })
+      return;
     }else{
       _this.setData({
         gongsi : "选择公司",

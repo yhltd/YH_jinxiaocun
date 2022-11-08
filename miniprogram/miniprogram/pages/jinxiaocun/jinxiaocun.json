@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "van-tabbar": "../../components/tabbar/index",
+    "van-tabbar-item": "../../components/tabbar-item/index",
+    "van-cell": "../../components/cell/index",
+    "van-cell-group": "../../components/cell-group/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "进销存"
+}

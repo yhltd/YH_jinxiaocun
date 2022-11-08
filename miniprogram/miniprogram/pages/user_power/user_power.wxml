@@ -1,0 +1,132 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<!-- <van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
+  <view class="lables">用户名</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="name" range="{{customer_picker_list}}">
+      <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name" disabled="disabled"></input>
+    </picker>
+    <view class="lables">页面名称</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="view_name" range="{{view_list}}">
+      <input bindinput="onInput" data-column="view_name" class="input_text_form"  value="{{view_name}}" type="text" name="view_name" disabled="disabled"></input>
+    </picker>
+    <view class="lables">增加</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="zeng" range="{{power_list}}">
+      <input bindinput="onInput" data-column="zeng" class="input_text_form"  value="{{zeng}}" type="text" name="zeng" disabled="disabled"></input>
+    </picker>
+    <view class="lables">删除</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="shan" range="{{power_list}}">
+      <input bindinput="onInput" data-column="shan" class="input_text_form"  value="{{shan}}" type="text" name="shan" disabled="disabled"></input>
+    </picker>
+    <view class="lables">修改</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="gai" range="{{power_list}}">
+      <input bindinput="onInput" data-column="gai" class="input_text_form"  value="{{gai}}" type="text" name="gai" disabled="disabled"></input>
+    </picker>
+    <view class="lables">查询</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="cha" range="{{power_list}}">
+      <input bindinput="onInput" data-column="cha" class="input_text_form"  value="{{cha}}" type="text" name="cha" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup> -->
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<!-- <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 82%;" >
+  <view class="lables">用户名</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="name" range="{{customer_picker_list}}">
+      <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name" disabled="disabled"></input>
+    </picker>
+    <view class="lables">页面名称</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="view_name" range="{{view_list}}">
+      <input bindinput="onInput" data-column="view_name" class="input_text_form"  value="{{view_name}}" type="text" name="view_name" disabled="disabled"></input>
+    </picker>
+    <view class="lables">增加</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="zeng" range="{{power_list}}">
+      <input bindinput="onInput" data-column="zeng" class="input_text_form"  value="{{zeng}}" type="text" name="zeng" disabled="disabled"></input>
+    </picker>
+    <view class="lables">删除</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="shan" range="{{power_list}}">
+      <input bindinput="onInput" data-column="shan" class="input_text_form"  value="{{shan}}" type="text" name="shan" disabled="disabled"></input>
+    </picker>
+    <view class="lables">修改</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="gai" range="{{power_list}}">
+      <input bindinput="onInput" data-column="gai" class="input_text_form"  value="{{gai}}" type="text" name="gai" disabled="disabled"></input>
+    </picker>
+    <view class="lables">查询</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="cha" range="{{power_list}}">
+      <input bindinput="onInput" data-column="cha" class="input_text_form"  value="{{cha}}" type="text" name="cha" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup> -->
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
+    <view class="lables">{{update_name[this_column]}}</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="this_value" range="{{power_list}}">
+      <input bindinput="onInput" data-column="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" ></input>
+    </picker>
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+	  <view class="lables">用户名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

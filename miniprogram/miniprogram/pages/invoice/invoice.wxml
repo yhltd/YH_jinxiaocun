@@ -1,0 +1,152 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+  <button class="bt_bottom" bindtap="getExcel" >导出</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
+    <view class="lables">日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="date" name="riqi" disabled="disabled"></input>
+    </picker>
+    <view class="lables">发票号</view>
+    <input bindinput="onInput" data-column="thebillingnumber" class="input_text_form" value="{{thebillingnumber}}" type="text" name="thebillingnumber"></input>
+    <view class="lables">税号</view>
+    <input bindinput="onInput" data-column="shuihao" class="input_text_form" value="{{shuihao}}" type="text" name="shuihao"></input>
+    <view class="lables">客户名称</view>
+    <input bindinput="onInput" bindlongtap="selKH" data-column="customer" class="input_text_form"  value="{{customer}}" type="text" name="customer"></input>
+    <view class="lables">开票单位</view>
+    <input bindinput="onInput" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit"></input>
+    <view class="lables">单位地址</view>
+    <input bindinput="onInput" data-column="address" class="input_text_form" value="{{address}}" type="text" name="address"></input>
+    <view class="lables">电话号码</view>
+    <input bindinput="onInput" data-column="phone" class="input_text_form" value="{{phone}}" type="text" name="phone"></input>
+    <view class="lables">开户银行</view>
+    <input bindinput="onInput" data-column="yinhang" class="input_text_form" value="{{yinhang}}" type="text" name="yinhang"></input>
+    <view class="lables">银行账户</view>
+    <input bindinput="onInput" data-column="zhanghu" class="input_text_form" value="{{zhanghu}}" type="text" name="zhanghu"></input>
+    <view class="lables">品名</view>
+    <input bindinput="onInput" data-column="nameofarticle" class="input_text_form" value="{{nameofarticle}}" type="text" name="nameofarticle"></input>
+    <view class="lables">单价</view>
+    <input bindinput="onInput" data-column="unitprice" class="input_text_form" value="{{unitprice}}" type="text" name="unitprice"></input>
+    <view class="lables">开票金额</view>
+    <input bindinput="onInput" data-column="jine" class="input_text_form" value="{{jine}}" type="text" name="jine"></input>
+    <view class="lables">备注</view>
+    <input bindinput="onInput" data-column="remarks" class="input_text_form" value="{{remarks}}" type="text" name="remarks"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 82%;" >
+    <view class="lables">日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="date" name="riqi" disabled="disabled"></input>
+    </picker>
+    <view class="lables">发票号</view>
+    <input bindinput="onInput" data-column="thebillingnumber" class="input_text_form" value="{{thebillingnumber}}" type="text" name="thebillingnumber"></input>
+    <view class="lables">税号</view>
+    <input bindinput="onInput" data-column="shuihao" class="input_text_form" value="{{shuihao}}" type="text" name="shuihao"></input>
+    <view class="lables">客户名称</view>
+    <input bindinput="onInput" bindlongtap="selKH" data-column="customer" class="input_text_form"  value="{{customer}}" type="text" name="customer"></input>
+    <view class="lables">开票单位</view>
+    <input bindinput="onInput" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit"></input>
+    <view class="lables">单位地址</view>
+    <input bindinput="onInput" data-column="address" class="input_text_form" value="{{address}}" type="text" name="address"></input>
+    <view class="lables">电话号码</view>
+    <input bindinput="onInput" data-column="phone" class="input_text_form" value="{{phone}}" type="text" name="phone"></input>
+    <view class="lables">开户银行</view>
+    <input bindinput="onInput" data-column="yinhang" class="input_text_form" value="{{yinhang}}" type="text" name="yinhang"></input>
+    <view class="lables">银行账户</view>
+    <input bindinput="onInput" data-column="zhanghu" class="input_text_form" value="{{zhanghu}}" type="text" name="zhanghu"></input>
+    <view class="lables">品名</view>
+    <input bindinput="onInput" data-column="nameofarticle" class="input_text_form" value="{{nameofarticle}}" type="text" name="nameofarticle"></input>
+    <view class="lables">单价</view>
+    <input bindinput="onInput" data-column="unitprice" class="input_text_form" value="{{unitprice}}" type="text" name="unitprice"></input>
+    <view class="lables">开票金额</view>
+    <input bindinput="onInput" data-column="jine" class="input_text_form" value="{{jine}}" type="text" name="jine"></input>
+    <view class="lables">备注</view>
+    <input bindinput="onInput" data-column="remarks" class="input_text_form" value="{{remarks}}" type="text" name="remarks"></input>>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" style="width: 85px;" hover-class="bt_bottom_hover" bindtap="selSH">审核</button>
+    <button class="bt_bottom" style="width: 85px;" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" style="width: 85px;" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" style="width: 85px;" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+  <view class="lables">客户名称</view>
+    <input bindinput="onInput" bindlongtap="selKH" data-column="customer" class="input_text_form"  value="{{customer}}" type="text" name="customer"></input>
+    <view class="lables">开始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="date" name="start_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="date" name="stop_date" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+<!--客户下拉-->
+<van-action-sheet
+  show="{{ xlShow5 }}"
+  actions="{{ listKeHu }}"
+  close-on-click-overlay
+  bind:close="select5"
+  bind:select="select5" 
+/>
+
+<!--审核下拉-->
+<van-action-sheet
+  show="{{ xlShow1 }}"
+  actions="{{ listShenHe }}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>

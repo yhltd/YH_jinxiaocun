@@ -1,0 +1,66 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <!-- <button class="bt_bottom" bindtap="entering" >查询</button> -->
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 30%;" >
+    <view class="lables">审核人</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="name" range="{{customer_picker_list}}">
+      <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 20%;" >
+  <view class="bottom_view" style="height:10%;margin-top: 10%;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="selSH">审核</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+  </view>
+</van-popup>
+
+
+<!--审核下拉-->
+<van-action-sheet
+  show="{{ xlShow1 }}"
+  actions="{{ listShenHe }}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>

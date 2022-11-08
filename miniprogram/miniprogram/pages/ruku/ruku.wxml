@@ -1,0 +1,176 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+  <button class="bt_bottom" bindtap="getExcel" >导出</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 90%;" >
+  <view class="lables">日期</view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
+  </picker>
+  <view class="lables">仓库</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="warehouse" range="{{warehouse_list}}">
+    <input bindinput="onInput" data-column="warehouse" class="input_text_form"  value="{{warehouse}}" type="text" name="warehouse" disabled="disabled"></input>
+  </picker>
+
+  <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height: 57%;">
+    <view class="table">
+      <view class='table_header'>
+        <block class="title" wx:for="{{add_title}}">
+          <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        </block>
+      </view>
+      <block class="list_row" wx:for="{{add_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+        <view class="table_main">
+          <view wx:for="{{add_title}}" 
+                wx:for-item="item" 
+                wx:key="item" 
+                class="list_view" 
+                style="width:{{item.width}}" data-index="{{i}}" 
+                data-column="{{item.columnName}}" 
+                data-value="{{list_item[item.columnName]}}" 
+                data-input_type="{{item.type}}"
+                data-isupd="{{item.isupd}}"
+                bindtap="clickView1"
+                bindlongpress="tab_del">
+            <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="selCD">选择产品</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;" >
+    <view class="lables">日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
+    </picker>
+    <view class="lables">仓库</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="warehouse" range="{{warehouse_list}}">
+      <input bindinput="onInput" data-column="warehouse" class="input_text_form"  value="{{warehouse}}" type="text" name="warehouse" disabled="disabled"></input>
+    </picker>
+    <view class="lables">产品生产日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="product_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="product_date" class="input_text_form" value="{{product_date}}" type="text" name="product_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">产品名称</view>
+    <input bindinput="onInput" bindtap="selCD2" data-column="product_name" class="input_text_form" value="{{product_name}}" type="text" name="product_name" disabled="disabled"></input>
+    <view class="lables">规格</view>
+    <input bindinput="onInput" data-column="spec" class="input_text_form" value="{{spec}}" type="text" name="spec" disabled="disabled"></input>
+    <view class="lables">产品属性</view>
+    <input bindinput="onInput" data-column="attribute" class="input_text_form" value="{{attribute}}" type="text" name="attribute" disabled="disabled"></input>
+    <view class="lables">批号</view>
+    <input bindinput="onInput" data-column="pihao" class="input_text_form" value="{{pihao}}" type="text" name="pihao"></input>
+    <view class="lables">单位</view>
+    <input bindinput="onInput" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" disabled="disabled"></input>
+    <view class="lables">数量</view>
+    <input bindinput="onInput" data-column="num" class="input_text_form" value="{{num}}" type="number" name="num"></input>
+    <view class="lables">备注</view>
+    <input bindinput="onInput" data-column="remarks" class="input_text_form" value="{{remarks}}" type="text" name="remarks"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="selSH">审核</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 85%;" >
+    <view class="lables">开始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
+    </picker>
+	  <view class="lables">产品名称</view>
+    <input bindinput="onInput" data-column="product_name" class="input_text_form" value="{{product_name}}" type="text" name="product_name" ></input>
+    <view class="lables">批号</view>
+    <input bindinput="onInput" data-column="pihao" class="input_text_form" value="{{pihao}}" type="text" name="pihao"></input>
+    <view class="lables">审核状态</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="state" range="{{state_list}}">
+      <input bindinput="onInput" data-column="state" class="input_text_form" value="{{state}}" type="text" name="state" ></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow2" show="{{ xgShow2 }}" position="bottom" custom-style="height: 25%;" >
+    <view class="lables">{{update_name[this_column]}}</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="this_value" bindchange="choiceDate" disabled="{{this_column == 'product_date'?false:true}}">
+      <input bindinput="onInput" data-column="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" disabled="{{this_column == 'product_date'?true:false}}">></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">修改</button>
+  </view>
+</van-popup>
+
+
+<!--产品下拉-->
+<van-action-sheet
+  show="{{ xlShow4 }}"
+  actions="{{ listChanPin }}"
+  close-on-click-overlay
+  bind:close="select4"
+  bind:select="select4" 
+/>
+
+<!--审核下拉-->
+<van-action-sheet
+  show="{{ xlShow1 }}"
+  actions="{{ listShenHe }}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>
