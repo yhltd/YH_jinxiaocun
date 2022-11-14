@@ -1,0 +1,219 @@
+
+<scroll-view class="scrolls" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil1}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th">
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='C' data-column='A' >{{item.C}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='D' data-column='B' >{{item.D}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='E' data-column='C' >{{item.E}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='F' data-column='D' >{{item.F}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='G' data-column='E' >{{item.G}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='H' data-column='F' >{{item.H}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='I' data-column='G' >{{item.I}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='J' data-column='H' >{{item.J}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='K' data-column='I' >{{item.K}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='L' data-column='J' >{{item.L}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='M' data-column='K' >{{item.M}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='N' data-column='L' >{{item.N}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='O' data-column='M' >{{item.O}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil2}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='P' data-column='N' >{{item.P}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='Q' data-column='O' >{{item.Q}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='R' data-column='P' >{{item.R}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='S' data-column='Q' >{{item.S}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='T' data-column='R' >{{item.T}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='U' data-column='S' >{{item.U}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='V' data-column='T' >{{item.V}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='W' data-column='U' >{{item.W}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='X' data-column='V' >{{item.X}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='Y' data-column='W' >{{item.Y}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='Z' data-column='X' >{{item.Z}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AA' data-column='Y'>{{item.AA}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AB' data-column='Z'>{{item.AB}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil3}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AC' data-column='AA'  >{{item.AC}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AD' data-column='AB'  >{{item.AD}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AE' data-column='AC'  >{{item.AE}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AF' data-column='AD'  >{{item.AF}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AG' data-column='AE'  >{{item.AG}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AH' data-column='AF'  >{{item.AH}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AI' data-column='AG'  >{{item.AI}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AJ' data-column='AH'  >{{item.AJ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AK' data-column='AI'  >{{item.AK}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AL' data-column='AJ'  >{{item.AL}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AM' data-column='AK'  >{{item.AM}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AN' data-column='AL'  >{{item.AN}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AO' data-column='AM'  >{{item.AO}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil4}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AP' data-column='AN'  >{{item.AP}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AQ' data-column='AO'  >{{item.AQ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AR' data-column='AP'  >{{item.AR}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='ASS' data-column='AQ'  >{{item.ASS}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AT' data-column='AR'  >{{item.AT}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AU' data-column='ASS'  >{{item.AU}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AV' data-column='AT'  >{{item.AV}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AW' data-column='AU'  >{{item.AW}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AX' data-column='AV'  >{{item.AX}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AY' data-column='AW'  >{{item.AY}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='AZ' data-column='AX'  >{{item.AZ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BA' data-column='AY'  >{{item.BA}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BB' data-column='AZ'  >{{item.BB}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil5}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+
+       <view class="td" bindtap="click" data-index="{{index}}" data-clie='BC' data-column='BA'  >{{item.BC}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BD' data-column='BB'  >{{item.BD}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BE' data-column='BC'  >{{item.BE}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BF' data-column='BD'  >{{item.BF}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BG' data-column='BE'  >{{item.BG}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BH' data-column='BF'  >{{item.BH}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BI' data-column='BG'  >{{item.BI}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BJ' data-column='BH'  >{{item.BJ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BK' data-column='BI'  >{{item.BK}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BL' data-column='BJ'  >{{item.BL}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BM' data-column='BK'  >{{item.BM}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BN' data-column='BL'  >{{item.BN}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BO' data-column='BM'  >{{item.BO}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil6}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BP' data-column='BN'  >{{item.BP}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BQ' data-column='BO'  >{{item.BQ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BR' data-column='BP'  >{{item.BR}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BS' data-column='BQ'  >{{item.BS}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BT' data-column='BR'  >{{item.BT}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BU' data-column='BS'  >{{item.BU}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BV' data-column='BT'  >{{item.BV}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BW' data-column='BU'  >{{item.BW}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BX' data-column='BV'  >{{item.BX}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BYY' data-column='BW'  >{{item.BYY}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='BZ' data-column='BX'  >{{item.BZ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CA' data-column='BYY'  >{{item.CA}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CB' data-column='BZ'  >{{item.CB}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil7}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CC' data-column='CA'  >{{item.CC}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CD' data-column='CB'  >{{item.CD}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CE' data-column='CC'  >{{item.CE}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CF' data-column='CD'  >{{item.CF}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CG' data-column='CE'  >{{item.CG}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CH' data-column='CF'  >{{item.CH}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CI' data-column='CG'  >{{item.CI}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CJ' data-column='CH'  >{{item.CJ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CK' data-column='CI'  >{{item.CK}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CL' data-column='CJ'  >{{item.CL}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CM' data-column='CK'  >{{item.CM}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CN' data-column='CL'  >{{item.CN}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CO' data-column='CM'  >{{item.CO}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+
+<scroll-view class="scrolls2" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class="th">
+        <block  wx:for="{{titil8}}" wx:key="titil" wx:for-item="item" wx:for-index="index">
+          <view class="tr">{{item.text}}</view>
+        </block>
+    </view>
+    <block  wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item">
+    <view class="th" >
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CP' data-column='CN'  >{{item.CP}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CQ' data-column='CO'  >{{item.CQ}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CR' data-column='CP'  >{{item.CR}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CS' data-column='CQ'  >{{item.CS}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CT' data-column='CR'  >{{item.CT}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CU' data-column='CS'  >{{item.CU}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CV' data-column='CT'  >{{item.CV}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CW' data-column='CU'  >{{item.CW}}</view>
+      <view class="td" bindtap="click" data-index="{{index}}" data-clie='CX' data-column='CV'  >{{item.CX}}</view>
+    </view>
+  </block>
+    </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="use_book">使用说明</button>
+</view>

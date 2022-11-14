@@ -121,6 +121,13 @@ Page({
     
   },
 
+  goto:function(){
+    var _this = this
+    wx.navigateTo({
+      url: "../companyfix2/companyfix2?userInfo="+JSON.stringify(_this.data.userInfo)
+    })
+  },
+
   tableShow:function(){
     var _this = this
     var sql="select * from baitaoquanxian_gongsi where B = '" + _this.data.title[0].val + "'"
@@ -211,6 +218,7 @@ Page({
   },
 
   sel:function(){
+    var _this = this
     if(_this.data.cha != '是'){
       wx.showToast({
         title: '无查询权限',
@@ -218,9 +226,9 @@ Page({
       })
       return;
     }
-    var _this = this
     var lie = _this.data.lie
     var gongsi = this.data.gongsi
+    var input_list = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV"]
     var lie_list = ["C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV","CW","CX"]
     if(lie == "" || lie == undefined){
       wx.showToast({
@@ -231,7 +239,7 @@ Page({
     }
     lie = lie.toUpperCase()
     
-    var panduan = lie_list.indexOf(lie)
+    var panduan = input_list.indexOf(lie)
     console.log(panduan)
     if (panduan <= -1){
       wx.showToast({
@@ -240,6 +248,8 @@ Page({
       })
       return
     }
+
+    lie = lie_list[panduan]
 
     if(lie == "AS"){
       lie = "ASS"
@@ -272,7 +282,9 @@ Page({
       }
     })  
   },
+
   upd:function(){
+    var _this = this
     if(_this.data.gai != '是'){
       wx.showToast({
         title: '无修改权限',
@@ -280,8 +292,6 @@ Page({
       })
       return;
     }
-    var _this = this
-    var _this = this
     var lie = _this.data.lie
     var gongsi = _this.data.gongsi
     var quanxian = _this.data.quanxian

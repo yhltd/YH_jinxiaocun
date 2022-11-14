@@ -63,14 +63,14 @@ justify-content: center;
 }
 
 .bt_bottom{
-  width: 35%;
+  width: 30%;
   background-color: #009688;
   color: #E6E6E6;
   margin: auto;
   margin-top: 5%;
 }
 .bt_bottom_hover{
-  width: 35%;
+  width: 30%;
   background-color: rgb(11, 194, 176);
   color: #E6E6E6;
   margin: auto;

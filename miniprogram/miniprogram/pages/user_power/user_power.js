@@ -199,7 +199,7 @@ Page({
     if(this_column != 'zeng' && this_column != 'shan' && this_column != 'gai' && this_column != 'cha' ){
       return;
     }
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -229,7 +229,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',

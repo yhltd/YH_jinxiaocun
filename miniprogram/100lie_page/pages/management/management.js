@@ -164,6 +164,13 @@ Page({
     that.setData({
       input_hid:false,
       mask_hid:false,
+      department_name:"",
+      view_name:"",
+      ins:"",
+      del:"",
+      upd:"",
+      sel:"",
+      id:"",
     })
 },
 
@@ -425,12 +432,19 @@ hid_sel:function(){
 sel_show:function(){
   var _this = this
   _this.setData({
-    name : "",
+    department_name:"",
+    view_name:"",
+    ins:"",
+    del:"",
+    upd:"",
+    sel:"",
+    id:"",
     sel_hid:false
   })
 },
   sel:function(e){
     var _this = this
+    var that = this
     var department_name = e.detail.value.input_department_name
     var sql="select id,isnull(department_name,'') as department_name,isnull(view_name,'') as view_name,isnull(ins,'') as ins,isnull(del,'') as del,isnull(upd,'') as upd,isnull(sel,'') as sel from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' and department_name ='" + department_name + "'"
     console.log(sql)

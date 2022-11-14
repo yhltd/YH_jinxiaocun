@@ -1,0 +1,38 @@
+<view class="bg">
+  <view class="head">
+    <view class="headIcon">
+      <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/weidenglu_touxiang.png" style="width:70px;height:70px;margin-top:5%"></image>
+    </view>
+    <text class="headIcon" style="margin-top:5%;">{{userInfo.username}}</text>
+  </view>
+</view>
+
+<view class="hr"></view>
+<view class='item' >
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongsi.png" class="images_st"></image>
+  权限</view>
+  <view class="detail2">
+    <text>{{userInfo.power}}</text>
+  </view>
+</view>
+<view class="line"></view>
+
+<view class="hr"></view>
+
+<view class='item' bindtap="go3">
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu.png" class="images_st"></image>
+  退出登录</view>
+  <view class="detail2">
+    <text> ></text>
+  </view>
+</view>
+<view class="line"></view>
+<view class="hr"></view>
+
+<van-tabbar active="{{1}}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../pages/images/dingdan.png">首页</van-tabbar-item>
+  <van-tabbar-item icon="../../pages/images/peizhi.png">我的</van-tabbar-item>
+</van-tabbar>
+

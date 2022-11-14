@@ -17,19 +17,25 @@
 <view class="input_view" hidden="{{input_hid}}">
   <form bindsubmit="save">
     <view>
+      <view class="lables">部门名称</view>
       <input class="input_text_form" placeholder="请输入部门名称" value="{{department_name}}" type="text" name="input_department_name" ></input>
+      <view class="lables">页面名称</view>
       <picker bindchange="bindPickerChange5" value="{{index}}" range="{{view_list}}">
         <input class="input_text_form" placeholder="请输入页面名称" value="{{view_name}}" type="text" name="input_view_name" disabled="disabled"></input>
       </picker>
+      <view class="lables">增加权限</view>
       <picker bindchange="bindPickerChange1" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入增加权限" value="{{ins}}" type="text" name="input_ins" disabled="disabled"></input>
       </picker>
+      <view class="lables">删除权限</view>
       <picker bindchange="bindPickerChange2" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入删除权限" value="{{del}}" type="text" name="input_del" disabled="disabled"></input>
       </picker>
+      <view class="lables">修改权限</view>
       <picker bindchange="bindPickerChange3" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入修改权限" value="{{upd}}" type="text" name="input_upd" disabled="disabled"></input>
       </picker>
+      <view class="lables">查询权限</view>
       <picker bindchange="bindPickerChange4" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入查询权限" value="{{sel}}" type="text" name="input_sel" disabled="disabled"></input>
       </picker>
@@ -45,19 +51,25 @@
 <view class="input_view" hidden="{{upd_hid}}">
   <form bindsubmit="upd">
     <view>
+      <view class="lables">部门名称</view>
       <input class="input_text_form" placeholder="请输入部门名称" value="{{department_name}}" type="text" name="input_department_name" ></input>
+      <view class="lables">页面名称</view>
       <picker bindchange="bindPickerChange5" value="{{index}}" range="{{view_list}}">
         <input class="input_text_form" placeholder="请输入页面名称" value="{{view_name}}" type="text" name="input_view_name" disabled="disabled"></input>
       </picker>
+      <view class="lables">增加权限</view>
       <picker bindchange="bindPickerChange1" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入增加权限" value="{{ins}}" type="text" name="input_ins" disabled="disabled"></input>
       </picker>
+      <view class="lables">删除权限</view>
       <picker bindchange="bindPickerChange2" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入删除权限" value="{{del}}" type="text" name="input_del" disabled="disabled"></input>
       </picker>
+      <view class="lables">修改权限</view>
       <picker bindchange="bindPickerChange3" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入修改权限" value="{{upd}}" type="text" name="input_upd" disabled="disabled"></input>
       </picker>
+      <view class="lables">查询权限</view>
       <picker bindchange="bindPickerChange4" value="{{index}}" range="{{zhuangtai_list}}">
         <input class="input_text_form" placeholder="请输入查询权限" value="{{sel}}" type="text" name="input_sel" disabled="disabled"></input>
       </picker>

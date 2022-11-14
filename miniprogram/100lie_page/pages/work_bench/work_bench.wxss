@@ -2,6 +2,12 @@ page{
   height: 100%;
 }
 
+.lables{
+  font-size: 40rpx;
+  margin-left: 90rpx;
+  margin-top: 4rpx;
+}
+
 view {
   font-size: 30rpx;
 }
@@ -161,7 +167,7 @@ button{
 }
 .bt_bottom{
   width: 13%;
-  background-color: #282B33;
+  background-color: #009688;
   color: #E6E6E6;
   float: left;
   height: 75rpx;
@@ -170,7 +176,7 @@ button{
 }
 .bt_bottom_hover{
   width: 13%;
-  background-color:#009688;
+  background-color: #009688;
   color: #E6E6E6;
   float: left;
   height: 75rpx;
@@ -178,7 +184,7 @@ button{
   margin-left: 3%;
 }
 .page_bottom{
-  background-color: #282B33;
+  background-color: #009688;
   color: #E6E6E6;
   width: 13%;
   text-align: center;
@@ -286,7 +292,7 @@ button{
 
 .moreDo{
   width: 41%;
-  background-color: #282B33;
+  background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;
   float: left;

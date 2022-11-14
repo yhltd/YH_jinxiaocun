@@ -337,7 +337,8 @@
 <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="save">
     <view wx:if="{{isDate}}">
-      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+      <view class="lables" style="margin-top: 10rpx;">修改内容</view>
+      <input class="input_text_form" style="margin-top: 5%;" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
     </view>
     <view style="height: 52%;" wx:if="{{!isDate}}">
       <view class="input_date_form" wx:for="{{dateArray}}">
@@ -388,12 +389,14 @@
 
 <view class="upd_countPage_view" animation="{{animationData_countPage}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="save_countPage" style="height:100%;width:100%">
-    <input class="upd_countPage_input" placeholder="每页显示条数" name="countPage" value="{{countPage}}" type="number"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{page_arr}}">
+      <input class="upd_countPage_input" placeholder="每页显示条数" name="countPage" value="{{countPage}}" type="number" disabled="disabled"></input>
+    </picker>
     <button class="upd_countPage_bt" form-type="submit">保存</button>
   </form>
 </view>
 
-<view class="bottom_view"  >
+<view class="bottom_view">
   <view style="{{isSelect?'opacity:0.3':'opacity:1'}}">
     <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
     <view class="page_bottom" bindtap="{{cha=='是'?'show_updPageCount':''}}">{{pageNum}}/{{pageCount}}</view>

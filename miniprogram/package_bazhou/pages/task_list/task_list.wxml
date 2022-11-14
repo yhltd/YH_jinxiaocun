@@ -1,0 +1,54 @@
+<picker class="pick" value="{{picker_select}}" range="{{pick_list}}" data-column_name="picker_select" range-key="label" bindchange="choicePick">
+  <input bindinput="onInput" data-column="picker_select" class="input_text_form" value="{{picker_select}}" type="text" name="picker_select" disabled="disabled"></input>
+</picker>
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:78%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="page_down_click" >{{"<<"}}</button>
+  <button class="bt_bottom" >{{this_page + "/" + max_page}}</button>
+  <button class="bt_bottom" bindtap="page_up_click" >{{">>"}}</button>
+  <!-- <button class="bt_bottom" bindtap="entering" >查询</button>
+  <button class="bt_bottom" bindtap="getExcel" >导出</button> -->
+</view>
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 13%;" >
+  <view class="bottom_view" style="height:10%;margin-top: 5%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="yes_click">{{picker_select == '待接受任务'?'接受':'已完成'}}</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="no_click">{{picker_select == '待接受任务'?'拒绝':'未完成'}}</button>
+  </view>
+</van-popup>

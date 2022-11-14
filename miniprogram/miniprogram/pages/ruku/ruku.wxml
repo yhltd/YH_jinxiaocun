@@ -87,8 +87,10 @@
     <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
       <input bindinput="onInput" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
     </picker>
-    <view class="lables">有效性</view>
-    <input bindinput="onInput" data-column="validity" class="input_text_form" value="{{validity}}" type="text" name="validity" disabled="disabled"></input>
+    <view class="lables">有效期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="validity" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="validity" class="input_text_form" value="{{validity}}" type="text" name="validity" disabled="disabled"></input>
+    </picker>
     <view class="lables">仓库</view>
     <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="warehouse" range="{{warehouse_list}}">
       <input bindinput="onInput" data-column="warehouse" class="input_text_form"  value="{{warehouse}}" type="text" name="warehouse" disabled="disabled"></input>

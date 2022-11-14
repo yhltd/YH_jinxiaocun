@@ -537,7 +537,7 @@ Page({
       title_month2 = "12"
     }
     if(that.data.this_date ==1 || that.data.this_date ==2){
-      var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + " and AO = '" + this.data.companyName + "' order by year,moth"
+      var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + title_year1 + title_month1 + " and year+moth <=" + title_year2 + title_month2 + " and AO = '" + this.data.companyName + "' order by year desc,moth desc"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',

@@ -308,7 +308,7 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = "select rk.id,rk.riqi,rk.warehouse,rk.staff,rk.product_id,rk.pihao,rk.num,rk.remarks,rk.state,rk.validity,pd.product_name,pd.spec,pd.unit,pd.attribute,rk.product_date,pd.pinhao from ruku as rk left join product as pd on rk.product_id = pd.id where CONVERT(date,rk.riqi) >= CONVERT(date,'" + e[0] + "') and CONVERT(date,rk.riqi) <= CONVERT(date,'" + e[1] + "') and pd.product_name like '%" + e[2] + "%' and rk.state like '%" + e[3] + "%' and rk.pihao like '%" + e[4] + "%'"
-    if (_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if (_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       sql = sql + " and rk.staff ='" + _this.data.userInfo.name + "'"
     }
     if(_this.data.tiaojian != undefined){
@@ -371,7 +371,7 @@ Page({
 
   clickView:function(e){
     var _this = this
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -379,7 +379,7 @@ Page({
       })
       return;
     }
-    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员' && _this.data.userInfo.state_upd != '是' && _this.data.list[e.currentTarget.dataset.index].state == '审核通过'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人' && _this.data.userInfo.state_upd != '是' && _this.data.list[e.currentTarget.dataset.index].state == '审核通过'){
       wx.showToast({
         title: '此账号无权限修改审核通过的数据！',
         icon: 'none',
@@ -446,7 +446,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -640,7 +640,7 @@ Page({
 
   del1:function(){
     var _this = this
-    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -839,7 +839,7 @@ Page({
 
   selSH: function () {
     var _this = this  
-    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '此账号无权限审核数据！',
         icon: 'none',

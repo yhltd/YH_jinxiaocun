@@ -4,7 +4,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 姓名：</view>
         <picker bindchange="update_name" data-column="B" value="{{index}}" range="{{name_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="B" placeholder="请输入姓名" maxlength="50" type="text" value="{{list[0].B}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="B" placeholder="请输入姓名" maxlength="50" type="text" value="{{list[0].B}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -30,7 +30,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 入职时间：</view>
 				<picker mode="date" bindchange="updateDate" data-column="F">
-					<input placeholder-class="phcolor" disabled="true" class="tui-input" name="F" placeholder="请输入入职时间" maxlength="50" type="number" value="{{list[0].F}}" />
+					<input placeholder-class="phcolor" disabled="true" class="tui-input" name="F" placeholder="请输入入职时间" maxlength="50" type="number" value="{{list[0].F}}" disabled="disabled"/>
 				</picker>
 			</view>
 		</tui-list-cell>
@@ -62,7 +62,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 跨度工资：</view>
         <picker bindchange="update_xiala" data-column="K" data-list="kuadu_gongzi_list" value="{{index}}" range="{{kuadu_gongzi_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="K" placeholder="请输入" maxlength="50" type="number" value="{{list[0].K}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="K" placeholder="请输入" maxlength="50" type="number" value="{{list[0].K}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -70,7 +70,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 职称津贴：</view>
         <picker bindchange="update_xiala" data-column="L" data-list="jintie_list" value="{{index}}" range="{{jintie_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="L" placeholder="请输入" maxlength="50" type="number" value="{{list[0].L}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="L" placeholder="请输入" maxlength="50" type="number" value="{{list[0].L}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -132,7 +132,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 社保基数：</view>
         <picker bindchange="update_xiala" data-column="V" data-list="shebao_list" value="{{index}}" range="{{shebao_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="V" placeholder="请输入" maxlength="50" type="number" value="{{list[0].V}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="V" placeholder="请输入" maxlength="50" type="number" value="{{list[0].V}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -140,7 +140,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 医疗基数：</view>
         <picker bindchange="update_xiala" data-column="W" data-list="yiliaojishu_list" value="{{index}}" range="{{yiliaojishu_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="W" placeholder="请输入" maxlength="50" type="number" value="{{list[0].W}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="W" placeholder="请输入" maxlength="50" type="number" value="{{list[0].W}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -148,7 +148,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 公积金基数：</view>
         <picker bindchange="update_xiala" data-column="X" data-list="gongjijin_list" value="{{index}}" range="{{gongjijin_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="X" placeholder="请输入" maxlength="50" type="number" value="{{list[0].X}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="X" placeholder="请输入" maxlength="50" type="number" value="{{list[0].X}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -156,7 +156,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 年金基数：</view>
         <picker bindchange="update_xiala" data-column="Y" data-list="nianjin_jishu_list" value="{{index}}" range="{{nianjin_jishu_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="Y" placeholder="请输入" maxlength="50" type="number" value="{{list[0].Y}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="Y" placeholder="请输入" maxlength="50" type="number" value="{{list[0].Y}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -206,7 +206,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 滞纳金：</view>
         <picker bindchange="update_xiala" data-column="AG" data-list="zhinajin_list" value="{{index}}" range="{{zhinajin_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="AG" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AG}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="AG" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AG}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -214,7 +214,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 利息：</view>
         <picker bindchange="update_xiala" data-column="AH" data-list="lixi_list" value="{{index}}" range="{{lixi_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="AH" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AH}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="AH" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AH}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -264,7 +264,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 滞纳金：</view>
         <picker bindchange="update_xiala" data-column="AP" data-list="zhinajin_list" value="{{index}}" range="{{zhinajin_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="AP" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AP}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="AP" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AP}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -272,7 +272,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 利息：</view>
         <picker bindchange="update_xiala" data-column="AQ" data-list="lixi_list" value="{{index}}" range="{{lixi_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="AQ" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AQ}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="AQ" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AQ}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -316,7 +316,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 1%年金：</view>
         <picker bindchange="update_xiala" data-column="AX" data-list="nianjin1_list" value="{{index}}" range="{{nianjin1_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="AX" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AX}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="AX" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AX}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -330,7 +330,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 验算公式：</view>
         <picker bindchange="update_xiala" data-column="AZ" data-list="yansuangongshi_list" value="{{index}}" range="{{yansuangongshi_list}}">
-          <input placeholder-class="phcolor" class="tui-input" name="AZ" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AZ}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="AZ" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AZ}}" disabled="disabled"/>
         </picker>
 			</view>
 		</tui-list-cell>
@@ -344,7 +344,7 @@
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 调薪时间：</view>
 				<picker mode="date" bindchange="updateDate" data-column="BB">
-					<input placeholder-class="phcolor" disabled="true" class="tui-input" name="BB" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BB}}" />
+					<input placeholder-class="phcolor" disabled="true" class="tui-input" name="BB" placeholder="请输入" maxlength="50" type="text" value="{{list[0].BB}}" disabled="disabled"/>
 				</picker>
 			</view>
 		</tui-list-cell>

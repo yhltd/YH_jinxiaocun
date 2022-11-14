@@ -15,6 +15,7 @@ Page({
     countPage : 20, //每一页显示的数据数据数量
     pageCount : 0, //总页数
     pageNum : 1, //当前页 
+    page_arr:[10,20,50,100],
     hid_view : true,
     where : "",
     animationData_countPage :[],
@@ -178,6 +179,14 @@ Page({
     })
 
   },
+
+  
+bindPickerChange1: function(e) {
+  var _this = this
+  _this.setData({
+    countPage: _this.data.page_arr[e.detail.value]
+  })
+},
 
   clickView : function(e){
     var _this = this;

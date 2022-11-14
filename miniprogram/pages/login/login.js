@@ -526,7 +526,6 @@ var login = function(that,info) {
             title: '用户名或密码错误',
             icon:'none',
           })
-          return;
         }else{
           var user_list = list[0]
           var sql = "select * from userPower where user_id=" + user_list.id
@@ -569,6 +568,61 @@ var login = function(that,info) {
           duration: 3000
         })
         console.log("请求失败！")
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  //结束
+  
+  }else if(system =="霸州市智科启达自动化"){
+    console.log(system)
+    var sql = "select * from userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_bazhou',
+      data:{
+        query : sql
+      },
+      success : res =>{
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length == 0){
+          wx.showToast({
+            title: '用户名或密码错误',
+            icon:'none',
+          })
+        }else{
+          var user_list = list[0]
+          if(user_list.power != '制造商'){
+            wx.showToast({
+              title: '非制造商账号，不能登录',
+              icon:'none',
+            })
+          }else{
+            wx.navigateTo({
+              url:'../../package_bazhou/pages/index/index?userInfo='+JSON.stringify(user_list)
+            })
+          }
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
       }
     })
   //结束
@@ -791,6 +845,13 @@ Page({
         system,
         gongsi : '浙江省磐安外贸药业',
         pickerArray: ['浙江省磐安外贸药业']
+      })
+      return;
+    }else if(system == '霸州市智科启达自动化'){
+      _this.setData({
+        system,
+        gongsi : '霸州市智科启达自动化',
+        pickerArray: ['霸州市智科启达自动化']
       })
       return;
     }else{

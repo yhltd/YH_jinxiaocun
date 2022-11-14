@@ -40,18 +40,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
+    var _this = this
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     if(options!=undefined){
-      that.setData({
+      _this.setData({
         gongsi:userInfo.B,
         userInfo:userInfo
       })
     }
 
     var sql="select ins,del,upd,sel from baitaoquanxian_department where company = '" + _this.data.userInfo.B + "' and department_name ='" + _this.data.userInfo.bumen + "' and view_name='人员权限设置'"
-    var that =this
+    var _this =this
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
@@ -72,40 +72,45 @@ Page({
             gai:quanxian[0].upd,
             cha:quanxian[0].sel,
           })
-
-          if(_this.data.cha != '是'){
-            wx.showToast({
-              title: '无查询权限',
-              icon:"none"
-            })
-            return;
-          }
-          var sql="select * from baitaoquanxian_copy1 WHERE quanxian = '" + that.data.gongsi + "' and chashanquanxian='" + that.data.quanxian_leixing + "'"
-          wx.cloud.callFunction({
-            name: 'sqlServer_117',
-            data:{
-              query : sql
-            },
-            success(res){
-              var list =res.result.recordset
-              that.setData({
-                list
-              })
-            }
-          })
+          _this.tableShow()
         }
       }
     })
 
     
   },
+
+tableShow:function(){
+  var _this = this
+  if(_this.data.cha != '是'){
+    wx.showToast({
+      title: '无查询权限',
+      icon:"none"
+    })
+    return;
+  }
+  var sql="select * from baitaoquanxian_copy1 WHERE quanxian = '" + _this.data.gongsi + "' and chashanquanxian='" + _this.data.quanxian_leixing + "'"
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data:{
+      query : sql
+    },
+    success(res){
+      var list =res.result.recordset
+      _this.setData({
+        list
+      })
+    }
+  })
+},
+
 click:function(e){
-  var that=this
-  var list=that.data.list
+  var _this=this
+  var list=_this.data.list
   var index= e.currentTarget.dataset.index
   var colmun=e.currentTarget.dataset.column
   var names= e.currentTarget.dataset.name
-  var sqls= "select " + colmun + " from baitaoquanxian_gongsi where B ='"+ that.data.gongsi +"'  "
+  var sqls= "select " + colmun + " from baitaoquanxian_gongsi where B ='"+ _this.data.gongsi +"'  "
     wx.cloud.callFunction({
       name: 'sqlServer_117',
     data:{
@@ -113,7 +118,7 @@ click:function(e){
     },
     success(res){
       if(res.result.recordset[0][colmun]=="√"){
-        that.update(list,index,colmun,names)
+        _this.update(list,index,colmun,names)
       }else{
         wx.showToast({
           title: '你没有该列权限',
@@ -164,7 +169,7 @@ quanxian_piliang1(){
       _this.setData({
         handle: true
       })
-      _this.onLoad()
+      _this.tableShow()
     }
   })
 },
@@ -193,7 +198,7 @@ quanxian_piliang2(){
       _this.setData({
         handle: true
       })
-      _this.onLoad()
+      _this.tableShow()
     }
   })
 },
@@ -208,7 +213,7 @@ hid_view(){
 
 
 update:function(list,index,colmun,names){
-  var that=this
+  var _this=this
   var _this = this
   if(_this.data.gai != '是'){
     wx.showToast({
@@ -222,7 +227,7 @@ update:function(list,index,colmun,names){
   }else if(list[index][colmun] != "√"){
     list[index][colmun]="√"
   }
-  var sql="update baitaoquanxian_copy1 set " + colmun + " = '" +list[index][colmun] + "' where quanxian = '" + that.data.gongsi + "' and B= '" + names+ "' "
+  var sql="update baitaoquanxian_copy1 set " + colmun + " = '" +list[index][colmun] + "' where quanxian = '" + _this.data.gongsi + "' and B= '" + names+ "' "
   wx.cloud.callFunction({
 
     name: 'sqlServer_117',
@@ -230,8 +235,12 @@ update:function(list,index,colmun,names){
       query: sql
     },
     success(res){
-     that.onLoad()
-    //  that.setData({
+      wx.showToast({
+        title: '修改成功',
+        icon:"none"
+      })
+     _this.tableShow()
+    //  _this.setData({
     //    list
     //  })
 
@@ -250,7 +259,7 @@ onInput: function (e) {
 },
 
 sel:function(){
-
+  var _this = this
   if(_this.data.cha != '是'){
     wx.showToast({
       title: '无查询权限',
@@ -259,7 +268,7 @@ sel:function(){
     return;
   }
 
-  var _this = this
+  
   var renyuan = _this.data.renyuan_name
   var sql="select * from baitaoquanxian_copy1 WHERE quanxian = '" + _this.data.gongsi + "' and B like '%" + renyuan + "%' and chashanquanxian='" + _this.data.quanxian_leixing + "'"
   wx.cloud.callFunction({
@@ -279,6 +288,13 @@ sel:function(){
 back:function(){
   wx.navigateBack({
     delta: 1
+  })
+},
+
+goto:function(){
+  var _this = this
+  wx.navigateTo({
+    url: "../personfix2/personfix2?userInfo="+JSON.stringify(_this.data.userInfo)
   })
 },
 

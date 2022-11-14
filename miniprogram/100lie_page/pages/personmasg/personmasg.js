@@ -43,7 +43,6 @@ Page({
         userInfo:userInfo
       })
     }
-
     var sql="select ins,del,upd,sel from baitaoquanxian_department where company = '" + _this.data.userInfo.B + "' and department_name ='" + _this.data.userInfo.bumen + "' and view_name='人员管理'"
     var that =this
     wx.cloud.callFunction({
@@ -66,28 +65,7 @@ Page({
             gai:quanxian[0].upd,
             cha:quanxian[0].sel,
           })
-
-          if(_this.data.cha != '是'){
-            wx.showToast({
-              title: '无查询权限',
-              icon:"none"
-            })
-            return;
-          }
-          var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
-          wx.cloud.callFunction({
-            name: 'sqlServer_117',
-            data:{
-              query : sql
-            },
-            success(res){
-              var list=res.result.recordset
-              that.setData({
-                list
-              })
-            }
-          })
-
+          _this.tableShow()
           var sql="select department_name from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' group by department_name"
           wx.cloud.callFunction({
             name: 'sqlServer_117',
@@ -120,6 +98,15 @@ Page({
     that.setData({
       input_hid:false,
       mask_hid:false,
+      name:"",
+      num:"",
+      pwd:"",
+      zhuangtai:"",
+      bumen:"",
+      email:"",
+      phone:"",
+      bianhao:"",
+      id:"",
     })
 },
 
@@ -129,6 +116,31 @@ bindPickerChange1: function(e) {
   var _this = this
   _this.setData({
     zhuangtai: _this.data.zhuangtai_list[e.detail.value]
+  })
+},
+
+tableShow: function(){
+  var _this = this
+  var that = this
+  if(_this.data.cha != '是'){
+    wx.showToast({
+      title: '无查询权限',
+      icon:"none"
+    })
+    return;
+  }
+  var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data:{
+      query : sql
+    },
+    success(res){
+      var list=res.result.recordset
+      that.setData({
+        list
+      })
+    }
   })
 },
 
@@ -224,14 +236,14 @@ if(that.data.name==list[i].C){
             title: '添加成功',
             icon:'success'
           })
-         that.onLoad()        
+         that.tableShow()        
       }
     })   
   that.setData({
     input_hid:true,
     mask_hid:true,
   })
-  that.onLoad ()
+  that.tableShow()
 },
 
 upd:function(e){
@@ -274,7 +286,7 @@ for( var i =0; i<list.length;i++){
             title: '修改成功',
             icon:'success'
           })
-         that.onLoad()        
+         that.tableShow()        
       }
     })   
   that.setData({
@@ -282,7 +294,7 @@ for( var i =0; i<list.length;i++){
     mask_hid:true,
     upd_hid:true,
   })
-  that.onLoad()
+  that.tableShow()
 },
 
 // 删除
@@ -332,7 +344,7 @@ delete:function(e){
                 title: '删除成功',
                 icon:"none"
               })
-              _this.onLoad()
+              _this.tableShow()
             }
           })
         }
@@ -361,7 +373,16 @@ sel_show:function(){
   var _this = this
   _this.setData({
     name : "",
-    sel_hid:false
+    sel_hid:false,
+    name:"",
+    num:"",
+    pwd:"",
+    zhuangtai:"",
+    bumen:"",
+    email:"",
+    phone:"",
+    bianhao:"",
+    id:"",
   })
 },
 sel:function(e){
@@ -387,7 +408,7 @@ sel:function(e){
 
 ref:function(){
   var _this = this
-  _this.onLoad()
+  _this.tableShow()
 }
 })
 

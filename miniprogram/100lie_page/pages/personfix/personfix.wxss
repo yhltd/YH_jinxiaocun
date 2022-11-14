@@ -99,7 +99,7 @@ padding: 0;
   color: white;
   margin: auto;
   margin-top: 5%; */
-  width: 41%;
+  width: 30%;
   background-color: #009688;
   color: #E6E6E6;
   /* height: 100rpx; */
@@ -108,7 +108,7 @@ padding: 0;
   margin-top: 5%;
 }
 .bt_bottom_hover{
-  width: 40%;
+  width: 30%;
   background-color:#009688;
   color: white;
   margin: auto;

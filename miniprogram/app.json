@@ -123,7 +123,9 @@
         "pages/management/management",
         "pages/company_chart/company_chart",
         "pages/person_chart/person_chart",
-        "pages/work_bench/work_bench"
+        "pages/work_bench/work_bench",
+        "pages/companyfix2/companyfix2",
+        "pages/personfix2/personfix2"
       ]
     },
     {
@@ -244,6 +246,15 @@
         "pages/assay/assay",
         "pages/chuku/chuku",
         "pages/kanban/kanban"
+      ]
+    },
+    {
+      "root": "package_bazhou",
+      "name": "ZhiKeQiDa",
+      "pages": [
+        "pages/index/index",
+        "pages/wode/wode",
+        "pages/task_list/task_list"
       ]
     },
     {

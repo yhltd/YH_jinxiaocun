@@ -157,7 +157,7 @@ Page({
 
   clickView:function(e){
     var _this = this
-    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -178,7 +178,7 @@ Page({
 
   inquire: function () {
     var _this = this
-    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.zeng != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',
@@ -318,7 +318,7 @@ Page({
   del1:function(e){
     var _this = this
     console.log(_this.data.list[e.currentTarget.dataset.index].id)
-    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核员'){
+    if(_this.data.userPower.shan != '可操作' && _this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
       wx.showToast({
         title: '无权限！',
         icon: 'none',

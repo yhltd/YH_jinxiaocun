@@ -56,7 +56,7 @@ Page({
       })
     }
     
-    var sql="select ins,del,upd,sel from baitaoquanxian_department where company = '" + _this.data.userInfo.B + "' and department_name ='" + _this.data.userInfo.bumen + "' and view_name='公司数据分析'"
+    var sql="select ins,del,upd,sel from baitaoquanxian_department where company = '" + _this.data.userInfo.B + "' and department_name ='" + _this.data.userInfo.bumen + "' and view_name='人员权限设置'"
     var that =this
     wx.cloud.callFunction({
       name: 'sqlServer_117',
