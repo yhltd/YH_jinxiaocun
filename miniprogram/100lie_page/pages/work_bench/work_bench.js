@@ -428,11 +428,11 @@ bindPickerChange1: function(e) {
   hid_view : function(){
     var _this = this;
     _this.hidView(_this,"input")
+    _this.hidView(_this,"countPage")
     _this.hidView(_this,"upd_code_input")
     _this.hidView(_this,"select")
     _this.hidView(_this,"moreDo")
     _this.hidView(_this,"examine")
-    _this.hidView(_this,"countPage")
   },
 
   hidView : function(_this,type){

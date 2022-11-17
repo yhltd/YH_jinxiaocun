@@ -82,6 +82,12 @@ Page({
       text: "员工档案",
       index: 12,
       lianjie: "../1gongzitiao/gongzitiao"
+    },
+    {
+      url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dangan.png",
+      text: "生日提醒",
+      index: 13,
+      lianjie: "../1gongzitiao/gongzitiao"
     }
     ],
     iconList: [{

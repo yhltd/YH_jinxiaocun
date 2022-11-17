@@ -65,12 +65,13 @@
   <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
     <form bindsubmit="save">
       <view>
+        <view class="input_message">修改内容</view>
         <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?view_list:xiala_panduan==2?view_list1:''}}" disabled="{{xiala_panduan==0}}">
-          <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new" disabled="{{xiala_panduan==0?false:true}}"></input>
+          <input class="input_text_form" style="margin-top: 10%;" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new" disabled="{{xiala_panduan==0?false:true}}"></input>
         </picker>
       </view>
       <view class="bottom_view">  
-        <button class="bt_bottom" style="width: 20%;" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+        <button class="bt_bottom" style="width: 30%;" bindtap="save_piliang" hover-class="bt_form_hover">批量设置</button>
         <button class="bt_bottom" style="width: 20%;" form-type="submit" hover-class="bt_form_hover">确定</button>
         <button class="bt_bottom" style="width: 20%;" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
       </view>

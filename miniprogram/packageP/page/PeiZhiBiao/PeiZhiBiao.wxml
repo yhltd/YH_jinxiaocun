@@ -24,7 +24,7 @@
 <view class="input_view" hidden="{{handle}}" style="margin: 0 auto;text-align: center;">
   <view class="progress-box" style="margin-top: 10rpx;">
     <view>剩余空间：{{allSpace}}MB</view>
-    <progress percent="{{100- usedSpace}}" show-info stroke-width="3" style="height: 100rpx;"></progress>
+    <progress percent="{{100- usedSpace}}" show-info stroke-width="3" style="height: 70px;width: 80%;margin: 0 auto;"></progress>
   </view>
 </view>
 

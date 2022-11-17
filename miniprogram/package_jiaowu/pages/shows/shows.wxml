@@ -15,11 +15,8 @@
 <!-- <button class="btn-primary" hover-class="btn-hover" disabled="{{isdis!=1}}" bindtap="chazhao">查找</button> -->
 
 <van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
-  <van-tabbar-item icon="">基础信息</van-tabbar-item>
-  <van-tabbar-item icon="">财务相关</van-tabbar-item>
-  <!-- <van-tabbar-item icon="../../images/dingdan.png" disabled="{{isdis!=1}}" >订单及部门</van-tabbar-item>
-  <van-tabbar-item icon="../../images/paichan.png">排产及排班</van-tabbar-item>
-  <van-tabbar-item icon="../../images/caozuo-huizong.png">汇总</van-tabbar-item> -->
+  <van-tabbar-item icon="../../images/work.png">基础信息</van-tabbar-item>
+  <van-tabbar-item icon="../../images/paichan.png">财务相关</van-tabbar-item>
 </van-tabbar>
 
 <view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>

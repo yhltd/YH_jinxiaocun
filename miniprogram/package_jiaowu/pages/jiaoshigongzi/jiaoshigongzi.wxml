@@ -87,7 +87,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
 	  <view class="lables1">日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" fields="month" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rq" class="input_text_form"  value="{{rq}}" type="date" name="rq" disabled="disabled"></input>

@@ -50,7 +50,7 @@
 <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="save">
     <view>
-      <view class="input_message" wx:if="{{message_input!=''}}">提示：{{message_input}}</view>
+      <view class="input_message">修改内容</view>
       <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
     </view>
     <view class="bt_view">  

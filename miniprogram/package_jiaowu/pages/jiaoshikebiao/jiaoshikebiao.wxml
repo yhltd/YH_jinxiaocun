@@ -64,7 +64,7 @@
 <!---------修改弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 82%;" >
-  <view class="lables">教师</view>
+  <view class="lables1">教师</view>
     <input bindinput="onInput" data-column="js" class="input_text_form"  value="{{js}}" type="text" name="js"></input>
     <view class="lables">课程</view>
     <picker bindchange="bindPickerChange1" value="{{index}}" range="{{kecheng_list}}">
@@ -87,8 +87,8 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 90%;" >
-    <view class="lables">教师</view>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;" >
+    <view class="lables1">教师</view>
     <input bindinput="onInput" data-column="js" class="input_text_form"  value="{{js}}" type="text" name="js"></input>
     <view class="lables">课程</view>
     <input bindinput="onInput" data-column="kc" class="input_text_form" value="{{kc}}" type="text" name="kc" ></input>

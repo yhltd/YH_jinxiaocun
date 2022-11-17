@@ -25,6 +25,7 @@
 <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?'true':''}}">
   <form bindsubmit="save">
     <view>
+      <view class="input_message">修改内容</view>
       <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{empty}}" type="{{dataset_input.input_type}}" name="new"></input>
     </view>
     <view class="bt_view">  

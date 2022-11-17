@@ -113,6 +113,9 @@ Page({
         var list = res.result
         for(var i=0; i<list.length; i++){
           list[i].rgdate = list[i].rgdate.split("T")[0]
+          if(list[i].Nohour == null){
+            list[i].Nohour = 0
+          }
         }
         _this.setData({
           list: list

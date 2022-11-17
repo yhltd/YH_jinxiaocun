@@ -238,8 +238,8 @@ Page({
   bindPickerChange2: function(e) {
     var _this = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    var week = _this.data.week[e.detail.value]
-    console.log(pxkc)
+    var week = _this.data.week_list[e.detail.value]
+    console.log(week)
     _this.setData({
       xq: week,
     })

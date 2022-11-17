@@ -82,11 +82,17 @@ Page({
         index: 12,
         hid : true,
         lianjie: "../../packageA/pages/1gongzitiao/gongzitiao"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "生日提醒",
+        index: 13,
+        hid : true,
+        lianjie: "../../packageA/pages/1shengri_tixing/shengri_tixing"
       }
     ]
   },
   submit: function(e) {
-    
+    console.log('跳转')
     var that = this
     var index = e.currentTarget.dataset.index;
     if(!that.data.list[index].hid){
@@ -94,13 +100,18 @@ Page({
     }
     var id = that.data.id;
     var view_id = e.currentTarget.dataset.view_id;
-    
+    var old_view_id = e.currentTarget.dataset.view_id;
     var gongsi = app.globalData.gongsi;
     var companyArr = gongsi.split("_")
     wx.showToast({
       title:'页面跳转中',
       icon:'none'
     })
+
+    if(view_id == 13){
+      view_id = 2
+      old_view_id = 13
+    }
 
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -112,7 +123,11 @@ Page({
         if(res.result.recordset.length!=0){
           var access  = res.result.recordset[0];
         }
-        if(index == 9){
+        if(old_view_id == 13){
+          wx.navigateTo({
+            url: that.data.list[12].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0]
+          })
+        }else if(index == 9){
           wx.navigateTo({
             url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+gongsi
           })
@@ -159,7 +174,7 @@ Page({
     var sql = "select ren.look,[view].viewName from gongzi_renyuanManager as ren,gongzi_viewNames as [view] where ren.R_id = '"+id+"' and ren.view_id = [view].id";
     console.log(sql)
     var looks = [];
-    wx.cloud.callFunction({
+    wx.cloud.callFunction({ 
       name: 'sqlServer_117',
       data: {
         query: sql
@@ -177,9 +192,11 @@ Page({
               continue list
             }
           }
-          _this.setData({
-            ["list["+i+"].hid"] : false
-          })
+          if(i != 12){
+            _this.setData({
+              ["list["+i+"].hid"] : false
+            })
+          }
         }
         wx.hideLoading({
           complete: (res) => {},

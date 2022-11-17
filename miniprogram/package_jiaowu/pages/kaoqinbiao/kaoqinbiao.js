@@ -87,7 +87,7 @@ Page({
     zeng:"",
     shan:"",
     gai:"",
-
+    empty:'',
     minDate: new Date(1900, 1, 1).getTime(),
     maxDate: new Date(2100, 12, 31).getTime(),
     currentDate: new Date().getTime(),
@@ -423,14 +423,11 @@ Page({
       ["list["+index+"]."+column] : new_value_input,
       empty : ""
     })
-
     wx.cloud.callFunction({
        name: 'sql_jiaowu',
         data: {
           sql: "update kaoqin set "+column+" = '"+new_value_input+"' where id='"+_this.data.id+"'"
         },
-        
-        
       success : res=>{
         _this.setData({
           initHidView : false,
@@ -440,6 +437,57 @@ Page({
           title: "修改成功",
           icon : "none"
         })
+        var e = ['']
+        _this.tableShow(e)
+      },
+      err : res =>{
+        wx.showToast({
+          title: "错误",
+          icon : "none"
+        })
+      }
+    })
+  },
+
+  save_piliang: function(e){
+    var _this = this;
+    console.log(e)
+    var new_value_input = _this.data.empty
+    console.log(new_value_input)
+    if(new_value_input == ""){
+      new_value_input = _this.data.value_input
+    }
+    var class_id = _this.data.class_id
+    if(new_value_input==""){
+      new_value_input = _this.data.value_input
+    }
+    
+    var index = _this.data.index_input;
+    var column = _this.data.column_input;
+    var id = _this.data.upd_db_id;
+    console.log(new_value_input+"-------"+column+"-------"+_this.data.id )
+    _this.hidView(_this,"input")
+    _this.setData({
+      ["list["+index+"]."+column] : new_value_input,
+      empty : ""
+    })
+    wx.cloud.callFunction({
+       name: 'sql_jiaowu',
+        data: {
+          sql: "update kaoqin set ri1= '"+new_value_input+"',ri2= '"+new_value_input+"',ri3= '"+new_value_input+"',ri4= '"+new_value_input+"',ri5= '"+new_value_input+"',ri6= '"+new_value_input+"',ri7= '"+new_value_input+"',ri8= '"+new_value_input+"',ri9= '"+new_value_input+"',ri10= '"+new_value_input+"',ri11= '"+new_value_input+"',ri12= '"+new_value_input+"',ri13= '"+new_value_input+"',ri14= '"+new_value_input+"',ri15= '"+new_value_input+"',ri16= '"+new_value_input+"',ri17= '"+new_value_input+"',ri18= '"+new_value_input+"',ri19= '"+new_value_input+"',ri20= '"+new_value_input+"',ri21= '"+new_value_input+"',ri22= '"+new_value_input+"',ri23= '"+new_value_input+"',ri24= '"+new_value_input+"',ri25= '"+new_value_input+"',ri26= '"+new_value_input+"',ri27= '"+new_value_input+"',ri28= '"+new_value_input+"',ri29= '"+new_value_input+"',ri30= '"+new_value_input+"',ri31= '"+new_value_input+"' where id='"+_this.data.id+"'"
+        },
+      success : res=>{
+        console.log(res)
+        _this.setData({
+          initHidView : false,
+        })
+        console.log('id',_this.data.id)
+        wx.showToast({
+          title: "修改成功",
+          icon : "none"
+        })
+        var e = ['']
+        _this.tableShow(e)
       },
       err : res =>{
         wx.showToast({

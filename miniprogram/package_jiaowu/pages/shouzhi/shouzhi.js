@@ -275,13 +275,18 @@ Page({
         console.log(res.result)
         var list = res.result
         var fenlei = []
+        var jingshou = []
         for(var i=0; i<list.length; i++){
           if(list[i].msort != '' && list[i].msort != null && list[i].msort != undefined){
             fenlei.push(list[i].msort)
           }
+          if(list[i].teacher != '' && list[i].teacher != null && list[i].teacher != undefined){
+            jingshou.push(list[i].teacher)
+          }
         }
         _this.setData({
           fenlei_list: fenlei,
+          jingshou_list:jingshou
         })
 
       },
@@ -326,6 +331,16 @@ Page({
     console.log(fenlei)
     _this.setData({
       zcfl: fenlei,
+    })
+  },
+
+  bindPickerChange3: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var jingshou = _this.data.jingshou_list[e.detail.value]
+    console.log(jingshou)
+    _this.setData({
+      jsr: jingshou,
     })
   },
 

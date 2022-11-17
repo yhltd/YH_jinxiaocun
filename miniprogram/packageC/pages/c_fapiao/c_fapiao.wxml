@@ -47,7 +47,7 @@
 <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="save">
     <view>
-      <view class="input_message" wx:if="{{message_input!=''}}">提示：{{message_input}}</view>
+      <view class="input_message">修改内容</view>
       <picker display="{{xiala_panduan==0?false:true}}" mode="{{xiala_panduan==1?'date':''}}" bindchange="bindPickerChange" value="{{xiala_panduan==1?date:index}}" range="{{xiala_panduan==2?kehu_list:xiala_panduan==3?zhonglei_list:''}}">
         <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
       </picker>

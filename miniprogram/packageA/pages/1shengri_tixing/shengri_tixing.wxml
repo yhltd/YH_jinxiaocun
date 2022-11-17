@@ -1,0 +1,88 @@
+<!--单选查询蒙版部分-->
+<view class='maskWindow' wx:if="{{isMaskWindowShow}}" catchtap='' catchtouchmove='move'>
+  <view class='maskWindowContent' catchtap='clickTap'>
+    <view class="maskWindowTitleText">
+      <icon type="search" size='13' color='#999'></icon>
+      <text> 请选择查询项目(单选)</text>
+    </view>
+    <view class='maskWindowList' wx:for='{{maskWindowList}}' wx:for-index='index' wx:if='{{index===0}}'>
+      <view class="maskWindowText {{index == selectIndex? 'maskWindowText_selected' : 'maskWindowText_unselected'}}" catchtap='maskWindowTableSelect' data-window-Index='{{index}}'>{{maskWindowList[index]}}</view>
+    </view>
+    <!--条件查询结果显示区域！-->
+
+    <view style="height:30rpx"></view>
+    <view class='maskWindowInputView'>
+      <picker mode="date" value="{{date}}" start="1900-01-01" end="2100-12-31" bindchange="bindDateChange1">
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入时间' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput' value="{{start_date}}" disabled="disabled"></input>
+      </picker>
+    </view>
+
+    <!---->
+    <view class='maskWindowBtnView'>
+      <view class='maskWindowBtn' hover-class="btn-hover" catchtap='maskWindowCancel' style="background: #ededed;color: #999 !important;">取消</view>
+      <view style="width:28%"></view>
+      <view class='maskWindowBtn' hover-class="btn-hover" bindtap="maskWindowOk" form-type="submit">提交</view>
+      <view style="width:2%"></view>
+    </view>
+  </view>
+</view>
+
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <view class='table_header'>
+      <block wx:for="{{title}}" wx:key="">
+        <view class="th {{(item.text == '员工银行账号')?'change':''||(item.text == '序号')?'tap_120':''}}" data-baopan='{{item.text}}'>
+          <view class="cell_label_header centerclass">
+            <text style=" font-weight:bold;">{{item.text}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+
+    <!--内容纵向渲染 -->
+    <block wx:for="{{list}}" wx:for-index="idx">
+      <view class='table_main'>
+        <view class='td' style="{{item.A!='' && isNotANumber(item.A)?'background:yellow':''}}">
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.A}}" data-name="{{item.A}}" data-doinb='A' data-type="text">{{item.A}}</view>
+        </view>
+        <view class='td' style="{{item.B!='' && isNotANumber(item.B)?'background:yellow':''}}">
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.B}}" data-name="{{item.B}}" data-doinb='B' data-type="text">{{item.B}}</view>
+        </view>
+        <view class='td' style="{{item.C!='' && isNotANumber(item.C)?'background:yellow':''}}">
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.C}}" data-name="{{item.C}}" data-doinb='C' data-type="text">{{item.C}}</view>
+        </view>
+        <view class='td' style="{{item.D!='' && isNotANumber(item.D)?'background:yellow':''}}">
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.D}}" data-name="{{item.D}}" data-doinb='D' data-type="text">{{item.D}}</view>
+        </view>
+        <view class='td' style="{{item.E!='' && isNotANumber(item.E)?'background:yellow':''}}">
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.E}}" data-name="{{item.E}}" data-doinb='E' data-type="text">{{item.E}}</view>
+        </view>
+        <view class='td' style="{{item.F!='' && isNotANumber(item.F)?'background:yellow':''}}">
+          <view class="cell_label centerclass" data-id='{{item.id}}' data-x="{{item.F}}" data-name="{{item.F}}" data-doinb='F' data-type="text">{{item.F}}</view>
+        </view>
+        <view class='td' style="{{item.G!='' && isNotANumber(item.G)?'background:yellow':''}}">
+          <view class="cell_label centerclass"  data-id='{{item.id}}' data-x="{{item.G}}" data-name="{{item.G}}" data-doinb='G' data-type="text">{{item.G}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+</scroll-view>
+
+<!--操作栏-->
+
+<view style="height:20rpx;"></view>
+
+<!--底部操作区-->
+<view class="down">
+
+  <view style="height:20rpx"></view>
+
+  <view style="display: inline-flex; flex-direction: row;">
+    <button class="btn-primary" style="width: 40%;" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="searchBtn" disabled="{{result.sel!=1}}">查找</button>
+  </view>
+
+</view>

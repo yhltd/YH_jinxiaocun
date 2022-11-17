@@ -70,7 +70,8 @@
         "pages/1renyuanxinxiguanli_edit_access/access",
         "pages/1renyuanxinxiguanli_gengduo/renyuanxinxiguanli_gengduo",
         "pages/1baopan_shenpi_edit/baopan_shenpi_edit",
-        "pages/1baopan_shenpi/baopan_shenpi"
+        "pages/1baopan_shenpi/baopan_shenpi",
+        "pages/1shengri_tixing/shengri_tixing"
       ]
     },
     {
@@ -269,7 +270,7 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1E90FF",
-    "navigationBarTitleText": "云合进销存",
+    "navigationBarTitleText": "云合未来一体化系统",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

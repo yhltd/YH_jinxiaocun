@@ -16,6 +16,16 @@ button{
   flex-direction: column;
 }
 
+.input_message{
+  position: fixed;
+  width: 80%;
+  left: 10%;
+  top: 4%;
+  text-align: center;
+  color: #787878;
+  text-shadow: 5rpx 5rpx 5rpx #D6D6D6;  
+}
+
 .sv_list{
   width: auto;
   white-space: nowrap;

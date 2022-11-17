@@ -69,6 +69,7 @@
 
 <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="save">
+    <view class="input_message">修改内容</view>
     <view wx:if="{{isDate}}">
       <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
     </view>

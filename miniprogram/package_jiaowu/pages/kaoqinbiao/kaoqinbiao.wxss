@@ -126,13 +126,23 @@ button{
 .input_view{
   position: fixed;
   width: 90%;
-  height: auto;
+  height: 20%;
   top: 25%;
   background-color: white;
   border-radius: 10rpx;
   box-shadow: 10rpx 10rpx 10rpx black;
   z-index: 20;
   left:5%;
+}
+
+.input_message{
+  position: fixed;
+  width: 80%;
+  left: 10%;
+  top: 4%;
+  text-align: center;
+  color: #787878;
+  text-shadow: 5rpx 5rpx 5rpx #D6D6D6;  
 }
 
 .input_text_form{
