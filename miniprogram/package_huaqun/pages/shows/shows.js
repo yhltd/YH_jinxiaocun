@@ -1,45 +1,13 @@
-// package_huaqun/page/shows/shows.js
+// package_huaqun/pages/shows/shows.js
 Page({
 
-   /**
+  /**
    * 页面的初始数据
    */
   data: {
-    userInfo:'',
-    active:0,
-    showList: [{
-      text: "参照表",
-      url: "../canzhao/canzhao"
-    },
-    {
-      text: "其他配置表",
-      url: "../qtpeizhi/qtpeizhi"
-    },
-    {
-      text: "下拉配置表",
-      url: "../xlpeizhi/xlpeizhi"
-    },
-    {
-      text: "账号管理",
-      url: "../zhguanli/zhguanli"
-    },
-  ]
-  },
-  
 
-  go: function (e) {
-    var _this = this;
-    var index = e.currentTarget.dataset.index;
-    var url = _this.data.showList[index].url
-    var text = _this.data.showList[index].text
-    
-    if(url != ''){
-      wx.navigateTo({
-        url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
-      })
-    }
-    
   },
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -269,7 +269,11 @@
       "root": "package_huaqun",
       "name": "HuaQunJiaJuCaiLiao",
       "pages": [
-        "page/shows/shows"
+        "page/shows/shows",
+        "page/canzhao/canzhao",
+        "page/qtpeizhi/qtpeizhi",
+        "page/xlpeizhi/xlpeizhi",
+        "page/zhguanli/zhguanli"
       ]
     }
   ],
