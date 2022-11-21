@@ -264,6 +264,13 @@
       "pages": [
         "page/out_in_print/out_in_print"
       ]
+    },
+    {
+      "root": "package_huaqun",
+      "name": "HuaQunJiaJuCaiLiao",
+      "pages": [
+        "page/shows/shows"
+      ]
     }
   ],
   "window": {
