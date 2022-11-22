@@ -8,5 +8,6 @@
     "van-datetime-picker": "../../components/datetime-picker/index"
   },
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "任务单（下派）"
+  "navigationBarTitleText": "任务单（下派）",
+  "pageOrientation": "auto"
 }

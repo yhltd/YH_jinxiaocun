@@ -21,6 +21,7 @@ Page({
       {label:'已完成任务'},
       {label:'已取消任务'},
     ],
+    checkItems:[],
     list: [],
     title: [
       {
@@ -146,15 +147,26 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var this_select = JSON.parse(options.picker_select)
     _this.setData({
       userInfo:userInfo,
+      picker_select:this_select,
     })
-    var e = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '' ",1,50]
+    var ee = []
+    if(this_select =='待接受任务'){
+      var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '' ",1,50]
+    }else if(this_select =='进行中任务'){
+      var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '已接受' and isnull(zhizao_wancheng,'') != '已完成' ",1,50]
+    }else if (this_select =='已完成任务'){
+      var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '已接受' and zhizao_wancheng = '已完成'",1,50]
+    }else if (this_select =='已取消任务'){
+      var ee = ["where zhizao_list like '%" + _this.data.userInfo.username + "%' and jiedanren != '" + _this.data.userInfo.username + "' ",1,50]
+    }
     _this.setData({
-      ee:e
+      ee
     })
-    _this.pageShow(e)
-    _this.tableShow(e)
+    _this.pageShow(ee)
+    _this.tableShow(ee)
   },
 
   choicePick (e) {
@@ -269,7 +281,8 @@ Page({
         }
         console.log(list)
         _this.setData({
-          list: list
+          list: list,
+          checkItems:[],
         })
         console.log(list)
       },
@@ -294,7 +307,7 @@ Page({
       title : '加载中',
       mask : 'true'
     })
-    var sql = "select * from (select row_number() over(order by id) as row_num,* from (select tl.id,isnull(tl.kehu,'') as kehu,isnull(pic_no,'') as pic_no,isnull(order_name,'') as order_name,isnull(dantai_name,'') as dantai_name,isnull(gongxv,'') as gongxv,isnull(lingjian,'') as lingjian,isnull(size,'') as size,isnull(num,'') as num,isnull(type,'') as type,isnull(jiedanren,'') as jiedanren,riqi,riqi2,isnull(is_wangong,'') as is_wangong,'' as cailiao,isnull(gongshi,'') as gongshi,isnull(remark,'') as remark,isnull(xuanxiang,'') as xuanxiang,isnull(jixing,'') as jixing,isnull(tl.order_no,'') as order_no,isnull(shunxv,'') as shunxv,'' as ks,isnull(dantai_id,'') as dantai_id,isnull(beizhu,'') as beizhu,isnull(zhizao_jieshou,'') as zhizao_jieshou,isnull(zhizao_wancheng,'') as zhizao_wancheng,isnull(kuguan_ruku,'') as kuguan_ruku,isnull(zhizao_list,'') as zhizao_list,isnull(ma.kehu,'') as kehu2 from task_list as tl left join (select id,order_no,kehu,ku from management) as ma on tl.order_no = ma.order_no where (tl.ku<>'库' or tl.ku is null and ma.ku<>'库' or ma.ku is null)) as list "+ e[0] +") as list_end where row_num between " + e[1] + " and " + e[2] 
+    var sql = "select * from (select row_number() over(order by id) as row_num,* from (select tl.id,isnull(tl.kehu,'') as kehu,isnull(pic_no,'') as pic_no,isnull(order_name,'') as order_name,isnull(dantai_name,'') as dantai_name,isnull(gongxv,'') as gongxv,isnull(lingjian,'') as lingjian,isnull(size,'') as size,isnull(num,'') as num,isnull(type,'') as type,isnull(jiedanren,'') as jiedanren,riqi,riqi2,isnull(is_wangong,'') as is_wangong,'' as cailiao,isnull(gongshi,'') as gongshi,isnull(remark,'') as remark,isnull(xuanxiang,'') as xuanxiang,isnull(jixing,'') as jixing,isnull(tl.order_no,'') as order_no,isnull(shunxv,'') as shunxv,'' as ks,isnull(dantai_id,'') as dantai_id,isnull(beizhu,'') as beizhu,isnull(zhizao_jieshou,'') as zhizao_jieshou,isnull(zhizao_wancheng,'') as zhizao_wancheng,isnull(kuguan_ruku,'') as kuguan_ruku,isnull(zhizao_list,'') as zhizao_list from task_list as tl where (tl.ku<>'库' or tl.ku is null)) as list "+ e[0] +") as list_end where row_num between " + e[1] + " and " + e[2] 
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_bazhou',
@@ -398,26 +411,38 @@ Page({
     })
   },
 
-  clickView:function(e){
+  clickView:function(){
     var _this = this
     if(_this.data.picker_select != '待接受任务' && _this.data.picker_select != '进行中任务'){
+      wx.showToast({
+        title: '无需操作！',
+        icon: 'none'
+      })
       return;
     }
     _this.setData({
-      id: _this.data.list[e.currentTarget.dataset.index].id,
       xgShow:true,
     })
   },
 
   yes_click:function(){
     var _this = this
+    var checkItems = _this.data.checkItems
     var sql = ""
     if(_this.data.picker_select == '待接受任务'){
-      sql = "update task_list set zhizao_jieshou = '已接受' where id = "+ _this.data.id
+      sql = "update task_list set zhizao_jieshou = '已接受' where id in("
     }else if(_this.data.picker_select == '进行中任务'){
-      sql = "update task_list set zhizao_wancheng = '已完成' where id = "+ _this.data.id
+      sql = "update task_list set zhizao_wancheng = '已完成' where id in("
     }
 
+    for(var i=0;i<checkItems.length;i++){
+      if(i==checkItems.length-1){
+        sql += checkItems[i]+")"
+        break;
+      }
+      sql += checkItems[i]+","
+    }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_bazhou',
       data: {
@@ -452,13 +477,23 @@ Page({
 
   no_click:function(){
     var _this = this
+    var checkItems = _this.data.checkItems
     var sql = ""
+
     if(_this.data.picker_select == '待接受任务'){
-      sql = "update task_list set zhizao_jieshou = '已拒绝' where id = "+ _this.data.id
+      sql = "update task_list set zhizao_jieshou = '已拒绝' where id in("
     }else if(_this.data.picker_select == '进行中任务'){
-      sql = "update task_list set zhizao_wancheng = '未完成' where id = "+ _this.data.id
+      sql = "update task_list set zhizao_wancheng = '未完成' where id in("
     }
 
+    for(var i=0;i<checkItems.length;i++){
+      if(i==checkItems.length-1){
+        sql += checkItems[i]+")"
+        break;
+      }
+      sql += checkItems[i]+","
+    }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_bazhou',
       data: {
@@ -489,6 +524,25 @@ Page({
       }
     })
 
+  },
+
+  choice_checkBox_examine : function(e){
+    var _this = this;
+    var value = e.detail.value
+    var id = e.currentTarget.dataset.id;
+    var checkItems = _this.data.checkItems;
+    if(value!=""){
+      checkItems.push(id)
+    }else{
+      for(let i=0;i<checkItems.length;i++){
+        if(checkItems[i]==id){
+          checkItems.splice(i,1)
+        }
+      }
+    }
+    _this.setData({
+      checkItems
+    })
   },
 
   onInput: function (e) {

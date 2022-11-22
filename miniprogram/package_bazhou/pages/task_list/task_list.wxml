@@ -5,12 +5,18 @@
 <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:78%">
   <view class="table">
     <view class='table_header'>
+      <view class="title_text" style="width:100rpx;position:sticky;left:0;z-index:5">选择</view>
       <block class="title" wx:for="{{title}}">
         <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0">
+            <checkbox-group bindchange="choice_checkBox_examine" data-id="{{list_item.id}}" style="width:100rpx">
+              <checkbox style="width: 62rpx;margin-bottom: 8rpx;margin-left: 29rpx;" value="{{list_item.id}}" color="#282B33"/>
+            </checkbox-group>
+          </view>
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
@@ -19,8 +25,7 @@
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
-              data-isupd="{{item.isupd}}"
-              bindtap="clickView">
+              data-isupd="{{item.isupd}}">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -36,9 +41,10 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="page_down_click" >{{"<<"}}</button>
-  <button class="bt_bottom" >{{this_page + "/" + max_page}}</button>
-  <button class="bt_bottom" bindtap="page_up_click" >{{">>"}}</button>
+	<button class="bt_bottom" style="width: 15%;" bindtap="page_down_click" >{{"<<"}}</button>
+  <button class="bt_bottom" style="width: 20%;" >{{this_page + "/" + max_page}}</button>
+  <button class="bt_bottom" style="width: 15%;" bindtap="page_up_click" >{{">>"}}</button>
+  <button class="bt_bottom" style="width: 35%;" bindtap="clickView">操作</button>
   <!-- <button class="bt_bottom" bindtap="entering" >查询</button>
   <button class="bt_bottom" bindtap="getExcel" >导出</button> -->
 </view>

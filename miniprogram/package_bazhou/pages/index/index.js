@@ -7,7 +7,16 @@ Page({
     userInfo:'',
     active:0,
     showList: [{
-      text: "任务单（下派）",
+      text: "任务单（下派）-待接受",
+      url: "../task_list/task_list"
+    },{
+      text: "任务单（下派）-进行中",
+      url: "../task_list/task_list"
+    },{
+      text: "任务单（下派）-已完成",
+      url: "../task_list/task_list"
+    },{
+      text: "任务单（下派）-已取消",
       url: "../task_list/task_list"
     },
   ]
@@ -28,8 +37,19 @@ Page({
     var _this = this;
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
+    console.log(index)
+    var picker_select = ''
+    if(index == 0){
+      picker_select = "待接受任务"
+    }else if(index == 1){
+      picker_select = "进行中任务"
+    }else if(index == 2){
+      picker_select = "已完成任务"
+    }else if(index == 3){
+      picker_select = "已取消任务"
+    }
     wx.navigateTo({
-      url: url + "?userInfo="+JSON.stringify(_this.data.userInfo)
+      url: url + "?userInfo="+JSON.stringify(_this.data.userInfo) + "&picker_select=" + JSON.stringify(picker_select)
     })
   },
 
