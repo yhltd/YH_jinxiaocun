@@ -23,6 +23,10 @@ Page({
       text: "账号管理",
       url: "../zhguanli/zhguanli"
     },
+    {
+      text: "灯带下单表",
+      url: "../ddxiadan/ddxiadan"
+    },
   ]
   },
   

@@ -1,4 +1,5 @@
-// package_huaqun/page/xlpeizhi/xlpeizhi.js
+// package_huaqun/page/ddxiadan/ddxiadan.js
+
 Page({
 
   /**
@@ -12,10 +13,10 @@ Page({
   cxShow: false,
   data: {
     update_name:{
-      cxdk:"出线端口",
-      lxc:"铝型材",
-      lcys:"铝材颜色",
-      gy:"光源",
+      fj:"房间",
+      gh:"柜号",
+      ddcd:"灯带长度mm",
+      sl:"数量(支）",
       dy:"电源",
       kg:"开关",
       pj:"配件",
@@ -29,88 +30,94 @@ Page({
     },
     list: [],
     title: [{
-        text: "出线端口",
+        text: "房间",
         width: "275rpx",
         columnName: "cxdk",
         type: "text",
         isupd: true
       },
       {
-        text: "铝型材",
+        text: "柜号",
         width: "330rpx",
         columnName: "lxc",
         type: "text",
         isupd: true
       },
       {
-        text: "铝材颜色",
+        text: "灯带长度mm",
         width: "200rpx",
         columnName: "lcys",
         type: "text",
         isupd: true
       },
       {
-        text: "光源",
+        text: "数量(支）",
         width: "275rpx",
         columnName: "gy",
         type: "text",
         isupd: true
       },{
-        text: "电源",
+        text: "出线端口",
         width: "300rpx",
         columnName: "dy",
         type: "text",
         isupd: true
       },{
-        text: "开关",
+        text: "铝型材",
         width: "225rpx",
         columnName: "kg",
         type: "text",
         isupd: true
       },{
-        text: "配件",
+        text: "铝材颜色",
         width: "275rpx",
         columnName: "pj",
         type: "text",
         isupd: true
       },{
-        text: "送货方式",
+        text: "光源",
         width: "275rpx",
         columnName: "shfs",
         type: "text",
         isupd: true
       },{
-        text: "玻璃深加工",
+        text: "电源",
         width: "275rpx",
         columnName: "blsjg",
         type: "text",
         isupd: true
       },{
-        text: "玻璃颜色",
+        text: "开关",
         width: "275rpx",
         columnName: "blys",
         type: "text",
         isupd: true
       },{
-        text: "拉手型号",
+        text: "配件",
         width: "275rpx",
         columnName: "lsxh",
         type: "text",
         isupd: true
       },{
-        text: "拉手位",
+        text: "功率W",
         width: "275rpx",
         columnName: "lsw",
         type: "text",
         isupd: true
       },{
-        text: "开铰链孔",
+        text: "备注",
         width: "275rpx",
         columnName: "kjlk",
         type: "text",
         isupd: true
       },{
-        text: "铰链孔位",
+        text: "单价",
+        width: "275rpx",
+        columnName: "jlkw",
+        type: "text",
+        isupd: true
+      },{
+        text: "金额",
         width: "275rpx",
         columnName: "jlkw",
         type: "text",

@@ -273,7 +273,8 @@
         "page/canzhao/canzhao",
         "page/qtpeizhi/qtpeizhi",
         "page/xlpeizhi/xlpeizhi",
-        "page/zhguanli/zhguanli"
+        "page/zhguanli/zhguanli",
+        "page/ddxiadan/ddxiadan"
       ]
     }
   ],
