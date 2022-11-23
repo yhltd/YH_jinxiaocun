@@ -27,10 +27,26 @@ Page({
       text: "灯带下单表",
       url: "../ddxiadan/ddxiadan"
     },
+    {
+      text: "灯带查看",
+      url: "../ddchakan/ddchakan"
+    },
   ]
   },
   
 
+  
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
+    console.log(userInfo)
+  },
   go: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
@@ -44,13 +60,6 @@ Page({
     }
     
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
-  },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

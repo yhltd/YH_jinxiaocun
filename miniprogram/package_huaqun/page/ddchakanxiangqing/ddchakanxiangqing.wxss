@@ -332,20 +332,3 @@ button{
   margin-left: 55rpx;
   margin-top: 15rpx;
 }
-.lables_head{
-  font-size: 40rpx;
-  margin-left: 30rpx;
-  margin-top: 10rpx;
-  float: left;
-}
-.input_text_head{
-  border: 5rpx solid #E6E6E6;
-  margin: auto;
-  width: 70%;
-  height: 64rpx;
-  align-items: center;
-  border-radius: 19rpx;
-  margin-top: 10rpx;
-  margin-right: 10rpx;
-  
-}

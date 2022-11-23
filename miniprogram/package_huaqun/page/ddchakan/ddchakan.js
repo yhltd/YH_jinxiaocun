@@ -1,4 +1,4 @@
-// package_huaqun/page/canzhao/canzhao.js
+// package_huaqun/page/ddchakan/ddchakan.js
 Page({
 
   /**
@@ -13,34 +13,63 @@ Page({
   data: {
     list: [],
     title: [{
-        text: "铝框型号",
+        text: "客户名称",
         width: "250rpx",
-        columnName: "lkxh",
+        columnName: "khmc",
         type: "text",
         isupd: true
       },
       {
-        text: "长",
+        text: "下单日期",
         width: "250rpx",
-        columnName: "chang",
+        columnName: "xdrq",
         type: "text",
         isupd: true
       },
       {
-        text: "宽",
+        text: "单据编号",
         width: "250rpx",
-        columnName: "kuan",
+        columnName: "djbh",
         type: "text",
         isupd: true
       },
-      
+      {
+        text: "送货地址",
+        width: "250rpx",
+        columnName: "shouhuo",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "联系电话",
+        width: "250rpx",
+        columnName: "lxdh",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "送货方式",
+        width: "250rpx",
+        columnName: "shfs",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "安装地址",
+        width: "250rpx",
+        columnName: "azdz",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "订单号",
+        width: "250rpx",
+        columnName: "ddh",
+        type: "text",
+        isupd: true
+      },
     ],
-
-    id:'',
-    lkxh: '', 
-    chang: '',
-    kuan: '',
-  
+    djbh:'',
   },
 
   /**
@@ -48,8 +77,32 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    var e = ['']
-    _this.tableShow(e)
+      wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc from lightbelt "
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          list: list
+        })
+        console.log(list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+    
   },
 
 
@@ -59,7 +112,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,lkxh,isnull(chang,'') as chang ,isnull(kuan,'') as kuan from refertable where lkxh like '%" + e[0] + "%'"
+        query: "select distinct khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh from lightbelt where khmc like '%"+  e[0] +"%' and ddh like '%"+  e[1] +"%'"
       },
       success: res => {
         console.log(res)
@@ -83,7 +136,6 @@ Page({
       }
     })
   },
-
   qxShow: function () {
     var _this = this
     _this.setData({
@@ -96,90 +148,25 @@ Page({
 
   clickView:function(e){
     var _this = this
+    var djbh=[]
+    djbh.push( _this.data.list[e.currentTarget.dataset.index].djbh)
     _this.setData({
       id: _this.data.list[e.currentTarget.dataset.index].id,
-      lkxh: _this.data.list[e.currentTarget.dataset.index].lkxh, 
-      chang: _this.data.list[e.currentTarget.dataset.index].chang,
-      kuan: _this.data.list[e.currentTarget.dataset.index].kuan,
+      khmc: _this.data.list[e.currentTarget.dataset.index].khmc, 
+      xdrq: _this.data.list[e.currentTarget.dataset.index].xdrq,
+      djbh: _this.data.list[e.currentTarget.dataset.index].djbh,
+      shouhuo: _this.data.list[e.currentTarget.dataset.index].shouhuo,
+      lxdh: _this.data.list[e.currentTarget.dataset.index].lxdh,
+      shfs: _this.data.list[e.currentTarget.dataset.index].shfs,
+      azdz: _this.data.list[e.currentTarget.dataset.index].azdz,
+      ddh: _this.data.list[e.currentTarget.dataset.index].ddh,
+      djbh:djbh,
       xgShow:true,
     })
+    console.log(djbh)
   },
 
-  inquire: function () {
-    var _this = this
-    _this.setData({
-      tjShow: true,
-      id:'',
-      lkxh: '', 
-      chang: '',
-      kuan: '',
-    })
-  },
-  add1: function(){
-    var _this = this
-
-    if(_this.data.lkxh == ''){
-      wx.showToast({
-        title: '请输铝框型号！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-
-    if(_this.data.chang == ''){
-      wx.showToast({
-        title: '请输入长！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-
-    if(_this.data.kuan == ''){
-      wx.showToast({
-        title: '请输入宽！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-
-    
-
-      wx.cloud.callFunction({
-        name: 'sqlserver_huaqun',
-        data: {
-          query: "insert into refertable(lkxh,chang,kuan) values('" + _this.data.lkxh + "','" + _this.data.chang + "','" + _this.data.kuan + "')"
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            lkxh: '', 
-            chang: '',
-            kuan: '',
-            
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-  },
+  
 
   onInput: function (e) {
     var _this = this
@@ -189,58 +176,28 @@ Page({
       [column]: e.detail.value
     })
   },
-  upd1:function(){
-    var _this = this
-    wx.cloud.callFunction({
-      name: 'sqlserver_huaqun',
-      data: {
-        query: "update refertable set lkxh='" + _this.data.lkxh + "',chang='" + _this.data.chang + "',kuan='" + _this.data.kuan + "' where id=" + _this.data.id  
-      },
-      success: res => {
-        _this.setData({
-            id:'',
-            lkxh: '', 
-            chang: '',
-            kuan: '',
-        })
-        _this.qxShow()
-        var e = ['']
-         _this.tableShow(e)
-
-        wx.showToast({
-          title: '修改成功！',
-          icon: 'none'
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
-      }
-    })
-  },
-
+  
   del1:function(){
     var _this = this
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "delete from refertable where id='" + _this.data.id + "'"
+          query: "delete from lightbelt where ddh='"+ _this.data.ddh +"'"
         },
         success: res => {
           _this.setData({
             id:'',
-            lkxh: '', 
-            chang: '',
-            kuan: '',
+            khmc: '', 
+            xdrq: '',
+            djbh: '',
+            shouhuo: '',
+            lxdh: '',
+            shfs: '',
+            azdz: '',
+            ddh: '',
           })
           _this.qxShow()
-          var e = ['']
+          var e = ['','']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -264,9 +221,8 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      customer:"",
-      leibie:"",
-      area:"",
+      khmc:"",
+      ddh:"",
     })
   },
 
@@ -278,9 +234,18 @@ Page({
     console.log(e.detail.value)
   },
 
+  cha1:function(){
+    var _this=this
+
+    wx.navigateTo({
+      url: "../ddchakanxiangqing/ddchakanxiangqing?djbh="+JSON.stringify(_this.data.djbh)
+    })
+    _this.qxShow()
+  },
+
   sel1:function(){
     var _this = this
-    var e = [_this.data.lkxh]
+    var e = [_this.data.khmc,_this.data.ddh]
     _this.tableShow(e)
     _this.qxShow()
   },

@@ -274,7 +274,9 @@
         "page/qtpeizhi/qtpeizhi",
         "page/xlpeizhi/xlpeizhi",
         "page/zhguanli/zhguanli",
-        "page/ddxiadan/ddxiadan"
+        "page/ddxiadan/ddxiadan",
+        "page/ddchakan/ddchakan",
+        "page/ddchakanxiangqing/ddchakanxiangqing"
       ]
     }
   ],
