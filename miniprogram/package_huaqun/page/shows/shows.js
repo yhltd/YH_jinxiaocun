@@ -23,43 +23,46 @@ Page({
       text: "账号管理",
       url: "../zhguanli/zhguanli"
     },
-    {
-      text: "灯带下单表",
-      url: "../ddxiadan/ddxiadan"
-    },
-    {
-      text: "灯带查看",
-      url: "../ddchakan/ddchakan"
-    },
   ]
   },
   
 
-  
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var _this = this
-    var userInfo = JSON.parse(options.userInfo)
-    _this.setData({
-      userInfo:userInfo
-    })
-    console.log(userInfo)
-  },
   go: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
-    
     if(url != ''){
       wx.navigateTo({
         url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
       })
     }
-    
   },
+
+  onChange: function (event) {
+    var _this = this;
+    if (event.detail == 0) {
+      wx.redirectTo({
+        url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 1) {
+      wx.redirectTo({
+        url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

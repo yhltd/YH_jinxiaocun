@@ -37,29 +37,6 @@
 </view>
 
 <!------------------------->
-<!---------添加弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
-	<view class="lables">出线端口</view>
-  <input bindinput="onInput" data-column="cxdk" class="input_text_form" value="{{cxdk}}" type="text" name="cxdk" ></input>
-    <view class="lables">铝型材</view>
-    <input bindinput="onInput" data-column="lxc" class="input_text_form"  value="{{lxc}}" type="text" name="lxc"></input>
-    <view class="lables">铝材颜色</view>
-    <input bindinput="onInput" data-column="lcys" class="input_text_form" value="{{lcys}}" type="text" name="lcys"></input>
-    <view class="lables">光源</view>
-    <input bindinput="onInput" data-column="gy" class="input_text_form" value="{{gy}}" type="text" name="gy"></input>
-    <view class="lables">电源</view>
-    <input bindinput="onInput" data-column="dy" class="input_text_form" value="{{dy}}" type="text" name="dy"></input>
-    <view class="lables">开关</view>
-    <input bindinput="onInput" data-column="kg" class="input_text_form" value="{{kg}}" type="text" name="kg"></input>
-    <view class="lables">配件</view>
-    <input bindinput="onInput" data-column="pj" class="input_text_form" value="{{pj}}" type="text" name="pj"></input>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
-  </view>
-</van-popup>
-<!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >

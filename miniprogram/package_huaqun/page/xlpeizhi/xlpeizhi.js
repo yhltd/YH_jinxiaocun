@@ -13,8 +13,8 @@ Page({
   data: {
     update_name:{
       cxdk:"出线端口",
-      lxc:"铝型材",
-      lcys:"铝材颜色",
+      lxc:"铝型材-灯带",
+      lcys:"铝材颜色-灯带",
       gy:"光源",
       dy:"电源",
       kg:"开关",
@@ -36,14 +36,14 @@ Page({
         isupd: true
       },
       {
-        text: "铝型材",
+        text: "铝型材-灯带",
         width: "330rpx",
         columnName: "lxc",
         type: "text",
         isupd: true
       },
       {
-        text: "铝材颜色",
+        text: "铝材颜色-灯带",
         width: "200rpx",
         columnName: "lcys",
         type: "text",
@@ -77,6 +77,18 @@ Page({
         text: "送货方式",
         width: "275rpx",
         columnName: "shfs",
+        type: "text",
+        isupd: true
+      },{
+        text: "铝型材-铝框",
+        width: "275rpx",
+        columnName: "lxc_lk",
+        type: "text",
+        isupd: true
+      },{
+        text: "铝材颜色-铝框",
+        width: "275rpx",
+        columnName: "lcys_lk",
         type: "text",
         isupd: true
       },{
@@ -133,7 +145,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,isnull(cxdk,'') as cxdk,isnull(lxc,'') as lxc,isnull(lcys,'') as lcys,isnull(gy,'') as gy,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(shfs,'') as shfs,isnull(blsjg,'') as blsjg,isnull(blys,'') as blys,isnull(lsxh,'') as lsxh,isnull(lsw,'') as lsw,isnull(kjlk,'') as kjlk,isnull(jlkw,'') as jlkw from dropdowntable"
+        query: "select id,isnull(cxdk,'') as cxdk,isnull(lxc,'') as lxc,isnull(lcys,'') as lcys,isnull(gy,'') as gy,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(shfs,'') as shfs,isnull(blsjg,'') as blsjg,isnull(blys,'') as blys,isnull(lsxh,'') as lsxh,isnull(lsw,'') as lsw,isnull(kjlk,'') as kjlk,isnull(jlkw,'') as jlkw,isnull(lxc_lk,'') as lxc_lk,isnull(lcys_lk,'') as lcys_lk from dropdowntable"
       },
       success: res => {
         var list = res.result.recordset
@@ -190,9 +202,10 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlserver_huaqun',
             data: {
-              query: "insert into dropdowntable(cxdk,lxc,lcys,gy,dy,kg,pj,shfs,blsjg,blys,lsxh,lsw,kjlk,jlkw) values('','','','','','','')"
+              query: "insert into dropdowntable(lxc) values('')"
             },
             success: res => {
+              console.log(res)
               _this.setData({
                 id:'',
                 cxdk:'', 
@@ -234,51 +247,6 @@ Page({
         }
       }
     })
-  },
-
-  add1: function(){
-    var _this = this
-      wx.cloud.callFunction({
-        name: 'sqlserver_huaqun',
-        data: {
-          query: "insert into dropdowntable(cxdk,lxc,lcys,gy,dy,kg,pj) values('" + _this.data.cxdk + "','" + _this.data.lxc + "','" + _this.data.lcys + "','" + _this.data.gy + "','" + _this.data.dy + "','" + _this.data.kg + "','" + _this.data.pj + "')"
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            cxdk:'', 
-            lxc: '',
-            lcys: '',
-            gy: '',
-            dy: '',
-            kg: '',
-            pj: '',
-            shfs:'', 
-            blsjg: '',
-            blys: '',
-            lsxh: '',
-            lsw: '',
-            kjlk: '',
-            jlkw: '',
-          })
-          _this.qxShow()
-          _this.tableShow()
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
   },
 
   onInput: function (e) {
@@ -326,7 +294,6 @@ Page({
   del1:function(e){
     var _this = this
     console.log('aaa',_this.data.list[e.currentTarget.dataset.index].id)
-
     wx.showModal({
       title: '提示',
       content: '确认删除此行数据？',

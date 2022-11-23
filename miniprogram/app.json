@@ -276,7 +276,9 @@
         "page/zhguanli/zhguanli",
         "page/ddxiadan/ddxiadan",
         "page/ddchakan/ddchakan",
-        "page/ddchakanxiangqing/ddchakanxiangqing"
+        "page/ddchakanxiangqing/ddchakanxiangqing",
+        "page/lvkuang_xiadan/lvkuang_xiadan",
+        "page/shows2/shows2"
       ]
     }
   ],
