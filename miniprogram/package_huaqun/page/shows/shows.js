@@ -32,15 +32,25 @@ Page({
     var index = e.currentTarget.dataset.index;
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
-    if(url != ''){
-      wx.navigateTo({
-        url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+    console.log(_this.data.userInfo.power)
+    if (_this.data.userInfo.power=="管理员"){
+      if(url != ''){
+        wx.navigateTo({
+          url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+        })
+      }
+    }else{
+      wx.showToast({
+        title: '无权限！',
+        icon: 'none'
       })
     }
+    
   },
 
   onChange: function (event) {
     var _this = this;
+    console.log(_this.data.userInfo.power)
     if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)

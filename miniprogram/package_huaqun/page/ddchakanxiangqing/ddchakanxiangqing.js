@@ -27,6 +27,8 @@ Page({
       bz:"备注",
       dj:"单价",
       je:"金额",
+      fkzt:"付款状态",
+      hd:"审单",
     },
     list: [],
     title: [{
@@ -85,8 +87,23 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "付款状态",
+        width: "250rpx",
+        columnName: "fkzt",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "审单",
+        width: "250rpx",
+        columnName: "hd",
+        type: "text",
+        isupd: true
+      },
     ],
     list2: [],
+    ddxh_list_dj:[],
     title2: [{
       text: "房间",
       width: "250rpx",
@@ -192,6 +209,7 @@ Page({
       type: "text",
       isupd: true
     },
+    
   ],
   fj: "",
   gh: "",
@@ -220,14 +238,16 @@ Page({
   onLoad(options) {
     var _this = this
     var djbh = JSON.parse(options.djbh)
-    _this.setData({
-      djbh:djbh
+    var userInfo = JSON.parse(options.userInfo)
+     _this.setData({
+      djbh:djbh,
+      userInfo:userInfo
     })
-    console.log(djbh)
+    console.log(userInfo.power)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select distinct djbh,xdrq,ddh,shouhuo,lxdh,shfs,azdz,khmc from lightbelt where djbh = '"+ djbh +"' "
+        query: "select distinct djbh,xdrq,ddh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where djbh = '"+ djbh +"' "
       },
       success: res => {
         var list = res.result.recordset
@@ -261,7 +281,7 @@ Page({
         _this.setData({
           list2: list2
         })
-        console.log('aaa',list2)
+        console.log(list2)
       },
       err: res => {
         console.log("错误!")
@@ -290,6 +310,8 @@ Page({
         var dy = []
         var kg = []
         var pj = []
+        var fk=['未付款','已付款']
+        var hd = ['未通过','已通过']
         console.log(list)
         for(var i=0; i<list.length; i++){
           if(list[i].cxdk != '' && list[i].cxdk != null && list[i].cxdk != undefined){
@@ -321,6 +343,8 @@ Page({
           dy_list:dy,
           kg_list:kg,
           pj_list:pj,
+          fk_list:fk,
+          hd_list:hd,
         })
       },
       err: res => {
@@ -352,6 +376,7 @@ Page({
         }
         _this.setData({
           ddxh_list:ddxh,
+          ddxh_list_dj:list,
         })
       },
       err: res => {
@@ -373,10 +398,16 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    let djbh = _this.data.djbh;
+    
+    _this.setData({
+      djbh:djbh
+    })
+    console.log(djbh)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select distinct djbh,xdrq,ddh,shouhuo,lxdh,shfs,azdz,khmc from lightbelt where djbh = '"+ _this.data.djbh +"' "
+        query: "select distinct djbh,xdrq,ddh,shouhuo,lxdh,shfs,azdz,khmc from lightbelt where djbh = '"+ djbh +"' "
       },
       success: res => {
         var list = res.result.recordset
@@ -439,6 +470,7 @@ Page({
     var _this = this
     var this_column = e.currentTarget.dataset.column
     var panduan = 0
+    
     if(this_column == "cxdk"){
       panduan = 1
     }else if(this_column == "lcb"){
@@ -453,30 +485,50 @@ Page({
       panduan = 6
     }else if(this_column == "pj"){
       panduan = 7
+    }else if(this_column == "fkzt"){
+      panduan = 8
+    }else if(this_column == "hd"){
+      panduan = 9
     }else{
       panduan = 0
     }
-    _this.setData({
-      fj: _this.data.list[e.currentTarget.dataset.index].fj, 
-      gh: _this.data.list[e.currentTarget.dataset.index].gh,
-      ddcd: _this.data.list[e.currentTarget.dataset.index].ddcd,
-      sl: _this.data.list[e.currentTarget.dataset.index].sl,
-      cxdk: _this.data.list[e.currentTarget.dataset.index].cxdk,
-      lcb: _this.data.list[e.currentTarget.dataset.index].lcb,
-      lcys: _this.data.list[e.currentTarget.dataset.index].lcys,
-      gy: _this.data.list[e.currentTarget.dataset.index].gy,
-      kg: _this.data.list[e.currentTarget.dataset.index].kg,
-      pj: _this.data.list[e.currentTarget.dataset.index].pj,
-      gl: _this.data.list[e.currentTarget.dataset.index].gl,
-      bz: _this.data.list[e.currentTarget.dataset.index].bz,
-      dj: _this.data.list[e.currentTarget.dataset.index].dj,
-      je: _this.data.list[e.currentTarget.dataset.index].je,
-      this_column:e.currentTarget.dataset.column,
-      this_value:e.currentTarget.dataset.value,
-      this_index:e.currentTarget.dataset.index,
-      xiala_panduan:panduan,
-      xgShow:true,
-    })
+    var this_row = e.currentTarget.dataset.index
+    console.log(this_row)
+    if (_this.data.userInfo.power=='管理员'){
+      if((e.currentTarget.dataset.column!='dy' || e.currentTarget.dataset.column!='kg' || e.currentTarget.dataset.column!='pj') && _this.data.list2[this_row].dy == "" && _this.data.list2[this_row].kg == "" && _this.data.list2[this_row].pj == ""){
+        _this.setData({
+          fj: _this.data.list2[e.currentTarget.dataset.index].fj, 
+          gh: _this.data.list2[e.currentTarget.dataset.index].gh,
+          ddcd: _this.data.list2[e.currentTarget.dataset.index].ddcd,
+          sl: _this.data.list2[e.currentTarget.dataset.index].sl,
+          cxdk: _this.data.list2[e.currentTarget.dataset.index].cxdk,
+          lcb: _this.data.list2[e.currentTarget.dataset.index].lcb,
+          lcys: _this.data.list2[e.currentTarget.dataset.index].lcys,
+          gy: _this.data.list2[e.currentTarget.dataset.index].gy,
+          kg: _this.data.list2[e.currentTarget.dataset.index].kg,
+          pj: _this.data.list2[e.currentTarget.dataset.index].pj,
+          gl: _this.data.list2[e.currentTarget.dataset.index].gl,
+          bz: _this.data.list2[e.currentTarget.dataset.index].bz,
+          dj: _this.data.list2[e.currentTarget.dataset.index].dj,
+          je: _this.data.list2[e.currentTarget.dataset.index].je,
+          this_column:e.currentTarget.dataset.column,
+          this_value:e.currentTarget.dataset.value,
+          this_index:e.currentTarget.dataset.index,
+          xiala_panduan:panduan,
+          xgShow:true,
+        })
+      }else{
+        wx.showToast({
+          title: '电源开关备件填有信息！',
+          icon: 'none'
+        })
+      }
+    }else{
+      wx.showToast({
+        title: '无权限！',
+        icon: 'none'
+      })
+    }
   },
 
   bindPickerChange: function(e) {
@@ -517,6 +569,16 @@ Page({
         this_value: _this.data.pj_list[e.detail.value]
       })
     }
+    if(_this.data.xiala_panduan==8){
+      _this.setData({
+        this_value: _this.data.fk_list[e.detail.value]
+      })
+    }
+    if(_this.data.xiala_panduan==9){
+      _this.setData({
+        this_value: _this.data.hd_list[e.detail.value]
+      })
+    }
     
   },
 
@@ -524,14 +586,25 @@ Page({
     var _this = this
     var list2= _this.data.list2
     list2[_this.data.this_index][_this.data.this_column] = _this.data.this_value
+    
+    var list1 = _this.data.ddxh_list_dj
+    var dj
+    for (var i = 0 ; i < list1.length ; i++){
+      if (_this.data.this_column == 'lcb' &&  _this.data.this_value == list1[i].ddxh && list2[_this.data.this_index].ddcd > 400){
+        dj = parseFloat(list1[i].mmdj) + parseFloat(((list2[_this.data.this_index].ddcd-400)/100) * list1[i].zjdj)
+        list2[_this.data.this_index].dj = dj
+        list2[_this.data.this_index].je = list2[_this.data.this_index].sl * list2[_this.data.this_index].dj
+        list2[_this.data.this_index].gl = list2[_this.data.this_index].ddcd / 1000 * list2[_this.data.this_index].sl * 15
+      }else if (_this.data.this_column == 'lcb' &&  _this.data.this_value == list1[i].ddxh){
+        dj = list1[i].mmdj
+        list2[_this.data.this_index].dj = dj
+        list2[_this.data.this_index].je = list2[_this.data.this_index].sl * list2[_this.data.this_index].dj
+        list2[_this.data.this_index].gl = list2[_this.data.this_index].ddcd / 1000 * list2[_this.data.this_index].sl * 15
+      }
+    }
     _this.setData({
       list2:list2
     })
-
-    // if(_this.data.this_column=='ddcd' && list2[_this.data.this_index][_this.data.this_column] !=""){
-    //   je = 
-    // }
-
     _this.qxShow()
   },
 
@@ -546,21 +619,23 @@ Page({
   
   add1: function(){
     var _this = this
-    var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,ddcd,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl,bz,dj,je) values"
-    var sql2 = ""
-    for(var i=0; i< _this.data.list2.length; i++){
-      if(sql2 == ""){
-        sql2 = "('" + _this.data.list[0].khmc + "','"+ _this.data.list[0].xdrq +"','" + _this.data.list[0].djbh +"','" + _this.data.list[0].shouhuo +"','"+ _this.data.list[0].lxdh +"','"+  _this.data.list[0].shfs +"','"+  _this.data.list[0].azdz +"','"+  _this.data.list[0].ddh +"','"+  _this.data.list2[i].fj +"','"+  _this.data.list2[i].gh +"','"+  _this.data.list2[i].ddcd +"','"+  _this.data.list2[i].sl +"','"+  _this.data.list2[i].cxdk +"','"+  _this.data.list2[i].lcb +"','"+  _this.data.list2[i].lcys +"','"+  _this.data.list2[i].gy +"','"+  _this.data.list2[i].dy +"','"+  _this.data.list2[i].kg +"','"+  _this.data.list2[i].pj +"','"+  _this.data.list2[i].gl +"','"+  _this.data.list2[i].bz +"','"+  _this.data.list2[i].dj +"','"+  _this.data.list2[i].je +"')"
-      }else{
-        sql2 = sql2 + ",('" + _this.data.list[0].khmc + "','"+ _this.data.list[0].xdrq +"','" + _this.data.list[0].djbh +"','" + _this.data.list[0].shouhuo +"','"+ _this.data.list[0].lxdh +"','"+  _this.data.list[0].shfs +"','"+  _this.data.list[0].azdz +"','"+  _this.data.list[0].ddh +"','"+  _this.data.list2[i].fj +"','"+  _this.data.list2[i].gh +"','"+  _this.data.list2[i].ddcd +"','"+  _this.data.list2[i].sl +"','"+  _this.data.list2[i].cxdk +"','"+  _this.data.list2[i].lcb +"','"+  _this.data.list2[i].lcys +"','"+  _this.data.list2[i].gy +"','"+  _this.data.list2[i].dy +"','"+  _this.data.list2[i].kg +"','"+  _this.data.list2[i].pj +"','"+  _this.data.list2[i].gl +"','"+  _this.data.list2[i].bz +"','"+  _this.data.list2[i].dj +"','"+  _this.data.list2[i].je +"')"
-      }
-    }
-    var sql = sql1 + sql2
-    console.log(sql)
+    if (_this.data.userInfo.power=='管理员'){
+      // var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,ddcd,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl,bz,dj,je) values"
+      // var sql2 = ""
+      // for(var i=0; i< _this.data.list2.length; i++){
+      //   if(sql2 == ""){
+      //     sql2 = "('" + _this.data.list[0].khmc + "','"+ _this.data.list[0].xdrq +"','" + _this.data.list[0].djbh +"','" + _this.data.list[0].shouhuo +"','"+ _this.data.list[0].lxdh +"','"+  _this.data.list[0].shfs +"','"+  _this.data.list[0].azdz +"','"+  _this.data.list[0].ddh +"','"+  _this.data.list2[i].fj +"','"+  _this.data.list2[i].gh +"','"+  _this.data.list2[i].ddcd +"','"+  _this.data.list2[i].sl +"','"+  _this.data.list2[i].cxdk +"','"+  _this.data.list2[i].lcb +"','"+  _this.data.list2[i].lcys +"','"+  _this.data.list2[i].gy +"','"+  _this.data.list2[i].dy +"','"+  _this.data.list2[i].kg +"','"+  _this.data.list2[i].pj +"','"+  _this.data.list2[i].gl +"','"+  _this.data.list2[i].bz +"','"+  _this.data.list2[i].dj +"','"+  _this.data.list2[i].je +"')"
+      //   }else{
+      //     sql2 = sql2 + ",('" + _this.data.list[0].khmc + "','"+ _this.data.list[0].xdrq +"','" + _this.data.list[0].djbh +"','" + _this.data.list[0].shouhuo +"','"+ _this.data.list[0].lxdh +"','"+  _this.data.list[0].shfs +"','"+  _this.data.list[0].azdz +"','"+  _this.data.list[0].ddh +"','"+  _this.data.list2[i].fj +"','"+  _this.data.list2[i].gh +"','"+  _this.data.list2[i].ddcd +"','"+  _this.data.list2[i].sl +"','"+  _this.data.list2[i].cxdk +"','"+  _this.data.list2[i].lcb +"','"+  _this.data.list2[i].lcys +"','"+  _this.data.list2[i].gy +"','"+  _this.data.list2[i].dy +"','"+  _this.data.list2[i].kg +"','"+  _this.data.list2[i].pj +"','"+  _this.data.list2[i].gl +"','"+  _this.data.list2[i].bz +"','"+  _this.data.list2[i].dj +"','"+  _this.data.list2[i].je +"')"
+      //   }
+      // }
+      // var sql = sql1 + sql2
+      var i = _this.data.this_index
+      console.log(_this.data.list2[i].id)
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: sql
+          query: "update lightbelt set " + _this.data.this_column + "='" + _this.data.this_value + "' where  id=" + _this.data.list2[i].id
         },
         success: res => {
           _this.setData({
@@ -581,7 +656,7 @@ Page({
             jlkw: '',
           })
           _this.qxShow()
-          _this.onLoad(options)
+          _this.tableShow()
           
           wx.showToast({
             title: '添加成功！',
@@ -599,14 +674,23 @@ Page({
           console.log("请求失败！")
         }
       })
+    }else{
+      wx.showToast({
+        title: '无权限！',
+        icon: 'none'
+      })
+    }
+    
   },
 
   del1:function(){
     var _this = this
+    var i = _this.data.this_index
+    console.log(_this.data.list2[0].id)
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "delete from lightbelt where khmc='"+ _this.data.list2[0].id +"'"
+          query: "delete from lightbelt where id='"+ _this.data.list2[i].id +"'"
         },
         success: res => {
           _this.setData({
@@ -621,7 +705,7 @@ Page({
             ddh: '',
           })
           _this.qxShow()
-          _this.onLoad(options)
+          _this.tableShow()
           wx.showToast({
             title: '删除成功！',
             icon: 'none'

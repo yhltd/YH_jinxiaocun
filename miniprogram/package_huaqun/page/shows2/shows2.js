@@ -16,6 +16,10 @@ Page({
     text: "铝框下单表",
     url: "../lvkuang_xiadan/lvkuang_xiadan"
   },
+  {
+    text: "灯带明细表",
+    url: "../ddchakan/ddchakan"
+  },
  ]
  },
  

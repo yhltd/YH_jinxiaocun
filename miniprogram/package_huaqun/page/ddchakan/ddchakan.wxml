@@ -49,8 +49,15 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 10%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 30%;" >
+  <view class="lables">{{update_name[this_column]}}</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?fkzt_list:xiala_panduan==2?hd_list:xiala_panduan==3?shfs_list:''}}" disabled="{{xiala_panduan==0}}">
+    <input class="input_text_form" style="margin-top: 10%;" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}" ></input>
+  </picker>
+
+    <!-- <input bindinput="onInput" data-column="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" ></input> -->
   <view class="bottom_view" style="height:10%; margin-top: 10rpx;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="cha1">查看</button>
   </view>

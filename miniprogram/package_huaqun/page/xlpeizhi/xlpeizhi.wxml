@@ -4,7 +4,7 @@
       <block class="title" wx:for="{{title}}">
         <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
-    </view>
+    </view> 
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
         <view wx:for="{{title}}" 

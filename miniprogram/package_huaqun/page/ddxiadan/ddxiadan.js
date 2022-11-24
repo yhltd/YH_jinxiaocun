@@ -12,6 +12,17 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
+    header_list:{
+      customer_name:'',
+      insert_date:'',
+      order_number:'',
+      pinyin:'',
+      shipping_address:'',
+      phone:'',
+      shipping_type:'',
+      install_address:'',
+      customer_number:'',
+    },
     update_name:{
       fj:"房间",
       gh:"柜号",
@@ -28,6 +39,7 @@ Page({
       bz:"备注",
       dj:"单价",
       je:"金额",
+      fkzt:"付款状态",
     },
     list: [],
     title: [{
@@ -124,8 +136,24 @@ Page({
         type: "text",
         isupd: true
       },
+      // {
+      //   text: "付款状态",
+      //   width: "275rpx",
+      //   columnName: "fkzt",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "审单",
+      //   width: "275rpx",
+      //   columnName: "hd",
+      //   type: "text",
+      //   isupd: true
+      // },
     ],
+    
     list:[],
+    ddxh_list_dj:[],
     khmc: "",
     xdrq: "",
     djbh: "",
@@ -154,9 +182,9 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
-    var riqi = getNowDate()
-    var bianhao = "DD" + riqi
-    console.log(bianhao)
+    // var riqi = getBianHao()
+    // var bianhao = "DD" + riqi
+    // console.log(bianhao)
     if (userInfo.power == '客户' ){
       _this.setData({
         userInfo:userInfo,
@@ -179,6 +207,8 @@ Page({
         var kg = []
         var pj = []
         var shfs = []
+        var fk=['未付款','已付款']
+        var hd = ['未通过','已通过']
         console.log('aaaaa',list)
         for(var i=0; i<list.length; i++){
           if(list[i].cxdk != '' && list[i].cxdk != null && list[i].cxdk != undefined){
@@ -214,6 +244,8 @@ Page({
           kg_list:kg,
           pj_list:pj,
           shfs_list:shfs,
+          fk_list:fk,
+          hd_list:hd,
         })
       },
       err: res => {
@@ -261,39 +293,50 @@ Page({
       }
     })
 
+    var bianhao_left = getBianHao()
+    console.log(bianhao_left)
+    var sql = "select djbh from lightbelt where djbh like '" + bianhao_left + "%'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select djbh from lightbelt where djbh like '%"+  bianhao +"%' GROUP BY djbh "
+        query: sql
       },
       success: res => {
-        var list = res.result.recordset
-        console.log(list)
-        var bianhao = "001"
-        var aa 
-        
-        for(var i=0; i<list.length; i++){
-          console.log(list[i].substr(list[i].length-3,list[i].length))
-        
-          if(aa>=bianhao){
-            bianhao = bianhao+1
-            console.log('biaohao',bianhao)
+        var bianhao_list = res.result.recordset
+        var new_bianhao = "001" 
+        for(var i=0; i<bianhao_list.length; i++){
+          if(bianhao_list[i].djbh != '' && bianhao_list[i].djbh != null && bianhao_list[i].djbh != undefined){
+            var this_bianhao = bianhao_list[i].djbh.slice(10)
+            console.log(this_bianhao)
+            if(this_bianhao >= new_bianhao){
+              new_bianhao = (this_bianhao * 1 + 1).toString()
+              if(new_bianhao.length == 1){
+                new_bianhao = "00" + new_bianhao.toString()
+              }else if(new_bianhao.length == 2){
+                new_bianhao = "0" + new_bianhao.toString()
+              }
+              console.log(new_bianhao)
+            }
           }
-          console.log('biaohao',aa)
         }
+        new_bianhao = bianhao_left.toString() + new_bianhao.toString()
+        var header_list = _this.data.header_list
+        header_list.djbh = new_bianhao
         _this.setData({
-          
+          header_list
         })
-        console.log(list)
       },
       err: res => {
+        wx.showToast({
+          title: '读取下拉列表错误！',
+          icon: 'none'
+        })
         console.log("错误!")
       },
       fail: res => {
         wx.showToast({
           title: '请求失败！',
-          icon: 'none',
-          duration: 3000
+          icon: 'none'
         })
         console.log("请求失败！")
       }
@@ -315,8 +358,9 @@ Page({
         }
         _this.setData({
           ddxh_list:ddxh,
+          ddxh_list_dj:list,
         })
-        console.log(ddxh_list)
+        console.log(list)
       },
       err: res => {
         console.log("错误!")
@@ -397,7 +441,8 @@ Page({
   clickView1:function(e){
     var _this = this
     var this_column = e.currentTarget.dataset.column
-    
+    var index = _this.data.this_index
+    var this_value=_this.data.this_value
     if(this_column == 'product_name' || this_column == 'spec' || this_column == 'unit' || this_column == 'attribute'){
       return;
     }
@@ -419,34 +464,34 @@ Page({
       panduan = 6
     }else if(this_column == "pj"){
       panduan = 7
+    }else if(this_column == "fkzt"){
+      panduan = 8
+    }else if(this_column == "hd"){
+      panduan = 9
     }else{
       panduan = 0
     }
-    var riqi = getNowDate()
-    var djbh
-    console.log(riqi)
-    if(e.currentTarget.dataset.column=='lcb'){
-      djbh = "DD" + riqi + "001"
-    }
-    // console.log(djbh.substr(djbh.length-3,djbh.length))
-    
-    
-    
-    if((e.currentTarget.dataset.column=='dy'||e.currentTarget.dataset.column=='kg'||e.currentTarget.dataset.column=='pj')&&e.currentTarget.dataset.value==''){
+
+    var this_row = e.currentTarget.dataset.index
+    console.log(this_row)
+  
+    if((e.currentTarget.dataset.column!='dy' || e.currentTarget.dataset.column!='kg' || e.currentTarget.dataset.column!='pj') && _this.data.list[this_row].dy == "" && _this.data.list[this_row].kg == "" && _this.data.list[this_row].pj == ""){
       _this.setData({
         this_column:e.currentTarget.dataset.column,
         this_value:e.currentTarget.dataset.value,
         xiala_panduan:panduan,
         this_index:e.currentTarget.dataset.index,
-        djbh:djbh,
         xgShow:true,
-    })
+      })
     }else{
       wx.showToast({
-        title: '此处不能填写！',
+        title: '电源开关备件填有信息！',
         icon: 'none'
       })
     }
+
+    
+    
   },
 
   bindPickerChange: function(e) {
@@ -459,7 +504,7 @@ Page({
     }
     if(_this.data.xiala_panduan==2){
       this.setData({
-        this_value: _this.data.cxdk_list[e.detail.value]
+        this_value: _this.data.ddxh_list[e.detail.value]
       })
     }
     if(_this.data.xiala_panduan==3){
@@ -487,7 +532,16 @@ Page({
         this_value: _this.data.pj_list[e.detail.value]
       })
     }
-    
+    if(_this.data.xiala_panduan==8){
+      _this.setData({
+        this_value: _this.data.fk_list[e.detail.value]
+      })
+    }
+    if(_this.data.xiala_panduan==9){
+      _this.setData({
+        this_value: _this.data.hd_list[e.detail.value]
+      })
+    }
   },
 
 
@@ -495,23 +549,41 @@ Page({
     var _this = this
     var list = _this.data.list
     list[_this.data.this_index][_this.data.this_column] = _this.data.this_value
+    var list1 = _this.data.ddxh_list_dj
+    console.log(_this.data.this_index)
+    console.log(_this.data.this_column)
+    var dj 
+    for (var i = 0 ; i < list1.length ; i++){
+      if (_this.data.this_column == 'lcb' &&  _this.data.this_value == list1[i].ddxh && list[_this.data.this_index].ddcd > 400){
+        dj = parseFloat(list1[i].mmdj) + parseFloat(((list[_this.data.this_index].ddcd-400)/100) * list1[i].zjdj)
+        list[_this.data.this_index].dj = dj
+        list[_this.data.this_index].je = list[_this.data.this_index].sl * list[_this.data.this_index].dj
+        list[_this.data.this_index].gl = list[_this.data.this_index].ddcd / 1000 * list[_this.data.this_index].sl * 15
+      }else if (_this.data.this_column == 'lcb' &&  _this.data.this_value == list1[i].ddxh){
+        dj = list1[i].mmdj
+        list[_this.data.this_index].dj = dj
+        list[_this.data.this_index].je = list[_this.data.this_index].sl * list[_this.data.this_index].dj
+        list[_this.data.this_index].gl = list[_this.data.this_index].ddcd / 1000 * list[_this.data.this_index].sl * 15
+      }
+    }
+    // console.log(list[_this.data.this_index].dj = dj)
     _this.setData({
-      list:list
+      list:list,
     })
     _this.qxShow()
   },
 
   add1: function(){
-    //console.log(djbh.substr(djbh.length-3,djbh.length))
-    if (_this.data.khmc!=''&&_this.data.xdrq!=''&&_this.data.djbh!=''&&_this.data.shouhuo!=''&&_this.data.lxdh!=''&&_this.data.shfs!=''&&_this.data.azdz!=''&&_this.data.ddh!=''){
-      var _this = this
+    var _this = this
+    if (_this.data.khmc != '' && _this.data.xdrq != '' && _this.data.shouhuo != '' && _this.data.lxdh != '' && _this.data.shfs != '' && _this.data.azdz != '' && _this.data.ddh != ''){
+      console.log(_this.data.khmc)
       var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,ddcd,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl,bz,dj,je) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].lcb +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].dy +"','"+  _this.data.list[i].kg +"','"+  _this.data.list[i].pj +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"')"
+          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].lcb +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].dy +"','"+  _this.data.list[i].kg +"','"+  _this.data.list[i].pj +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].lcb +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].dy +"','"+  _this.data.list[i].kg +"','"+  _this.data.list[i].pj +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"')"
+          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].lcb +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].dy +"','"+  _this.data.list[i].kg +"','"+  _this.data.list[i].pj +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"')"
         }
       }
       var sql = sql1 + sql2
@@ -787,7 +859,7 @@ Page({
 })
 
 
-function getNowDate() {
+function getBianHao() {
   var date = new Date();
   var sign1 = "-";
   var sign2 = ":";
@@ -816,7 +888,6 @@ function getNowDate() {
    seconds = "0" + seconds;
   }
   // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
-  var currentdate = year.toString() + month.toString() + day.toString() ;
+  var currentdate = "DD"+ year.toString() + month.toString() + day.toString() ;
   return currentdate;
  }
- 
