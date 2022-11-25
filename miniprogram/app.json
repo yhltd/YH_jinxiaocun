@@ -278,7 +278,17 @@
         "page/ddchakan/ddchakan",
         "page/ddchakanxiangqing/ddchakanxiangqing",
         "page/lvkuang_xiadan/lvkuang_xiadan",
+        "page/lvkuang_mingxi/lvkuang_mingxi",
+        "page/lvkuang_biaodan/lvkuang_biaodan",
+        "page/boli_mingxi/boli_mingxi",
         "page/shows2/shows2"
+      ]
+    },
+    {
+      "root": "package_yiwa",
+      "name": "YiWaDeDanTengXiaoWaLi",
+      "pages": [
+        "pages/shows/shows"
       ]
     }
   ],

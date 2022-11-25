@@ -670,6 +670,49 @@ var login = function(that,info) {
     })
   //结束
   
+  }else if(system =="销售管理系统"){
+    console.log(system)
+    var sql = "select * from userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data:{
+        query : sql
+      },
+      success : res =>{
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length == 0){
+          wx.showToast({
+            title: '用户名或密码错误',
+            icon:'none',
+          })
+        }else{
+          var user_list = list[0]
+          wx.navigateTo({
+            url:'../../package_yiwa/pages/shows/shows?userInfo='+JSON.stringify(user_list)
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  //结束
+  
   }else{
     wx.showToast({
       title: '请选择系统',
@@ -902,6 +945,13 @@ Page({
         system,
         gongsi : '华群家具材料',
         pickerArray: ['华群家具材料']
+      })
+      return;
+    }else if(system == '销售管理系统'){
+      _this.setData({
+        system,
+        gongsi : '销售管理系统',
+        pickerArray: ['销售管理系统']
       })
       return;
     }else{

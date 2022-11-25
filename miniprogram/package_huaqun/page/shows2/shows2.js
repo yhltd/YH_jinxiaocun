@@ -20,6 +20,14 @@ Page({
     text: "灯带明细表",
     url: "../ddchakan/ddchakan"
   },
+  {
+    text: "铝框下单明细",
+    url: "../lvkuang_mingxi/lvkuang_mingxi"
+  },
+  {
+    text: "玻璃下单明细",
+    url: "../boli_mingxi/boli_mingxi"
+  },
  ]
  },
  

@@ -24,10 +24,6 @@
   </view>
 </scroll-view>
 
-
-
-
-
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
@@ -44,8 +40,10 @@
     <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
     <view class="lables">密码</view>
     <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
-  <view class="lables">姓名</view>
+    <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">简码</view>
+    <input bindinput="onInput" data-column="pinyin" class="input_text_form"  value="{{pinyin}}" type="text" name="pinyin"></input>
     <view class="lables">权限</view>
     <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
   <view class="bottom_view" style="height:10%">
@@ -61,8 +59,10 @@
     <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
     <view class="lables">密码</view>
     <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
-  <view class="lables">姓名</view>
+    <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">简码</view>
+    <input bindinput="onInput" data-column="pinyin" class="input_text_form"  value="{{pinyin}}" type="text" name="pinyin"></input>
     <view class="lables">权限</view>
     <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
   <view class="bottom_view" style="height:10%">

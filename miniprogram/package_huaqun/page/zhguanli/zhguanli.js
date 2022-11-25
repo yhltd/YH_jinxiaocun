@@ -34,6 +34,13 @@ Page({
         isupd: true
       },
       {
+        text: "简码",
+        width: "250rpx",
+        columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "权限",
         width: "250rpx",
         columnName: "power",
@@ -45,6 +52,7 @@ Page({
     id:'',
     username: '', 
     password: '',
+    pinyin:'',
     name: '',
     power: '',
   },
@@ -106,6 +114,7 @@ Page({
       id: _this.data.list[e.currentTarget.dataset.index].id,
       username: _this.data.list[e.currentTarget.dataset.index].username, 
       password: _this.data.list[e.currentTarget.dataset.index].password,
+      pinyin: _this.data.list[e.currentTarget.dataset.index].pinyin,
       name: _this.data.list[e.currentTarget.dataset.index].name,
       power: _this.data.list[e.currentTarget.dataset.index].power,
       xgShow:true,
@@ -119,6 +128,7 @@ Page({
       id:'',
       username: '', 
       password: '',
+      pinyin:'',
       name: '',
       power: '',
     })
@@ -153,12 +163,10 @@ Page({
       return;
     }
 
-    
-
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "insert into userInfo(username,password,name,power) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.power + "')"
+          query: "insert into userInfo(username,password,name,pinyin,power) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "')"
         },
         success: res => {
           _this.setData({
@@ -167,7 +175,7 @@ Page({
             password: '',
             name: '',
             power: '',
-            
+            pinyin:'',
           })
           _this.qxShow()
           var e = ['','']
@@ -198,12 +206,13 @@ Page({
       [column]: e.detail.value
     })
   },
+
   upd1:function(){
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',power='" + _this.data.power + "' where id=" + _this.data.id  
+        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "' where id=" + _this.data.id  
       },
       success: res => {
         _this.setData({
@@ -211,6 +220,7 @@ Page({
             username: '', 
             password: '',
             name: '',
+            pinyin:'',
             power: '',
         })
         _this.qxShow()
@@ -247,6 +257,7 @@ Page({
             id:'',
             username: '', 
             password: '',
+            pinyin:'',
             name: '',
             power: '',
           })

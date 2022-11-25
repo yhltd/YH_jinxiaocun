@@ -1068,51 +1068,234 @@ Page({
       })
       return;
     }
-  },
 
-  add1: function(){
-    var _this = this
-      wx.cloud.callFunction({
-        name: 'sqlserver_huaqun',
-        data: {
-          query: "insert into dropdowntable(cxdk,lxc,lcys,gy,dy,kg,pj) values('" + _this.data.cxdk + "','" + _this.data.lxc + "','" + _this.data.lcys + "','" + _this.data.gy + "','" + _this.data.dy + "','" + _this.data.kg + "','" + _this.data.pj + "')"
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            cxdk:'', 
-            lxc: '',
-            lcys: '',
-            gy: '',
-            dy: '',
-            kg: '',
-            pj: '',
-            shfs:'', 
-            blsjg: '',
-            blys: '',
-            lsxh: '',
-            lsw: '',
-            kjlk: '',
-            jlkw: '',
-          })
-          _this.qxShow()
-          _this.tableShow()
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
+    var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita) values "
+    var sql_foot = ""
+    for(var i=0; i<body_list.length; i++){
+      if(sql_foot == ''){
+        sql_foot = "('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "')"
+      }else{
+        sql_foot = sql_foot + ",('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "')"
+      }
+    }
+    insert_sql = insert_sql + sql_foot + ";"
+
+
+    var sql = ""
+    var select_sql_head = "select * from refertable "
+    var select_sql_foot = ""
+
+    for(var i=0; i<body_list.length; i++){
+      sql = sql + "select * from lvkuang_xiadan where customer_name ='" + header_list.customer_name + "' and height='" + body_list[i].height + "' and width='" + body_list[i].width + "' and lvxingcai='" + body_list[i].lvxingcai + "' and lvcai_yanse='" + body_list[i].lvcai_yanse + "' and boli_shenjiagong='" + body_list[i].boli_shenjiagong + "' and boli_yanse='" + body_list[i].boli_yanse + "' and lashou_xinghao='" + body_list[i].lashou_xinghao + "' and lashou_shuliang_right='" + body_list[i].lashou_shuliang_right + "' and lashou_shuliang_left='" + body_list[i].lashou_shuliang_left + "' and lashouwei_select_left='" + body_list[i].lashouwei_select_left + "' and lashouwei_insert_left='" + body_list[i].lashouwei_insert_left + "' and lashouwei_select_right='" + body_list[i].lashouwei_select_right + "' and lashouwei_insert_right='" + body_list[i].lashouwei_insert_right + "' and jiaoliankong_fangxiang_left='" + body_list[i].jiaoliankong_fangxiang_left + "' and jiaoliankong_fangxiang_right='" + body_list[i].jiaoliankong_fangxiang_right + "' and kaijiaolian='" + body_list[i].kaijiaolian + "' and jiaolian1_select_left='" + body_list[i].jiaolian1_select_left + "' and jiaolian1_insert_left='" + body_list[i].jiaolian1_insert_left + "' and jiaolian1_select_right='" + body_list[i].jiaolian1_select_right + "' and jiaolian1_insert_right='" + body_list[i].jiaolian1_insert_right + "' and jiaolian2_select_left='" + body_list[i].jiaolian2_select_left + "' and jiaolian2_insert_left='" + body_list[i].jiaolian2_insert_left + "' and jiaolian2_select_right='" + body_list[i].jiaolian2_select_right + "' and jiaolian2_insert_right='" + body_list[i].jiaolian2_insert_right + "' and jiaolian3_select_left='" + body_list[i].jiaolian3_select_left + "' and jiaolian3_insert_left='" + body_list[i].jiaolian3_insert_left + "' and jiaolian3_select_right='" + body_list[i].jiaolian3_select_right + "' and jiaolian3_insert_right='" + body_list[i].jiaolian3_insert_right + "' and jiaolian4_select_left='" + body_list[i].jiaolian4_select_left + "' and jiaolian4_insert_left='" + body_list[i].jiaolian4_insert_left + "' and jiaolian4_select_right='" + body_list[i].jiaolian4_select_right + "' and jiaolian4_insert_right='" + body_list[i].jiaolian4_insert_right + "' and jiaolian5_select_left='" + body_list[i].jiaolian5_select_left + "' and jiaolian5_insert_left='" + body_list[i].jiaolian5_insert_left + "' and jiaolian5_select_right='" + body_list[i].jiaolian5_select_right + "' and jiaolian5_insert_right='" + body_list[i].jiaolian5_insert_right + "' and jiaolian6_select_left='" + body_list[i].jiaolian6_select_left + "' and jiaolian6_insert_left='" + body_list[i].jiaolian6_insert_left + "' and jiaolian6_select_right='" + body_list[i].jiaolian6_select_right + "' and jiaolian6_insert_right='" + body_list[i].jiaolian6_insert_right + "' and qita='" + body_list[i].qita + "' and width != '' and height != '';"
+
+      if(body_list[i].lvxingcai != ''){
+        if(select_sql_foot == ""){
+          select_sql_foot = "where lkxh ='" + body_list[i].lvxingcai + "' "
+        }else{
+          select_sql_foot = select_sql_foot + "or lkxh ='" + body_list[i].lvxingcai + "' "
         }
-      })
+      }
+    }
+    var select_sql = select_sql_head + select_sql_foot + ";"
+    console.log(select_sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql + select_sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets
+        var xuhao = ""
+        for(var i=0; i<6; i++){
+          if(list[i].length > 0){
+            if(xuhao == ""){
+              xuhao = (i * 1 + 1).toString()
+            }else{
+              xuhao = xuhao + "、" + (i * 1 + 1).toString()
+            }
+          }
+        }
+        
+        if(xuhao != ''){
+          wx.showModal({
+            title: '提示',
+            content: '表单中序号'+ i * 1 + 1 +'铝框与以往订单中的铝框重复，是否继续下单？',
+            success (res) {
+              if (res.confirm) {
+
+                var canzhao_list = res.result.recordsets[6]
+                console.log(canzhao_list)
+                var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
+                var boli_insert_sql_foot = ""
+                
+                for(var i=0; i<body_list.length; i++){
+                  if(body_list[i].width != '' && body_list[i].height != '' && body_list[i].lvxingcai != '' && body_list[i].boli_yanse != '' && body_list[i].boli_shenjiagong != '' && (body_list[i].jiaoliankong_fangxiang_left != '' || body_list[i].jiaoliankong_fangxiang_right != '')){
+                    for(var j=0; j<canzhao_list.length; j++){
+                      var width = parseFloat(body_list[i].width)
+                      var height = parseFloat(body_list[i].height)
+                      var num = 0
+                      var num_left = parseFloat(body_list[i].jiaoliankong_fangxiang_left)
+                      if(num_left == NaN){
+                        num_left = 0
+                      }
+                      var num_right = parseFloat(body_list[i].jiaoliankong_fangxiang_right)
+                      if(num_right == NaN){
+                        num_right = 0
+                      }
+                      num = num_left + num_right
+                      if(width == NaN){
+                        width = 0
+                      }
+                      if(height == NaN){
+                        height = 0
+                      }
+                      if(canzhao_list[j].lkxh == body_list[i].lvxingcai){
+                        var this_width = parseFloat(canzhao_list[j].kuan)
+                        var this_height = parseFloat(canzhao_list[j].chang)
+                        if(this_width == NaN){
+                          this_width = 0
+                        }
+                        if(this_height == NaN){
+                          this_height = 0
+                        }
+                        width = width - this_width
+                        height = height - this_height
+                        if(boli_insert_sql_foot == ""){
+                          boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                        }else{
+                          boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                        }
+                      }
+                    }
+                  }
+                }
+
+                if(boli_insert_sql_foot != ''){
+                  insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
+                }
+
+                wx.cloud.callFunction({
+                  name: 'sqlserver_huaqun',
+                  data: {
+                    query: insert_sql
+                  },
+                  success: res => {
+                    console.log(res)
+                    wx.showToast({
+                      title: '下单成功！',
+                      icon: 'none'
+                    })
+                  },
+                  err: res => {
+                    console.log("错误!")
+                  },
+                  fail: res => {
+                    wx.showToast({
+                      title: '请求失败！',
+                      icon: 'none'
+                    })
+                    console.log("请求失败！")
+                  }
+                })
+
+              } else if (res.cancel) {
+                wx.showToast({
+                  title: '已取消！',
+                  icon: 'none'
+                })
+                return;
+              }
+            }
+          })
+        }else{
+          var canzhao_list = res.result.recordsets[6]
+          console.log(canzhao_list)
+          var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
+          var boli_insert_sql_foot = ""
+          
+          for(var i=0; i<body_list.length; i++){
+            if(body_list[i].width != '' && body_list[i].height != '' && body_list[i].lvxingcai != '' && body_list[i].boli_yanse != '' && body_list[i].boli_shenjiagong != '' && (body_list[i].jiaoliankong_fangxiang_left != '' || body_list[i].jiaoliankong_fangxiang_right != '')){
+              for(var j=0; j<canzhao_list.length; j++){
+                var width = parseFloat(body_list[i].width)
+                var height = parseFloat(body_list[i].height)
+                var num = 0
+                var num_left = parseFloat(body_list[i].jiaoliankong_fangxiang_left)
+                if(num_left == NaN){
+                  num_left = 0
+                }
+                var num_right = parseFloat(body_list[i].jiaoliankong_fangxiang_right)
+                if(num_right == NaN){
+                  num_right = 0
+                }
+                num = num_left + num_right
+                if(width == NaN){
+                  width = 0
+                }
+                if(height == NaN){
+                  height = 0
+                }
+                if(canzhao_list[j].lkxh == body_list[i].lvxingcai){
+                  var this_width = parseFloat(canzhao_list[j].kuan)
+                  var this_height = parseFloat(canzhao_list[j].chang)
+                  if(this_width == NaN){
+                    this_width = 0
+                  }
+                  if(this_height == NaN){
+                    this_height = 0
+                  }
+                  width = width - this_width
+                  height = height - this_height
+                  if(boli_insert_sql_foot == ""){
+                    boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                  }else{
+                    boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                  }
+                }
+              }
+            }
+          }
+
+          if(boli_insert_sql_foot != ''){
+            insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
+          }
+
+          wx.cloud.callFunction({
+            name: 'sqlserver_huaqun',
+            data: {
+              query: insert_sql
+            },
+            success: res => {
+              console.log(res)
+              wx.showToast({
+                title: '下单成功！',
+                icon: 'none'
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   onInput: function (e) {
@@ -1131,7 +1314,6 @@ Page({
     _this.setData({
       header_list: list
     })
-    console.log(_this.data.header_list)
   },
 
   clickView:function(e){
@@ -1141,42 +1323,42 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var column = e.currentTarget.dataset.column
-    if(_this.data.body_list[index].jiaolian1_insert_left == '' && column == 'jiaolian1_insert_left' ){
+    if(_this.data.body_list[index].jiaolian1_select_left == '' && column == 'jiaolian1_insert_left' ){
       wx.showToast({
         title: '未选择铰链孔1左开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian2_insert_left == '' && column == 'jiaolian2_insert_left' ){
+    if(_this.data.body_list[index].jiaolian2_select_left == '' && column == 'jiaolian2_insert_left' ){
       wx.showToast({
         title: '未选择铰链孔2左开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian3_insert_left == '' && column == 'jiaolian3_insert_left' ){
+    if(_this.data.body_list[index].jiaolian3_select_left == '' && column == 'jiaolian3_insert_left' ){
       wx.showToast({
         title: '未选择铰链孔3左开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian4_insert_left == '' && column == 'jiaolian4_insert_left' ){
+    if(_this.data.body_list[index].jiaolian4_select_left == '' && column == 'jiaolian4_insert_left' ){
       wx.showToast({
         title: '未选择铰链孔4左开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian5_insert_left == '' && column == 'jiaolian5_insert_left' ){
+    if(_this.data.body_list[index].jiaolian5_select_left == '' && column == 'jiaolian5_insert_left' ){
       wx.showToast({
         title: '未选择铰链孔5左开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian6_insert_left == '' && column == 'jiaolian6_insert_left' ){
+    if(_this.data.body_list[index].jiaolian6_select_left == '' && column == 'jiaolian6_insert_left' ){
       wx.showToast({
         title: '未选择铰链孔6左开方向！',
         icon: 'none'
@@ -1184,42 +1366,42 @@ Page({
       return;
     }
 
-    if(_this.data.body_list[index].jiaolian1_insert_right == '' && column == 'jiaolian1_insert_right' ){
+    if(_this.data.body_list[index].jiaolian1_select_right == '' && column == 'jiaolian1_insert_right' ){
       wx.showToast({
         title: '未选择铰链孔1右开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian2_insert_right == '' && column == 'jiaolian2_insert_right' ){
+    if(_this.data.body_list[index].jiaolian2_select_right == '' && column == 'jiaolian2_insert_right' ){
       wx.showToast({
         title: '未选择铰链孔2右开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian3_insert_right == '' && column == 'jiaolian3_insert_right' ){
+    if(_this.data.body_list[index].jiaolian3_select_right == '' && column == 'jiaolian3_insert_right' ){
       wx.showToast({
         title: '未选择铰链孔3右开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian4_insert_right == '' && column == 'jiaolian4_insert_right' ){
+    if(_this.data.body_list[index].jiaolian4_select_right == '' && column == 'jiaolian4_insert_right' ){
       wx.showToast({
         title: '未选择铰链孔4右开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian5_insert_right == '' && column == 'jiaolian5_insert_right' ){
+    if(_this.data.body_list[index].jiaolian5_select_right == '' && column == 'jiaolian5_insert_right' ){
       wx.showToast({
         title: '未选择铰链孔5右开方向！',
         icon: 'none'
       })
       return;
     }
-    if(_this.data.body_list[index].jiaolian6_insert_right == '' && column == 'jiaolian6_insert_right' ){
+    if(_this.data.body_list[index].jiaolian6_select_right == '' && column == 'jiaolian6_insert_right' ){
       wx.showToast({
         title: '未选择铰链孔6右开方向！',
         icon: 'none'
