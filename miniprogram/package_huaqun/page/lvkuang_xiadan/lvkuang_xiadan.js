@@ -1271,6 +1271,13 @@ Page({
                 title: '下单成功！',
                 icon: 'none'
               })
+              var common_Interval = setInterval(()=>
+              {
+                wx.navigateBack({ 
+                  delta: 1
+                });
+                clearInterval(common_Interval);
+              }, 2000)
             },
             err: res => {
               console.log("错误!")

@@ -100,6 +100,7 @@ Page({
     hd_list:['通过','未通过'],
     djbh:'',
     xiala_panduan:'',
+    kehu_panduan:false,
   },
 
   /**
@@ -113,7 +114,10 @@ Page({
     })
     console.log(userInfo.name)
     if (userInfo.power =='客户'){
-      var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd  from lightbelt where khmc like '%"+  userInfo.name +"%' "
+      _this.setData({
+        kehu_panduan:true
+      })
+      var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where khmc ='"+  userInfo.name +"'"
     }else{
       var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt "
     }
@@ -212,14 +216,23 @@ Page({
     })
   },
 
-
+  back:function(){
+    wx.navigateBack({ 
+      delta: 1
+    });
+  },
 
   tableShow: function (e) {
     var _this = this
+    if (userInfo.power =='客户'){
+      var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where khmc ='"+  userInfo.name +"' and ddh like '%"+  e[1] +"%'"
+    }else{
+      var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where khmc like '%"+  e[0] +"%' and ddh like '%"+  e[1] +"%'"
+    }
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select distinct khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where khmc like '%"+  e[0] +"%' and ddh like '%"+  e[1] +"%'"
+        query: sql
       },
       success: res => {
         console.log(res)
@@ -255,41 +268,70 @@ Page({
 
   clickView:function(e){
     var _this = this
-    var djbh=[]
-    var this_column = e.currentTarget.dataset.column
-    var panduan = 0
-    if(this_column == "fkzt"){
-      panduan = 1
-    }else if(this_column == "hd"){
-      panduan = 2
-    }else if(this_column == "shfs"){
-      panduan = 3
-    }else {
-      panduan = 0
-    }
-    if (this_column!='djbh' && this_column!='khmc'){
-      djbh.push( _this.data.list[e.currentTarget.dataset.index].djbh)
+    var index = e.currentTarget.dataset.index
+    var column = e.currentTarget.dataset.column
+    var order_number = _this.data.list[e.currentTarget.dataset.index].djbh
+    console.log(index)
+    console.log(column)
+    if(column == "hd"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无审核权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        khmc: _this.data.list[e.currentTarget.dataset.index].khmc, 
-        xdrq: _this.data.list[e.currentTarget.dataset.index].xdrq,
-        djbh: _this.data.list[e.currentTarget.dataset.index].djbh,
-        shouhuo: _this.data.list[e.currentTarget.dataset.index].shouhuo,
-        lxdh: _this.data.list[e.currentTarget.dataset.index].lxdh,
-        shfs: _this.data.list[e.currentTarget.dataset.index].shfs,
-        azdz: _this.data.list[e.currentTarget.dataset.index].azdz,
-        ddh: _this.data.list[e.currentTarget.dataset.index].ddh,
-        djbh:djbh,
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        this_column:e.currentTarget.dataset.column,
-        this_value:e.currentTarget.dataset.value,
-        xiala_panduan:panduan,
+        order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
+        this_column: column,
         xgShow:true,
+        yes_click: '通过',
+        no_click: '拒绝',
+      })
+    }else if(column == "fkzt"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无付款权限！',
+          icon: 'none'
+        })
+        return;
+      }
+      _this.setData({
+        order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
+        this_column: column,
+        xgShow:true,
+        yes_click: '已付款',
+        no_click: '未付款',
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '确认查看此条订单的明细信息？',
+        success (res) {
+          if (res.confirm){
+            // wx.navigateTo({
+            //   url: '../lvkuang_biaodan/lvkuang_biaodan?userInfo='+JSON.stringify(_this.data.userInfo) + '&order_number='+JSON.stringify(order_number)
+            // })
+            wx.navigateTo({
+              url: "../ddchakanxiangqing/ddchakanxiangqing?djbh="+JSON.stringify(order_number)+ "&userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          } else if (res.cancel){
+            wx.showToast({
+              title: '已取消！',
+              icon: 'none'
+            })
+            return;
+          }
+        }
       })
     }
-    
-    console.log(djbh)
+
   },
+
   bindPickerChange: function(e) {
     var _this = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -327,37 +369,25 @@ Page({
       [column]: e.detail.value
     })
   },
-  
-  upd1:function(){
+
+  yes_click:function(){
     var _this = this
-    if (_this.data.userInfo.power=='管理员'){
+    var sql = "update lightbelt set " + _this.data.this_column + "='" + _this.data.yes_click + "' where djbh='"+ _this.data.order_number +"'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update lightbelt set " + _this.data.this_column + "='" + _this.data.this_value + "' where  djbh='"+ _this.data.djbh +"'"
+        query: sql
       },
       success: res => {
-        _this.setData({
-          id:'',
-            khmc: '', 
-            xdrq: '',
-            djbh: '',
-            shouhuo: '',
-            lxdh: '',
-            shfs: '',
-            azdz: '',
-            ddh: '',
-            fkzt: '',
-            hd: '',
-        })
-        _this.qxShow()
-        var e = ['','']
-          _this.tableShow(e)
-
         wx.showToast({
-          title: '修改成功！',
-          icon: 'none'
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
         })
+        var e = ['','1900-01-01','2100-12-31']
+        var e = ['','']
+        _this.tableShow(e)
+        _this.qxShow()
       },
       err: res => {
         console.log("错误!")
@@ -365,74 +395,104 @@ Page({
       fail: res => {
         wx.showToast({
           title: '请求失败！',
-          icon: 'none'
+          icon: 'none',
+          duration: 3000
         })
         console.log("请求失败！")
       }
     })
-  }else{
-    wx.showToast({
-      title: '无权限！',
-      icon: 'none'
-    })
-  }
   },
 
-  del1:function(){
+  no_click:function(){
     var _this = this
-    if (_this.data.userInfo.power=='管理员'){
-      wx.cloud.callFunction({
-        name: 'sqlserver_huaqun',
-        data: {
-          query: "delete from lightbelt where djbh='"+ _this.data.djbh +"'"
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            khmc: '', 
-            xdrq: '',
-            djbh: '',
-            shouhuo: '',
-            lxdh: '',
-            shfs: '',
-            azdz: '',
-            ddh: '',
-            fkzt: '',
-            hd: '',
-          })
-          _this.qxShow()
-          var e = ['','']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '删除成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+    var sql = "update lightbelt set " + _this.data.this_column + "='" + _this.data.no_click + "' where djbh='"+ _this.data.order_number +"'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  del1:function(e){
+    var _this = this
+    var djbh = _this.data.list[e.currentTarget.dataset.index].djbh
+    if(_this.data.power == '管理员'){
+
     }else{
       wx.showToast({
-        title: '无权限！',
+        title: '非管理员账号，无删除订单权限！',
         icon: 'none'
       })
+      return;
     }
-      
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此条订单？',
+      success (res) {
+        if (res.confirm) {
+          wx.cloud.callFunction({
+            name: 'sqlserver_huaqun',
+            data: {
+              query: "delete from lightbelt where djbh='" + djbh + "';"
+            },
+            success: res => {
+              _this.qxShow()
+              var e = ['','']
+              _this.tableShow(e)
+              wx.showToast({
+                title: '删除成功！',
+                icon: 'none'
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
+          })
+        } else if (res.cancel) {
+
+        }
+      }
+    })
   },
 
   entering:function(){
     var _this=this
+    var khmc = ""
+    if(_this.data.userInfo.power == '客户'){
+      khmc = _this.data.userInfo.name
+    }
     _this.setData({
       cxShow:true,
-      khmc:"",
+      khmc:khmc,
       ddh:"",
     })
   },
@@ -459,10 +519,6 @@ Page({
     _this.tableShow(e)
     _this.qxShow()
   },
-
-  
-
-  
 
   /**
    * 生命周期函数--监听页面初次渲染完成

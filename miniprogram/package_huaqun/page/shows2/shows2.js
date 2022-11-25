@@ -17,7 +17,7 @@ Page({
     url: "../lvkuang_xiadan/lvkuang_xiadan"
   },
   {
-    text: "灯带明细表",
+    text: "灯带下单明细",
     url: "../ddchakan/ddchakan"
   },
   {
@@ -37,6 +37,31 @@ Page({
    var index = e.currentTarget.dataset.index;
    var url = _this.data.showList[index].url
    var text = _this.data.showList[index].text
+
+   if((index == 0 || index == 1) && _this.data.userInfo.power == '玻璃厂' ){
+    wx.showToast({
+      title: '玻璃厂账号无权限下单！',
+      icon: 'none'
+    })
+    return;
+   }
+
+   if((index == 2 || index == 3) && _this.data.userInfo.power == '玻璃厂' ){
+    wx.showToast({
+      title: '玻璃厂账号无权限查看订单明细！',
+      icon: 'none'
+    })
+    return;
+   }
+
+   if(index == 4 && _this.data.userInfo.power != '玻璃厂' && _this.data.userInfo.power != '管理员'){
+    wx.showToast({
+      title: '非玻璃厂账号无权限查看玻璃下单明细！',
+      icon: 'none'
+    })
+    return;
+   }
+
    if(url != ''){
      wx.navigateTo({
        url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)

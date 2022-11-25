@@ -136,20 +136,6 @@ Page({
         type: "text",
         isupd: true
       },
-      // {
-      //   text: "付款状态",
-      //   width: "275rpx",
-      //   columnName: "fkzt",
-      //   type: "text",
-      //   isupd: true
-      // },
-      // {
-      //   text: "审单",
-      //   width: "275rpx",
-      //   columnName: "hd",
-      //   type: "text",
-      //   isupd: true
-      // },
     ],
     
     list:[],
@@ -170,7 +156,6 @@ Page({
 
   choiceDate: function (e) {
     //e.preventDefault(); 
-    
     this.setData({
       [e.target.dataset.column_name]: e.detail.value
     })
@@ -182,16 +167,16 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
-    // var riqi = getBianHao()
-    // var bianhao = "DD" + riqi
-    // console.log(bianhao)
-    if (userInfo.power == '客户' ){
+    var this_date = getNowDate()
+    if (userInfo.power == '客户'){
       _this.setData({
         userInfo:userInfo,
-        khmc:userInfo.name
+        khmc:userInfo.name, 
       })
     }
-    
+    _this.setData({
+      xdrq:this_date,
+    })
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -295,6 +280,7 @@ Page({
 
     var bianhao_left = getBianHao()
     console.log(bianhao_left)
+
     var sql = "select djbh from lightbelt where djbh like '" + bianhao_left + "%'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
@@ -397,8 +383,6 @@ Page({
     })
   },
 
-
-
   tableShow: function (e) {
     var _this = this
     console.log('eeeeee',e)
@@ -441,11 +425,53 @@ Page({
   clickView1:function(e){
     var _this = this
     var this_column = e.currentTarget.dataset.column
-    var index = _this.data.this_index
-    var this_value=_this.data.this_value
-    if(this_column == 'product_name' || this_column == 'spec' || this_column == 'unit' || this_column == 'attribute'){
+    var index = e.currentTarget.dataset.index
+    var this_value = e.currentTarget.dataset.value
+    
+    if(this_column == "dj" || this_column == "je" || this_column == "gl"){
       return;
     }
+
+    if(( this_column == "ddcd" || this_column == "sl" || this_column == "cxdk" || this_column == "lcb" || this_column == "lcys" || this_column == "gy") && (_this.data.list[index].dy != "" || _this.data.list[index].kg != "" || _this.data.list[index].pj != "")){
+      wx.showToast({
+        title: '此行已选择电源、开关或配件，不允许填写其他信息！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if((this_column == "dy" || this_column == "kg" || this_column == "pj") && (_this.data.list[index].ddcd != "" || _this.data.list[index].sl != "" || _this.data.list[index].cxdk != "" || _this.data.list[index].lcb != "" || _this.data.list[index].lcys != "" || _this.data.list[index].gy != "")){
+      wx.showToast({
+        title: '此行已填写其他信息，不允许选择电源、开关或配件！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if((this_column == "dy") && ( _this.data.list[index].kg != "" || _this.data.list[index].pj != "") ){
+      wx.showToast({
+        title: '此行已选择电源、开关或配件，不允许选择其他信息！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if((this_column == "kg") && ( _this.data.list[index].dy != "" || _this.data.list[index].pj != "") ){
+      wx.showToast({
+        title: '此行已选择电源、开关或配件，不允许选择其他信息！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if((this_column == "pj") && ( _this.data.list[index].dy != "" || _this.data.list[index].kg != "") ){
+      wx.showToast({
+        title: '此行已选择电源、开关或配件，不允许选择其他信息！',
+        icon: 'none'
+      })
+      return;
+    }
+
     console.log(e.currentTarget.dataset.column)
     console.log(e.currentTarget.dataset.value)
     console.log(e.currentTarget.dataset.index)
@@ -474,21 +500,14 @@ Page({
 
     var this_row = e.currentTarget.dataset.index
     console.log(this_row)
-  
-    if((e.currentTarget.dataset.column!='dy' || e.currentTarget.dataset.column!='kg' || e.currentTarget.dataset.column!='pj') && _this.data.list[this_row].dy == "" && _this.data.list[this_row].kg == "" && _this.data.list[this_row].pj == ""){
-      _this.setData({
-        this_column:e.currentTarget.dataset.column,
-        this_value:e.currentTarget.dataset.value,
-        xiala_panduan:panduan,
-        this_index:e.currentTarget.dataset.index,
-        xgShow:true,
-      })
-    }else{
-      wx.showToast({
-        title: '电源开关备件填有信息！',
-        icon: 'none'
-      })
-    }
+
+    _this.setData({
+      this_column:e.currentTarget.dataset.column,
+      this_value:e.currentTarget.dataset.value,
+      xiala_panduan:panduan,
+      this_index:e.currentTarget.dataset.index,
+      xgShow:true,
+    })
 
     
     
@@ -552,21 +571,44 @@ Page({
     var list1 = _this.data.ddxh_list_dj
     console.log(_this.data.this_index)
     console.log(_this.data.this_column)
-    var dj 
-    for (var i = 0 ; i < list1.length ; i++){
-      if (_this.data.this_column == 'lcb' &&  _this.data.this_value == list1[i].ddxh && list[_this.data.this_index].ddcd > 400){
-        dj = parseFloat(list1[i].mmdj) + parseFloat(((list[_this.data.this_index].ddcd-400)/100) * list1[i].zjdj)
-        list[_this.data.this_index].dj = dj
-        list[_this.data.this_index].je = list[_this.data.this_index].sl * list[_this.data.this_index].dj
-        list[_this.data.this_index].gl = list[_this.data.this_index].ddcd / 1000 * list[_this.data.this_index].sl * 15
-      }else if (_this.data.this_column == 'lcb' &&  _this.data.this_value == list1[i].ddxh){
-        dj = list1[i].mmdj
-        list[_this.data.this_index].dj = dj
-        list[_this.data.this_index].je = list[_this.data.this_index].sl * list[_this.data.this_index].dj
-        list[_this.data.this_index].gl = list[_this.data.this_index].ddcd / 1000 * list[_this.data.this_index].sl * 15
+    var danjia = 0
+    var gonglv = 0
+    for(var i=0; i<list.length; i++){
+      if(list[i].lcb != '' && list[i].ddcd != ''){
+        for(var j=0; j<list1.length; j++){
+          if(list[i].lcb == list1[j].ddxh && list[i].ddcd > 400){
+            danjia = parseFloat(list1[j].mmdj) + Math.ceil(((list[i].ddcd-400)/100) * list1[j].zjdj)
+            list[i].dj = danjia
+            if(list[i].sl != ''){
+              var shuliang = parseFloat(list[i].sl)
+              list[i].je = (danjia * shuliang).toFixed(2)
+            }
+            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015)
+            list[i].gl = gonglv
+            break;
+          }else{
+            danjia = parseFloat(list1[j].mmdj)
+            list[i].dj = danjia
+            if(list[i].sl != ''){
+              var shuliang = parseFloat(list[i].sl)
+              list[i].je = (danjia * shuliang).toFixed(2)
+            }
+            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015)
+            list[i].gl = gonglv
+            break;
+          }
+        }
       }
+      if(i != 0){
+        if(list[i].fj == list[i-1].fj && list[i].gh == list[i-1].gh){
+
+        }else{
+          gonglv = 0
+        }
+      }
+      
     }
-    // console.log(list[_this.data.this_index].dj = dj)
+
     _this.setData({
       list:list,
     })
@@ -575,7 +617,15 @@ Page({
 
   add1: function(){
     var _this = this
-    if (_this.data.khmc != '' && _this.data.xdrq != '' && _this.data.shouhuo != '' && _this.data.lxdh != '' && _this.data.shfs != '' && _this.data.azdz != '' && _this.data.ddh != ''){
+    
+    if (_this.data.khmc != '' && _this.data.xdrq != '' && _this.data.header_list.djbh != '' && _this.data.shouhuo != '' && _this.data.lxdh != '' && _this.data.shfs != '' && _this.data.azdz != ''){
+      if(_this.data.list.length == 0){
+        wx.showToast({
+          title: '未填写订单内容！',
+          icon: 'none'
+        })
+        return;
+      }
       console.log(_this.data.khmc)
       var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,ddcd,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl,bz,dj,je) values"
       var sql2 = ""
@@ -616,6 +666,16 @@ Page({
             title: '添加成功！',
             icon: 'none'
           })
+          
+          var common_Interval = setInterval(()=>
+          {
+            wx.navigateBack({ 
+              delta: 1
+            });
+            clearInterval(common_Interval);
+          }, 2000)
+
+          
         },
         err: res => {
           console.log("错误!")
@@ -644,9 +704,9 @@ Page({
       currentDate: e.detail,
       [column]: e.detail.value
     })
-    
-    
   },
+
+
   upd1:function(){
     var _this = this
     wx.cloud.callFunction({
@@ -889,5 +949,38 @@ function getBianHao() {
   }
   // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
   var currentdate = "DD"+ year.toString() + month.toString() + day.toString() ;
+  return currentdate;
+ }
+
+ function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
   return currentdate;
  }

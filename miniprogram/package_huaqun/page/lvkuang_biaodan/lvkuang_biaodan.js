@@ -608,7 +608,15 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var column = e.currentTarget.dataset.column
+    if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
 
+    }else{
+      wx.showToast({
+        title: '无付款权限！',
+        icon: 'none'
+      })
+      return;
+    }
     _this.setData({
       this_column:e.currentTarget.dataset.column,
       this_value:e.currentTarget.dataset.value,

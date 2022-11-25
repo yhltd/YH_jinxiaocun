@@ -142,6 +142,15 @@ Page({
     console.log(index)
     console.log(column)
     if(column == "shengchan"){
+      if(_this.data.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
+
+      }else{
+        wx.showToast({
+          title: '非玻璃厂账号，无生产权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
         id: _this.data.list[e.currentTarget.dataset.index].id,
         this_column: column,
@@ -150,6 +159,15 @@ Page({
         no_click: '未完成',
       })
     }else if(column == "beizhu"){
+      if(_this.data.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
+
+      }else{
+        wx.showToast({
+          title: '非玻璃厂账号，无修改权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
         id: _this.data.list[e.currentTarget.dataset.index].id,
         this_column:e.currentTarget.dataset.column,

@@ -17,7 +17,7 @@
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
-              bindtap="clickView">
+              >
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -43,7 +43,7 @@
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
-              bindtap="clickView1">
+              >
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>

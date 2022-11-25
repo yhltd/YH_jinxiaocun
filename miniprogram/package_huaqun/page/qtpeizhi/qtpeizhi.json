@@ -8,5 +8,5 @@
     "van-datetime-picker": "../../components/datetime-picker/index"
   },
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "其他配置"
+  "navigationBarTitleText": "灯带价格配置表"
 }

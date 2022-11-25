@@ -8,11 +8,11 @@ Page({
     userInfo:'',
     active:0,
     showList: [{
-      text: "参照表",
+      text: "铝框参照表",
       url: "../canzhao/canzhao"
     },
     {
-      text: "其他配置表",
+      text: "灯带价格配置表",
       url: "../qtpeizhi/qtpeizhi"
     },
     {
@@ -41,7 +41,7 @@ Page({
       }
     }else{
       wx.showToast({
-        title: '无权限！',
+        title: '非管理员账号无权限查看！',
         icon: 'none'
       })
     }

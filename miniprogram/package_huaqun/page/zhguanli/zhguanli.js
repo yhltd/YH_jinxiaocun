@@ -11,6 +11,8 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
+    quanxian_type:['管理员','操作员','玻璃厂','客户'],
+    quanxian_list:['是','否'],
     list: [],
     title: [{
         text: "账号",
@@ -47,6 +49,48 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "填写铝框金额权限",
+        width: "300rpx",
+        columnName: "money",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "审单权限",
+        width: "250rpx",
+        columnName: "shendan",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "付款权限",
+        width: "250rpx",
+        columnName: "pay",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开料权限",
+        width: "250rpx",
+        columnName: "kailiao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "组装权限",
+        width: "250rpx",
+        columnName: "zuzhuang",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "包装权限",
+        width: "250rpx",
+        columnName: "baozhuang",
+        type: "text",
+        isupd: true
+      },
     ],
 
     id:'',
@@ -55,6 +99,12 @@ Page({
     pinyin:'',
     name: '',
     power: '',
+    money: '',
+    shendan: '',
+    pay: '',
+    kailiao: '',
+    zuzhuang: '',
+    baozhuang: '',
   },
 
   /**
@@ -66,7 +116,25 @@ Page({
     _this.tableShow(e)
   },
 
+  bindPickerChange1: function(e){
+    var _this = this
+    console.log(e.currentTarget.dataset.column)
+    var column = e.currentTarget.dataset.column_name
+    console.log(_this.data.quanxian_type[e.detail.value])
+    _this.setData({
+      [column]: _this.data.quanxian_type[e.detail.value]
+    })
+  },
 
+  bindPickerChange2: function(e){
+    var _this = this
+    console.log(e.currentTarget.dataset.column)
+    var column = e.currentTarget.dataset.column_name
+    console.log(_this.data.quanxian_list[e.detail.value])
+    _this.setData({
+      [column]: _this.data.quanxian_list[e.detail.value]
+    })
+  },
 
   tableShow: function (e) {
     var _this = this
@@ -117,6 +185,12 @@ Page({
       pinyin: _this.data.list[e.currentTarget.dataset.index].pinyin,
       name: _this.data.list[e.currentTarget.dataset.index].name,
       power: _this.data.list[e.currentTarget.dataset.index].power,
+      money:  _this.data.list[e.currentTarget.dataset.index].money,
+      shendan:  _this.data.list[e.currentTarget.dataset.index].shendan,
+      pay:  _this.data.list[e.currentTarget.dataset.index].pay,
+      kailiao:  _this.data.list[e.currentTarget.dataset.index].kailiao,
+      zuzhuang:  _this.data.list[e.currentTarget.dataset.index].zuzhuang,
+      baozhuang:  _this.data.list[e.currentTarget.dataset.index].baozhuang,
       xgShow:true,
     })
   },
@@ -131,6 +205,12 @@ Page({
       pinyin:'',
       name: '',
       power: '',
+      money: '',
+      shendan: '',
+      pay: '',
+      kailiao: '',
+      zuzhuang: '',
+      baozhuang: '',
     })
   },
   add1: function(){
@@ -162,11 +242,19 @@ Page({
       })
       return;
     }
+    if(_this.data.power == ''){
+      wx.showToast({
+        title: '请输权限！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
 
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "insert into userInfo(username,password,name,pinyin,power) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "')"
+          query: "insert into userInfo(username,password,name,pinyin,power,money,shendan,pay,kailiao,zuzhuang,baozhuang) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "','" + _this.data.money + "','" + _this.data.shendan + "','" + _this.data.pay + "','" + _this.data.kailiao + "','" + _this.data.zuzhuang + "','" + _this.data.baozhuang + "')"
         },
         success: res => {
           _this.setData({
@@ -176,6 +264,12 @@ Page({
             name: '',
             power: '',
             pinyin:'',
+            money: '',
+            shendan: '',
+            pay: '',
+            kailiao: '',
+            zuzhuang: '',
+            baozhuang: '',
           })
           _this.qxShow()
           var e = ['','']
@@ -212,7 +306,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "' where id=" + _this.data.id  
+        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "',money='" + _this.data.money + "',shendan='" + _this.data.shendan + "',pay='" + _this.data.pay + "',kailiao='" + _this.data.kailiao + "',zuzhuang='" + _this.data.zuzhuang + "',baozhuang='" + _this.data.baozhuang + "' where id=" + _this.data.id  
       },
       success: res => {
         _this.setData({
@@ -222,6 +316,12 @@ Page({
             name: '',
             pinyin:'',
             power: '',
+            money: '',
+            shendan: '',
+            pay: '',
+            kailiao: '',
+            zuzhuang: '',
+            baozhuang: '',
         })
         _this.qxShow()
         var e = ['','']
@@ -260,6 +360,12 @@ Page({
             pinyin:'',
             name: '',
             power: '',
+            money: '',
+            shendan: '',
+            pay: '',
+            kailiao: '',
+            zuzhuang: '',
+            baozhuang: '',
           })
           _this.qxShow()
           var e = ['','']
@@ -286,9 +392,8 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      customer:"",
-      leibie:"",
-      area:"",
+      name:"",
+      power:"",
     })
   },
 

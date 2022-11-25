@@ -35,7 +35,7 @@
 <!------------------------->
 <!---------添加弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 50%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;" >
   <view class="lables">账号</view>
     <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
     <view class="lables">密码</view>
@@ -45,7 +45,33 @@
     <view class="lables">简码</view>
     <input bindinput="onInput" data-column="pinyin" class="input_text_form"  value="{{pinyin}}" type="text" name="pinyin"></input>
     <view class="lables">权限</view>
-    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
+      <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
+    <view class="lables">填写铝框金额权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="money" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="money" class="input_text_form"  value="{{money}}" type="text" name="money" disabled="disabled"></input>
+    </picker>
+    <view class="lables">审单权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="shendan" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="shendan" class="input_text_form"  value="{{shendan}}" type="text" name="shendan" disabled="disabled"></input>
+    </picker>
+    <view class="lables">付款权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="pay" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="pay" class="input_text_form"  value="{{pay}}" type="text" name="pay" disabled="disabled"></input>
+    </picker>
+    <view class="lables">开料权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="kailiao" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="kailiao" class="input_text_form"  value="{{kailiao}}" type="text" name="kailiao" disabled="disabled"></input>
+    </picker>
+    <view class="lables">组装权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="zuzhuang" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="zuzhuang" class="input_text_form"  value="{{zuzhuang}}" type="text" name="zuzhuang" disabled="disabled"></input>
+    </picker>
+    <view class="lables">包装权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="baozhuang" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="baozhuang" class="input_text_form"  value="{{baozhuang}}" type="text" name="baozhuang" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -54,7 +80,7 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 50%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;" >
   <view class="lables">账号</view>
     <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
     <view class="lables">密码</view>
@@ -64,7 +90,33 @@
     <view class="lables">简码</view>
     <input bindinput="onInput" data-column="pinyin" class="input_text_form"  value="{{pinyin}}" type="text" name="pinyin"></input>
     <view class="lables">权限</view>
-    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
+      <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
+    <view class="lables">填写铝框金额权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="money" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="money" class="input_text_form"  value="{{money}}" type="text" name="money" disabled="disabled"></input>
+    </picker>
+    <view class="lables">审单权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="shendan" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="shendan" class="input_text_form"  value="{{shendan}}" type="text" name="shendan" disabled="disabled"></input>
+    </picker>
+    <view class="lables">付款权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="pay" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="pay" class="input_text_form"  value="{{pay}}" type="text" name="pay" disabled="disabled"></input>
+    </picker>
+    <view class="lables">开料权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="kailiao" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="kailiao" class="input_text_form"  value="{{kailiao}}" type="text" name="kailiao" disabled="disabled"></input>
+    </picker>
+    <view class="lables">组装权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="zuzhuang" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="zuzhuang" class="input_text_form"  value="{{zuzhuang}}" type="text" name="zuzhuang" disabled="disabled"></input>
+    </picker>
+    <view class="lables">包装权限</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="baozhuang" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="baozhuang" class="input_text_form"  value="{{baozhuang}}" type="text" name="baozhuang" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
@@ -77,7 +129,9 @@
   <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
     <view class="lables">权限</view>
-    <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power"></input>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
+      <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

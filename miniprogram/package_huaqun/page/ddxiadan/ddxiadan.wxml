@@ -74,26 +74,12 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
     <view class="lables">{{update_name[this_column]}}</view>
     <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?cxdk_list:xiala_panduan==2?ddxh_list:xiala_panduan==3?lcys_list:xiala_panduan==4?gy_list:xiala_panduan==5?dy_list:xiala_panduan==6?kg_list:xiala_panduan==7?pj_list:xiala_panduan==8?fk_list:xiala_panduan==9?hd_list:''}}" disabled="{{xiala_panduan==0}}">
-      <input class="input_text_form" style="margin-top: 10%;" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
+      <input class="input_text_form" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
     </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">修改</button>
-  </view>
-</van-popup>
-
-<!------------------------->
-<!---------查询弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
-  <view class="lables">客户名称</view>
-    <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>
-    <view class="lables">订单号</view>
-    <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{ddh}}" type="text" name="ddh"></input>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
 

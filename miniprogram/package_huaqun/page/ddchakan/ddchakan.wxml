@@ -17,7 +17,8 @@
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
-              bindtap="clickView">
+              bindtap="clickView"
+              bindlongpress="del1">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -28,6 +29,7 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
+  <button class="bt_bottom" bindtap="back" >返回</button>
 	<button class="bt_bottom"  bindtap="entering">查询</button>
 </view>
 
@@ -36,7 +38,7 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
   <view class="lables">客户名称</view>
-    <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>
+    <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc" disabled="{{kehu_panduan}}"></input>
     <view class="lables">订单号</view>
     <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{ddh}}" type="text" name="ddh"></input>
   <view class="bottom_view" style="height:10%">
@@ -49,16 +51,9 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 30%;" >
-  <view class="lables">{{update_name[this_column]}}</view>
-  <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?fkzt_list:xiala_panduan==2?hd_list:xiala_panduan==3?shfs_list:''}}" disabled="{{xiala_panduan==0}}">
-    <input class="input_text_form" style="margin-top: 10%;" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}" ></input>
-  </picker>
-
-    <!-- <input bindinput="onInput" data-column="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" ></input> -->
-  <view class="bottom_view" style="height:10%; margin-top: 10rpx;">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="cha1">查看</button>
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 15%;" >
+  <view class="bottom_view" style="height:10%;margin-top: 8%;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="yes_click">{{yes_click}}</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="no_click">{{no_click}}</button>
   </view>
 </van-popup>

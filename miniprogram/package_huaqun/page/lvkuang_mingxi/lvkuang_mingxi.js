@@ -76,6 +76,13 @@ Page({
         isupd: true
       },
       {
+        text: "付款状态",
+        width: "250rpx",
+        columnName: "pay",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "审单",
         width: "250rpx",
         columnName: "shendan",
@@ -132,10 +139,16 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var sql = ""
+    if(_this.data.userInfo.power == '客户'){
+      sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%"+ e[0] +"%' and insert_date >= '"+ e[1] +"' and insert_date <= '"+ e[2] +"' and customer_name ='"+ _this.data.userInfo.name +"' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+    }else{
+      sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%"+ e[0] +"%' and insert_date >= '"+ e[1] +"' and insert_date <= '"+ e[2] +"' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+    }
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%"+ e[0] +"%' and insert_date >= '"+ e[1] +"' and insert_date <= '"+ e[2] +"' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+        query: sql
       },
       success: res => {
         var list = res.result.recordset
@@ -195,6 +208,15 @@ Page({
     console.log(index)
     console.log(column)
     if(column == "shendan"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无审核权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
         order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
         this_column: column,
@@ -202,7 +224,33 @@ Page({
         yes_click: '通过',
         no_click: '拒绝',
       })
+    }if(column == "pay"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无付款权限！',
+          icon: 'none'
+        })
+        return;
+      }
+      _this.setData({
+        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
+        this_column: column,
+        xgShow:true,
+        yes_click: '已付款',
+        no_click: '未付款',
+      })
     }else if(column == "kailiao"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.kailiao == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无开料权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
         order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
         this_column: column,
@@ -211,6 +259,15 @@ Page({
         no_click: '未完成',
       })
     }else if(column == "zuzhuang"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.zuzhuang == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无组装权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
         order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
         this_column: column,
@@ -219,6 +276,15 @@ Page({
         no_click: '未完成',
       })
     }else if(column == "baozhuang"){
+      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.baozhuang == '是')){
+
+      }else{
+        wx.showToast({
+          title: '无包装权限！',
+          icon: 'none'
+        })
+        return;
+      }
       _this.setData({
         order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
         this_column: column,
@@ -338,6 +404,15 @@ Page({
   del1:function(e){
     var _this = this
     var order_number = _this.data.list[e.currentTarget.dataset.index].order_number
+    if(_this.data.power == '管理员'){
+
+    }else{
+      wx.showToast({
+        title: '非管理员账号，无删除订单权限！',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条订单？',
@@ -401,7 +476,15 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.order_number,_this.data.start_date,_this.data.stop_date]
+    var start_date = _this.data.start_date
+    var stop_date = _this.data.stop_date
+    if(start_date == ''){
+      start_date = '1900-01-01'
+    }
+    if(stop_date == ''){
+      stop_date = '2100-12-31'
+    }
+    var e = [_this.data.order_number,start_date,stop_date]
     _this.tableShow(e)
     _this.qxShow()
   },
