@@ -1,0 +1,90 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 70%;" >
+  <view class="lables">用户名</view>
+    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">权限</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{qx_list}}" >
+      <input bindinput="onInput" data-column="power" class="input_text_form" value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 70%;" >
+  <view class="lables">用户名</view>
+    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">所属业务员</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{power_ywy_picker}}" disabled="{{power!='客户'}}" >
+      <input bindinput="onInput" data-column="salesman" class="input_text_form"  value="{{salesman}}" type="text" name="salesman" disabled="{{power!='客户'}}"></input>
+    </picker>
+    <view class="lables">所属司机</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{power_sj_picker}}" disabled="{{power!='客户'}}" >
+      <input bindinput="onInput" data-column="driver" class="input_text_form"  value="{{driver}}" type="text" name="driver" disabled="{{power!='客户'}}"></input>
+    </picker>
+    <!-- <view class="lables">业务员二维码</view>
+    <input bindinput="onInput" data-column="qr_code" class="input_text_form"  value="{{qr_code}}" type="text" name="qr_code"></input> -->
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+  <view class="lables">姓名</view>
+  <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

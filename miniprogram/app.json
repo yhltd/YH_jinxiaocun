@@ -288,7 +288,11 @@
       "root": "package_yiwa",
       "name": "YiWaDeDanTengXiaoWaLi",
       "pages": [
-        "pages/shows/shows"
+        "pages/shows/shows",
+        "pages/zhanghaoguanli/zhanghaoguanli",
+        "pages/erweima/erweima",
+        "pages/mingxipeizhibiao/mingxipeizhibiao",
+        "pages/chanpinmingxi/chanpinmingxi"
       ]
     }
   ],

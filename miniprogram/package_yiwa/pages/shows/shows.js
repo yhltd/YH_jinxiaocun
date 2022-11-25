@@ -8,20 +8,20 @@ Page({
    userInfo:'',
    active:0,
    showList: [{
-     text: "参照表",
-     url: "../canzhao/canzhao"
-   },
-   {
-     text: "其他配置表",
-     url: "../qtpeizhi/qtpeizhi"
-   },
-   {
-     text: "下拉配置表",
-     url: "../xlpeizhi/xlpeizhi"
-   },
-   {
      text: "账号管理",
-     url: "../zhguanli/zhguanli"
+     url: "../zhanghaoguanli/zhanghaoguanli"
+   },
+   {
+     text: "二维码",
+     url: "../erweima/erweima"
+   },
+   {
+     text: "明细(配置表)",
+     url: "../mingxipeizhibiao/mingxipeizhibiao"
+   },
+   {
+     text: "产品明细",
+     url: "../chanpinmingxi/chanpinmingxi"
    },
  ]
  },
@@ -33,18 +33,46 @@ Page({
    var url = _this.data.showList[index].url
    var text = _this.data.showList[index].text
    console.log(_this.data.userInfo.power)
-   if (_this.data.userInfo.power=="管理员"){
-     if(url != ''){
-       wx.navigateTo({
-         url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
-       })
-     }
-   }else{
-     wx.showToast({
-       title: '无权限！',
-       icon: 'none'
-     })
-   }
+   if (_this.data.userInfo.power=="业务员"){
+    if(url != ''){
+      wx.navigateTo({
+        url: "../erweima/erweima?userInfo=" + JSON.stringify(_this.data.userInfo)
+      })
+    }
+  }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
+    if(url != ''){
+      wx.navigateTo({
+        url: "../zhanghaoguanli/zhanghaoguanli?userInfo=" + JSON.stringify(_this.data.userInfo)
+      })
+    }
+  }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
+    if(url != ''){
+      wx.navigateTo({
+        url: "../mingxipeizhibiao/mingxipeizhibiao?userInfo=" + JSON.stringify(_this.data.userInfo)
+      })
+    }
+  }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
+    if(url != ''){
+      wx.navigateTo({
+        url: "../chanpinmingxi/chanpinmingxi?userInfo=" + JSON.stringify(_this.data.userInfo)
+      })
+    }
+  }else{
+    wx.showToast({
+      title: '无权限！',
+      icon: 'none'
+    })
+  }
+
+
+
+  
+  
+  //  if(url != ''){
+  //   wx.navigateTo({
+  //     url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+  //   })
+  // }
    
  },
 
