@@ -13,19 +13,19 @@ Page({
   data: {
     list: [],
     title: [{
-        text: "明细id",
+        text: "客户名称",
         width: "250rpx",
-        columnName: "Thedetail_id",
+        columnName: "name",
         type: "text",
         isupd: true
       },
-      {
-        text: "客户id",
-        width: "250rpx",
-        columnName: "Customer_id",
-        type: "text",
-        isupd: true
-      },
+      // {
+      //   text: "客户id",
+      //   width: "250rpx",
+      //   columnName: "Customer_id",
+      //   type: "text",
+      //   isupd: true
+      // },
       {
         text: "产品名称",
         width: "250rpx",
@@ -62,31 +62,12 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    wx.cloud.callFunction({
-      name: 'sqlserver_yiwa',
-      data: {
-        query: "select * from DetailsofProducts"
-      },
-      success: res => {
-        var list = res.result.recordset
-        console.log(list)
-        _this.setData({
-          list:list,
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
+    var userInfo = options.userInfo
+    _this.setData({
+      userInfo
     })
-   
+    var e = ['']
+    _this.tableShow(e)   
   },
 
 
@@ -96,7 +77,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "select * from DetailsofProducts where NameofProduct like '%" + e[0] + "%' "
+        query: "select DP.id,userInfo.name as name,DC.NameofProduct,DC.unit,DP.Theunitprice from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id where DC.NameofProduct like '%" + e[0] + "%'"
       },
       success: res => {
         console.log(res)

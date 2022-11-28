@@ -264,9 +264,10 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      customer:"",
-      leibie:"",
-      area:"",
+      id:'',
+      lkxh: '', 
+      chang: '',
+      kuan: '',
     })
   },
 

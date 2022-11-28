@@ -129,7 +129,7 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    var userInfo = options.userInfo
+    var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       userInfo:userInfo
     })
@@ -142,8 +142,10 @@ Page({
     var sql = ""
     if(_this.data.userInfo.power == '客户'){
       sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%"+ e[0] +"%' and insert_date >= '"+ e[1] +"' and insert_date <= '"+ e[2] +"' and customer_name ='"+ _this.data.userInfo.name +"' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
-    }else{
+    }else if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.shendan == '是'){
       sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%"+ e[0] +"%' and insert_date >= '"+ e[1] +"' and insert_date <= '"+ e[2] +"' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+    }else{
+      sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%"+ e[0] +"%' and insert_date >= '"+ e[1] +"' and insert_date <= '"+ e[2] +"' and shendan = '通过' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
     }
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
@@ -208,7 +210,7 @@ Page({
     console.log(index)
     console.log(column)
     if(column == "shendan"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')){
 
       }else{
         wx.showToast({
@@ -225,7 +227,7 @@ Page({
         no_click: '拒绝',
       })
     }if(column == "pay"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
 
       }else{
         wx.showToast({
@@ -242,7 +244,7 @@ Page({
         no_click: '未付款',
       })
     }else if(column == "kailiao"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.kailiao == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.kailiao == '是')){
 
       }else{
         wx.showToast({
@@ -259,7 +261,7 @@ Page({
         no_click: '未完成',
       })
     }else if(column == "zuzhuang"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.zuzhuang == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.zuzhuang == '是')){
 
       }else{
         wx.showToast({
@@ -276,7 +278,7 @@ Page({
         no_click: '未完成',
       })
     }else if(column == "baozhuang"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.baozhuang == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.baozhuang == '是')){
 
       }else{
         wx.showToast({
@@ -404,7 +406,7 @@ Page({
   del1:function(e){
     var _this = this
     var order_number = _this.data.list[e.currentTarget.dataset.index].order_number
-    if(_this.data.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员'){
 
     }else{
       wx.showToast({

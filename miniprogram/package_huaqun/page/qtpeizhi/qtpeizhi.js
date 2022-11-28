@@ -288,9 +288,10 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      customer:"",
-      leibie:"",
-      area:"",
+      id:'',
+      ddxh: '', 
+      mmdj: '',
+      zjdj: '',
     })
   },
 

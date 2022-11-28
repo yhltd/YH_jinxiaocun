@@ -20,6 +20,8 @@ Page({
       kg:"开关",
       pj:"配件",
       shfs:"送货方式",
+      lxc_lk:"铝型材-铝框",
+      lcys_lk:"铝材颜色-铝框",
       blsjg:"玻璃深加工",
       blys:"玻璃颜色",
       lsxh:"拉手型号",
@@ -44,7 +46,7 @@ Page({
       },
       {
         text: "铝材颜色-灯带",
-        width: "200rpx",
+        width: "275rpx",
         columnName: "lcys",
         type: "text",
         isupd: true

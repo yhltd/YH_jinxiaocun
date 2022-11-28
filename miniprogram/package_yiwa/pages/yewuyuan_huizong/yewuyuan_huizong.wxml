@@ -1,0 +1,113 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="refresh">生成</button>
+  <button class="bt_bottom" bindtap="out_put">导出</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 70%;" >
+  <view class="lables">用户名</view>
+    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">权限</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{qx_list}}" >
+      <input bindinput="onInput" data-column="power" class="input_text_form" value="{{power}}" type="text" name="power" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 53%;" >
+  <view class="lables">用户名</view>
+    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+  <view class="lables">姓名</view>
+  <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+<van-popup bind:click-overlay="qxShow" show="{{ xzkhShow }}" position="bottom" custom-style="height: 60%;" >
+<view class="weui-cells weui-cells_after-title">
+  <checkbox-group data-name="countries" bindchange="onCheckboxChange" >
+    <label 
+      class="weui-cell weui-check__label"
+      wx:for="{{kehu_list}}" 
+      wx:key="id"
+      wx:for-item="item" 
+      wx:for-index="i"
+    >
+      <view class="weui-cell__bd">{{item.name}}</view>
+      <view class="weui-cell__hd">
+        <checkbox value="{{item.id}}" color="red" checked="true" style="color:red"/>
+      </view>
+    </label>
+  </checkbox-group>
+
+</view>
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">确定</button>
+  </view>
+</van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet
+  show="{{xlShow}}"
+  actions="{{list_xiala}}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>

@@ -1,38 +1,29 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
-  <view class="table">
-    <view class='table_header'>
-      <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
-      </block>
-    </view>
-    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
-      <view class="table_main">
-        <view wx:for="{{title}}" 
-              wx:for-item="item" 
-              wx:key="item" 
-              class="list_view" 
-              style="width:{{item.width}}" data-index="{{i}}" 
-              data-column="{{item.columnName}}" 
-              data-value="{{list_item[item.columnName]}}" 
-              data-input_type="{{item.type}}"
-              data-isupd="{{item.isupd}}"
-              bindtap="clickView">
-          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
-        </view>
-      </view>
-    </block>
-  </view>
-</scroll-view>
+<view style="display: flex;margin-top: 2%;">
+  <view class="lables">业务员：</view>
+  <input bindinput="onInput_text" bindtap="sel_xiala" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name" disabled="disabled" ></input>
+</view>
 
-<!-- <view class='shangpin'>
-	<image src='{{all[i].mark1}}' class='shangpin-image' mode="widthFix"> </image>
-<view class='shangpin-text'> -->
+<view style="height: 80%;display: flex;justify-content: center;">
+  <view  style="width:95%;border-style:dashed;border-width:3rpx;margin-top: 2%;display: flex;justify-content: center;">
+    <image src='{{qr_code_head}}' class='shangpin-image' mode="widthFix"> </image>
+  </view>
+</view>
+
 
 
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="chooseImage" >修改/添加</button>
+	<button class="bt_bottom" bindtap="upd_image" >修改/添加</button>
 </view>
+
+<!--表单下拉选择-->
+<van-action-sheet
+  show="{{xlShow}}"
+  actions="{{yewu_list}}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>
 

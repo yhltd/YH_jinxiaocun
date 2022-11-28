@@ -63,6 +63,13 @@ Page({
         isupd: true
       },
       {
+        text: "审单",
+        width: "250rpx",
+        columnName: "shendan",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "生产状态",
         width: "250rpx",
         columnName: "shengchan",
@@ -79,7 +86,7 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    var userInfo = options.userInfo
+    var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       userInfo:userInfo
     })
@@ -89,10 +96,16 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var sql = ''
+    if(_this.data.userInfo.power == '管理员'){
+      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%'"
+    }else{
+      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and shendan = '通过'"
+    }
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select * from boli_xiadan where pinyin like '%" + e[0] + "%'"
+        query: sql
       },
       success: res => {
         var list = res.result.recordset
@@ -142,7 +155,7 @@ Page({
     console.log(index)
     console.log(column)
     if(column == "shengchan"){
-      if(_this.data.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
+      if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
 
       }else{
         wx.showToast({
@@ -159,7 +172,7 @@ Page({
         no_click: '未完成',
       })
     }else if(column == "beizhu"){
-      if(_this.data.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
+      if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
 
       }else{
         wx.showToast({

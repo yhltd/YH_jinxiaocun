@@ -289,12 +289,14 @@
       "name": "YiWaDeDanTengXiaoWaLi",
       "pages": [
         "pages/shows/shows",
+        "pages/shows2/shows2",
         "pages/zhanghaoguanli/zhanghaoguanli",
         "pages/erweima/erweima",
         "pages/mingxipeizhibiao/mingxipeizhibiao",
         "pages/chanpinmingxi/chanpinmingxi",
         "pages/kehuxiadan/kehuxiadan",
-        "pages/kehuxiadanmingxi/kehuxiadanmingxi"
+        "pages/kehuxiadanmingxi/kehuxiadanmingxi",
+        "pages/yewuyuan_huizong/yewuyuan_huizong"
       ]
     }
   ],

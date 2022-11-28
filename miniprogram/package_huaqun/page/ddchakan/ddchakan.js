@@ -274,7 +274,7 @@ Page({
     console.log(index)
     console.log(column)
     if(column == "hd"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')){
 
       }else{
         wx.showToast({
@@ -291,7 +291,7 @@ Page({
         no_click: '拒绝',
       })
     }else if(column == "fkzt"){
-      if(_this.data.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
+      if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
 
       }else{
         wx.showToast({
@@ -438,7 +438,7 @@ Page({
   del1:function(e){
     var _this = this
     var djbh = _this.data.list[e.currentTarget.dataset.index].djbh
-    if(_this.data.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员'){
 
     }else{
       wx.showToast({

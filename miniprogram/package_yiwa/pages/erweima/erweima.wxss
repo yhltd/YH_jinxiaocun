@@ -135,7 +135,7 @@ button{
   left:5%;
 }
 
-.input_text_form{
+/* .input_text_form{
   border: 5rpx solid #E6E6E6;
   margin: auto;
   width: 80%;
@@ -145,7 +145,20 @@ button{
   border-radius: 19rpx;
   padding-left: 3%;
   margin-bottom:5% ;
+} */
+
+.input_text_form{
+  border: 5rpx solid #E6E6E6;
+  margin: auto;
+  width: 65%;
+  height: 64rpx;
+  align-items: center;
+  margin-top: 10rpx;
+  border-radius: 19rpx;
+  padding-left: 3%;
+  margin-bottom:3% ;
 }
+
 .input_text_form2{
   border: 5rpx solid #E6E6E6;
   margin: auto;
@@ -310,10 +323,17 @@ button{
   padding-left: 19rpx;  
 }
 
-.lables{
+/* .lables{
   font-size: 40rpx;
   margin-left: 90rpx;
   margin-top: 10rpx;
+} */
+
+.lables{
+  font-size: 35rpx;
+  width: 25%;
+  margin-top: 20rpx;
+  padding-left: 20rpx;
 }
 
 .lables1{

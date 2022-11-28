@@ -54,23 +54,13 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 70%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 53%;" >
   <view class="lables">用户名</view>
     <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
     <view class="lables">密码</view>
     <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
     <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-    <view class="lables">所属业务员</view>
-    <picker bindchange="bindPickerChange1" value="{{index}}" range="{{power_ywy_picker}}" disabled="{{power!='客户'}}" >
-      <input bindinput="onInput" data-column="salesman" class="input_text_form"  value="{{salesman}}" type="text" name="salesman" disabled="{{power!='客户'}}"></input>
-    </picker>
-    <view class="lables">所属司机</view>
-    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{power_sj_picker}}" disabled="{{power!='客户'}}" >
-      <input bindinput="onInput" data-column="driver" class="input_text_form"  value="{{driver}}" type="text" name="driver" disabled="{{power!='客户'}}"></input>
-    </picker>
-    <!-- <view class="lables">业务员二维码</view>
-    <input bindinput="onInput" data-column="qr_code" class="input_text_form"  value="{{qr_code}}" type="text" name="qr_code"></input> -->
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
@@ -88,3 +78,12 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet
+  show="{{xlShow}}"
+  actions="{{list_xiala}}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>
