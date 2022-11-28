@@ -8,5 +8,5 @@
     "van-datetime-picker": "../../components/datetime-picker/index"
   },
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "业务员报货汇总单"
+  "navigationBarTitleText": "司机报货汇总单"
 }

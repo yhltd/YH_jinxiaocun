@@ -224,7 +224,7 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    if (userInfo.power =='客户'){
+    if (_this.data.userInfo.power =='客户'){
       var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where khmc ='"+  userInfo.name +"' and ddh like '%"+  e[1] +"%'"
     }else{
       var sql ="select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd from lightbelt where khmc like '%"+  e[0] +"%' and ddh like '%"+  e[1] +"%'"

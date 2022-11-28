@@ -1,6 +1,5 @@
 // package_huaqun/page/zhguanli/zhguanli.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -51,8 +50,8 @@ Page({
     var sql = ""
     if(_this.data.userInfo.power == '管理员'){
       sql = "select * from userInfo where power ='客户'"
-    }else if(_this.data.userInfo.power == '业务员'){
-      sql = "select * from userInfo where power ='客户' and salesman ='" + _this.data.userInfo.id + "'"
+    }else if(_this.data.userInfo.power == '司机'){
+      sql = "select * from userInfo where power ='客户' and driver ='" + _this.data.userInfo.id + "'"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -582,36 +581,9 @@ Page({
             for(var j=0; j<list.length; j++){
               if(order_list[i].NameofProduct == list[j].NameofProduct){
                 if(list[j][order_list[i].name] == ""){
-                  list[j][order_list[i].name] = order_list[i].Theunitprice + "*" + order_list[i].number
+                  list[j][order_list[i].name] = order_list[i].number
                 }else{
-                  console.log(order_list[i].name)
-                  console.log(list[j][order_list[i].name])
-                  var this_str = list[j][order_list[i].name].split("+")
-                  var panduan = false
-                  for(var k=0; k<this_str.length; k++){
-                    var this_price = this_str[k].split("*")[0]
-                    if(this_price == order_list[i].Theunitprice){
-                      var this_num = this_str[k].split("*")[1] * 1 + order_list[i].number * 1
-                      this_str[k] = this_price + "*" + this_num
-                      panduan = true
-                      break;
-                    }
-                  }
-                  if(panduan){
-                    var end_str = ""
-                    for(var k=0; k<this_str.length; k++){
-                      if(end_str == ''){  
-                        end_str = this_str[k]
-                      }else{
-                        end_str = end_str + "+" + this_str[k]
-                      }
-                    }
-                    list[j][order_list[i].name] = end_str
-                  }else{
-                    var end_str = list[j][order_list[i].name]
-                    end_str = end_str + "+" + this_price + "*" + order_list[i].number
-                    list[j][order_list[i].name] = end_str
-                  }
+                  list[j][order_list[i].name] = list[j][order_list[i].name] * 1 + order_list[i].number * 1
                 }
               }
             }
@@ -624,11 +596,7 @@ Page({
             for(var j=0; j<tempArr.length; j++){
               if(tempArr[j] != "NameofProduct" && tempArr[j] != "sum"){
                 console.log(list[i][tempArr[j]])
-                var this_arr = list[i][tempArr[j]].split("+")
-                for(var k=0; k<this_arr.length; k++){
-                  var arr_item = this_arr[k].split("*")
-                  sum = sum + arr_item[0] * arr_item[1]
-                }
+                sum = sum + list[i][tempArr[j]] * 1
               }
             }
             list[i].sum = sum
@@ -642,11 +610,7 @@ Page({
             var sum = 0
             if(tempArr[i] != "NameofProduct" && tempArr[i] != "sum"){
               for(var j=0; j<list.length; j++){
-                var this_arr = list[j][tempArr[i]].split("+")
-                for(var k=0; k<this_arr.length; k++){
-                  var arr_item = this_arr[k].split("*")
-                  sum = sum + arr_item[0] * arr_item[1]
-                }
+                  sum = sum + list[j][tempArr[i]] * 1
               }
               sum_row[tempArr[i]] = sum
             }
@@ -707,7 +671,7 @@ Page({
     }
     var title = _this.data.title
     var cloudList = {
-      name : '业务员报货汇总单',
+      name : '司机报货汇总单',
       items : [],
       header : []
     }

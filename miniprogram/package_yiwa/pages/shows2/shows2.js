@@ -17,9 +17,13 @@ Page({
       url: "../kehuxiadanmingxi/kehuxiadanmingxi"
     }, 
     {
-     text: "业务员客户汇总单",
+     text: "业务员报货汇总单",
      url: "../yewuyuan_huizong/yewuyuan_huizong"
    },
+   {
+    text: "司机报货汇总单",
+    url: "../siji_huizong/siji_huizong"
+  },
  ]
  },
  

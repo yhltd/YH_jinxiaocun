@@ -226,7 +226,7 @@ Page({
         yes_click: '通过',
         no_click: '拒绝',
       })
-    }if(column == "pay"){
+    }else if(column == "pay"){
       if(_this.data.userInfo.power == '管理员' ||(_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')){
 
       }else{
@@ -313,7 +313,6 @@ Page({
         }
       })
     }
-
   },
 
   yes_click:function(){
