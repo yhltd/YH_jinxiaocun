@@ -1,0 +1,74 @@
+<view style="display: flex;">
+  <view class="lables">客户名称：</view>
+  <picker class="input_text_form" bindchange="bindPickerChange" value="{{index}}" range="{{khmc}}" disabled="{{ userInfo.power == '客户'}}">
+    <input  bindinput="onInput" value="{{Customer_id}}" data-column="Customer_id" name="Customer_id" disabled="disabled"></input>
+  </picker>
+</view>
+<view style="display: flex;">
+  <view class="lables">单据编号：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="Documentnumber" class="input_text_form" value="{{Documentnumber}}" type="text" name="Documentnumber" disabled="disabled" ></input>
+</view>
+<view style="display: flex;">
+  <view class="lables">日期：</view>
+  <input bindinput="onInput_text" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled" ></input>
+</view>
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+
+
+  <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height: 65%;">
+    <view class="table">
+      <view class='table_header'>
+        <block class="title" wx:for="{{add_title}}">
+          <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        </block>
+      </view>
+      <block class="list_row" wx:for="{{add_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+        <view class="table_main">
+          <view wx:for="{{add_title}}" 
+                wx:for-item="item" 
+                wx:key="item" 
+                class="list_view" 
+                style="width:{{item.width}}" data-index="{{i}}" 
+                data-column="{{item.columnName}}" 
+                data-value="{{list_item[item.columnName]}}" 
+                data-input_type="{{item.type}}"
+                data-isupd="{{item.isupd}}"
+                bindtap="clickView1"
+                bindlongpress="tab_del">
+            <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="selCD">选择产品</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">保存</button>
+  </view>
+
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
+  <view class="lables">数量：</view>
+  <input class="input_text_form"  bindinput="onInput" value="{{number}}" data-column="number" name="number" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">修改</button>
+  </view>
+</van-popup>
+
+<!--产品下拉-->
+<van-action-sheet
+  show="{{ xlShow4 }}"
+  actions="{{ listChanPin }}"
+  close-on-click-overlay
+  bind:close="select4"
+  bind:select="select4" 
+/>
+

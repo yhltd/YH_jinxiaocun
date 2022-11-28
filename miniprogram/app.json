@@ -292,7 +292,9 @@
         "pages/zhanghaoguanli/zhanghaoguanli",
         "pages/erweima/erweima",
         "pages/mingxipeizhibiao/mingxipeizhibiao",
-        "pages/chanpinmingxi/chanpinmingxi"
+        "pages/chanpinmingxi/chanpinmingxi",
+        "pages/kehuxiadan/kehuxiadan",
+        "pages/kehuxiadanmingxi/kehuxiadanmingxi"
       ]
     }
   ],

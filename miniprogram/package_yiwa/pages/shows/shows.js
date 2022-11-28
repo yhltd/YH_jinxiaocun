@@ -23,6 +23,14 @@ Page({
      text: "产品明细",
      url: "../chanpinmingxi/chanpinmingxi"
    },
+   {
+    text: "下单表",
+    url: "../kehuxiadan/kehuxiadan"
+  },
+  {
+    text: "下单明细表",
+    url: "../kehuxiadanmingxi/kehuxiadanmingxi"
+  },
  ]
  },
  
@@ -33,46 +41,43 @@ Page({
    var url = _this.data.showList[index].url
    var text = _this.data.showList[index].text
    console.log(_this.data.userInfo.power)
-   if (_this.data.userInfo.power=="业务员"){
-    if(url != ''){
-      wx.navigateTo({
-        url: "../erweima/erweima?userInfo=" + JSON.stringify(_this.data.userInfo)
-      })
-    }
-  }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
-    if(url != ''){
-      wx.navigateTo({
-        url: "../zhanghaoguanli/zhanghaoguanli?userInfo=" + JSON.stringify(_this.data.userInfo)
-      })
-    }
-  }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
-    if(url != ''){
-      wx.navigateTo({
-        url: "../mingxipeizhibiao/mingxipeizhibiao?userInfo=" + JSON.stringify(_this.data.userInfo)
-      })
-    }
-  }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
-    if(url != ''){
-      wx.navigateTo({
-        url: "../chanpinmingxi/chanpinmingxi?userInfo=" + JSON.stringify(_this.data.userInfo)
-      })
-    }
-  }else{
-    wx.showToast({
-      title: '无权限！',
-      icon: 'none'
-    })
-  }
-
-
-
-  
-  
-  //  if(url != ''){
-  //   wx.navigateTo({
-  //     url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+   
+  //  if (_this.data.userInfo.power=="业务员"){
+  //   if(url != ''){
+  //     wx.navigateTo({
+  //       url: "../erweima/erweima?userInfo=" + JSON.stringify(_this.data.userInfo)
+  //     })
+  //   }
+  // }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
+  //   if(url != ''){
+  //     wx.navigateTo({
+  //       url: "../zhanghaoguanli/zhanghaoguanli?userInfo=" + JSON.stringify(_this.data.userInfo)
+  //     })
+  //   }
+  // }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
+  //   if(url != ''){
+  //     wx.navigateTo({
+  //       url: "../mingxipeizhibiao/mingxipeizhibiao?userInfo=" + JSON.stringify(_this.data.userInfo)
+  //     })
+  //   }
+  // }else if (_this.data.userInfo.power=="业务员" || _this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="司机" || _this.data.userInfo.power=="客户"){
+  //   if(url != ''){
+  //     wx.navigateTo({
+  //       url: "../chanpinmingxi/chanpinmingxi?userInfo=" + JSON.stringify(_this.data.userInfo)
+  //     })
+  //   }
+  // }else{
+  //   wx.showToast({
+  //     title: '无权限！',
+  //     icon: 'none'
   //   })
   // }
+
+  if(url != ''){
+    wx.navigateTo({
+      url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+    })
+  }
    
  },
 
