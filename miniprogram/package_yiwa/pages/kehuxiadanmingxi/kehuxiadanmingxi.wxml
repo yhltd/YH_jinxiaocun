@@ -32,32 +32,21 @@
 	<button class="bt_bottom" bindtap="entering" >查询</button>
 </view>
 
-<!------------------------->
-<!---------修改弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 50%;" >
-    <view class="lables">产品名称</view>
-    <input bindinput="onInput" data-column="NameofProduct" class="input_text_form"  value="{{NameofProduct}}" type="text" name="NameofProduct"></input>
-    <view class="lables">单位</view>
-    <input bindinput="onInput" data-column="unit" class="input_text_form"  value="{{unit}}" type="text" name="unit"></input>
-    <view class="lables">单价</view>
-    <input bindinput="onInput" data-column="Theunitprice" class="input_text_form"  value="{{Theunitprice}}" type="text" name="Theunitprice"></input>
-    <view class="lables">数量</view>
-    <input bindinput="onInput" data-column="number" class="input_text_form"  value="{{number}}" type="text" name="number"></input>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
-  </view>
-</van-popup>
+
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
-  <view class="lables">客户姓名</view>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+  <view class="lables1">客户姓名</view>
     <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-  <view class="lables">产品名称</view>
-    <input bindinput="onInput" data-column="NameofProduct" class="input_text_form"  value="{{NameofProduct}}" type="text" name="NameofProduct"></input>
-    
+    <view class="lables1">起始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
+    </picker>
+    <view class="lables1">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
