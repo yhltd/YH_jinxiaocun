@@ -405,6 +405,7 @@ Page({
   del1:function(e){
     var _this = this
     var order_number = _this.data.list[e.currentTarget.dataset.index].order_number
+    console.log(order_number)
     if(_this.data.userInfo.power == '管理员'){
 
     }else{

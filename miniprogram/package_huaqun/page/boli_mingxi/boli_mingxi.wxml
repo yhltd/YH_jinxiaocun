@@ -35,17 +35,9 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 55%;" >
-    <view class="lables">单据编号</view>
-    <input bindinput="onInput" data-column="order_number" class="input_text_form"  value="{{order_number}}" type="text" name="order_number"></input>
-    <view class="lables">开始日期</view>
-    <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
-      <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
-    </picker>
-    <view class="lables">结束日期</view>
-    <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
-      <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
-    </picker>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 25%;" >
+    <view class="lables">简码</view>
+    <input bindinput="onInput" data-column="pinyin" class="input_text_form"  value="{{pinyin}}" type="text" name="pinyin"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

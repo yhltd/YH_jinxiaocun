@@ -39,7 +39,7 @@ Page({
       },
       {
         text: "铝型材-灯带",
-        width: "330rpx",
+        width: "400rpx",
         columnName: "lxc",
         type: "text",
         isupd: true
@@ -59,7 +59,7 @@ Page({
         isupd: true
       },{
         text: "电源",
-        width: "300rpx",
+        width: "400rpx",
         columnName: "dy",
         type: "text",
         isupd: true

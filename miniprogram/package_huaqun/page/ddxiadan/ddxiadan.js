@@ -476,6 +476,10 @@ Page({
     console.log(e.currentTarget.dataset.value)
     console.log(e.currentTarget.dataset.index)
     var panduan = 0
+    var this_type = "text"
+    if(this_column == 'ddcd' || this_column == 'sl'){
+      this_type = 'number'
+    }
     if(this_column == "cxdk"){
       panduan = 1
     }else if(this_column == "lcb"){
@@ -586,7 +590,7 @@ Page({
             gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015)
             list[i].gl = gonglv
             break;
-          }else{
+          }else if(list[i].lcb == list1[j].ddxh && list[i].ddcd <= 400){
             danjia = parseFloat(list1[j].mmdj)
             list[i].dj = danjia
             if(list[i].sl != ''){
@@ -644,23 +648,6 @@ Page({
           query: sql
         },
         success: res => {
-          _this.setData({
-            id:'',
-            cxdk:'', 
-            lxc: '',
-            lcys: '',
-            gy: '',
-            dy: '',
-            kg: '',
-            pj: '',
-            shfs:'', 
-            blsjg: '',
-            blys: '',
-            lsxh: '',
-            lsw: '',
-            kjlk: '',
-            jlkw: '',
-          })
           _this.qxShow()
           wx.showToast({
             title: '添加成功！',

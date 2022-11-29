@@ -14,6 +14,7 @@ Page({
   data: {
     riqi:'',
     select_customer:[],
+    customer_arr:[],
     list: [],
     title: [{
         text: "产品名称",
@@ -524,6 +525,7 @@ Page({
       var sql3 = "select Customer_id,name from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id " + sql_foot + " and riqi = '" + _this.data.riqi + "' group by Customer_id,name order by name;"
       console.log(sql) 
       console.log(sql2)
+      console.log(sql3)
       wx.cloud.callFunction({
         name: 'sqlserver_yiwa',
         data: {
@@ -536,6 +538,13 @@ Page({
           var product_list = res.result.recordsets[1]
           var order_list = res.result.recordsets[0]
           var customer_list = res.result.recordsets[2]
+          if(order_list.length == 0){
+            wx.showToast({
+              title: '未读取到订单信息！',
+              icon: 'none'
+            })
+            return;
+          }
           var list = []
           var list_item = {
             NameofProduct:'',
@@ -574,7 +583,7 @@ Page({
               list.push(JSON.parse(JSON.stringify(this_item)))  //必须转成json后再转回对象，否则数组中所有对象相同
             }
           }
-
+          console.log(list)
 
           //循环订单，计算单价*数量
           for(var i=0; i<order_list.length; i++){
@@ -588,7 +597,7 @@ Page({
               }
             }
           }
-
+          console.log(list)
           for(var i=0; i<list.length; i++){
             let tempArr = Object.keys(list[i])
             console.log(tempArr)
@@ -596,21 +605,26 @@ Page({
             for(var j=0; j<tempArr.length; j++){
               if(tempArr[j] != "NameofProduct" && tempArr[j] != "sum"){
                 console.log(list[i][tempArr[j]])
-                sum = sum + list[i][tempArr[j]] * 1
+                if(list[i][tempArr[j]] != '' && list[i][tempArr[j]] != null && list[i][tempArr[j]] != undefined){
+                  sum = sum + list[i][tempArr[j]] * 1
+                }
               }
             }
             list[i].sum = sum
           }
-
+          console.log(list)
           let tempArr = Object.keys(list[0])
           var sum_row = {
             NameofProduct:'合计：' 
           }
+          console.log(list)
           for(var i=0; i<tempArr.length; i++){
             var sum = 0
             if(tempArr[i] != "NameofProduct" && tempArr[i] != "sum"){
               for(var j=0; j<list.length; j++){
+                if(list[j][tempArr[i]] != '' && list[j][tempArr[i]] != null && list[j][tempArr[i]] != undefined){
                   sum = sum + list[j][tempArr[i]] * 1
+                }
               }
               sum_row[tempArr[i]] = sum
             }
@@ -632,12 +646,15 @@ Page({
             type: "text",
             isupd: true
           })
-
+          var riqi = _this.data.riqi
           _this.setData({
             title,
-            list
+            list,
+            customer_arr:select_customer,
+            refresh_riqi:riqi,
           })
 
+          _this.qxShow()
         },
         err: res => {
           console.log("错误!")
@@ -651,6 +668,134 @@ Page({
         }
       })
     }
+
+  },
+
+  insert:function(e){
+    var _this = this
+    console.log('新增单据')
+    console.log(e)
+    var sql = "insert into driver_order(riqi,customer_id,driver_id,maker) values('" + e[0] + "','" + e[1] + "','" + e[2] + "','" + e[3] + "')"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        wx.showToast({
+          title: '保存成功！',
+          icon: 'none',
+          duration: 3000
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  save:function(){
+    var _this = this
+    if(_this.data.customer_arr.length == 0){
+      wx.showToast({
+        title: '未生成报货汇总单，请生成后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+    var customer_arr = _this.data.customer_arr
+    var id_list = ""
+    var riqi = _this.data.refresh_riqi
+    var driver_id = ""
+    var maker = _this.data.userInfo.id
+    for(var i=0; i<customer_arr.length; i++){
+      if(customer_arr[i] != ''){
+        if(id_list == ""){
+          id_list = customer_arr[i]
+        }else{
+          id_list = id_list + "," + customer_arr[i]
+        }
+      }
+    }
+    if(_this.data.userInfo.power == '司机'){
+      driver_id = _this.data.userInfo.id
+    }
+    var insert_arr = [riqi,id_list,driver_id,maker]
+    var sql = "select * from driver_order where riqi='" + riqi + "' and driver_id = '" + driver_id + "' and maker = '" + maker + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length > 0){
+          wx.showModal({
+            title: '提示',
+            content: '已有相同单据，确认覆盖？',
+            success (res) {
+              if (res.confirm){
+                var sql = "delete from driver_order where id=" + list[0].id
+                wx.cloud.callFunction({
+                  name: 'sqlserver_yiwa',
+                  data: {
+                    query: sql
+                  },
+                  success: res => {
+                    console.log("已删除原有单据!")
+                    console.log(res)
+                    _this.insert(insert_arr)
+                  },
+                  err: res => {
+                    console.log("错误!")
+                  },
+                  fail: res => {
+                    wx.showToast({
+                      title: '请求失败！',
+                      icon: 'none',
+                      duration: 3000
+                    })
+                    console.log("请求失败！")
+                  }
+                })
+              } else if (res.cancel){
+                wx.showToast({
+                  title: '已取消！',
+                  icon: 'none'
+                })
+                return;
+              }
+            }
+          })
+        }else{
+          _this.insert(insert_arr)
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
     
 
   },

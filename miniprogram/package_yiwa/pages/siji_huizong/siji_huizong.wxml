@@ -29,6 +29,7 @@
 <!------------------------->
 <view class="bottom_view">
 	<button class="bt_bottom" bindtap="refresh">生成</button>
+  <button class="bt_bottom" bindtap="save">保存</button>
   <button class="bt_bottom" bindtap="out_put">导出</button>
 </view>
 

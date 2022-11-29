@@ -303,7 +303,7 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.order_number,_this.data.start_date,_this.data.stop_date]
+    var e = [_this.data.pinyin]
     _this.tableShow(e)
     _this.qxShow()
   },

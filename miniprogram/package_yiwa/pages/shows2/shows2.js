@@ -19,11 +19,19 @@ Page({
     {
      text: "业务员报货汇总单",
      url: "../yewuyuan_huizong/yewuyuan_huizong"
-   },
-   {
-    text: "司机报货汇总单",
-    url: "../siji_huizong/siji_huizong"
-  },
+    },
+    {
+      text: "司机报货汇总单",
+      url: "../siji_huizong/siji_huizong"
+    },
+    {
+      text: "司机以往报货明细",
+      url: "../siji_mingxi/siji_mingxi"
+    },
+    {
+      text: "客户周期汇总单",
+      url: "../kehu_huizong/kehu_huizong"
+    },
  ]
  },
  

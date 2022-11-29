@@ -537,6 +537,13 @@ Page({
           var product_list = res.result.recordsets[1]
           var order_list = res.result.recordsets[0]
           var customer_list = res.result.recordsets[2]
+          if(order_list.length == 0){
+            wx.showToast({
+              title: '未读取到订单信息！',
+              icon: 'none'
+            })
+            return;
+          }
           var list = []
           var list_item = {
             NameofProduct:'',
@@ -627,7 +634,9 @@ Page({
                 var this_arr = list[i][tempArr[j]].split("+")
                 for(var k=0; k<this_arr.length; k++){
                   var arr_item = this_arr[k].split("*")
-                  sum = sum + arr_item[0] * arr_item[1]
+                  if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
+                    sum = sum + arr_item[0] * arr_item[1]
+                  }
                 }
               }
             }
@@ -645,7 +654,9 @@ Page({
                 var this_arr = list[j][tempArr[i]].split("+")
                 for(var k=0; k<this_arr.length; k++){
                   var arr_item = this_arr[k].split("*")
-                  sum = sum + arr_item[0] * arr_item[1]
+                  if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
+                    sum = sum + arr_item[0] * arr_item[1]
+                  }
                 }
               }
               sum_row[tempArr[i]] = sum
@@ -673,6 +684,7 @@ Page({
             title,
             list
           })
+          _this.qxShow()
 
         },
         err: res => {

@@ -43,9 +43,9 @@
     <view class="lables">铝框型号</view>
     <input bindinput="onInput" data-column="lkxh" class="input_text_form"  value="{{lkxh}}" type="text" name="lkxh"></input>
     <view class="lables">长</view>
-    <input bindinput="onInput" data-column="chang" class="input_text_form" value="{{chang}}" type="number" name="chang"></input>
+    <input bindinput="onInput" data-column="chang" class="input_text_form" value="{{chang}}" type="digit" name="chang"></input>
     <view class="lables">宽</view>
-    <input bindinput="onInput" data-column="kuan" class="input_text_form" value="{{kuan}}" type="number" name="kuan"></input>
+    <input bindinput="onInput" data-column="kuan" class="input_text_form" value="{{kuan}}" type="digit" name="kuan"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -58,9 +58,9 @@
   <view class="lables">铝框型号</view>
     <input bindinput="onInput" data-column="lkxh" class="input_text_form"  value="{{lkxh}}" type="text" name="lkxh"></input>
     <view class="lables">长</view>
-    <input bindinput="onInput" data-column="chang" class="input_text_form" value="{{chang}}" type="number" name="chang"></input>
+    <input bindinput="onInput" data-column="chang" class="input_text_form" value="{{chang}}" type="digit" name="chang"></input>
     <view class="lables">宽</view>
-    <input bindinput="onInput" data-column="kuan" class="input_text_form" value="{{kuan}}" type="number" name="kuan"></input>
+    <input bindinput="onInput" data-column="kuan" class="input_text_form" value="{{kuan}}" type="digit" name="kuan"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>

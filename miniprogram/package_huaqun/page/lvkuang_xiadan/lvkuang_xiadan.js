@@ -1416,10 +1416,17 @@ Page({
       return;
     }
 
+    var column = e.currentTarget.dataset.column
+    var this_type = "text"
+    if(column == 'height' || column == 'width' || column == 'lashou_shuliang_right' || column == 'lashou_shuliang_left' || column == 'lashou_shuliang_left' || column == 'jiaoliankong_fangxiang_left' || column == 'jiaoliankong_fangxiang_right'){
+      this_type = 'digit'
+    }
+
     _this.setData({
       this_column:e.currentTarget.dataset.column,
       this_value:e.currentTarget.dataset.value,
       this_index:e.currentTarget.dataset.index,
+      this_type:this_type,
       xgShow:true,
     })
   },
