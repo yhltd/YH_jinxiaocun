@@ -277,8 +277,9 @@ Page({
 
   choiceDate: function (e) {
     //e.preventDefault(); 
+    
     this.setData({
-      [e.target.dataset.NameofProduct]: e.detail.value 
+      [e.target.dataset.column_name]: e.detail.value
     })
     console.log(e.detail.value)
   },

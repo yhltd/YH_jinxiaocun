@@ -43,7 +43,7 @@
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
-              bindtap="clickView"
+              bindtap="clickView1"
               bindlongpress="del1">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
@@ -55,20 +55,56 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <!-- <button class="bt_bottom" bindtap="selCD" >添加一行</button> -->
+  <button class="bt_bottom" bindtap="inquire" >添加</button>
 	<!-- <button class="bt_bottom"  bindtap="add1">保存</button> -->
 </view>
 
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 30%;" >
-  <view class="lables">{{update_name[this_column]}}</view>
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?cxdk_list:xiala_panduan==2?ddxh_list:xiala_panduan==3?lcys_list:xiala_panduan==4?gy_list:xiala_panduan==5?dy_list:xiala_panduan==6?kg_list:xiala_panduan==7?pj_list:xiala_panduan==8?fk_list:xiala_panduan==9?hd_list:''}}" disabled="{{xiala_panduan==0}}">
-      <input class="input_text_form" style="margin-top: 10%;" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
-    </picker>
-  <view class="bottom_view" style="height:10%; margin-top: 10rpx;">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">修改</button>
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 78%;" >
+  <view class="lables1">产品名称</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{NameofProduct_xl}}" >
+    <input bindinput="onInput_text" data-column="NameofProduct" class="input_text_form" value="{{NameofProduct}}" type="text" name="NameofProduct" disabled="disabled"></input>
+  </picker>
+  <view class="lables1">单位</view>
+  <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" disabled="disabled"></input>
+  <view class="lables1">单价</view>
+  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="text" name="Theunitprice" ></input>
+  <view class="lables1">数量</view>
+  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="text" name="number"></input>
+  <!-- <view class="lables1">产品名称</view>
+  <input bindinput="onInput_text" data-column="NameofProduct" class="input_text_form" value="{{NameofProduct}}" type="text" name="NameofProduct"></input>
+  <view class="lables1">单位</view>
+  <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" ></input>
+  <view class="lables1">单价</view>
+  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="text" name="Theunitprice"></input>
+  <view class="lables1">数量</view>
+  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="text" name="number"></input> -->
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
 </van-popup>
+
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 78%;" >
+  <view class="lables1">产品名称</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{NameofProduct_xl}}" >
+    <input bindinput="onInput_text" data-column="NameofProduct" class="input_text_form" value="{{NameofProduct}}" type="text" name="NameofProduct" disabled="disabled"></input>
+  </picker>
+  <view class="lables1">单位</view>
+  <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" disabled="disabled"></input>
+  <view class="lables1">单价</view>
+  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="text" name="Theunitprice" ></input>
+  <view class="lables1">数量</view>
+  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="text" name="number"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+
