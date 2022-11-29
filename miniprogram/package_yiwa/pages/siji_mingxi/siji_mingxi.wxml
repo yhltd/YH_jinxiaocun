@@ -16,7 +16,8 @@
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
-              bindtap="clickView">
+              bindtap="clickView"
+              bindlongpress="del1">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -28,62 +29,28 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="inquire" >添加</button>
-  <button class="bt_bottom" bindtap="entering" >查询</button>
+	<button class="bt_bottom" bindtap="entering" >查询</button>
 </view>
 
 <!------------------------->
-<!---------添加弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 70%;" >
-  <view class="lables">用户名</view>
-    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
-    <view class="lables">密码</view>
-    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
-    <view class="lables">姓名</view>
-    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-    <view class="lables">权限</view>
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{qx_list}}" >
-      <input bindinput="onInput" data-column="power" class="input_text_form" value="{{power}}" type="text" name="power" disabled="disabled"></input>
-    </picker>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
-  </view>
-</van-popup>
-<!------------------------->
-<!---------修改弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 53%;" >
-  <view class="lables">用户名</view>
-    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
-    <view class="lables">密码</view>
-    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
-    <view class="lables">姓名</view>
-    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
-  </view>
-</van-popup>
-<!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
-  <view class="lables">姓名</view>
-  <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-    
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 80%;" >
+  <view class="lables1">起始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
+    </picker>
+    <view class="lables1">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
+    </picker>
+  <view class="lables">司机</view>
+  <input bindinput="onInput" data-column="driver_id" class="input_text_form"  value="{{driver_id}}" type="text" name="driver_id"></input>
+  <view class="lables">录入人</view>
+  <input bindinput="onInput" data-column="maker" class="input_text_form"  value="{{maker}}" type="text" name="maker"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
 
-<!--表单下拉选择-->
-<van-action-sheet
-  show="{{xlShow}}"
-  actions="{{list_xiala}}"
-  close-on-click-overlay
-  bind:close="select1"
-  bind:select="select1" 
-/>

@@ -14,64 +14,36 @@ Page({
   data: {
     list: [],
     title: [{
-        text: "用户名",
+        text: "日期",
         width: "250rpx",
-        columnName: "username",
+        columnName: "riqi",
         type: "text",
         isupd: true
       },
       {
-        text: "密码",
+        text: "司机",
         width: "250rpx",
-        columnName: "password",
+        columnName: "driver_id",
         type: "text",
         isupd: true
       },
       {
-        text: "姓名",
+        text: "录入人",
         width: "250rpx",
-        columnName: "name",
+        columnName: "maker",
         type: "text",
         isupd: true
       },
-      {
-        text: "权限",
-        width: "250rpx",
-        columnName: "power",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "所属业务员",
-        width: "250rpx",
-        columnName: "salesman",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "所属司机",
-        width: "250rpx",
-        columnName: "driver",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "是否上传收款二维码",
-        width: "320rpx",
-        columnName: "qr_code",
-        type: "text",
-        isupd: true
-      },
+     
     ],
-    qx_list:['管理员','业务员','司机','客户'],
+    
     id:'',
-    username: '', 
+    riqi: '', 
     password: '',
-    name:'',
-    power: '',
-    salesman: '',
-    driver: '',
-    qr_code: '',
+    customer_id:'',
+    driver_id: '',
+    maker: '',
+    
   },
 
   /**
@@ -79,73 +51,42 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    var e = ['']
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo,
+    })
+    var _this = this
+    var e = ['1999-01-01','2222-01-01','','']
     _this.tableShow(e)
   },
 
   tableShow: function (e) {
     var _this = this
+    var sql
+    console.log(_this.data.userInfo.power=='管理员')
+    if (_this.data.userInfo.power=='管理员'){
+      sql ="select do.id,do.riqi,do.customer_id,isnull(us.name,'') as maker ,isnull(uss.name,'') as driver_id from driver_order as do LEFT JOIN (select * from userInfo) as us on do.maker=us.id LEFT JOIN (select * from userInfo) as uss on driver_id=uss.id where do.riqi between '"+ e[0] +"' and '"+ e[1] +"' and isnull(uss.name,'') like '%"+ e[2] +"%' and us.name like '%"+ e[3] +"%'"
+    }else if (_this.data.userInfo.power=='司机'){
+      sql ="select do.id,do.riqi,do.customer_id,isnull(us.name,'') as maker ,isnull(uss.name,'') as driver_id from driver_order as do LEFT JOIN (select * from userInfo) as us on do.maker=us.id LEFT JOIN (select * from userInfo) as uss on driver_id=uss.id where uss.power='司机' and do.riqi between '"+ e[0] +"' and '"+ e[1] +"'and isnull(uss.name,'') like '%"+ e[2] +"%' and us.name like '%"+ e[3] +"%'"
+    }else{
+      wx.showToast({
+        title: '无权限！',
+        icon: 'none'
+      })
+      return;
+    }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "select u3.id,u3.username,u3.password,u3.name,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id where u3.name like '%" + e[0] + "%';select u3.id,u3.username,u3.password,u3.name,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id"
+        query: sql
       },
       success: res => {
-        console.log(res)
-        var list = res.result.recordsets[0]
+        var list = res.result.recordset
         console.log(list)
-        var renyuan_list = res.result.recordsets[1]
-        console.log(renyuan_list)
-        var salesman = []
-        var driver = []
-        for(var i=0; i<renyuan_list.length; i++){
-          if(renyuan_list[i].power == '业务员'){
-            salesman.push({
-              name:renyuan_list[i].name,
-              id:renyuan_list[i].id,
-            })
-          }
-          if(renyuan_list[i].power == '司机'){
-            driver.push({
-              name:renyuan_list[i].name,
-              id:renyuan_list[i].id,
-            })
-          }
-        }
-        _this.setData({ 
-          list: list,
-          driver,
-          salesman,
-        })
-        console.log(list)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
-
-
-    wx.cloud.callFunction({
-      name: 'sqlserver_yiwa',
-      data: {
-        query: "select * from DetailedConfiguration"
-      },
-      success: res => {
-        console.log(res)
-        var peizhi_list=res.result.recordset
-        console.log(peizhi_list)
         _this.setData({
-          peizhi_list: peizhi_list
+          list:list,
         })
-        console.log(peizhi_list)
       },
       err: res => {
         console.log("错误!")
@@ -159,7 +100,6 @@ Page({
         console.log("请求失败！")
       }
     })
-
   },
 
   qxShow: function () {
@@ -175,86 +115,35 @@ Page({
   clickView:function(e){
     var _this = this
     var column = e.currentTarget.dataset.column
-    if(column == 'username' || column == 'password' || column == 'name'){
-      _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        username: _this.data.list[e.currentTarget.dataset.index].username, 
-        password: _this.data.list[e.currentTarget.dataset.index].password,
-        name: _this.data.list[e.currentTarget.dataset.index].name,
-        power: _this.data.list[e.currentTarget.dataset.index].power,
-        salesman: _this.data.list[e.currentTarget.dataset.index].salesman,
-        driver: _this.data.list[e.currentTarget.dataset.index].driver,
-        qr_code: _this.data.list[e.currentTarget.dataset.index].qr_code,
-        xgShow:true,
-      })
-    }else if(column == 'salesman' && _this.data.list[e.currentTarget.dataset.index].power == '客户'){
-      var list = _this.data.salesman
-      _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        column:column,
-        list_xiala:list,
-        xlShow:true,
-      })
-    }else if(column == 'driver' && _this.data.list[e.currentTarget.dataset.index].power == '客户'){
-      var list = _this.data.driver
-      _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        column:column,
-        list_xiala:list,
-        xlShow:true,
-      })
-    }
-  },
-
-  select1: function (e){
-    var _this = this
-    if (e.type == "select") {
-      var new_val = e.detail.id
-      var click_column = _this.data.column
-      var sql = "update userInfo set "+ click_column + "='" + new_val + "' where id=" + _this.data.id
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: sql
-        },
-        success: res => {
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '修改成功！',
-            icon: 'none',
-            duration: 3000
-          })
-          _this.setData({
-            xlShow: false,
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-    } else if (e.type == "close") {
-      _this.setData({
-        xlShow: false,
-      })
-    }
-  },
-
-  bindPickerChange: function(e) {
-    var _this = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     _this.setData({
-      power:_this.data.qx_list[e.detail.value]
+      id: _this.data.list[e.currentTarget.dataset.index].id,
+      riqi: _this.data.list[e.currentTarget.dataset.index].riqi, 
+      customer_id: _this.data.list[e.currentTarget.dataset.index].customer_id,
+      driver_id: _this.data.list[e.currentTarget.dataset.index].driver_id,
+      maker: _this.data.list[e.currentTarget.dataset.index].maker,
+      xgShow:true,
+    })
+      
+    
+    var i=e.currentTarget.dataset.index
+    wx.showModal({
+      title: '提示',
+      content: '是否查看此条详情？',
+      success (res) {
+        var aa = _this.data.list[i]
+       if (res.confirm) {
+          wx.navigateTo({
+            url: "../siji_huizong/siji_huizong?aa="+JSON.stringify(aa)+ "&userInfo="+JSON.stringify(_this.data.userInfo)
+          }) 
+      } else if (res.cancel) {
+
+      }
+      }
     })
   },
+
+  
+  
   inquire: function () {
     var _this = this
     _this.setData({
@@ -269,127 +158,7 @@ Page({
       qr_code: '',
     })
   },
-  add1: function(){
-    var _this = this
-    if(_this.data.username == ''){
-      wx.showToast({
-        title: '请输用户名！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-    if(_this.data.password == ''){
-      wx.showToast({
-        title: '请输密码！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-    if(_this.data.name == ''){
-      wx.showToast({
-        title: '请输姓名！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-    if(_this.data.power == ''){
-      wx.showToast({
-        title: '请输权限！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: "insert into userInfo(username,password,name,power)output inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.power + "')"
-        },
-        success: res => {
-          var Customer_id = res.result.recordset[0].id
-          console.log(res.result.recordset[0].id)
-          console.log(_this.data.Customer_id)
-      var sql1 = "insert into DetailsofProducts(Thedetail_id,Customer_id,NameofProduct,unit,Theunitprice) values"
-      var sql2 = ""
-      for(var i = 0; _this.data.peizhi_list.length>i ; i++){
-        if(sql2 == ""){
-          sql2 = "('" +  _this.data.peizhi_list[i].id + "','"+ Customer_id +"','" + _this.data.peizhi_list[i].NameofProduct +"','" + _this.data.peizhi_list[i].unit +"','"+ _this.data.peizhi_list[i].Theunitprice +"')"
-        }else{
-          sql2 = sql2 + ",('" +  _this.data.peizhi_list[i].id + "','"+ Customer_id +"','" + _this.data.peizhi_list[i].NameofProduct +"','" + _this.data.peizhi_list[i].unit +"','"+ _this.data.peizhi_list[i].Theunitprice +"')"
-        }
-      }
-      var sql = sql1 + sql2
-      console.log(sql)
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: sql
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-          _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-            list:Customer_id,
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-      
-  },
+  
 
   onInput: function (e) {
     var _this = this
@@ -400,128 +169,81 @@ Page({
     })
   },
 
-  upd1:function(){
-    var _this = this
-    wx.cloud.callFunction({
-      name: 'sqlserver_yiwa',
-      data: {
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',power='" + _this.data.power + "' where id=" + _this.data.id  
-      },
-      success: res => {
-        _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-        })
-        _this.qxShow()
-        var e = ['']
-         _this.tableShow(e)
+  
 
-        wx.showToast({
-          title: '修改成功！',
-          icon: 'none'
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
+  del1:function(e){
+    var _this = this
+    let power = _this.data.userInfo.power;
+    var i = e.currentTarget.dataset.index
+    var column = e.currentTarget.dataset.column
+    var Documentnumber = _this.data.list[e.currentTarget.dataset.index].Documentnumber
+    console.log(_this.data.list[i].id)
+    var sql
+    if (power=='管理员' ){
+      sql ="delete from driver_order where id='"+ _this.data.list[i].id +"'"
+    }else{
+      wx.showToast({
+        title: '无权限！',
+        icon: 'none'
+      })
+      return;
+    }
+    console.log(sql)
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此条订单？',
+      success (res) {
+       if (res.confirm) {
+          wx.cloud.callFunction({
+            name: 'sqlserver_yiwa',
+            data: {
+              query: sql
+            },
+            success: res => {
+              _this.setData({
+                id:'',
+                username: '', 
+                password: '',
+                name:'',
+                power: '',
+                salesman: '',
+                driver: '',
+                qr_code: '',
+              })
+              _this.qxShow()
+              var e = ['1900-01-01', '2100-12-31','','']
+              _this.tableShow(e)
+              wx.showToast({
+                title: '删除成功！',
+                icon: 'none'
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
+          })
+        } else if (res.cancel) {
+
+        }
       }
     })
-  },
-
-  del1:function(){
-    var _this = this
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: "delete from userInfo where id='" + _this.data.id + "'"
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '删除成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: "delete from DetailsofProducts where Customer_id='" + _this.data.id + "'"
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '删除成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
   },
 
   entering:function(){
     var _this=this
     _this.setData({
       cxShow:true,
-      customer:"",
-      leibie:"",
-      area:"",
+      riqi1:"",
+      riqi2:"",
+      driver_id:"",
+      maker:"",
     })
   },
 
@@ -535,7 +257,17 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.name]
+    if(_this.data.riqi1==''){
+      _this.setData({
+        riqi1:'1900-01-01'
+      })
+    }
+    if(_this.data.riqi2==''){
+      _this.setData({
+        riqi2:'2100-12-31'
+      })
+    }
+    var e = [_this.data.riqi1,_this.data.riqi2,_this.data.driver_id,_this.data.maker]
     _this.tableShow(e)
     _this.qxShow()
   },

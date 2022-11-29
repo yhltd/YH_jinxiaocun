@@ -39,11 +39,25 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
-    _this.setData({
-      userInfo,
-      riqi:getNowDate()
-    })
-    _this.tableShow()
+    var aa = JSON.parse(options.aa)
+    if (aa != undefined){
+      console.log(aa.riqi)
+      console.log(aa.customer_id)
+      var bb=[]
+      var this_str = aa.customer_id.split(",")
+      _this.setData({
+        userInfo,
+        riqi:getNowDate(),
+        aa:aa,
+        bb:bb,
+        select_customer:this_str,
+        riqi:aa.riqi
+      })
+      console.log(this_str)
+      _this.tableShow()
+      _this.add2()
+    }
+
   },
 
   tableShow: function () {
