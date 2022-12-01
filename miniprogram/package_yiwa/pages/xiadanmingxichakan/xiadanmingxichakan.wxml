@@ -63,24 +63,16 @@
 <!---------修改弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 78%;" >
-  <view class="lables1">产品名称</view>
+  <!-- <view class="lables1">产品名称</view>
   <picker bindchange="bindPickerChange" value="{{index}}" range="{{NameofProduct_xl}}" >
     <input bindinput="onInput_text" data-column="NameofProduct" class="input_text_form" value="{{NameofProduct}}" type="text" name="NameofProduct" disabled="disabled"></input>
   </picker>
   <view class="lables1">单位</view>
-  <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" disabled="disabled"></input>
+  <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" disabled="disabled"></input> -->
   <view class="lables1">单价</view>
-  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="text" name="Theunitprice" ></input>
+  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="digit" name="Theunitprice" ></input>
   <view class="lables1">数量</view>
-  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="text" name="number"></input>
-  <!-- <view class="lables1">产品名称</view>
-  <input bindinput="onInput_text" data-column="NameofProduct" class="input_text_form" value="{{NameofProduct}}" type="text" name="NameofProduct"></input>
-  <view class="lables1">单位</view>
-  <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" ></input>
-  <view class="lables1">单价</view>
-  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="text" name="Theunitprice"></input>
-  <view class="lables1">数量</view>
-  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="text" name="number"></input> -->
+  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="number" name="number"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
@@ -99,9 +91,9 @@
   <view class="lables1">单位</view>
   <input bindinput="onInput_text" data-column="unit" class="input_text_form" value="{{unit}}" type="text" name="unit" disabled="disabled"></input>
   <view class="lables1">单价</view>
-  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="text" name="Theunitprice" ></input>
+  <input bindinput="onInput_text" data-column="Theunitprice" class="input_text_form" value="{{Theunitprice}}" type="digit" name="Theunitprice" ></input>
   <view class="lables1">数量</view>
-  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="text" name="number"></input>
+  <input bindinput="onInput_text" data-column="number" class="input_text_form" value="{{number}}" type="number" name="number"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>

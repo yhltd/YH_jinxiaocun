@@ -33,14 +33,29 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "是否需要后补重量",
+        width: "300rpx",
+        columnName: "zhongliang",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "是否需要还筐",
+        width: "250rpx",
+        columnName: "kuang",
+        type: "text",
+        isupd: true
+      },
       
     ],
-   
+    xiala_list:['是','否'],
     id:'',
     NameofProduct: '', 
     unit: '',
     Theunitprice:'',
-    
+    zhongliang:'',
+    kuang:'',
   },
 
   /**
@@ -124,7 +139,18 @@ Page({
       NameofProduct: _this.data.list[e.currentTarget.dataset.index].NameofProduct, 
       unit: _this.data.list[e.currentTarget.dataset.index].unit,
       Theunitprice: _this.data.list[e.currentTarget.dataset.index].Theunitprice,
+      zhongliang:_this.data.list[e.currentTarget.dataset.index].zhongliang,
+      kuang:_this.data.list[e.currentTarget.dataset.index].kuang,
       xgShow:true,
+    })
+  },
+
+  bindPickerChange: function(e){
+    var _this = this
+    var column = e.currentTarget.dataset.column
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      [column]:_this.data.xiala_list[e.detail.value]
     })
   },
   
@@ -133,14 +159,15 @@ Page({
     _this.setData({
       tjShow: true,
       id:'',
-      NameofProduct: '', 
-      unit: '',
+      NameofProduct:'',
+      unit:'',
       Theunitprice:'',
+      zhongliang:'',
+      kuang:'',
     })
   },
   add1: function(){
     var _this = this
-
     if(_this.data.NameofProduct == ''){
       wx.showToast({
         title: '请输产品名称！',
@@ -158,19 +185,78 @@ Page({
       })
       return;
     }
-
-
       wx.cloud.callFunction({
         name: 'sqlserver_yiwa',
         data: {
-          query: "insert into DetailedConfiguration(NameofProduct,unit,Theunitprice)output inserted.id values('" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "')"
+          query: "insert into DetailedConfiguration(NameofProduct,unit,Theunitprice,zhongliang,kuang)output inserted.id values('" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.zhongliang + "','" + _this.data.kuang + "')"
         },
         success: res => {
-          _this.setData({
-            id:'',
-            NameofProduct: '', 
-            unit: '',
-            Theunitprice:'',
+          console.log(res)
+          var product_id = res.result.recordset[0].id
+          var sql = "select * from userinfo where power = '客户'"
+          console.log(sql)
+          wx.cloud.callFunction({
+            name: 'sqlserver_yiwa',
+            data: {
+              query: sql
+            },
+            success: res => {
+              var user_list = res.result.recordset
+              var sql = "insert into DetailsofProducts(Thedetail_id,Customer_id,NameofProduct,unit,Theunitprice,zhongliang,kuang) values "
+              var sql_foot = ""
+              for(var i=0; i<user_list.length; i++){
+                if(sql_foot == ""){
+                  sql_foot = "('" + product_id + "','" + user_list[i].id + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.zhongliang + "','" + _this.data.kuang + "')"
+                }else{
+                  sql_foot = sql_foot + ",('" + product_id + "','" + user_list[i].id + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.zhongliang + "','" + _this.data.kuang + "')"
+                }
+              }
+              sql = sql + sql_foot
+              console.log(sql)
+              wx.cloud.callFunction({
+                name: 'sqlserver_yiwa',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  _this.setData({
+                      id:'',
+                      NameofProduct:'',
+                      unit:'',
+                      Theunitprice:'',
+                      zhongliang:'',
+                      kuang:'',
+                  })
+                  _this.qxShow()
+                  var e = ['']
+                   _this.tableShow(e)
+                   wx.showToast({
+                    title: '添加成功！',
+                    icon: 'none'
+                  })
+                },
+                err: res => {
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none'
+                  })
+                  console.log("请求失败！")
+                }
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
           })
           _this.qxShow()
           var e = ['']
@@ -207,14 +293,16 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "update DetailedConfiguration set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit + "',Theunitprice='" + _this.data.Theunitprice + "' where id=" + _this.data.id
+        query: "update DetailedConfiguration set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit + "',Theunitprice='" + _this.data.Theunitprice + "',zhongliang='" + _this.data.zhongliang + "',kuang='" + _this.data.kuang + "' where id=" + _this.data.id
       },
       success: res => {
         _this.setData({
             id:'',
-            NameofProduct: '', 
-            unit: '',
+            NameofProduct:'',
+            unit:'',
             Theunitprice:'',
+            zhongliang:'',
+            kuang:'',
         })
         _this.qxShow()
         var e = ['']
@@ -240,14 +328,16 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "update DetailsofProducts set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit + "',Theunitprice='" + _this.data.Theunitprice + "' where Thedetail_id=" + _this.data.id
+        query: "update DetailsofProducts set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit + "',zhongliang='" + _this.data.zhongliang + "',kuang='" + _this.data.kuang + "' where Thedetail_id=" + _this.data.id
       },
       success: res => {
         _this.setData({
             id:'',
-            NameofProduct: '', 
-            unit: '',
+            NameofProduct:'',
+            unit:'',
             Theunitprice:'',
+            zhongliang:'',
+            kuang:'',
         })
         _this.qxShow()
         var e = ['']
@@ -281,9 +371,11 @@ Page({
         success: res => {
           _this.setData({
             id:'',
-            NameofProduct: '', 
-            unit: '',
+            NameofProduct:'',
+            unit:'',
             Theunitprice:'',
+            zhongliang:'',
+            kuang:'',
           })
           _this.qxShow()
           var e = ['']
@@ -313,9 +405,11 @@ Page({
         success: res => {
           _this.setData({
             id:'',
-            NameofProduct: '', 
-            unit: '',
+            NameofProduct:'',
+            unit:'',
             Theunitprice:'',
+            zhongliang:'',
+            kuang:'',
           })
           _this.qxShow()
           var e = ['']
@@ -342,9 +436,11 @@ Page({
     var _this=this
     _this.setData({
       cxShow:true,
-      customer:"",
-      leibie:"",
-      area:"",
+      NameofProduct:'',
+      unit:'',
+      Theunitprice:'',
+      zhongliang:'',
+      kuang:'',
     })
   },
 

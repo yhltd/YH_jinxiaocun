@@ -300,7 +300,9 @@
         "pages/xiadanmingxichakan/xiadanmingxichakan",
         "pages/siji_huizong/siji_huizong",
         "pages/kehu_huizong/kehu_huizong",
-        "pages/siji_mingxi/siji_mingxi"
+        "pages/siji_mingxi/siji_mingxi",
+        "pages/songhuodan/songhuodan",
+        "pages/dayin/dayin"
       ]
     }
   ],

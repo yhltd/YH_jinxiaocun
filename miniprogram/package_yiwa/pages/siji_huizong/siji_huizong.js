@@ -39,8 +39,8 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
-    var aa = JSON.parse(options.aa)
-    if (aa != undefined){
+    if (options.aa != undefined){
+      var aa = JSON.parse(options.aa)
       console.log(aa.riqi)
       console.log(aa.customer_id)
       var bb=[]
@@ -56,6 +56,12 @@ Page({
       console.log(this_str)
       _this.tableShow()
       _this.add2()
+    }else{
+      _this.setData({
+        userInfo,
+        riqi:getNowDate(),
+      })
+      _this.tableShow()
     }
 
   },

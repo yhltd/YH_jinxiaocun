@@ -32,7 +32,7 @@ page{
   padding-left: 30px;  
   justify-content: space-between;
   box-shadow: 10rpx 10rpx 20rpx black;
-  margin-bottom: 50rpx;
+  margin-bottom: 40rpx;
 }
 .item_hover{
   width: 73%;

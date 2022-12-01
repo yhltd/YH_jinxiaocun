@@ -1,0 +1,206 @@
+<!-- <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view> -->
+
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <block class="list_row">
+      <view class="table_main">
+        <view class="title_text" style="width:200rpx;height:70rpx;">客户:</view>
+        <view class="list_view"   data-index="0" data-column="kehu" data-value="{{head_list.kehu}}" style="width:300rpx">{{head_list.kehu}}</view>
+        <view class="title_text" style="width:200rpx;height:70rpx;">电话:</view>
+        <view class="list_view"   data-index="0" data-column="kehu_phone" data-value="{{head_list.kehu_phone}}" style="width:300rpx">{{head_list.kehu_phone}}</view>
+      </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:200rpx;height:70rpx;">司机:</view>
+        <view class="list_view"   data-index="0" data-column="siji" data-value="{{head_list.siji}}" style="width:300rpx">{{head_list.siji}}</view>
+        <view class="title_text" style="width:200rpx;height:70rpx;">电话:</view>
+        <view class="list_view"   data-index="0" data-column="siji_phone" data-value="{{head_list.siji_phone}}" style="width:300rpx">{{head_list.siji_phone}}</view>
+      </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:200rpx;height:70rpx;">业务员:</view>
+        <view class="list_view"   data-index="0" data-column="yewuyuan" data-value="{{head_list.yewuyuan}}" style="width:300rpx">{{head_list.yewuyuan}}</view>
+        <view class="title_text" style="width:200rpx;height:70rpx;">电话:</view>
+        <view class="list_view"   data-index="0" data-column="yewuyuan_phone" data-value="{{head_list.yewuyuan_phone}}" style="width:300rpx">{{head_list.yewuyuan_phone}}</view>
+      </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:200rpx;height:70rpx;">日期:</view>
+        <view class="list_view"   data-index="0" data-column="siji" data-value="{{head_list.riqi}}" style="width:300rpx">{{head_list.riqi}}</view>
+      </view>
+
+      <view class="table" style="margin-top: 30rpx;">
+        <view class='table_header'>
+          <block class="title" wx:for="{{title}}">
+            <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          </block>
+        </view>
+        <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+          <view class="table_main">
+            <view wx:for="{{title}}" 
+                  wx:for-item="item" 
+                  wx:key="item" 
+                  class="list_view" 
+                  style="width:{{item.width}}" data-index="{{i}}" 
+                  data-column="{{item.columnName}}" 
+                  data-value="{{list_item[item.columnName]}}" 
+                  data-input_type="{{item.type}}"
+                  data-isupd="{{item.isupd}}">
+              <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+            </view>
+          </view>
+        </block> 
+        <view class="list_view" data-value="{{zongjia}}" style="width:250rpx">{{zongjia}}</view>
+      </view>
+      
+      <view class="table_main" style="margin-top: 30rpx;">
+        <view class="title_text" style="width:300rpx;height:70rpx;">产品重量</view>
+      </view>
+      <block wx:for="{{zhongliang_list}}"  wx:for-item="i" wx:for-index="index1">
+        <view class="table_main">
+          <block wx:for="{{i}}" wx:for-item="k" wx:for-index="index2">
+            <view class="{{index2 > 1?'list_view2':'title_text'}}" data-index1="{{index1}}" data-index2="{{index2}}" data-value="{{k}}" style="{{index2 == 0?'display:none;':'width:300rpx;'}}" bindtap="zhongliang_click">{{k}}</view>
+          </block>
+        </view>
+      </block>
+
+      <view class="table_main" style="margin-top: 30rpx;">
+        <view class="title_text" style="width:300rpx;height:70rpx;">产品回筐</view>
+      </view>
+      <view class="table">
+        <view class='table_header'>
+          <block class="title" wx:for="{{huankuang_title}}">
+            <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          </block>
+        </view>
+        <block class="list_row" wx:for="{{huankuang_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+          <view class="table_main">
+            <view wx:for="{{huankuang_title}}" 
+                  wx:for-item="item" 
+                  wx:key="item" 
+                  class="list_view" 
+                  style="width:{{item.width}}" data-index="{{i}}" 
+                  data-column="{{item.columnName}}" 
+                  data-value="{{list_item[item.columnName]}}" 
+                  data-input_type="{{item.type}}"
+                  data-isupd="{{item.isupd}}"
+                  bindtap="kuang_click">
+              <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+
+
+      <view class="table" style="margin-top: 30rpx;">
+        <view class="table_main">
+          <view class="title_text" style="width:200rpx;height:70rpx;">备注1:</view>
+          <view class="list_view2" bindtap="beizhu_click" data-column="beizhu1" data-value="{{beizhu1}}" style="width:500rpx">{{beizhu1}}</view>
+        </view>
+      </view>
+
+      <view class="table" style="margin-top: 30rpx;">
+        <view class="table_main">
+          <view class="title_text" style="width:200rpx;height:70rpx;">备注2:</view>
+          <view class="list_view2" bindtap="beizhu_click" data-column="beizhu2" data-value="{{beizhu2}}" style="width:500rpx">{{beizhu2}}</view>
+        </view>
+      </view>
+
+    </block>
+  </view>
+</scroll-view>
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="save">保存</button>
+  <button class="bt_bottom" bindtap="entering">查询</button>
+  <button class="bt_bottom" bindtap="shengcheng">生成打印</button>
+</view>
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+  <view class="lables">客户</view>
+  <input bindinput="onInput" bindtap="kehu_select" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name" disabled="disabled"></input>
+  <view class="lables">日期</view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="riqi" class="input_text_form"  value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
+  </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet
+  show="{{xlShow}}"
+  actions="{{kehu_list}}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>
+
+
+<!------------------------->
+<!---------重量修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow1 }}" position="bottom" custom-style="height: 25%;" >
+    <input bindinput="onInput2" style="margin-top:10%" data-index1="this_index1" data-index2="this_index2"  data-name="this_value" class="input_text_form" value="{{this_value}}" type="digit" name="this_value" ></input>
+  <view class="bottom_view" style="height:10%;margin-top: 50rpx;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------回筐修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 25%;" >
+    <input bindinput="onInput2" style="margin-top:10%" data-index="this_index" data-column="this_column"  data-name="this_value" class="input_text_form" value="{{this_value}}" type="number" name="this_value" ></input>
+  <view class="bottom_view" style="height:10%;margin-top: 50rpx;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">修改</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------备注修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow3 }}" position="bottom" custom-style="height: 25%;" >
+    <input bindinput="onInput2" style="margin-top:10%" data-index="this_index" data-column="this_column"  data-name="this_value" class="input_text_form" value="{{this_value}}" type="text" name="this_value" ></input>
+  <view class="bottom_view" style="height:10%;margin-top: 50rpx;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd3">修改</button>
+  </view>
+</van-popup>

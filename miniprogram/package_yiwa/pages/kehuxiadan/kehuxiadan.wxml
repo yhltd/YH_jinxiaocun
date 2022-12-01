@@ -55,7 +55,7 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
   <view class="lables">数量：</view>
-  <input class="input_text_form"  bindinput="onInput" value="{{number}}" data-column="number" name="number" ></input>
+  <input class="input_text_form" type="number" bindinput="onInput" value="{{number}}" data-column="number" name="number" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->

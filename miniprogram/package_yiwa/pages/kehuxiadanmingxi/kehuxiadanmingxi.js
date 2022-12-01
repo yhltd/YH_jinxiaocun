@@ -57,7 +57,6 @@ Page({
     })
     console.log(userInfo)
     var sql
-    console.log(userInfo.power=='管理员')
     if (userInfo.power=='管理员'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id group by Documentnumber,name,us.id,riqi,Customer_id "
     }else if (userInfo.power=='客户'){

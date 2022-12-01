@@ -472,8 +472,8 @@ Page({
     var _this = this
     let column = e.currentTarget.dataset.column
     console.log(e.detail.value)
+    console.log(column) 
     _this.setData({
-      currentDate: e.detail,
       [column]: e.detail.value
     })
   },
@@ -512,7 +512,7 @@ Page({
                 _this.qxShow()
                 _this.tableShow()
                 wx.showToast({
-                  title: '删除成功！',
+                  title: '修改成功！',
                   icon: 'none'
                 })
               },

@@ -200,127 +200,6 @@ Page({
       qr_code: '',
     })
   },
-  add1: function(){
-    var _this = this
-    if(_this.data.username == ''){
-      wx.showToast({
-        title: '请输用户名！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-    if(_this.data.password == ''){
-      wx.showToast({
-        title: '请输密码！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-    if(_this.data.name == ''){
-      wx.showToast({
-        title: '请输姓名！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-    if(_this.data.power == ''){
-      wx.showToast({
-        title: '请输权限！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: "insert into userInfo(username,password,name,power)output inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.power + "')"
-        },
-        success: res => {
-          var Customer_id = res.result.recordset[0].id
-          console.log(res.result.recordset[0].id)
-          console.log(_this.data.Customer_id)
-      var sql1 = "insert into DetailsofProducts(Thedetail_id,Customer_id,NameofProduct,unit,Theunitprice) values"
-      var sql2 = ""
-      for(var i = 0; _this.data.peizhi_list.length>i ; i++){
-        if(sql2 == ""){
-          sql2 = "('" +  _this.data.peizhi_list[i].id + "','"+ Customer_id +"','" + _this.data.peizhi_list[i].NameofProduct +"','" + _this.data.peizhi_list[i].unit +"','"+ _this.data.peizhi_list[i].Theunitprice +"')"
-        }else{
-          sql2 = sql2 + ",('" +  _this.data.peizhi_list[i].id + "','"+ Customer_id +"','" + _this.data.peizhi_list[i].NameofProduct +"','" + _this.data.peizhi_list[i].unit +"','"+ _this.data.peizhi_list[i].Theunitprice +"')"
-        }
-      }
-      var sql = sql1 + sql2
-      console.log(sql)
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: sql
-        },
-        success: res => {
-          _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-          _this.setData({
-            id:'',
-            username: '', 
-            password: '',
-            name:'',
-            power: '',
-            salesman: '',
-            driver: '',
-            qr_code: '',
-            list:Customer_id,
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
-      
-  },
 
   onInput: function (e) {
     var _this = this
@@ -507,7 +386,7 @@ Page({
       return;
     }
 
-    var sql_head = 'select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id'
+    var sql_head = 'select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id'
     var sql_foot = ""
     for(var i=0; i<select_customer.length; i++){
       if(select_customer[i] != '' && select_customer[i] != null && select_customer[i] != undefined){

@@ -32,11 +32,13 @@
 </view>
 
 <!------------------------->
-<!---------修改弹窗--------->
+<!---------修改弹窗---------> 
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 30%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 40%;" >
     <view class="lables">单价</view>
-    <input bindinput="onInput" data-column="Theunitprice" class="input_text_form"  value="{{Theunitprice}}" type="text" name="Theunitprice"></input>
+    <input bindinput="onInput" data-column="Theunitprice" class="input_text_form"  value="{{Theunitprice}}" type="digit" name="Theunitprice"></input>
+    <view class="lables">期初欠筐</view>
+    <input bindinput="onInput" data-column="kuang_num" class="input_text_form"  value="{{kuang_num}}" type="number" name="kuang_num"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>
@@ -44,10 +46,11 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
   <view class="lables">产品名称</view>
   <input bindinput="onInput" data-column="NameofProduct" class="input_text_form"  value="{{NameofProduct}}" type="text" name="NameofProduct"></input>
-    
+  <view class="lables">客户名称</view>
+  <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

@@ -241,10 +241,10 @@ Page({
               isupd: true
             },
           ]
-
+          var riqi_list = []
           //根据客户list拼接title
           for(var i=0; i<order_list.length; i++){
-            if(order_list[i].riqi != ''){
+            if(order_list[i].riqi != '' && riqi_list.indexOf(order_list[i].riqi) == -1){
               title.push({
                 text: order_list[i].riqi,
                 width: "300rpx",
@@ -252,6 +252,7 @@ Page({
                 type: "text",
                 isupd: true
               })
+              riqi_list.push(order_list[i].riqi)
             }
             list_item[order_list[i].riqi] = ''
           }

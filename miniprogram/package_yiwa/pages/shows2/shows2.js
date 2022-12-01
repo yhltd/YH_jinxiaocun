@@ -32,6 +32,10 @@ Page({
       text: "客户周期汇总单",
       url: "../kehu_huizong/kehu_huizong"
     },
+    {
+      text: "送货单生成",
+      url: "../songhuodan/songhuodan"
+    },
  ]
  },
  
@@ -41,7 +45,32 @@ go: function (e) {
   var index = e.currentTarget.dataset.index;
   var url = _this.data.showList[index].url
   var text = _this.data.showList[index].text
-  console.log(_this.data.userInfo.power)
+  console.log(index)
+
+  if((index == 0 || index == 1 || index == 2 || index == 5) && _this.data.userInfo.power == '司机'){
+    wx.showToast({
+      title: '司机无权限查看！',
+      icon: 'none'
+    })
+    return;
+  }
+
+  if((index == 2 || index == 3 || index == 4 || index == 5 || index == 6) && _this.data.userInfo.power == '客户'){
+    wx.showToast({
+      title: '客户无权限查看！',
+      icon: 'none'
+    })
+    return;
+  }
+
+  if((index == 3 || index == 4 || index == 6 ) && _this.data.userInfo.power == '业务员'){
+    wx.showToast({
+      title: '业务员无权限查看！',
+      icon: 'none'
+    })
+    return;
+  }
+
   if(url != ''){
     wx.navigateTo({
       url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)

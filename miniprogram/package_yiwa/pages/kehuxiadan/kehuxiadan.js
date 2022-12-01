@@ -115,6 +115,7 @@ Page({
       _this.setData({
         userInfo:userInfo,
         Customer_id:userInfo.name, 
+        idd:userInfo.id,
       })
     }
     _this.setData({
@@ -209,34 +210,9 @@ Page({
         })
         console.log("请求失败！")
       }
-    }) 
+    })
 
     console.log(userInfo.id)
-    wx.cloud.callFunction({
-      name: 'sqlserver_yiwa',
-      data: {
-        query: "select DP.id,Thedetail_id,Customer_id,DC.NameofProduct as name,DC.unit,DP.Theunitprice from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id where Customer_id = '"+ userInfo.id +"'"
-      },
-      success: res => {
-        var list = res.result.recordset
-        console.log(list)
-        _this.setData({
-          listChanPin: list
-        })
-        console.log(list)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
 
   },
 
@@ -450,9 +426,44 @@ Page({
 
   selCD: function () {
     var _this = this
-    _this.setData({
-      xlShow4_type:"add",
-      xlShow4: true
+
+    if(_this.data.Customer_id == ''){
+      wx.showToast({
+        title: '请选择客户！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: "select DP.id,Thedetail_id,Customer_id,DC.NameofProduct as name,DC.unit,DP.Theunitprice from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id where Customer_id = '"+ _this.data.idd +"'"
+      },
+      success: res => {
+        console.log()
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          listChanPin: list
+        })
+        _this.setData({
+          xlShow4_type:"add",
+          xlShow4: true
+        })
+        console.log(list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
