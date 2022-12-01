@@ -24,13 +24,14 @@ Page({
     checkItems:[],
     list: [],
     title: [
-      {
-      text: "客户",
-      width: "450rpx",
-      columnName: "kehu",
-      type: "text",
-      isupd: true
-    },{
+    //   {
+    //   text: "客户",
+    //   width: "450rpx",
+    //   columnName: "kehu",
+    //   type: "text",
+    //   isupd: true
+    // },
+    {
         text: "图号",
         width: "275rpx",
         columnName: "pic_no",
@@ -44,20 +45,20 @@ Page({
         type: "text",
         isupd: true
       },
-      {
-        text: "单台组成名称",
-        width: "230rpx",
-        columnName: "dantai_name",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "大工序",
-        width: "200rpx",
-        columnName: "gongxu",
-        type: "text",
-        isupd: true
-      },
+      // {
+      //   text: "单台组成名称",
+      //   width: "230rpx",
+      //   columnName: "dantai_name",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "大工序",
+      //   width: "200rpx",
+      //   columnName: "gongxu",
+      //   type: "text",
+      //   isupd: true
+      // },
       {
         text: "零件名称",
         width: "350rpx",
@@ -77,61 +78,71 @@ Page({
         columnName: "num",
         type: "text",
         isupd: true
-      },{
-        text: "任务类型",
-        width: "200rpx",
-        columnName: "type",
-        type: "text",
-        isupd: true
-      },{
-        text: "接单人",
-        width: "200rpx",
-        columnName: "jiedanren",
-        type: "text",
-        isupd: true
-      },{
-        text: "是否完工",
-        width: "200rpx",
-        columnName: "is_wangong",
-        type: "text",
-        isupd: true
-      },{
-        text: "材质",
-        width: "200rpx",
-        columnName: "cailiao",
-        type: "text",
-        isupd: true
-      },{
-        text: "用时（天）",
-        width: "200rpx",
-        columnName: "gongshi",
-        type: "text",
-        isupd: true
-      },{
-        text: "备注（窗口）",
-        width: "230rpx",
-        columnName: "remark",
-        type: "text",
-        isupd: true
-      },{
-        text: "备注（新增）",
-        width: "230rpx",
-        columnName: "beizhu",
-        type: "text",
-        isupd: true
-      },{
-        text: "选项",
-        width: "200rpx",
-        columnName: "xuanxiang",
-        type: "text",
-        isupd: true
-      },{
+      },
+      // {
+      //   text: "任务类型",
+      //   width: "200rpx",
+      //   columnName: "type",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "接单人",
+      //   width: "200rpx",
+      //   columnName: "jiedanren",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "是否完工",
+      //   width: "200rpx",
+      //   columnName: "is_wangong",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "材质",
+      //   width: "200rpx",
+      //   columnName: "cailiao",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "用时（天）",
+      //   width: "200rpx",
+      //   columnName: "gongshi",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "备注（窗口）",
+      //   width: "230rpx",
+      //   columnName: "remark",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "备注（新增）",
+      //   width: "230rpx",
+      //   columnName: "beizhu",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "选项",
+      //   width: "200rpx",
+      //   columnName: "xuanxiang",
+      //   type: "text",
+      //   isupd: true
+      // },
+      {
         text: "制造商接受状态",
         width: "300rpx",
         columnName: "zhizao_jieshou",
         type: "text",
         isupd: true
-      },{
+      },
+      {
         text: "制造商完成情况",
         width: "300rpx",
         columnName: "zhizao_wancheng",
@@ -139,7 +150,9 @@ Page({
         isupd: true
       }
     ],
-  },
+    jixing_list:[],
+    jixing:'',
+   },
 
   /**
    * 生命周期函数--监听页面加载
@@ -167,14 +180,44 @@ Page({
     })
     _this.pageShow(ee)
     _this.tableShow(ee)
+
+    wx.cloud.callFunction({
+      name: 'sqlserver_bazhou',
+      data: {
+        query: "select jixing from task_list GROUP BY jixing"
+      },
+      success: res => {
+        var list = res.result.recordset
+        var jixing=[]
+        console.log(list)
+        for(var i=0; i<list.length; i++){
+          jixing.push(list[i].jixing)
+        }
+        _this.setData({
+          jixing_list:jixing,
+        })
+        console.log(jixing)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   choicePick (e) {
     var _this = this
-    _this.setData({
-      picker_select: _this.data.pick_list[e.detail.value].label
-    })
-    var this_select = _this.data.pick_list[e.detail.value].label
+    // _this.setData({
+    //   picker_select: _this.data.pick_list[e.detail.value].label
+    // })
+    var this_select = _this.data.picker_select //pick_list[e.detail.value].label
     var ee = []
     if(this_select =='待接受任务'){
       var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '' ",1,50]
@@ -265,7 +308,8 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select * from (select row_number() over(order by id) as row_num,* from (select tl.id,isnull(tl.kehu,'') as kehu,isnull(pic_no,'') as pic_no,isnull(order_name,'') as order_name,isnull(dantai_name,'') as dantai_name,isnull(gongxv,'') as gongxv,isnull(lingjian,'') as lingjian,isnull(size,'') as size,isnull(num,'') as num,isnull(type,'') as type,isnull(jiedanren,'') as jiedanren,riqi,riqi2,isnull(is_wangong,'') as is_wangong,'' as cailiao,isnull(gongshi,'') as gongshi,isnull(remark,'') as remark,isnull(xuanxiang,'') as xuanxiang,isnull(jixing,'') as jixing,isnull(tl.order_no,'') as order_no,isnull(shunxv,'') as shunxv,'' as ks,isnull(dantai_id,'') as dantai_id,isnull(beizhu,'') as beizhu,isnull(zhizao_jieshou,'') as zhizao_jieshou,isnull(zhizao_wancheng,'') as zhizao_wancheng,isnull(kuguan_ruku,'') as kuguan_ruku,isnull(zhizao_list,'') as zhizao_list,isnull(ma.kehu,'') as kehu2 from task_list as tl left join (select id,order_no,kehu,ku from management) as ma on tl.order_no = ma.order_no where (tl.ku<>'库' or tl.ku is null and ma.ku<>'库' or ma.ku is null)) as list "+ e[0] +") as list_end where row_num between " + e[1] + " and " + e[2] 
+    console.log(_this.data.jixing)
+    var sql = "select * from (select row_number() over(order by id) as row_num,* from (select tl.id,isnull(tl.kehu,'') as kehu,isnull(pic_no,'') as pic_no,isnull(order_name,'') as order_name,isnull(dantai_name,'') as dantai_name,isnull(gongxv,'') as gongxv,isnull(lingjian,'') as lingjian,isnull(size,'') as size,isnull(num,'') as num,isnull(type,'') as type,isnull(jiedanren,'') as jiedanren,riqi,riqi2,isnull(is_wangong,'') as is_wangong,'' as cailiao,isnull(gongshi,'') as gongshi,isnull(remark,'') as remark,isnull(xuanxiang,'') as xuanxiang,isnull(jixing,'') as jixing,isnull(tl.order_no,'') as order_no,isnull(shunxv,'') as shunxv,'' as ks,isnull(dantai_id,'') as dantai_id,isnull(beizhu,'') as beizhu,isnull(zhizao_jieshou,'') as zhizao_jieshou,isnull(zhizao_wancheng,'') as zhizao_wancheng,isnull(kuguan_ruku,'') as kuguan_ruku,isnull(zhizao_list,'') as zhizao_list,isnull(ma.kehu,'') as kehu2 from task_list as tl left join (select id,order_no,kehu,ku from management) as ma on tl.order_no = ma.order_no where (tl.ku<>'库' or tl.ku is null and ma.ku<>'库' or ma.ku is null)) as list "+ e[0] +") as list_end where row_num between " + e[1] + " and " + e[2] +" and jixing like '%"+ _this.data.jixing +"%'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_bazhou',
@@ -273,6 +317,7 @@ Page({
         query: sql
       },
       success: res => {
+        console.log(sql)
         var list = res.result.recordset
         for(var i=0; i<list.length; i++){
           if(list[i].kehu2 != ''){
@@ -420,15 +465,49 @@ Page({
       })
       return;
     }
+    if(_this.data.picker_select != '待接受任务' && _this.data.picker_select != '进行中任务'){
+      wx.showToast({
+        title: '无需操作！',
+        icon: 'none'
+      })
+      return;
+    }
     _this.setData({
       xgShow:true,
     })
+  },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var jixing = _this.data.jixing_list[e.detail.value]
+    console.log(jixing)
+    _this.setData({
+      jixing: jixing,
+    })
+    
+    var ee = []
+    if(_this.data.picker_select =='待接受任务'){
+      var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '' ",1,50]
+    }else if(_this.data.picker_select =='进行中任务'){
+      var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '已接受' and isnull(zhizao_wancheng,'') != '已完成' ",1,50]
+    }else if (_this.data.picker_select =='已完成任务'){
+      var ee = ["where jiedanren = '" + _this.data.userInfo.username + "' and isnull(zhizao_jieshou,'') = '已接受' and zhizao_wancheng = '已完成'",1,50]
+    }else if (_this.data.picker_select =='已取消任务'){
+      var ee = ["where zhizao_list like '%" + _this.data.userInfo.username + "%' and jiedanren != '" + _this.data.userInfo.username + "' ",1,50]
+    }
+    _this.setData({
+      ee
+    })
+    _this.pageShow(ee)
+    _this.tableShow(ee)
   },
 
   yes_click:function(){
     var _this = this
     var checkItems = _this.data.checkItems
     var sql = ""
+    console.log(_this.data.picker_select)
     if(_this.data.picker_select == '待接受任务'){
       sql = "update task_list set zhizao_jieshou = '已接受' where id in("
     }else if(_this.data.picker_select == '进行中任务'){
@@ -526,6 +605,38 @@ Page({
 
   },
 
+  quanxuan: function () {
+    var _this = this
+    var checkItems = []
+    var list = _this.data.list
+    for (let i = 0; i < list.length; i++) {
+      checkItems.push(list[i].id)
+      list[i].panduan = true
+    }
+    console.log(checkItems)
+    console.log(list)
+    _this.setData({
+      checkItems: checkItems,
+      list:list
+    })
+  },
+  quxiao: function () {
+    var _this = this
+    var checkItems = []
+    var list = _this.data.list
+    for (let i = 0; i < list.length; i++) {
+      list[i].panduan = false
+    }
+    console.log(checkItems)
+    console.log(list)
+    _this.setData({
+      checkItems: checkItems,
+      list:list
+    })
+  },
+
+  
+
   choice_checkBox_examine : function(e){
     var _this = this;
     var value = e.detail.value
@@ -540,9 +651,14 @@ Page({
         }
       }
     }
+
+    console.log(checkItems)
     _this.setData({
       checkItems
     })
+
+
+    
   },
 
   onInput: function (e) {
