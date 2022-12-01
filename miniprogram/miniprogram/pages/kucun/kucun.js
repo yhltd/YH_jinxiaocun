@@ -305,12 +305,14 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var sql="select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,r.num from (select product_id,warehouse,pihao,sum(case when state='审核通过' then convert(float,num) else 0 end) as num from ruku group by product_id,warehouse,pihao) as r left join product p on r.product_id=p.id where warehouse like '%%' and pihao like '%%' and product_name like '%%';select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,s.num from (select product_id,warehouse,pihao,sum(case when type='销售' then convert(float,num) else -convert(float,num) end) as num from sale where sale_state = '审核通过' and fahuo = '已发货' group by product_id,warehouse,pihao ) as s left join product p on s.product_id=p.id where warehouse like '%%' and pihao like '%%' and product_name like '%%'"
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query : "select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,r.num from (select product_id,warehouse,pihao,sum(case when state='审核通过' then convert(float,num) else 0 end) as num from ruku group by product_id,warehouse,pihao) as r left join product p on r.product_id=p.id where warehouse like '%" + e[0] + "%' and pihao like '%" + e[1] + "%' and product_name like '%" + e[2] + "%';select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,s.num from (select product_id,warehouse,pihao,sum(case when type='销售' then convert(float,num) else -convert(float,num) end) as num from sale where sale_state = '审核通过' and chuku_state = '审核通过' and fahuo = '已发货' group by product_id,warehouse,pihao ) as s left join product p on s.product_id=p.id where warehouse like '%" + e[0] + "%' and pihao like '%" + e[1] + "%' and product_name like '%" + e[2] + "%';"
+        query : sql
       },
       success: res => {
+        console.log(sql)
         console.log(res)
         var list1 = res.result.recordsets[0]
         var list2 = res.result.recordsets[1]
@@ -376,9 +378,16 @@ Page({
               }
           }
         }
+        var aa=[]
+        for(var i =0;i< this_list.length;i++){
+          if(this_list[i].num != 0){
+            aa.push(this_list[i])
+          }
+          
+        }
         console.log(this_list)
         _this.setData({
-          list: this_list
+          list: aa
         })
       },
       err: res => {

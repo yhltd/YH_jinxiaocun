@@ -186,12 +186,15 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var sql ="select isnull(sum(case when type='销售' then convert(float,xiaoji) else 0 end),0) as bqgh,isnull(sum(case when type='退货' then convert(float,xiaoji) else 0 end),0) as bqth from sale where customer_id="+ e[0] +" and sale_state = '审核通过'  and fahuo = '已发货';select isnull(sum(convert(float,f_jine)),0) as yf,isnull(sum(convert(float,discount)),0) zhekou,isnull(sum(convert(float,r_jine)),0) as fkjine,isnull(sum(convert(float,quota)),0) as bqzs from payment where customer_id="+ e[0] +" and state = '审核通过';select isnull(convert(float,ghye),0) as xswqye,isnull(convert(float,zsye),0) as zswqye from customerInfo where id="+ e[0] +";select isnull(sum(convert(float,jine)),0) as kpjine from invoice where customer_id="+ e[0] +" and state = '审核通过';"
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query: "select isnull(sum(case when type='销售' then convert(float,xiaoji) else 0 end),0) as bqgh,isnull(sum(case when type='退货' then convert(float,xiaoji) else 0 end),0) as bqth from sale where customer_id="+ e[0] +" and sale_state = '审核通过' and chuku_state = '审核通过' and fahuo = '已发货';select isnull(sum(convert(float,f_jine)),0) as yf,isnull(sum(convert(float,discount)),0) zhekou,isnull(sum(convert(float,r_jine)),0) as fkjine,isnull(sum(convert(float,quota)),0) as bqzs from payment where customer_id="+ e[0] +" and state = '审核通过';select isnull(convert(float,ghye),0) as xswqye,isnull(convert(float,zsye),0) as zswqye from customerInfo where id="+ e[0] +";select isnull(sum(convert(float,jine)),0) as kpjine from invoice where customer_id="+ e[0] +" and state = '审核通过';"
+        query: sql
       },
       success: res => {
+        console.log(sql)
+        console.log(res.result.recordsets)
         var list1 = res.result.recordsets[0]
         var list2 = res.result.recordsets[1]
         var list3 = res.result.recordsets[2]

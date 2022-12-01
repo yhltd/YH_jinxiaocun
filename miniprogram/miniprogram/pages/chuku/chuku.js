@@ -180,13 +180,13 @@ Page({
         type: "text",
         isupd: true
       },
-      {
-        text: "出库审核状态",
-        width: "200rpx",
-        columnName: "chuku_state",
-        type: "text",
-        isupd: true
-      },
+      // {
+      //   text: "出库审核状态",
+      //   width: "200rpx",
+      //   columnName: "chuku_state",
+      //   type: "text",
+      //   isupd: true
+      // },
       {
         text: "发货状态",
         width: "200rpx",
@@ -722,9 +722,10 @@ Page({
     var sql = ""
     var tiaojian = _this.data.tiaojian
     console.log(tiaojian)
+    console.log(_this.data.userInfo.power)
     if(_this.data.tiaojian != undefined){
       sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,isnull(customer,'') as customer,customer_num,area,leibie,isnull(salesman,'') as salesman,product_name,spec,pinhao,attribute,unit,sa.price,isnull(p.pinyin,'') as pinyin,sa.sale_state,sa.sale_type,sa.warehouse,sa.express,sa.wuliu_order,sa.pihao,sa.chuku_insert,sa.chuku_state,fahuo from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,isnull(customer,'') as customer,customer_num,area,leibie,salesman,isnull(pinyin,'') as pinyin,fahuo,s.price,sale_state,sale_type,chuku_insert,chuku_state from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id  where convert(date,sa.riqi)>=convert(date,'" + _this.data.tiaojian[2] + "') and convert(date,sa.riqi)<=convert(date,'" + _this.data.tiaojian[2] + "') and (customer = '" + _this.data.tiaojian[1] + "') and chuku_state = '审核中' and sale_state = '审核通过' and isnull(salesman,'') = '" + _this.data.tiaojian[3] + "' order by sa.riqi desc,customer,sale_type;"
-    }else if(_this.data.userInfo.power == '管理员'){
+    }else if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '审核人'){
       sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,isnull(customer,'') as customer,customer_num,area,leibie,isnull(salesman,'') as salesman,product_name,spec,pinhao,attribute,unit,sa.price,isnull(p.pinyin,'') as pinyin,sa.sale_state,sa.sale_type,sa.warehouse,sa.express,sa.wuliu_order,sa.pihao,sa.chuku_insert,sa.chuku_state,fahuo from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,isnull(customer,'') as customer,customer_num,area,leibie,salesman,isnull(pinyin,'') as pinyin,fahuo,s.price,sale_state,sale_type,chuku_insert,chuku_state from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id  where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and chuku_state like '%"+ e[5] +"%' and sale_state = '审核通过' and sale_type like '%" + e[4] + "%' and pihao like '%" + e[6] + "%' order by sa.riqi desc,customer,sale_type;"
     }else{
       sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,isnull(customer,'') as customer,customer_num,area,leibie,isnull(salesman,'') as salesman,product_name,spec,pinhao,attribute,unit,sa.price,isnull(p.pinyin,'') as pinyin,sa.sale_state,sa.sale_type,sa.warehouse,sa.express,sa.wuliu_order,sa.pihao,sa.chuku_insert,sa.chuku_state,fahuo from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,isnull(customer,'') as customer,customer_num,area,leibie,salesman,isnull(pinyin,'') as pinyin,fahuo,s.price,sale_state,sale_type,chuku_insert,chuku_state from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id  where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and chuku_state like '%"+ e[5] +"%' and sale_state = '审核通过' and sale_type like '%" + e[4] + "%' and pihao like '%" + e[6] + "%' and salesman = '" + _this.data.userInfo.name + "' order by sa.riqi desc,customer,sale_type;"
@@ -796,7 +797,7 @@ Page({
   clickView:function(e){
     var _this = this
     if(e.currentTarget.dataset.column != 'chuku_state'){
-      if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员'){
+      if(_this.data.userPower.gai != '可操作' && _this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '审核人'){
         wx.showToast({
           title: '无权限！',
           icon: 'none',

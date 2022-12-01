@@ -1,4 +1,4 @@
-<block wx:if="{{userInfo.power=='管理员'}}">
+<block wx:if="{{userInfo.power=='管理员' || userInfo.power=='审核人' }}">
   <view class='item' >
     <view class="title">
     当日销售金额:</view>
@@ -38,7 +38,7 @@
   <view class="line"></view>
 </block>
 
-<block wx:if="{{userInfo.power=='管理员'}}">
+<block wx:if="{{userInfo.power=='管理员' || userInfo.power=='审核人'}}">
   <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
     <view class="table">
       <view class='table_header'>

@@ -43,10 +43,17 @@ Page({
         type: "text",
         isupd: true
       },
+      // {
+      //   text: "状态",
+      //   width: "200rpx",
+      //   columnName: "state",
+      //   type: "text",
+      //   isupd: true
+      // },
       {
-        text: "状态",
+        text: "发货状态",
         width: "200rpx",
-        columnName: "state",
+        columnName: "fahuo",
         type: "text",
         isupd: true
       },
@@ -71,12 +78,14 @@ Page({
   tableShow: function () {
     var _this = this
     var this_date = getNowDate()
+    var sql="select '入库' as type,riqi,staff,state from ruku where state = '审核中' group by riqi,staff,state;select '销售' as type,s.riqi,customer,salesman,sale_state from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核中' group by s.riqi,customer,salesman,sale_state;select '出库' as type,s.riqi,isnull(customer,'') as customer,isnull(salesman,'') as salesman,fahuo from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核中'and fahuo = '已发货' or fahuo = '未发货' group by s.riqi,customer,salesman,fahuo;select sum(convert(float,xiaoji)) as jine from sale where sale_state = '审核中' and fahuo = '已发货' or fahuo = '未发货' and type = '销售' and riqi = '" + this_date + "';select sum(convert(float,f_jine)) as jine from payment as p left join customerInfo as c on p.customer_id = c.id where p.riqi ='" + this_date + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query : "select '入库' as type,riqi,staff,state from ruku where state = '审核中' group by riqi,staff,state;select '销售' as type,s.riqi,customer,salesman,sale_state from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核中' group by s.riqi,customer,salesman,sale_state;select '出库' as type,s.riqi,isnull(customer,'') as customer,isnull(salesman,'') as salesman,chuku_state from sale as s left join customerInfo as c on s.customer_id = c.id where chuku_state = '审核中' group by s.riqi,customer,salesman,chuku_state;select sum(convert(float,xiaoji)) as jine from sale where sale_state = '审核通过' and chuku_state = '审核通过' and type = '销售' and riqi = '" + this_date + "';select sum(convert(float,f_jine)) as jine from payment as p left join customerInfo as c on p.customer_id = c.id where p.riqi ='" + this_date + "';"
+        query : sql
       },
       success: res => {
+        console.log(sql)
         console.log(res)
         var list1 = res.result.recordsets[0]
         var list2 = res.result.recordsets[1]
@@ -117,7 +126,7 @@ Page({
             customer:list3[i].customer,
             riqi:list3[i].riqi,
             salesman:list3[i].salesman,
-            state:list3[i].chuku_state,
+            fahuo:list3[i].fahuo,
           })
         }
 
@@ -156,7 +165,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query : "select '入库' as type,riqi,staff,state from ruku where state = '审核中' and staff ='" + _this.data.userInfo.name + "' group by riqi,staff,state;select '销售' as type,s.riqi,customer,salesman,sale_state from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核中' and salesman ='" + _this.data.userInfo.name + "' group by s.riqi,customer,salesman,sale_state;select '出库' as type,s.riqi,isnull(customer,'') as customer,isnull(salesman,'') as salesman,chuku_state from sale as s left join customerInfo as c on s.customer_id = c.id where chuku_state = '审核中' and salesman ='" + _this.data.userInfo.name + "' group by s.riqi,customer,salesman,chuku_state;select sum(convert(float,xiaoji)) as jine from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核通过' and chuku_state = '审核通过' and type = '销售' and s.riqi >= '" + start_date + "' and s.riqi <= '" + stop_date + "' and c.salesman = '" + _this.data.userInfo.name + "';select sum(convert(float,f_jine)) as jine from payment as p left join customerInfo as c on p.customer_id = c.id where p.riqi >='" + start_date + "' and p.riqi <='" + stop_date + "' and c.salesman = '" + _this.data.userInfo.name + "';"
+        query : "select '入库' as type,riqi,staff,state from ruku where state = '审核中' and staff ='施丽娜' group by riqi,staff,state;select '销售' as type,s.riqi,customer,salesman,sale_state from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核中' and salesman ='施丽娜' group by s.riqi,customer,salesman,sale_state;select '出库' as type,s.riqi,isnull(customer,'') as customer,isnull(salesman,'') as salesman,fahuo from sale as s left join customerInfo as c on s.customer_id = c.id where fahuo = '已发货' or fahuo = '未发货' and salesman ='施丽娜' group by s.riqi,customer,salesman,fahuo;select sum(convert(float,xiaoji)) as jine from sale as s left join customerInfo as c on s.customer_id = c.id where sale_state = '审核通过' and fahuo = '已发货' or fahuo = '未发货' and type = '销售' and s.riqi >= '2022-11-01' and s.riqi <= '2022-11-31' and c.salesman = '施丽娜';select sum(convert(float,f_jine)) as jine from payment as p left join customerInfo as c on p.customer_id = c.id where p.riqi >='2022-11-01' and p.riqi <='2022-11-31' and c.salesman = '施丽娜';"
       },
       success: res => {
         console.log(res)
@@ -199,7 +208,7 @@ Page({
             customer:list3[i].customer,
             riqi:list3[i].riqi,
             salesman:list3[i].salesman,
-            state:list3[i].chuku_state,
+            fahuo:list3[i].fahuo,
           })
         }
 
