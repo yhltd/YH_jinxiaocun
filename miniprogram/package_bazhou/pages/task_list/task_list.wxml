@@ -1,11 +1,11 @@
-
-<input bindinput="onInput" data-column="picker_select" class="input_text_form" value="{{picker_select}}" type="text" name="picker_select" disabled="disabled"></input>
+<!-- 
+<input bindinput="onInput" data-column="picker_select" class="input_text_form" value="{{picker_select}}" type="text" name="picker_select" disabled="disabled"></input> -->
 <picker bindchange="bindPickerChange1" value="{{index}}" range="{{jixing_list}}" bindtap="clickView2">
   <input bindinput="onInput" data-column="jixing" class="input_text_form" value="{{jixing}}" type="text" name="jixing" disabled="disabled"></input>
 </picker>
 
 
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:70%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:76%">
   <view class="table">
     <view class='table_header'>
       <view class="title_text" style="width:100rpx;position:sticky;left:0;z-index:5">选择</view>
