@@ -423,6 +423,18 @@ Page({
             })
             return;
           }
+          for(var i=0; i<order_list.length; i++){
+            if(order_list[i].zhongliang_num != ''){
+              var this_list = order_list[i].zhongliang_num.split(',')
+              var this_num = 0
+              for(var j=0; j<this_list.length; j++){
+                if(this_list[j] != ''){
+                  this_num += this_list[j] * 1
+                }
+              }
+              order_list[i].number = this_num
+            }
+          }
           var list = []
           var list_item = {
             NameofProduct:'',
@@ -462,7 +474,7 @@ Page({
             }
           }
 
-
+          console.log(order_list)
           //循环订单，计算单价*数量
           for(var i=0; i<order_list.length; i++){
             for(var j=0; j<list.length; j++){
@@ -495,7 +507,7 @@ Page({
                     list[j][order_list[i].name] = end_str
                   }else{
                     var end_str = list[j][order_list[i].name]
-                    end_str = end_str + "+" + this_price + "*" + order_list[i].number
+                    end_str = end_str + "+" + order_list[i].Theunitprice + "*" + order_list[i].number
                     list[j][order_list[i].name] = end_str
                   }
                 }

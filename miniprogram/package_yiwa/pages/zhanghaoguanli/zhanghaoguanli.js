@@ -140,6 +140,33 @@ Page({
       }
     })
 
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: "select * from DetailedConfiguration"
+      },
+      success: res => {
+        console.log(res)
+        var peizhi_list=res.result.recordset
+        console.log(peizhi_list)
+        _this.setData({
+          peizhi_list: peizhi_list
+        })
+        console.log(peizhi_list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
   },
 
   qxShow: function () {

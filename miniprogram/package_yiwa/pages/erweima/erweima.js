@@ -1,4 +1,6 @@
 // package_huaqun/page/zhguanli/zhguanli.js
+
+import drawQrcode from './weapp.qrcode.js'
 Page({
 
   /**
@@ -9,6 +11,9 @@ Page({
     list: [],
     yewu_list:[],
     xlShow: false,
+    qr_code:'',
+    id:'',
+    // qr_code:'wxp://f2f0nIzIuG52daqiJhSKJ14P1q8gtBMmXc7QTP_p5yEs2S59qfVjBF47yZnutMsixDVw',
   },
 
   /**
@@ -25,9 +30,18 @@ Page({
     _this.setData({
       name:userInfo.name,
       id:userInfo.id
-    })
+    }) 
    _this.tableShow(e)
    }
+
+  //  drawQrcode({
+  //   width: 200,
+  //   height: 200,
+  //   x: 0,
+  //   y: 0,
+  //   canvasId: 'myQrcode',
+  //   text: _this.data.qr_code,
+  // })
 
    var sql = "select name,id from userInfo where power ='业务员'"
    wx.cloud.callFunction({
@@ -71,9 +85,23 @@ Page({
         var qr_code = res.result.recordset[0].qr_code
         console.log(qr_code)
         _this.setData({
-          qr_code_head: "data:image/png;base64," + qr_code,
-          qr_code_body: qr_code
+          qr_code: qr_code
         })
+        if(qr_code == '' || qr_code == null){
+          const ctx = wx.createCanvasContext('myQrcode')
+          ctx.draw()
+        }else{
+          drawQrcode({
+            width: 200,
+            height: 200,
+            x: 0,
+            y: 0,
+            canvasId: 'myQrcode',
+            text: qr_code,
+          })
+        }
+        
+
         console.log(qr_code)
       },
       err: res => {
@@ -171,7 +199,6 @@ Page({
   sel_xiala: function () {
     var _this = this
     if(_this.data.userInfo.power != '管理员'){
-
       return;
     }
     _this.setData({
@@ -194,6 +221,61 @@ Page({
         xlShow: false,
       })
     }
+  },
+
+  btnTapHander(e){
+    var _this = this
+    if(_this.data.id == ''){
+      wx.showToast({
+        title: '未选择业务员',
+        icon:'none'
+      })
+      return;
+    }
+    wx.scanCode({
+      scanType:'qrCode',
+      success (res) {
+        console.log(res)
+        var erCode= res.result;
+        console.log(erCode);
+        var sql = "update userInfo set qr_code ='" + erCode + "' where id=" + _this.data.id
+        wx.cloud.callFunction({
+          name: 'sqlserver_yiwa',
+          data: {
+            query: sql
+          },
+          success: res => {
+            var e = [_this.data.id]
+            _this.tableShow(e)
+            _this.setData({
+              qr_code: erCode
+            }, wx.showToast({
+              title: '图片选择成功',
+              'icon': 'none',
+              duration: 3000
+            }))
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
+      },
+      fail (res){
+        console.log(res)
+        wx.showToast({
+          title: '无效二维码',
+          icon:'none',
+        })
+      }
+    })  
   },
 
   /**

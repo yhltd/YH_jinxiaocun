@@ -201,7 +201,7 @@ Page({
     var start_date = e[1]
     var stop_date = e[2]
 
-    var sql_head = 'select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id'
+    var sql_head = 'select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id'
     var sql_foot = " where (Customer_id = '" + select_customer + "')"
 
     if(sql_foot != ''){
@@ -226,6 +226,18 @@ Page({
               icon: 'none'
             })
             return;
+          }
+          for(var i=0; i<order_list.length; i++){
+            if(order_list[i].zhongliang_num != ''){
+              var this_list = order_list[i].zhongliang_num.split(',')
+              var this_num = 0
+              for(var j=0; j<this_list.length; j++){
+                if(this_list[j] != ''){
+                  this_num += this_list[j] * 1
+                }
+              }
+              order_list[i].number = this_num
+            }
           }
           var list = []
           var list_item = {
@@ -299,7 +311,7 @@ Page({
                     list[j][order_list[i].riqi] = end_str
                   }else{
                     var end_str = list[j][order_list[i].riqi]
-                    end_str = end_str + "+" + this_price + "*" + order_list[i].number
+                    end_str = end_str + "+" + order_list[i].Theunitprice + "*" + order_list[i].number
                     list[j][order_list[i].riqi] = end_str
                   }
                 }

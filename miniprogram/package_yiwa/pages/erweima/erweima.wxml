@@ -5,7 +5,8 @@
 
 <view style="height: 80%;display: flex;justify-content: center;">
   <view  style="width:95%;border-style:dashed;border-width:3rpx;margin-top: 2%;display: flex;justify-content: center;">
-    <image src='{{qr_code_head}}' class='shangpin-image' mode="widthFix"> </image>
+    <!-- <image src='{{qr_code_head}}' class='shangpin-image' mode="widthFix"> </image> -->
+    <canvas style="width: 200px; height: 200px;" canvas-id="myQrcode"></canvas>
   </view>
 </view>
 
@@ -15,7 +16,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="upd_image" >修改/添加</button>
+	<!-- <button class="bt_bottom" bindtap="upd_image" >修改/添加</button> -->
+  <button class="bt_bottom" bindtap="btnTapHander" >扫码添加</button>
 </view>
 
 <!--表单下拉选择-->
