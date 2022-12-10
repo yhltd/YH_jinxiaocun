@@ -520,6 +520,29 @@ Page({
       }
     })
 
+    // wx.cloud.callFunction({
+    //     name: 'sqlServer_cw',
+    //     data: {
+    //       query: "select kehu from KehuPeizhi where company = '"+userInfo.company+"';"
+    //     },
+    //     success: res => {
+    //       var list = res.result.recordset
+    //       console.log(list)
+    //       _this.setData({
+    //         list:list,
+    //       })
+    //     },
+    //     err: res => {
+    //       console.log("错误!")
+    //     },
+    //     fail: res => {
+    //       wx.showToast({
+    //         title: '请求失败！',
+    //         icon: 'none'
+    //       })
+    //       console.log("请求失败！")
+    //     }
+    //   })
   },
 
   bindPickerChange: function(e) {
@@ -538,6 +561,17 @@ Page({
         empty: _this.data.zhonglei_list[e.detail.value]
       })
     }
+  },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为',e.detail.value)
+    var i = e.detail.value
+    console.log(_this.data.kehu_list)
+    
+    _this.setData({
+      xiangmumingcheng: _this.data.kehu_list[e.detail.value]
+    })
   },
 
   use_book:function(){

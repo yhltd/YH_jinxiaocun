@@ -140,6 +140,7 @@ button{
   border-radius: 10rpx;
   box-shadow: 10rpx 10rpx 10rpx black;
   z-index: 20;
+  
 }
 .input_message{
   position: fixed;

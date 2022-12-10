@@ -9,7 +9,8 @@ Page({
     countPage : 100, //每一页显示的数据数据数量
     pageCount : 0, //总页数
     pageNum : 1, //当前页 
-
+    riqi1:"",
+    riqi2:"",
     list: [],
     title: [],
     title1: [
@@ -525,8 +526,8 @@ Page({
     })
   },
 
-  getList : function(pageNum,countPage,_this,companyName,where){
-    var sql= "select * from (select *,ROW_NUMBER() over(order by [id]) ROW_ID from [gongzi_gongzimingxi] where BD = '"+companyName+"') t where t.ROW_ID >("+pageNum+"-1)*"+countPage+" and t.ROW_ID<("+pageNum+"*"+countPage+"+1) "+where
+  getList : function(riqi1,riqi2,pageNum,countPage,_this,companyName,where){
+    var sql= "select * from (select *,ROW_NUMBER() over(order by [id]) ROW_ID from [gongzi_gongzimingxi] where BC between '"+ _this.data.riqi1 +"' and '"+ _this.data.riqi2 +"' and  BD = '"+companyName+"') t where t.ROW_ID >("+pageNum+"-1)*"+countPage+" and t.ROW_ID<("+pageNum+"*"+countPage+"+1) "+where
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -534,6 +535,7 @@ Page({
         query: sql
       },
       success: res => {
+        console.log(sql)
         _this.setData({
           list: res.result.recordset
         })
@@ -604,6 +606,16 @@ Page({
     // if(zhiwu=='请选择'){
     //   var where = "and C = '"+bumen+"'"
     // }
+    if(_this.data.riqi1==''){
+      _this.setData({
+        riqi1:'1900-01-01'
+      })
+    }
+    if(_this.data.riqi2==''){
+      _this.setData({
+        riqi2:'2100-12-31'
+      })
+    }
     var where = ""
     if(bumen == "请选择" || bumen == ""){
     }else{
@@ -614,10 +626,12 @@ Page({
       where = where + " and D like '%"+zhiwu+"%'";
     }
     // var where = "and C = '"+bumen+"' and D = '"+zhiwu+"'";
-    _this.getList(_this.data.pageNum,_this.data.countPage,_this,_this.data.companyName,where);
+    _this.getList(_this.data.riqi1,_this.data.riqi2,_this.data.pageNum,_this.data.countPage,_this,_this.data.companyName,where);
 
     _this.setData({
-      hidMask : true
+      riqi1:"",
+      riqi12:"",
+      hidMask : true,
     })
   },
 
@@ -642,7 +656,23 @@ Page({
       ["options["+index+"].text"] : value
     })
   },
-
+  choiceDate: function (e) {
+    //e.preventDefault(); 
+    
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value
+    })
+    console.log(e.detail.value)
+  },
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    console.log(column)
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -238,6 +238,14 @@
 
 <view class="Mask" hidden="{{hidMask}}">
   <view class="criteria_view" hidden="{{hidMask}}">  
+    <view class="lables1">起始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
+    </picker>
+    <view class="lables1">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
+    </picker>
     <view class="option" wx:for="{{options}}" wx:for-index="op_index" wx:for-item="op_item">
       <view style="width:88%;margin: auto;height: 100%;">
         <view style="float: left;width: 65%;">

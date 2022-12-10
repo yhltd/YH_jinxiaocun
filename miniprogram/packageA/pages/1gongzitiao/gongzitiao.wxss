@@ -145,7 +145,7 @@ page {
 .option{
   height: 100rpx;
   width: 50%;
-  margin-top: 5%;
+  margin-top: 2%;
   float: left;
 }
 
@@ -216,4 +216,18 @@ background-color: #4876FF;
 color: white;
 margin-left: 27rpx;
 margin-top: 5%;
+}
+.lables1{
+  font-size: 40rpx;
+  margin-left: 90rpx;
+  margin-top: 2%;
+}
+.input_text_form{
+  border: 5rpx solid #E6E6E6;
+  margin: auto;
+  width: 80%;
+  height: 64rpx;
+  align-items: center;
+  border-radius: 19rpx;
+  padding-left: 3%;
 }

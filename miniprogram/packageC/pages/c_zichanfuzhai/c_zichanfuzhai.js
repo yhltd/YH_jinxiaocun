@@ -42,6 +42,8 @@ Page({
     sum_start2 : 0,
     sum_end2 : 0,
     chaxun_hidden:true,
+    start_date:'',
+    stop_date:'',
   },
 
 
@@ -51,15 +53,36 @@ Page({
       mask : 'true'
     })
     var _this = this;
+    var this_date = getNowDate()
+    var fh = '-'
+    var day1='01'
+    var day12='12'
+    var riqi1=this_date+fh+day1+fh+day1;
+    var riqi2=this_date+fh+day12+fh+day1;
+    if(_this.data.start_date==''||_this.data.start_date=='undefined'){
+      _this.setData({
+        start_date:riqi1
+      })
+    }
+    if(_this.data.stop_date==''||_this.data.stop_date=='undefined'){
+      _this.setData({
+        stop_date:riqi2
+      })
+    }
+    console.log(_this.data.start_date)
+    console.log(riqi1)
+    console.log(riqi2)
     var userInfo = _this.data.userInfo;
     var class_id = _this.data.class_id
+    // var sql="select * from (select a.name,left(a.code,1) as class,v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
+    var sql="select * from (select a.name,left(a.code,1) as class,v.company,(CASE 1 WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE 1 WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 1 and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'"+_this.data.start_date+"') and v.voucherDate <= convert(date,'"+_this.data.stop_date+"') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select * from (select a.name,left(a.code,1) as class,v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
-
+        query: sql
       },
       success: res => {
+        console.log(sql)
         var list = res.result.recordset
         _this.setData({
           ["list["+(class_id-1)+"].arr"] : list,
@@ -92,10 +115,28 @@ Page({
     var _this = this;
     var class_id = _this.data.class_id
     var userInfo = _this.data.userInfo
-
-    var sql = "select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;"
+    var this_date = getNowDate()
+    var fh = '-'
+    var day1='01'
+    var day12='12'
+    var riqi1=this_date+fh+day1+fh+day1;
+    var riqi2=this_date+fh+day12+fh+day1;
+    if(_this.data.start_date==''||_this.data.start_date=='undefined'){
+      _this.setData({
+        start_date:riqi1
+      })
+    }
+    if(_this.data.stop_date==''||_this.data.stop_date=='undefined'){
+      _this.setData({
+        stop_date:riqi2
+      })
+    }
+    console.log(_this.data.start_date)
+    console.log(riqi1)
+    console.log(riqi2)
+    var sql = "select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'"+_this.data.start_date+"') and v.voucherDate <= convert(date,'"+_this.data.stop_date+"') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;"
     if(class_id==3){
-      sql += "select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,(CASE 2 WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE 2 WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 2 and a.company = '"+userInfo.company+"' GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;"
+      sql += "select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,(CASE 2 WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE 2 WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 2 and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'"+_this.data.start_date+"') and v.voucherDate <= convert(date,'"+_this.data.stop_date+"') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;"
     }
 
     wx.cloud.callFunction({
@@ -104,6 +145,7 @@ Page({
         query: sql
       },
       success: res => {
+        console.log(sql)
         if(class_id<3){
           var list = res.result.recordset
           _this.setData({
@@ -415,15 +457,17 @@ Page({
     })
     var userInfo = _this.data.userInfo;
     var class_id = _this.data.class_id
+    var sql ="select * from (select a.name,left(a.code,1) as class,v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'" + start_date + "') and v.voucherDate <= convert(date,'"+ stop_date +"') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select * from (select a.name,left(a.code,1) as class,v.company,(CASE "+class_id+" WHEN 1 THEN sum(load-borrowed) ELSE sum(borrowed-load) END) as start_year,(CASE "+class_id+" WHEN 1 THEN sum([load]-borrowed+ISNULL(v.money, 0)) ELSE sum(borrowed-[load]+ISNULL(v.money, 0)) END) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = "+class_id+" and a.company = '"+userInfo.company+"' and v.voucherDate >= convert(date,'" + start_date + "') and v.voucherDate <= convert(date,'"+ stop_date +"') GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null"
+        query: sql
       },
       success: res => {
         var list = res.result.recordset
         var nianchu = 0
         var nianmo = 0
+        console.log(sql)
         console.log(list)
         if(list != undefined){
           if(list.length != 0){
@@ -492,3 +536,37 @@ function delCloudFile(fileId){
     
   })
 }
+
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  // var currentdate = year + sign1 + month + sign1 + day ;
+  var currentdate = year ;
+  return currentdate;
+ }

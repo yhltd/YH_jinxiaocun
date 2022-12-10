@@ -1352,23 +1352,43 @@ Page({
   //用于刷新页面时保持页数，或者跳转到某一页
   baochi: function () {
     var that = this
+    // var sql ="select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + that.data.title_year1 + that.data.title_moth1 +"and year+moth <=" + that.data.title_year2 + that.data.title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "' order by year,moth"
+    // wx.cloud.callFunction({
+    //   name: 'sqlServer_117',
+    //   data: {
+    //     query: sql
+    //   },
+    //   success: res => {
+    //     console.log(sql)
+    //     this.setData({
+    //       list: res.result.recordset,
+    //       isSearch: false
+    //     })
+    //   },
+    //   err: res => {
+    //     console.log("错误!", res)
+    //   }
+    // })
+
     wx.cloud.callFunction({
-      name: 'sqlServer_117',
+      name: "sqlServer_117",
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where year+moth >= " + that.data.title_year1 + that.data.title_moth1 +"and year+moth <=" + that.data.title_year2 + that.data.title_month2 + ") temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and AO ='" + that.data.companyName + "' order by year,moth"
+        query: "select top 100 * from gongzi_kaoqinjilu where name like'%%' and AO like '%%' order by year,moth"
       },
       success: res => {
-        this.setData({
+        console.log("姓名查询成功！", res.result)
+        that.setData({
           list: res.result.recordset,
-          isSearch: false
+          isSearch: true
         })
       },
       err: res => {
         console.log("错误!", res)
+      },
+      complete: () => {
+
       }
     })
-
-
   },
 
 
@@ -1431,6 +1451,7 @@ Page({
         },
         success: res => {
           console.log("插入成功")
+          
           that.baochi()
         },
         err: res => {

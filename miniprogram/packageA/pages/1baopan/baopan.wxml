@@ -14,10 +14,10 @@
     <view style="height:30rpx"></view>
     <view class='maskWindowInputView'>
       <picker mode="date" value="{{date}}" start="1900-01-01" end="2100-12-31" bindchange="bindDateChange1">
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入开始时间' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput' value="{{start_date}}"></input>
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入开始时间' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput' value="{{start_date}}" disabled="disabled"></input>
       </picker>
       <picker mode="date" value="{{date}}" start="1900-01-01" end="2100-12-31" bindchange="bindDateChange2">
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入结束时间' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput' value="{{stop_date}}"></input>
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入结束时间' hidden='{{!isMaskWindowInputShow}}' bindinput='maskWindowInput' value="{{stop_date}}" disabled="disabled"></input>
       </picker>
       
     </view>
@@ -111,7 +111,7 @@
 
   <view style="display: inline-flex; flex-direction: row;">
     <view style="width:5%"></view>
-    <button class="btn-primary" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="leftDrawer">更多功能
+    <button class="btn-primary" hover-class="btn-hover" bindtap="leftDrawer">更多功能
     </button>
     <view style="width:10%"></view>
     <button class="btn-primary" disabled="{{!isLoad}}" hover-class="btn-hover" bindtap="searchBtn" disabled="{{result.sel!=1}}">查找</button>

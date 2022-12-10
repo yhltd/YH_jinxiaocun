@@ -89,7 +89,10 @@
 <view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{chaxun_hidden}}">
   <form bindsubmit="select">
     <view class="option">
-      <input class="option_text" value="{{xiangmumingcheng}}" bindinput="input" placeholder="请输入往来单位" name="xiangmumingcheng"/>
+      <picker class="date-picker" bindchange="bindPickerChange1" value="{{xiangmumingcheng}}" range="{{kehu_list}}" >
+        <input class="option_text" value="{{xiangmumingcheng}}" bindinput="input" placeholder="请输入往来单位" name="xiangmumingcheng"/>
+      </picker>
+      <!-- <input class="option_text" value="{{xiangmumingcheng}}" bindinput="input" placeholder="请输入往来单位" name="xiangmumingcheng"/> -->
       <picker class="date-picker" mode="date"  bindchange="showChoiceMonth1">
         <input class="option_text" value="{{start_date}}" bindinput="input" placeholder="请输入开始日期" name="start_date" disabled='disabled'/>
       </picker>
