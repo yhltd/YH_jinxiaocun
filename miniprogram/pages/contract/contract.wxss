@@ -9,9 +9,20 @@
   flex-direction: column;
 }
 
-.jinhuo-text {
-  /* margin: 0 0 0 20% */
+.bk_ss {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 45%;
+  position: absolute;
+  left: 21.3%;
+  top: 2%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
 }
+
+/* .jinhuo-text {
+  margin: 0 0 0 20%
+} */
 
 .tianjia {
   background-color: #1c9ef1;
@@ -139,7 +150,7 @@ left: 85%; */
   font-weight: bold;
   position: absolute;
   top: 2%;
-  left: 5%;
+  left: 2%;
   color: #f8f8f8;
   z-index: 0
 }

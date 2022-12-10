@@ -1,2 +1,16 @@
-<!--packageP/page/PC_Line/PC_Line.wxml-->
-<text>packageP/page/PC_Line/PC_Line.wxml</text>
+<view class="lables">选择年份</view>
+<picker class="pick" mode="date" fields="year" value="{{xdrq}}" data-column_name="xdrq" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="xdrq" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq"  disabled="disabled"></input>
+   </picker>
+    <view class="bottom_view" style="height:10%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="clearlpmg" style="width: 164rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: 6rpx; top: 0rpx">清空</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx; display: block; box-sizing: border-box">查询</button>
+  <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="moreDo" style="width: 247rpx; height: 75rpx; display: block; box-sizing: border-box; position: relative; left: -11rpx; top: 0rpx">更多操作</button> -->
+</view>
+<!-- <view class="but">
+  <button class="put" bindtap="pie_refresh">饼图</button>
+  <button class="zput" bindtap="category_refresh">柱状图</button>
+</view> -->
+<!--  订单号下拉选-->
+<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ecage}}"></ec-canvas>
+<ec-canvas id="businessTrend" class='mychart-businessTrend' canvas-id="mychart-businessTrend" ec="{{ line_ec }}"></ec-canvas>

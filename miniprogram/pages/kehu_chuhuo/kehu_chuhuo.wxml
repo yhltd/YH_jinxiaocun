@@ -4,7 +4,9 @@
 <view class='header'>
   <view class="dq_y">查询</view>
   <view class='pm'></view> 
-  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索供货商/客户" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="customer" range="{{customer_list}}">
+    <input bindinput="onInput" data-column="customer" value="{{customer}}" name="customer" disabled="disabled" class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" placeholder="搜索供应商/客户" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  </picker>
   <button class="button_css" bindtap="use_book">使用说明</button>
 </view>
 <view class='main'>

@@ -18,7 +18,8 @@ padding: 8px;
 }
 .main{
   position: absolute;
-width: 100%;
+  top: 17%;
+  width: 100%;
 /* top: 6%; */
 
 
@@ -31,8 +32,10 @@ width: 100%;
 .shangpin-img{
     display: flex;
     border: 1px solid black;
-    width: 18%;
-    height: 118rpx;
+    max-height: 59px;
+    max-width:67.5px;
+    /* width: 18%;
+    height: 118rpx; */
     margin-top: 5%;
 margin-right: 6%;
 
@@ -77,12 +80,35 @@ left: 46%;
 
 }
 
-.bk_ss{
-  border: 1px solid  #1c60a3;border-radius: 29rpx; 
-  width: 45%;
+.bk_ss {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 60%;
   position: absolute;
-  left: 21.3%;
-  top: 2.5%;
+  left: 5%;
+  top: 0.5%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
+.bk_ss2 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 60%;
+  position: absolute;
+  left: 5%;
+  top: 6%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
+.bk_ss3 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 60%;
+  position: absolute;
+  left: 5%;
+  top: 11.5%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }
@@ -90,7 +116,7 @@ left: 46%;
 .header{
   background-color: rgb(30,144,255);
   padding: 7%;
-
+  height: 100px;
 }
 .ss-text{
   position: absolute;
@@ -115,18 +141,48 @@ color: white;
 }
 
 .button_css{
-  height: 6%;
-  width: 25%;
+  font-size: 15px;
+  height: 2.0rem;
+  min-height: 2.0rem;
+  width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  background-color: rgb(95, 101, 119);
-  float: right;
-  font-size: 15px;
-  right: 2%;
+  background-color:rgb(95, 101, 119);
   position: absolute;
-  top: 1%;
+  left: 68%;
+  top: 0%;
+}
+
+.button_css2{
+  font-size: 15px;
+  height: 2.0rem;
+  min-height: 2.0rem;
+  width: 30%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color:rgb(95, 101, 119);
+  position: absolute;
+  left: 68%;
+  top: 5.5%;
+}
+
+.button_css3{
+  font-size: 15px;
+  height: 2.0rem;
+  min-height: 2.0rem;
+  width: 30%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color:rgb(95, 101, 119);
+  position: absolute;
+  left: 68%;
+  top: 11%;
 }
 .shangpin-kucun{
   display: flex;

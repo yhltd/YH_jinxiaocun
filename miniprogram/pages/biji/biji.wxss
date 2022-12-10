@@ -3,6 +3,18 @@ page {
   background-color: #F5FFFA;
 
 } 
+
+.bk_ss {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 45%;
+  position: absolute;
+  left: 21.3%;
+  top: 0%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
 .tui-picker-content{
   position: absolute;
   top: 1%;

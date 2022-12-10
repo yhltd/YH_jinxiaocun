@@ -53,17 +53,54 @@ Page({
         console.log("失败", res)
       }
     });
-    // db.collection("Yh_JinXiaoCun_jinhuofang").where({
-    //   gongsi: gongsi,
-    //   finduser: finduser
-    // }).get({
-    //   success: res => {
-    //     console.log(res.data)
-    //     that.setData({
-    //       all: res.data
-    //     })
-    //   }
-    // })
+  },
+
+  xixi: function(e) {
+    console.log(e.detail.value)
+    if (e.detail.value == "") {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "'"
+        },
+        success(res) {
+          that.setData({
+            all: res.result
+          })
+          console.log(that.data.szzhi)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "' and beizhu like '%" + e.detail.value + "%'"
+        },
+        success(res) {
+          that.setData({
+            all: res.result
+          })
+          console.log(that.data.all)
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+    }
   },
 
   /**

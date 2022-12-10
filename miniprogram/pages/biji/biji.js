@@ -123,6 +123,55 @@ Page({
       }
     })
   },
+
+
+  xixi: function(e) {
+    console.log(e.detail.value)
+    if (e.detail.value == "") {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "'"
+        },
+        success(res) {
+          that.setData({
+            szzhi: res.result
+          })
+          console.log(that.data.szzhi)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
+        },
+        success(res) {
+          that.setData({
+            szzhi: res.result
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+    }
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */

@@ -22,7 +22,8 @@ Page({
     rkSum: 0,
     rkck: "",
     startTime: 0,
-    endTime: 0
+    endTime: 0,
+    product_name:'',
   },
 
   /**
@@ -37,6 +38,15 @@ Page({
    */
   onReady: function () {
 
+  },
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
   },
 
   upd: function (e) {
@@ -103,7 +113,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlConnection',
       data: {
-        sql: "select * from yh_jinxiaocun_qichushu where gs_name = '" + gs_name + "'"
+        sql: "select * from yh_jinxiaocun_qichushu where gs_name = '" + gs_name + "' and cpname like '%" + _this.data.product_name + "%'"
       },
       success: res => {
         var sum = 0;

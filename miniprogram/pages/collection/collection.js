@@ -224,6 +224,11 @@ Page({
             },
             success(res) {
               console.log("成功", res)
+              wx.showToast({
+                title: '删除成功',
+                icon:'none',
+              })
+              that.init();
               // that.setData({
               //     all: res.data,
 

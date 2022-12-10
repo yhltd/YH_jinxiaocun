@@ -23,7 +23,7 @@ page {
 .main {
   position: absolute;
   width: 100%;
-  top: 13%;
+  top: 17%;
 }
 
 .shangpin-text {
@@ -89,7 +89,7 @@ left: 46%;
   border-radius: 29rpx;
   width: 60%;
   position: absolute;
-  left: 21.3%;
+  left: 5%;
   top: 0.5%;
   color: #f8f8f8;
   background-color: #1c60a3;
@@ -100,8 +100,19 @@ left: 46%;
   border-radius: 29rpx;
   width: 60%;
   position: absolute;
-  left: 21.3%;
+  left: 5%;
   top: 6%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
+}
+
+.bk_ss3 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 60%;
+  position: absolute;
+  left: 5%;
+  top: 11.5%;
   color: #f8f8f8;
   background-color: #1c60a3;
 }
@@ -132,14 +143,46 @@ left: 46%;
 }
 
 .button_css{
-  height: 100%;
-  width: 25%;
+  font-size: 15px;
+  height: 2.0rem;
+  min-height: 2.0rem;
+  width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
   background-color:rgb(95, 101, 119);
-  float: right;
-  font-size: 14px;
-  right: -5%;
+  position: absolute;
+  left: 68%;
+  top: 1%;
+}
+
+.button_css2{
+  font-size: 15px;
+  height: 2.0rem;
+  min-height: 2.0rem;
+  width: 30%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color:rgb(95, 101, 119);
+  position: absolute;
+  left: 68%;
+  top: 6%;
+}
+
+.button_css3{
+  font-size: 15px;
+  height: 2.0rem;
+  min-height: 2.0rem;
+  width: 30%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(255, 255, 255);
+  background-color:rgb(95, 101, 119);
+  position: absolute;
+  left: 68%;
+  top: 11%;
 }

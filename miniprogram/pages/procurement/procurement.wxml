@@ -3,6 +3,8 @@
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
 <view class="dqy_bj"></view>
 <view class="dq_y">期初数</view>
+<input class='bk_ss2' type="text" bindinput="onInput" data-column="product_name" value="{{product_name}}" name="product_name"  style="color:#f8f8f8;text-align:center;" placeholder="请输入产品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+<button class="button_css2" bindtap="init">查询</button>
 <scroll-view class=' main' scroll-y='true'> 
 
   <view class='list' bindtap="upd" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd" bindlongtap = "del" wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{item._id}}">
@@ -17,12 +19,12 @@
   </view>
 </scroll-view>
 <view class='kongbai'></view>
-<view class='divline'></view>
+<!-- <view class='divline'></view> -->
 
 <view  class='xuan' bindtap='xuanshangpin'> 
 <image class='jiahao'  src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png'></image>
-<text decode="emsp">&emsp;&emsp;选商品</text>
+<text decode="emsp">&emsp;&emsp;选商品</text> 
   </view>
 
-<view class='divline2'></view>
+<!-- <view class='divline2'></view> -->
 

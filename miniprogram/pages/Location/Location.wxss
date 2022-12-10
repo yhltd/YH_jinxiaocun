@@ -60,7 +60,18 @@
   font-size: 92%;
 }
 
-.jinhuo-text {
+/* .jinhuo-text {
+} */
+
+.bk_ss {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 45%;
+  position: absolute;
+  left: 21.3%;
+  top: 2%;
+  color: #f8f8f8;
+  background-color: #1c60a3;
 }
 
 .yi_kuai {

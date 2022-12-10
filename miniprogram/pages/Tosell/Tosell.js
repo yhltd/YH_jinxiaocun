@@ -6,7 +6,74 @@ Page({
    * 页面的初始数据
    */
   data: {
-    szzhi: []
+    szzhi: [],
+    start_date:'',
+    stop_date:'',
+    order_number:'',
+    title: [{
+      text: "订单号",
+      width: "200rpx",
+      columnName: "orderid",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "商品代码",
+      width: "200rpx",
+      columnName: "sp_dm",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "商品名称",
+      width: "200rpx",
+      columnName: "name",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "商品类别",
+      width: "200rpx",
+      columnName: "lei_bie",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "价格",
+      width: "230rpx",
+      columnName: "cpsj",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "数量",
+      width: "300rpx",
+      columnName: "cpsl",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "明细类型",
+      width: "150rpx",
+      columnName: "mxtype",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "时间",
+      width: "400rpx",
+      columnName: "time2",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "收货方",
+      width: "200rpx",
+      columnName: "shou_h",
+      type: "text",
+      isupd: true
+    },
+  ],
   },
 
   /**
@@ -19,210 +86,69 @@ Page({
     var szzhi = null;
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
-    // db.collection("Yh_JinXiaoCun_mingxi").where({
-    //   finduser: finduser,
-    //   gongsi: gongsi
-    // }).get({
-    //   success:res=>{
-    //     that.setData({
-    //       szzhi:res.data
-    //     })
-    //   }
-    // })
+    that.sel1()
+  },
+
+  sel1:function(){
+    var _this = this
+    var gongsi = app.globalData.gongsi
+    var start_date = _this.data.start_date
+    var stop_date = _this.data.stop_date
+    var order_number = _this.data.order_number
+    if (start_date != ''){
+      start_date = start_date + " 00:00:00"
+    }else{
+      start_date = "1900-01-01 00:00:00"
+    }
+    if (stop_date != ''){
+      stop_date = stop_date + " 23:59:59"
+    }else{
+      stop_date = "2100-12-31 23:59:59"
+    }
+
+    console.log("SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" )
 
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
+        sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" 
       },
       success(res) {
         for(var i=0;i<res.result.length;i++){
-          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          if(res.result[i].mark1 != null){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
         }
         console.log(res.result)
-        that.setData({
-          szzhi: res.result
+        _this.setData({
+          szzhi: res.result,
+          start_date:'',
+          stop_date:'',
+          order_number:'',
         })
-        console.log(that.data.szzhi)
+        console.log(_this.data.szzhi)
       },
       fail(res) {
         console.log("失败", res)
 
       }
     });
-
-    // const [rows, fields] = await connection.execute('SELECT * from yh_jinxiaocun_mingxi')
-    // console.log("jieguo:")
-    // console.log(rows)
-    // that.setData({
-    //   szzhi: rows
-    // })
-    // return rows;
   },
 
-
-  xixi: function(e) {
-    if (e.detail.value == "") {
-      var that = this
-      const db = wx.cloud.database()
-      var app = getApp();
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
-        },
-        success(res) {
-          for(var i=0;i<res.result.length;i++){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-          }
-          that.setData({
-            szzhi: res.result
-          })
-          console.log(that.data.szzhi)
-        },
-        fail(res) {
-          console.log("失败", res)
-
-        }
-      });
-      // db.collection("Yh_JinXiaoCun_mingxi").where({
-      //   finduser: finduser,
-      //   gongsi: gongsi,
-
-      // }).get({
-      //   success: res => {
-      //     that.setData({
-      //       szzhi: res.data
-      //     })
-      //   }
-      // })
-
-    } else {
-      var that = this
-      const db = wx.cloud.database()
-      var app = getApp();
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'and yh_jinxiaocun_mingxi.cpname like '%" + e.detail.value + "%'"
-        },
-        success(res) {
-          for(var i=0;i<res.result.length;i++){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-          }
-          that.setData({
-            szzhi: res.result
-          })
-          console.log(that.data.szzhi)
-        },
-        fail(res) {
-          console.log("失败", res)
-
-        }
-      });
-      // db.collection("Yh_JinXiaoCun_mingxi").where({      
-      //     finduser: finduser,
-      //     gongsi: gongsi,
-      //     cpname: db.RegExp({
-      //       regexp: e.detail.value,    
-      //     options: 'i',   
-      //     })    
-      // }).get({
-      //   success: res => {
-      //     that.setData({
-      //       szzhi: res.data
-      //     })
-      //   }
-      // })
-
-    }
-
+  choiceDate: function (e) {
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value 
+    })
+    console.log(e.detail.value)
   },
 
-  xixi2: function(e) {
-    if (e.detail.value == "") {
-      var that = this
-      const db = wx.cloud.database()
-      var app = getApp();
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'"
-        },
-        success(res) {
-          for(var i=0;i<res.result.length;i++){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-          }
-          that.setData({
-            szzhi: res.result
-          })
-          console.log(that.data.szzhi)
-        },
-        fail(res) {
-          console.log("失败", res)
-
-        }
-      });
-      // db.collection("Yh_JinXiaoCun_mingxi").where({
-      //   finduser: finduser,
-      //   gongsi: gongsi,
-
-      // }).get({
-      //   success: res => {
-      //     that.setData({
-      //       szzhi: res.data
-      //     })
-      //   }
-      // })
-
-    } else {
-      var that = this
-      const db = wx.cloud.database()
-      var app = getApp();
-      var finduser = app.globalData.finduser
-      var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'and yh_jinxiaocun_mingxi.shou_h like '%" + e.detail.value + "%'"
-        },
-        success(res) {
-          for(var i=0;i<res.result.length;i++){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-          }
-          that.setData({
-            szzhi: res.result
-          })
-          console.log(that.data.szzhi)
-        },
-        fail(res) {
-          console.log("失败", res)
-
-        }
-      });
-      // db.collection("Yh_JinXiaoCun_mingxi").where({      
-      //     finduser: finduser,
-      //     gongsi: gongsi,
-      //     cpname: db.RegExp({
-      //       regexp: e.detail.value,    
-      //     options: 'i',   
-      //     })    
-      // }).get({
-      //   success: res => {
-      //     that.setData({
-      //       szzhi: res.data
-      //     })
-      //   }
-      // })
-
-    }
-
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
   },
 
   /**
@@ -318,7 +244,7 @@ Page({
     var _this = this
     wx.showModal({
       title: '使用说明',
-      content: '1.头部可根据商品名称、供应商或客户进行出入库明细查询。\n2.长按数据可进行删除。',
+      content: '1.头部可根据日期区间和订单号进行出入库明细查询。\n2.长按数据可进行删除。\n3.点击导出按钮可将当前显示的数据导出为excel文档。',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
       confirmColor: '#84B9F2', //确定文字的颜色
@@ -327,6 +253,7 @@ Page({
       complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
     })
   },
+
   upd: function (e) {
     var _this = this;
     var id = e.currentTarget.dataset.uid
@@ -364,6 +291,63 @@ Page({
     //   }
     // })
 
-  }
+  },
+
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.szzhi;
+    var title = _this.data.title
+    var cloudList = {
+      name : '明细',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
   
 })

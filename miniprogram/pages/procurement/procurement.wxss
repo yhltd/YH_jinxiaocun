@@ -39,9 +39,9 @@ padding: 8px;
 .main{
   position: absolute;
   width: 100%;
-  top: 12%;
+  top: 17%;
   z-index: 5;
-  height: 78%;
+  height: 73%;
 }
 .shangpin-text{
   width: 28%;
@@ -71,9 +71,36 @@ margin-right: 6%;
   color: rgb(80,80,80);
   position: absolute;
   width: 100%;
-  top: 5%;
+  top: 10%;
 
   }
+
+  .bk_ss2 {
+    border: 1px solid #1c60a3;
+    border-radius: 29rpx;
+    width: 60%;
+    position: absolute;
+    left: 5%;
+    top: 5.5%;
+    color: #f8f8f8;
+    background-color: #1c60a3;
+  }
+
+  .button_css2{
+    font-size: 15px;
+    height: 2.0rem;
+    min-height: 2.0rem;
+    width: 30%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    background-color:rgb(95, 101, 119);
+    position: absolute;
+    left: 68%;
+    top: 5%;
+  }
+
 .jiahao{
     width: 20px;
       height:20px
@@ -94,7 +121,7 @@ margin-right: 6%;
   width:100%;
   height: 2rpx;
   position: absolute;
-   top:12%;
+   top:17%;
   z-index: 2;
 
 }
@@ -114,6 +141,6 @@ color: white;
   .dqy_bj{
 
     background-color: #1e90ff;
-    height: 55rpx;
+    height: 200rpx;
 
   }

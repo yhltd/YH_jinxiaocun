@@ -13,7 +13,8 @@ exports.main = async(event, context) => {
       database: 'YH_jinxiaocun_PC',
       user: 'root',
       password: 'Lyh07910',
-      port: '3306'
+      port: '3306',
+      requestTimeout: 999999,
     })
     const [rows, fields] = await connection.execute(event.sql)
     console.log("shabi")

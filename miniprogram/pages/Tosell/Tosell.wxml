@@ -1,9 +1,15 @@
-<view class='header' style="width: 750rpx; height: 143rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
-  <view class="dq_y" style="position: absolute; left: 38rpx; top: 43rpx">明细</view>
+<view class='header' style="width: 750rpx; height: 130px; display: block; box-sizing: border-box;">
   <view class='pm'></view>
-  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;width:50%" bindblur='' value="" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
-  <input class='bk_ss2' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;width:50%" bindblur='' value="" bindconfirm="xixi2" placeholder="搜索供货商或客户名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+    <input class='bk_ss' type="text" bindinput="onInput" data-column="start_date" value="{{start_date}}" name="start_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入开始日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+    <input class='bk_ss2' type="text" bindinput="onInput" data-column="stop_date" value="{{stop_date}}" name="stop_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入结束日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <input class='bk_ss3' type="text" bindinput="onInput" data-column="order_number" value="{{order_number}}" name="order_number"  style="color:#f8f8f8;text-align:center;" placeholder="请输入订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
   <button class="button_css" bindtap="use_book">使用说明</button>
+  <button class="button_css2" bindtap="sel1">查询</button>
+  <button class="button_css3" bindtap="getExcel">导出</button>
 </view>
 <view class=' main'>
   <view class='list_ps' wx:for="{{szzhi}}" wx:key="item" wx:for-index='i' data-uid="{{item._id}}" data-id="{{i}}" bindlongpress="shanchu" bindtap='upd'>

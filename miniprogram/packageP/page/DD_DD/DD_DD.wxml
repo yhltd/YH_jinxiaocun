@@ -38,8 +38,8 @@
      disabled="{{isdischa!=1}}">查询</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="getExcel"
     >导出</button>
-    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="get_line"
-    >图表</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="get_line"
+    >图表</button> 
     <button class="bt_bottom"  bindtap="goto_yanshi">演示</button>
 </view>
   

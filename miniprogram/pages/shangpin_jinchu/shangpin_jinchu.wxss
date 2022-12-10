@@ -100,10 +100,10 @@ left: 46%;
   left: 7%;
 }
 
-.list_ps2{
+/* .list_ps2{
 
-  /* margin-bottom: -2%; */
-}
+  margin-bottom: -2%;
+} */
 
 .dq_y{
   font-weight: bold;

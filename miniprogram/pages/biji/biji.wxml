@@ -2,6 +2,7 @@
 
 <view class="dqy_bj"></view>
 <view class="dq_y">笔记</view>
+<input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
 <scroll-view class=' main' scroll-y='true'> 
 
   <view class='list' bindtap="upd" bindtouchstart="bindTouchStart" bindtouchend="bindTouchEnd" bindlongtap = "del" wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{item.id}}">

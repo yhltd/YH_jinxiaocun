@@ -2,10 +2,17 @@
 <template is="xiugai" data="{{xiugai,hidden1,szzh,cpsljg}}" />
 
 <view class='header'>
-  <view class="dq_y">进销存</view>
   <view class='pm'></view> 
-  <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" value="" bindinput="xixi" placeholder="搜索商品代码" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+    <input class='bk_ss' type="text" bindinput="onInput" data-column="start_date" value="{{start_date}}" name="start_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入开始日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+    <input class='bk_ss2' type="text" bindinput="onInput" data-column="stop_date" value="{{stop_date}}" name="stop_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入结束日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <input class='bk_ss3' type="text" bindinput="onInput" data-column="product_number" value="{{product_number}}" name="product_number"  style="color:#f8f8f8;text-align:center;" placeholder="请输入商品代码" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
   <button class="button_css" bindtap="use_book">使用说明</button>
+  <button class="button_css2" bindtap="sel1">查询</button>
+  <button class="button_css3" bindtap="getExcel">导出</button>
 </view>
 <view class='main'>
   <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->

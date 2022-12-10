@@ -131,8 +131,8 @@ Page({
 
   get_line: function(){
     wx.navigateTo({
-      url: "../PC_Line/PC_Line?this_list=" + JSON.stringify(_this.data.list)
-      }) 
+      url: "../PC_Line/PC_Line"
+    })
   },
   
   //新增代码

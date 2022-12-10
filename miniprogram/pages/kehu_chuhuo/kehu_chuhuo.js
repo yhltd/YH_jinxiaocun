@@ -6,14 +6,45 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hidden1: true
+    hidden1: true,
+    customer:'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var _this = this
+    var that = this
+    var sql = "select shou_h from yh_jinxiaocun_mingxi where gs_name = '" + app.globalData.gongsi + "' group by shou_h"
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: sql
+      },
+      success(res) {
+        var customer_list = []
+        for(var i=0; i<res.result.length; i++){
+          customer_list.push(res.result[i].shou_h)
+        } 
+        console.log(customer_list)
+        that.setData({
+          customer_list: customer_list
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+  },
 
+  bindPickerChange: function(e){
+    var _this = this
+    console.log(_this.data.customer_list[e.detail.value])
+    _this.setData({
+      customer: _this.data.customer_list[e.detail.value]
+    })
+    _this.sel1()
   },
 
   /**
@@ -91,22 +122,17 @@ Page({
     // })
   },
 
-  xixi: function(e) {
+  sel1: function() {
     var that = this
+    var _this = this
     const db = wx.cloud.database()
-    var app = getApp();
-    console.log("xixi:", e)
     wx.showToast({
       title: '正在搜索',
       icon: 'loading',
       duration: 1000
     })
-    var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
-    var kehu = e.detail.value
-    console.log(finduser)
-    console.log(gongsi)
-    console.log(e)
+    var kehu = _this.data.customer
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {

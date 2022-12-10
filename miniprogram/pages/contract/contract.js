@@ -33,7 +33,6 @@ Page({
       name: "sqlConnection",
       data: {
         sql: "select * from yh_jinxiaocun_chuhuofang where gongsi = '" + gongsi + "'"
-        // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
       },
       success(res) {
         console.log("成功", res)
@@ -46,17 +45,54 @@ Page({
 
       }
     });
-    // db.collection("Yh_JinXiaoCun_chuhuofang").where({
-    //   finduser: finduser,
-    //   gongsi: gongsi
-    // }).get({
-    //   success: res => {
-    //     console.log(res.data)
-    //     that.setData({
-    //       all: res.data
-    //     })
-    //   }
-    // })
+  },
+
+  xixi: function(e) {
+    console.log(e.detail.value)
+    if (e.detail.value == "") {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_chuhuofang where gongsi = '" + gongsi + "'"
+        },
+        success(res) {
+          that.setData({
+            all: res.result
+          })
+          console.log(that.data.szzhi)
+        },
+        fail(res) {
+          console.log("失败", res)
+
+        }
+      });
+    } else {
+      var that = this
+      const db = wx.cloud.database()
+      var app = getApp();
+      var finduser = app.globalData.finduser
+      var gongsi = app.globalData.gongsi
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select * from yh_jinxiaocun_chuhuofang where gongsi = '" + gongsi + "' and beizhu like '%" + e.detail.value + "%'"
+        },
+        success(res) {
+          that.setData({
+            all: res.result
+          })
+          console.log(that.data.all)
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+    }
   },
 
   /**
@@ -77,7 +113,6 @@ Page({
       name: "sqlConnection",
       data: {
         sql: "select * from yh_jinxiaocun_chuhuofang where gongsi = '" + gongsi + "'"
-        // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
       },
       success(res) {
         console.log("成功", res)
@@ -131,8 +166,6 @@ Page({
     var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id
-    // console.log(id)
-    // console.log(that.data.all)
     wx.showModal({
       title: '提示',
       content: '是否删除？',
@@ -208,7 +241,6 @@ Page({
         name: "sqlConnection",
         data: {
           sql: "insert yh_jinxiaocun_chuhuofang (finduser,gongsi,beizhu,lianxifangshi,lianxidizhi) VALUES('" + finduser + "','" + gongsi + "','" + beizhu + "','" + lianxifangshi + "','" + lianxidizhi + "')"
-          // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
         },
         success(res) {
           console.log("成功", res)
@@ -221,21 +253,6 @@ Page({
 
         }
       });
-      // db.collection("Yh_JinXiaoCun_chuhuofang").add({
-      //   data: {
-      //     finduser:finduser,
-      //     gongsi: gongsi,
-      //     beizhu: beizhu,
-      //     lianxifangshi: lianxifangshi,
-      //     lianxidizhi: lianxidizhi,
-      //     // backhidden: true
-      //   },
-      //   success(res) {
-      //     wx.showToast({
-      //       title: '添加成功',
-      //     })
-      //   }
-      // })
 
     }
     that.setData({
