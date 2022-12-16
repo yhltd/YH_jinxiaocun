@@ -25,6 +25,7 @@ Page({
       {text:'邮箱'},
       {text:'电话号'},
       {text:'员工编号'},
+      
     ],
     list:[],
     zhuangtai_list:['正常','锁定'],

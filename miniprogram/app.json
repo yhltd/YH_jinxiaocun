@@ -126,7 +126,8 @@
         "pages/person_chart/person_chart",
         "pages/work_bench/work_bench",
         "pages/companyfix2/companyfix2",
-        "pages/personfix2/personfix2"
+        "pages/personfix2/personfix2",
+        "pages/gongzuotaigongs/gongzuotaigongs"
       ]
     },
     {

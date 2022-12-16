@@ -187,7 +187,7 @@ Page({
 
   use_book:function(){
     var _this = this
-    _this.hidView(_this,"moreDo");
+    // _this.hidView(_this,"moreDo");
     wx.showModal({
       title: '使用说明',
       content: '1.此页面用于手动解除工作台列的占用情况。\n2.点击有人占用的列可弹出确认解除占用窗口，点击确定后解除对应列的占用。\n3.点击下方一键解除按钮，可一键解除工作台所有列的占用。',

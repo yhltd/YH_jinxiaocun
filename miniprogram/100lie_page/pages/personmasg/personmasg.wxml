@@ -2,7 +2,7 @@
 <view class="table">
 <view class="th" wx:for="{{titil}}" wx:key="text" wx:for-item="item" >
   <view class="tr">{{item.text}}</view>
-</view>
+</view> 
 <view class="th" wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item" >
   <view class="td" bindlongpress="delete" data-index="{{index}}" >{{item.C}}</view>
   <view class="td" bindtap="update" data-index="{{index}}" >{{item.D}}</view>

@@ -26,7 +26,7 @@ page{
 .td,.tr{
   display: flex;
   flex-direction: column;
-  width: 200rpx;
+  width: 300rpx;
   height: 70rpx;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@ page{
 } 
 .tr{
   display: flex;
-  width: 200rpx;
+  width: 300rpx;
   height: 80rpx;
   border-right: 1rpx solid #C4C5C9;
   border-bottom: 1rpx solid #C4C5C9;

@@ -11,6 +11,9 @@ Page({
     showList: [{
       text: "工作台使用状态",
       url: '../userpeople/userpeople'
+    },{
+      text: "工作台公式设置",
+      url: '../gongzuotaigongs/gongzuotaigongs'
     },
   ]
   },
