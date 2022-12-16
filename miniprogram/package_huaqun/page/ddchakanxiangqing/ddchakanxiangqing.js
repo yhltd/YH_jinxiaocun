@@ -105,111 +105,101 @@ Page({
     list2: [],
     ddxh_list_dj:[],
     title2: [{
-      text: "房间",
-      width: "250rpx",
+      text: "项目类别",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "fj",
       type: "text",
       isupd: true
     },
     {
-      text: "柜号",
-      width: "250rpx",
+      text: "项目名称",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "gh",
       type: "text",
       isupd: true
     },
     {
+      text: "铝材颜色",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
+      columnName: "lcys",
+      type: "text",
+      isupd: true
+    },
+    {
       text: "灯带长度mm",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "ddcd",
       type: "text",
       isupd: true
     },
     {
       text: "数量(支）",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "sl",
       type: "text",
       isupd: true
-    },
-    {
-      text: "出线端口",
-      width: "250rpx",
+    },{
+      text: "出线端口左出线",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "cxdk",
       type: "text",
       isupd: true
-    },
-    {
-      text: "铝型材",
-      width: "250rpx",
-      columnName: "lcb",
+    },{
+      text: "出线端口右出线",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
+      columnName: "cxdk_right",
       type: "text",
       isupd: true
-    },
-    {
-      text: "铝材颜色",
-      width: "250rpx",
-      columnName: "lcys",
-      type: "text",
-      isupd: true
-    },
-    {
+    },{
       text: "光源",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "gy",
       type: "text",
       isupd: true
-    },
-    {
-      text: "电源",
-      width: "250rpx",
-      columnName: "dy",
-      type: "text",
-      isupd: true
-    },
-    {
-      text: "开关",
-      width: "250rpx",
-      columnName: "kg",
-      type: "text",
-      isupd: true
-    },
-    {
-      text: "配件",
-      width: "250rpx",
-      columnName: "pj",
-      type: "text",
-      isupd: true
-    },
-    {
+    },{
       text: "功率W",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "gl",
       type: "text",
       isupd: true
-    },
-    {
+    },{
       text: "备注",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "bz",
       type: "text",
       isupd: true
-    },
-    {
+    },{
       text: "单价",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "dj",
       type: "text",
       isupd: true
-    },
-    {
+    },{
       text: "金额",
-      width: "250rpx",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
       columnName: "je",
       type: "text",
       isupd: true
+    },{
+      text: "开料尺寸",
+      width: "275rpx",
+      width2: "calc(275vmin / 7.5)",
+      columnName: "chicun",
+      type: "text",
+      isupd: true
     },
-    
   ],
   fj: "",
   gh: "",
@@ -273,7 +263,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,isnull(fj,'')as fj,isnull(gh,'')as gh,isnull(ddcd,'')as ddcd,isnull(sl,'')as sl,isnull(cxdk,'')as cxdk,isnull(lcb,'')as lcb,isnull(lcys,'')as lcys,isnull(gy,'')as gy,isnull(dy,'')as dy,isnull(kg,'')as kg,isnull(pj,'') as pj,isnull(gl,'')as gl,isnull(bz,'')as bz,isnull(dj,'')as dj,isnull(je,'')as je from lightbelt where djbh = '"+ djbh +"'"
+        query: "select id,isnull(fj,'')as fj,isnull(gh,'')as gh,isnull(ddcd,'')as ddcd,isnull(sl,'')as sl,isnull(cxdk,'')as cxdk,isnull(cxdk_right,'')as cxdk_right,isnull(lcb,'')as lcb,isnull(lcys,'')as lcys,isnull(gy,'')as gy,isnull(dy,'')as dy,isnull(kg,'')as kg,isnull(pj,'') as pj,isnull(gl,'')as gl,isnull(bz,'')as bz,isnull(dj,'')as dj,isnull(je,'')as je,isnull(chicun,'')as chicun from lightbelt where djbh = '"+ djbh +"'"
       },
       success: res => {
         var list2 = res.result.recordset
@@ -399,7 +389,6 @@ Page({
   tableShow: function (e) {
     var _this = this
     let djbh = _this.data.djbh;
-    
     _this.setData({
       djbh:djbh
     })
@@ -772,7 +761,113 @@ Page({
     _this.qxShow()
   },
 
-  
+  out_put:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list2;
+    var list_head = _this.data.list
+    var end_list = []
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    var title = _this.data.title2
+    var cloudList = {
+      name : '灯带订单详情',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0]),
+        columnName:title[i].columnName
+      })
+    }
+
+    var list_item = {
+      fj:'客户名称：' + list_head[0].khmc,
+      gh:'下单日期：' + list_head[0].xdrq,
+      lcys:'单据编号：' + list_head[0].djbh,
+      ddcd:'送货地址：' + list_head[0].shouhuo,
+      sl:'联系电话：' + list_head[0].lxdh,
+      cxdk:'送货方式：' + list_head[0].shfs,
+      cxdk_right:'安装地址：' + list_head[0].azdz,
+      gy:'订单号：' + list_head[0].ddh,
+      gl:'',
+      bz:'',
+      dj:'',
+      je:'',
+      chicun:'',
+    }
+
+    var list_kong = {
+      fj:'',
+      gh:'',
+      lcys:'',
+      ddcd:'',
+      sl:'',
+      cxdk:'',
+      cxdk_right:'',
+      gy:'',
+      gl:'',
+      bz:'',
+      dj:'',
+      je:'',
+      chicun:'',
+    }
+
+    for(var i=0; i<list.length; i++){
+      end_list.push(list[i])
+    }
+
+    end_list.push(list_kong)
+    end_list.push(list_item)
+
+
+    cloudList.items = end_list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
 
   
 

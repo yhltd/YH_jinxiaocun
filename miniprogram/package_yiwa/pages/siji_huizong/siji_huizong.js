@@ -114,74 +114,16 @@ Page({
     })
   },
 
-  clickView:function(e){
-    var _this = this
-    var column = e.currentTarget.dataset.column
-    if(column == 'username' || column == 'password' || column == 'name'){
-      _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        username: _this.data.list[e.currentTarget.dataset.index].username, 
-        password: _this.data.list[e.currentTarget.dataset.index].password,
-        name: _this.data.list[e.currentTarget.dataset.index].name,
-        power: _this.data.list[e.currentTarget.dataset.index].power,
-        salesman: _this.data.list[e.currentTarget.dataset.index].salesman,
-        driver: _this.data.list[e.currentTarget.dataset.index].driver,
-        qr_code: _this.data.list[e.currentTarget.dataset.index].qr_code,
-        xgShow:true,
-      })
-    }else if(column == 'salesman' && _this.data.list[e.currentTarget.dataset.index].power == '客户'){
-      var list = _this.data.salesman
-      _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        column:column,
-        list_xiala:list,
-        xlShow:true,
-      })
-    }else if(column == 'driver' && _this.data.list[e.currentTarget.dataset.index].power == '客户'){
-      var list = _this.data.driver
-      _this.setData({
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        column:column,
-        list_xiala:list,
-        xlShow:true,
-      })
-    }
-  },
 
   select1: function (e){
     var _this = this
     if (e.type == "select") {
-      var new_val = e.detail.id
-      var click_column = _this.data.column
-      var sql = "update userInfo set "+ click_column + "='" + new_val + "' where id=" + _this.data.id
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: sql
-        },
-        success: res => {
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '修改成功！',
-            icon: 'none',
-            duration: 3000
-          })
-          _this.setData({
-            xlShow: false,
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
+      var siji_id = e.detail.id
+      var siji_name = e.detail.name
+      _this.setData({
+        siji_id:siji_id,
+        siji_name:siji_name,
+        xlShow: false,
       })
     } else if (e.type == "close") {
       _this.setData({
@@ -500,19 +442,111 @@ Page({
     console.log(e.detail.value)
   },
 
+
+  refresh_start:function(){
+    var _this = this
+    var sql = ""
+    if(_this.data.siji_id != '' && _this.data.siji_name != ''){
+      sql = "select * from userInfo where power ='客户' and driver ='" + _this.data.siji_id + "'"
+    }else{
+      sql = "select * from userInfo where power ='客户'"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        var kehu_list = res.result.recordset
+        console.log(list)
+        _this.setData({ 
+          kehu_list: list,
+        })
+        var select_customer = []
+        for(var i=0; i<kehu_list.length; i++){
+          if(kehu_list[i].id != '' && kehu_list[i].id != null && kehu_list[i].id != undefined){
+            select_customer.push(kehu_list[i].id.toString())
+          }
+        }
+        console.log(select_customer)
+        _this.setData({
+          select_customer:select_customer,
+          xzkhShow:true,
+          xgShow:false,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+
   refresh:function(){
     var _this = this
     var select_customer = []
-    var kehu_list = _this.data.kehu_list
-    for(var i=0; i<kehu_list.length; i++){
-      if(kehu_list[i].id != '' && kehu_list[i].id != null && kehu_list[i].id != undefined){
-        select_customer.push(kehu_list[i].id.toString())
+    if(_this.data.userInfo.power == '管理员'){
+      _this.setData({
+        xgShow:true,
+        siji_id:'',
+        siji_name:'',
+      })
+    }else{
+      var kehu_list = _this.data.kehu_list
+      for(var i=0; i<kehu_list.length; i++){
+        if(kehu_list[i].id != '' && kehu_list[i].id != null && kehu_list[i].id != undefined){
+          select_customer.push(kehu_list[i].id.toString())
+        }
       }
+      console.log(select_customer)
+      _this.setData({
+        select_customer:select_customer,
+        xzkhShow:true,
+      })
     }
-    console.log(select_customer)
-    _this.setData({
-      select_customer:select_customer,
-      xzkhShow:true,
+  },
+
+  siji_xiala_show:function(){
+    var _this = this
+    var siji_name = _this.data.siji_name
+    var sql_siji = "select * from userInfo where power = '司机' and name like '%" + siji_name + "%'"
+    console.log(sql_siji)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql_siji
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          siji_list: list,
+          xlShow:true,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -527,7 +561,7 @@ Page({
       return;
     }
 
-    var sql_head = 'select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id'
+    var sql_head = 'select dd.id,Customer_id,name,Documentnumber,riqi,dd.NameofProduct,dd.unit,dd.Theunitprice,number,zhongliang_num,zhongliang,kuang from (select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id) as dd left join DetailedConfiguration as dc on dd.NameofProduct = dc.NameofProduct and dd.unit = dc.unit'
     var sql_foot = ""
     for(var i=0; i<select_customer.length; i++){
       if(select_customer[i] != '' && select_customer[i] != null && select_customer[i] != undefined){
@@ -565,6 +599,51 @@ Page({
             })
             return;
           }
+
+          var shuliang = []
+          console.log(order_list)
+          for(var i=0; i<order_list.length; i++){
+            if(order_list[i].zhongliang == '是'){
+              var panduan = true
+              for(var j=0; j<shuliang.length; j++){
+                if(shuliang[j].NameofProduct == order_list[i].NameofProduct){
+                  panduan = false
+                }
+              }
+              if(panduan){
+                shuliang.push({
+                  NameofProduct:order_list[i].NameofProduct
+                })
+              }
+            }
+          }
+          for(var i=0; i<order_list.length; i++){
+            if(order_list[i].zhongliang == '是'){
+              for(var j=0; j<shuliang.length; j++){
+                if(order_list[i].NameofProduct == shuliang[j].NameofProduct){
+                  var num = shuliang[j][order_list[i].name]
+                  if(num == undefined || num == '' || num == null){
+                    num = 0
+                  }
+                  var zhongliang = 0
+                  var zhongliang_num = order_list[i].zhongliang_num
+                  if(zhongliang_num != ''){
+                    var zhongliang_list = zhongliang_num.split(',')
+                    for(var k=0; k<zhongliang_list.length; k++){
+                      if(zhongliang_list[k] != ''){
+                        zhongliang = zhongliang + zhongliang_list[k] * 1
+                      }
+                    }
+                  }
+                  if(order_list[i].number != ''){
+                    num = num + zhongliang * 1
+                  }
+                  shuliang[j][order_list[i].name] = num
+                }
+              }
+            }
+          }
+
           var list = []
           var list_item = {
             NameofProduct:'',
@@ -587,7 +666,7 @@ Page({
                 text: customer_list[i].name,
                 width: "300rpx",
                 columnName: customer_list[i].name,
-                type: "text",
+                type: "number",
                 isupd: true
               })
             }
@@ -659,11 +738,34 @@ Page({
           list.push(sum_row)
           console.log(list)
 
+          for(var i=0; i<list.length; i++){
+            for(var j=0; j<shuliang.length; j++){
+              if(list[i].NameofProduct == shuliang[j].NameofProduct){
+                for(var k=0; k<tempArr.length; k++){
+                  if(tempArr[k] != 'NameofProduct' && tempArr[k] != 'sum'){
+                    var num = shuliang[j][tempArr[k]]
+                    if(num == '' || num == undefined || num == null){
+                      num = 0
+                    }
+                    var this_str = list[i][tempArr[k]]
+                    if(this_str == ''){
+                      continue;
+                    }else{
+                      var this_arr = this_str
+                      this_str = this_str + "(" + num + ")"
+                      list[i][tempArr[k]] = this_str
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           title.push({
             text: "合计",
             width: "250rpx",
             columnName: "sum",
-            type: "text",
+            type: "number",
             isupd: true
           })
           var riqi = _this.data.riqi

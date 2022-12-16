@@ -162,9 +162,28 @@ Page({
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
+    var value = e.detail.value
+    if(column == 'kuang_num'){
+      var replaceArray = [];
+      for (let i = 0; i < value.length; ++i) {//正则判断是否合法
+        var textValue = (/^[0-9_.+-]$/.test(value.charAt(i)));
+        if (!textValue) {
+          replaceArray.push(value.charAt(i));
+        }
+      }
+      if (replaceArray.length != 0) {
+        wx.showToast({
+          title: '只能输入数字，小数点和加减号',
+          icon: 'none'
+        })
+        for (let j = 0; j < replaceArray.length; ++j) {//循环删除不合法内容
+          value = value.replace(replaceArray[j], '');
+        }
+      }
+    }
     _this.setData({
       currentDate: e.detail,
-      [column]: e.detail.value
+      [column]: value
     })
   },
 

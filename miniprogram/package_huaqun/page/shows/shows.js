@@ -12,6 +12,10 @@ Page({
       url: "../canzhao/canzhao"
     },
     {
+      text: "灯带开料参照表",
+      url: "../dengdai_kailiao/dengdai_kailiao"
+    },
+    {
       text: "灯带价格配置表",
       url: "../qtpeizhi/qtpeizhi"
     },

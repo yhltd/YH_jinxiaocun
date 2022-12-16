@@ -54,7 +54,7 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <!-- <button class="bt_bottom" bindtap="selCD" >添加一行</button> -->
+  <button class="bt_bottom" bindtap="out_put" >导出表格</button>
 	<!-- <button class="bt_bottom"  bindtap="add1">保存</button> -->
 </view>
 

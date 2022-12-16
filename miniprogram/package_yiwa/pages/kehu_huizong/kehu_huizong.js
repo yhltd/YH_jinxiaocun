@@ -171,9 +171,41 @@ Page({
     var _this = this
     var column = e.currentTarget.dataset.column
     console.log(column)
-    _this.setData({
-      xlShow: true
+    var _this = this
+    var sql = ""
+    if(_this.data.userInfo.power == '管理员'){
+      sql = "select * from userInfo where power ='客户' and name like '%" + _this.data.name + "%'"
+    }else if(_this.data.userInfo.power == '业务员'){
+      sql = "select * from userInfo where power ='客户' and salesman ='" + _this.data.userInfo.id + "' and name like '%" + _this.data.name + "%'"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          kehu_list: list,
+          xlShow: true,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
+
   },
 
   select1: function (e) {
@@ -261,7 +293,7 @@ Page({
                 text: order_list[i].riqi,
                 width: "300rpx",
                 columnName: order_list[i].riqi,
-                type: "text",
+                type: "number",
                 isupd: true
               })
               riqi_list.push(order_list[i].riqi)
@@ -371,7 +403,7 @@ Page({
             text: "合计",
             width: "250rpx",
             columnName: "sum",
-            type: "text",
+            type: "number",
             isupd: true
           })
 
@@ -423,7 +455,7 @@ Page({
       cloudList.header.push({
         item:title[i].text,
         type:title[i].type,
-        width:parseInt(title[i].width.split("r")[0])/10,
+        width:parseInt(title[i].width.split("r")[0]),
         columnName:title[i].columnName
       })
     }

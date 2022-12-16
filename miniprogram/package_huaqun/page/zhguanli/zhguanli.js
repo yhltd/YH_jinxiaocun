@@ -141,7 +141,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select * from userInfo where name like '%" + e[0] + "%' and  power like '%" + e[1] + "%'"
+        query: "select * from userInfo where name like '%" + e[0] + "%' and  power like '%" + e[1] + "%' order by username"
       },
       success: res => {
         console.log(res)

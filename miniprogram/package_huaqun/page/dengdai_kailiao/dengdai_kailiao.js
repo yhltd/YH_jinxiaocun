@@ -1,4 +1,4 @@
-// package_huaqun/page/qtpeizhi/qtpeizhi.js
+// package_huaqun/page/canzhao/canzhao.js
 Page({
 
   /**
@@ -13,33 +13,24 @@ Page({
   data: {
     list: [],
     title: [{
-        text: "灯带型号",
+        text: "名称型材",
         width: "400rpx",
-        columnName: "ddxh",
+        columnName: "name",
         type: "text",
         isupd: true
       },
       {
-        text: "400mm单价",
-        width: "230rpx",
-        columnName: "mmdj",
+        text: "实际尺寸（减）",
+        width: "250rpx",
+        columnName: "chicun",
         type: "text",
         isupd: true
       },
-      {
-        text: "每100mm增加单价",
-        width: "310rpx",
-        columnName: "zjdj",
-        type: "text",
-        isupd: true
-      },
-      
     ],
 
     id:'',
-    ddxh: '', 
-    mmdj: '',
-    zjdj: '',
+    name: '', 
+    chicun: '',
   
   },
 
@@ -48,45 +39,19 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    //   wx.cloud.callFunction({
-    //   name: 'sqlserver_huaqun',
-    //   data: {
-    //     query: "select ddxh,isnull(mmdj,'') as mmdj,isnull(zjdj,'') as zjdj from otherconfigurations"
-    //   },
-    //   success: res => {
-    //     var list = res.result.recordset
-    //     console.log(list)
-    //     _this.setData({
-    //       list: list
-    //     })
-    //     console.log(list)
-    //   },
-    //   err: res => {
-    //     console.log("错误!")
-    //   },
-    //   fail: res => {
-    //     wx.showToast({
-    //       title: '请求失败！',
-    //       icon: 'none',
-    //       duration: 3000
-    //     })
-    //     console.log("请求失败！")
-    //   }
-    // })
     var e = ['']
     _this.tableShow(e)
   },
-
-
 
   tableShow: function (e) {
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,ddxh,isnull(mmdj,'') as mmdj ,isnull(zjdj,'') as zjdj from otherconfigurations where ddxh like '%" + e[0] + "%'"
+        query: "select id,name,chicun from dengdai_kailiao where name like '%" + e[0] + "%'"
       },
       success: res => {
+        console.log(res)
         var list = res.result.recordset
         console.log(list)
         _this.setData({
@@ -122,9 +87,8 @@ Page({
     var _this = this
     _this.setData({
       id: _this.data.list[e.currentTarget.dataset.index].id,
-      ddxh: _this.data.list[e.currentTarget.dataset.index].ddxh, 
-      mmdj: _this.data.list[e.currentTarget.dataset.index].mmdj,
-      zjdj: _this.data.list[e.currentTarget.dataset.index].zjdj,
+      name: _this.data.list[e.currentTarget.dataset.index].name, 
+      chicun: _this.data.list[e.currentTarget.dataset.index].chicun,
       xgShow:true,
     })
   },
@@ -134,55 +98,41 @@ Page({
     _this.setData({
       tjShow: true,
       id:'',
-      ddxh: '', 
-      mmdj: '',
-      zjdj: '',
+      name: '', 
+      chicun: '',
     })
   },
   add1: function(){
     var _this = this
 
-    if(_this.data.ddxh == ''){
+    if(_this.data.name == ''){
       wx.showToast({
-        title: '灯带型号',
+        title: '未输入名称型材！',
         icon: 'none',
         duration: 3000
       })
       return;
     }
 
-    if(_this.data.mmdj == ''){
+    if(_this.data.chicun == ''){
       wx.showToast({
-        title: '400mm单价',
+        title: '未输入实际尺寸！',
         icon: 'none',
         duration: 3000
       })
       return;
     }
-
-    if(_this.data.zjdj == ''){
-      wx.showToast({
-        title: '每100mm增加单价',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
-    }
-
-    
 
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "insert into otherconfigurations(ddxh,mmdj,zjdj) values('" + _this.data.ddxh + "','" + _this.data.mmdj + "','" + _this.data.zjdj + "')"
+          query: "insert into dengdai_kailiao(name,chicun) values('" + _this.data.name + "','" + _this.data.chicun + "')"
         },
         success: res => {
           _this.setData({
             id:'',
-            ddxh: '', 
-            mmdj: '',
-            zjdj: '',
-            
+            name: '', 
+            chicun: '',
           })
           _this.qxShow()
           var e = ['']
@@ -218,19 +168,17 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update otherconfigurations set ddxh='" + _this.data.ddxh + "',mmdj='" + _this.data.mmdj + "',zjdj='" + _this.data.zjdj + "' where id=" + _this.data.id  
+        query: "update dengdai_kailiao set name='" + _this.data.name + "',chicun='" + _this.data.chicun + "' where id=" + _this.data.id 
       },
       success: res => {
         _this.setData({
             id:'',
-            ddxh: '', 
-            mmdj: '',
-            zjdj: '',
+            name: '', 
+            chicun: '',
         })
         _this.qxShow()
         var e = ['']
          _this.tableShow(e)
-
         wx.showToast({
           title: '修改成功！',
           icon: 'none'
@@ -254,14 +202,13 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "delete from otherconfigurations where id='" + _this.data.id + "'"
+          query: "delete from dengdai_kailiao where id='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({
             id:'',
-            ddxh: '', 
-            mmdj: '',
-            zjdj: '',
+            name: '', 
+            chicun: '',
           })
           _this.qxShow()
           var e = ['']
@@ -289,9 +236,8 @@ Page({
     _this.setData({
       cxShow:true,
       id:'',
-      ddxh: '', 
-      mmdj: '',
-      zjdj: '',
+      name: '', 
+      chicun: '',
     })
   },
 
@@ -305,7 +251,7 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.ddxh]
+    var e = [_this.data.name]
     _this.tableShow(e)
     _this.qxShow()
   },

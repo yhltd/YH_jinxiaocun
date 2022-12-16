@@ -1,0 +1,28 @@
+<!--pages/shangpinxuanze/shangpinxuanze.wxml-->
+<import src="../template/tabber.wxml" />
+<import src="../template/jg.wxml" />
+<view class="hidden_css" hidden="{{backhidden}}"></view>
+<view class='header'>
+  <view class='pm'>
+    <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindinput="select" placeholder="搜索产品名称" placeholder-style="color:#f8f8f8;text-align:center;"></input>
+  </view>
+</view>
+<view class="Mymain">
+  <view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i' hidden="{{item.isSelect!=0}}">
+    <view class='divline'></view>
+    <view class="shangpinline" bindtap='srJg' data-id="{{i}}" data-Theunitprice="{{all[i].Theunitprice}}">
+      <view class='shangpin' data-id="{{i}}">
+        <image src='{{all[i].mark1}}' class='shangpin-image' data-id="{{i}}" mode="widthFix"> </image>
+        <text class='shangpinpm' data-id="{{i}}"><text class="shangpinpm">名称：{{all[i].NameofProduct}}</text>\n单位：{{all[i].unit}} </text> 
+      </view>
+      <view class='shangpin'>
+        <text class='shangpinpm' data-id="{{i}}"><text class="shangpinpm">数量：{{all[i].num}}</text>\n价格：{{all[i].Theunitprice}} </text> 
+      </view>
+    </view>
+  </view>
+</view>
+
+<template is="jg" data="{{jghide,dtid,cpsl,cpjg,all}}" />
+
+
+<template is="tabbar" data="{{tabbar,rkSum,rkck}}" />

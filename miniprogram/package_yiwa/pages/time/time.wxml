@@ -1,0 +1,38 @@
+<!-- pages/time/time.wxml -->
+<import src="/pages/template/tabber.wxml" />
+
+<view class='main'>
+  <view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="del">
+    <view class='shangpin'>
+      <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
+      <view class="shangpin-text" data-id="{{i}}">
+        <view class="shangpinpm">商品名称： {{szzhi[i].NameofProduct}}</view>
+        <view class="shangpinpm">单位：{{szzhi[i].unit}}</view>
+      </view>
+    </view>
+    <view class='shangpin-jin' data-id="{{i}}">
+      <view class='shangpin-input'>数量：{{szzhi[i].num}}</view>
+      <view class='shangpin-input'>单价：{{szzhi[i].Theunitprice}}</view>
+    </view>
+  </view>
+</view>
+<view class='header'>
+  <view class='dq_y'>单号</view>
+  <view class='pm'></view>
+  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="{{Documentnumber}}" placeholder="订单号" disabled="disabled" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+</view>
+<view class='zg'>
+  <view class='xzkh'>
+    <view class="xsp" bindtap='xuanshangpin'>
+      <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png" class="jiahao"></image>
+      <text class='xsp-text'>选商品</text>
+    </view>
+  </view>
+</view>
+<view class="tui-picker-content">
+    <view class="tui-picker-detail">
+      <text decode="true">&nbsp;&nbsp;</text>下单日期: {{riqi}}
+    </view>
+</view>
+
+<template is="tabbar" data="{{tabbar,rkSum,rkck}}" />

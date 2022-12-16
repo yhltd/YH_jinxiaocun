@@ -32,7 +32,7 @@ Page({
   entering:function(){
     var _this = this
     var xdrq = _this.data.xdrq
-
+    
     if(xdrq == ''){
       wx.showToast({
         title: '请选择年份后再点击查询',

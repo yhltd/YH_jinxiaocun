@@ -1,4 +1,3 @@
-// package_huaqun/page/zhguanli/zhguanli.js
 Page({
 
   /**
@@ -280,8 +279,40 @@ Page({
 
   kehu_select:function(e){
     var _this = this
-    _this.setData({
-      xlShow:true,
+    var sql = ""
+    var userInfo = _this.data.userInfo
+    if(userInfo.power == '管理员'){
+      sql = "select id,name from userInfo where power = '客户' and name like '%" + _this.data.name + "%'"
+    }else{
+      sql = "select id,name from userInfo where power = '客户' and driver = '" + userInfo.id + "' and name like '%" + _this.data.name + "%'"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var kehu_list = res.result.recordset
+        console.log(kehu_list)
+        _this.setData({ 
+          kehu_list: kehu_list,
+          xlShow:true,
+        })
+        console.log(kehu_list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -463,6 +494,7 @@ Page({
     var index1 = _this.data.this_index1
     var index2 = _this.data.this_index2
     var value = _this.data.this_value
+    var value2 = ""
     var list = _this.data.zhongliang_list
     console.log(index1)
     console.log(index2)
@@ -472,6 +504,17 @@ Page({
       zhongliang_list:list,
       xgShow1:false,
     })
+
+    if(list[index1].length > index2 + 1){
+      index2 = index2 + 1
+      value = _this.data.zhongliang_list[index1][index2]
+      _this.setData({
+        this_index1:index1,
+        this_index2:index2,
+        this_value:value,
+        xgShow1:true
+      })
+    }
   },
 
   entering:function(){

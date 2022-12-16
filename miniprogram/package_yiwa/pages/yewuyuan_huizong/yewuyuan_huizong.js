@@ -16,6 +16,8 @@ Page({
     riqi:'',
     select_customer:[],
     list: [],
+    yewu_id:'',
+    yewu_name:'',
     title: [{
         text: "产品名称",
         width: "250rpx",
@@ -80,7 +82,6 @@ Page({
         console.log("请求失败！")
       }
     })
-
   },
 
   qxShow: function () {
@@ -92,6 +93,56 @@ Page({
       xzkhShow:false,
       currentDate: new Date().getTime()
     })
+  },
+
+  yewu_xiala_show:function(){
+    var _this = this
+    var yewu_name = _this.data.yewu_name
+    var sql_yewu = "select * from userInfo where power = '业务员' and name like '%" + yewu_name + "%'"
+    console.log(sql_yewu)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql_yewu
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          yewu_list: list,
+          xlShow:true,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  select1: function (e){
+    var _this = this
+    if (e.type == "select") {
+      var yewu_id = e.detail.id
+      var yewu_name = e.detail.name
+      _this.setData({
+        yewu_id:yewu_id,
+        yewu_name:yewu_name,
+        xlShow: false,
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow: false,
+      })
+    }
   },
 
   clickView:function(e){
@@ -124,48 +175,6 @@ Page({
         column:column,
         list_xiala:list,
         xlShow:true,
-      })
-    }
-  },
-
-  select1: function (e){
-    var _this = this
-    if (e.type == "select") {
-      var new_val = e.detail.id
-      var click_column = _this.data.column
-      var sql = "update userInfo set "+ click_column + "='" + new_val + "' where id=" + _this.data.id
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: sql
-        },
-        success: res => {
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '修改成功！',
-            icon: 'none',
-            duration: 3000
-          })
-          _this.setData({
-            xlShow: false,
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-    } else if (e.type == "close") {
-      _this.setData({
-        xlShow: false,
       })
     }
   },
@@ -359,20 +368,78 @@ Page({
     console.log(e.detail.value)
   },
 
+  refresh_start:function(){
+    var _this = this
+    var sql = ""
+    if(_this.data.yewu_id != '' && _this.data.yewu_name != ''){
+      sql = "select * from userInfo where power ='客户' and salesman ='" + _this.data.yewu_id + "'"
+    }else{
+      sql = "select * from userInfo where power ='客户'"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        var kehu_list = res.result.recordset
+        console.log(list)
+        _this.setData({ 
+          kehu_list: list,
+        })
+        var select_customer = []
+        for(var i=0; i<kehu_list.length; i++){
+          if(kehu_list[i].id != '' && kehu_list[i].id != null && kehu_list[i].id != undefined){
+            select_customer.push(kehu_list[i].id.toString())
+          }
+        }
+        console.log(select_customer)
+        _this.setData({
+          select_customer:select_customer,
+          xzkhShow:true,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
   refresh:function(){
     var _this = this
     var select_customer = []
-    var kehu_list = _this.data.kehu_list
-    for(var i=0; i<kehu_list.length; i++){
-      if(kehu_list[i].id != '' && kehu_list[i].id != null && kehu_list[i].id != undefined){
-        select_customer.push(kehu_list[i].id.toString())
+    if(_this.data.userInfo.power == '管理员'){
+      _this.setData({
+        xgShow:true,
+        yewu_id:'',
+        yewu_name:'',
+      })
+    }else{
+      var kehu_list = _this.data.kehu_list
+      for(var i=0; i<kehu_list.length; i++){
+        if(kehu_list[i].id != '' && kehu_list[i].id != null && kehu_list[i].id != undefined){
+          select_customer.push(kehu_list[i].id.toString())
+        }
       }
+      console.log(select_customer)
+      _this.setData({
+        select_customer:select_customer,
+        xzkhShow:true,
+      })
     }
-    console.log(select_customer)
-    _this.setData({
-      select_customer:select_customer,
-      xzkhShow:true,
-    })
+
+    
   },
 
   add2:function(){
@@ -386,7 +453,7 @@ Page({
       return;
     }
 
-    var sql_head = 'select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id'
+    var sql_head = 'select dd.id,Customer_id,name,Documentnumber,riqi,dd.NameofProduct,dd.unit,dd.Theunitprice,number,zhongliang_num,zhongliang,kuang from (select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id) as dd left join DetailedConfiguration as dc on dd.NameofProduct = dc.NameofProduct and dd.unit = dc.unit'
     var sql_foot = ""
     for(var i=0; i<select_customer.length; i++){
       if(select_customer[i] != '' && select_customer[i] != null && select_customer[i] != undefined){
@@ -423,8 +490,43 @@ Page({
             })
             return;
           }
+
+          var shuliang = []
+          console.log(order_list)
           for(var i=0; i<order_list.length; i++){
-            if(order_list[i].zhongliang_num != ''){
+            if(order_list[i].zhongliang == '是'){
+              var panduan = true
+              for(var j=0; j<shuliang.length; j++){
+                if(shuliang[j].NameofProduct == order_list[i].NameofProduct){
+                  panduan = false
+                }
+              }
+              if(panduan){
+                shuliang.push({
+                  NameofProduct:order_list[i].NameofProduct
+                })
+              }
+            }
+          }
+          for(var i=0; i<order_list.length; i++){
+            if(order_list[i].zhongliang == '是'){
+              for(var j=0; j<shuliang.length; j++){
+                if(order_list[i].NameofProduct == shuliang[j].NameofProduct){
+                  var num = shuliang[j][order_list[i].name]
+                  if(num == undefined || num == '' || num == null){
+                    num = 0
+                  }
+                  if(order_list[i].number != ''){
+                    num = num + order_list[i].number * 1
+                  }
+                  shuliang[j][order_list[i].name] = num
+                }
+              }
+            }
+          }
+
+          for(var i=0; i<order_list.length; i++){
+            if(order_list[i].zhongliang == '是'){
               var this_list = order_list[i].zhongliang_num.split(',')
               var this_num = 0
               for(var j=0; j<this_list.length; j++){
@@ -457,7 +559,7 @@ Page({
                 text: customer_list[i].name,
                 width: "300rpx",
                 columnName: customer_list[i].name,
-                type: "text",
+                type: "number",
                 isupd: true
               })
             }
@@ -562,12 +664,39 @@ Page({
           sum_row.sum = sum
           list.push(sum_row)
           console.log(list)
+          
+          
+
+          console.log(shuliang)
+
+          for(var i=0; i<list.length; i++){
+            for(var j=0; j<shuliang.length; j++){
+              if(list[i].NameofProduct == shuliang[j].NameofProduct){
+                for(var k=0; k<tempArr.length; k++){
+                  if(tempArr[k] != 'NameofProduct' && tempArr[k] != 'sum'){
+                    var num = shuliang[j][tempArr[k]]
+                    if(num == '' || num == undefined || num == null){
+                      num = 0
+                    }
+                    var this_str = list[i][tempArr[k]]
+                    if(this_str == ''){
+                      continue;
+                    }else{
+                      var this_arr = this_str.split('*')
+                      this_str = this_arr[0] + "*" + num + "(" + this_arr[1] + ")"
+                      list[i][tempArr[k]] = this_str
+                    }
+                  }
+                }
+              }
+            }
+          }
 
           title.push({
             text: "合计",
             width: "250rpx",
             columnName: "sum",
-            type: "text",
+            type: "number",
             isupd: true
           })
 

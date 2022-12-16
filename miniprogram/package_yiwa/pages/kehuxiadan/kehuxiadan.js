@@ -71,13 +71,6 @@ Page({
         isupd: true
       },
       {
-        text: "单位",
-        width: "250rpx",
-        columnName: "unit",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "单价",
         width: "250rpx",
         columnName: "Theunitprice",
@@ -91,6 +84,14 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "单位",
+        width: "250rpx",
+        columnName: "unit",
+        type: "text",
+        isupd: true
+      },
+
   ],
     listChanPin:[],
     id:'',
@@ -121,45 +122,38 @@ Page({
     _this.setData({
       userInfo:userInfo,
     })
-      console.log(userInfo.power)
-      if (userInfo.power=='管理员'){
-        sql="select id,name from userInfo where power='客户'"
-      }else if (userInfo.power=='业务员'){
-        sql="select id,name from userInfo where power='客户' and salesman = '"+  userInfo.id +"' "
+    
+    var name = _this.data.Customer_id
+    if (userInfo.power=='管理员'){
+      sql="select id,name from userInfo where power='客户' and name like '%" + name + "%'"
+    }else if (userInfo.power=='业务员'){
+      sql="select id,name from userInfo where power='客户' and salesman = '"+  userInfo.id +"' and name like '%" + name + "%'"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          listKeHu:list
+        })
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
       }
-      
-      console.log(sql)
-      wx.cloud.callFunction({
-        name: 'sqlserver_yiwa',
-        data: {
-          query: sql
-        },
-        success: res => {
-          var list = res.result.recordset
-          var khmc=[] 
-          console.log(list)
-          for (var i = 0;list.length>i;i++){
-            khmc.push(list[i].name)
-          }
-          _this.setData({
-            list:list,
-            khmc:khmc
-          })
-          _this.qxShow()
-          console.log(khmc)
-          
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+    })
 
     var bianhao_left = getBianHao()
     var riqi= getNowDate()
@@ -217,7 +211,45 @@ Page({
   },
 
 
-
+  kehu_select:function(){
+    var _this = this
+    var name = _this.data.Customer_id
+    var userInfo = _this.data.userInfo
+    var sql = ""
+    if (userInfo.power=='管理员'){
+      sql="select id,name from userInfo where power='客户' and name like '%" + name + "%'"
+    }else if (userInfo.power=='业务员'){
+      sql="select id,name from userInfo where power='客户' and salesman = '"+  userInfo.id +"' and name like '%" + name + "%'"
+    }else{
+      return;
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          listKeHu:list,
+          xlShow1_type:"add",
+          xlShow1: true
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
   
 
   qxShow: function () {
@@ -234,10 +266,9 @@ Page({
 
   clickView1:function(e){
     var _this = this
-    
     console.log(e.currentTarget.dataset.column)
     console.log(e.currentTarget.dataset.value)
-    console.log(_this.data.list[e.currentTarget.dataset.index].id)
+    console.log(_this.data.add_list[e.currentTarget.dataset.index].id)
     if(e.currentTarget.dataset.column == 'number'){
       _this.setData({
         id: e.currentTarget.dataset.index,
@@ -246,7 +277,6 @@ Page({
         xgShow:true,
       })
     }
-    
   },
 
   upd2:function(){
@@ -260,27 +290,12 @@ Page({
     _this.qxShow()
   },
 
-  bindPickerChange: function(e) {
-    var _this = this
-    console.log('picker发送选择改变，携带值为',e.detail.value)
-    var i = e.detail.value
-    console.log(_this.data.list[i].id)
-    
-    _this.setData({
-      Customer_id:_this.data.khmc[e.detail.value],
-      idd:_this.data.list[i].id
-    })
-  },
-
   bindPickerChange1: function(e) {
     var _this = this
     console.log('picker发送选择改变，携带值为',e.detail.value)
-
     _this.setData({
       NameofProduct_xl:_this.data.NameofProduct[e.detail.value],
-      
     })
-
   },
   
   inquire: function () {
@@ -299,7 +314,6 @@ Page({
   },
   add1: function(){
     var _this = this
-
     if(_this.data.Customer_id == ''){
       wx.showToast({
         title: '客户名称未填写！',
@@ -309,7 +323,7 @@ Page({
     }
     if(_this.data.add_list.length == '0'){
       wx.showToast({
-        title: '为选择商品！',
+        title: '未选择商品！',
         icon: 'none'
       })
       return;
@@ -317,7 +331,6 @@ Page({
     
     console.log(_this.data.add_list)
     for(var i=0; i<_this.data.add_list.length; i++){
-     
       if(_this.data.add_list[i].number == '' || _this.data.add_list[i].number == undefined){
         wx.showToast({
           title: '产品列表中第'+ i * 1+1 +'行未填写数量！',
@@ -426,7 +439,6 @@ Page({
 
   selCD: function () {
     var _this = this
-
     if(_this.data.Customer_id == ''){
       wx.showToast({
         title: '请选择客户！',
@@ -467,6 +479,7 @@ Page({
     })
   },
 
+
   select4: function (e) {
     var _this = this
     if (e.type == "select") {
@@ -497,6 +510,37 @@ Page({
     } else if (e.type == "close") {
       _this.setData({
         xlShow4: false,
+      })
+    }
+  },
+
+  bindPickerChange: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为',e.detail.value)
+    var i = e.detail.value
+    console.log(_this.data.list[i].id)
+    
+    _this.setData({
+      Customer_id:_this.data.khmc[e.detail.value],
+      idd:_this.data.list[i].id
+    })
+  },
+
+
+  select1: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      if(_this.data.xlShow1_type == "add"){
+        console.log(e.detail)
+        _this.setData({
+          Customer_id:e.detail.name,
+          idd:e.detail.id,
+          xlShow1: false,
+        })
+      }
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow1: false,
       })
     }
   },

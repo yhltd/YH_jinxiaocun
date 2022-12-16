@@ -1,7 +1,7 @@
 <!-- pages/time/time.wxml -->
 <import src="/pages/template/tabber.wxml" />
 
-<view class=' main'>
+<view class='main'>
   <view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
     <view class='shangpin'>
       <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>

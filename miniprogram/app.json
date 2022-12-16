@@ -282,7 +282,8 @@
         "page/lvkuang_mingxi/lvkuang_mingxi",
         "page/lvkuang_biaodan/lvkuang_biaodan",
         "page/boli_mingxi/boli_mingxi",
-        "page/shows2/shows2"
+        "page/shows2/shows2",
+        "page/dengdai_kailiao/dengdai_kailiao"
       ]
     },
     {
@@ -303,7 +304,9 @@
         "pages/kehu_huizong/kehu_huizong",
         "pages/siji_mingxi/siji_mingxi",
         "pages/songhuodan/songhuodan",
-        "pages/dayin/dayin"
+        "pages/dayin/dayin",
+        "pages/time/time",
+        "pages/shangpinxuanze/shangpinxuanze"
       ]
     }
   ],

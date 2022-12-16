@@ -33,53 +33,6 @@
   <button class="bt_bottom" bindtap="out_put">导出</button>
 </view>
 
-<!------------------------->
-<!---------添加弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 70%;" >
-  <view class="lables">用户名</view>
-    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
-    <view class="lables">密码</view>
-    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
-    <view class="lables">姓名</view>
-    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-    <view class="lables">权限</view>
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{qx_list}}" >
-      <input bindinput="onInput" data-column="power" class="input_text_form" value="{{power}}" type="text" name="power" disabled="disabled"></input>
-    </picker>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
-  </view>
-</van-popup>
-<!------------------------->
-<!---------修改弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 53%;" >
-  <view class="lables">用户名</view>
-    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
-    <view class="lables">密码</view>
-    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
-    <view class="lables">姓名</view>
-    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
-  </view>
-</van-popup>
-<!------------------------->
-<!---------查询弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
-  <view class="lables">姓名</view>
-  <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
-    
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
-  </view>
-</van-popup>
-
 <van-popup bind:click-overlay="qxShow" show="{{ xzkhShow }}" position="bottom" custom-style="height: 80%;" >
 
   <view style="display: flex;margin-top: 2%;">
@@ -111,11 +64,24 @@
   </view>
 </van-popup>
 
+<!------------------------->
+<!---------司机选择--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
+  <view class="lables">司机：</view>
+  <input class="input_text_form" bindlongpress="siji_xiala_show" type="text" bindinput="onInput" value="{{siji_name}}" data-column="siji_name" name="siji_name" ></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="refresh_start">确定</button>
+  </view>
+</van-popup>
+
 <!--表单下拉选择-->
 <van-action-sheet
   show="{{xlShow}}"
-  actions="{{list_xiala}}"
+  actions="{{siji_list}}"
   close-on-click-overlay
-  bind:close="select1"
+  bind:close="select1" 
   bind:select="select1" 
 />

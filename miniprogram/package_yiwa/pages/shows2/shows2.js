@@ -72,9 +72,16 @@ go: function (e) {
   }
 
   if(url != ''){
-    wx.navigateTo({
-      url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
-    })
+    if(index == 0 && _this.data.userInfo.power == '客户'){
+      wx.navigateTo({
+        url: "../time/time?userInfo=" + JSON.stringify(_this.data.userInfo)
+      })
+    }else{
+      wx.navigateTo({
+        url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+      })
+    }
+    
   }
 },
 

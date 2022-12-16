@@ -38,7 +38,7 @@
     <view class="lables">单价</view>
     <input bindinput="onInput" data-column="Theunitprice" class="input_text_form"  value="{{Theunitprice}}" type="digit" name="Theunitprice"></input>
     <view class="lables">期初欠筐</view>
-    <input bindinput="onInput" data-column="kuang_num" class="input_text_form"  value="{{kuang_num}}" type="number" name="kuang_num"></input>
+    <input bindinput="onInput" data-column="kuang_num" class="input_text_form"  value="{{kuang_num}}" type="text" name="kuang_num"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
   </view>

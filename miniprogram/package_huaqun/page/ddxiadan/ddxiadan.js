@@ -24,41 +24,49 @@ Page({
       customer_number:'',
     },
     update_name:{
-      fj:"房间",
-      gh:"柜号",
+      fj:"项目类别",
+      gh:"项目名称",
+      lcys:"铝材颜色",
       ddcd:"灯带长度mm",
       sl:"数量(支）",
-      cxdk:"出线端口",
-      lcb:"铝型材",
-      lcys:"铝材颜色",
+      cxdk:"出线端口左出线",
+      cxdk_right:"出线端口右出线",
       gy:"光源",
-      dy:"电源",
-      kg:"开关",
-      pj:"配件",
       gl:"功率W",
       bz:"备注",
       dj:"单价",
       je:"金额",
-      fkzt:"付款状态",
+      chicun:"开料尺寸",
     },
     list: [],
     title: [{
-        text: "房间",
+        text: "项目类别",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "fj",
         type: "text",
         isupd: true
       },
       {
-        text: "柜号",
+        text: "项目名称",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "gh",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "铝材颜色",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "lcys",
         type: "text",
         isupd: true
       },
       {
         text: "灯带长度mm",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "ddcd",
         type: "text",
         isupd: true
@@ -66,78 +74,71 @@ Page({
       {
         text: "数量(支）",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "sl",
         type: "text",
         isupd: true
       },{
-        text: "出线端口",
+        text: "出线端口左出线",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "cxdk",
         type: "text",
         isupd: true
       },{
-        text: "铝型材",
-        width: "225rpx",
-        columnName: "lcb",
-        type: "text",
-        isupd: true
-      },{
-        text: "铝材颜色",
+        text: "出线端口右出线",
         width: "275rpx",
-        columnName: "lcys",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "cxdk_right",
         type: "text",
         isupd: true
       },{
         text: "光源",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "gy",
-        type: "text",
-        isupd: true
-      },{
-        text: "电源",
-        width: "275rpx",
-        columnName: "dy",
-        type: "text",
-        isupd: true
-      },{
-        text: "开关",
-        width: "275rpx",
-        columnName: "kg",
-        type: "text",
-        isupd: true
-      },{
-        text: "配件",
-        width: "275rpx",
-        columnName: "pj",
         type: "text",
         isupd: true
       },{
         text: "功率W",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "gl",
         type: "text",
         isupd: true
       },{
         text: "备注",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "bz",
         type: "text",
         isupd: true
       },{
         text: "单价",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "dj",
         type: "text",
         isupd: true
       },{
         text: "金额",
         width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "je",
+        type: "text",
+        isupd: true
+      },{
+        text: "开料尺寸",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "chicun",
         type: "text",
         isupd: true
       },
     ],
-    
+    xiangmu_leibie_list:['房间柜号','铝型材','电源','开关','配件'],
+    xiangmu_mingcheng_list:[],
+    kailiao_list:[],
     list:[],
     ddxh_list_dj:[],
     khmc: "",
@@ -180,10 +181,12 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,isnull(cxdk,'') as cxdk,isnull(lxc,'') as lxc,isnull(lcys,'') as lcys,isnull(gy,'') as gy,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(shfs,'') as shfs,isnull(blsjg,'') as blsjg,isnull(blys,'') as blys,isnull(lsxh,'') as lsxh,isnull(lsw,'') as lsw,isnull(kjlk,'') as kjlk,isnull(jlkw,'') as jlkw from dropdowntable"
+        query: "select id,isnull(cxdk,'') as cxdk,isnull(lxc,'') as lxc,isnull(lcys,'') as lcys,isnull(gy,'') as gy,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(shfs,'') as shfs,isnull(blsjg,'') as blsjg,isnull(blys,'') as blys,isnull(lsxh,'') as lsxh,isnull(lsw,'') as lsw,isnull(kjlk,'') as kjlk,isnull(jlkw,'') as jlkw from dropdowntable;select * from dengdai_kailiao"
       },
       success: res => {
-        var list = res.result.recordset
+        var list = res.result.recordsets[0]
+        var kailiao_list = res.result.recordsets[1]
+        console.log(kailiao_list)
         var cxdk = []
         var lcb = []
         var lcys = []
@@ -231,6 +234,7 @@ Page({
           shfs_list:shfs,
           fk_list:fk,
           hd_list:hd,
+          kailiao_list
         })
       },
       err: res => {
@@ -427,46 +431,27 @@ Page({
     var this_column = e.currentTarget.dataset.column
     var index = e.currentTarget.dataset.index
     var this_value = e.currentTarget.dataset.value
-    
-    if(this_column == "dj" || this_column == "je" || this_column == "gl"){
+    var this_leibie = _this.data.list[index].fj
+    console.log(index)
+    console.log(this_leibie)
+    if(this_column == "chicun" || this_column == "je" || this_column == "gl"){
       return;
     }
-
-    if(( this_column == "ddcd" || this_column == "sl" || this_column == "cxdk" || this_column == "lcb" || this_column == "lcys" || this_column == "gy") && (_this.data.list[index].dy != "" || _this.data.list[index].kg != "" || _this.data.list[index].pj != "")){
+    if(this_column != 'fj' && this_leibie == ''){
       wx.showToast({
-        title: '此行已选择电源、开关或配件，不允许填写其他信息！',
+        title: '未选择项目类别，不可选择其他信息！',
         icon: 'none'
       })
       return;
-    }
-
-    if((this_column == "dy" || this_column == "kg" || this_column == "pj") && (_this.data.list[index].ddcd != "" || _this.data.list[index].sl != "" || _this.data.list[index].cxdk != "" || _this.data.list[index].lcb != "" || _this.data.list[index].lcys != "" || _this.data.list[index].gy != "")){
+    }else if(this_column != 'fj' && this_column != 'gh' && this_leibie == '房间柜号'){
       wx.showToast({
-        title: '此行已填写其他信息，不允许选择电源、开关或配件！',
+        title: '项目类别选择了房间柜号，此行只允许在项目名称处填写房间柜号！',
         icon: 'none'
       })
       return;
-    }
-
-    if((this_column == "dy") && ( _this.data.list[index].kg != "" || _this.data.list[index].pj != "") ){
+    }else if(this_column != 'fj' && this_column != 'gh' && this_column != 'sl' && (this_leibie == '电源' || this_leibie == '开关' || this_leibie == '配件')){
       wx.showToast({
-        title: '此行已选择电源、开关或配件，不允许选择其他信息！',
-        icon: 'none'
-      })
-      return;
-    }
-
-    if((this_column == "kg") && ( _this.data.list[index].dy != "" || _this.data.list[index].pj != "") ){
-      wx.showToast({
-        title: '此行已选择电源、开关或配件，不允许选择其他信息！',
-        icon: 'none'
-      })
-      return;
-    }
-
-    if((this_column == "pj") && ( _this.data.list[index].dy != "" || _this.data.list[index].kg != "") ){
-      wx.showToast({
-        title: '此行已选择电源、开关或配件，不允许选择其他信息！',
+        title: '项目类别选择了'+ this_leibie +'，此行只允许填写项目名称和数量（支）！',
         icon: 'none'
       })
       return;
@@ -477,43 +462,46 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var panduan = 0
     var this_type = "text"
-    if(this_column == 'ddcd' || this_column == 'sl'){
-      this_type = 'number'
+    if(this_column == 'ddcd' || this_column == 'sl' || this_column == 'dj' || this_column == 'cxdk' || this_column == 'cxdk_right'){
+      this_type = 'digit'
     }
-    if(this_column == "cxdk"){
-      panduan = 1
-    }else if(this_column == "lcb"){
+
+    if(this_column == "lcb"){
       panduan = 2
     }else if(this_column == "lcys"){
       panduan = 3
     }else if(this_column == "gy"){
       panduan = 4
-    }else if(this_column == "dy"){
-      panduan = 5
-    }else if(this_column == "kg"){
-      panduan = 6
-    }else if(this_column == "pj"){
-      panduan = 7
-    }else if(this_column == "fkzt"){
-      panduan = 8
-    }else if(this_column == "hd"){
-      panduan = 9
+    }else if(this_column == "fj"){
+      panduan = 10
     }else{
       panduan = 0
     }
 
+    if(this_column == 'gh'){
+      if(this_leibie == '铝型材'){
+        panduan = 2
+      }else if(this_leibie == '电源'){
+        panduan = 5
+      }else if(this_leibie == '开关'){
+        panduan = 6
+      }else if(this_leibie == '配件'){
+        panduan = 7
+      }
+    }
+
+    console.log(panduan)
     var this_row = e.currentTarget.dataset.index
     console.log(this_row)
-
+ 
     _this.setData({
+      this_type,
       this_column:e.currentTarget.dataset.column,
       this_value:e.currentTarget.dataset.value,
       xiala_panduan:panduan,
       this_index:e.currentTarget.dataset.index,
       xgShow:true,
     })
-
-    
     
   },
 
@@ -565,12 +553,18 @@ Page({
         this_value: _this.data.hd_list[e.detail.value]
       })
     }
+    if(_this.data.xiala_panduan==10){
+      _this.setData({
+        this_value: _this.data.xiangmu_leibie_list[e.detail.value]
+      })
+    }
   },
 
 
   upd2:function(){
     var _this = this
     var list = _this.data.list
+    var kailiao_list = _this.data.kailiao_list
     list[_this.data.this_index][_this.data.this_column] = _this.data.this_value
     var list1 = _this.data.ddxh_list_dj
     console.log(_this.data.this_index)
@@ -578,16 +572,20 @@ Page({
     var danjia = 0
     var gonglv = 0
     for(var i=0; i<list.length; i++){
-      if(list[i].lcb != '' && list[i].ddcd != ''){
+      if(list[i].fj == '房间柜号' && list[i].gh != ''){
+        danjia = 0
+        gonglv = 0
+      }
+      if(list[i].fj == '铝型材' && list[i].gh != '' && list[i].sl != ''){
         for(var j=0; j<list1.length; j++){
-          if(list[i].lcb == list1[j].ddxh && list[i].ddcd > 400){
+          if(list[i].gh == list1[j].ddxh && list[i].ddcd > 400){
             danjia = parseFloat(list1[j].mmdj) + Math.ceil(((list[i].ddcd-400)/100) * list1[j].zjdj)
             list[i].dj = danjia
             if(list[i].sl != ''){
               var shuliang = parseFloat(list[i].sl)
               list[i].je = (danjia * shuliang).toFixed(2)
             }
-            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015)
+            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
             list[i].gl = gonglv
             break;
           }else if(list[i].lcb == list1[j].ddxh && list[i].ddcd <= 400){
@@ -597,26 +595,147 @@ Page({
               var shuliang = parseFloat(list[i].sl)
               list[i].je = (danjia * shuliang).toFixed(2)
             }
-            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015)
+            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
             list[i].gl = gonglv
             break;
           }
         }
-      }
-      if(i != 0){
-        if(list[i].fj == list[i-1].fj && list[i].gh == list[i-1].gh){
-
-        }else{
-          gonglv = 0
+        for(var j=0; j<kailiao_list.length; j++){
+          if(list[i].gh == kailiao_list[j].name && list[i].ddcd != '' && kailiao_list[j].chicun != ''){
+            list[i].chicun = list[i].ddcd * 1 - kailiao_list[j].chicun * 1
+          }
         }
       }
-      
     }
-
     _this.setData({
       list:list,
     })
     _this.qxShow()
+
+    if(list[_this.data.this_index].fj != ''){
+      if(list[_this.data.this_index].fj == '房间柜号' && _this.data.this_column == 'fj'){
+        _this.setData({
+          this_type:'text',
+          this_column:'gh',
+          this_value:list[_this.data.this_index].gh,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }
+
+      if(list[_this.data.this_index].fj == '电源' && _this.data.this_column == 'fj'){
+        _this.setData({
+          this_type:'text',
+          this_column:'gh',
+          this_value:list[_this.data.this_index].gh,
+          xiala_panduan:5,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '电源' && _this.data.this_column == 'gh'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'sl',
+          this_value:list[_this.data.this_index].sl,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }
+
+      if(list[_this.data.this_index].fj == '开关' && _this.data.this_column == 'fj'){
+        _this.setData({
+          this_type:'text',
+          this_column:'gh',
+          this_value:list[_this.data.this_index].gh,
+          xiala_panduan:6,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '开关' && _this.data.this_column == 'gh'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'sl',
+          this_value:list[_this.data.this_index].sl,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }
+
+      if(list[_this.data.this_index].fj == '配件' && _this.data.this_column == 'fj'){
+        _this.setData({
+          this_type:'text',
+          this_column:'gh',
+          this_value:list[_this.data.this_index].gh,
+          xiala_panduan:7,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '配件' && _this.data.this_column == 'gh'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'sl',
+          this_value:list[_this.data.this_index].sl,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }
+
+      if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'fj'){
+        _this.setData({
+          this_type:'text',
+          this_column:'gh',
+          this_value:list[_this.data.this_index].gh,
+          xiala_panduan:2,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'gh'){
+        _this.setData({
+          this_type:'text',
+          this_column:'lcys',
+          this_value:list[_this.data.this_index].lcys,
+          xiala_panduan:3,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'lcys'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'ddcd',
+          this_value:list[_this.data.this_index].ddcd,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'ddcd'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'sl',
+          this_value:list[_this.data.this_index].sl,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'sl'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'cxdk',
+          this_value:list[_this.data.this_index].cxdk,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'cxdk'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'cxdk_right',
+          this_value:list[_this.data.this_index].cxdk_right,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'cxdk_right'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'gy',
+          this_value:list[_this.data.this_index].gy,
+          xiala_panduan:4,
+          xgShow:true,
+        })
+      }
+    }
+
   },
 
   add1: function(){
@@ -631,13 +750,13 @@ Page({
         return;
       }
       console.log(_this.data.khmc)
-      var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,ddcd,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl,bz,dj,je) values"
+      var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,lcys,ddcd,sl,cxdk,cxdk_right,gy,gl,bz,dj,je,chicun) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].lcb +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].dy +"','"+  _this.data.list[i].kg +"','"+  _this.data.list[i].pj +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"')"
+          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].lcb +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].dy +"','"+  _this.data.list[i].kg +"','"+  _this.data.list[i].pj +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"')"
+          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"')"
         }
       }
       var sql = sql1 + sql2
@@ -753,107 +872,28 @@ Page({
     })
   },
 
-  del1:function(e){
-    var _this = this
-    console.log('aaa',_this.data.list[e.currentTarget.dataset.index].id)
-
-    wx.showModal({
-      title: '提示',
-      content: '确认删除此行数据？',
-      success (res) {
-        if (res.confirm) {
-          wx.cloud.callFunction({
-            name: 'sqlserver_huaqun',
-            data: {
-              query: "delete from lightbelt where id=" + _this.data.list[e.currentTarget.dataset.index].id
-            },
-            success: res => {
-              _this.setData({
-                id:'',
-                cxdk:'', 
-                lxc: '',
-                lcys: '',
-                gy: '',
-                dy: '',
-                kg: '',
-                pj: '',
-                shfs:'', 
-                blsjg: '',
-                blys: '',
-                lsxh: '',
-                lsw: '',
-                kjlk: '',
-                jlkw: '',
-              })
-              _this.qxShow()
-              var e = [_this.data.khmc,_this.data.ddh]
-              _this.tableShow(e)
-              wx.showToast({
-                title: '删除成功！',
-                icon: 'none'
-              })
-            },
-            err: res => {
-              console.log("错误!")
-            },
-            fail: res => {
-              wx.showToast({
-                title: '请求失败！',
-                icon: 'none'
-              })
-              console.log("请求失败！")
-            }
-          })
-        } else if (res.cancel) {
-
-        }
-      }
-    })
-  },
-
   selCD: function () {
     var _this = this
     var list = _this.data.list
     list.push({
       fj:"",
       gh:"",
+      lcys:"",
       ddcd:"",
       sl:"",
       cxdk:"",
-      lcb:"",
-      lcys:"",
+      cxdk_right:"",
       gy:"",
-      dy:"",
-      kg:"",
-      pj:"",
       gl:"",
       bz:"",
       dj:"",
       je:"",
+      chicun:"",      
     })
     _this.setData({
       list
     })
   },
-
-  entering:function(){
-    var _this=this
-    _this.setData({
-      cxShow:true,
-      
-    })
-  },
-
-  sel1:function(){
-    var _this = this
-    var e = [_this.data.khmc,_this.data.ddh]
-    _this.tableShow(e)
-    _this.qxShow()
-  },
-
-
-  
-
 
   /**
    * 生命周期函数--监听页面初次渲染完成

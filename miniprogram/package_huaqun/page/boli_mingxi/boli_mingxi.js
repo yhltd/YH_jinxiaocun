@@ -76,6 +76,20 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "开拉手孔位数据说明",
+        width: "1500rpx",
+        columnName: "shuoming1",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开锁孔数据说明",
+        width: "1500rpx",
+        columnName: "shuoming2",
+        type: "text",
+        isupd: true
+      },
     ],
 
     pinyin:'',
@@ -98,9 +112,9 @@ Page({
     var _this = this
     var sql = ''
     if(_this.data.userInfo.power == '管理员'){
-      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%'"
+      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%'"
     }else{
-      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and shendan = '通过'"
+      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and shendan = '通过'"
     }
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
@@ -159,7 +173,7 @@ Page({
 
       }else{
         wx.showToast({
-          title: '非玻璃厂账号，无生产权限！',
+          title: '非管理员或玻璃厂账号，无生产权限！',
           icon: 'none'
         })
         return;
@@ -171,12 +185,12 @@ Page({
         yes_click: '完成',
         no_click: '未完成',
       })
-    }else if(column == "beizhu"){
+    }else if(column == "beizhu" || column == "shuoming1" || column == "shuoming2" ){
       if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
 
       }else{
         wx.showToast({
-          title: '非玻璃厂账号，无修改权限！',
+          title: '非管理员或玻璃厂账号，无修改权限！',
           icon: 'none'
         })
         return;
@@ -226,6 +240,7 @@ Page({
   no_click:function(){
     var _this = this
     var sql = "update boli_xiadan set " + _this.data.this_column + "='" + _this.data.no_click + "' where id="+ _this.data.id
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -344,6 +359,73 @@ Page({
     })
     _this.setData({
       xgShow2:false,
+    })
+  },
+
+
+  out_put:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    var title = _this.data.title
+    var cloudList = {
+      name : '玻璃下单明细',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0]),
+        columnName:title[i].columnName
+      })
+    }
+
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
     })
   },
 

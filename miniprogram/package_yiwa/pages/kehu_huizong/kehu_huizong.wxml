@@ -37,8 +37,8 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 53%;" >
   <view class="lables">姓名</view>
-  <input bindinput="onInput" bindtap="sel_xiala" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name" disabled="disabled"></input>
-  <view class="lables">开始日期</view>
+  <input bindinput="onInput" bindlongpress="sel_xiala" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+  <view class="lables">开始日期</view> 
     <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
     </picker>

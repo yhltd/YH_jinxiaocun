@@ -150,7 +150,7 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
   <view class="lables">客户</view>
-  <input bindinput="onInput" bindtap="kehu_select" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name" disabled="disabled"></input>
+  <input bindinput="onInput" bindlongpress="kehu_select" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
   <view class="lables">日期</view>
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
     <input bindinput="onInput" data-column="riqi" class="input_text_form"  value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>
@@ -174,7 +174,8 @@
 <!------------------------->
 <!---------重量修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow1 }}" position="bottom" custom-style="height: 25%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow1 }}" position="bottom" custom-style="height: 30%;" >
+  <view class="lables">第{{this_index2 - 1}}筐</view>
     <input bindinput="onInput2" style="margin-top:10%" data-index1="this_index1" data-index2="this_index2"  data-name="this_value" class="input_text_form" value="{{this_value}}" type="digit" name="this_value" ></input>
   <view class="bottom_view" style="height:10%;margin-top: 50rpx;">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
