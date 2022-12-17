@@ -8,7 +8,7 @@
     <input bindinput="onInput" data-column="product_name" value="{{product_name}}" name="product_name" disabled="disabled" class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" placeholder="搜索商品名称" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
   </picker>
   
-  <button class="button_css" bindtap="use_book">使用说明</button>
+  <button class="button_css" bindtap="goto_print">打印</button>
 </view>
 <view class='main'>
   <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->

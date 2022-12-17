@@ -114,7 +114,7 @@ Page({
       console.log(_this.data.listJiQi)
       //新增代码 
       var _this = this
-      var e = ''
+      var e = ['','']
       _this.tableShow(e)
       //  _this.panduanquanxian()
     }
@@ -607,14 +607,14 @@ Page({
     })
     console.log(_this.data.mokuai_list)
     
-    _this.tableShow('')
+    _this.tableShow(['',''])
 
   },
 
 
   goto_yanshi: function(){
     wx.navigateTo({
-      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/huizong.mp4"
       }) 
   },
 
@@ -732,10 +732,10 @@ Page({
     var _this = this
     let user = app.globalData.gongsi;
     var sql = ""
-    if (e == "" || e == true) {
-      sql = "select mt.name as type, mi.name as name, mi.num as num, (select name from module_info where id = mi.parent_id) as parentName, sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id where wd.company = '" + user + "' group by mt.name, mi.name, mi.num, mi.parent_id"
+    if (e[0] == "") {
+      sql = "select mt.name as type,mi.name as name,mi.num as num,isnull((select name from module_info where id = mi.parent_id),'') as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and o.order_id like'%" + e[1] + "%' group by mt.name, mi.name, mi.num, mi.parent_id"
     } else {
-      sql = "select mt.name as type,mi.name as name,mi.num as num,(select name from module_info where id = mi.parent_id) as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id where wd.company = '" + user + "' and mi.type_id = '" + e + "' group by mt.name,mi.name,mi.num,mi.parent_id"
+      sql = "select mt.name as type,mi.name as name,mi.num as num,isnull((select name from module_info where id = mi.parent_id),'') as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and mi.type_id = '" + e[0] + "' and o.order_id like'%" + e[1] + "%' group by mt.name,mi.name,mi.num,mi.parent_id"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -801,7 +801,7 @@ Page({
     let user = app.globalData.gongsi;
     var sql = ""
     if (e == "") {
-      sql = "select mt.name as type, mi.name as name, mi.num as num, (select name from module_info where id = mi.parent_id) as parentName, sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id where wd.company = '" + user + "' group by mt.name, mi.name, mi.num, mi.parent_id"
+      sql = "select mt.name as type,mi.name as name,mi.num as num,(select name from module_info where id = mi.parent_id) as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and o.order_id like'%" + e + "%' group by mt.name, mi.name, mi.num, mi.parent_id"
     } else {
       sql = "select mt.name as type,mi.name as name,mi.num as num,(select name from module_info where id = mi.parent_id) as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and o.order_id like'%" + e + "%' group by mt.name,mi.name,mi.num,mi.parent_id"
     }
@@ -837,6 +837,10 @@ Page({
     var _this = this
     _this.setData({
       cxShow: true,
+      riqi1:'',
+      riqi2:'',
+      id:'',
+      oid:'',
     })
   },
   qxShow: function () {
@@ -902,8 +906,14 @@ Page({
   },
   sel1: function () {
     var _this = this
-    var e = _this.data.id
-    console.log(_this.data.id)
+    var start_date = _this.data.start_date
+    var stop_date = _this.data.stop_date
+    if(start_date == ''){
+      start_date = '1900-01-01'
+    }if(stop_date == ''){
+      stop_date = '2100-12-31'
+    }
+    var e = [_this.data.id,_this.data.oid]
     _this.tableShow(e)
     _this.setData({
       cxShow: false,

@@ -11,9 +11,7 @@
     </view>
     <block class="list_row" wx:for="{{list_mk}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
-        <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="list_view" style="width:{{item.width}}"
-          data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}"
-          data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
+        <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="list_view" style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -31,22 +29,27 @@
 </view>
 
 
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;">
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;">
   <swiper circular="true" easing-function="linear" bindchange="changeFunction" style="height: 100%;">
-    <swiper-item style="display: flex;align-items: center;" item-id="upd_pwd">
-      <view class="swiper_item">模块类型(可左右滑动←→)</view>
-      <input bindinput="onInput" bindtap="cx" class="input_text_form1" value="{{modal}}" type="text" name="modal"
-        disabled="disabled" placeholder="请选择模块类型"></input>
-      <view class="bottom_view3" style="height:10%">
+    <swiper-item style="display: flex;align-items: center;" item-id="upd_pwd"> 
+      <!-- <view class="swiper_item">模块类型(可左右滑动←→)</view> -->
+      <input bindinput="onInput" bindtap="cx" class="input_text_form1" value="{{modal}}" type="text" name="modal" disabled="disabled" placeholder="请选择模块类型"></input>
+      <input bindinput="onInput2" style="margin-top: 20%;" data-column="oid" class="input_text_form1" value="{{oid}}" type="text" name="oid" placeholder="请输入订单号"></input>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+        <input bindinput="onInput2" style="margin-top: 35%;" data-column="riqi1" class="input_text_form1" value="{{riqi1}}" type="text" name="riqi1" disabled="disabled" placeholder="请输入开始日期"></input>
+      </picker>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+        <input bindinput="onInput2" style="margin-top: 50%;" data-column="riqi2" class="input_text_form1" value="{{riqi2}}" type="text" name="riqi2" disabled="disabled" placeholder="请输入结束日期"></input>
+      </picker>
+      <view class="bottom_view3" style="height:10%;margin-top: 10%;">
         <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
         <button class="bt_bottom" bindtap="sel1" style="width:33%">查询</button>
       </view>
     </swiper-item>
 
-    <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
+    <!-- <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
       <view class="swiper_item">订单号(可左右滑动←→)</view>
-      <input bindinput="onInput2" data-column="oid" class="input_text_form1" value="{{oid}}" type="text" name="oid"
-        placeholder="请输入订单号"></input>
+      <input bindinput="onInput2" data-column="oid" class="input_text_form1" value="{{oid}}" type="text" name="oid" placeholder="请输入订单号"></input>
       <view class="bottom_view3" style="height:10%">
         <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
         <button class="bt_bottom" bindtap="sel2" style="width:33%">查询</button>
@@ -56,19 +59,17 @@
     <swiper-item style="display: flex;align-items: center;" item-id="upd_do">
       <view class="swiper_item">日期区间(可左右滑动←→)</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
-        <input bindinput="onInput2" data-column="riqi1" class="input_text_form1" value="{{riqi1}}" type="text" name="riqi1" style="margin-top: 0%;" disabled="disabled"
-        placeholder="请输入开始日期"></input>
+        <input bindinput="onInput2" data-column="riqi1" class="input_text_form1" value="{{riqi1}}" type="text" name="riqi1" style="margin-top: 0%;" disabled="disabled" placeholder="请输入开始日期"></input>
       </picker>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
-        <input bindinput="onInput2" data-column="riqi2" class="input_text_form1" value="{{riqi2}}" type="text" name="riqi2" style="margin-top: 15%;" disabled="disabled"
-      placeholder="请输入结束日期"></input>
+        <input bindinput="onInput2" data-column="riqi2" class="input_text_form1" value="{{riqi2}}" type="text" name="riqi2" style="margin-top: 15%;" disabled="disabled" placeholder="请输入结束日期"></input>
       </picker>
-      
+
       <view class="bottom_view3" style="height:10%">
         <button class="bt_bottom" bindtap="qxShow" style="width:33%">取消</button>
         <button class="bt_bottom" bindtap="sel3" style="width:33%">查询</button>
       </view>
-    </swiper-item>
+    </swiper-item> -->
   </swiper>
   <!-- <view class="lables">模块类型</view>
     <input bindinput="onInput" bindtap="cx" class="input_text_form" value="{{modal}}" type="text" name="modal" disabled="disabled"></input>
@@ -87,5 +88,4 @@
 
 
 <!--  下拉选1-->
-<van-action-sheet show="{{ xlShow1 }}" actions="{{ actions1 }}" close-on-click-overlay bind:close="select1"
-  bind:select="select1" />
+<van-action-sheet show="{{ xlShow1 }}" actions="{{ actions1 }}" close-on-click-overlay bind:close="select1" bind:select="select1" />

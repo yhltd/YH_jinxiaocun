@@ -328,7 +328,7 @@ button{
   margin-top: 5%;
   border-radius: 19rpx;
   padding-left: 14%;
-  top: 38%;
+  top: 0%;
   left: 8%;
   position: absolute;
 }

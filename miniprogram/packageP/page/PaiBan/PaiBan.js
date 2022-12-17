@@ -15,6 +15,7 @@ Page({
   handle: true,
   onOff: true,
   xgShow: false,
+  cxShow:false,
   data: {
     SQLlist: [],
     PaiBanlist: [],
@@ -125,6 +126,8 @@ Page({
     zmfz: "",
     lzts: "",
     jhmc: "",
+    department_name:'',
+    jihua:'',
     minDate: new Date(1899, 1, 1).getTime(),
     maxDate: new Date(2030, 12, 31).getTime(),
     currentDate: new Date().getTime(),
@@ -138,7 +141,8 @@ Page({
     _this.panduanquanxian()
     //判断是否有查看权限
     if (_this.data.isdischa == 1) {
-      _this.tableShow()
+      var e = ['','']
+      _this.tableShow(e)
       _this.getSystemName()
       console.log(_this.data.listBUMEN)
       _this.setData({
@@ -148,9 +152,18 @@ Page({
     }
   },
 
+  entering: function () {
+    var _this = this
+    _this.setData({
+      cxShow: true,
+      department_name:'',
+      jihua:'',
+    })
+  },
+
   goto_yanshi: function(){
     wx.navigateTo({
-      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/paiban.mp4"
       }) 
   },
   
@@ -232,19 +245,21 @@ Page({
   },
   //
   //初始数据
-  tableShow: function () {
+  tableShow: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from paibanbiao_info where remarks1='" + user + "'"
+        query: "select * from paibanbiao_info where remarks1='" + user + "' and department_name like '%" + e[0] + "%' and plan_name like '%" + e[1] + "%'"
       },
       success: res => {
         var list = res.result.recordset
         _this.setData({
           list: list,
-          listJiQi: list
+          listJiQi: list,
+          department_name:'',
+          jihua:'',
         })
         // console.log(list)
         wx.hideLoading({
@@ -264,6 +279,16 @@ Page({
       }
     })
   },
+
+  sel1:function(){
+    var _this = this
+    console.log(_this.data.name)
+    console.log(_this.data.banci)
+    var e = [_this.data.department_name,_this.data.jihua]
+    _this.tableShow(e)
+    _this.qxShow()
+  },
+
   clickView: function (e) {
     console.log(e);
     var _this = this
@@ -315,7 +340,8 @@ Page({
           title: '删除成功！',
           icon: 'none'
         })
-        _this.tableShow()
+        var e = ['','']
+        _this.tableShow(e)
         _this.qxShow()
       },
       err: res => {
@@ -341,6 +367,7 @@ Page({
       tjShow: false,
       handle: true,
       xgShow: false,
+      cxShow:false,
       paiban_add_show1:'none',
       paiban_add_show2:'none',
       riqi: "",
@@ -685,6 +712,7 @@ Page({
           id: "",
         })
         _this.qxShow()
+        var e = ['','']
         _this.tableShow()
         wx.showToast({
           title: '修改成功！',
@@ -1144,6 +1172,7 @@ Page({
               id: "",
             })
             _this.qxShow()
+            var e = ['','']
             _this.tableShow()
             wx.showToast({
               title: '排班成功！请到排班明细表中查看明细。',
@@ -1357,6 +1386,7 @@ Page({
             id: "",
           })
           _this.qxShow()
+          var e = ['','']
           _this.tableShow()
           wx.showToast({
             title: '排班成功！请到排班明细表中查看明细。',
@@ -1539,6 +1569,7 @@ Page({
             id: "",
           })
           _this.qxShow()
+          var e = ['','']
           _this.tableShow()
           wx.showToast({
             title: '排班成功！请到排班明细表中查看明细。',
@@ -1713,6 +1744,7 @@ Page({
             id: "",
           })
           _this.qxShow()
+          var e = ['','']
           _this.tableShow()
           wx.showToast({
             title: '排班成功！请到排班明细表中查看明细。',

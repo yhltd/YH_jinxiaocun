@@ -244,7 +244,7 @@ button{
   bottom: 2%;
 }
 .bt_bottom{
-  width: 30%;
+  width: 23%;
   background-color: #009688;
   color: #E6E6E6;
   height: 75rpx;

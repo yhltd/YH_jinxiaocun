@@ -22,6 +22,9 @@ Page({
     addId: "",
     addCDIde: "",
 
+    start_date:'',
+    stop_date:'',
+
     riqi: "",
     riqi2: "",
     riqi3: "",
@@ -240,7 +243,7 @@ Page({
 
   goto_yanshi: function(){
     wx.navigateTo({
-      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/paichan.mp4"
       }) 
   },
 
@@ -990,7 +993,9 @@ Page({
     var _this = this
     _this.selListGongZuoShiJian('')
     _this.setData({
-      cxShow: true
+      cxShow: true,
+      start_date:'',
+      stop_date:'',
     })
   },
   sel1: function () {
@@ -1029,22 +1034,12 @@ Page({
 
   // 根据日期查询每日生产计划
   sel2: function (e) {
-
     var _this = this;
     let riqi2 = _this.data.riqi;
     let jiqi = _this.data.listJiQi;
     let list3 = [];
-
-    // console.log(jiqi)
-    // console.log(riqi2);
-    // console.log(jiqi[1].name)
-    // console.log(jiqi[1].list[riqi2]);
     for (let i = 0; i < jiqi.length; i++) {
-      // console.log(12);
       for (let j=0; j<jiqi[i].list.length; j++) {
-        // console.log(123);
-        // console.log(item);
-        // console.log(jiqi[i].list[item]);
         if (jiqi[i].list[j].riqi == riqi2) {
           list3.push({
             riqi: jiqi[i].list[j].riqi,
@@ -1068,26 +1063,9 @@ Page({
         xlShow1: false,
         xzmkShow: false
       })
-
     }
-
-    // _this.selListGongZuoShiJian2()
-    // _this.qxShow22()
-
-    // for (let item in list[index].list){
-
-    //   list3.push({
-    //     riqi: item,
-    //     shuliang: list[index].list[item]
-    //   })
-    //   console.log(item);   
-    // }   
-    // _this.setData({
-    //    xiangqingShow2: true,
-    //    list3
-    //  })
-
   },
+
   sel3: function (e) {
     var _this = this;
     let riqi2 = _this.data.riqi2;
@@ -1502,6 +1480,7 @@ Page({
     });
     _this.qxShow22()
   },
+
   // 起始日期获取
   onInput33: function () {
     var _this = this

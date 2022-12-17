@@ -30,11 +30,30 @@
 <!------------------------->
 <view class="bottom_view">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire"
-     disabled="{{isdis!=1}}">添加</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="tableShow"
+     disabled="{{isdis!=1}}">添加</button> 
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1"
     disabled="{{isdischa!=1}}">刷新</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" 
+   disabled="{{isdischa!=1}}">查询</button>
   <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
 </view>
+
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+	<view class="lables">部门名称</view>
+    <input bindinput="onInput" data-column="department_name" class="input_text_form" value="{{department_name}}" type="text" name="department_name" ></input>
+    <view class="lables">页面名称</view>
+    <input bindinput="onInput" data-column="view_name" class="input_text_form"  value="{{view_name}}" type="text" name="view_name"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->

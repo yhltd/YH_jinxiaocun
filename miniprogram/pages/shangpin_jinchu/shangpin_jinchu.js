@@ -97,6 +97,15 @@ Page({
       }
     });
   },
+
+  goto_print: function(){
+    var _this = this 
+    var list = _this.data.szzhi
+    console.log(list)
+    wx.navigateTo({
+      url: "../../packageJ/page/print/print?list=" + JSON.stringify(list) + "&type=商品",
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

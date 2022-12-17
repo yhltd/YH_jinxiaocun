@@ -106,12 +106,8 @@ Page({
     var _this = this
     _this.panduanquanxian()
     if (_this.data.isdischa == 1) {
-      _this.tableShow()
-      _this.setData({
-
-      })
       var _this = this
-      var e = ['', '', '']
+      var e = ['','']
       _this.tableShow(e)
       // _this.panduanquanxian()
     }
@@ -125,7 +121,7 @@ Page({
 
   goto_yanshi: function(){
     wx.navigateTo({
-      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/bumen.mp4"
       }) 
   },
 
@@ -264,7 +260,7 @@ Page({
 
   // //结束
   //初始数据
-  tableShow: function () {
+  tableShow: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
     let bumen = app.globalData;
@@ -272,12 +268,14 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from department where company='" + user + "' order by department_name"
+        query: "select * from department where company = '" + user + "' and department_name like '%" + e[0] + "%' and view_name like '%" + e[1] + "%' order by department_name"
       },
       success: res => {
         var list = res.result.recordset
         _this.setData({
-          list: list
+          list: list,
+          department_name:'',
+          view_name:'',
         })
         // console.log(list)
         wx.hideLoading({
@@ -320,8 +318,17 @@ Page({
     _this.setData({
       xzShow: false,
       tjShow: false,
+      cxShow:false,
     })
   },
+
+  sel1:function(){
+    var _this = this
+    var e = [_this.data.department_name,_this.data.view_name]
+    _this.tableShow(e)
+    _this.qxShow()
+  },
+
   // 修改事件
   upd1: function () {
     var _this = this
@@ -345,7 +352,8 @@ Page({
             dcompany: "",
           })
           _this.qxShow()
-          _this.tableShow()
+          var e = ['','']
+          _this.tableShow(e)
           wx.showToast({
             title: '修改成功！',
             icon: 'none',
@@ -443,7 +451,8 @@ Page({
             tjShow: false,
           })
           _this.qxShow()
-          _this.tableShow()
+          var e = ['','']
+          _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
             icon: 'none',
@@ -474,7 +483,9 @@ Page({
   entering: function () {
     var _this = this
     _this.setData({
-      cxShow: true
+      cxShow: true,
+      department_name:'',
+      view_name:'',
     })
   },
   // 删除事件
@@ -500,7 +511,8 @@ Page({
           tjShow: false
         })
         _this.qxShow()
-        _this.tableShow()
+        var e = ['','']
+        _this.tableShow(e)
         wx.showToast({
           title: '删除成功！',
           icon: 'none',

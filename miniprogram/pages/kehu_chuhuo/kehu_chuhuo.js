@@ -47,6 +47,15 @@ Page({
     _this.sel1()
   },
 
+  goto_print: function(){
+    var _this = this 
+    var list = _this.data.szzhi
+    console.log(list)
+    wx.navigateTo({
+      url: "../../packageJ/page/print/print?list=" + JSON.stringify(list) + "&type=客户",
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

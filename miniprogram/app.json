@@ -263,7 +263,8 @@
       "root": "packageJ",
       "name": "jinxiaocun",
       "pages": [
-        "page/out_in_print/out_in_print"
+        "page/out_in_print/out_in_print",
+        "page/print/print"
       ]
     },
     {

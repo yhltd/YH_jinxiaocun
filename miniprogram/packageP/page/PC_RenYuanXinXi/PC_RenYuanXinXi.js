@@ -26,10 +26,13 @@ Page({
   delWindow1:false,
   xgShow:false,
   rqxzShow3:false,
+  cxShow:false,
   isdis: '',
   isdischa: '',
   isdisgai:'',
-  isdisshan:''
+  isdisshan:'',
+  name:'',
+  banci:'',
   },
 
   /**
@@ -39,14 +42,33 @@ Page({
     var _this = this
     _this.panduanquanxian()
     if (_this.data.isdischa == 1) {
-      _this.tableShow()
+      var e = ['','']
+      _this.tableShow(e)
       _this.getSystemName()
     }
   },
 
+  entering: function () {
+    var _this = this
+    _this.setData({
+      cxShow: true,
+      name:'',
+      banci:'',
+    })
+  },
+
+  sel1:function(){
+    var _this = this
+    console.log(_this.data.name)
+    console.log(_this.data.banci)
+    var e = [_this.data.name,_this.data.banci]
+    _this.tableShow(e)
+    _this.qxShow()
+  },
+
   goto_yanshi: function(){
     wx.navigateTo({
-      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/mokuaidanwei.mp4"
+      url: "../PC_mp4/PC_mp4?this_url=cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageP_mp4/renyuanxinxi.mp4"
       }) 
   },
 
@@ -121,18 +143,21 @@ Page({
     }
   },
 
-  tableShow:function(){
+  tableShow:function(e){
     var _this = this
     let user = app.globalData.gongsi;
+    console.log("select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'")
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from paibanbiao_renyuan where company='" + user + "'"
+        query: "select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'"
       },
       success: res => {
         var list = res.result.recordset
         _this.setData({
           list: list,
+          name:'',
+          banci:'',
         })
         wx.showToast({
           title: '查询成功！',
@@ -325,6 +350,7 @@ Page({
     _this.setData({
       tjShow: false,
       xgShow: false,
+      cxShow:false,
       handle:true
     })
   },

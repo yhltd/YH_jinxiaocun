@@ -1,6 +1,6 @@
 // import * as echarts from '../../../ec-canvas/echarts'
-import * as echarts from '../../components/ec-canvas/echarts'
-
+// import * as echarts from '../../components/ec-canvas/echarts'
+import * as echarts from '../ec-canvas/echarts'
 const app = getApp();
 // var Chart = null;
 Page({
@@ -42,13 +42,32 @@ Page({
 
     var sql = "select sum(case when set_date like '" + xdrq + "-01%' then set_num else 0 end) as month1,sum(case when set_date like '" + xdrq + "-02%' then set_num else 0 end) as month2,sum(case when set_date like '" + xdrq + "-03%' then set_num else 0 end) as month3,sum(case when set_date like '" + xdrq + "-04%' then set_num else 0 end) as month4,sum(case when set_date like '" + xdrq + "-05%' then set_num else 0 end) as month5,sum(case when set_date like '" + xdrq + "-06%' then set_num else 0 end) as month6,sum(case when set_date like '" + xdrq + "-07%' then set_num else 0 end) as month7,sum(case when set_date like '" + xdrq + "-08%' then set_num else 0 end) as month8,sum(case when set_date like '" + xdrq + "-09%' then set_num else 0 end) as month9,sum(case when set_date like '" + xdrq + "-10%' then set_num else 0 end) as month10,sum(case when set_date like '" + xdrq + "-11%' then set_num else 0 end) as month11,sum(case when set_date like '" + xdrq + "-12%' then set_num else 0 end) as month12 from order_info where company = '济南顺昌制造有限公司'"
 
-    _this.setData({
-      pie_data:pie_data,
-      xvalue:xvalue,
-      yvalue:yvalue
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var month_list = res.result.recordset
+        console.log(month_list)
+        _this.setData({
+          month_list: month_list
+        })
+        _this.line_refresh()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
     })
 
-    _this.line_refresh()
+
   },
 
   pie_refresh: function(){
@@ -61,21 +80,43 @@ Page({
 
   line_refresh: function(){
     var _this = this
+    var list = _this.data.month_list
     var options = {
       xAxis: {
-        type: 'category',
-        data: _this.data.xvalue
+        type: 'category',   // 还有其他的type，可以去官网喵两眼哦
+        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],   // x轴数据
+        name: '月份',   // x轴名称
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        name: '订单数量',   // y轴名称
       },
       series: [
         {
-          data: _this.data.yvalue,
-          type: 'line',
-        }
+          name: '当月订单',
+          data: [list[0].month1, list[0].month2, list[0].month3, list[0].month4, list[0].month5, list[0].month6, list[0].month7,list[0].month8,list[0].month9,list[0].month10,list[0].month11,list[0].month12],
+          type: 'line'
+        },
       ]
     }
+
+    console.log(options)
+
+    // var options = {
+    //   xAxis: {
+    //     type: 'category',
+    //     data: _this.data.xvalue
+    //   },
+    //   yAxis: {
+    //     type: 'value'
+    //   },
+    //   series: [
+    //     {
+    //       data: _this.data.yvalue,
+    //       type: 'line',
+    //     }
+    //   ]
+    // }
     var options = 
     _this.updChart(options)
   },
