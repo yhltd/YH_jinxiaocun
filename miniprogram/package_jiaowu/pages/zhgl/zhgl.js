@@ -162,7 +162,7 @@ Page({
     var list = _this.data.list;
     var title = _this.data.title
     var cloudList = {
-      name : '账号管理',
+      name : '用户管理',
       items : [],
       header : []
     }
@@ -215,14 +215,16 @@ Page({
   onLoad: function (options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    console.log(userInfo)
     _this.setData({
       userInfo:userInfo
     })
-
+    console.log(userInfo.ID)
+    console.log(userInfo.Company)
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='账号管理'"
+        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='用户管理'"
       },
       success: res => {
         console.log(res.result)
@@ -231,12 +233,14 @@ Page({
         var shan = 0
         var gai = 0
         var cha = 0
+        console.log(list)
         if(list.length > 0){
           zeng = list[0].add
           shan = list[0].del
           gai = list[0].upd
           cha = list[0].sel
         }
+        
         _this.setData({
           quanxian_zeng:zeng,
           quanxian_shan:shan,

@@ -87,11 +87,17 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
-	  <view class="lables1">日期</view>
-    <picker class="pick" mode="date" value="{{date}}" data-column_name="rq" fields="month" bindchange="choiceDate">
-      <input bindinput="onInput" data-column="rq" class="input_text_form"  value="{{rq}}" type="date" name="rq" disabled="disabled"></input>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+	  <view class="lables1">起始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1"  bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi1" class="input_text_form"  value="{{riqi1}}" type="date" name="riqi1" disabled="disabled"></input>
     </picker>
+    <view class="lables1">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
+    </picker>
+    <view class="lables">教师姓名</view>
+    <input bindinput="onInput" data-column="t_name" class="input_text_form"  value="{{t_name}}" type="text" name="t_name"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

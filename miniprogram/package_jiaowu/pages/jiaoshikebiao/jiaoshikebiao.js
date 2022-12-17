@@ -67,6 +67,35 @@ Page({
     console.log(e.detail.value)
   },
 
+  choiceDate1: function (e) {
+    //e.preventDefault(); 
+    console.log(e.detail.value)
+    var this_start_date=e.detail.value
+    var this_start_week = new Date(this_start_date).getDay();
+    console.log(this_start_week)
+    var aa
+    if (this_start_week=='1'){
+      aa='星期一'
+    }else if (this_start_week=='2'){
+      aa='星期二'
+    }else if (this_start_week=='3'){
+      aa='星期三'
+    }else if (this_start_week=='4'){
+      aa='星期四'
+    }else if (this_start_week=='5'){
+      aa='星期五'
+    }else if (this_start_week=='6'){
+      aa='星期六'
+    }else if (this_start_week=='7'){
+      aa='星期日'
+    }
+    this.setData({
+      [e.target.dataset.column_name]: e.detail.value,
+      xq:aa
+    })
+    console.log(e.detail.value)
+  },
+
   tableShow: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
@@ -111,6 +140,38 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       userInfo:userInfo
+    })
+
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu', 
+      data: {
+        sql: "select teacher from shezhi where Company = '" + userInfo.Company + "'"
+      },
+      success: res => {
+        var list = res.result
+        console.log(list[0].teacher)
+        var teacker = [] 
+        for(var i=0; i<list.length; i++){
+          if(list[i].teacher != '' && list[i].teacher != null && list[i].teacher != undefined){
+            teacker.push(list[i].teacher)
+            console.log(list[i].teacher)
+          }
+        }
+        _this.setData({
+          t_name_list:teacker,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
 
     wx.cloud.callFunction({
@@ -242,6 +303,14 @@ Page({
     console.log(week)
     _this.setData({
       xq: week,
+    })
+  },
+
+  bindPickerChange6: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      js: _this.data.t_name_list[e.detail.value]
     })
   },
 

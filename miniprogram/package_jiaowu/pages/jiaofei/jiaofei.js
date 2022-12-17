@@ -248,6 +248,38 @@ Page({
     })
 
     wx.cloud.callFunction({
+      name: 'sql_jiaowu', 
+      data: {
+        sql: "select paiment from shezhi where Company = '" + userInfo.Company + "'"
+      },
+      success: res => {
+        var list = res.result
+        console.log(list[0].paiment)
+        var paiment = [] 
+        for(var i=0; i<list.length; i++){
+          if(list[i].paiment != '' && list[i].paiment != null && list[i].paiment != undefined){
+            paiment.push(list[i].paiment)
+            console.log(list[i].teacher)
+          }
+        }
+        _this.setData({
+          tpaiment_list:paiment,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+    wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
         sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='缴费记录'"
@@ -452,7 +484,13 @@ Page({
       xgShow:true,
     })
   },
-
+  bindPickerChange6: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      jffs: _this.data.tpaiment_list[e.detail.value]
+    })
+  },
   upd1:function(){
     var _this = this
     let user = app.globalData.gongsi;

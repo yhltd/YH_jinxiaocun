@@ -41,10 +41,13 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
     <view class="lables">教师姓名</view>
-    <input bindinput="onInput" data-column="jsxm" class="input_text_form"  value="{{jsxm}}" type="text" name="jsxm"></input>
+    <picker bindchange="bindPickerChange6" value="{{index}}" range="{{t_name_list}}">
+      <input bindinput="onInput" data-column="jsxm" class="input_text_form"  value="{{jsxm}}" type="text" name="jsxm" disabled="disabled"></input>
+    </picker>
+    
     <view class="lables">性别</view>
     <picker bindchange="bindPickerChange4" value="{{index}}" range="{{xingbie_list}}">
-      <input bindinput="onInput" data-column="xb" class="input_text_form" value="{{xb}}" type="text" name="xb" disabled="disabled"></input>
+      <input bindinput="onInput" data-column="xb" class="input_text_form" value="{{xb}}" type="text" name="xb" ></input>
     </picker>
     <view class="lables">身份证号码</view>
     <input bindinput="onInput" data-column="sfzhm" class="input_text_form" value="{{sfzhm}}" type="text" name="sfzhm" ></input>
@@ -65,7 +68,10 @@
       <input bindinput="onInput" data-column="rzrq" class="input_text_form"  value="{{rzrq}}" type="date" name="rzrq" disabled="disabled"></input>
     </picker>
     <view class="lables">在职状态</view>
-    <input bindinput="onInput" data-column="zzzt" class="input_text_form" value="{{zzzt}}" type="text" name="zzzt" ></input>
+    <picker bindchange="bindPickerChange5" value="{{index}}" range="{{state_list}}">
+      <input bindinput="onInput" data-column="zzzt" class="input_text_form" value="{{zzzt}}" type="text" name="zzzt" disabled="disabled"></input>
+    </picker>
+    
     <view class="lables">社保情况</view>
     <input bindinput="onInput" data-column="sbqk" class="input_text_form" value="{{sbqk}}" type="text" name="sbqk" ></input>
     <view class="lables">地址</view>

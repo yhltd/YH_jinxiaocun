@@ -80,7 +80,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where riqi like '%" + e[0] + "%' and Company='"+user+"'"
+        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and teacher_name like '%" + e[2] + "%' and Company='"+user+"'"
       },
       success: res => {
         console.log(res.result)
@@ -141,7 +141,7 @@ Page({
           quanxian_cha:cha,
         })
         if(cha == '√'){
-          var e = ['']
+          var e = ['1999-01-01','2222-01-01',_this.data.rq]
           _this.tableShow(e)
         }else{
           wx.showToast({
@@ -258,7 +258,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['']
+          var e = ['1999-01-01','2222-01-01',_this.data.rq]
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -317,7 +317,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['']
+          var e = ['1999-01-01','2222-01-01',_this.data.rq]
           _this.tableShow(e)
 
           wx.showToast({
@@ -361,7 +361,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['']
+          var e = ['1999-01-01','2222-01-01',_this.data.rq]
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -412,7 +412,7 @@ Page({
         riqi2:'2100-12-31'
       })
     }
-    var e = [_this.data.rq]
+    var e = [_this.data.riqi1,_this.data.riqi2,_this.data.rq]
     _this.tableShow(e)
     _this.qxShow()
   },

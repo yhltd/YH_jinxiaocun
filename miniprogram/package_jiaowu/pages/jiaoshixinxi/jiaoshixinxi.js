@@ -119,6 +119,7 @@ Page({
     minDate: new Date(1900, 1, 1).getTime(),
     maxDate: new Date(2100, 12, 31).getTime(),
     currentDate: new Date().getTime(),
+    state_list:['在职','离职']
   },
 
   bindPickerChange4: function(e) {
@@ -130,6 +131,24 @@ Page({
       xb: xb,
     })
   },
+
+
+  bindPickerChange5: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      zzzt: _this.data.state_list[e.detail.value]
+    })
+  },
+
+  bindPickerChange6: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      jsxm: _this.data.t_name_list[e.detail.value]
+    })
+  },
+
 
   choiceDate: function (e) {
     //e.preventDefault(); 
@@ -183,6 +202,38 @@ Page({
     })
 
     wx.cloud.callFunction({
+      name: 'sql_jiaowu', 
+      data: {
+        sql: "select teacher from shezhi where Company = '" + userInfo.Company + "'"
+      },
+      success: res => {
+        var list = res.result
+        console.log(list[0].teacher)
+        var teacker = [] 
+        for(var i=0; i<list.length; i++){
+          if(list[i].teacher != '' && list[i].teacher != null && list[i].teacher != undefined){
+            teacker.push(list[i].teacher)
+            console.log(list[i].teacher)
+          }
+        }
+        _this.setData({
+          t_name_list:teacker,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+    wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
         sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='教师信息'"
@@ -230,7 +281,8 @@ Page({
       }
     })
 
-    
+
+
   },
 
   onInput: function (e) {

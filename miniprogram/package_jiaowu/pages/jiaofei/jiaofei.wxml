@@ -50,8 +50,11 @@
     <input bindinput="onInput" data-column="djje" class="input_text_form" value="{{djje}}" type="text" name="djje" ></input>
     <view class="lables">学费金额</view>
     <input bindinput="onInput" data-column="xfje" class="input_text_form" value="{{xfje}}" type="text" name="xfje" ></input>
-    <view class="lables">缴费方式</view>
-    <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" ></input>
+    <view class="lables">缴费方式</view> 
+    <picker bindchange="bindPickerChange6" value="{{index}}" range="{{tpaiment_list}}">
+      <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" disabled="disabled"></input>
+    </picker>
+    
     <view class="lables">收费人</view>
     <input bindinput="onInput" data-column="sfr" class="input_text_form" value="{{sfr}}" type="text" name="sfr" ></input>
     <view class="lables">备注</view>
@@ -76,7 +79,11 @@
     <view class="lables">学费金额</view>
     <input bindinput="onInput" data-column="xfje" class="input_text_form" value="{{xfje}}" type="text" name="xfje" ></input>
     <view class="lables">缴费方式</view>
-    <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" ></input>
+    <!-- <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" ></input> -->
+    <picker bindchange="bindPickerChange6" value="{{index}}" range="{{tpaiment_list}}">
+      <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" disabled="disabled"></input>
+    </picker>
+    
     <view class="lables">收费人</view>
     <input bindinput="onInput" data-column="sfr" class="input_text_form" value="{{sfr}}" type="text" name="sfr" ></input>
     <view class="lables">备注</view>
