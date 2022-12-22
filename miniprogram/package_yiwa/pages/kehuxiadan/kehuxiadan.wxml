@@ -8,7 +8,9 @@
 </view>
 <view style="display: flex;">
   <view class="lables">日期：</view>
-  <input bindinput="onInput_text" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled" ></input>
+  <picker style="width: 65%;" class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
+    <input style="width: 100%;" bindinput="onInput_text" data-column="riqi" class="input_text_form" value="{{riqi}}" type="text" name="riqi" disabled="disabled" ></input>
+  </picker>
 </view>
 <!------------------------->
 <!---------添加弹窗--------->

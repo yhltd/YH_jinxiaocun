@@ -171,8 +171,8 @@ Page({
         var new_bianhao = "001" 
         for(var i=0; i<bianhao_list.length; i++){
           if(bianhao_list[i].Documentnumber != '' && bianhao_list[i].Documentnumber != null && bianhao_list[i].Documentnumber != undefined){
-            var this_bianhao = bianhao_list[i].Documentnumber.slice(10)
-            console.log(this_bianhao)
+            var this_bianhao = bianhao_list[i].Documentnumber.slice(8)
+            console.log(this_bianhao) 
             if(this_bianhao >= new_bianhao){
               new_bianhao = (this_bianhao * 1 + 1).toString()
               if(new_bianhao.length == 1){
