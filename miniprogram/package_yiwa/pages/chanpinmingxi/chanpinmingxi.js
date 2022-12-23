@@ -91,7 +91,7 @@ Page({
 
     var sql = ""
     console.log(_this.data.userInfo.power)
-    if(_this.data.userInfo.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '业务员'){
       sql = "select DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id where DC.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
     }else{
       sql = "select DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id where salesman = '" + _this.data.userInfo.id + "' DC.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
@@ -189,10 +189,14 @@ Page({
 
   upd1:function(){
     var _this = this
+    if(_this.data.userInfo.power == '管理员' ){
+      sql = "update DetailsofProducts set Theunitprice='" + _this.data.Theunitprice + "',kuang_num='" + _this.data.kuang_num + "' where id=" + _this.data.id
+    }
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "update DetailsofProducts set Theunitprice='" + _this.data.Theunitprice + "',kuang_num='" + _this.data.kuang_num + "' where id=" + _this.data.id
+        //query: "update DetailsofProducts set Theunitprice='" + _this.data.Theunitprice + "',kuang_num='" + _this.data.kuang_num + "' where id=" + _this.data.id
+        query: sql
       },
       success: res => {
         _this.setData({
@@ -203,7 +207,8 @@ Page({
             kuang_num:'',
         })
         _this.qxShow()
-        var e = ['','']
+        console.log(_this.data.cxcpmc)
+        var e = [_this.data.cxcpmc,_this.data.cxkhmc]
          _this.tableShow(e)
 
         wx.showToast({
@@ -249,6 +254,10 @@ Page({
   sel1:function(){
     var _this = this
     var e = [_this.data.NameofProduct,_this.data.name]
+    this.setData({
+      cxcpmc: _this.data.NameofProduct,
+      cxkhmc: _this.data.name
+    })
     _this.tableShow(e)
     _this.qxShow()
   },

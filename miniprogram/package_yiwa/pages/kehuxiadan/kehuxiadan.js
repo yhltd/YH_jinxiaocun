@@ -157,7 +157,14 @@ Page({
 
     var bianhao_left = getBianHao()
     var riqi= getNowDate()
-    
+    var nian =riqi.split('-')[0]
+    var yue =riqi.split('-')[1]
+    var ri =riqi.split('-')[2]
+    var fu = '-'
+    var aa = 1
+    var rii = number(ri) + number(aa) 
+    riqi = nian+fu+yue+fu+rii
+    console.log(riqi)
     console.log(bianhao_left)
 
     var sql = "select Documentnumber from Detailsoforder where Documentnumber like '" + bianhao_left + "%'"
@@ -446,14 +453,14 @@ Page({
       })
       return;
     }
-
+    var sql ="select DP.id,Thedetail_id,Customer_id,DC.NameofProduct as name,DC.unit,DP.Theunitprice from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id where Customer_id = '"+ _this.data.idd +"'"
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "select DP.id,Thedetail_id,Customer_id,DC.NameofProduct as name,DC.unit,DP.Theunitprice from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id where Customer_id = '"+ _this.data.idd +"'"
+        query: sql
       },
       success: res => {
-        console.log()
+        console.log(sql)
         var list = res.result.recordset
         console.log(list)
         _this.setData({

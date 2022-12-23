@@ -82,6 +82,7 @@ Page({
     salesman: '',
     driver: '',
     qr_code: '',
+    customer_address:'',
   },
 
   /**
@@ -130,13 +131,16 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var sql = "select * from (select * from (select *,'' as zongjia from (select * from (select * from (select df.id,Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,huikuang,zhongliang_num,name as kehu,phone as kehu_phone,driver,salesman,beizhu from Detailsoforder as df left join (select id,name,phone,driver,salesman,customer_address from userInfo) as us on df.Customer_id = us.id) as df2 left join (select id as siji_id,name as siji,phone as siji_phone from userInfo) as us2 on df2.driver = us2.siji_id) as df3 left join (select id as yewuyuan_id,name as yewuyuan,phone as yewuyuan_phone from userInfo) as us3 on df3.salesman = us3.yewuyuan_id) as df4 left join (select Customer_id as kehu_id,NameofProduct as production_name,unit as danwei,isnull(sum(CONVERT(float,isnull(number,0))) - sum(CONVERT(float,isnull(huikuang,0))),0) as qiankuang from Detailsoforder where riqi < '" + e[1] + "' group by Customer_id,NameofProduct,unit) as kuang_left on df4.Customer_id = kuang_left.kehu_id and df4.NameofProduct = kuang_left.production_name and df4.unit = kuang_left.danwei) as df5 left join (select NameofProduct as product_name,unit as danwei1,zhongliang,kuang from DetailedConfiguration) as dc on df5.NameofProduct = dc.product_name and df5.unit = dc.danwei1 where Customer_id = '" + e[0] + "' and riqi = '" + e[1] + "') as df6 left join (select Customer_id as c_id,kuang_num as qichu_kuang,NameofProduct as ming,unit as dw from DetailsofProducts) as kuang on df6.NameofProduct = kuang.ming and df6.unit = kuang.dw and df6.Customer_id = kuang.c_id;select * from beizhu;"
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: "select * from (select * from (select *,'' as zongjia from (select * from (select * from (select df.id,Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,huikuang,zhongliang_num,name as kehu,phone as kehu_phone,driver,salesman,beizhu from Detailsoforder as df left join (select id,name,phone,driver,salesman from userInfo) as us on df.Customer_id = us.id) as df2 left join (select id as siji_id,name as siji,phone as siji_phone from userInfo) as us2 on df2.driver = us2.siji_id) as df3 left join (select id as yewuyuan_id,name as yewuyuan,phone as yewuyuan_phone from userInfo) as us3 on df3.salesman = us3.yewuyuan_id) as df4 left join (select Customer_id as kehu_id,NameofProduct as production_name,unit as danwei,isnull(sum(CONVERT(float,isnull(number,0))) - sum(CONVERT(float,isnull(huikuang,0))),0) as qiankuang from Detailsoforder where riqi < '" + e[1] + "' group by Customer_id,NameofProduct,unit) as kuang_left on df4.Customer_id = kuang_left.kehu_id and df4.NameofProduct = kuang_left.production_name and df4.unit = kuang_left.danwei) as df5 left join (select NameofProduct as product_name,unit as danwei1,zhongliang,kuang from DetailedConfiguration) as dc on df5.NameofProduct = dc.product_name and df5.unit = dc.danwei1 where Customer_id = " + e[0] + " and riqi = '" + e[1] + "') as df6 left join (select Customer_id as c_id,kuang_num as qichu_kuang,NameofProduct as ming,unit as dw from DetailsofProducts) as kuang on df6.NameofProduct = kuang.ming and df6.unit = kuang.dw and df6.Customer_id = kuang.c_id;select * from beizhu;"
+        //query: "select * from (select * from (select *,'' as zongjia from (select * from (select * from (select df.id,Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,huikuang,zhongliang_num,name as kehu,phone as kehu_phone,driver,salesman,beizhu from Detailsoforder as df left join (select id,name,phone,driver,salesman from userInfo) as us on df.Customer_id = us.id) as df2 left join (select id as siji_id,name as siji,phone as siji_phone from userInfo) as us2 on df2.driver = us2.siji_id) as df3 left join (select id as yewuyuan_id,name as yewuyuan,phone as yewuyuan_phone from userInfo) as us3 on df3.salesman = us3.yewuyuan_id) as df4 left join (select Customer_id as kehu_id,NameofProduct as production_name,unit as danwei,isnull(sum(CONVERT(float,isnull(number,0))) - sum(CONVERT(float,isnull(huikuang,0))),0) as qiankuang from Detailsoforder where riqi < '" + e[1] + "' group by Customer_id,NameofProduct,unit) as kuang_left on df4.Customer_id = kuang_left.kehu_id and df4.NameofProduct = kuang_left.production_name and df4.unit = kuang_left.danwei) as df5 left join (select NameofProduct as product_name,unit as danwei1,zhongliang,kuang from DetailedConfiguration) as dc on df5.NameofProduct = dc.product_name and df5.unit = dc.danwei1 where Customer_id = " + e[0] + " and riqi = '" + e[1] + "') as df6 left join (select Customer_id as c_id,kuang_num as qichu_kuang,NameofProduct as ming,unit as dw from DetailsofProducts) as kuang on df6.NameofProduct = kuang.ming and df6.unit = kuang.dw and df6.Customer_id = kuang.c_id;select * from beizhu;"
+        query: sql
       },
       success: res => {
         console.log(res)
+        console.log(sql)
         var list = res.result.recordsets[0]
         if(list.length < 1){
           wx.showToast({
@@ -524,6 +528,8 @@ Page({
       customer:"",
       leibie:"",
       area:"",
+      name:"",
+      riqi:"",
     })
   },
 
@@ -560,6 +566,7 @@ Page({
     var e = [_this.data.sel_id,_this.data.sel_riqi]
     _this.tableShow(e)
     _this.qxShow()
+    
   },
 
   save:function(){
