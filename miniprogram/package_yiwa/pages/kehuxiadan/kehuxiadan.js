@@ -157,15 +157,6 @@ Page({
 
     var bianhao_left = getBianHao()
     var riqi= getNowDate()
-    var nian =riqi.split('-')[0]
-    var yue =riqi.split('-')[1]
-    var ri =riqi.split('-')[2]
-    var fu = '-'
-    var aa = 1
-    var rii = number(ri) + number(aa) 
-    riqi = nian+fu+yue+fu+rii
-    console.log(riqi)
-    console.log(bianhao_left)
 
     var sql = "select Documentnumber from Detailsoforder where Documentnumber like '" + bianhao_left + "%'"
     wx.cloud.callFunction({
@@ -292,7 +283,8 @@ Page({
     add_list[_this.data.id][_this.data.this_column] = _this.data.number
     console.log(_this.data.this_value)
     _this.setData({
-      add_list:add_list
+      add_list:add_list,
+      number:"",
     })
     _this.qxShow()
   },
@@ -371,13 +363,65 @@ Page({
             title: '添加成功！',
             icon: 'none'
           })
-          var common_Interval = setInterval(()=>
-          {
-            wx.navigateBack({ 
-              delta: 1
-            });
-            clearInterval(common_Interval);
-          }, 2000)
+          // var common_Interval = setInterval(()=>
+          // {
+          //   wx.navigateBack({ 
+          //     delta: 1
+          //   });
+          //   clearInterval(common_Interval);
+          // }, 2000)
+          _this.setData({
+            add_list:"",
+            Customer_id:"",
+          })
+          var bianhao_left = getBianHao()
+    var riqi= getNowDate()
+
+    var sql = "select Documentnumber from Detailsoforder where Documentnumber like '" + bianhao_left + "%'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var bianhao_list = res.result.recordset
+        var new_bianhao = "001" 
+        for(var i=0; i<bianhao_list.length; i++){
+          if(bianhao_list[i].Documentnumber != '' && bianhao_list[i].Documentnumber != null && bianhao_list[i].Documentnumber != undefined){
+            var this_bianhao = bianhao_list[i].Documentnumber.slice(8)
+            console.log(this_bianhao) 
+            if(this_bianhao >= new_bianhao){
+              new_bianhao = (this_bianhao * 1 + 1).toString()
+              if(new_bianhao.length == 1){
+                new_bianhao = "00" + new_bianhao.toString()
+              }else if(new_bianhao.length == 2){
+                new_bianhao = "0" + new_bianhao.toString()
+              }
+              console.log(new_bianhao)
+            }
+          }
+        }
+        new_bianhao = bianhao_left.toString() + new_bianhao.toString()
+        _this.setData({
+          Documentnumber:new_bianhao,
+          riqi:riqi
+        })
+      },
+      err: res => {
+        wx.showToast({
+          title: '读取下拉列表错误！',
+          icon: 'none'
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
         },
         err: res => {
           console.log("错误!")
@@ -510,7 +554,7 @@ Page({
           number:'',
         })
         _this.setData({
-          xlShow4: false,
+          //xlShow4: false,
           add_list:add_list
         })
       }
@@ -607,7 +651,7 @@ function getBianHao() {
   var sign2 = ":";
   var year = date.getFullYear() // 年
   var month = date.getMonth() + 1; // 月
-  var day  = date.getDate(); // 日
+  var day  = date.getDate()+1; // 日
   var hour = date.getHours(); // 时
   var minutes = date.getMinutes(); // 分
   var seconds = date.getSeconds() //秒
@@ -639,7 +683,7 @@ function getBianHao() {
   var sign2 = ":";
   var year = date.getFullYear() // 年
   var month = date.getMonth() + 1; // 月
-  var day  = date.getDate(); // 日
+  var day  = date.getDate()+1; // 日
   var hour = date.getHours(); // 时
   var minutes = date.getMinutes(); // 分
   var seconds = date.getSeconds() //秒

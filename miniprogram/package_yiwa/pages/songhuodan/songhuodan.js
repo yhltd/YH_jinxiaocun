@@ -573,6 +573,7 @@ Page({
     var _this = this
     var zhongliang_list = _this.data.zhongliang_list
     var sql1 = ""
+    var sql_end=""
     if(_this.data.sel_riqi == '' || _this.data.sel_id == ''){
       wx.showToast({
         title: '请查询后补全信息再点击此按钮！',
@@ -612,23 +613,59 @@ Page({
     
     var sql4 = ""
     
-    sql4 = "update Detailsoforder set beizhu = '" + _this.data.beizhu2 + "' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
-    var sql_end = sql1 + sql2 + sql3 + sql4
-    console.log(sql_end) 
+    sql4 = "update Detailsoforder set beizhu = '" + _this.data.beizhu2 + "',baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
+    // var sql_end = sql1 + sql2 + sql3 + sql4
+    // console.log(sql_end) 
+    console.log(sql4)
+    var sql="select baocun from Detailsoforder where Customer_id = '" + _this.data.sel_id + "'and riqi = '" + _this.data.sel_riqi + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        query: sql_end
+        query: sql
       },
       success: res => {
-        console.log(res)
-        wx.showToast({
-          title: '保存成功！',
-          icon: 'none',
-          duration: 3000
-        })
-        var e = [_this.data.sel_id,_this.data.sel_riqi]
-        _this.tableShow(e)
+        console.log(sql)
+        var kehu_list = res.result.recordset
+        console.log(kehu_list)
+        for (var i = 0;i<kehu_list.length;i++){
+          console.log(kehu_list[i]) 
+          if (kehu_list[i].baocun != "已保存"){
+            sql_end = sql1 + sql2 + sql3 + sql4
+            wx.cloud.callFunction({
+              name: 'sqlserver_yiwa',
+              data: {
+                query: sql_end
+              },
+              success: res => {
+                console.log(res)
+                wx.showToast({
+                  title: '保存成功！',
+                  icon: 'none',
+                  duration: 3000
+                })
+                var e = [_this.data.sel_id,_this.data.sel_riqi]
+                _this.tableShow(e)
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("请求失败！")
+              }
+            })
+          }else{
+            wx.showToast({
+              title: '该订单也保存无法再次保存！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        }
       },
       err: res => {
         console.log("错误!")
@@ -642,8 +679,7 @@ Page({
         console.log("请求失败！")
       }
     })
-
-  },
+},
 
   
 
