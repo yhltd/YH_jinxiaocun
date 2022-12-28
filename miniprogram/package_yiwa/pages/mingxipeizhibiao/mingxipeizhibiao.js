@@ -47,7 +47,6 @@ Page({
         type: "text",
         isupd: true
       },
-      
     ],
     xiala_list:['是','否'],
     id:'',
@@ -358,6 +357,14 @@ Page({
         })
         console.log("请求失败！")
       }
+    })
+  },
+
+  goto_img:function(){
+    var _this = this
+    var id = _this.data.id
+    wx.navigateTo({
+      url: "../image_show/image_show?id=" + id
     })
   },
 

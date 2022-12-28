@@ -52,3 +52,12 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet
+  show="{{xlShow}}"
+  actions="{{list_xiala}}"
+  close-on-click-overlay
+  bind:close="select1"
+  bind:select="select1" 
+/>

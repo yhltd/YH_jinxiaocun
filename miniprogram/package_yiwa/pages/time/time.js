@@ -1,6 +1,7 @@
 // pages/time/time.js
 var app = getApp()
-
+var dtid
+var sl
 var szzhi = [] //
 var szsl = []
 var szje = []
@@ -23,6 +24,7 @@ Page({
     szjg: [],
     szsl: [],
     rkSum: 0,
+    jghide: "none",
     rkck: "确认下单",
     hideen1: true,
     hideen2: false,
@@ -97,43 +99,99 @@ Page({
       }
     })
 
+    var sql = "select DP.id,Thedetail_id,Customer_id,NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,mark1 from DetailsofProducts as DP left join(select id,mark1 from DetailedConfiguration) as DC on DP.Thedetail_id = DC.id where Customer_id = '" + userInfo.id + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        for(var i=0; i<list.length; i++){
+          list[i].mark1 =  "data:image/png;base64," + list[i].mark1
+        }
+        console.log(list)
+        _this.setData({
+          szzhi:list
+        })
+        console.log(_this.data.szzhi)
+      },
+      err: res => {
+        wx.showToast({
+          title: '读取产品信息错误！',
+          icon: 'none'
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+
+  },
+
+  cunsl: function(e) {
+    sl = e.detail.value
+  },
+
+  tjjg: function(e) {
+    var that = this
+    var _this = this
+    var szzhi = _this.data.szzhi
+    var dtid = _this.data.dtid
+    that.setData({
+      jghide: true,
+      jghide: "none",
+      backhidden: true
+    })
+    if (sl != null) { 
+      szzhi[dtid].num = sl
+    }
+    that.setData({
+      jghide: "none",
+      szzhi
+    })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    console.log('onshow')
-    var _this = this
-    var all = wx.getStorageSync("all")
-    wx.setStorageSync("all", '')
-    var szzhi = _this.data.szzhi
-    if (all != '') {
-      var zongjia = 0
-      for (var i = 0; i < all.length; i++) {
-        var panduan = false
-        for (var j = 0; j < szzhi.length; j++) {
-          if (szzhi[j].NameofProduct == all[i].NameofProduct) {
-            panduan = true
-            szzhi[j].num = szzhi[j].num * 1 + all[i].num * 1
-            break;
-          }
-        }
-        if (panduan == false && all[i].num != '' && all[i].num != undefined && all[i].num != null) {
-          szzhi.push(JSON.parse(JSON.stringify(all[i])))
-        }
-      }
-      console.log(szzhi)
-      for (var i = 0; i < szzhi.length; i++) {
-        zongjia = zongjia + szzhi[i].num * szzhi[i].Theunitprice
-      }
-      _this.setData({
-        szzhi,
-        rkSum: zongjia,
-      })
-    }
+  // onShow: function () {
+  //   console.log('onshow')
+  //   var _this = this
+  //   var all = wx.getStorageSync("all")
+  //   wx.setStorageSync("all", '')
+  //   var szzhi = _this.data.szzhi
+  //   if (all != '') {
+  //     var zongjia = 0
+  //     for (var i = 0; i < all.length; i++) {
+  //       var panduan = false
+  //       for (var j = 0; j < szzhi.length; j++) {
+  //         if (szzhi[j].NameofProduct == all[i].NameofProduct) {
+  //           panduan = true
+  //           szzhi[j].num = szzhi[j].num * 1 + all[i].num * 1
+  //           break;
+  //         }
+  //       }
+  //       if (panduan == false && all[i].num != '' && all[i].num != undefined && all[i].num != null) {
+  //         szzhi.push(JSON.parse(JSON.stringify(all[i])))
+  //       }
+  //     }
+  //     console.log(szzhi)
+  //     for (var i = 0; i < szzhi.length; i++) {
+  //       zongjia = zongjia + szzhi[i].num * szzhi[i].Theunitprice
+  //     }
+  //     _this.setData({
+  //       szzhi,
+  //       rkSum: zongjia,
+  //     })
+  //   }
 
-  },
+  // },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -152,16 +210,16 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-    var that = this
-    wx.showToast({
-      title: '刷新中',
-      icon: 'loading',
-      duration: 500
-    })
-    that.onShow()
-    wx.stopPullDownRefresh()
-  },
+  // onPullDownRefresh: function () {
+  //   var that = this
+  //   wx.showToast({
+  //     title: '刷新中',
+  //     icon: 'loading',
+  //     duration: 500
+  //   })
+  //   that.onShow()
+  //   wx.stopPullDownRefresh()
+  // },
 
   /**
    * 页面上拉触底事件的处理函数
@@ -177,48 +235,77 @@ Page({
 
   },
 
-  xuanshangpin: function () {
+  // xuanshangpin: function () {
+  //   var _this = this
+  //   wx.setStorageSync('type', '1');
+  //   wx.navigateTo({
+  //     url: '../shangpinxuanze/shangpinxuanze?userInfo=' + JSON.stringify(_this.data.userInfo),
+  //   })
+  // },
+
+  // del:function(e){
+  //   var _this = this
+  //   console.log(e.currentTarget.dataset.id)
+  //   wx.showModal({
+  //     title: '提示',
+  //     content: '确认删除此行数据？',
+  //     success (res) {
+  //       if (res.confirm) {
+  //         var add_list = _this.data.szzhi
+  //         add_list.splice(e.currentTarget.dataset.index,1)
+  //         var zongjia = 0
+  //         console.log(add_list)
+  //         for (var i = 0; i < add_list.length; i++) {
+  //           zongjia = zongjia + add_list[i].num * add_list[i].Theunitprice
+  //         }
+  //         _this.setData({
+  //           szzhi:add_list,
+  //           rkSum: zongjia,
+  //         })
+  //         console.log(add_list)
+  //       } else if (res.cancel) {
+
+  //       }
+  //     }
+  //   })
+  // },
+
+  srJg: function(e) {
+    var that = this
     var _this = this
-    wx.setStorageSync('type', '1');
-    wx.navigateTo({
-      url: '../shangpinxuanze/shangpinxuanze?userInfo=' + JSON.stringify(_this.data.userInfo),
+    dtid = e.currentTarget.dataset.id
+    sl = _this.data.szzhi[dtid].num
+    console.log(sl)
+    console.log(dtid)
+    that.setData({
+      dtid,
+      jghide: "flex",
+      backhidden: false
     })
   },
 
-  del:function(e){
-    var _this = this
-    console.log(e.currentTarget.dataset.id)
-    wx.showModal({
-      title: '提示',
-      content: '确认删除此行数据？',
-      success (res) {
-        if (res.confirm) {
-          var add_list = _this.data.szzhi
-          add_list.splice(e.currentTarget.dataset.index,1)
-          var zongjia = 0
-          console.log(add_list)
-          for (var i = 0; i < add_list.length; i++) {
-            zongjia = zongjia + add_list[i].num * add_list[i].Theunitprice
-          }
-          _this.setData({
-            szzhi:add_list,
-            rkSum: zongjia,
-          })
-          console.log(add_list)
-        } else if (res.cancel) {
-
-        }
-      }
+  spClose: function(e) {
+    var that = this
+    that.setData({
+      jghide: true,
+      jghide: "none",
+      backhidden: true
     })
   },
 
   querenRk: function () {
     var _this = this
     var rk_list = _this.data.szzhi
-    if(rk_list.length == 0){
+    var panduan = false
+    for(var i=0; i<rk_list.length; i++){
+      if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
+        panduan = true
+      }
+    }
+    if(panduan == false){
       wx.showToast({
-        title: '未选择商品',
-        icon:'none',
+        title: '请至少填写一种商品数量！',
+        icon: 'none'
       })
       return;
     }
@@ -227,9 +314,17 @@ Page({
     var sql2 = ""
     for (var i = 0; i < rk_list.length; i++) {
       if (sql2 == "") {
-        sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
+        if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
+          sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
+        }else if(rk_list[i].kuang == '是'){
+          sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','0')"
+        }
       } else {
-        sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
+        if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
+          sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
+        }else if(rk_list[i].kuang == '是'){
+          sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','0')"
+        }
       }
     }
     var sql = sql1 + sql2
@@ -266,7 +361,10 @@ Page({
 })
 
 function getBianHao() {
-  var date = new Date();
+  var d = new Date();
+  d.setTime(d.getTime()+24*60*60*1000);
+  var s = d.getFullYear()+"-" + (d.getMonth()+1) + "-" + d.getDate();
+  var date = new Date(s);
   var sign1 = "-";
   var sign2 = ":";
   var year = date.getFullYear() // 年
@@ -299,7 +397,11 @@ function getBianHao() {
 }
 
 function getNowDate() {
-  var date = new Date();
+
+  var d = new Date();
+  d.setTime(d.getTime()+24*60*60*1000);
+  var s = d.getFullYear()+"-" + (d.getMonth()+1) + "-" + d.getDate();
+  var date = new Date(s);
   var sign1 = "-";
   var sign2 = ":";
   var year = date.getFullYear() // 年

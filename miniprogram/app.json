@@ -307,7 +307,9 @@
         "pages/songhuodan/songhuodan",
         "pages/dayin/dayin",
         "pages/time/time",
-        "pages/shangpinxuanze/shangpinxuanze"
+        "pages/shangpinxuanze/shangpinxuanze",
+        "pages/image_show/image_show",
+        "pages/shows_kehu/shows_kehu"
       ]
     }
   ],

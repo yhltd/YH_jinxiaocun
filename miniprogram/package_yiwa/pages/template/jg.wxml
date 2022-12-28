@@ -1,10 +1,10 @@
 <template name="jg" hidden='true'>
   <view class='test' style="display:{{jghide}};flex-direction: column;">
     <view class="message">
-      <image class='tp_css' src="{{all[dtid].mark1}}"></image>
+      <image class='tp_css' src="{{szzhi[dtid].mark}}"></image>
       <view>
-        <text class='text_name'>商品名称：{{all[dtid].NameofProduct}}</text>
-        <text class='text_name' style="top: 6%;">价格：{{all[dtid].Theunitprice}}</text>
+        <text class='text_name'>商品名称：{{szzhi[dtid].NameofProduct}}</text>
+        <text class='text_name' style="top: 6%;">价格：{{szzhi[dtid].Theunitprice}}</text>
       </view>
     </view>
     <form bindsubmit="tjjg">
@@ -16,7 +16,7 @@
 			<view class="huise_bian"></view> -->
       <view class="Xzshuliang" style="display: flex">
         <text class="text_css1">数量:</text>
-        <input type="number" class='input-srjg1' name="num" style="border: 1px solid  #DCDCDC;border-radius:18rpx; " bindblur='cunsl' value="{{all[dtid].num}}"></input>
+        <input type="number" class='input-srjg1' name="num" style="border: 1px solid  #DCDCDC;border-radius:18rpx; " bindblur='cunsl' value="{{szzhi[dtid].num}}"></input>
       </view>
       <button class='ti_jiao' form-type="submit">提交</button>
     </form>

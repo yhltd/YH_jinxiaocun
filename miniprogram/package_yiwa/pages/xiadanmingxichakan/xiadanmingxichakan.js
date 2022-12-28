@@ -134,11 +134,11 @@ Page({
     var sql=''
     console.log(userInfo.power=='管理员')
     if (userInfo.power=='管理员'){
-      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"'"
+      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"'"
     }else if (userInfo.power=='客户'){
-      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ userInfo.id +"' and us.power='客户'"
+      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ userInfo.id +"' and us.power='客户'"
     }else if (userInfo.power=='业务员'){
-      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' and us.salesman = '"+ userInfo.id +"' and us.power='客户'"
+      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.salesman = '"+ userInfo.id +"' and us.power='客户'"
     }else{
       wx.showToast({
         title: '无权限！',
@@ -286,11 +286,11 @@ Page({
     
     var sql=''
     if (_this.data.userInfo.power=='管理员'){
-      sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"'"
+      sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"'"
     }else if (_this.data.userInfo.power=='客户'){
-      sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ _this.data.userInfo.id +"' and us.power='客户'"
+      sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ _this.data.userInfo.id +"' and us.power='客户'"
     }else if (_this.data.userInfo.power=='业务员'){
-      sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' and us.salesman = '"+ _this.data.userInfo.id +"' and us.power='客户'"
+      sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.salesman = '"+ _this.data.userInfo.id +"' and us.power='客户'"
     }else{
       wx.showToast({
         title: '无权限！',
@@ -338,7 +338,7 @@ Page({
     var _this = this
     var this_row = e.currentTarget.dataset.index
     console.log(_this.data.list2[e.currentTarget.dataset.index].Documentnumber)
-    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='业务员'){
+    if (_this.data.userInfo.power=='管理员'){
       _this.setData({
         id: _this.data.list2[e.currentTarget.dataset.index].id,
         Customer_id: _this.data.list2[e.currentTarget.dataset.index].Customer_id, 
@@ -362,7 +362,7 @@ Page({
     var _this = this
     console.log('picker发送选择改变，携带值为',e.detail.value)
     var i = e.detail.value
-    console.log(i )
+    console.log(i)
     
     _this.setData({
       NameofProduct:_this.data.NameofProduct_xl[e.detail.value],
@@ -426,13 +426,12 @@ Page({
     var sql
     if (_this.data.userInfo.power=='管理员' ){
       sql ="insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values('" + _this.data.list[0].Customer_id + "','" + _this.data.Documentnumber + "','" + _this.data.list[0].riqi + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.number + "')"
-    }else if ( _this.data.userInfo.power=='业务员'){
-      sql ="insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values('" + _this.data.list[0].Customer_id + "','" + _this.data.Documentnumber + "','" + _this.data.list[0].riqi + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.number + "')"
     }else{
       wx.showToast({
         title: '无权限！',
         icon: 'none'
       })
+      return;
     }
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
@@ -485,7 +484,7 @@ Page({
     var i =e.currentTarget.dataset.index
     console.log(_this.data.number)
     var sql
-    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='业务员'){
+    if (_this.data.userInfo.power=='管理员'){
       wx.showModal({
         title: '提示',
         content: '是否修改？',
@@ -544,7 +543,7 @@ Page({
     console.log(_this.data.this_index)
     console.log(_this.data.list2[i].id)
     var sql
-    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='业务员'){
+    if (_this.data.userInfo.power=='管理员'){
       wx.showModal({
         title: '提示',
         content: '是否删除？',

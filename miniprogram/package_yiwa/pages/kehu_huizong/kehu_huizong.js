@@ -268,7 +268,7 @@ Page({
                   this_num += this_list[j] * 1
                 }
               }
-              order_list[i].number = this_num
+              order_list[i].number =  order_list[i].number + "(" + this_num + ")"
             }
           }
           var list = []
@@ -362,7 +362,12 @@ Page({
                 for(var k=0; k<this_arr.length; k++){
                   var arr_item = this_arr[k].split("*")
                   if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
-                    sum = sum + arr_item[0] * arr_item[1]
+                    if(arr_item[1].indexOf("(") != -1){
+                      var this_zhong = arr_item[1].split("(")[1].replace(")","")
+                      sum = sum + arr_item[0] * this_zhong * 1
+                    }else{
+                      sum = sum + arr_item[0] * arr_item[1]
+                    }
                   }
                 }
               }
@@ -382,7 +387,12 @@ Page({
                 for(var k=0; k<this_arr.length; k++){
                   var arr_item = this_arr[k].split("*")
                   if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
-                    sum = sum + arr_item[0] * arr_item[1]
+                    if(arr_item[1].indexOf("(") != -1){
+                      var this_zhong = arr_item[1].split("(")[1].replace(")","")
+                      sum = sum + arr_item[0] * this_zhong * 1
+                    }else{
+                      sum = sum + arr_item[0] * arr_item[1]
+                    }
                   }
                 }
               }

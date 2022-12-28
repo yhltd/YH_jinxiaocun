@@ -1,0 +1,12 @@
+<view style="height: 80%;display: flex;justify-content: center;">
+  <view  style="width:95%;border-style:dashed;border-width:3rpx;margin-top: 2%;display: flex;justify-content: center;">
+    <image src='{{mark1}}' class='shangpin-image' mode="widthFix"> </image>
+  </view>
+</view>
+
+<!-------------------------> 
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="upd_image" >修改/添加</button>
+</view>

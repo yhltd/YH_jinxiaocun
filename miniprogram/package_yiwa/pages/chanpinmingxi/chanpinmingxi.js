@@ -61,6 +61,13 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "当前欠筐",
+        width: "250rpx",
+        columnName: "dangqian_kuang",
+        type: "text",
+        isupd: true
+      },
     ],
    
     id:'',
@@ -88,13 +95,12 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-
     var sql = ""
     console.log(_this.data.userInfo.power)
-    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '业务员'){
-      sql = "select DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id where DC.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
+    if(_this.data.userInfo.power == '管理员'){
+      sql = "select id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
     }else{
-      sql = "select DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id where salesman = '" + _this.data.userInfo.id + "' DC.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
+      sql = "select id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where salesman = '" + _this.data.userInfo.id + "' and chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -105,6 +111,11 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordset
+        for(var i=0; i<list.length; i++){
+          if(list[i].kuang == '是'){
+            list[i].dangqian_kuang = list[i].kuang_num * 1 - list[i].qiankuang * 1 + list[i].huikuang
+          }
+        }
         console.log(list)
         _this.setData({
           list: list
@@ -189,8 +200,14 @@ Page({
 
   upd1:function(){
     var _this = this
+    var sql = ""
     if(_this.data.userInfo.power == '管理员' ){
       sql = "update DetailsofProducts set Theunitprice='" + _this.data.Theunitprice + "',kuang_num='" + _this.data.kuang_num + "' where id=" + _this.data.id
+    }else{
+      wx.showToast({
+        title: '无权限！',
+      })
+      return;
     }
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',

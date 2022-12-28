@@ -63,6 +63,29 @@
   </view>
 </van-popup>
 
+<!--产品多选-->
+<van-popup bind:click-overlay="qxShow" show="{{ xzkhShow }}" position="bottom" custom-style="height: 80%;" >
+<view class="weui-cells weui-cells_after-title">
+<checkbox-group data-name="countries" bindchange="onCheckboxChange" >
+  <label 
+    class="weui-cell weui-check__label"
+    wx:for="{{listChanPin}}" 
+    wx:key="id"
+    wx:for-item="item" 
+    wx:for-index="i">
+    <view class="weui-cell__bd">{{item.name}}</view>
+    <view class="weui-cell__hd">
+      <checkbox value="{{item.Thedetail_id}}" color="red" style="color:red"/>
+    </view>
+  </label>
+</checkbox-group>
+</view>
+  <view class="bottom_view" style="height:10%">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="select_submit">确定</button>
+</view>
+</van-popup>
+
 <!--产品下拉-->
 <van-action-sheet
   show="{{ xlShow4 }}"

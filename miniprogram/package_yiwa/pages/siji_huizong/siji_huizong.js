@@ -561,7 +561,7 @@ Page({
       return;
     }
 
-    var sql_head = 'select dd.id,Customer_id,name,Documentnumber,riqi,dd.NameofProduct,dd.unit,dd.Theunitprice,number,zhongliang_num,zhongliang,kuang from (select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id) as dd left join DetailedConfiguration as dc on dd.NameofProduct = dc.NameofProduct and dd.unit = dc.unit'
+    var sql_head = 'select dd.id,Customer_id,name,Documentnumber,riqi,dd.NameofProduct,dd.unit,dd.Theunitprice,number,zhongliang_num,zhongliang,kuang,zhuangtai from (select de.id,de.Customer_id,name,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,zhongliang_num,zhuangtai from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id) as dd left join DetailedConfiguration as dc on dd.NameofProduct = dc.NameofProduct and dd.unit = dc.unit'
     var sql_foot = ""
     for(var i=0; i<select_customer.length; i++){
       if(select_customer[i] != '' && select_customer[i] != null && select_customer[i] != undefined){
@@ -574,7 +574,7 @@ Page({
     }
     if(sql_foot != ''){
       sql_foot = sql_foot + ")"
-      var sql = sql_head + sql_foot + " and riqi = '" + _this.data.riqi + "' order by NameofProduct;"
+      var sql = sql_head + sql_foot + " and riqi = '" + _this.data.riqi + "' and zhuangtai !='不发货' order by NameofProduct;"
       var sql2 = "select NameofProduct from Detailsoforder " + sql_foot + " and riqi = '" + _this.data.riqi + "' group by NameofProduct order by NameofProduct;"
       var sql3 = "select Customer_id,name from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id " + sql_foot + " and riqi = '" + _this.data.riqi + "' group by Customer_id,name order by name;"
       console.log(sql) 
@@ -754,12 +754,22 @@ Page({
                       var this_arr = this_str
                       this_str = this_str + "(" + num + ")"
                       list[i][tempArr[k]] = this_str
+                      var sum = list[i].sum.toString()
+                      if(sum.indexOf("(") != -1){
+                        var yuan_num = sum.split("(")[1]
+                        yuan_num = yuan_num.replace(")","")
+                        list[i].sum = sum.split("(")[0] + "(" + (yuan_num * 1 + num * 1) + ")"
+                      }else{
+                        list[i].sum = sum + "(" + num + ")"
+                      }
                     }
                   }
                 }
               }
             }
           }
+
+          console.log(list)
 
           title.push({
             text: "合计",

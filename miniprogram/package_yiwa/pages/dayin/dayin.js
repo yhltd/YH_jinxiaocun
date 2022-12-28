@@ -92,24 +92,26 @@ Page({
     ctx.fillText('电话：' + head_list.yewuyuan_phone, width, 115)
     ctx.setTextAlign('left')
     ctx.fillText('日期：' + sel_riqi, 0, 135)
+    ctx.setTextAlign('left')
+    ctx.fillText('地址：' + head_list.customer_address, 0, 155)
+    console.log(head_list)
 
-
-    ctx.moveTo(0, 155)
-    ctx.lineTo((width_all - width) / 2 + width, 155)
+    ctx.moveTo(0, 175)
+    ctx.lineTo((width_all - width) / 2 + width, 175)
 
     ctx.setFontSize(16)
     ctx.setTextAlign('center')
-    ctx.fillText('产品', width / 2 - width / 11 * 4, 175)
-    ctx.fillText('数量', width / 2 - width / 11 * 1.4, 175)
-    ctx.fillText('单价', width / 2 + width / 11 * 1.4, 175)
-    ctx.fillText('总价', width / 2 + width / 11 * 4, 175)
+    ctx.fillText('产品', width / 2 - width / 11 * 4, 195)
+    ctx.fillText('数量', width / 2 - width / 11 * 1.4, 195)
+    ctx.fillText('单价', width / 2 + width / 11 * 1.4, 195)
+    ctx.fillText('总价', width / 2 + width / 11 * 4, 195)
 
 
-    ctx.moveTo(0, 190)
-    ctx.lineTo((width_all - width) / 2 + width, 190)
+    ctx.moveTo(0, 210)
+    ctx.lineTo((width_all - width) / 2 + width, 210)
 
     ctx.setFontSize(14)
-    var y = 215;
+    var y = 235;
     for (let i = 0; i < list.length; i++, y += 30) {
       ctx.fillText(list[i].NameofProduct, width / 2 - width / 11 * 4, y);
       ctx.fillText(list[i].number, width / 2 - width / 11 * 1.4, y);
@@ -483,6 +485,8 @@ Page({
     printUtil.printlnText(4, 395, height, '电话：' + head_list.yewuyuan_phone);
     height = height + 40
     printUtil.printlnText(4, 15, height, '日期：' + sel_riqi);
+    height = height + 40
+    printUtil.printlnText(4, 15, height, '地址：' + head_list.customer_address);
 
     height = height + 40
     printUtil.printBox(0, height, 700, height);

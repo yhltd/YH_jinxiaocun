@@ -1,9 +1,9 @@
 <!-- pages/time/time.wxml -->
-<import src="/pages/template/tabber.wxml" />
-
-<view class='main'>
+<import src="../template/tabber.wxml" />
+<import src="../template/jg.wxml" />
+<view class='main'> 
   <view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="del">
-    <view class='shangpin'>
+    <view class='shangpin' bindtap='srJg' data-id="{{i}}" data-Theunitprice="{{all[i].Theunitprice}}"> 
       <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
       <view class="shangpin-text" data-id="{{i}}">
         <view class="shangpinpm">商品名称： {{szzhi[i].NameofProduct}}</view>
@@ -17,18 +17,20 @@
   </view>
 </view>
 <view class='header'>
-  <view class='dq_y'>单号</view>
+  <view class='dq_y'>单号:</view>
   <view class='pm'></view>
-  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="{{Documentnumber}}" placeholder="订单号" disabled="disabled" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="{{Documentnumber}}" placeholder="订单号" disabled="disabled" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input> 
+  <view class='dq_y' style="top: 8%;">地址:{{userInfo.customer_address}}</view>
+  <view class='dq_y' style="top: 12%;">姓名:{{userInfo.name}}</view>
 </view>
-<view class='zg'>
+<!-- <view class='zg'>
   <view class='xzkh'>
     <view class="xsp" bindtap='xuanshangpin'>
       <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png" class="jiahao"></image>
       <text class='xsp-text'>选商品</text>
     </view>
   </view>
-</view>
+</view> -->
 <view class="tui-picker-content">
     <view class="tui-picker-detail">
       <text decode="true">&nbsp;&nbsp;</text>下单日期: {{riqi}}
@@ -36,3 +38,5 @@
 </view>
 
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
+
+<template is="jg" data="{{jghide,dtid,cpsl,cpjg,szzhi}}" />

@@ -304,7 +304,7 @@ Page({
     saveAs(){
       var _this = this
       _this.onExportJSON()
-      _this.onExport()
+      // _this.onExport()
     },
 
     /**
@@ -332,6 +332,7 @@ Page({
             console.log(imgArr.length)
             _this.onClearCanvas()
             _this.onImport()
+            _this.onExport()
         })
           .catch((e) => {
               console.error(e);

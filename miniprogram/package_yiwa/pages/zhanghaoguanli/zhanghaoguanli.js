@@ -87,6 +87,7 @@ Page({
     salesman: '',
     driver: '',
     qr_code: '',
+    customer_address:'',
   },
 
   /**
@@ -443,6 +444,7 @@ Page({
             salesman: '',
             driver: '',
             qr_code: '',
+            customer_address:'',
         })
         _this.qxShow()
         var e = ['']
@@ -489,6 +491,7 @@ Page({
                 salesman: '',
                 driver: '',
                 qr_code: '',
+                customer_address:'',
               })
               _this.qxShow()
               var e = ['']
@@ -526,6 +529,7 @@ Page({
                 salesman: '',
                 driver: '',
                 qr_code: '',
+                customer_address:'',
               })
               _this.qxShow()
               var e = ['']

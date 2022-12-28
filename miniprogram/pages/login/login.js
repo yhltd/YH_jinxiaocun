@@ -688,9 +688,16 @@ var login = function(that,info) {
           })
         }else{
           var user_list = list[0]
-          wx.navigateTo({
-            url:'../../package_yiwa/pages/shows/shows?userInfo='+JSON.stringify(user_list)
-          })
+          if(user_list.power == '客户'){
+            wx.navigateTo({
+              url:'../../package_yiwa/pages/shows_kehu/shows_kehu?userInfo='+JSON.stringify(user_list)
+            })
+          }else{
+            wx.navigateTo({
+              url:'../../package_yiwa/pages/shows/shows?userInfo='+JSON.stringify(user_list)
+            })
+          }
+          
         }
       },
       err: res => {
