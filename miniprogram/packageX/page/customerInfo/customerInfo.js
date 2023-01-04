@@ -702,6 +702,73 @@ Page({
     })
   },
 
+  get_excel: function () {
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask: 'true'
+    })
+    var list = _this.data.list2;
+    var title = [{ text: "编号", width: "100rpx", columnName: "did", type: "digit", isupd: true },
+    { text: "日期", width: "250rpx", columnName: "date_time", type: "text", isupd: true },
+    { text: "已还款", width: "200rpx", columnName: "repayment", type: "text", isupd: true },
+    { text: "商户", width: "400rpx", columnName: "commercial_tenant", type: "text", isupd: true },
+    { text: "刷卡额", width: "200rpx", columnName: "swipe", type: "text", isupd: true },
+    { text: "费率", width: "200rpx", columnName: "rate", type: "date", isupd: true },
+    { text: "到账金额", width: "200rpx", columnName: "arrival_amount", type: "date", isupd: true },
+{ text: "基础手续费", width: "200rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
+{ text: "其他手续费", width: "200rpx", columnName: "other_service_charge", type: "digit", isupd: true },
+    
+    ]
+    var cloudList = {
+      name: '客户信息',
+      items: [],
+      header: []
+    }
+
+    for (let i = 0; i < title.length; i++) {
+      cloudList.header.push({
+        item: title[i].text,
+        type: title[i].type,
+        width: parseInt(title[i].width.split("r")[0]) / 6,
+        columnName: title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
+
   getExcel: function () {
     var _this = this;
     wx.showLoading({

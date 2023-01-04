@@ -176,8 +176,9 @@
       </block>
     </view>
   </scroll-view>
-  <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
-  <button class="bt_form" bindtap="luru" hover-class="bt_form_hover">录入</button>
+  <button class="bt_form" style="width: 25%;" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+  <button class="bt_form" style="width: 25%;" bindtap="luru" hover-class="bt_form_hover">录入</button>
+  <button class="bt_form" style="width: 25%;" bindtap="get_excel" hover-class="bt_form_hover">导出</button>
 </scroll-view>
 
 

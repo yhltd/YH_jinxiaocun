@@ -72,7 +72,7 @@ Page({
     _this.panduanquanxian()
     if (_this.data.isdischa == 1) {
       _this.addMK(),
-        _this.module_info_show('')
+      _this.module_info_show('')
     }
     // wx.showModal({
     //   title: '提示：',
@@ -190,6 +190,15 @@ Page({
       }
     })
   },
+
+  bindPickerChange: function(e){
+    var _this = this
+    console.log(_this.data.xiala[e.detail.value])
+    _this.setData({
+      moduleName: _this.data.xiala[e.detail.value]
+    })
+  },
+
   addMK: function () {
     var _this = this
     let user = app.globalData.gongsi;
@@ -200,9 +209,14 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
+        var xiala = []
+        for(var i=0; i<list.length; i++){
+          xiala.push(list[i].name)
+        }
         console.log(res)
         _this.setData({
-          list: list
+          list: list,
+          xiala:xiala,
         })
         wx.hideLoading({
 
@@ -263,7 +277,7 @@ Page({
     _this.addMK()
     let column = e.currentTarget.dataset.column
     var list = _this.data.list
-    if (column == "mklb") {
+    if (column == "mklb" || column == 'moduleName') {
       _this.setData({
         xlShow1: true,
         actions1: list
@@ -415,7 +429,8 @@ Page({
   entering: function () {
     var _this = this
     _this.setData({
-      cxShow: true
+      cxShow: true,
+      moduleName:'',
     })
   },
   inquire: function () {
@@ -456,6 +471,7 @@ Page({
     if (e.type == 'select') {
       _this.setData({
         mklb: e.detail.name,
+        moduleName:e.detail.name,
         type_id: e.detail.id,
       })
     }

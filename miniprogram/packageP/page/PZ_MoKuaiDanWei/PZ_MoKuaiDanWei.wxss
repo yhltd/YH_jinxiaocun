@@ -71,7 +71,6 @@ button{
 
 .table_header {
   display: inline-flex;
-  z-index: 6;
   height: 100rpx;
   position: sticky;
   top: 0;
@@ -145,7 +144,6 @@ button{
   line-height: 70rpx;  
   position:sticky;
   left:0;
-  z-index:5;
 }
 
 
@@ -161,7 +159,6 @@ button{
   background-color: white;
   border-radius: 10rpx;
   box-shadow: 10rpx 10rpx 10rpx black;
-  z-index: 20;
   left:5%;
 }
 
@@ -202,7 +199,6 @@ button{
   width:100%;
   top:0;
   background-color: white;
-  z-index: 20;
   box-shadow: 10rpx 10rpx 10rpx black;
 }
 .input{
@@ -266,7 +262,6 @@ button{
   right: 0;
   bottom: 0;
   background: rgba(0,0,0,0.6);
-  z-index: 19;
   transition: all 0.3s ease-in-out;
 } 
 
@@ -278,7 +273,6 @@ button{
   width:100%;
   top:30%;
   background-color: white;
-  z-index: 20;
 }
 
 

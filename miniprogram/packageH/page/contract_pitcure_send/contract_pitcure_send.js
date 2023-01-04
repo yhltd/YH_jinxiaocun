@@ -251,7 +251,6 @@ Page({
     },
 
     yunhanshu(){
-  
       var _this = this
       console.log('云函数'+_this.data.fileID)
       wx.cloud.callFunction({
