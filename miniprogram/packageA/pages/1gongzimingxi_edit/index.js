@@ -1,5 +1,5 @@
 const form = require("../../../components/utils/formValidation.js")
-const utils = require("../../../components/utils/utils.js")
+const utils = require("../utils/utils.js")
 Page({
   data: {
     id: '',

@@ -799,12 +799,11 @@ function getCompanyTime(that,info,sort_name){
   var date = new Date()
   var nowTime = date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
   var sql = "select CASE WHEN endtime < '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE WHEN mark2<'"+nowTime+"' THEN 1 ELSE 0 END as mark2 from control_soft_time where soft_name ='"+sort_name+"'"
-
+    
   if(sort_name=='云合未来财务系统' || sort_name=='云合排产管理系统'){
     sql += " and name = '"+that.data.gongsi+"'"
   }
 
-  console.log(sql)
   wx.cloud.callFunction({
     name : 'sqlServer_system',
     data : {
@@ -1136,7 +1135,7 @@ Page({
       getCompanyTime(this,e.detail.value,'财务')
     }else if(this.data.system=="云合排产管理系统"){
       getCompanyTime(this,e.detail.value,'排产')
-    }else if(this.data.system=="零售管理系统"){
+    }else if(this.data.system=="零售管理系统" || this.data.system == "销售管理系统"){
       getCompanyTime(this,e.detail.value,this.data.system)
     }else{
       login(this,e.detail.value)
