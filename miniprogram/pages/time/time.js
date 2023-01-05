@@ -53,7 +53,6 @@ Page({
   onLoad: function(options) {
     var all
     var that = this
-    wx.setStorageSync('all', '');
     cpxinxi = []
     slxinxi = []
     jgxinxi = []
@@ -159,7 +158,6 @@ Page({
   onShow: function() {
     var that = this;
     var id = wx.getStorageSync("jinhuofang")
-    wx.setStorageSync('all', '');
     console.log(id)
     if (id != "") {
       that.setData({
@@ -174,6 +172,51 @@ Page({
         cpxinxi[i] = that.data.szzhi[i]
         slxinxi[i] = that.data.szsl[i]
         jgxinxi[i] = that.data.szje[i]
+      }
+    }
+
+    if (wx.getStorageSync("khpd") != "1") {
+      var rk = that.data.rkSum
+      if (wx.getStorageSync("rkall") != null) {
+        rk = rk + Number(wx.getStorageSync("cpsum"))
+        szzhi = wx.getStorageSync("rkall")
+        var sl = wx.getStorageSync("szsl")
+        var je = wx.getStorageSync("szje")
+
+        var fuzhii = 0
+        var szzhilength = that.data.szzhi.length;
+        // console.log(sl)
+        for (var i = szzhilength; i < szzhilength + wx.getStorageSync("rkall").length; i++) {
+          if (cpxinxi[i] == null) {
+            cpxinxi[i] = szzhi[fuzhii]
+            slxinxi[i] = sl[fuzhii]
+            jgxinxi[i] = je[fuzhii]
+            fuzhii++;
+          }
+        }
+
+        that.setData({
+          szzhi: cpxinxi,
+          szsl: slxinxi,
+          szje: jgxinxi,
+          rkSum: rk
+
+        })
+        wx.clearStorageSync("cpsum")
+        wx.clearStorageSync("rkall")
+        wx.clearStorageSync("szsl")
+        wx.clearStorageSync("szje")
+
+      }
+    } else {
+      if (wx.getStorageSync('khname') != null) {
+        that.setData({
+          khname: wx.getStorageSync('khname'),
+          hidden1: false,
+          hidden2: true
+        })
+        wx.clearStorageSync("khname")
+        wx.setStorageSync("khpd", "0")
       }
     }
   },
@@ -244,7 +287,6 @@ Page({
             content: '请输入订单号',
           })
         } else {
-          
             wx.setStorageSync('type', '1');
             wx.navigateTo({
               url: '/pages/shangpinxuanze/shangpinxuanze',

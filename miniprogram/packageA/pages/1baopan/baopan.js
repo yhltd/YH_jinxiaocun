@@ -32,23 +32,44 @@ Page({
     title: [],
     title1:[
       {
-        text: "姓名",
+        text: "员工姓名",
         width: 20,
         columnName: "B",
         type: "text",
         isupd: true
       },
       {
-        text: "员工银行账号",
+        text: "录入日期",
         width: 20,
-        columnName: "BA",
+        columnName: "BC",
         type: "text",
         isupd: true
       },
       {
-        text: "支付金额",
+        text: "实发工资",
         width: 20,
         columnName: "AY",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "全勤天数",
+        width: 20,
+        columnName: "M",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人支出",
+        width: 20,
+        columnName: "geren",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业支出",
+        width: 20,
+        columnName: "qiye",
         type: "text",
         isupd: true
       },
