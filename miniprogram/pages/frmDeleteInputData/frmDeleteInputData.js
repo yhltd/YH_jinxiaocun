@@ -150,23 +150,6 @@ Page({
 
   },
   del() {
-    // // const cloud = require('wx-server-sdk')
-    // const db = wx.cloud.database()
-    // const _ = db.command
-    // db.collection('SY_LHDataAnalysis_shuju').doc('96c1cbbe5cc1c27c06a00fb3565bbbdb').remove({
-    //   success(res) {
-    //     console.log(res.data)
-    //   }
-    // })
-
-    //2
-    // var exports_mode = require('/cloudfunctions/add/index.js')
-    // var event = { "a": '96c1cbbe5cc1c27c06a00fb3565bbbdb', "b": 2, "userInfo": { "appId": "wxd747b7dd1d8f9e34", "openId": "oPTYg5dSDjYZ2mMdytcw_R8yq3PI" } }
-
-    // exports_mode.main(event, null)
-
-
-    //3
     wx.cloud.callFunction({
       name: 'removeid',
       data: {
