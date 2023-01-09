@@ -1,4 +1,7 @@
 /* pages/login/login.wxss */
+page{
+  height: 100%;
+}
 
 .input-login {
   box-sizing: border-box;

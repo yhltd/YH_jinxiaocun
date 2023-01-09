@@ -1,7 +1,5 @@
-<view class="top-bgimage">
+<view class="top-bgimage" style="height: 25%;">
   <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
-
-
   <view class="container">
     <view class="userinfo">
       <image class="userinfo-avatar" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/login.png" background-size="cover"></image>
@@ -9,11 +7,11 @@
     </view>
   </view>
 </view>
-<view class="main-body">
+<view class="main-body" style="height: 65%;">
   <form bindsubmit="formLogin">
 
-    <picker class="picker_system" bindcancel="out_choice_system" mode="selector" bindchange="choice_system"  range="{{systemArray}}">
-        <button class="bt_choice_system" style="position: relative; left: 0rpx; top: 2rpx">{{system}}</button>
+    <picker class="picker_system" bindcancel="out_choice_system" mode="selector" bindchange="choice_system" range="{{systemArray}}">
+      <button class="bt_choice_system" style="position: relative; left: 0rpx; top: 2rpx">{{system}}</button>
     </picker>
     <view class="hs20"></view>
 
@@ -22,7 +20,7 @@
         <button class="bt_choice_company" disabled="{{pickerArray==''}}">{{gongsi}}</button>
       </picker>
     </view>
-    
+
     <view class="hs20"></view>
 
     <view>
@@ -30,7 +28,7 @@
     </view>
     <view class="hs20"></view>
     <view>
-      <input name="inputPwd" password="true" bindinput="bindPwdInput" class="input-login" placeholder="输入密码"/>
+      <input name="inputPwd" password="true" bindinput="bindPwdInput" class="input-login" placeholder="输入密码" />
     </view>
     <view class="hs20"></view>
     <view>
@@ -42,5 +40,5 @@
 
 
 <view>
-  
+版本号：2.001
 </view>

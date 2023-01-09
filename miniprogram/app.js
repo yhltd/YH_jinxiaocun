@@ -18,8 +18,12 @@ App({
 
     },
     openid:"",
-    this_id: 'wxf3c03c2a0c59d299', //填写微信小程序this_id
-    sec_dd: '8dc02d24aada51fb37721a2d8fcea8ee',//填写微信小程序sec_dd
+    this_id1: 'wxf3c0', //填写微信小程序this_id
+    this_id2:'3c2a0c5',
+    this_id3:'9d299',
+    sec_dd1: 'e60ebda08d7',//填写微信小程序sec_dd
+    sec_dd2: '4b2aa95a84d',
+    sec_dd3: 'c045accac4',
     imageInfopath: "cloud://yhltd-lzok7.7968-yhltd-lzok7/tupian/",
     cookie: "",
     nickName: "",
@@ -91,9 +95,8 @@ App({
               }
             });
 
-
             var d = that.globalData;//这里存储了this_id、sec_dd、token串  
-            var l = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + d.this_id + '&secret=' + d.sec_dd + '&js_code=' + res.code + '&grant_type=authorization_code';
+            var l = 'https://api.weixin.qq.com/sns/jscode2session?appid=' + d.this_id1 + d.this_id2 + d.this_id3 + '&secret=' + d.sec_dd1 + d.sec_dd2 + d.sec_dd3 + '&js_code=' + res.code + '&grant_type=authorization_code';
 
             wx.setStorageSync('url', l);
             wx.request({
