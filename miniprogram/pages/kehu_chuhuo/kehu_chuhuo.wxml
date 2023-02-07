@@ -7,7 +7,8 @@
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="customer" range="{{customer_list}}">
     <input bindinput="onInput" data-column="customer" value="{{customer}}" name="customer" disabled="disabled" class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" placeholder="搜索供应商/客户" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
   </picker>
-  <button class="button_css" bindtap="goto_print">打印</button>
+  <!-- <button class="button_css" bindtap="goto_print">导出</button> -->
+  <button class="button_css" bindtap="inquire">导出</button>
 </view>
 <view class='main'>
   <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->
@@ -21,3 +22,12 @@
     
   </view>
 </view>
+
+
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
+  <view class="bottom_view" style="height:50%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+

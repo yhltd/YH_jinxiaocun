@@ -55,6 +55,8 @@ Page({
     ks: "",
     zrjs: "",
     mjksje: "",
+    riqi1:"",
+    riqi2:"",
     // 新增代码
     isdis: '',
     isdischa: '',
@@ -141,7 +143,7 @@ Page({
           quanxian_cha:cha,
         })
         if(cha == '√'){
-          var e = ['1999-01-01','2222-01-01',_this.data.rq]
+          var e = ['1999-01-01','2222-01-01','']
           _this.tableShow(e)
         }else{
           wx.showToast({
@@ -230,6 +232,9 @@ Page({
       ks: "",
       zrjs: "",
       mjksje: "",
+      riqi1:"",
+      riqi2:"",
+      t_name:"",
     })
   },
 
@@ -258,7 +263,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['1999-01-01','2222-01-01',_this.data.rq]
+          var e = ['1999-01-01','2222-01-01',_this.data.t_name]
           _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
@@ -317,7 +322,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['1999-01-01','2222-01-01',_this.data.rq]
+          var e = ['1999-01-01','2222-01-01',_this.data.t_name]
           _this.tableShow(e)
 
           wx.showToast({
@@ -361,7 +366,7 @@ Page({
             mjksje: "",
           })
           _this.qxShow()
-          var e = ['1999-01-01','2222-01-01',_this.data.rq]
+          var e = ['1999-01-01','2222-01-01',_this.data.t_name]
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -402,17 +407,20 @@ Page({
 
   sel1:function(){
     var _this = this
-    if(_this.data.riqi1==''){
+    if(_this.data.riqi1=='' || _this.data.riqi1=='undefined'){
       _this.setData({
         riqi1:'1900-01-01'
       })
     }
-    if(_this.data.riqi2==''){
+    if(_this.data.riqi2=='' || _this.data.riqi1=='undefined'){
       _this.setData({
         riqi2:'2100-12-31'
       })
     }
-    var e = [_this.data.riqi1,_this.data.riqi2,_this.data.rq]
+    var e = [_this.data.riqi1,_this.data.riqi2,_this.data.t_name]
+    console.log(_this.data)
+    console.log(_this.data.riqi2)
+    console.log(_this.data.t_name)
     _this.tableShow(e)
     _this.qxShow()
   },

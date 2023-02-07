@@ -82,18 +82,40 @@ Page({
         query: sql
       },
       success: res => {
-        console.log(sql)
         var list = res.result.recordset
+        var nianchu = 0
+        var nianmo = 0
+        console.log(sql)
+        console.log(list)
+        if(list != undefined){
+          if(list.length != 0){
+            for(var i=0;i<list.length;i++){
+              nianchu = nianchu + list[i].start_year
+              nianmo = nianmo + list[i].end_year
+            }
+          }
+        }
         _this.setData({
           ["list["+(class_id-1)+"].arr"] : list,
-          class_name : _this.data.list[class_id-1].className
+          class_name : _this.data.list[class_id-1].className,
+          sum_start1:nianchu,
+          sum_end1:nianmo
         })
         wx.hideLoading()
-        _this.getSum()
-        if(callback != undefined){
-          callback();
-        }
       },
+      // success: res => {
+      //   console.log(sql)
+      //   var list = res.result.recordset
+      //   _this.setData({
+      //     ["list["+(class_id-1)+"].arr"] : list,
+      //     class_name : _this.data.list[class_id-1].className
+      //   })
+      //   wx.hideLoading()
+      //   _this.getSum()
+      //   if(callback != undefined){
+      //     callback();
+      //   }
+      // },
       err: res => {
         console.log("错误!")
       },

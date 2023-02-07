@@ -122,9 +122,9 @@ Page({
         console.log(res.result)
         _this.setData({
           szzhi: res.result,
-          start_date:'',
-          stop_date:'',
-          order_number:'',
+          // start_date:'',
+          // stop_date:'',
+          // order_number:'',
         })
         console.log(_this.data.szzhi)
       },

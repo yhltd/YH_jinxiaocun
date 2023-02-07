@@ -188,8 +188,22 @@ Page({
       url: '/pages/xinjianshangpin/xinjianshangpin'
 
     })
-
   },
+
+  zhu: function() {
+    wx.showModal({
+      title: '提示',
+      content: '此表是根据明细表合计来查询的',
+      success: function (res) {
+        if (res.confirm) { //这里是点击了确定以后
+          console.log('用户点击确定')
+        } else { //这里是点击了取消以后
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
   srJg: function(e) {
     var that = this
     dtid = e.currentTarget.dataset.id

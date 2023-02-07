@@ -6,6 +6,7 @@
   <view class='pm'>
     <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindinput="select" placeholder="搜索产品名称" placeholder-style="color:#f8f8f8;text-align:center;"></input>
   </view>
+  <button style="color: rgb(255, 255, 255);background-color:rgb(95, 101, 119);width: 40px;height: 30px;float:right;left:-8px；top:-10px" bindtap="zhu">注</button>
 </view>
 <view class="Mymain">
   <view class="list" wx:for="{{all}}" wx:key="" wx:for-index='i' hidden="{{item.isSelect!=0}}">

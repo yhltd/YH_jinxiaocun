@@ -150,7 +150,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select expenditure,isnull((select sum(s.money) from VoucherSummary as s where company = 'admin' and year(voucherDate) = year('"+ start_date +"') and month(voucherDate) >= month('" + start_date + "') and month(voucherDate) <= month('" + stop_date + "') and s.expenditure = v.expenditure),0) as money_month,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year('" + start_date + "') and s.expenditure = v.expenditure),0) as money_year from VoucherSummary as v where company = '"+userInfo.company+"' GROUP BY expenditure"
+        query: "select expenditure,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year(convert(date,'"+ start_date +"')) and month(voucherDate) >= month(convert(date,'" + start_date + "')) and month(voucherDate) <= month(convert(date,'" + stop_date + "')) and s.expenditure = v.expenditure),0) as money_month,isnull((select sum(s.money) from VoucherSummary as s where company = '"+userInfo.company+"' and year(voucherDate) = year(convert(date,'" + start_date + "')) and s.expenditure = v.expenditure),0) as money_year from VoucherSummary as v where company = '"+userInfo.company+"' GROUP BY expenditure"
       },
       success: res => {
         var list = res.result.recordset
