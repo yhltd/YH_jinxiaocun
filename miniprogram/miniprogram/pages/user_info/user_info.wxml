@@ -58,6 +58,10 @@
     <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="state_upd" range="{{state_upd_list}}">
       <input bindinput="onInput" data-column="state_upd" class="input_text_form" value="{{state_upd}}" type="text" name="state_upd" disabled="disabled"></input>
     </picker>
+    <view class="lables">能否查看销售单价金额</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="money_sel" range="{{state_upd_list}}">
+      <input bindinput="onInput" data-column="money_sel" class="input_text_form" value="{{money_sel}}" type="text" name="money_sel" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -84,6 +88,10 @@
     <view class="lables">能否修改审核通过数据</view>
     <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="state_upd" range="{{state_upd_list}}">
       <input bindinput="onInput" data-column="state_upd" class="input_text_form" value="{{state_upd}}" type="text" name="state_upd" disabled="disabled"></input>
+    </picker>
+    <view class="lables">能否查看销售单价金额</view>
+    <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="money_sel" range="{{state_upd_list}}">
+      <input bindinput="onInput" data-column="money_sel" class="input_text_form" value="{{money_sel}}" type="text" name="money_sel" disabled="disabled"></input>
     </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

@@ -1,0 +1,60 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;" >
+  <view class="lables">日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="D" bindchange="choiceDate" >
+      <input bindinput="onInput" data-column="D" class="input_text_form"  value="{{D}}" type="text" name="D" disabled="disabled"></input>
+    </picker>
+    <view class="lables">星期</view>
+    <input bindinput="onInput" data-column="E" class="input_text_form"  value="{{E}}" type="text" name="E"></input>
+    <view class="lables">值班A</view>
+    <input bindinput="onInput" data-column="F" class="input_text_form"  value="{{F}}" type="text" name="F"></input>
+    <view class="lables">值班B</view>
+    <input bindinput="onInput" data-column="G" class="input_text_form"  value="{{G}}" type="text" name="G"></input>
+    <view class="lables">加强A</view>
+    <input bindinput="onInput" data-column="H" class="input_text_form"  value="{{H}}" type="text" name="H"></input>
+    <view class="lables">加强B</view>
+    <input bindinput="onInput" data-column="I" class="input_text_form"  value="{{I}}" type="text" name="I"></input>
+    <view class="lables">九加</view>
+    <input bindinput="onInput" data-column="J" class="input_text_form"  value="{{J}}" type="text" name="J"></input>
+    <view class="lables">早班</view>
+    <input bindinput="onInput" data-column="K" class="input_text_form"  value="{{K}}" type="text" name="K"></input>
+    <view class="lables">正常上班1</view>
+    <input bindinput="onInput" data-column="L" class="input_text_form"  value="{{L}}" type="text" name="L"></input>
+    <view class="lables">正常上班2</view>
+    <input bindinput="onInput" data-column="M" class="input_text_form"  value="{{M}}" type="text" name="M"></input>
+    <view class="lables">正常上班3</view>
+    <input bindinput="onInput" data-column="N" class="input_text_form"  value="{{N}}" type="text" name="N"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>

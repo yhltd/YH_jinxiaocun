@@ -20,6 +20,13 @@ Page({
         isupd: true
       },
       {
+        text: "颜色",
+        width: "250rpx",
+        columnName: "yanse",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "长",
         width: "250rpx",
         columnName: "chang",
@@ -40,7 +47,7 @@ Page({
     lkxh: '', 
     chang: '',
     kuan: '',
-  
+    yanse:'',
   },
 
   /**
@@ -59,7 +66,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,lkxh,isnull(chang,'') as chang ,isnull(kuan,'') as kuan from refertable where lkxh like '%" + e[0] + "%'"
+        query: "select id,lkxh,isnull(yanse,'') as yanse,isnull(chang,'') as chang ,isnull(kuan,'') as kuan from refertable where lkxh like '%" + e[0] + "%'"
       },
       success: res => {
         console.log(res)
@@ -98,6 +105,7 @@ Page({
     var _this = this
     _this.setData({
       id: _this.data.list[e.currentTarget.dataset.index].id,
+      yanse: _this.data.list[e.currentTarget.dataset.index].yanse, 
       lkxh: _this.data.list[e.currentTarget.dataset.index].lkxh, 
       chang: _this.data.list[e.currentTarget.dataset.index].chang,
       kuan: _this.data.list[e.currentTarget.dataset.index].kuan,
@@ -110,6 +118,7 @@ Page({
     _this.setData({
       tjShow: true,
       id:'',
+      yanse:'',
       lkxh: '', 
       chang: '',
       kuan: '',
@@ -121,6 +130,15 @@ Page({
     if(_this.data.lkxh == ''){
       wx.showToast({
         title: '请输铝框型号！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
+    if(_this.data.yanse == ''){
+      wx.showToast({
+        title: '请输颜色！',
         icon: 'none',
         duration: 3000
       })
@@ -145,16 +163,15 @@ Page({
       return;
     }
 
-    
-
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "insert into refertable(lkxh,chang,kuan) values('" + _this.data.lkxh + "','" + _this.data.chang + "','" + _this.data.kuan + "')"
+          query: "insert into refertable(lkxh,yanse,chang,kuan) values('" + _this.data.lkxh + "','" + _this.data.yanse + "','" + _this.data.chang + "','" + _this.data.kuan + "')"
         },
         success: res => {
           _this.setData({
             id:'',
+            yanse:'',
             lkxh: '', 
             chang: '',
             kuan: '',
@@ -194,7 +211,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update refertable set lkxh='" + _this.data.lkxh + "',chang='" + _this.data.chang + "',kuan='" + _this.data.kuan + "' where id=" + _this.data.id  
+        query: "update refertable set lkxh='" + _this.data.lkxh + "',yanse='" + _this.data.yanse + "',chang='" + _this.data.chang + "',kuan='" + _this.data.kuan + "' where id=" + _this.data.id  
       },
       success: res => {
         _this.setData({
@@ -235,6 +252,7 @@ Page({
         success: res => {
           _this.setData({
             id:'',
+            yanse:'',
             lkxh: '', 
             chang: '',
             kuan: '',
@@ -265,6 +283,7 @@ Page({
     _this.setData({
       cxShow:true,
       id:'',
+      yanse:'',
       lkxh: '', 
       chang: '',
       kuan: '',

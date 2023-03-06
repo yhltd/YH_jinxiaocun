@@ -3,11 +3,14 @@
 <!------------------------->
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">客户名称</view>
-  <picker bindchange="bindPickerChange1" value="{{index}}" range="{{name_list}}" disabled="{{ userInfo.power != '客户'?false:true}}" style="width: 35%; margin: auto;">
+  <picker bindchange="bindPickerChange1" value="{{index}}" range="{{name_list}}" disabled="{{ userInfo.power != '客户'?false:true}}" style="width: 50%; margin: auto;">
     <input bindinput="onInput" data-column="khmc" style="width: 100%;" class="input_text_head" value="{{khmc}}" type="text" name="khmc" disabled="disabled"></input>
   </picker>
+</view>
+
+<view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">下单日期</view>
-  <picker class="pick" mode="date" value="{{date}}" data-column_name="xdrq" bindchange="choiceDate" style="width: 35%; margin: auto;">
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="xdrq" bindchange="choiceDate" style="width: 50%; margin: auto;">
     <input bindinput="onInput" data-column="xdrq" class="input_text_head" value="{{xdrq}}" type="date" name="xdrq" disabled="disabled" style="width: 100%;"></input>
   </picker>
 </view>
@@ -15,6 +18,10 @@
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">单据编号</view>
   <input bindinput="onInput" data-column="djbh" class="input_text_head" value="{{header_list.djbh}}" type="text" name="djbh" disabled="disabled"></input>
+
+</view>
+
+<view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">送货地址</view>
   <input bindinput="onInput" data-column="shouhuo" class="input_text_head" value="{{shouhuo}}" type="text" name="shouhuo"></input>
 </view>
@@ -22,8 +29,11 @@
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">联系电话</view>
   <input bindinput="onInput" data-column="lxdh" class="input_text_head" value="{{lxdh}}" type="text" name="lxdh"></input>
+</view>
+
+<view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">送货方式</view>
-  <picker bindchange="bindPickerChange2" value="{{index}}" range="{{shfs_list}}" style="width: 35%; margin: auto;">
+  <picker bindchange="bindPickerChange2" value="{{index}}" range="{{shfs_list}}" style="width: 50%; margin: auto;">
     <input bindinput="onInput" data-column="shfs" class="input_text_head" value="{{shfs}}" type="text" name="shfs" disabled="disabled" style="width: 100%;"></input>
   </picker>
 </view>
@@ -31,6 +41,9 @@
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">安装地址</view>
   <input bindinput="onInput" data-column="azdz" class="input_text_head" value="{{azdz}}" type="text" name="azdz"></input> 
+</view>
+
+<view style="display: flex;">
   <view class="lables_head" style="font-size: calc(40vmin / 7.5)">订单编号</view>
   <input bindinput="onInput" data-column="ddh" class="input_text_head" value="{{ddh}}" type="text" name="ddh" style="margin-bottom: calc(10vmin / 7.5);"></input>
 </view>
@@ -67,7 +80,7 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 55%;">
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
   <view class="lables">{{update_name[this_column]}}</view>
   <picker bindchange="bindPickerChange" value="{{index}}" range="{{xiala_panduan==1?cxdk_list:xiala_panduan==2?ddxh_list:xiala_panduan==3?lcys_list:xiala_panduan==4?gy_list:xiala_panduan==5?dy_list:xiala_panduan==6?kg_list:xiala_panduan==7?pj_list:xiala_panduan==8?fk_list:xiala_panduan==9?hd_list:xiala_panduan==10?xiangmu_leibie_list:''}}" disabled="{{xiala_panduan==0}}"> 
     <input class="input_text_form" type="{{this_type}}" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
@@ -75,6 +88,6 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">确定</button>
   </view>
 </van-popup>

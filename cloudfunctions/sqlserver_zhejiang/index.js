@@ -6,8 +6,8 @@ cloud.init()
 exports.main = async(event) => {
   var config = {
     user: 'sa',
-    password: 'Lyh07910_001',
-    server: 'yhocn.cn',
+    password: 'Biii2010_2022',
+    server: '43.137.18.87',
     database: 'zhejiangpananwaimaoyaoye_20220819',
     port: '1433' * 1, //用数字相乘强制转换,之前没用 *1 转换所以报错！笨
     options: {

@@ -854,22 +854,57 @@ Page({
   tab_del:function(e){
     var _this = this
     console.log(e.currentTarget.dataset.index)
-    wx.showModal({
-      title: '提示',
-      content: '确认删除此行数据？',
-      success (res) {
-        if (res.confirm) {
-          var list = _this.data.list
-          list.splice(e.currentTarget.dataset.index,1)
-          _this.setData({
-            list:list
-          })
-          console.log(list)
-        } else if (res.cancel) {
-
+    if(e.currentTarget.dataset.column != 'fj'){
+      wx.showModal({
+        title: '提示',
+        content: '确认删除此行数据？',
+        success (res) {
+          if (res.confirm) {
+            var list = _this.data.list
+            list.splice(e.currentTarget.dataset.index,1)
+            _this.setData({
+              list:list
+            })
+            console.log(list)
+          } else if (res.cancel) {
+  
+          }
         }
-      }
-    })
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '确认复制此行数据？',
+        success (res) {
+          if (res.confirm) {
+            var list = _this.data.list
+            var this_row = _this.data.list[e.currentTarget.dataset.index]
+            list.push({
+              fj:this_row.fj,
+              gh:this_row.gh,
+              lcys:this_row.lcys,
+              ddcd:this_row.ddcd,
+              sl:this_row.sl,
+              cxdk:this_row.cxdk,
+              cxdk_right:this_row.cxdk_right,
+              gy:this_row.gy,
+              gl:this_row.gl,
+              bz:this_row.bz,
+              dj:this_row.dj,
+              je:this_row.je,
+              chicun:this_row.chicun,      
+            })
+            _this.setData({
+              list:list
+            })
+            console.log(list)
+          } else if (res.cancel) {
+  
+          }
+        }
+      })
+    }
+
   },
 
   selCD: function () {

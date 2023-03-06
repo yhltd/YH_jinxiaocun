@@ -211,7 +211,7 @@ page {
 
 .bt_bottom{
   float: left;
-width: 45%;
+width: 30%;
 background-color: #4876FF;
 color: white;
 margin-left: 27rpx;

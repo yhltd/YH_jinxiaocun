@@ -1,9 +1,13 @@
 <view style="display: flex;">
   <view class="lables">客户名称：</view>
   <input bindinput="onInput_text" bindtap="header_xiala" data-column="customer_name" class="input_text_form" value="{{header_list.customer_name}}" type="text" name="customer_name" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
   <view class="lables">下单日期：</view>
   <input bindinput="onInput_text" bindtap="selRIQI2" data-column="insert_date" class="input_text_form" value="{{header_list.insert_date}}" type="date" name="insert_date" disabled="disabled"></input>
 </view>
+
 <!-- <view style="display: flex;">
   <view class="lables">下单日期：</view>
   <input bindinput="onInput_text" bindtap="selRIQI2" data-column="insert_date" class="input_text_form" value="{{header_list.insert_date}}" type="date" name="insert_date" disabled="disabled" ></input>
@@ -11,6 +15,8 @@
 <view style="display: flex;">
   <view class="lables">单据编号：</view>
   <input bindinput="onInput_text" data-column="order_number" class="input_text_form" value="{{header_list.order_number}}" type="text" name="order_number" disabled="disabled"></input>
+</view>
+<view style="display: flex;">
   <view class="lables">简码：</view>
   <input bindinput="onInput_text" data-column="pinyin" class="input_text_form" value="{{header_list.pinyin}}" type="text" name="pinyin" disabled="disabled"></input>
 </view>
@@ -21,6 +27,9 @@
 <view style="display: flex;">
   <view class="lables">送货地址：</view>
   <input bindinput="onInput_text" data-column="shipping_address" class="input_text_form" value="{{header_list.shipping_address}}" type="text" name="shipping_address"></input>
+
+</view>
+<view style="display: flex;">
   <view class="lables">联系电话：</view>
   <input bindinput="onInput_text" data-column="phone" class="input_text_form" value="{{header_list.phone}}" type="text" name="phone"></input>
 </view>
@@ -31,6 +40,9 @@
 <view style="display: flex;">
   <view class="lables">送货方式：</view>
   <input bindinput="onInput_text" bindtap="header_xiala" data-column="shipping_type" class="input_text_form" value="{{header_list.shipping_type}}" type="text" name="shipping_type" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
   <view class="lables">安装地址：</view>
   <input bindinput="onInput_text" data-column="install_address" class="input_text_form" value="{{header_list.install_address}}" type="text" name="install_address"></input>
 </view>
@@ -48,7 +60,7 @@
   <view class="table">
     <block class="list_row">
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">序号</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">序号</view>
         <view class="title_text" style="width:calc(500vmin / 7.5)">1</view>
         <view class="title_text" style="width:calc(500vmin / 7.5)">2</view>
         <view class="title_text" style="width:calc(500vmin / 7.5)">3</view>
@@ -57,7 +69,7 @@
         <view class="title_text" style="width:calc(500vmin / 7.5)">6</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0;"></view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0;"></view>
         <view class="title_text" style="width:calc(250vmin / 7.5)">H&高</view>
         <view class="title_text" style="width:calc(250vmin / 7.5)">W&宽</view>
         <view class="title_text" style="width:calc(250vmin / 7.5)">H&高</view>
@@ -72,7 +84,7 @@
         <view class="title_text" style="width:calc(250vmin / 7.5)">W&宽</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">尺寸</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">尺寸</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="height" data-value="{{body_list[0].height}}" style="width:calc(250vmin / 7.5)">{{body_list[0].height}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="width" data-value="{{body_list[0].width}}" style="width:calc(250vmin / 7.5)">{{body_list[0].width}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="height" data-value="{{body_list[1].height}}" style="width:calc(250vmin / 7.5)">{{body_list[1].height}}</view>
@@ -86,8 +98,19 @@
         <view class="list_view" bindtap="clickView" data-index="5" data-column="height" data-value="{{body_list[5].height}}" style="width:calc(250vmin / 7.5)">{{body_list[5].height}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="width" data-value="{{body_list[5].width}}" style="width:calc(250vmin / 7.5)">{{body_list[5].width}}</view>
       </view>
+
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铝型材</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">下单数量</view>
+        <view class="list_view" bindtap="clickView" data-index="0" data-column="num" data-value="{{body_list[0].num}}" style="width:calc(500vmin / 7.5)">{{body_list[0].num}}</view>
+        <view class="list_view" bindtap="clickView" data-index="1" data-column="num" data-value="{{body_list[1].num}}" style="width:calc(500vmin / 7.5)">{{body_list[1].num}}</view>
+        <view class="list_view" bindtap="clickView" data-index="2" data-column="num" data-value="{{body_list[2].num}}" style="width:calc(500vmin / 7.5)">{{body_list[2].num}}</view>
+        <view class="list_view" bindtap="clickView" data-index="3" data-column="num" data-value="{{body_list[3].num}}" style="width:calc(500vmin / 7.5)">{{body_list[3].num}}</view>
+        <view class="list_view" bindtap="clickView" data-index="4" data-column="num" data-value="{{body_list[4].num}}" style="width:calc(500vmin / 7.5)">{{body_list[4].num}}</view>
+        <view class="list_view" bindtap="clickView" data-index="5" data-column="num" data-value="{{body_list[5].num}}" style="width:calc(500vmin / 7.5)">{{body_list[5].num}}</view>
+      </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铝型材</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="lvxingcai" data-value="{{body_list[0].lvxingcai}}" style="width:calc(500vmin / 7.5)">{{body_list[0].lvxingcai}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="lvxingcai" data-value="{{body_list[1].lvxingcai}}" style="width:calc(500vmin / 7.5)">{{body_list[1].lvxingcai}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="lvxingcai" data-value="{{body_list[2].lvxingcai}}" style="width:calc(500vmin / 7.5)">{{body_list[2].lvxingcai}}</view>
@@ -96,7 +119,7 @@
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="lvxingcai" data-value="{{body_list[5].lvxingcai}}" style="width:calc(500vmin / 7.5)">{{body_list[5].lvxingcai}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铝材颜色</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铝材颜色</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="lvcai_yanse" data-value="{{body_list[0].lvcai_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[0].lvcai_yanse}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="lvcai_yanse" data-value="{{body_list[1].lvcai_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[1].lvcai_yanse}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="lvcai_yanse" data-value="{{body_list[2].lvcai_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[2].lvcai_yanse}}</view>
@@ -105,7 +128,7 @@
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="lvcai_yanse" data-value="{{body_list[5].lvcai_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[5].lvcai_yanse}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">玻璃深加工</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">玻璃深加工</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="boli_shenjiagong" data-value="{{body_list[0].boli_shenjiagong}}" style="width:calc(500vmin / 7.5)">{{body_list[0].boli_shenjiagong}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="boli_shenjiagong" data-value="{{body_list[1].boli_shenjiagong}}" style="width:calc(500vmin / 7.5)">{{body_list[1].boli_shenjiagong}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="boli_shenjiagong" data-value="{{body_list[2].boli_shenjiagong}}" style="width:calc(500vmin / 7.5)">{{body_list[2].boli_shenjiagong}}</view>
@@ -114,7 +137,7 @@
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="boli_shenjiagong" data-value="{{body_list[5].boli_shenjiagong}}" style="width:calc(500vmin / 7.5)">{{body_list[5].boli_shenjiagong}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">玻璃颜色</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">玻璃颜色</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="boli_yanse" data-value="{{body_list[0].boli_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[0].boli_yanse}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="boli_yanse" data-value="{{body_list[1].boli_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[1].boli_yanse}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="boli_yanse" data-value="{{body_list[2].boli_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[2].boli_yanse}}</view>
@@ -123,7 +146,7 @@
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="boli_yanse" data-value="{{body_list[5].boli_yanse}}" style="width:calc(500vmin / 7.5)">{{body_list[5].boli_yanse}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">拉手型号</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">拉手型号</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="lashou_xinghao" data-value="{{body_list[0].lashou_xinghao}}" style="width:calc(500vmin / 7.5)">{{body_list[0].lashou_xinghao}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="lashou_xinghao" data-value="{{body_list[1].lashou_xinghao}}" style="width:calc(500vmin / 7.5)">{{body_list[1].lashou_xinghao}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="lashou_xinghao" data-value="{{body_list[2].lashou_xinghao}}" style="width:calc(500vmin / 7.5)">{{body_list[2].lashou_xinghao}}</view>
@@ -132,66 +155,66 @@
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="lashou_xinghao" data-value="{{body_list[5].lashou_xinghao}}" style="width:calc(500vmin / 7.5)">{{body_list[5].lashou_xinghao}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">有拉手数量（个）</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">右边拉手</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="lashou_shuliang_right" data-value="{{body_list[0].lashou_shuliang_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].lashou_shuliang_right}}</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">有拉手数量（个）</view>
+        <view class="title_text" style="width:calc(123vmin / 7.5)">右边拉手</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="lashou_shuliang_right" data-value="{{body_list[0].lashou_shuliang_right}}" style="width:calc(123vmin / 7.5)">{{body_list[0].lashou_shuliang_right}}</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view> 
         <view class="list_view" bindtap="clickView" data-index="0" data-column="lashou_shuliang_left" data-value="{{body_list[0].lashou_shuliang_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].lashou_shuliang_left}}</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">右边拉手</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="lashou_shuliang_right" data-value="{{body_list[1].lashou_shuliang_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].lashou_shuliang_right}}</view>
+        <view class="title_text" style="width:calc(123vmin / 7.5)">右边拉手</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="lashou_shuliang_right" data-value="{{body_list[1].lashou_shuliang_right}}" style="width:calc(123vmin / 7.5)">{{body_list[1].lashou_shuliang_right}}</view>
         <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="lashou_shuliang_left" data-value="{{body_list[1].lashou_shuliang_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].lashou_shuliang_left}}</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">右边拉手</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="lashou_shuliang_right" data-value="{{body_list[2].lashou_shuliang_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].lashou_shuliang_right}}</view>
+        <view class="title_text" style="width:calc(123vmin / 7.5)">右边拉手</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="lashou_shuliang_right" data-value="{{body_list[2].lashou_shuliang_right}}" style="width:calc(123vmin / 7.5)">{{body_list[2].lashou_shuliang_right}}</view>
         <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="lashou_shuliang_left" data-value="{{body_list[2].lashou_shuliang_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].lashou_shuliang_left}}</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">右边拉手</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="lashou_shuliang_right" data-value="{{body_list[3].lashou_shuliang_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].lashou_shuliang_right}}</view>
+        <view class="title_text" style="width:calc(123vmin / 7.5)">右边拉手</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="lashou_shuliang_right" data-value="{{body_list[3].lashou_shuliang_right}}" style="width:calc(123vmin / 7.5)">{{body_list[3].lashou_shuliang_right}}</view>
         <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="lashou_shuliang_left" data-value="{{body_list[3].lashou_shuliang_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].lashou_shuliang_left}}</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">右边拉手</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="lashou_shuliang_right" data-value="{{body_list[4].lashou_shuliang_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].lashou_shuliang_right}}</view>
+        <view class="title_text" style="width:calc(123vmin / 7.5)">右边拉手</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="lashou_shuliang_right" data-value="{{body_list[4].lashou_shuliang_right}}" style="width:calc(123vmin / 7.5)">{{body_list[4].lashou_shuliang_right}}</view>
         <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="lashou_shuliang_left" data-value="{{body_list[4].lashou_shuliang_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].lashou_shuliang_left}}</view>
-        <view class="title_text" style="width:calc(125vmin / 7.5)">右边拉手</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="lashou_shuliang_right" data-value="{{body_list[5].lashou_shuliang_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].lashou_shuliang_right}}</view>
+        <view class="title_text" style="width:calc(123vmin / 7.5)">右边拉手</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="lashou_shuliang_right" data-value="{{body_list[5].lashou_shuliang_right}}" style="width:calc(123vmin / 7.5)">{{body_list[5].lashou_shuliang_right}}</view>
         <view class="title_text" style="width:calc(125vmin / 7.5)">左边拉手</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="lashou_shuliang_left" data-value="{{body_list[5].lashou_shuliang_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].lashou_shuliang_left}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">拉手位</view>
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="lashouwei_select_left" data-value="{{body_list[0].lashouwei_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].lashouwei_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="lashouwei_insert_left" data-value="{{body_list[0].lashouwei_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].lashouwei_insert_left}}</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">拉手位</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="lashouwei_select_left" data-value="{{body_list[0].lashouwei_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].lashouwei_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="lashouwei_insert_left" data-value="{{body_list[0].lashouwei_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].lashouwei_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="lashouwei_select_right" data-value="{{body_list[0].lashouwei_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].lashouwei_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="lashouwei_insert_right" data-value="{{body_list[0].lashouwei_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].lashouwei_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="lashouwei_select_left" data-value="{{body_list[1].lashouwei_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].lashouwei_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="lashouwei_insert_left" data-value="{{body_list[1].lashouwei_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].lashouwei_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="lashouwei_select_left" data-value="{{body_list[1].lashouwei_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].lashouwei_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="lashouwei_insert_left" data-value="{{body_list[1].lashouwei_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].lashouwei_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="lashouwei_select_right" data-value="{{body_list[1].lashouwei_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].lashouwei_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="lashouwei_insert_right" data-value="{{body_list[1].lashouwei_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].lashouwei_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="lashouwei_select_left" data-value="{{body_list[2].lashouwei_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].lashouwei_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="lashouwei_insert_left" data-value="{{body_list[2].lashouwei_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].lashouwei_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="lashouwei_select_left" data-value="{{body_list[2].lashouwei_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].lashouwei_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="lashouwei_insert_left" data-value="{{body_list[2].lashouwei_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].lashouwei_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="lashouwei_select_right" data-value="{{body_list[2].lashouwei_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].lashouwei_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="lashouwei_insert_right" data-value="{{body_list[2].lashouwei_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].lashouwei_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="lashouwei_select_left" data-value="{{body_list[3].lashouwei_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].lashouwei_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="lashouwei_insert_left" data-value="{{body_list[3].lashouwei_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].lashouwei_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="lashouwei_select_left" data-value="{{body_list[3].lashouwei_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].lashouwei_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="lashouwei_insert_left" data-value="{{body_list[3].lashouwei_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].lashouwei_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="lashouwei_select_right" data-value="{{body_list[3].lashouwei_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].lashouwei_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="lashouwei_insert_right" data-value="{{body_list[3].lashouwei_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].lashouwei_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="lashouwei_select_left" data-value="{{body_list[4].lashouwei_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].lashouwei_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="lashouwei_insert_left" data-value="{{body_list[4].lashouwei_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].lashouwei_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="lashouwei_select_left" data-value="{{body_list[4].lashouwei_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].lashouwei_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="lashouwei_insert_left" data-value="{{body_list[4].lashouwei_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].lashouwei_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="lashouwei_select_right" data-value="{{body_list[4].lashouwei_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].lashouwei_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="lashouwei_insert_right" data-value="{{body_list[4].lashouwei_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].lashouwei_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="lashouwei_select_left" data-value="{{body_list[5].lashouwei_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].lashouwei_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="lashouwei_insert_left" data-value="{{body_list[5].lashouwei_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].lashouwei_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="lashouwei_select_left" data-value="{{body_list[5].lashouwei_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].lashouwei_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="lashouwei_insert_left" data-value="{{body_list[5].lashouwei_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].lashouwei_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="lashouwei_select_right" data-value="{{body_list[5].lashouwei_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].lashouwei_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="lashouwei_insert_right" data-value="{{body_list[5].lashouwei_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].lashouwei_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0"></view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔方向</view>
         <view class="title_text" style="width:calc(250vmin / 7.5)">左开</view>
         <view class="title_text" style="width:calc(250vmin / 7.5)">右开</view>
 
@@ -211,127 +234,127 @@
         <view class="title_text" style="width:calc(250vmin / 7.5)">右开</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔方向及数量（个）</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[0].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[0].jiaoliankong_fangxiang_left}}</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量（个）</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[0].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[0].jiaoliankong_fangxiang_left}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaoliankong_fangxiang_right" data-value="{{body_list[0].jiaoliankong_fangxiang_right}}" style="width:calc(250vmin / 7.5)">{{body_list[0].jiaoliankong_fangxiang_right}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[1].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[1].jiaoliankong_fangxiang_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[1].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[1].jiaoliankong_fangxiang_left}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaoliankong_fangxiang_right" data-value="{{body_list[1].jiaoliankong_fangxiang_right}}" style="width:calc(250vmin / 7.5)">{{body_list[1].jiaoliankong_fangxiang_right}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[2].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[2].jiaoliankong_fangxiang_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[2].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[2].jiaoliankong_fangxiang_left}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaoliankong_fangxiang_right" data-value="{{body_list[2].jiaoliankong_fangxiang_right}}" style="width:calc(250vmin / 7.5)">{{body_list[2].jiaoliankong_fangxiang_right}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[3].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[3].jiaoliankong_fangxiang_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[3].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[3].jiaoliankong_fangxiang_left}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaoliankong_fangxiang_right" data-value="{{body_list[3].jiaoliankong_fangxiang_right}}" style="width:calc(250vmin / 7.5)">{{body_list[3].jiaoliankong_fangxiang_right}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[4].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[4].jiaoliankong_fangxiang_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[4].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[4].jiaoliankong_fangxiang_left}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaoliankong_fangxiang_right" data-value="{{body_list[4].jiaoliankong_fangxiang_right}}" style="width:calc(250vmin / 7.5)">{{body_list[4].jiaoliankong_fangxiang_right}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[5].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[5].jiaoliankong_fangxiang_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaoliankong_fangxiang_left" data-value="{{body_list[5].jiaoliankong_fangxiang_left}}" style="width:calc(250vmin / 7.5)">{{body_list[5].jiaoliankong_fangxiang_left}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaoliankong_fangxiang_right" data-value="{{body_list[5].jiaoliankong_fangxiang_right}}" style="width:calc(250vmin / 7.5)">{{body_list[5].jiaoliankong_fangxiang_right}}</view>
       </view>
 
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">装锁方向</view>
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[0].zhuangsuofangxiang_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuofangxiang_select_left}}</view>
-        <view class="title_text" data-index="0" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[0].zhuangsuofangxiang_insert_left}}" style="width:calc(125vmin / 7.5)">从右向左</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">装锁方向</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[0].zhuangsuofangxiang_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].zhuangsuofangxiang_select_left}}</view>
+        <view class="title_text" data-index="0" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[0].zhuangsuofangxiang_insert_left}}" style="width:calc(123vmin / 7.5)">从右向左</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="zhuangsuofangxiang_select_right" data-value="{{body_list[0].zhuangsuofangxiang_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuofangxiang_select_right}}</view>
         <view class="title_text" bindtap="clickView" data-index="0" data-column="zhuangsuofangxiang_insert_right" data-value="{{body_list[0].zhuangsuofangxiang_insert_right}}" style="width:calc(125vmin / 7.5)">从左向右</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[1].zhuangsuofangxiang_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuofangxiang_select_left}}</view>
-        <view class="title_text" data-index="1" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[1].zhuangsuofangxiang_insert_left}}" style="width:calc(125vmin / 7.5)">从右向左</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[1].zhuangsuofangxiang_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].zhuangsuofangxiang_select_left}}</view>
+        <view class="title_text" data-index="1" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[1].zhuangsuofangxiang_insert_left}}" style="width:calc(123vmin / 7.5)">从右向左</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="zhuangsuofangxiang_select_right" data-value="{{body_list[1].zhuangsuofangxiang_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuofangxiang_select_right}}</view>
         <view class="title_text" bindtap="clickView" data-index="1" data-column="zhuangsuofangxiang_insert_right" data-value="{{body_list[1].zhuangsuofangxiang_insert_right}}" style="width:calc(125vmin / 7.5)">从左向右</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[2].zhuangsuofangxiang_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuofangxiang_select_left}}</view>
-        <view class="title_text" data-index="2" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[2].zhuangsuofangxiang_insert_left}}" style="width:calc(125vmin / 7.5)">从右向左</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[2].zhuangsuofangxiang_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].zhuangsuofangxiang_select_left}}</view>
+        <view class="title_text" data-index="2" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[2].zhuangsuofangxiang_insert_left}}" style="width:calc(123vmin / 7.5)">从右向左</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="zhuangsuofangxiang_select_right" data-value="{{body_list[2].zhuangsuofangxiang_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuofangxiang_select_right}}</view>
         <view class="title_text" bindtap="clickView" data-index="2" data-column="zhuangsuofangxiang_insert_right" data-value="{{body_list[2].zhuangsuofangxiang_insert_right}}" style="width:calc(125vmin / 7.5)">从左向右</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[3].zhuangsuofangxiang_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuofangxiang_select_left}}</view>
-        <view class="title_text" data-index="3" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[3].zhuangsuofangxiang_insert_left}}" style="width:calc(125vmin / 7.5)">从右向左</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[3].zhuangsuofangxiang_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].zhuangsuofangxiang_select_left}}</view>
+        <view class="title_text" data-index="3" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[3].zhuangsuofangxiang_insert_left}}" style="width:calc(123vmin / 7.5)">从右向左</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="zhuangsuofangxiang_select_right" data-value="{{body_list[3].zhuangsuofangxiang_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuofangxiang_select_right}}</view>
         <view class="title_text" bindtap="clickView" data-index="3" data-column="zhuangsuofangxiang_insert_right" data-value="{{body_list[3].zhuangsuofangxiang_insert_right}}" style="width:calc(125vmin / 7.5)">从左向右</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[4].zhuangsuofangxiang_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuofangxiang_select_left}}</view>
-        <view class="title_text" data-index="4" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[4].zhuangsuofangxiang_insert_left}}" style="width:calc(125vmin / 7.5)">从右向左</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[4].zhuangsuofangxiang_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].zhuangsuofangxiang_select_left}}</view>
+        <view class="title_text" data-index="4" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[4].zhuangsuofangxiang_insert_left}}" style="width:calc(123vmin / 7.5)">从右向左</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="zhuangsuofangxiang_select_right" data-value="{{body_list[4].zhuangsuofangxiang_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuofangxiang_select_right}}</view>
         <view class="title_text" bindtap="clickView" data-index="4" data-column="zhuangsuofangxiang_insert_right" data-value="{{body_list[4].zhuangsuofangxiang_insert_right}}" style="width:calc(125vmin / 7.5)">从左向右</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[5].zhuangsuofangxiang_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuofangxiang_select_left}}</view>
-        <view class="title_text" data-index="5" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[5].zhuangsuofangxiang_insert_left}}" style="width:calc(125vmin / 7.5)">从右向左</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="zhuangsuofangxiang_select_left" data-value="{{body_list[5].zhuangsuofangxiang_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].zhuangsuofangxiang_select_left}}</view>
+        <view class="title_text" data-index="5" data-column="zhuangsuofangxiang_insert_left" data-value="{{body_list[5].zhuangsuofangxiang_insert_left}}" style="width:calc(123vmin / 7.5)">从右向左</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="zhuangsuofangxiang_select_right" data-value="{{body_list[5].zhuangsuofangxiang_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuofangxiang_select_right}}</view>
         <view class="title_text" bindtap="clickView" data-index="5" data-column="zhuangsuofangxiang_insert_right" data-value="{{body_list[5].zhuangsuofangxiang_insert_right}}" style="width:calc(125vmin / 7.5)">从左向右</view>
       </view>
 
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">装锁方位</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[0].zhuangsuofangwei_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuofangwei_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[0].zhuangsuofangwei_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuofangwei_insert_left2}}</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">装锁方位</view>
+        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[0].zhuangsuofangwei_insert_left1}}" style="width:calc(123vmin / 7.5)">{{body_list[0].zhuangsuofangwei_insert_left1}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[0].zhuangsuofangwei_insert_left2}}" style="width:calc(123vmin / 7.5)">{{body_list[0].zhuangsuofangwei_insert_left2}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuofangwei_insert_right1" data-value="{{body_list[0].zhuangsuofangwei_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuofangwei_insert_right1}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuofangwei_insert_right2" data-value="{{body_list[0].zhuangsuofangwei_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuofangwei_insert_right2}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[1].zhuangsuofangwei_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuofangwei_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[1].zhuangsuofangwei_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuofangwei_insert_left2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[1].zhuangsuofangwei_insert_left1}}" style="width:calc(123vmin / 7.5)">{{body_list[1].zhuangsuofangwei_insert_left1}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[1].zhuangsuofangwei_insert_left2}}" style="width:calc(123vmin / 7.5)">{{body_list[1].zhuangsuofangwei_insert_left2}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuofangwei_insert_right1" data-value="{{body_list[1].zhuangsuofangwei_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuofangwei_insert_right1}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuofangwei_insert_right2" data-value="{{body_list[1].zhuangsuofangwei_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuofangwei_insert_right2}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[2].zhuangsuofangwei_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuofangwei_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[2].zhuangsuofangwei_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuofangwei_insert_left2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[2].zhuangsuofangwei_insert_left1}}" style="width:calc(123vmin / 7.5)">{{body_list[2].zhuangsuofangwei_insert_left1}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[2].zhuangsuofangwei_insert_left2}}" style="width:calc(123vmin / 7.5)">{{body_list[2].zhuangsuofangwei_insert_left2}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuofangwei_insert_right1" data-value="{{body_list[2].zhuangsuofangwei_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuofangwei_insert_right1}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuofangwei_insert_right2" data-value="{{body_list[2].zhuangsuofangwei_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuofangwei_insert_right2}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[3].zhuangsuofangwei_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuofangwei_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[3].zhuangsuofangwei_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuofangwei_insert_left2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[3].zhuangsuofangwei_insert_left1}}" style="width:calc(123vmin / 7.5)">{{body_list[3].zhuangsuofangwei_insert_left1}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[3].zhuangsuofangwei_insert_left2}}" style="width:calc(123vmin / 7.5)">{{body_list[3].zhuangsuofangwei_insert_left2}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuofangwei_insert_right1" data-value="{{body_list[3].zhuangsuofangwei_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuofangwei_insert_right1}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuofangwei_insert_right2" data-value="{{body_list[3].zhuangsuofangwei_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuofangwei_insert_right2}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[4].zhuangsuofangwei_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuofangwei_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[4].zhuangsuofangwei_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuofangwei_insert_left2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[4].zhuangsuofangwei_insert_left1}}" style="width:calc(123vmin / 7.5)">{{body_list[4].zhuangsuofangwei_insert_left1}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[4].zhuangsuofangwei_insert_left2}}" style="width:calc(123vmin / 7.5)">{{body_list[4].zhuangsuofangwei_insert_left2}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuofangwei_insert_right1" data-value="{{body_list[4].zhuangsuofangwei_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuofangwei_insert_right1}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuofangwei_insert_right2" data-value="{{body_list[4].zhuangsuofangwei_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuofangwei_insert_right2}}</view>
 
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[5].zhuangsuofangwei_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuofangwei_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[5].zhuangsuofangwei_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuofangwei_insert_left2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuofangwei_insert_left1" data-value="{{body_list[5].zhuangsuofangwei_insert_left1}}" style="width:calc(123vmin / 7.5)">{{body_list[5].zhuangsuofangwei_insert_left1}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="zhuangsuofangwei_insert_left2" data-value="{{body_list[5].zhuangsuofangwei_insert_left2}}" style="width:calc(123vmin / 7.5)">{{body_list[5].zhuangsuofangwei_insert_left2}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuofangwei_insert_right1" data-value="{{body_list[5].zhuangsuofangwei_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuofangwei_insert_right1}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuofangwei_insert_right2" data-value="{{body_list[5].zhuangsuofangwei_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuofangwei_insert_right2}}</view>
       </view>
 
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">装锁数量</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[0].zhuangsuoshuliang_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[0].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_left2}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[0].zhuangsuoshuliang_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_right1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[0].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_right2}}</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">装锁数量</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[0].zhuangsuoshuliang_insert_left1}}" style="width:calc(250vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_left1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[0].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_left2}}</view> -->
+        <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[0].zhuangsuoshuliang_insert_right1}}" style="width:calc(250vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_right1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="0" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[0].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].zhuangsuoshuliang_insert_right2}}</view> -->
 
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[1].zhuangsuoshuliang_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[1].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_left2}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[1].zhuangsuoshuliang_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_right1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[1].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_right2}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[1].zhuangsuoshuliang_insert_left1}}" style="width:calc(250vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_left1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[1].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_left2}}</view> -->
+        <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[1].zhuangsuoshuliang_insert_right1}}" style="width:calc(250vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_right1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="1" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[1].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].zhuangsuoshuliang_insert_right2}}</view> -->
 
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[2].zhuangsuoshuliang_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[2].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_left2}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[2].zhuangsuoshuliang_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_right1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[2].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_right2}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[2].zhuangsuoshuliang_insert_left1}}" style="width:calc(250vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_left1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[2].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_left2}}</view> -->
+        <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[2].zhuangsuoshuliang_insert_right1}}" style="width:calc(250vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_right1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="2" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[2].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].zhuangsuoshuliang_insert_right2}}</view> -->
 
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[3].zhuangsuoshuliang_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[3].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_left2}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[3].zhuangsuoshuliang_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_right1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[3].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_right2}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[3].zhuangsuoshuliang_insert_left1}}" style="width:calc(250vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_left1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[3].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_left2}}</view> -->
+        <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[3].zhuangsuoshuliang_insert_right1}}" style="width:calc(250vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_right1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="3" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[3].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].zhuangsuoshuliang_insert_right2}}</view> -->
 
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[4].zhuangsuoshuliang_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[4].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_left2}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[4].zhuangsuoshuliang_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_right1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[4].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_right2}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[4].zhuangsuoshuliang_insert_left1}}" style="width:calc(250vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_left1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[4].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_left2}}</view> -->
+        <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[4].zhuangsuoshuliang_insert_right1}}" style="width:calc(250vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_right1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="4" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[4].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].zhuangsuoshuliang_insert_right2}}</view> -->
 
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[5].zhuangsuoshuliang_insert_left1}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_left1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[5].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_left2}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[5].zhuangsuoshuliang_insert_right1}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_right1}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[5].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_right2}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_left1" data-value="{{body_list[5].zhuangsuoshuliang_insert_left1}}" style="width:calc(250vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_left1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_left2" data-value="{{body_list[5].zhuangsuoshuliang_insert_left2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_left2}}</view> -->
+        <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_right1" data-value="{{body_list[5].zhuangsuoshuliang_insert_right1}}" style="width:calc(250vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_right1}}</view>
+        <!-- <view class="list_view" bindtap="clickView" data-index="5" data-column="zhuangsuoshuliang_insert_right2" data-value="{{body_list[5].zhuangsuoshuliang_insert_right2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].zhuangsuoshuliang_insert_right2}}</view> -->
       </view>
 
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">开铰链孔</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">开铰链孔</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="kaijiaolian" data-value="{{body_list[0].kaijiaolian}}" style="width:calc(500vmin / 7.5)">{{body_list[0].kaijiaolian}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="kaijiaolian" data-value="{{body_list[1].kaijiaolian}}" style="width:calc(500vmin / 7.5)">{{body_list[1].kaijiaolian}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="kaijiaolian" data-value="{{body_list[2].kaijiaolian}}" style="width:calc(500vmin / 7.5)">{{body_list[2].kaijiaolian}}</view>
@@ -340,204 +363,204 @@
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="kaijiaolian" data-value="{{body_list[5].kaijiaolian}}" style="width:calc(500vmin / 7.5)">{{body_list[5].kaijiaolian}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位1</view>
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian1_select_left" data-value="{{body_list[0].jiaolian1_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian1_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian1_insert_left" data-value="{{body_list[0].jiaolian1_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian1_insert_left}}</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位1</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian1_select_left" data-value="{{body_list[0].jiaolian1_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian1_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaolian1_insert_left" data-value="{{body_list[0].jiaolian1_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian1_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian1_select_right" data-value="{{body_list[0].jiaolian1_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian1_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian1_insert_right" data-value="{{body_list[0].jiaolian1_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian1_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian1_select_left" data-value="{{body_list[1].jiaolian1_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian1_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian1_insert_left" data-value="{{body_list[1].jiaolian1_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian1_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian1_select_left" data-value="{{body_list[1].jiaolian1_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian1_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaolian1_insert_left" data-value="{{body_list[1].jiaolian1_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian1_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian1_select_right" data-value="{{body_list[1].jiaolian1_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian1_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian1_insert_right" data-value="{{body_list[1].jiaolian1_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian1_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian1_select_left" data-value="{{body_list[2].jiaolian1_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian1_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian1_insert_left" data-value="{{body_list[2].jiaolian1_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian1_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian1_select_left" data-value="{{body_list[2].jiaolian1_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian1_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaolian1_insert_left" data-value="{{body_list[2].jiaolian1_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian1_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian1_select_right" data-value="{{body_list[2].jiaolian1_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian1_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian1_insert_right" data-value="{{body_list[2].jiaolian1_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian1_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian1_select_left" data-value="{{body_list[3].jiaolian1_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian1_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian1_insert_left" data-value="{{body_list[3].jiaolian1_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian1_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian1_select_left" data-value="{{body_list[3].jiaolian1_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian1_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaolian1_insert_left" data-value="{{body_list[3].jiaolian1_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian1_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian1_select_right" data-value="{{body_list[3].jiaolian1_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian1_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian1_insert_right" data-value="{{body_list[3].jiaolian1_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian1_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian1_select_left" data-value="{{body_list[4].jiaolian1_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian1_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian1_insert_left" data-value="{{body_list[4].jiaolian1_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian1_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian1_select_left" data-value="{{body_list[4].jiaolian1_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian1_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaolian1_insert_left" data-value="{{body_list[4].jiaolian1_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian1_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian1_select_right" data-value="{{body_list[4].jiaolian1_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian1_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian1_insert_right" data-value="{{body_list[4].jiaolian1_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian1_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian1_select_left" data-value="{{body_list[5].jiaolian1_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian1_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian1_insert_left" data-value="{{body_list[5].jiaolian1_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian1_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian1_select_left" data-value="{{body_list[5].jiaolian1_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian1_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaolian1_insert_left" data-value="{{body_list[5].jiaolian1_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian1_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian1_select_right" data-value="{{body_list[5].jiaolian1_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian1_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian1_insert_right" data-value="{{body_list[5].jiaolian1_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian1_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位2</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位2</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian2_select_left" data-value="{{body_list[0].jiaolian2_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian2_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian2_insert_left" data-value="{{body_list[0].jiaolian2_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian2_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian2_select_left" data-value="{{body_list[0].jiaolian2_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian2_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaolian2_insert_left" data-value="{{body_list[0].jiaolian2_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian2_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian2_select_right" data-value="{{body_list[0].jiaolian2_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian2_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian2_insert_right" data-value="{{body_list[0].jiaolian2_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian2_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian2_select_left" data-value="{{body_list[1].jiaolian2_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian2_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian2_insert_left" data-value="{{body_list[1].jiaolian2_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian2_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian2_select_left" data-value="{{body_list[1].jiaolian2_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian2_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaolian2_insert_left" data-value="{{body_list[1].jiaolian2_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian2_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian2_select_right" data-value="{{body_list[1].jiaolian2_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian2_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian2_insert_right" data-value="{{body_list[1].jiaolian2_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian2_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian2_select_left" data-value="{{body_list[2].jiaolian2_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian2_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian2_insert_left" data-value="{{body_list[2].jiaolian2_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian2_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian2_select_left" data-value="{{body_list[2].jiaolian2_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian2_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaolian2_insert_left" data-value="{{body_list[2].jiaolian2_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian2_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian2_select_right" data-value="{{body_list[2].jiaolian2_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian2_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian2_insert_right" data-value="{{body_list[2].jiaolian2_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian2_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian2_select_left" data-value="{{body_list[3].jiaolian2_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian2_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian2_insert_left" data-value="{{body_list[3].jiaolian2_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian2_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian2_select_left" data-value="{{body_list[3].jiaolian2_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian2_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaolian2_insert_left" data-value="{{body_list[3].jiaolian2_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian2_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian2_select_right" data-value="{{body_list[3].jiaolian2_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian2_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian2_insert_right" data-value="{{body_list[3].jiaolian2_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian2_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian2_select_left" data-value="{{body_list[4].jiaolian2_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian2_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian2_insert_left" data-value="{{body_list[4].jiaolian2_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian2_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian2_select_left" data-value="{{body_list[4].jiaolian2_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian2_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaolian2_insert_left" data-value="{{body_list[4].jiaolian2_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian2_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian2_select_right" data-value="{{body_list[4].jiaolian2_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian2_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian2_insert_right" data-value="{{body_list[4].jiaolian2_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian2_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian2_select_left" data-value="{{body_list[5].jiaolian2_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian2_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian2_insert_left" data-value="{{body_list[5].jiaolian2_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian2_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian2_select_left" data-value="{{body_list[5].jiaolian2_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian2_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaolian2_insert_left" data-value="{{body_list[5].jiaolian2_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian2_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian2_select_right" data-value="{{body_list[5].jiaolian2_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian2_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian2_insert_right" data-value="{{body_list[5].jiaolian2_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian2_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位3</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位3</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian3_select_left" data-value="{{body_list[0].jiaolian3_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian3_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian3_insert_left" data-value="{{body_list[0].jiaolian3_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian3_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian3_select_left" data-value="{{body_list[0].jiaolian3_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian3_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaolian3_insert_left" data-value="{{body_list[0].jiaolian3_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian3_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian3_select_right" data-value="{{body_list[0].jiaolian3_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian3_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian3_insert_right" data-value="{{body_list[0].jiaolian3_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian3_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian3_select_left" data-value="{{body_list[1].jiaolian3_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian3_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian3_insert_left" data-value="{{body_list[1].jiaolian3_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian3_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian3_select_left" data-value="{{body_list[1].jiaolian3_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian3_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaolian3_insert_left" data-value="{{body_list[1].jiaolian3_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian3_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian3_select_right" data-value="{{body_list[1].jiaolian3_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian3_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian3_insert_right" data-value="{{body_list[1].jiaolian3_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian3_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian3_select_left" data-value="{{body_list[2].jiaolian3_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian3_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian3_insert_left" data-value="{{body_list[2].jiaolian3_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian3_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian3_select_left" data-value="{{body_list[2].jiaolian3_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian3_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaolian3_insert_left" data-value="{{body_list[2].jiaolian3_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian3_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian3_select_right" data-value="{{body_list[2].jiaolian3_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian3_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian3_insert_right" data-value="{{body_list[2].jiaolian3_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian3_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian3_select_left" data-value="{{body_list[3].jiaolian3_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian3_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian3_insert_left" data-value="{{body_list[3].jiaolian3_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian3_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian3_select_left" data-value="{{body_list[3].jiaolian3_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian3_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaolian3_insert_left" data-value="{{body_list[3].jiaolian3_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian3_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian3_select_right" data-value="{{body_list[3].jiaolian3_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian3_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian3_insert_right" data-value="{{body_list[3].jiaolian3_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian3_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian3_select_left" data-value="{{body_list[4].jiaolian3_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian3_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian3_insert_left" data-value="{{body_list[4].jiaolian3_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian3_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian3_select_left" data-value="{{body_list[4].jiaolian3_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian3_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaolian3_insert_left" data-value="{{body_list[4].jiaolian3_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian3_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian3_select_right" data-value="{{body_list[4].jiaolian3_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian3_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian3_insert_right" data-value="{{body_list[4].jiaolian3_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian3_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian3_select_left" data-value="{{body_list[5].jiaolian3_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian3_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian3_insert_left" data-value="{{body_list[5].jiaolian3_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian3_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian3_select_left" data-value="{{body_list[5].jiaolian3_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian3_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaolian3_insert_left" data-value="{{body_list[5].jiaolian3_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian3_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian3_select_right" data-value="{{body_list[5].jiaolian3_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian3_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian3_insert_right" data-value="{{body_list[5].jiaolian3_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian3_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位4</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位4</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian4_select_left" data-value="{{body_list[0].jiaolian4_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian4_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian4_insert_left" data-value="{{body_list[0].jiaolian4_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian4_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian4_select_left" data-value="{{body_list[0].jiaolian4_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian4_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaolian4_insert_left" data-value="{{body_list[0].jiaolian4_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian4_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian4_select_right" data-value="{{body_list[0].jiaolian4_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian4_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian4_insert_right" data-value="{{body_list[0].jiaolian4_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian4_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian4_select_left" data-value="{{body_list[1].jiaolian4_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian4_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian4_insert_left" data-value="{{body_list[1].jiaolian4_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian4_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian4_select_left" data-value="{{body_list[1].jiaolian4_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian4_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaolian4_insert_left" data-value="{{body_list[1].jiaolian4_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian4_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian4_select_right" data-value="{{body_list[1].jiaolian4_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian4_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian4_insert_right" data-value="{{body_list[1].jiaolian4_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian4_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian4_select_left" data-value="{{body_list[2].jiaolian4_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian4_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian4_insert_left" data-value="{{body_list[2].jiaolian4_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian4_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian4_select_left" data-value="{{body_list[2].jiaolian4_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian4_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaolian4_insert_left" data-value="{{body_list[2].jiaolian4_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian4_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian4_select_right" data-value="{{body_list[2].jiaolian4_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian4_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian4_insert_right" data-value="{{body_list[2].jiaolian4_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian4_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian4_select_left" data-value="{{body_list[3].jiaolian4_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian4_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian4_insert_left" data-value="{{body_list[3].jiaolian4_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian4_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian4_select_left" data-value="{{body_list[3].jiaolian4_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian4_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaolian4_insert_left" data-value="{{body_list[3].jiaolian4_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian4_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian4_select_right" data-value="{{body_list[3].jiaolian4_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian4_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian4_insert_right" data-value="{{body_list[3].jiaolian4_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian4_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian4_select_left" data-value="{{body_list[4].jiaolian4_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian4_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian4_insert_left" data-value="{{body_list[4].jiaolian4_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian4_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian4_select_left" data-value="{{body_list[4].jiaolian4_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian4_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaolian4_insert_left" data-value="{{body_list[4].jiaolian4_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian4_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian4_select_right" data-value="{{body_list[4].jiaolian4_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian4_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian4_insert_right" data-value="{{body_list[4].jiaolian4_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian4_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian4_select_left" data-value="{{body_list[5].jiaolian4_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian4_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian4_insert_left" data-value="{{body_list[5].jiaolian4_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian4_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian4_select_left" data-value="{{body_list[5].jiaolian4_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian4_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaolian4_insert_left" data-value="{{body_list[5].jiaolian4_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian4_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian4_select_right" data-value="{{body_list[5].jiaolian4_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian4_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian4_insert_right" data-value="{{body_list[5].jiaolian4_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian4_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位5</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位5</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian5_select_left" data-value="{{body_list[0].jiaolian5_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian5_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian5_insert_left" data-value="{{body_list[0].jiaolian5_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian5_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian5_select_left" data-value="{{body_list[0].jiaolian5_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian5_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaolian5_insert_left" data-value="{{body_list[0].jiaolian5_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian5_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian5_select_right" data-value="{{body_list[0].jiaolian5_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian5_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian5_insert_right" data-value="{{body_list[0].jiaolian5_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian5_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian5_select_left" data-value="{{body_list[1].jiaolian5_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian5_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian5_insert_left" data-value="{{body_list[1].jiaolian5_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian5_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian5_select_left" data-value="{{body_list[1].jiaolian5_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian5_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaolian5_insert_left" data-value="{{body_list[1].jiaolian5_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian5_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian5_select_right" data-value="{{body_list[1].jiaolian5_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian5_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian5_insert_right" data-value="{{body_list[1].jiaolian5_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian5_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian5_select_left" data-value="{{body_list[2].jiaolian5_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian5_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian5_insert_left" data-value="{{body_list[2].jiaolian5_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian5_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian5_select_left" data-value="{{body_list[2].jiaolian5_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian5_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaolian5_insert_left" data-value="{{body_list[2].jiaolian5_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian5_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian5_select_right" data-value="{{body_list[2].jiaolian5_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian5_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian5_insert_right" data-value="{{body_list[2].jiaolian5_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian5_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian5_select_left" data-value="{{body_list[3].jiaolian5_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian5_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian5_insert_left" data-value="{{body_list[3].jiaolian5_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian5_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian5_select_left" data-value="{{body_list[3].jiaolian5_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian5_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaolian5_insert_left" data-value="{{body_list[3].jiaolian5_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian5_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian5_select_right" data-value="{{body_list[3].jiaolian5_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian5_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian5_insert_right" data-value="{{body_list[3].jiaolian5_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian5_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian5_select_left" data-value="{{body_list[4].jiaolian5_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian5_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian5_insert_left" data-value="{{body_list[4].jiaolian5_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian5_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian5_select_left" data-value="{{body_list[4].jiaolian5_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian5_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaolian5_insert_left" data-value="{{body_list[4].jiaolian5_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian5_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian5_select_right" data-value="{{body_list[4].jiaolian5_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian5_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian5_insert_right" data-value="{{body_list[4].jiaolian5_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian5_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian5_select_left" data-value="{{body_list[5].jiaolian5_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian5_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian5_insert_left" data-value="{{body_list[5].jiaolian5_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian5_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian5_select_left" data-value="{{body_list[5].jiaolian5_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian5_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaolian5_insert_left" data-value="{{body_list[5].jiaolian5_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian5_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian5_select_right" data-value="{{body_list[5].jiaolian5_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian5_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian5_insert_right" data-value="{{body_list[5].jiaolian5_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian5_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位6</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">铰链孔位6</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian6_select_left" data-value="{{body_list[0].jiaolian6_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian6_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian6_insert_left" data-value="{{body_list[0].jiaolian6_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian6_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian6_select_left" data-value="{{body_list[0].jiaolian6_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian6_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="0" data-column="jiaolian6_insert_left" data-value="{{body_list[0].jiaolian6_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[0].jiaolian6_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="0" data-column="jiaolian6_select_right" data-value="{{body_list[0].jiaolian6_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian6_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="jiaolian6_insert_right" data-value="{{body_list[0].jiaolian6_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[0].jiaolian6_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian6_select_left" data-value="{{body_list[1].jiaolian6_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian6_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian6_insert_left" data-value="{{body_list[1].jiaolian6_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian6_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian6_select_left" data-value="{{body_list[1].jiaolian6_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian6_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="1" data-column="jiaolian6_insert_left" data-value="{{body_list[1].jiaolian6_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[1].jiaolian6_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="1" data-column="jiaolian6_select_right" data-value="{{body_list[1].jiaolian6_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian6_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="jiaolian6_insert_right" data-value="{{body_list[1].jiaolian6_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[1].jiaolian6_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian6_select_left" data-value="{{body_list[2].jiaolian6_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian6_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian6_insert_left" data-value="{{body_list[2].jiaolian6_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian6_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian6_select_left" data-value="{{body_list[2].jiaolian6_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian6_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="2" data-column="jiaolian6_insert_left" data-value="{{body_list[2].jiaolian6_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[2].jiaolian6_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="2" data-column="jiaolian6_select_right" data-value="{{body_list[2].jiaolian6_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian6_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="jiaolian6_insert_right" data-value="{{body_list[2].jiaolian6_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[2].jiaolian6_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian6_select_left" data-value="{{body_list[3].jiaolian6_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian6_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian6_insert_left" data-value="{{body_list[3].jiaolian6_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian6_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian6_select_left" data-value="{{body_list[3].jiaolian6_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian6_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="3" data-column="jiaolian6_insert_left" data-value="{{body_list[3].jiaolian6_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[3].jiaolian6_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="3" data-column="jiaolian6_select_right" data-value="{{body_list[3].jiaolian6_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian6_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="3" data-column="jiaolian6_insert_right" data-value="{{body_list[3].jiaolian6_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[3].jiaolian6_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian6_select_left" data-value="{{body_list[4].jiaolian6_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian6_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian6_insert_left" data-value="{{body_list[4].jiaolian6_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian6_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian6_select_left" data-value="{{body_list[4].jiaolian6_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian6_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="4" data-column="jiaolian6_insert_left" data-value="{{body_list[4].jiaolian6_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[4].jiaolian6_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="4" data-column="jiaolian6_select_right" data-value="{{body_list[4].jiaolian6_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian6_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="4" data-column="jiaolian6_insert_right" data-value="{{body_list[4].jiaolian6_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[4].jiaolian6_insert_right}}</view>
 
-        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian6_select_left" data-value="{{body_list[5].jiaolian6_select_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian6_select_left}}</view>
-        <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian6_insert_left" data-value="{{body_list[5].jiaolian6_insert_left}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian6_insert_left}}</view>
+        <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian6_select_left" data-value="{{body_list[5].jiaolian6_select_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian6_select_left}}</view>
+        <view class="list_view_fenge" bindtap="clickView" data-index="5" data-column="jiaolian6_insert_left" data-value="{{body_list[5].jiaolian6_insert_left}}" style="width:calc(123vmin / 7.5)">{{body_list[5].jiaolian6_insert_left}}</view>
         <view class="picker_text" bindtap="sel_xiala" data-index="5" data-column="jiaolian6_select_right" data-value="{{body_list[5].jiaolian6_select_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian6_select_right}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="jiaolian6_insert_right" data-value="{{body_list[5].jiaolian6_insert_right}}" style="width:calc(125vmin / 7.5)">{{body_list[5].jiaolian6_insert_right}}</view>
       </view>
       <view class="table_main">
-        <view class="title_text" style="width:calc(300vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">其他项目（说明）</view>
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">其他项目（说明）</view>
         <view class="list_view" bindtap="clickView" data-index="0" data-column="qita" data-value="{{body_list[0].qita}}" style="width:calc(500vmin / 7.5)">{{body_list[0].qita}}</view>
         <view class="list_view" bindtap="clickView" data-index="1" data-column="qita" data-value="{{body_list[1].qita}}" style="width:calc(500vmin / 7.5)">{{body_list[1].qita}}</view>
         <view class="list_view" bindtap="clickView" data-index="2" data-column="qita" data-value="{{body_list[2].qita}}" style="width:calc(500vmin / 7.5)">{{body_list[2].qita}}</view>
@@ -545,6 +568,73 @@
         <view class="list_view" bindtap="clickView" data-index="4" data-column="qita" data-value="{{body_list[4].qita}}" style="width:calc(500vmin / 7.5)">{{body_list[4].qita}}</view>
         <view class="list_view" bindtap="clickView" data-index="5" data-column="qita" data-value="{{body_list[5].qita}}" style="width:calc(500vmin / 7.5)">{{body_list[5].qita}}</view>
       </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0"></view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">单价</view>
+        <view class="title_text" style="width:calc(250vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">金额</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">单价</view>
+        <view class="title_text" style="width:calc(250vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">金额</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">单价</view>
+        <view class="title_text" style="width:calc(250vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">金额</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">单价</view>
+        <view class="title_text" style="width:calc(250vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">金额</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">单价</view>
+        <view class="title_text" style="width:calc(250vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">金额</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">数量</view>
+        <view class="title_text" style="width:calc(125vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">单价</view>
+        <view class="title_text" style="width:calc(250vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">金额</view>
+      </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">平方</view>
+        <view class="title_text" data-index="0" data-column="sum_shuliang1" data-value="{{body_list[0].sum_shuliang1}}" style="width:calc(125vmin / 7.5)">{{body_list[0].sum_shuliang1}}</view>
+        <view class="list_view" bindtap="clickView" data-index="0" data-column="danjia1" data-value="{{body_list[0].danjia1}}" style="width:calc(125vmin / 7.5)">{{body_list[0].danjia1}}</view>
+        <view class="title_text" data-index="0" data-column="sum_jine1" data-value="{{body_list[0].sum_jine1}}" style="width:calc(250vmin / 7.5)">{{body_list[0].sum_jine1}}</view>
+        <view class="title_text" data-index="1" data-column="sum_shuliang1" data-value="{{body_list[1].sum_shuliang1}}" style="width:calc(125vmin / 7.5)">{{body_list[1].sum_shuliang1}}</view>
+        <view class="list_view" bindtap="clickView" data-index="1" data-column="danjia1" data-value="{{body_list[1].danjia1}}" style="width:calc(125vmin / 7.5)">{{body_list[1].danjia1}}</view>
+        <view class="title_text" data-index="1" data-column="sum_jine1" data-value="{{body_list[1].sum_jine1}}" style="width:calc(250vmin / 7.5)">{{body_list[1].sum_jine1}}</view>
+        <view class="title_text" data-index="2" data-column="sum_shuliang1" data-value="{{body_list[2].sum_shuliang1}}" style="width:calc(125vmin / 7.5)">{{body_list[2].sum_shuliang1}}</view>
+        <view class="list_view" bindtap="clickView" data-index="2" data-column="danjia1" data-value="{{body_list[2].danjia1}}" style="width:calc(125vmin / 7.5)">{{body_list[2].danjia1}}</view>
+        <view class="title_text" data-index="2" data-column="sum_jine1" data-value="{{body_list[2].sum_jine1}}" style="width:calc(250vmin / 7.5)">{{body_list[2].sum_jine1}}</view>
+        <view class="title_text" data-index="3" data-column="sum_shuliang1" data-value="{{body_list[3].sum_shuliang1}}" style="width:calc(125vmin / 7.5)">{{body_list[3].sum_shuliang1}}</view>
+        <view class="list_view" bindtap="clickView" data-index="3" data-column="danjia1" data-value="{{body_list[3].danjia1}}" style="width:calc(125vmin / 7.5)">{{body_list[3].danjia1}}</view>
+        <view class="title_text" data-index="3" data-column="sum_jine1" data-value="{{body_list[3].sum_jine1}}" style="width:calc(250vmin / 7.5)">{{body_list[3].sum_jine1}}</view>
+        <view class="title_text" data-index="4" data-column="sum_shuliang1" data-value="{{body_list[4].sum_shuliang1}}" style="width:calc(125vmin / 7.5)">{{body_list[4].sum_shuliang1}}</view>
+        <view class="list_view" bindtap="clickView" data-index="4" data-column="danjia1" data-value="{{body_list[4].danjia1}}" style="width:calc(125vmin / 7.5)">{{body_list[4].danjia1}}</view>
+        <view class="title_text" data-index="4" data-column="sum_jine1" data-value="{{body_list[4].sum_jine1}}" style="width:calc(250vmin / 7.5)">{{body_list[4].sum_jine1}}</view>
+        <view class="title_text" data-index="5" data-column="sum_shuliang1" data-value="{{body_list[5].sum_shuliang1}}" style="width:calc(125vmin / 7.5)">{{body_list[5].sum_shuliang1}}</view>
+        <view class="list_view" bindtap="clickView" data-index="5" data-column="danjia1" data-value="{{body_list[5].danjia1}}" style="width:calc(125vmin / 7.5)">{{body_list[5].danjia1}}</view>
+        <view class="title_text" data-index="5" data-column="sum_jine1" data-value="{{body_list[5].sum_jine1}}" style="width:calc(250vmin / 7.5)">{{body_list[5].sum_jine1}}</view>
+      </view>
+
+      <view class="table_main">
+        <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">周长</view>
+        <view class="title_text" data-index="0" data-column="sum_shuliang2" data-value="{{body_list[0].sum_shuliang2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].sum_shuliang2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="0" data-column="danjia2" data-value="{{body_list[0].danjia2}}" style="width:calc(125vmin / 7.5)">{{body_list[0].danjia2}}</view>
+        <view class="title_text" data-index="0" data-column="sum_jine2" data-value="{{body_list[0].sum_jine2}}" style="width:calc(250vmin / 7.5)">{{body_list[0].sum_jine2}}</view>
+        <view class="title_text" data-index="1" data-column="sum_shuliang2" data-value="{{body_list[1].sum_shuliang2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].sum_shuliang2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="1" data-column="danjia2" data-value="{{body_list[1].danjia2}}" style="width:calc(125vmin / 7.5)">{{body_list[1].danjia2}}</view>
+        <view class="title_text" data-index="1" data-column="sum_jine2" data-value="{{body_list[1].sum_jine2}}" style="width:calc(250vmin / 7.5)">{{body_list[1].sum_jine2}}</view>
+        <view class="title_text" data-index="2" data-column="sum_shuliang2" data-value="{{body_list[2].sum_shuliang2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].sum_shuliang2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="2" data-column="danjia2" data-value="{{body_list[2].danjia2}}" style="width:calc(125vmin / 7.5)">{{body_list[2].danjia2}}</view>
+        <view class="title_text" data-index="2" data-column="sum_jine2" data-value="{{body_list[2].sum_jine2}}" style="width:calc(250vmin / 7.5)">{{body_list[2].sum_jine2}}</view>
+        <view class="title_text" data-index="3" data-column="sum_shuliang2" data-value="{{body_list[3].sum_shuliang2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].sum_shuliang2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="3" data-column="danjia2" data-value="{{body_list[3].danjia2}}" style="width:calc(125vmin / 7.5)">{{body_list[3].danjia2}}</view>
+        <view class="title_text" data-index="3" data-column="sum_jine2" data-value="{{body_list[3].sum_jine2}}" style="width:calc(250vmin / 7.5)">{{body_list[3].sum_jine2}}</view>
+        <view class="title_text" data-index="4" data-column="sum_shuliang2" data-value="{{body_list[4].sum_shuliang2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].sum_shuliang2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="4" data-column="danjia2" data-value="{{body_list[4].danjia2}}" style="width:calc(125vmin / 7.5)">{{body_list[4].danjia2}}</view>
+        <view class="title_text" data-index="4" data-column="sum_jine2" data-value="{{body_list[4].sum_jine2}}" style="width:calc(250vmin / 7.5)">{{body_list[4].sum_jine2}}</view>
+        <view class="title_text" data-index="5" data-column="sum_shuliang2" data-value="{{body_list[5].sum_shuliang2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].sum_shuliang2}}</view>
+        <view class="list_view" bindtap="clickView" data-index="5" data-column="danjia2" data-value="{{body_list[5].danjia2}}" style="width:calc(125vmin / 7.5)">{{body_list[5].danjia2}}</view>
+        <view class="title_text" data-index="5" data-column="sum_jine2" data-value="{{body_list[5].sum_jine2}}" style="width:calc(250vmin / 7.5)">{{body_list[5].sum_jine2}}</view>
+      </view>
+
     </block>
   </view>
 </scroll-view>
@@ -594,12 +684,12 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 55%;">
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
   <input bindinput="onInput" style="margin:auto;margin-top:5%;width: 50%;" data-index="this_index" data-column="this_value" class="input_text_form" value="{{this_value}}" type="{{this_type}}" name="this_value"></input>
   <view class="bottom_view" style="height:10%;margin-top: calc(50vmin / 7.5);">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">确定</button>
   </view>
 </van-popup>
 

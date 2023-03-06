@@ -33,6 +33,7 @@ Page({
       {
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -83,10 +84,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -135,10 +143,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -187,10 +202,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -239,10 +261,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -291,10 +320,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -343,13 +379,20 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },
     ],
     body_list_refresh:[
       {
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -398,10 +441,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -450,10 +500,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -502,10 +559,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -554,10 +618,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -606,10 +677,17 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },{ 
         height:'',
         width:'',
+        num:'',
         lvxingcai:'',
         lvcai_yanse:'',
         boli_shenjiagong:'',
@@ -658,7 +736,13 @@ Page({
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
-        qita:''
+        qita:'',
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
       },
     ]
   },
@@ -782,29 +866,29 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
-        var shipping_type = []
-        var lvxingcai = []
-        var lvcai_yanse = []
-        var boli_shenjiagong = []
-        var boli_yanse = []
-        var lashou_xinghao = []
-        var lashouwei_select_left = []
-        var lashouwei_select_right = []
-        var kaijiaolian = []
-        var jiaolian1_select_left = []
-        var jiaolian1_select_right = []
-        var jiaolian2_select_left = []
-        var jiaolian2_select_right = []
-        var jiaolian3_select_left = []
-        var jiaolian3_select_right = []
-        var jiaolian4_select_left = []
-        var jiaolian4_select_right = []
-        var jiaolian5_select_left = []
-        var jiaolian5_select_right = []
-        var jiaolian6_select_left = []
-        var jiaolian6_select_right = []
-        var zhuangsuofangxiang_select_left = []
-        var zhuangsuofangxiang_select_right = []
+        var shipping_type = [{name:''}]
+        var lvxingcai = [{name:''}]
+        var lvcai_yanse = [{name:''}]
+        var boli_shenjiagong = [{name:''}]
+        var boli_yanse = [{name:''}]
+        var lashou_xinghao = [{name:''}]
+        var lashouwei_select_left = [{name:''}]
+        var lashouwei_select_right = [{name:''}]
+        var kaijiaolian = [{name:''}]
+        var jiaolian1_select_left = [{name:''}]
+        var jiaolian1_select_right = [{name:''}]
+        var jiaolian2_select_left = [{name:''}]
+        var jiaolian2_select_right = [{name:''}]
+        var jiaolian3_select_left = [{name:''}]
+        var jiaolian3_select_right = [{name:''}]
+        var jiaolian4_select_left = [{name:''}]
+        var jiaolian4_select_right = [{name:''}]
+        var jiaolian5_select_left = [{name:''}]
+        var jiaolian5_select_right = [{name:''}]
+        var jiaolian6_select_left = [{name:''}]
+        var jiaolian6_select_right = [{name:''}]
+        var zhuangsuofangxiang_select_left = [{name:''}]
+        var zhuangsuofangxiang_select_right = [{name:''}]
         for(var i=0; i<list.length; i++){
           if(list[i].shfs != '' && list[i].shfs != null && list[i].shfs != undefined){
             shipping_type.push({
@@ -1222,13 +1306,13 @@ Page({
       return;
     }
 
-    var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita,zhuangsuofangxiang_select_left,zhuangsuofangxiang_select_right,zhuangsuofangwei_insert_left1,zhuangsuofangwei_insert_left2,zhuangsuofangwei_insert_right1,zhuangsuofangwei_insert_right2,zhuangsuoshuliang_insert_left1,zhuangsuoshuliang_insert_left2,zhuangsuoshuliang_insert_right1,zhuangsuoshuliang_insert_right2) values "
+    var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita,zhuangsuofangxiang_select_left,zhuangsuofangxiang_select_right,zhuangsuofangwei_insert_left1,zhuangsuofangwei_insert_left2,zhuangsuofangwei_insert_right1,zhuangsuofangwei_insert_right2,zhuangsuoshuliang_insert_left1,zhuangsuoshuliang_insert_left2,zhuangsuoshuliang_insert_right1,zhuangsuoshuliang_insert_right2,num,sum_shuliang1,danjia1,sum_jine1,sum_shuliang2,danjia2,sum_jine2) values "
     var sql_foot = ""
     for(var i=0; i<body_list.length; i++){
       if(sql_foot == ''){
-        sql_foot = "('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].zhuangsuofangxiang_select_left + "','" + body_list[i].zhuangsuofangxiang_select_right + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_left2 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuoshuliang_insert_right2 + "')"
+        sql_foot = "('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].zhuangsuofangxiang_select_left + "','" + body_list[i].zhuangsuofangxiang_select_right + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_left2 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuoshuliang_insert_right2 + "','" + body_list[i].num + "','" + body_list[i].sum_shuliang1 + "','" + body_list[i].danjia1 + "','" + body_list[i].sum_jine1 + body_list[i].sum_shuliang2 + "','" + body_list[i].danjia2 + "','" + body_list[i].sum_jine2 + "')"
       }else{
-        sql_foot = sql_foot + ",('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].zhuangsuofangxiang_select_left + "','" + body_list[i].zhuangsuofangxiang_select_right + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_left2 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuoshuliang_insert_right2 + "')"
+        sql_foot = sql_foot + ",('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].zhuangsuofangxiang_select_left + "','" + body_list[i].zhuangsuofangxiang_select_right + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_left2 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuoshuliang_insert_right2 + "','" + body_list[i].num + "','" + body_list[i].sum_shuliang1 + "','" + body_list[i].danjia1 + "','" + body_list[i].sum_jine1 + body_list[i].sum_shuliang2 + "','" + body_list[i].danjia2 + "','" + body_list[i].sum_jine2 + "')"
       }
     }
     insert_sql = insert_sql + sql_foot + ";"
@@ -1303,7 +1387,7 @@ Page({
                       if(height == NaN){
                         height = 0
                       }
-                      if(canzhao_list[j].lkxh == body_list[i].lvxingcai){
+                      if(canzhao_list[j].lkxh == body_list[i].lvxingcai && canzhao_list[j].yanse == body_list[i].lvcai_yanse){
                         var this_width = parseFloat(canzhao_list[j].kuan)
                         var this_height = parseFloat(canzhao_list[j].chang)
                         if(this_width == NaN){
@@ -1614,6 +1698,32 @@ Page({
     var this_value = _this.data.this_value
     var list = _this.data.body_list
     list[index * 1][this_column] = this_value
+
+    if(list[index * 1].height != '' && list[index * 1].width != '' && list[index * 1].num != ''){
+      list[index].sum_shuliang1 = Math.round(list[index * 1].height * list[index * 1].width / 1000000 * list[index * 1].num * 1000) / 1000 
+    }else{
+      list[index].sum_shuliang1 = ''
+    }
+
+    if(list[index * 1].sum_shuliang1 != '' && list[index * 1].danjia1 != ''){
+      list[index * 1].sum_jine1 = Math.round(list[index * 1].sum_shuliang1 * list[index * 1].danjia1 * 100) / 100
+    }else{
+      list[index].sum_jine1 = ''
+    }
+
+    if(list[index * 1].height != '' && list[index * 1].width != '' && list[index * 1].num != ''){
+      list[index].sum_shuliang2 = Math.round((list[index * 1].height * 1 + list[index * 1].width * 1) / 1000 * 2 * list[index * 1].num * 1000) / 1000 
+    }else{
+      list[index].sum_shuliang2 = ''
+    }
+
+    if(list[index * 1].sum_shuliang2 != '' && list[index * 1].danjia2 != ''){
+      list[index * 1].sum_jine2 = Math.round(list[index * 1].sum_shuliang2 * list[index * 1].danjia2 * 100) / 100
+    }else{
+      list[index].sum_jine2 = ''
+    }
+
+    console.log(list[index * 1])
     _this.setData({
       body_list:list,
       xgShow:false,

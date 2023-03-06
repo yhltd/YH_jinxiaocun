@@ -9,6 +9,25 @@ view {
   
 }
 
+.list_view_fenge{
+  display: flex;
+  flex-direction: column;
+  /* width: 200rpx;
+  height: 70rpx; */
+  width: calc(200vmin / 7.5);
+  height: calc(70vmin / 7.5);
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  /* border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0; */
+  border-right: calc(1vmin / 7.5) solid black;
+  border-bottom: calc(1vmin / 7.5) solid #F0F0F0;
+  /* line-height: 70rpx;   */
+  line-height: calc(70vmin / 7.5);
+}
+
 button{
   /* font-size: 30rpx; */
   font-size: calc(30vmin / 7.5)

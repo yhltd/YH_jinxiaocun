@@ -1,0 +1,126 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >生成</button>
+  <button class="bt_bottom" bindtap="chear_all">清空</button>
+  <button class="bt_bottom" bindtap="save" >保存</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;" >
+    <view class="lables">排班开始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="this_date" bindchange="choiceDate" >
+      <input bindinput="onInput" data-column="this_date" class="input_text_form"  value="{{this_date}}" type="text" name="this_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">排班轮次</view>
+    <input bindinput="onInput" data-column="lunci" class="input_text_form"  value="{{lunci}}" type="number" name="lunci"></input>
+    <view class="lables">A组-1A</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_1A" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_1A" class="input_text_form"  value="{{A_1A}}" type="text" name="A_1A" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-2A</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_2A" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_2A" class="input_text_form"  value="{{A_2A}}" type="text" name="A_2A" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-3A</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_3A" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_3A" class="input_text_form"  value="{{A_3A}}" type="text" name="A_3A" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-1B</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_1B" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_1B" class="input_text_form"  value="{{A_1B}}" type="text" name="A_1B" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-2B</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_2B" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_2B" class="input_text_form"  value="{{A_2B}}" type="text" name="A_2B" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-3B</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_3B" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_3B" class="input_text_form"  value="{{A_3B}}" type="text" name="A_3B" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-1C</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_1C" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_1C" class="input_text_form"  value="{{A_1C}}" type="text" name="A_1C" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-2C</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_2C" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_2C" class="input_text_form"  value="{{A_2C}}" type="text" name="A_2C" disabled="disabled"></input>
+    </picker>
+    <view class="lables">A组-3C</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="A_3C" range="{{name_list}}">
+      <input bindinput="onInput" data-column="A_3C" class="input_text_form"  value="{{A_3C}}" type="text" name="A_3C" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-1A</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_1A" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_1A" class="input_text_form"  value="{{B_1A}}" type="text" name="B_1A" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-2A</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_2A" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_2A" class="input_text_form"  value="{{B_2A}}" type="text" name="B_2A" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-3A</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_3A" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_3A" class="input_text_form"  value="{{B_3A}}" type="text" name="B_3A" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-1B</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_1B" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_1B" class="input_text_form"  value="{{B_1B}}" type="text" name="B_1B" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-2B</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_2B" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_2B" class="input_text_form"  value="{{B_2B}}" type="text" name="B_2B" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-3B</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_3B" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_3B" class="input_text_form"  value="{{B_3B}}" type="text" name="B_3B" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-1C</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_1C" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_1C" class="input_text_form"  value="{{B_1C}}" type="text" name="B_1C" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-2C</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_2C" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_2C" class="input_text_form"  value="{{B_2C}}" type="text" name="B_2C" disabled="disabled"></input>
+    </picker>
+    <view class="lables">B组-3C</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="B_3C" range="{{name_list}}">
+      <input bindinput="onInput" data-column="B_3C" class="input_text_form"  value="{{B_3C}}" type="text" name="B_3C" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>

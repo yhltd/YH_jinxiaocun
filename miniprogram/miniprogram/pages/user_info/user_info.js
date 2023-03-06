@@ -12,7 +12,7 @@ Page({
   cxShow: false,
   data: {
     list: [],
-    state_upd_list:['是','否'],
+    state_upd_list:['','是'],
     title: [{
         text: "用户名",
         width: "250rpx",
@@ -50,6 +50,12 @@ Page({
         text: "能否修改审核通过数据",
         width: "400rpx",
         columnName: "state_upd",
+        type: "text",
+        isupd: true
+      },{
+        text: "能否查看销售单价金额",
+        width: "400rpx",
+        columnName: "money_sel",
         type: "text",
         isupd: true
       }
@@ -120,6 +126,14 @@ Page({
     })
   },
 
+  bindPickerChange2: function(e){
+    var _this = this
+    console.log(_this.data.state_upd_list[e.detail.value])
+    _this.setData({
+      money_sel: _this.data.state_upd_list[e.detail.value]
+    })
+  },
+
   tableShow: function (e) {
     var _this = this
     wx.cloud.callFunction({
@@ -185,6 +199,7 @@ Page({
       name: _this.data.list[e.currentTarget.dataset.index].name,
       department: _this.data.list[e.currentTarget.dataset.index].department,
       state_upd: _this.data.list[e.currentTarget.dataset.index].state_upd,
+      money_sel: _this.data.list[e.currentTarget.dataset.index].money_sel,
       xgShow:true,
     })
   },
@@ -208,6 +223,7 @@ Page({
       name: '',
       department: '',
       state_upd: '',
+      money_sel: '',
     })
   },
 
@@ -216,7 +232,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlserver_zhejiang',
         data: {
-          query: "insert into userInfo(username,password,power,name,department,state_upd) OUTPUT Inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.power + "','" + _this.data.name + "','" + _this.data.department + "','" + _this.data.state_upd + "');"
+          query: "insert into userInfo(username,password,power,name,department,state_upd,money_sel) OUTPUT Inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.power + "','" + _this.data.name + "','" + _this.data.department + "','" + _this.data.state_upd + "','" + _this.data.money_sel + "');"
         },
         success: res => {
           console.log(res)
@@ -235,6 +251,7 @@ Page({
                 name: '',
                 department: '',
                 state_upd: '',
+                money_sel: '',
               })
               _this.qxShow()
               var e = ['','']
@@ -282,7 +299,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',power='" + _this.data.power + "',name='" + _this.data.name + "',department='" + _this.data.department + "',state_upd='" + _this.data.state_upd + "' where id=" + _this.data.id 
+        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',power='" + _this.data.power + "',name='" + _this.data.name + "',department='" + _this.data.department + "',state_upd='" + _this.data.state_upd + "',money_sel='" + _this.data.money_sel + "' where id=" + _this.data.id 
       },
       success: res => {
         _this.setData({
@@ -293,6 +310,7 @@ Page({
           name: '',
           department: '',
           state_upd: '',
+          money_sel: '',
         })
         _this.qxShow()
         var e = ['','']
@@ -340,6 +358,7 @@ Page({
             name: '',
             department: '',
             state_upd: '',
+            money_sel: '',
           })
           _this.qxShow()
           var e = ['','']

@@ -1036,6 +1036,34 @@ Page({
       X:'W&宽',
       Y:'',
     })
+    //下单数量
+    body_list_end.push({
+      A:'下单数量',
+      B:body_list[0].num,
+      C:'',
+      D:'',
+      E:'',
+      F:body_list[1].num,
+      G:'',
+      H:'',
+      I:'',
+      J:body_list[2].num,
+      K:'',
+      L:'',
+      M:'',
+      N:body_list[3].num,
+      O:'',
+      P:'',
+      Q:'',
+      R:body_list[4].num,
+      S:'',
+      T:'',
+      U:'',
+      V:body_list[5].num,
+      W:'',
+      X:'',
+      Y:'',
+    })
     //尺寸
     body_list_end.push({
       A:'尺寸',
@@ -1064,6 +1092,7 @@ Page({
       X:body_list[5].width,
       Y:'',
     })
+
     //铝型材
     body_list_end.push({
       A:'铝型材',
@@ -1624,6 +1653,94 @@ Page({
       X:'',
       Y:'',
     })
+
+    //表头
+    body_list_end.push({
+      A:'',
+      B:'数量',
+      C:'单价',
+      D:'金额',
+      E:'',
+      F:'数量',
+      G:'单价',
+      H:'金额',
+      I:'',
+      J:'数量',
+      K:'单价',
+      L:'金额',
+      M:'',
+      N:'数量',
+      O:'单价',
+      P:'金额',
+      Q:'',
+      R:'数量',
+      S:'单价',
+      T:'金额',
+      U:'',
+      V:'数量',
+      W:'单价',
+      X:'金额',
+      Y:'',
+    })
+
+    //平方
+    body_list_end.push({
+      A:'平方',
+      B:body_list[0].sum_shuliang1,
+      C:body_list[0].danjia1,
+      D:body_list[0].sum_jine1,
+      E:'',
+      F:body_list[1].sum_shuliang1,
+      G:body_list[1].danjia1,
+      H:body_list[1].sum_jine1,
+      I:'',
+      J:body_list[2].sum_shuliang1,
+      K:body_list[2].danjia1,
+      L:body_list[2].sum_jine1,
+      M:'',
+      N:body_list[3].sum_shuliang1,
+      O:body_list[3].danjia1,
+      P:body_list[3].sum_jine1,
+      Q:'',
+      R:body_list[4].sum_shuliang1,
+      S:body_list[4].danjia1,
+      T:body_list[4].sum_jine1,
+      U:'',
+      V:body_list[5].sum_shuliang1,
+      W:body_list[5].danjia1,
+      X:body_list[5].sum_jine1,
+      Y:'',
+    })
+
+    //周长
+    body_list_end.push({
+      A:'周长',
+      B:body_list[0].sum_shuliang2,
+      C:body_list[0].danjia2,
+      D:body_list[0].sum_jine2,
+      E:'',
+      F:body_list[1].sum_shuliang2,
+      G:body_list[1].danjia2,
+      H:body_list[1].sum_jine2,
+      I:'',
+      J:body_list[2].sum_shuliang2,
+      K:body_list[2].danjia2,
+      L:body_list[2].sum_jine2,
+      M:'',
+      N:body_list[3].sum_shuliang2,
+      O:body_list[3].danjia2,
+      P:body_list[3].sum_jine2,
+      Q:'',
+      R:body_list[4].sum_shuliang2,
+      S:body_list[4].danjia2,
+      T:body_list[4].sum_jine2,
+      U:'',
+      V:body_list[5].sum_shuliang2,
+      W:body_list[5].danjia2,
+      X:body_list[5].sum_jine2,
+      Y:'',
+    })
+
     //金额
     body_list_end.push({
       A:'金额',

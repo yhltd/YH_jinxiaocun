@@ -245,7 +245,7 @@ button{
   bottom: 2%;
 }
 .bt_bottom{
-  width: 15%;
+  width: 30%;
   background-color: #009688;
   color: #E6E6E6;
   height: calc(75vmin / 7.5);
@@ -341,11 +341,11 @@ button{
 .input_text_head{
   border: calc(5vmin / 7.5) solid #E6E6E6;
   margin: auto;
-  width: 35%;
+  width: 50%;
   height: calc(64vmin / 7.5);
   align-items: center; 
   border-radius: calc(19vmin / 7.5);
   margin-top: calc(10vmin / 7.5);
-  margin-right: calc(10vmin / 7.5);
+  /* margin-right: calc(10vmin / 7.5); */
   
 }

@@ -39,9 +39,11 @@
 <!------------------------->
 <!---------添加弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 50%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 70%;" >
     <view class="lables">铝框型号</view>
     <input bindinput="onInput" data-column="lkxh" class="input_text_form"  value="{{lkxh}}" type="text" name="lkxh"></input>
+    <view class="lables">颜色</view>
+    <input bindinput="onInput" data-column="yanse" class="input_text_form"  value="{{yanse}}" type="text" name="yanse"></input>
     <view class="lables">长</view>
     <input bindinput="onInput" data-column="chang" class="input_text_form" value="{{chang}}" type="digit" name="chang"></input>
     <view class="lables">宽</view>
@@ -54,9 +56,11 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 50%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 70%;" >
   <view class="lables">铝框型号</view>
     <input bindinput="onInput" data-column="lkxh" class="input_text_form"  value="{{lkxh}}" type="text" name="lkxh"></input>
+    <view class="lables">颜色</view>
+    <input bindinput="onInput" data-column="yanse" class="input_text_form"  value="{{yanse}}" type="text" name="yanse"></input>
     <view class="lables">长</view>
     <input bindinput="onInput" data-column="chang" class="input_text_form" value="{{chang}}" type="digit" name="chang"></input>
     <view class="lables">宽</view>

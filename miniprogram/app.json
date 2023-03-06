@@ -311,6 +311,25 @@
         "pages/image_show/image_show",
         "pages/shows_kehu/shows_kehu"
       ]
+    },
+    {
+      "root": "package_huanchenmeng",
+      "name": "HuanChenMeng",
+      "pages": [
+        "pages/shows/shows",
+        "pages/shows2/shows2",
+        "pages/zhanghaoguanli/zhanghaoguanli",
+        "pages/peizhibiao/peizhibiao",
+        "pages/jihua_peizhi/jihua_peizhi",
+        "pages/paiban_A/paiban_A",
+        "pages/paiban_B/paiban_B",
+        "pages/paiban_shengcheng/paiban_shengcheng",
+        "pages/paiban_mingxi_guanli/paiban_mingxi_guanli",
+        "pages/paiban_mingxi_yonghu/paiban_mingxi_yonghu",
+        "pages/kaoqin_mingxi/kaoqin_mingxi",
+        "pages/kaoqin_guanli/kaoqin_guanli",
+        "pages/jihua_mingxi/jihua_mingxi"
+      ]
     }
   ],
   "window": {

@@ -414,6 +414,14 @@ Page({
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var userPower = JSON.parse(options.userPower)
+    var shenhe_title = _this.data.shenhe_title
+    var title = _this.data.title
+    if(userInfo.money_sel != '是'){
+      shenhe_title.splice(12,1)
+      shenhe_title.splice(10,1)
+      title.splice(17,1)
+      title.splice(15,1)
+    }
     console.log(userPower)
     var tiaojian = options.tiaojian
     console.log(tiaojian)
@@ -421,6 +429,8 @@ Page({
       tiaojian = JSON.parse(options.tiaojian)
     }
     _this.setData({
+      shenhe_title,
+      title,
       userInfo:userInfo,
       userPower:userPower,
       tiaojian:tiaojian

@@ -57,7 +57,7 @@ Page({
         isupd: true
       },
       {
-        text: "效绩工资",
+        text: "绩效工资",
         width: 20,
         columnName: "H",
         type: "text",

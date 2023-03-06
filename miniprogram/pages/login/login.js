@@ -670,6 +670,49 @@ var login = function(that,info) {
     })
   //结束
   
+  }else if(system =="幻尘萌"){
+    console.log(system)
+    var sql = "select * from login where E ='" + info.inputName + "' and F = '" + info.inputPwd + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huanchenmeng',
+      data:{
+        query : sql
+      },
+      success : res =>{
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length == 0){
+          wx.showToast({
+            title: '用户名或密码错误',
+            icon:'none',
+          })
+        }else{
+          var user_list = list[0]
+          wx.navigateTo({
+            url:'../../package_huanchenmeng/pages/shows/shows?userInfo='+JSON.stringify(user_list)
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  //结束
+  
   }else if(system =="销售管理系统"){
     console.log(system)
     var sql = "select * from userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
@@ -953,6 +996,13 @@ Page({
         pickerArray: ['华群家具材料']
       })
       return;
+    }else if(system == '幻尘萌'){
+      _this.setData({
+        system,
+        gongsi : '幻尘萌',
+        pickerArray: ['幻尘萌']
+      })
+      return;
     }else if(system == '销售管理系统'){
       _this.setData({
         system,
@@ -1135,7 +1185,17 @@ Page({
       getCompanyTime(this,e.detail.value,'财务')
     }else if(this.data.system=="云合排产管理系统"){
       getCompanyTime(this,e.detail.value,'排产')
-    }else if(this.data.system=="零售管理系统" || this.data.system == "销售管理系统"){
+    }else if(this.data.system=="云合人事管理系统"){
+      getCompanyTime(this,e.detail.value,'人事')
+    }else if(this.data.system=="云合进销存系统"){
+      getCompanyTime(this,e.detail.value,'进销存')
+    }else if(this.data.system=="云合分权编辑系统"){
+      getCompanyTime(this,e.detail.value,'分权')
+    }else if(this.data.system=="云合信用卡管理系统"){
+      getCompanyTime(this,e.detail.value,'卡管理')
+    }else if(this.data.system=="云合教务管理系统"){
+      getCompanyTime(this,e.detail.value,'教务')
+    }else if(this.data.system=="零售管理系统" || this.data.system == "销售管理系统" || this.data.system == "浙江省磐安外贸药业"){
       getCompanyTime(this,e.detail.value,this.data.system)
     }else{
       login(this,e.detail.value)
