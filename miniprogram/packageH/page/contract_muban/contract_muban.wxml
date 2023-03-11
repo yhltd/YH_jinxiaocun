@@ -29,9 +29,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view" style="height:10%"> 
-	<button class="bt_bottom" bindtap="inquire" >添加</button>
-  <button class="bt_bottom" bindtap="entering" >查询</button>
-  <button class="bt_bottom" bindtap="goto_muban">模板</button>
+	<button class="bt_bottom" bindtap="inquire">添加</button>
+  <button class="bt_bottom" bindtap="entering">查询</button>
 </view>
 
 
@@ -87,12 +86,12 @@
     </picker>
 
   <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" style="width:42%" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" style="width:42%" bindtap="upd1" >保存</button>
+    <button class="bt_bottom" bindtap="hetong_add">创建合同</button>
+    <button class="bt_bottom" bindtap="upd1" >保存</button>
   </view>
   <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" style="width:42%" bindtap="del1" >删除</button>
-    <button class="bt_bottom" style="width:42%" bindtap="contract_png" >合同图片</button>
+    <button class="bt_bottom" bindtap="del1" >删除</button>
+    <button class="bt_bottom" bindtap="contract_png" >合同图片</button>
   </view>
 </van-popup>
 

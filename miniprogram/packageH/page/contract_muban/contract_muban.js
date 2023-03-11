@@ -141,7 +141,6 @@ Page({
       }
     })
     _this.setData({
-      userInfo,
       user_name : userInfo.user_name,
       user_id : userInfo.id,
       company : userInfo.company,
@@ -155,7 +154,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select * from contract_manage where contract_code like '%" + e[0] + "%' and contract_name like '%" + e[1] + "%' and contract_type like '%" + e[2] + "%' and creation_date between '" + e[3] + "' and '" + e[4] + "' and company = '" + e[5] + "' and (first_party ='" + _this.data.user_name + "' or creator ='" + _this.data.user_name + "' or send_out ='" + _this.data.user_name + "')"
+        query: "select * from contract_manage_muban where contract_code like '%" + e[0] + "%' and contract_name like '%" + e[1] + "%' and contract_type like '%" + e[2] + "%' and creation_date between '" + e[3] + "' and '" + e[4] + "' and company = '" + e[5] + "' and (first_party ='" + _this.data.user_name + "' or creator ='" + _this.data.user_name + "' or send_out ='" + _this.data.user_name + "')"
       },
       success: res => {
         var list = res.result.recordset
@@ -237,13 +236,111 @@ Page({
     console.log(e.detail.value)
   },
 
+  hetong_add:function(){
+    var _this = this
+    if (_this.data.contract_code != "" && _this.data.contract_name != "" && _this.data.contract_type != "" && _this.data.first_party != "" && _this.data.second_party != "" && _this.data.creation_date != "" && _this.data.send_out != "") {
+      wx.cloud.callFunction({
+        name: 'sqlServer_cw',
+        data: {
+          query: "insert into contract_manage(contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,send_judge) output inserted.ID values('" + _this.data.contract_code + "','" + _this.data.contract_name + "','" + _this.data.contract_type + "','" + _this.data.first_party + "','" + _this.data.second_party + "','" + _this.data.user_name + "','" + _this.data.creation_date + "','" + _this.data.send_out + "','" + _this.data.company + "','否')"
+        },
+        success: res => {
+          console.log(res)
+          var ins_id = res.result.recordset[0].ID
+          var sql = "select * from contract_picture_muban where contract_id ='" + _this.data.id + "'"
+          wx.cloud.callFunction({
+            name: 'sqlServer_cw',
+            data: {
+              query: sql
+            },
+            success: res => {
+              var list = res.result.recordset
+              console.log(list)
+              var sql1 = "insert into contract_picture(contract_id,picture) values "
+              var sql2 = ""
+              for(var i=0; i<list.length; i++){
+                if(sql2 == ""){
+                  sql2 = "('" + ins_id + "','" + list[i].picture + "')"
+                }else{
+                  sql2 = sql2 + ",('" + ins_id + "','" + list[i].picture + "')"
+                }
+              }
+              if(sql2 != ''){
+                wx.cloud.callFunction({
+                  name: 'sqlServer_cw',
+                  data: {
+                    query: sql1 + sql2
+                  },
+                  success: res => {
+                    _this.setData({
+                      contract_code:"",
+                      contract_name:"",
+                      contract_type:"",
+                      first_party:"",
+                      second_party:"",
+                      creation_date:"",
+                      send_out:"",
+                    })
+                    _this.qxShow()
+                    var e = ['','','','1900/1/1','2100/12/31', _this.data.company]
+                    _this.tableShow(e)
+                    wx.showToast({
+                      title: '添加成功,请退回到合同管理页面查看！',
+                      icon: 'none'
+                    })
+                  },
+                  err: res => {
+                    console.log("错误!")
+                  },
+                  fail: res => {
+                    wx.showToast({
+                      title: '请求失败！',
+                      icon: 'none'
+                    })
+                    console.log("请求失败！")
+                  }
+                })
+              }
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '信息输入不全！',
+        icon: 'none'
+      })
+    }
+  },
+
   add1: function () {
     var _this = this
     if (_this.data.contract_code != "" && _this.data.contract_name != "" && _this.data.contract_type != "" && _this.data.first_party != "" && _this.data.second_party != "" && _this.data.creation_date != "" && _this.data.send_out != "") {
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
-          query: "insert into contract_manage(contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,send_judge) values('" + _this.data.contract_code + "','" + _this.data.contract_name + "','" + _this.data.contract_type + "','" + _this.data.first_party + "','" + _this.data.second_party + "','" + _this.data.user_name + "','" + _this.data.creation_date + "','" + _this.data.send_out + "','" + _this.data.company + "','否')"
+          query: "insert into contract_manage_muban(contract_code,contract_name,contract_type,first_party,second_party,creator,creation_date,send_out,company,send_judge) values('" + _this.data.contract_code + "','" + _this.data.contract_name + "','" + _this.data.contract_type + "','" + _this.data.first_party + "','" + _this.data.second_party + "','" + _this.data.user_name + "','" + _this.data.creation_date + "','" + _this.data.send_out + "','" + _this.data.company + "','否')"
         },
         success: res => {
           _this.setData({
@@ -288,7 +385,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
-          query: "update contract_manage set contract_code='" + _this.data.contract_code + "',contract_name='" + _this.data.contract_name + "',contract_type='" + _this.data.contract_type + "',first_party='" + _this.data.first_party + "',second_party='" + _this.data.second_party + "',creation_date='" + _this.data.creation_date + "',send_out='" + _this.data.send_out + "',send_judge='" + _this.data.send_judge + "' where company='" + _this.data.company + "' and id='" + _this.data.id +"'"
+          query: "update contract_manage_muban set contract_code='" + _this.data.contract_code + "',contract_name='" + _this.data.contract_name + "',contract_type='" + _this.data.contract_type + "',first_party='" + _this.data.first_party + "',second_party='" + _this.data.second_party + "',creation_date='" + _this.data.creation_date + "',send_out='" + _this.data.send_out + "',send_judge='" + _this.data.send_judge + "' where company='" + _this.data.company + "' and id='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
@@ -377,7 +474,7 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_cw',
             data: {
-              query: "delete from contract_manage where id='" + _this.data.id + "';delete from contract_pitcure where contract_id ='" + _this.data.id + "';"
+              query: "delete from contract_manage_muban where id='" + _this.data.id + "';delete from contract_pitcure_muban where contract_id ='" + _this.data.id + "';"
             },
             success: res => {
               console.log(res)
@@ -442,18 +539,6 @@ Page({
     })
   },
 
-  goto_muban:function(){
-    var _this = this
-    wx.navigateTo({
-      url: '../contract_muban/contract_muban?userInfo=' + JSON.stringify({
-        user_name : _this.data.user_name,
-        id : _this.data.user_id,
-        company : _this.data.company,
-        full_name : _this.data.full_name,
-      })
-    })
-  },
-
   sel1:function(){
     var _this = this
     var start_date = '1900/1/1'
@@ -472,7 +557,7 @@ Page({
 
   contract_png:function(){
     var _this = this
-    var url = "../contract_png/contract_png"
+    var url = "../contract_muban_pitcure/contract_muban_pitcure"
     wx.navigateTo({
       url: url + '?userInfo=' + JSON.stringify({
         id : _this.data.id,
