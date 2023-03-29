@@ -1,0 +1,163 @@
+<!--packageX/page/order_panel/order_panel.wxml-->
+<view class="header">
+  <view class="item-label">订单号:</view>
+  <input class="order_num" disabled="disabled" bindtap="orders_auto" value="{{orders_value}}"></input>
+</view>
+
+<!-- 点餐区域 -->
+<view class="menu-info">
+
+</view>
+<view class="menu" scroll-y show-scrollbar="{{ false }}" enhanced>
+  <scroll-view class="sidebar">
+    <block wx:for="{{title}}">
+      <view class="sidebar-item active" data-name="{{item.name}}" bindtap="type_click">
+        <view class="item-label">{{item.name}}</view>
+        <view class="left-line"></view>
+      </view>
+    </block>
+
+  </scroll-view>
+  <scroll-view class="menu-list" scroll-y show-scrollbar="{{ false }}" enhanced>
+    <view class="list">
+      
+       <block wx:for="{{product_list}}">
+        <view class="menu-item">
+          <image class="item-photo" src="" mode=""/> 
+          <view class="item_details" data-name="{{item.product_name}}">
+            <view class="item-name">{{item.product_name}}</view>
+            <view class="item-price">{{item.price}}</view>
+          </view>
+          <button class="item-chooseGG" bindtap="openPopup" data-index="{{index}}">规格</button>
+        </view>
+       </block>
+    
+    </view>
+  </scroll-view>
+</view>
+
+<view class="footer">
+  <view class="footer_text">
+    <view class="text_num">数量:</view>
+    <input class="product_num" disabled="disabled" value="{{num_sum}}"></input>
+    <view class="text_money">金额:</view>
+    <input class="product_money" disabled="disabled" value="{{price_sum}}"></input>
+  </view>
+  <button class="footer_jiesuan" bindtap="jiesuan">立即结算</button>
+</view>
+
+<!-- 弹窗窗口 -->
+<view class="popup-box" wx:if="{{showIndex=='0'}}" bindtap="closePopup"></view> 
+<!-- 中间弹窗 -->
+<view class="popup-box" hidden="{{mask_hid}}" bindtap="closePopup"></view> 
+<view class="info-center"  hidden="{{specifications_hid}}">
+  <view>
+    <view class="row-info">
+      <view class="row-author">{{window_name}}</view>
+      <view class="Product_details">
+        <view class="row-photo">
+        <image src="" mode=""/>
+        </view>
+        <view class="row-text">
+          <view class="product_item">
+            <view>商品类型</view>
+           <input class="input_text_form"  value="{{window_type}}" type="text" name="window_type" disabled="disabled"></input>
+          </view>
+          <view class="product_item">
+            <view>商品数量</view>
+            <input class="input_text_form" bindinput="onInput" value="{{window_num}}" type="text" data-name="window_num"></input>
+          </view>
+          <view class="product_item">
+            <view>商品规格</view>
+            <picker bindchange="bindPickerChange1" value="{{index}}" range="{{guige_list}}">
+              <input class="input_text_form"  value="{{window_guige}}" type="text" name="window_guige" disabled="disabled"></input>
+            </picker>
+          </view>
+          <view class="product_item">
+            <view>保存方式</view>
+            <picker bindchange="bindPickerChange2" value="{{index}}" range="{{baocun_list}}">
+              <input class="input_text_form"  value="{{window_practice}}" type="text" name="window_practice" disabled="disabled"></input>
+            </picker>
+          </view>
+          <view class="product_item">
+            <view>商品单价</view>
+            <input class="input_text_form"  value="{{window_price}}" type="text" name="window_price" disabled="disabled"></input>
+          </view>
+        </view>
+        
+      </view>
+      
+    </view>
+    <view class="row-btn">
+      <view class="left-btn" bindtap="closePopup">取消</view>
+      <view class="right-btn" bindtap="addtocart">添加购物车</view>
+    </view>
+  </view>
+</view>
+<!-- 底部弹窗 -->
+<view class="info-bottom" hidden="{{bottom_jiesuan}}">
+  <view class="row-info">
+    <view>
+      <text>购物车</text>
+    </view>
+    <view class="row-author">
+      <view>
+        会员选择
+      </view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="product_type" bindtap="chooseMember"></input>
+    </view>
+
+    <view class="choosemember_info">
+      <view>会员账号</view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="product_type" bindtap="chooseMember"></input>
+
+      <view>会员姓名</view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="product_type" bindtap="chooseMember"></input>
+    </view>
+    
+      <view class="table_title">
+        <view class="table_item table_name">序号</view>
+        <view class="table_item table_guige">商品名称</view>
+        <view class="table_item table_num">数量</view>
+        <view class="table_item table_sum">金额</view>
+      </view>
+    <scroll-view class="cart_list" scroll-y show-scrollbar="{{ false }}" enhanced>
+      <block wx:for="{{ cart_list }}" wx:for-item="item" wx:for-index="index" wx:key="index" >
+        <view class="cart_list_item list {{ item.isTouchMove ? 'touch-move-active' : '' }}" bindtouchstart="touchStart" bindtouchmove="touchMove" data-index="{{ index }}">
+          <view value="">{{index + 1}}</view>
+          <view value="">{{item.cpmc}}</view>
+          <view value="">{{item.gs}}</view>
+          <view value="">{{item.zhje}}</view>
+        </view>
+        <view class="del" bindtap="delList" data-index="{{ index }}" > 删除 </view>
+      </block>
+      
+    </scroll-view>
+    
+  </view>
+  <view class="row-btn">
+    <view class="cancel-btn" bindtap="closejiesuan2">取消</view>
+    <view class="left-btn" bindtap="closejiesuan">作废</view>
+    <view class="right-btn">立即结账</view>
+  </view>
+</view>
+
+<!-- 会员选择弹窗 -->
+<view class="member" hidden="{{member_hid}}">
+  <input class="input_member" placeholder="手机号/卡号/姓名"></input>
+  <view class="member_title">
+    <view>卡号</view>
+    <view>姓名</view>
+    <view>性别</view>
+    <view>电话</view>
+    <view>状态</view>
+  </view>
+  <scroll-view class="member_info">
+  
+  </scroll-view>
+  <button class="member_btn_L member_btn" >确认</button>
+  <button class="member_btn_R member_btn" bindtap="closemember">取消</button>
+</view>
+
+<!-- 黑底 -->
+<view class="mask" bindtap="specifications_show" hidden="{{mask_hid}}"></view>

@@ -39,7 +39,8 @@
     "lazyloadPlaceholderEnable": false,
     "ignoreUploadUnusedFiles": false,
     "ignoreDevUnusedFiles": false,
-    "localPlugins": false
+    "localPlugins": false,
+    "condition": false
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},

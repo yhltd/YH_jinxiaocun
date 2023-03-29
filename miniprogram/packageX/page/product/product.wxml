@@ -1,0 +1,241 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="{{index==0?'list_view_fixed':'list_view'}}" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+
+
+
+
+
+<!--商品设置-->
+<!--- 查询 --->
+<!----------->
+<view class="choiceList" hidden="{{frmStudfind}}">
+  <form bindsubmit="save">
+    <view>
+      <view class="lables">商品名称:</view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="product_name"></input>
+      <view class="lables">商品类别:</view>
+      <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type" disabled="disabled"></input>
+      
+    </view>
+    <view class="bt_view">
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</view>
+
+<!--商品设置-->
+<!--- 修改 --->
+<!----------->
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="changed">
+    <view>
+      <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
+        <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{new}}" type="{{dataset_input.input_type}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+      </picker>
+    </view>
+    <view class="bt_view"> 
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</view>
+
+<!--商品设置-->
+<!--- 删除 --->
+<!----------->
+<view class="input_view" hidden="{{handle}}">
+      <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
+      <button class="bt_form" bindtap="xiangqing" hover-class="bt_form_hover">详情</button>
+</view>
+
+<!--商品设置-->
+<!--- 录入 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
+  <form bindsubmit="add">
+    <view>
+      <view class="lables">商品编码1:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="skr"></input>
+      <view class="lables">商品类别:</view>
+      <picker class="pick" mode="date" value="{{type}}" data-column_name="type" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type" disabled="disabled"></input>
+      </picker>
+      <view class="lables">商品名称:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{product_name}}" type="text" name="product_name"></input>
+      <view class="lables">单位:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{unit}}" type="text" name="unit"></input>
+      <view class="lables">单价:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{price}}" name="price" disabled="disabled"></input>
+      <view  class="lables">成本:</view>
+      <input class="input_text_form" type="text" placeholder="{{}}" value="{{chengben}}" name="chengben" disabled="disabled"></input>
+      <view  class="lables">商品规格:</view>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="specifications" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{specifications}}" name="specifications" disabled="disabled"></input>
+      </picker>
+      <view  class="lables">保存方式:</view>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="practice" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{practice}}" name="practice" disabled="disabled"></input>
+      </picker>
+      <view  class="lables">是否停用:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="tingyong"></input>
+      <view  class="lables">图片:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="photo"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</scroll-view>
+
+<!--商品设置-->
+<!--- 详情 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList" hidden="{{details}}">
+  <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
+    <view class="table">
+      <view class='table_header'>
+        <block class="title" wx:for="{{title2}}">
+          <view class="title_text" style="width:{{item.width}};{{item.text=='编号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        </block>
+      </view>
+      <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+        <view class="table_main">
+          <view wx:for="{{title2}}" 
+                wx:for-item="item" 
+                wx:key="item" 
+                class="{{index==0?'list_view_fixed':'list_view'}}" 
+                style="width:{{item.width}}" data-index="{{i}}" 
+                data-column="{{item.columnName}}" 
+                data-did="{{item.did}}"
+                data-value="{{list_item[item.columnName]}}" 
+                data-input_type="{{item.type}}"
+                data-isupd="{{item.isupd}}"
+                bindtap="{{item.columnName=='row_id'?'delete':'clickView2'}}"
+            >
+                
+            <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+  <button class="bt_form" style="width: 25%;" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+  <button class="bt_form" style="width: 25%;" bindtap="luru" hover-class="bt_form_hover">录入</button>
+  <button class="bt_form" style="width: 25%;" bindtap="get_excel" hover-class="bt_form_hover">导出</button>
+</scroll-view>
+
+<!----详情---->
+<!--- 修改 --->
+<!----------->
+<view class="input_view" hidden="{{input_hid2}}">
+  <form bindsubmit="changed2">
+    <view>
+      <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
+      <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{dataset_input.value}}" type="{{dataset_input.input_type}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+      </picker>
+    </view>
+    <view class="bt_view"> 
+      <button class="bt_form" bindtap="xq_qx" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</view>
+
+
+
+
+
+
+<!----详情---->
+<!--- 删除 --->
+<!----------->
+<view class="input_view" hidden="{{handle2}}">
+      <button class="bt_form" bindtap="xq_qx" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" bindtap="sanchu2" hover-class="bt_form_hover">删除</button>
+</view>
+
+
+
+
+
+
+
+
+<!----详情---->
+<!--- 录入 --->
+<!----------->
+<scroll-view scroll-y="true" class="choiceList" hidden="{{addTable2}}">
+  <form bindsubmit="add2">
+    <view>
+      <view class="lables">商品编码:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="product_bianhao"></input>
+      <view class="lables">商品类别:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="type"></input>
+      <view class="lables">商品名称:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="product_name"></input>
+      <view class="lables">单位:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="unit"></input>
+      <view  class="lables">单价:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="price"></input>
+      <view  class="lables">成本:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="chengben"></input>
+      <view  class="lables">商品规格:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="specifications"></input>
+      <view  class="lables">保存方式:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="practice"></input>
+      <view  class="lables">是否停用:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="tingyong"></input>
+      <view  class="lables">图片:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="photo"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</scroll-view>
+
+<!------------->
+<!-- 下方按钮 -->
+<!------------->
+<view class="bottom_view" style="height:13%">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">查询</button>
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">录入</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="gengduo_show">更多功能</button>
+</view>
+
+<view class="input_view" hidden="{{handle3}}">
+      <button class="bt_form" bindtap="getExcel" hover-class="bt_form_hover">导出Excel</button>
+      <button class="bt_form" bindtap="use_book" hover-class="bt_form_hover">使用说明</button>
+</view>
+
+<!---------->
+<!-- 黑底 -->
+<!---------->
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>

@@ -20,17 +20,35 @@ Page({
         text: "客户信息",
         url: "../../packageX/page/customerInfo/customerInfo"
       }, {
-        text: "日交易记录",
+        text: "日交易额",
         url: "../../packageX/page/DailyTurnover/DailyTurnover"
       }, {
-        text: "月交易记录",
+        text: "月交易额",
         url: "../../packageX/page/MonthlyTurnover/MonthlyTurnover"
       }, {
-        text: "统计交易总额",
+        text: "总交易额",
         url: "../../packageX/page/Statistics/Statistics"
       }, {
         text: "员工信息",
         url: "../../packageX/page/UserInfo/UserInfo"
+      }, {
+        text: "商品设置",
+        url: "../../packageX/page/product/product"
+      }, {
+        text: "会员管理",
+        url: "../../packageX/page/member_info/member_info"
+      }, {
+        text: "会员等级",
+        url: "../../packageX/page/membership_level/membership_level"
+      }, {
+        text: "点单面板",
+        url: "../../packageX/page/order_panel/order_panel"
+      },{
+        text: "订单信息",
+        url: "../../packageX/page/orders/orders"
+      }, {
+        text: "统计报表",
+        url: "../../packageX/page/report_form/report_form"
       },  {
         text: "退出",
         url: 　""
@@ -71,7 +89,7 @@ Page({
             }) + '&sheetqx1=' + JSON.stringify(_this.data.sheetqx1) + '&sheetqx2=' + JSON.stringify(_this.data.sheetqx2)
           })
         }
-      } else if (text == "日交易记录"){
+      } else if (text == "日交易额"){
         if (_this.data.sheetqx2.Sel != "1") {
           wx.showToast({
             title: '无权限',
@@ -85,7 +103,7 @@ Page({
             })
           })
         }
-      } else if (text == "月交易记录") {
+      } else if (text == "月交易额") {
         if (_this.data.sheetqx3 != "1") {
           wx.showToast({
             title: '无权限',
@@ -99,7 +117,7 @@ Page({
             })
           })
         }
-      } else if (text == "统计交易总额") {
+      } else if (text == "总交易额") {
         if (_this.data.sheetqx4 != "1") {
           wx.showToast({
             title: '无权限',
@@ -127,6 +145,60 @@ Page({
             }) + '&sheetqx5=' + JSON.stringify(_this.data.sheetqx5)
           })
         }
+      }else if (text == "商品设置") {
+        
+          wx.navigateTo({
+            url: url + '?userInfo=' + JSON.stringify({
+              company: _this.data.gongsi,
+              uname: _this.data.uname
+            })
+          })
+        
+      }else if (text == "会员管理") {
+        
+          wx.navigateTo({
+            url: url + '?userInfo=' + JSON.stringify({
+              company: _this.data.gongsi,
+              uname: _this.data.uname
+            })
+          })
+        
+      }else if (text == "会员等级") {
+        
+          wx.navigateTo({
+            url: url + '?userInfo=' + JSON.stringify({
+              company: _this.data.gongsi,
+              uname: _this.data.uname
+            }) 
+          })
+        
+      }else if (text == "点单面板") {
+        
+          wx.navigateTo({
+            url: url + '?userInfo=' + JSON.stringify({
+              gongsi: _this.data.gongsi,
+              uname: _this.data.uname
+            })
+          })
+        
+      }else if (text == "订单信息") {
+        
+          wx.navigateTo({
+            url: url + '?userInfo=' + JSON.stringify({
+              company: _this.data.gongsi,
+              uname: _this.data.uname
+            }) 
+          })
+        
+      }else if (text == "统计报表") {
+        
+          wx.navigateTo({
+            url: url + '?userInfo=' + JSON.stringify({
+              gongsi: _this.data.gongsi,
+              uname: _this.data.uname
+            }) 
+          })
+        
       }
       
     }
@@ -197,7 +269,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

@@ -34,7 +34,7 @@
     "pages/dayin/dayin",
     "pages/frmDeleteInputData/frmDeleteInputData",
     "pages/frmbasedata/frmbasedata",
-    "pages/shuju/shuju", 
+    "pages/shuju/shuju",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -152,7 +152,13 @@
         "page/DailyTurnover/DailyTurnover",
         "page/MonthlyTurnover/MonthlyTurnover",
         "page/Statistics/Statistics",
-        "page/UserInfo/UserInfo"
+        "page/UserInfo/UserInfo",
+        "page/product/product",
+        "page/member_info/member_info",
+        "page/membership_level/membership_level",
+        "page/order_panel/order_panel",
+        "page/orders/orders",
+        "page/report_form/report_form"
       ]
     },
     {
