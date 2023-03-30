@@ -23,7 +23,7 @@
       
        <block wx:for="{{product_list}}">
         <view class="menu-item">
-          <image class="item-photo" src="" mode=""/> 
+          <image class="item-photo" src="{{item.photo}}" mode=""/> 
           <view class="item_details" data-name="{{item.product_name}}">
             <view class="item-name">{{item.product_name}}</view>
             <view class="item-price">{{item.price}}</view>
@@ -56,7 +56,7 @@
       <view class="row-author">{{window_name}}</view>
       <view class="Product_details">
         <view class="row-photo">
-        <image src="" mode=""/>
+        <image class="row-photo-item" src="{{window_photo}}" mode=""/>
         </view>
         <view class="row-text">
           <view class="product_item">
@@ -100,19 +100,19 @@
     <view>
       <text>购物车</text>
     </view>
-    <view class="row-author">
+    <!-- <view class="row-author">
       <view>
         会员选择
       </view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="product_type" bindtap="chooseMember"></input>
-    </view>
+    </view> -->
 
     <view class="choosemember_info">
       <view>会员账号</view>
-      <input class="input_text_form"  value="{{empty}}" type="text" name="product_type" bindtap="chooseMember"></input>
+      <input class="input_text_form"  value="{{member_zhanghao}}" type="text" name="product_type" bindtap="chooseMember"></input>
 
       <view>会员姓名</view>
-      <input class="input_text_form"  value="{{empty}}" type="text" name="product_type" bindtap="chooseMember"></input>
+      <input class="input_text_form"  value="{{member_xingming}}" type="text" name="product_type" bindtap="chooseMember"></input>
     </view>
     
       <view class="table_title">
@@ -123,39 +123,45 @@
       </view>
     <scroll-view class="cart_list" scroll-y show-scrollbar="{{ false }}" enhanced>
       <block wx:for="{{ cart_list }}" wx:for-item="item" wx:for-index="index" wx:key="index" >
-        <view class="cart_list_item list {{ item.isTouchMove ? 'touch-move-active' : '' }}" bindtouchstart="touchStart" bindtouchmove="touchMove" data-index="{{ index }}">
+        <view class="cart_list_item list {{ item.isTouchMove ? 'touch-move-active' : '' }}" bindlongpress="cart_delete" data-index="{{ index }}">
           <view value="">{{index + 1}}</view>
           <view value="">{{item.cpmc}}</view>
           <view value="">{{item.gs}}</view>
           <view value="">{{item.zhje}}</view>
         </view>
-        <view class="del" bindtap="delList" data-index="{{ index }}" > 删除 </view>
       </block>
-      
     </scroll-view>
     
   </view>
   <view class="row-btn">
     <view class="cancel-btn" bindtap="closejiesuan2">取消</view>
     <view class="left-btn" bindtap="closejiesuan">作废</view>
-    <view class="right-btn">立即结账</view>
+    <view class="right-btn" bindtap="order_insert">立即结账</view>
   </view>
 </view>
 
 <!-- 会员选择弹窗 -->
 <view class="member" hidden="{{member_hid}}">
-  <input class="input_member" placeholder="手机号/卡号/姓名"></input>
+  <input class="input_member" bindinput="onInput" data-name="member_where" value="{{member_where}}" placeholder="手机号/卡号/姓名"></input>
   <view class="member_title">
-    <view>卡号</view>
-    <view>姓名</view>
-    <view>性别</view>
-    <view>电话</view>
-    <view>状态</view>
+    <view class="member_title_item1">卡号</view>
+    <view class="member_title_item2">姓名</view>
+    <view class="member_title_item3">性别</view>
+    <view class="member_title_item4">电话</view>
+    <view class="member_title_item5">状态</view>
   </view>
   <scroll-view class="member_info">
-  
+    <block wx:for="{{ member_list }}" wx:for-item="item" wx:for-index="index" wx:key="index" >
+      <view class="member_title" data-index="{{index}}" bindtap="member_click">
+        <view class="member_title_item1">{{item.username}}</view>
+        <view class="member_title_item2">{{item.name}}</view>
+        <view class="member_title_item3">{{item.gender}}</view>
+        <view class="member_title_item4">{{item.phone}}</view>
+        <view class="member_title_item5">{{item.state}}</view>
+      </view>
+    </block>
   </scroll-view>
-  <button class="member_btn_L member_btn" >确认</button>
+  <button bindtap="member_sel" class="member_btn_L member_btn" >查询</button>
   <button class="member_btn_R member_btn" bindtap="closemember">取消</button>
 </view>
 

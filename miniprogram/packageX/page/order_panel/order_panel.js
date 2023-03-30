@@ -12,16 +12,20 @@ Page({
     product_list:[],
     member_list:[],
     cart_list:[],
+    member_list:[],
     mask_hid:true,
     specifications_hid:true,
     bottom_jiesuan:true,
     member_hid:true,
     orders_value:'',
     window_unit:'',
+    member_where:'',
     num_sum:0,
     price_sum:0,
     startX: 0,        // 开始X坐标
     startY: 0,        // 开始Y坐标
+    member_zhanghao:'',
+    member_xingming:'',
   },
 
   bindPickerChange1: function(e) {
@@ -43,6 +47,32 @@ Page({
     _this.setData({
       window_practice: window_practice,
     }) 
+  },
+
+  cart_delete:function(e){
+    var _this = this
+    console.log(e)
+    console.log(e.currentTarget.dataset)
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此行商品？',
+      success (res) {
+        if (res.confirm) {
+          var list = _this.data.cart_list
+          var num_sum = _this.data.num_sum * 1 - list[e.currentTarget.dataset.index].gs * 1
+          var price_sum = _this.data.price_sum * 1 - list[e.currentTarget.dataset.index].zhje * 1
+          console.log(num_sum)
+          console.log(price_sum)
+          list.splice(e.currentTarget.dataset.index,1)
+          _this.setData({
+            cart_list:list,
+            num_sum,
+            price_sum
+          })
+          console.log(list)
+        }
+      }
+    })
   },
 
   numChange1: function(e) {
@@ -91,6 +121,7 @@ Page({
       price_list,
       baocun_list,
       window_unit:_this.data.product_list[index].unit,
+      window_photo:_this.data.product_list[index].photo
     })
     _this.setData({
       mask_hid:false,
@@ -109,6 +140,8 @@ Page({
   closePopup(){
     this.setData({
       mask_hid:true,
+      member_hid:true,
+      bottom_jiesuan:true,
       specifications_hid:true
     })
   },
@@ -119,7 +152,9 @@ Page({
       cart_list:[],
       bottom_jiesuan:true,
       price_sum:0,
-      num_sum:0
+      num_sum:0,
+      member_xingming:'',
+      member_zhanghao:'',
     })
   },
 
@@ -187,8 +222,11 @@ Page({
   chooseMember(){
     var _this = this
     _this.setData({
-      member_hid:false
+      member_hid:false,
+      member_where:'',
     })
+    _this.member_sel()
+    
   },
   closemember(){
     this.setData({
@@ -293,7 +331,6 @@ Page({
     if(day <10){
         day = '0' + day;
     }
-
     _this.setData({
       userInfo,
       scrollHeight:wx.getSystemInfoSync().screenHeight
@@ -373,10 +410,9 @@ Page({
       }
     })
 
-    var sql = "select username,name,gender,phone,state from memberinfo where company ='" + userInfo.gongsi + "'"
-    var sql2 = "select username,name,gender,phone,state from memberinfo where company ='" + userInfo.gongsi + "'and (username like %'" + _this.data.username + "'% or name like%'" + _this.data.name + "' or phone like %'" + _this.data.phone + "')"
-    console.log(this.type) 
-    console.log(sql + sql2)
+    var sql = "select username,name,gender,phone,state from member_info where company ='" + userInfo.gongsi + "'"
+    // var sql2 = "select username,name,gender,phone,state from member_info where company ='" + userInfo.gongsi + "'and (username like %'" + _this.data.username + "'% or name like%'" + _this.data.name + "' or phone like %'" + _this.data.phone + "')"
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -386,7 +422,7 @@ Page({
         console.log("select-success", res)
         var list = res.result
         _this.setData({
-          title
+          member_list:list
         })
       },
       fail: res=> {
@@ -408,6 +444,163 @@ Page({
       },
       fail: res=> {
         console.log("select-fail",res)
+      }
+    })
+  },
+
+  member_sel:function(){
+    var _this = this
+    var sql = "select username,name,gender,phone,state from member_info where company ='" + _this.data.userInfo.gongsi + "' and (username like '%" + _this.data.member_where + "%' or name like '%" + _this.data.member_where + "%' or phone like '%" + _this.data.member_where + "%')"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_xinyongka',
+      data: {
+        sql: sql
+      },
+      success: res => {
+        console.log("select-success", res)
+        var list = res.result
+        _this.setData({
+          member_list:list
+        })
+      },
+      fail: res=> {
+        console.log("select-fail",res)
+      }
+    })
+  },
+
+  member_click:function(e){
+    var _this = this
+    var index = e.currentTarget.dataset.index;
+    console.log(index)
+    _this.setData({
+      member_zhanghao:_this.data.member_list[index].username,
+      member_xingming:_this.data.member_list[index].name,
+      member_hid:true,
+    })
+  },
+
+  order_insert:function(){
+    var _this = this
+    var cart_list = _this.data.cart_list
+    console.log(cart_list)
+    var ddh = _this.data.orders_value
+    var myDate = new Date()
+    var year = myDate.getFullYear()
+    var month = myDate.getMonth()+1
+    var day = myDate.getDate()
+    var fixedvalue = 1
+    if (month < 10){
+        month = '0' + month;
+    }
+    if(day <10){
+        day = '0' + day;
+    }
+    var riqi = year + "-" + month + "-" + day
+    var hyzh = _this.data.member_zhanghao
+    var hyxm = _this.data.member_xingming
+    var yhfa = 1
+    var xfje = ""
+    var ssje = ""
+    var yhje = ""
+    var syy = _this.data.userInfo.uname
+    var company = _this.data.userInfo.gongsi
+    var hyjf = ""
+    if(cart_list.length == 0){
+      wx.showToast({
+        title: '购物车为空！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if(hyzh == ''){
+      wx.showToast({
+        title: '未选择会员！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    var sql1 = "insert into orders_details(ddid,cplx,cpmc,dw,dj,dzbl,zhdj,zhje,gs,company) values "
+    var sql2 = ""
+    var sql3 = "insert into orders(riqi,ddh,hyzh,hyxm,yhfa,xfje,ssje,yhje,syy,company,hyjf) values('" + riqi + "','" + ddh + "','" + hyzh + "','" + hyxm + "','" + yhfa + "','" + xfje + "','" + ssje + "','" + yhje + "','" + syy + "','" + company + "','" + hyjf + "')"
+    for(var i=0; i<cart_list.length; i++){
+      if(sql2 == ''){
+        sql2 = "('" + ddh + "','" + cart_list[i].cplx + "','" + cart_list[i].cpmc + "','" + cart_list[i].dw + "','" + cart_list[i].dj + "','" + cart_list[i].dzbl + "','" + cart_list[i].zhdj + "','" + cart_list[i].zhje + "','" + cart_list[i].gs + "','" + company +  "')"
+      }else{
+        sql2 = sql2 + ",('" + ddh + "','" + cart_list[i].cplx + "','" + cart_list[i].cpmc + "','" + cart_list[i].dw + "','" + cart_list[i].dj + "','" + cart_list[i].dzbl + "','" + cart_list[i].zhdj + "','" + cart_list[i].zhje + "','" + cart_list[i].gs + "','" + company +  "')"
+      }
+    }
+
+    console.log(sql3 + ";" + sql1 + sql2)
+    wx.cloud.callFunction({
+      name: 'sqlserver_xinyongka',
+      data: {
+        sql: sql3
+      },
+      success: res => {
+        wx.cloud.callFunction({
+          name: 'sqlserver_xinyongka',
+          data: {
+            sql: sql1 + sql2
+          },
+          success: res => {
+            wx.showToast({
+              title: "添加成功！",
+              icon: "none"
+            })
+            _this.closePopup()
+            _this.closejiesuan()
+            var myDate = new Date()
+            var year = myDate.getFullYear()
+            var month = myDate.getMonth()+1
+            var day = myDate.getDate()
+            if (month < 10){
+                month = '0' + month;
+            }
+            if(day <10){
+                day = '0' + day;
+            }
+            var orders_value = year.toString()+month.toString()+day.toString()
+            wx.cloud.callFunction({
+              name: 'sqlserver_xinyongka',
+              data: {
+                sql: "select max(ddh) as ddh from orders where company ='" + _this.data.userInfo.gongsi + "' and ddh like '" + orders_value + "%'"
+              },
+            success: res => {
+              console.log("select-success", res)
+              var list = res.result
+              console.log(list)
+              if(list[0].ddh != null){
+                console.log(list[0].ddh * 1 + 1)
+                _this.setData({
+                  orders_value: list[0].ddh * 1 + 1
+                })
+              }else{
+                console.log(orders_value + "0001")
+                _this.setData({
+                  orders_value:orders_value + "0001"
+                })
+              }
+            },
+            fail: res=> {
+                console.log("select-fail",res)
+              }
+            })
+            console.log(res)
+          },
+          fail: res => {
+            console.log(res)
+          }
+        })
+      },
+      error: res => {
+        console.log(res)
+      },
+      fail: res => {
+        console.log(res)
       }
     })
   },
