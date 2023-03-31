@@ -369,7 +369,7 @@ Page({
     }
     if (e.detail.value.jibie !="" && e.detail.value.menkan != "" && e.detail.value.bili != "" ){
     let sql = "insert into member_jibie(company,jibie,menkan,bili) values('" + _this.data.company + "','" +
-      e.detail.value.jiibe + "','" + e.detail.value.menkan + "','" + e.detail.value.bili + "')"
+      e.detail.value.jibie + "','" + e.detail.value.menkan + "','" + e.detail.value.bili + "')"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -471,7 +471,7 @@ Page({
   use_book:function(){
     wx.showModal({
       title: '使用说明',
-      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。\n4.点击序号，在弹出的窗口点击详情即可查看某客户的所有日交易记录。\n5.在弹出的详情窗口点击编号即可删除。\n6.在弹出的详情窗口点击录入即可录入当前客户的日交易记录。',
+      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
       confirmColor: '#84B9F2', //确定文字的颜色
@@ -551,9 +551,9 @@ Page({
     })
     var list = _this.data.list;
     var title = [
-      { text: "级别名称", width: "200rpx", columnName: "recipient", type: "text",isupd: true},
-      { text: "消费额度门槛",width: "200rpx",columnName: "cardholder",type: "text",isupd: true},
-      { text: "折扣比例", width: "200rpx", columnName: "drawee", type: "text", isupd: true},
+      { text: "级别名称", width: "200rpx", columnName: "jibie", type: "text",isupd: true},
+      { text: "消费额度门槛",width: "200rpx",columnName: "menkan",type: "text",isupd: true},
+      { text: "折扣比例", width: "200rpx", columnName: "bili", type: "text", isupd: true},
       
     ]
     var cloudList = {

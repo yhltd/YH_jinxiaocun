@@ -33,7 +33,7 @@
 <!--订单信息-->
 <!--- 查询 --->
 <!----------->
-<view class="choiceList" hidden="{{frmStudfind}}">
+<scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
     <view>
       <view class="lables">订单号:</view>
@@ -43,12 +43,12 @@
       <view class="lables">会员姓名:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="hyxm"></input>
       <view class="lables">起始日期:</view>
-      <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
-        <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{new}}" type="{{dataset_input.input_type}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="startdate" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{startdate}}" name="startdate" disabled="disabled"></input>
       </picker>
       <view class="lables">结束日期:</view>
-      <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
-        <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{new}}" type="{{dataset_input.input_type}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="enddate" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{enddate}}" name="enddate" disabled="disabled"></input>
       </picker>
       
     </view>
@@ -57,7 +57,7 @@
       <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
     </view>
   </form>
-</view>
+</scroll-view>
 
 <!--订单信息-->
 <!--- 修改 --->
@@ -81,7 +81,6 @@
 <!----------->
 <view class="input_view" hidden="{{handle}}">
       <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
-      <button class="bt_form" bindtap="xiangqing" hover-class="bt_form_hover">详情</button>
 </view>
 
 

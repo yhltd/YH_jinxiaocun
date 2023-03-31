@@ -26,7 +26,7 @@
           <image class="item-photo" src="{{item.photo}}" mode=""/> 
           <view class="item_details" data-name="{{item.product_name}}">
             <view class="item-name">{{item.product_name}}</view>
-            <view class="item-price">{{item.price}}</view>
+            <view class="item-price">{{item.price_look}}</view>
           </view>
           <button class="item-chooseGG" bindtap="openPopup" data-index="{{index}}">规格</button>
         </view>
@@ -65,7 +65,7 @@
           </view>
           <view class="product_item">
             <view>商品数量</view>
-            <input class="input_text_form" bindinput="onInput" value="{{window_num}}" type="text" data-name="window_num"></input>
+            <input class="input_text_form" bindinput="onInput" value="{{window_num}}" type="number" data-name="window_num"></input>
           </view>
           <view class="product_item">
             <view>商品规格</view>

@@ -69,7 +69,6 @@
 <!----------->
 <view class="input_view" hidden="{{handle}}">
       <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
-      <button class="bt_form" bindtap="xiangqing" hover-class="bt_form_hover">详情</button>
 </view>
 
 <!--会员等级-->
@@ -83,7 +82,7 @@
       <view class="lables">消费额度门槛:</view>
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{empty}}" name="menkan"></input>
       <view class="lables">折扣比例:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="bili"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="bili"></input>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

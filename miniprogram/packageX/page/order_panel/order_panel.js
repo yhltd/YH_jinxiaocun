@@ -13,6 +13,7 @@ Page({
     member_list:[],
     cart_list:[],
     member_list:[],
+    test_list:['是','否'],
     mask_hid:true,
     specifications_hid:true,
     bottom_jiesuan:true,
@@ -365,7 +366,7 @@ Page({
       }
     })
     var sql = "select type from product where company ='" + userInfo.gongsi + "' group by type;"
-    var sql2 = "select type,product_name,unit,price,photo,specifications,practice from product where company ='" + userInfo.gongsi + "'"
+    var sql2 = "select type,product_name,unit,price,photo,specifications,practice,'' as price_look from product where company ='" + userInfo.gongsi + "'"
     console.log(this.type) 
     console.log(sql + sql2)
     wx.cloud.callFunction({
@@ -401,6 +402,9 @@ Page({
       success: res => {
         console.log("select-success", res)
         var list = res.result
+        for(var i=0; i<list.length; i++){
+          list[i].price_look = list[i].price.split(",")[0]
+        }
         _this.setData({
           product_list:list
         })
@@ -611,9 +615,9 @@ Page({
     console.log(this_name)
     var sql = ""
     if(this_name == '全部'){
-      sql = "select * from product where company ='" + _this.data.userInfo.gongsi + "'"
+      sql = "select *,'' as price_look from product where company ='" + _this.data.userInfo.gongsi + "'"
     }else{
-      sql = "select * from product where company ='" +  _this.data.userInfo.gongsi +"' and type ='" + this_name + "'"
+      sql = "select *,'' as price_look from product where company ='" +  _this.data.userInfo.gongsi +"' and type ='" + this_name + "'"
     }
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
@@ -623,6 +627,9 @@ Page({
       success: res => {
         console.log("select-success", res)
         var list = res.result
+        for(var i=0; i<list.length; i++){
+          list[i].price_look = list[i].price.split(",")[0]
+        }
         _this.setData({
           product_list:list
         })

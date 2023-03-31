@@ -5,6 +5,7 @@
         <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
+    
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
         <view wx:for="{{title}}" 
@@ -21,8 +22,11 @@
         </view>
       </view>
     </block>
+    
   </view>
+  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas"></canvas>
 </scroll-view>
+
 
 
 
@@ -58,7 +62,7 @@
 <view class="bottom_view" style="height:16%">
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">查询</button>
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">全部</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="gengduo_show">更多功能</button>
+  <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="gengduo_show">更多功能</button> -->
 </view>
 
 <view class="input_view" hidden="{{handle3}}">

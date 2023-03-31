@@ -1,13 +1,17 @@
 // miniprogram/packageX/page/Turnover/Turnover.js
+var wxCharts = require("../../../utils/wxcharts.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    imageWidth:0,
     userInfo: [],
     input_type: 'text',
     list: [],
+    list1:[],
+    list2:[],
     riqi1: "",
     riqi2: "",
     empty: "",
@@ -23,7 +27,7 @@ Page({
     title: [
             { text: "会员总数", width: "200rpx", columnName: "hyzs", type: "date", isupd: true },
             { text: "下单会员人数", width: "180rpx", columnName: "xdhyrs", type: "number", isupd: true },
-            { text: "订单总数", width: "250rpx", columnName: "commercial_tenant", type: "tenumberxt", isupd: true },
+            { text: "订单总数", width: "250rpx", columnName: "ddzs", type: "number", isupd: true },
             { text: "消费金额", width: "180rpx", columnName: "xfje", type: "number", isupd: true },
             { text: "实收金额", width: "180rpx", columnName: "ssje", type: "number", isupd: true },
             { text: "优惠金额", width: "180rpx", columnName: "yhje", type: "number", isupd: true },
@@ -52,7 +56,7 @@ Page({
     }
     if (_this.data.riqi2 == "") {
       _this.setData({
-        riqi2:"2030/12/31"
+        riqi2:"2300/12/31"
       })
     }
     let sql = "select round(sum(ifnull(heji.xfje,0)),2) as xfje,round(sum(ifnull(heji.ssje,0)),2) as ssje,round(sum(ifnull(heji.yhje,0)),2) as yhje from orders as ord left join(select ddid,company,sum(convert(dj,float) * convert(gs,float)) as xfje,sum(convert(zhdj,float) * convert(gs,float)) as ssje,round(sum(convert(dj,float) * convert(gs,float)) - sum(convert(zhdj,float) * convert(gs,float)),2) as yhje from orders_details group by ddid) as heji on ord.ddh = heji.ddid and ord.company = heji.company where ord.company = '" + _this.data.company + "' and riqi >='" + _this.data.riqi1 + "' and riqi <= '" + _this.data.riqi2 + "'"
@@ -64,11 +68,54 @@ Page({
       },
       success: res => {
         console.log("select-success", res)
-        _this.setData({
-          list: res.result,
-          skr: "",
-          fkr: "",
-          ckr: "",
+        var list1 = res.result
+        let sql2 = "select count(*) as huiyuan_sum from member_info where company = '"+ _this.data.company +"' union all select count(*) as xiadan_sum from(select hyzh from orders where company = '"+ _this.data.company +"' and hyzh != '' and riqi >='" + _this.data.riqi1 + "' and riqi <= '" +  _this.data.riqi2 + "' group by hyzh) as xdhy union all select count(*) as dingdan_sum from orders where company = '"+ _this.data.company +"' and riqi >='" + _this.data.riqi1 + "' and riqi <= '" +  _this.data.riqi2 + "'"
+        console.log(sql2)
+        wx.cloud.callFunction({
+          name: 'sqlserver_xinyongka',
+          data: {
+            sql: sql2
+          },
+          success: res => {
+            console.log("select-success", res)
+            var list2 = res.result
+            var list = []
+            list.push({
+              hyzs:list2[0].huiyuan_sum,
+              xdhyrs:list2[1].huiyuan_sum,
+              ddzs:list2[2].huiyuan_sum,
+              xfje:list1[0].xfje,
+              ssje:list1[0].ssje,
+              yhje:list1[0].yhje
+            })
+            _this.setData({
+              list: list,
+              skr: "",
+              fkr: "",
+              ckr: "",
+            })
+
+            new wxCharts({
+              canvasId: 'columnCanvas',
+              type: 'column',
+              categories: ['消费金额', '实收金额', '优惠金额'],
+              series: [{
+                  name: '点单收入情况汇总',
+                  data: [list[0].xfje, list[0].ssje, list[0].yhje]
+              }],
+              yAxis: {
+                  format: function (val) {
+                      return val;
+                  },
+              },
+              width: 400,
+              height: 200
+            });
+
+          },
+          fail: res => {
+            console.log("select-fail", res)
+          }
         })
       },
       fail: res => {
@@ -79,11 +126,12 @@ Page({
 
 
 
+
   entering: function () {
     var _this = this;
     _this.setData({
-      riqi1:"1900/1/1",
-      riqi2: "2030/12/31",
+      riqi1:"1900-01-01",
+      riqi2: "2300-12-31",
     })
     _this.init();
   },
@@ -214,7 +262,6 @@ Page({
       uname: userInfo.uname,
     })
     _this.entering();
-    _this.init();
   },
 
   /**

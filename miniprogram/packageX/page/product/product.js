@@ -6,6 +6,7 @@ Page({
    */
   data: {
     userInfo: [],
+    tingyong_list:['是','否'],
     input_type: 'text',
     updatePicker: true,
     updateInput: false,
@@ -60,7 +61,16 @@ Page({
     handle2: true,
     handle3:true,
   },
-
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var window_tingyong = _this.data.tingyong_list[e.detail.value]
+    console.log(window_tingyong)
+    _this.setData({
+      // window_tingyong: window_tingyong,
+      window_tingyong: _this.data.tingyong_list[e.detail.value]
+    })
+  },
 
   clickView: function(e) {
     var _this = this;
@@ -448,44 +458,12 @@ Page({
 
   add: function(e) {
     var _this = this;
-    //console.log(e.detail.value.skr,)
-    //_this.setData({
-    // skr: e.detail.value.skr,
-    // fkr: e.detail.value.fkr,
-    // ckr: e.detail.value.ckr,
-    // fkh: e.detail.value.fkh,
-    // zdr: e.detail.value.zdr,
-    // hkr: e.detail.value.hkr,
-    // zje: e.detail.value.zje,
-    // ysk: e.detail.value.ysk,
-    // yke: e.detail.value.yke,
-    // jke: e.detail.value.jke,
-    // sxf: e.detail.value.sxf,
-    // dhh: e.detail.value.dhh,
-    // mm: e.detail.value.mm,
-    // yh: e.detail.value.yh
-    //})
-    if(e.detail.value.zje==""){
-      e.detail.value.zje =0
-    }
-    if (e.detail.value.yhk == "") {
-      e.detail.value.yhk = 0
-    }
-    if (e.detail.value.yke == "") {
-      e.detail.value.yke = 0
-    }
-    if (e.detail.value.jke == "") {
-      e.detail.value.jke = 0
-    }
-    if (e.detail.value.sxf == "") {
-      e.detail.value.sxf = 0
-    }
-    if (e.detail.value.skr !="" && e.detail.value.fkr != "" && e.detail.value.ckr != "" && e.detail.value.fkh != "" && e.detail.value.zdr != "" && e.detail.value.hkr != "" && e.detail.value.zje != "" && e.detail.value.yhk != "" && e.detail.value.yke != "" && e.detail.value.jke != "" && e.detail.value.sxf !=""){
-    let sql = "insert into product(company,product_bianhao,type,product_name,unit,price,chengben,specifications,practice,tingyong,photo) values('" + e.detail.value.skr + "','" +
-      e.detail.value.fkr + "','" + e.detail.value.ckr + "','" + e.detail.value.fkh + "','" +
-      e.detail.value.zdr + "','" + e.detail.value.hkr + "'," +
-      parseInt(e.detail.value.zje) + "," + parseInt(e.detail.value.yhk) + "," + parseInt(e.detail.value.yke) + "," +
-      parseInt(e.detail.value.jke) + "," + parseInt(e.detail.value.sxf) + ",'" + e.detail.value.dhh + "','" + e.detail.value.mm + "','" + e.detail.value.yg + "','" + _this.data.gongsi + "')"
+  
+    if (e.detail.value.product_bianhao !="" && e.detail.value.type != "" && e.detail.value.product_name != "" && e.detail.value.unit != "" && e.detail.value.price != "" && e.detail.value.chengben != "" && e.detail.value.specifications != "" && e.detail.value.practice != "" && e.detail.value.tingyong != "" ){
+    let sql = "insert into product(company,product_bianhao,type,product_name,unit,price,chengben,specifications,practice,tingyong) values('" + _this.data.company + "','" +
+      e.detail.value.product_bianhao + "','" + e.detail.value.type + "','" + e.detail.value.product_name + "','" +
+      e.detail.value.unit + "','" + e.detail.value.price + "','" + e.detail.value.chengben + "','" + e.detail.value.specifications + "','" + e.detail.value.practice + "','" + e.detail.value.tingyong + "')"
+      console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -496,6 +474,14 @@ Page({
           title: "添加成功！",
           icon: "none"
         })
+        _this.init();
+        _this.setData({
+          addTable: true,
+          mask_hid: true,
+          empty:"",
+          zdr:"",
+          hkr:""
+        })
       },
       error: res => {
         console.log(res)
@@ -503,14 +489,6 @@ Page({
       fail: res => {
         console.log(res)
       }
-    })
-    _this.init();
-    _this.setData({
-      addTable: true,
-      mask_hid: true,
-      empty:"",
-      zdr:"",
-      hkr:""
     })
     }else{
       wx.showToast({
@@ -654,7 +632,7 @@ Page({
   use_book:function(){
     wx.showModal({
       title: '使用说明',
-      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。\n4.点击序号，在弹出的窗口点击详情即可查看某客户的所有日交易记录。\n5.在弹出的详情窗口点击编号即可删除。\n6.在弹出的详情窗口点击录入即可录入当前客户的日交易记录。',
+      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
       confirmColor: '#84B9F2', //确定文字的颜色
@@ -676,9 +654,9 @@ Page({
     { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
     { text: "商品名称", width: "400rpx", columnName: "product_name", type: "text", isupd: true },
     { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
-    { text: "单价", width: "200rpx", columnName: "price", type: "date", isupd: true },
-    { text: "成本", width: "200rpx", columnName: "chengben", type: "date", isupd: true },
-    { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "digit", isupd: true },
+    { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
+    { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+    { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
     
     ]
     var cloudList = {
@@ -738,23 +716,16 @@ Page({
     })
     var list = _this.data.list;
     var title = [
-      { text: "收卡人", width: "200rpx", columnName: "recipient", type: "text",isupd: true},
-      { text: "付款人",width: "200rpx",columnName: "cardholder",type: "text",isupd: true},
-      { text: "持卡人", width: "200rpx", columnName: "drawee", type: "text", isupd: true},
-      { text: "发卡行", width: "400rpx", columnName: "issuing_bank", type: "text", isupd: true},
-      { text: "账单日", width: "250rpx", columnName: "bill_day", type: "date", isupd: true},
-      { text: "还款日", width: "250rpx", columnName: "repayment_date", type: "date", isupd: true},
-      { text: "总金额", width: "200rpx", columnName: "total", type: "digit", isupd: true},
-      { text: "应还款", width: "200rpx", columnName: "repayable", type: "digit", isupd: true},
-      { text: "剩余金额", width: "200rpx", columnName: "balance", type: "digit", isupd: true},
-      { text: "借款金额", width: "200rpx", columnName: "loan", type: "digit", isupd: true},
-      { text: "手续费", width: "200rpx", columnName: "service_charge", type: "digit", isupd: true},
-      { text: "电话号", width: "300rpx", columnName: "telephone", type: "digit", isupd: true},
-      { text: "密码", width: "250rpx", columnName: "password", isupd: true},
-      { text: "员工", width: "200rpx", columnName: "staff", isupd: true},
+    { text: "商品编码", width: "250rpx", columnName: "product_bianhao", type: "text", isupd: true },
+    { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
+    { text: "商品名称", width: "400rpx", columnName: "product_name", type: "text", isupd: true },
+    { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
+    { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
+    { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+    { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
     ]
     var cloudList = {
-      name: '客户信息',
+      name: '商品设置',
       items: [],
       header: []
     }

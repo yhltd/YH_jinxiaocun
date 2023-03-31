@@ -38,7 +38,7 @@
       <view class="lables">商品名称:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="product_name"></input>
       <view class="lables">商品类别:</view>
-      <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type" disabled="disabled"></input>
+      <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type"></input>
       
     </view>
     <view class="bt_view">
@@ -70,7 +70,6 @@
 <!----------->
 <view class="input_view" hidden="{{handle}}">
       <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
-      <button class="bt_form" bindtap="xiangqing" hover-class="bt_form_hover">详情</button>
 </view>
 
 <!--商品设置-->
@@ -79,32 +78,29 @@
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
     <view>
-      <view class="lables">商品编码1:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="skr"></input>
+      <view class="lables">商品编码:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="product_bianhao"></input>
       <view class="lables">商品类别:</view>
-      <picker class="pick" mode="date" value="{{type}}" data-column_name="type" bindchange="choiceDate">
-        <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type" disabled="disabled"></input>
-      </picker>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type"></input>
       <view class="lables">商品名称:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{product_name}}" type="text" name="product_name"></input>
       <view class="lables">单位:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{unit}}" type="text" name="unit"></input>
       <view class="lables">单价:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{price}}" name="price" disabled="disabled"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{price}}" name="price"></input>
       <view  class="lables">成本:</view>
-      <input class="input_text_form" type="text" placeholder="{{}}" value="{{chengben}}" name="chengben" disabled="disabled"></input>
+      <input class="input_text_form" type="text" placeholder="{{}}" value="{{chengben}}" name="chengben"></input>
       <view  class="lables">商品规格:</view>
-      <picker class="pick" mode="date" value="{{date}}" data-column_name="specifications" bindchange="choiceDate">
-        <input class="input_text_form" type="text" placeholder="{{}}" value="{{specifications}}" name="specifications" disabled="disabled"></input>
-      </picker>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{specifications}}" name="specifications"></input>
       <view  class="lables">保存方式:</view>
-      <picker class="pick" mode="date" value="{{date}}" data-column_name="practice" bindchange="choiceDate">
-        <input class="input_text_form" type="text" placeholder="{{}}" value="{{practice}}" name="practice" disabled="disabled"></input>
-      </picker>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{practice}}" name="practice"></input>
       <view  class="lables">是否停用:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="tingyong"></input>
-      <view  class="lables">图片:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="photo"></input>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{tingyong_list}}">
+        <input class="input_text_form" value="{{window_tingyong}}" type="text" name="tingyong" disabled="disabled"></input>
+      </picker>
+      
+      <!-- <view  class="lables">图片:</view>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="photo"></input> -->
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

@@ -279,3 +279,9 @@ button{
   margin-left: 90rpx;
   margin-top: 30rpx;
 }
+
+.canvas {
+  margin-top: 300rpx;
+  width: 750rpx;
+  height: 500rpx;
+}

@@ -6,6 +6,8 @@ Page({
    */
   data: {
     userInfo: [],
+    gender_list:['男','女'],
+    state_list:['正常','停用'],
     input_type: 'text',
     updatePicker: true,
     updateInput: false,
@@ -62,6 +64,27 @@ Page({
     handle3:true,
   },
 
+  bindPickerChangeXB: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var window_gender = _this.data.gender_list[e.detail.value]
+    console.log(window_gender)
+    _this.setData({
+      // window_tingyong: window_tingyong,
+      window_gender: _this.data.gender_list[e.detail.value]
+    })
+  },
+
+  bindPickerChange1: function(e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var window_state = _this.data.state_list[e.detail.value]
+    console.log(window_state)
+    _this.setData({
+      // window_tingyong: window_tingyong,
+      window_state: _this.data.state_list[e.detail.value]
+    })
+  },
 
   clickView: function(e) {
     var _this = this;
@@ -470,7 +493,7 @@ Page({
   use_book:function(){
     wx.showModal({
       title: '使用说明',
-      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。\n4.点击序号，在弹出的窗口点击详情即可查看某客户的所有日交易记录。\n5.在弹出的详情窗口点击编号即可删除。\n6.在弹出的详情窗口点击录入即可录入当前客户的日交易记录。',
+      content: '1.点击查询按钮，输入条件点击确定即可查询。\n2.点击录入按钮，输入内容点击确定即可录入。\n3.点击序号，在弹出的窗口点击删除按钮即可删除。',
       showCancel: false, //是否显示取消按钮
       confirmText: "知道了", //默认是“确定”
       confirmColor: '#84B9F2', //确定文字的颜色
