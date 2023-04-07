@@ -1,3 +1,4 @@
+var wxCharts = require('../../../utils/wxcharts');
 const app = getApp();
 Page({
 

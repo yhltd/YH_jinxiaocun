@@ -41,6 +41,18 @@ Page({
       danhao_list:this_list_dingdan
     })
   },
+  clearlpmg:function(e){
+    var _this = this
+    _this.setData({
+      xdrq:"",
+      jieshuriqi:"",
+      ddh:"",
+      ddmk:""
+    })
+    wx.showToast({
+      title: '清空成功',
+    })
+  },
 
   entering:function(){
 

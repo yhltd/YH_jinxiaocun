@@ -65,7 +65,10 @@ Page({
       },
       success: res=> {
         for(var i=0;i<res.result.length;i++){
-          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          if(res.result.mark1!=null){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
+          
         }
         that.setData({
           all: res.result,

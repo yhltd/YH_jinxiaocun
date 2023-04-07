@@ -27,7 +27,10 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view">
+<view class="bottom_view" style="margin-top:-20rpx">
+  <button class="bt_bottom" style="width: 15%;" bindtap="page_down_click" >{{"<<"}}</button>
+  <button class="bt_bottom" style="width: 20%;" >{{this_page + "/" + max_page}}</button>
+  <button class="bt_bottom" style="width: 15%;" bindtap="page_up_click" >{{">>"}}</button>
 	<button class="bt_bottom" bindtap="entering" >查询</button>
 </view>
 

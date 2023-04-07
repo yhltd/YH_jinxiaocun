@@ -468,7 +468,7 @@ Page({
 
     //加粗字体
     printUtil.setFontWidthAndHeight(2, 2);
-    printUtil.printlnText(4, 200, height, '盈丰豆制品');
+    printUtil.printlnText(4, 200, height, '莹丰豆制品');
 
     height = height + 75
 
@@ -577,7 +577,7 @@ Page({
 
     //加粗字体
     printUtil.setFontWidthAndHeight(2, 2);
-    printUtil.printlnText(4, 200, height, '盈丰豆制品');
+    printUtil.printlnText(4, 200, height, '莹丰豆制品');
 
     height = height + 75
 

@@ -1,5 +1,6 @@
 'use strict';
 
+
 var config = {
     yAxisWidth: 15,
     yAxisSplit: 5,

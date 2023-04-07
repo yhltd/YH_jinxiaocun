@@ -148,7 +148,17 @@ Page({
       }
     })
   },
-
+  clearlpmg:function(){
+    var _this = this
+    this.setData({
+      xdrq:"",
+      jieshuriqi:"",
+    })
+    wx.showToast({
+      title: '清空成功',
+      icon:"none"
+    })
+  },
   entering:function(){
     var _this = this
 

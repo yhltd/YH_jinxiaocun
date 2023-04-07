@@ -11,6 +11,8 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
+    max_page:1,
+    this_page:1,
     list: [],
     title: [{
         text: "客户名称",
@@ -69,7 +71,7 @@ Page({
         isupd: true
       },
     ],
-   
+    list:[],
     id:'',
     name:'',
     Thedetail_id: '',  
@@ -89,8 +91,68 @@ Page({
     _this.setData({
       userInfo
     })
-    var e = ['','']
-    _this.tableShow(e)   
+    var ee = ['','',1,50]
+    _this.setData({
+      ee
+    })
+    _this.pageShow(ee)
+    _this.tableShow(ee)
+    // _this.tableShow(e)  
+  },
+  pageShow: function (e) {
+    wx.showLoading({
+      title : '加载中',
+      mask : 'true'
+    })
+    var _this = this
+    var sql = ""
+    if(_this.data.userInfo.power == '管理员'){
+      sql = "select count(*) as page from (select * from(select row_number() over(order by name,chanpin.NameofProduct) as row_num,id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' ) as list ) as list_end"
+    }else{
+      sql = "select count(*) as page from (select * from(select row_number() over(order by name,chanpin.NameofProduct) as row_num,id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where salesman = '" + _this.data.userInfo.id + "' and chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' ) as list ) as list_end"
+    }
+    
+    console.log("想要的"+sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        var this_row = list[0].page
+        var max_page = Math.ceil(this_row * 1 / 50)
+        console.log(max_page)
+        var this_page = 1
+        _this.setData({
+          max_page,
+          this_page,
+        })
+        wx.hideLoading({
+
+        })
+      },
+      err: res => {
+        console.log("错误!")
+        wx.hideLoading({
+
+        })
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        wx.hideLoading({
+
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   tableShow: function (e) {
@@ -98,9 +160,9 @@ Page({
     var sql = ""
     console.log(_this.data.userInfo.power)
     if(_this.data.userInfo.power == '管理员'){
-      sql = "select id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
+      sql = "select * from(select row_number() over(order by name,chanpin.NameofProduct) as row_num,id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' ) as list where row_num between " + e[2] + " and " + e[3]
     }else{
-      sql = "select id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where salesman = '" + _this.data.userInfo.id + "' and chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' order by name,NameofProduct"
+      sql = "select * from(select row_number() over(order by name,chanpin.NameofProduct) as row_num,id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where salesman = '" + _this.data.userInfo.id + "' and chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' ) as list where row_num between " + e[2] + " and " + e[3]
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -246,17 +308,116 @@ Page({
     })
   },
 
-  
+  page_up_click () {
+    var _this = this
+    var this_page = _this.data.this_page
+    var max_page = _this.data.max_page
+    if(this_page * 1 + 1 > max_page){
+      wx.showToast({
+        title: '已经最后一页！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    var start_page = this_page * 50 + 1
+    var stop_page = start_page + 49
+    this_page = this_page + 1
+    _this.setData({
+      this_page
+    })
+    var ee = [_this.data.NameofProduct,_this.data.name,start_page,stop_page]
+    
+    _this.setData({
+      ee
+    })
+    _this.page_show(ee)
+  },
+
+  page_down_click () {
+    var _this = this
+    var this_page = _this.data.this_page
+    var max_page = _this.data.max_page
+    if(this_page * 1 - 1 < 1){
+      wx.showToast({
+        title: '已经第一页！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    this_page = this_page - 1
+    var start_page = this_page * 50 + 1
+    var stop_page = start_page + 49
+    _this.setData({
+      this_page
+    })
+    var ee = [_this.data.NameofProduct,_this.data.name,start_page,stop_page]
+    _this.setData({
+      ee
+    })
+    _this.page_show(ee)
+  },
+
+  page_show: function (e) {
+    var _this = this
+    var sql = ""
+    wx.showLoading({
+      title : '加载中',
+      mask : 'true'
+    })
+    if(_this.data.userInfo.power == '管理员'){
+      sql = "select * from(select row_number() over(order by name,chanpin.NameofProduct) as row_num,id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' ) as list where row_num between " + e[2] + " and " + e[3]
+    }else{
+      sql = "select * from(select row_number() over(order by name,chanpin.NameofProduct) as row_num,id,name,salesman,chanpin.NameofProduct,unit,Theunitprice,zhongliang,kuang,kuang_num,isnull(qiankuang,'') as qiankuang,isnull(huikuang,'') as huikuang from (select userInfo.id as Customer_id,DP.id,userInfo.name as name,userInfo.salesman,DC.NameofProduct,DC.unit,DP.Theunitprice,DC.zhongliang,DC.kuang,DP.kuang_num from DetailsofProducts as DP left join DetailedConfiguration as DC on DP.Thedetail_id = DC.id left join userInfo on DP.Customer_id = userInfo.id) as chanpin left join (select Customer_id,NameofProduct,sum(convert(float,number)) as qiankuang,sum(convert(float,huikuang)) as huikuang from Detailsoforder group by Customer_id,NameofProduct) as kuang on chanpin.Customer_id = kuang.Customer_id and chanpin.NameofProduct = kuang.NameofProduct and kuang = '是' where salesman = '" + _this.data.userInfo.id + "' and chanpin.NameofProduct like '%" + e[0] + "%' and name like '%" + e[1] + "%' ) as list where row_num between " + e[2] + " and " + e[3]
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        for(var i=0; i<list.length; i++){
+          if(list[i].kehu2 != ''){
+            list[i].kehu = list[i].kehu2
+          }
+        }
+        console.log(list)
+        _this.setData({
+          list: list
+        })
+        console.log(list)
+        wx.hideLoading({
+
+        })
+      },
+      err: res => {
+        console.log("错误!")
+        wx.hideLoading({
+
+        })
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+        wx.hideLoading({
+
+        })
+      }
+    })
+  },
 
   entering:function(){
     var _this=this
     _this.setData({
       cxShow:true,
-      id:'',
-      NameofProduct: '', 
-      unit: '',
-      Theunitprice:'',
-      kuang_num:'',
     })
   },
 
@@ -270,11 +431,12 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.NameofProduct,_this.data.name]
+    var e = [_this.data.NameofProduct,_this.data.name,1,50]
     this.setData({
       cxcpmc: _this.data.NameofProduct,
       cxkhmc: _this.data.name
     })
+    _this.pageShow(e)
     _this.tableShow(e)
     _this.qxShow()
   },

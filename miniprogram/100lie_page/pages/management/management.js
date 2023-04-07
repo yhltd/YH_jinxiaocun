@@ -286,7 +286,8 @@ save:function(e){
     }
   }
 
-  var sql="insert into baitaoquanxian_department(department_name,view_name,ins,del,upd,sel) values ('" + that.data.department_name + "','"+that.data.view_name+ "','"+that.data.ins+"','"+that.data.del+"','"+that.data.upd+"','"+that.data.sel+"')"
+  var sql="insert into baitaoquanxian_department(department_name,view_name,ins,del,upd,sel,company) values ('" + that.data.department_name + "','"+that.data.view_name+ "','"+that.data.ins+"','"+that.data.del+"','"+that.data.upd+"','"+that.data.sel+ "','"+that.data.gongsi+"')"
+   
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{

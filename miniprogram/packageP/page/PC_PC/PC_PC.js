@@ -989,6 +989,7 @@ Page({
       rqxzShow6: false,
     })
   },
+
   entering: function (e) {
     var _this = this
     _this.selListGongZuoShiJian('')

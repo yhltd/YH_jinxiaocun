@@ -24,10 +24,5 @@
 </view>
 
 
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 82%;" >
-  <view class="bottom_view" style="height:50%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
-  </view>
-</van-popup>
+
 
