@@ -1,6 +1,9 @@
-// import * as echarts from '../../../ec-canvas/echarts'
-// import * as echarts from '../../components/ec-canvas/echarts'
-import * as echarts from '../ec-canvas/echarts'
+// import * as echarts from '../../ec-canvas/echarts'
+// import * as echarts from '../../../echarts-for-weixin-master/ec-canvas/echarts'
+import * as echarts from '../../components/ec-canvas/echarts'
+// import echarts from 'echarts';
+// import * as echarts from '../../components'
+// import * as echarts from '../ec-canvas/echarts'
 const app = getApp();
 // var Chart = null;
 Page({
@@ -19,7 +22,7 @@ Page({
     lineChart: '',
     ddmk:'',
     ec: {
-      lazyLoad: true
+      lazyLoad: true,
     },
     
   },
