@@ -36,9 +36,13 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 25%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 35%;" >
     <view class="lables">简码</view>
     <input bindinput="onInput" data-column="pinyin" class="input_text_form"  value="{{pinyin}}" type="text" name="pinyin"></input>
+    <view class="lables">生产状态</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-list_name="shengchan_list" data-column_name="shengchan" range="{{shengchan_list}}" hidden="{{userInfo.power == '客户'}}">
+      <input bindinput="onInput" data-column="shengchan" class="input_text_form" value="{{shengchan}}" type="text" name="shengchan" disabled="disabled" hidden="{{userInfo.power == '客户'}}"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

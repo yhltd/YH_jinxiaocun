@@ -40,6 +40,7 @@
   <view class="bottom_view" style="height:10%;margin-top: 8%;">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="yes_click">{{yes_click}}</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="no_click">{{no_click}}</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="clear_yesno">清空</button>
   </view>
 </van-popup>
 <!------------------------->
@@ -47,7 +48,9 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
   <view class="lables">单据编号</view>
-    <input bindinput="onInput" data-column="order_number" class="input_text_form"  value="{{order_number}}" type="text" name="order_number"></input> 
+    <input bindinput="onInput" data-column="order_number" class="input_text_form"  value="{{order_number}}" type="text" name="order_number"></input>
+    <view class="lables">客户名称</view>
+    <input bindinput="onInput" data-column="customer_name" class="input_text_form"  value="{{customer_name}}" type="text" name="customer_name"></input>  
     <view class="lables">开始日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>

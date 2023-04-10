@@ -13,10 +13,32 @@ Page({
   cxShow: false,
   data: {
     list: [],
-    title: [{
+    title: [
+      {
+        text: "下单日期",
+        width: "250rpx",
+        columnName: "insert_date",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "单据编号",
+        width: "250rpx",
+        columnName: "order_number",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "简码",
         width: "250rpx",
         columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "所属供应商",
+        width: "250rpx",
+        columnName: "gongyingshang",
         type: "text",
         isupd: true
       },
@@ -91,8 +113,16 @@ Page({
         isupd: true
       },
     ],
-
+    shengchan_list:['已完成','未完成'],
     pinyin:'',
+  },
+
+  bindPickerChange: function (e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      shengchan: _this.data.shengchan_list[e.detail.value]
+    })
   },
 
   /**
@@ -104,7 +134,7 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-    var e = ['']
+    var e = ['','']
     _this.tableShow(e)
   },
 
@@ -112,10 +142,13 @@ Page({
     var _this = this
     var sql = ''
     if(_this.data.userInfo.power == '管理员'){
-      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%'"
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
+    }else if(_this.data.userInfo.power=='玻璃厂'){
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
     }else{
-      sql = "select id,boli.order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan from lvkuang_xiadan group by order_number,shendan) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and shendan = '通过'"
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
     }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -182,7 +215,7 @@ Page({
         id: _this.data.list[e.currentTarget.dataset.index].id,
         this_column: column,
         xgShow:true,
-        yes_click: '完成',
+        yes_click: '已完成',
         no_click: '未完成',
       })
     }else if(column == "beizhu" || column == "shuoming1" || column == "shuoming2" ){
@@ -219,7 +252,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['']
+        var e = ['','']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -252,7 +285,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['']
+        var e = ['','']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -305,6 +338,7 @@ Page({
       customer:"",
       leibie:"",
       area:"",
+      shengchan:""
     })
   },
 
@@ -318,7 +352,7 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.pinyin]
+    var e = [_this.data.pinyin,_this.data.shengchan]
     _this.tableShow(e)
     _this.qxShow()
   },
@@ -341,7 +375,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['']
+        var e = ['','']
         _this.tableShow(e)
         _this.qxShow()
       },

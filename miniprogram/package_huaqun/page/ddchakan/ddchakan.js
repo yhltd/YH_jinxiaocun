@@ -176,6 +176,7 @@ Page({
     fkzt_list: ['未付款', '已付款'],
     hd_list: ['通过', '未通过'],
     djbh: '',
+    fkzt :'',
     xiala_panduan: '',
     kehu_panduan: false,
   },
@@ -195,9 +196,9 @@ Page({
       _this.setData({
         kehu_panduan: true
       })
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt order by shunxu,xdrq,djbh where khmc ='" + userInfo.name + "'"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbeltorder by shunxu,xdrq DESC where khmc ='" + userInfo.name + "'"
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt order by shunxu,xdrq,djbh"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt order by shunxu,xdrq DESC"
       title = _this.data.title2
     }
 
@@ -249,11 +250,13 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%'"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '% " + e[4] + " %' order by shunxu,xdrq DESC"
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,isnull(fkzt,'')as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' order by shunxu"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '" + e[4] + "' order by shunxu,xdrq DESC"
     }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -386,21 +389,9 @@ Page({
   bindPickerChange: function (e) {
     var _this = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    if (_this.data.xiala_panduan == 1) {
-      _this.setData({
-        this_value: _this.data.fkzt_list[e.detail.value]
-      })
-    }
-    if (_this.data.xiala_panduan == 2) {
-      this.setData({
-        this_value: _this.data.hd_list[e.detail.value]
-      })
-    }
-    if (_this.data.xiala_panduan == 3) {
-      this.setData({
-        this_value: _this.data.shfs_list[e.detail.value]
-      })
-    }
+    _this.setData({
+      fkzt: _this.data.fkzt_list[e.detail.value]
+    })
   },
   bindPickerChange2: function (e) {
     var _this = this
@@ -418,6 +409,41 @@ Page({
     _this.setData({
       currentDate: e.detail,
       [column]: e.detail.value
+    })
+  },
+
+  clear_yesno:function(){
+    var _this = this
+    if(_this.data.this_column == 'shunxu'){
+      var sql = "update lightbelt set " + _this.data.this_column + "='' where djbh='" + _this.data.order_number + "'"
+    }
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -440,8 +466,8 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['', '1900-01-01', '2100-12-31']
-        var e = ['', '']
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        // var e = ['', '',start_date,stop_date,'']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -554,6 +580,8 @@ Page({
       cxShow: true,
       khmc: khmc,
       ddh: "",
+      start_date: "",
+      stop_date: "",
     })
   },
 
@@ -575,7 +603,15 @@ Page({
 
   sel1: function () {
     var _this = this
-    var e = [_this.data.khmc, _this.data.ddh]
+    var start_date = _this.data.start_date
+    var stop_date = _this.data.stop_date
+    if (start_date == '') {
+      start_date = '1900-01-01'
+    }
+    if (stop_date == '') {
+      stop_date = '2100-12-31'
+    }
+    var e = [_this.data.khmc, _this.data.ddh,start_date,stop_date, _this.data.fkzt]
     _this.tableShow(e)
     _this.qxShow()
   },

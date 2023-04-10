@@ -60,6 +60,10 @@ button{
   margin-left: 10px;
 }
 
+.table_main .forborder{
+  border-right: 10rpx solid #5eee0a;
+}
+
 .title_text{
   display: flex;
   width: 100%;

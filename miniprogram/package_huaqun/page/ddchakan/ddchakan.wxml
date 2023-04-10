@@ -36,11 +36,23 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
-  <view class="lables">客户名称</view>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+  <view class="lables">开始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">客户名称</view>
     <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc" disabled="{{kehu_panduan}}"></input>
     <view class="lables">订单号</view>
     <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{ddh}}" type="text" name="ddh"></input>
+    <view class="lables">付款状态</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-list_name="fkzt_list" data-column_name="fkzt" range="{{fkzt_list}}" hidden="{{userInfo.power == '客户'}}">
+      <input bindinput="onInput" data-column="fkzt" class="input_text_form" value="{{fkzt}}" type="text" name="fkzt" disabled="disabled" hidden="{{userInfo.power == '客户'}}"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
@@ -55,5 +67,6 @@
   <view class="bottom_view" style="height:10%;margin-top: 8%;">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="yes_click">{{yes_click}}</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="no_click">{{no_click}}</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="clear_yesno">清空</button>
   </view>
 </van-popup>

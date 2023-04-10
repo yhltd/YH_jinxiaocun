@@ -251,7 +251,7 @@ Page({
       userInfo: userInfo,
       title,
     })
-    var e = ['', '1900-01-01', '2100-12-31', '未完成']
+    var e = ['','', '1900-01-01', '2100-12-31', _this.data.wancheng]
     _this.tableShow(e)
   },
 
@@ -269,18 +269,18 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and insert_date >= '" + e[1] + "' and insert_date <= '" + e[2] + "' and customer_name ='" + _this.data.userInfo.name + "' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+      sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
     } else if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.shendan == '是') {
-      sql = "select shunxu,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select case shunxu when '' then '1' else shunxu end as shunxu, customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and insert_date >= '" + e[1] + "' and insert_date <= '" + e[2] + "' group by shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number "
+      sql = "select shunxu,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select case shunxu when '' then '1' else shunxu end as shunxu, customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' group by shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number "
     } else {
-      sql = "select shunxu,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select case shunxu when '' then '1' else shunxu end as shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and insert_date >= '" + e[1] + "' and insert_date <= '" + e[2] + "' and shendan = '通过' group by shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+      sql = "select shunxu,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong from (select case shunxu when '' then '1' else shunxu end as shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and shendan = '通过' group by shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
     }
 
     if (_this.data.userInfo.power != '客户') {
-      if (e[3] == '未完成') {
-        sql = sql + " where (shendan != '通过' or kailiao != '完成' or zuzhuang != '完成' or baozhuang != '完成' or shengchan != row) order by shunxu"
-      } else if (e[3] == '已完成') {
-        sql = sql + " where (shendan = '通过' and kailiao = '完成' and zuzhuang = '完成' and baozhuang = '完成' and shengchan = row) order by shunxu"
+      if (e[4] == '未完成') {
+        sql = sql + " where (shendan != '通过' or kailiao != '完成' or zuzhuang != '完成' or baozhuang != '完成' or shengchan != row) ORDER BY shunxu,insert_date DESC"
+      } else if (e[4] == '已完成') {
+        sql = sql + " where (shendan = '通过' and kailiao = '完成' and zuzhuang = '完成' and baozhuang = '完成' and shengchan = row) ORDER BY shunxu,insert_date DESC"
       }
     }
 
@@ -498,7 +498,43 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['', '1900-01-01', '2100-12-31', _this.data.wancheng]
+        var e = ['','', '1900-01-01', '2100-12-31', _this.data.wancheng]
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  clear_yesno:function(){
+    var _this = this
+    if(_this.data.this_column == 'shunxu'){
+      var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='' where order_number='" + _this.data.order_number + "'"
+    }
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+       
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31',_this.data.wancheng]
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -535,7 +571,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['', '1900-01-01', '2100-12-31', _this.data.wancheng]
+        var e = ['','', '1900-01-01', '2100-12-31', _this.data.wancheng]
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -601,7 +637,7 @@ Page({
             },
             success: res => {
               _this.qxShow()
-              var e = ['', '1900-01-01', '2100-12-31', _this.data.wancheng]
+              var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
               _this.tableShow(e)
               wx.showToast({
                 title: '删除成功！',
@@ -650,6 +686,8 @@ Page({
     console.log(e.detail.value)
   },
 
+
+
   sel1: function () {
     var _this = this
     var start_date = _this.data.start_date
@@ -660,7 +698,7 @@ Page({
     if (stop_date == '') {
       stop_date = '2100-12-31'
     }
-    var e = [_this.data.order_number, start_date, stop_date, _this.data.wancheng]
+    var e = [_this.data.order_number,_this.data.customer_name, start_date, stop_date, _this.data.wancheng]
     _this.tableShow(e)
     _this.qxShow()
   },
