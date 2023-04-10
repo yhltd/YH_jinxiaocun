@@ -393,7 +393,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,isnull(khmc,'') as khmc,isnull(xdrq,'') as xdrq,isnull(djbh,'') as djbh,isnull(shouhuo,'') as shouhuo,isnull(lxdh,'') as lxdh,isnull(shfs,'') as shfs,isnull(azdz,'') as azdz,isnull(ddh,'') as ddh,isnull(fj,'') as fj,isnull(gh,'') as gh,isnull(ddcd,'') as ddcd,isnull(sl,'') as sl,isnull(cxdk,'') as cxdk,isnull(lcb,'') as lcb,isnull(lcys,'') as lcys ,isnull(gy,'') as gy ,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(gl,'') as gl,isnull(bz,'') as bz,isnull(dj,'') as dj,isnull(je,'') as je  from lightbelt where khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%'"
+        query: "select id,isnull(khmc,'') as khmc,isnull(xdrq,'') as xdrq,isnull(djbh,'') as djbh,isnull(shouhuo,'') as shouhuo,isnull(lxdh,'') as lxdh,isnull(shfs,'') as shfs,isnull(azdz,'') as azdz,isnull(ddh,'') as ddh,isnull(fj,'') as fj,isnull(gh,'') as gh,isnull(ddcd,'') as ddcd,isnull(sl,'') as sl,isnull(cxdk,'') as cxdk,isnull(lcb,'') as lcb,isnull(lcys,'') as lcys ,isnull(gy,'') as gy ,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(gl,'') as gl,isnull(bz,'') as bz,isnull(dj,'') as dj,isnull(je,'') as je from lightbelt where khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%'"
       },
       success: res => {
         var list = res.result.recordset

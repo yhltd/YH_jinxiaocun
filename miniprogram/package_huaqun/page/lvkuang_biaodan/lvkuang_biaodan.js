@@ -1780,20 +1780,33 @@ Page({
       },
       success: function(res){
         console.log("获取云储存id")
+        var this_name = new Date().getTime() + ".xlsx"
+        var fileId = res.result.fileID
         wx.cloud.downloadFile({
           fileID : res.result.fileID,
           success : res=> {
-            console.log("获取临时路径")
-            wx.hideLoading({
-              success: (res) => {},
-            })
-            console.log(res.tempFilePath)
-            wx.openDocument({
-              filePath: res.tempFilePath,
-              showMenu : 'true',
-              fileType : 'xlsx',
+            console.log("获得临时路径",res.tempFilePath)
+            wx.getFileSystemManager().saveFile({
+              tempFilePath: res.tempFilePath,
+              filePath : wx.env.USER_DATA_PATH + "/" + getTime() + ".xlsx",
               success : res=> {
-                console.log("打开Excel")
+                let path_downLoad = res.savedFilePath
+                console.log("下载完成",res)
+                delCloudFile(fileId)
+                wx.openDocument({
+                  filePath: path_downLoad,
+                  fileType : 'xlsx',
+                  showMenu : true,
+                  success : res=> {
+                    wx.hideLoading({
+                      success: (res) => {},
+                    })
+                    console.log("用户打开文件")
+                  }
+                })
+              },
+              fail: res=>{
+                console.log(res)
               }
             })
           }
@@ -1819,6 +1832,8 @@ Page({
   onShow() {
 
   },
+
+  
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -1855,3 +1870,22 @@ Page({
 
   }
 })
+function getTime(){
+  var myDate = new Date();
+  var year = myDate.getFullYear();
+  var month = myDate.getMonth()+1 > 10 ? myDate.getMonth() + 1 : "0" + (myDate.getMonth()+1);
+  var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
+  return year+"-"+month+"-"+day
+}
+
+function delCloudFile(fileId){
+  var fileIds = [];
+  fileIds.push(fileId);
+  wx.cloud.deleteFile({
+    fileList: fileIds,
+    success: res => {
+      console.log(res.fileList);
+    },
+    fail : console.error
+  })
+}

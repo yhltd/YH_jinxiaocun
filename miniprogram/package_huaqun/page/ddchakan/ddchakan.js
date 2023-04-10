@@ -254,7 +254,7 @@ Page({
     if (_this.data.userInfo.power == '客户') {
       var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '% " + e[4] + " %' order by shunxu,xdrq DESC"
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '" + e[4] + "' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '%" + e[4] + "%' order by shunxu,xdrq DESC"
     }
     console.log(sql)
     wx.cloud.callFunction({

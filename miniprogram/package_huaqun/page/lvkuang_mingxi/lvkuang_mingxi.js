@@ -235,6 +235,7 @@ Page({
     order_number: '',
     start_date: '',
     stop_date: '',
+    customer_name:'',
   },
 
   /**
