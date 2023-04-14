@@ -74,6 +74,7 @@
 <!------------------------->
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="selCD">添加一行</button>
+  <button class="bt_bottom" bindtap="intowin_Show">插入一行</button>
   <button class="bt_bottom" bindtap="add1">保存</button>
 </view>
 
@@ -89,5 +90,18 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">确定</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------插行弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ intoShow }}" position="bottom" custom-style="height: 25%;" >
+    <view class="lables">请输入要插入的行数</view>
+    <input bindinput="onInput" data-column="rowcount" class="input_text_form"  value="{{rowcount}}" type="text" name="rowcount"></input>
+    
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="intoCD">确认</button>
   </view>
 </van-popup>

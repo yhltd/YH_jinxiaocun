@@ -11,6 +11,7 @@ Page({
   rqxzShow1: false,
   xgShow: false,
   cxShow: false,
+  intoShow:false,
   data: {
     header_list:{
       customer_name:'',
@@ -22,6 +23,7 @@ Page({
       shipping_type:'',
       install_address:'',
       customer_number:'',
+      rowcount:''
     },
     update_name:{
       fj:"项目类别",
@@ -422,6 +424,7 @@ Page({
       tjShow: false,
       xgShow: false,
       cxShow: false,
+      intoShow:false,
       currentDate: new Date().getTime()
     })
   },
@@ -927,6 +930,50 @@ Page({
     })
     _this.setData({
       list
+    })
+  },
+  intowin_Show:function(){
+    var _this = this
+    _this.setData({
+      intoShow:true
+    })
+  },
+  intoCD: function () {
+    var _this = this
+    var list = _this.data.list
+    var list2 = []
+    var rowcount = _this.data.rowcount * 1 - 1
+    console.log(rowcount)
+    if(rowcount >= 0 && rowcount < list.length){
+      for(var i = 0;i<list.length;i++){
+        if(i==rowcount){
+          list2.push({
+            fj:"",
+            gh:"",
+            lcys:"",
+            ddcd:"",
+            sl:"",
+            cxdk:"",
+            cxdk_right:"",
+            gy:"",
+            gl:"",
+            bz:"",
+            dj:"",
+            je:"",
+            chicun:"",      
+          })
+        }
+        list2.push(list[i])
+      }
+    }else{
+      return
+    }
+    
+    
+    _this.setData({
+      list:list2,
+      rowcount:"",
+      intoShow:false
     })
   },
 

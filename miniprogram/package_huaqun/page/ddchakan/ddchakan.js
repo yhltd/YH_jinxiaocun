@@ -196,7 +196,7 @@ Page({
       _this.setData({
         kehu_panduan: true
       })
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbeltorder by shunxu,xdrq DESC where khmc ='" + userInfo.name + "'"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc ='" + userInfo.name + "' order by shunxu,xdrq DESC "
     } else {
       var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt order by shunxu,xdrq DESC"
       title = _this.data.title2

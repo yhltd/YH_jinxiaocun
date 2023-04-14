@@ -634,8 +634,9 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlserver_huaqun',
             data: {
-              query: "delete from lvkuang_mingxi where order_number='" + order_number + "';delete from boli_xiadan where order_number='" + order_number + "'"
+              query: "delete from lvkuang_xiadan where order_number='" + order_number + "';delete from boli_xiadan where order_number='" + order_number + "'"
             },
+            
             success: res => {
               _this.qxShow()
               var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
