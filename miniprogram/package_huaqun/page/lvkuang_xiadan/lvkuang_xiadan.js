@@ -1363,7 +1363,7 @@ Page({
 
                 var canzhao_list = res.result.recordsets[6]
                 console.log(canzhao_list)
-                var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,xdrq,djbh) values "
+                var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
                 var boli_insert_sql_foot = ""
                 
                 for(var i=0; i<body_list.length; i++){

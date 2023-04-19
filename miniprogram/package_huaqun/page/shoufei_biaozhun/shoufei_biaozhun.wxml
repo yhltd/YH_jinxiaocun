@@ -1,0 +1,7 @@
+<!--package_huaqun/page/shoufei_biaozhun/shoufei_biaozhun.wxml-->
+<view class="shoufeiContains">
+  <view class="shoufei_title">
+    收费标准(mm)：
+  </view>
+  <input bindinput="onInput" data-column="shoufei_text" class="shoufei_text"  value="{{shoufei_text}}" type="number" name="shoufei_text" disabled="{{shoufei_dis}}"></input>
+</view>

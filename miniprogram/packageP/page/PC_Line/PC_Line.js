@@ -12,7 +12,6 @@ Page({
    */
   data: {
     pie_data:[],
-
     listJiQi:[],
     gongsi: '',
     xlShow2:false,
@@ -105,23 +104,7 @@ Page({
 
     console.log(options)
 
-    // var options = {
-    //   xAxis: {
-    //     type: 'category',
-    //     data: _this.data.xvalue
-    //   },
-    //   yAxis: {
-    //     type: 'value'
-    //   },
-    //   series: [
-    //     {
-    //       data: _this.data.yvalue,
-    //       type: 'line',
-    //     }
-    //   ]
-    // }
-    var options = 
-    _this.updChart(options)
+    var options = _this.updChart(options)
   },
 
   updChart : function(options){
@@ -200,3 +183,4 @@ function getBarOption(pie_data) {
  
 }
 }
+

@@ -72,10 +72,17 @@
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
-<view class="bottom_view">
-  <button class="bt_bottom" bindtap="selCD">添加一行</button>
-  <button class="bt_bottom" bindtap="intowin_Show">插入一行</button>
-  <button class="bt_bottom" bindtap="add1">保存</button>
+<view class="bottom_view4">
+  <view class="sum_money">
+    <view class="money_title" style="font-size: calc(40vmin / 7.5)">总金额</view>
+    <input bindinput="onInput" data-column="sum_money" class="input_text_head" value="{{sum_money}}" type="text" name="sum_money" disabled="disabled"></input>
+  </view>
+  <view class="bottom_view1">
+    <button class="bt_bottom" bindtap="selCD">添加一行</button>
+    <button class="bt_bottom" bindtap="intowin_Show">插入一行</button>
+    <button class="bt_bottom" bindtap="add1">保存</button>
+  </view>
+  
 </view>
 
 <!------------------------->

@@ -12,5 +12,8 @@
   <button class="zput" bindtap="category_refresh">柱状图</button>
 </view> -->
 <!--  订单号下拉选-->
+<view class="charts_title">
+  订单数量统计
+</view>
 <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ecage}}"></ec-canvas>
 <ec-canvas id="businessTrend" class='mychart-businessTrend' canvas-id="mychart-businessTrend" ec="{{ line_ec }}"></ec-canvas>

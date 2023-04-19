@@ -234,10 +234,29 @@ button{
   bottom_view
 */
 .bottom_view{
-  height: 10%;
+  height: 20%;
   align-items: center;
   display: flex;
   bottom: 2%;
+}
+
+.bottom_view4{
+  height: 20%;
+  align-items: center;
+  /* display: flex; */
+  bottom: 2%;
+}
+
+.bottom_view1{
+  display: flex;
+}
+
+.sum_money{
+  display: flex;
+  margin-bottom:40rpx ;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 80rpx;
 }
 
 .bottom_view2{

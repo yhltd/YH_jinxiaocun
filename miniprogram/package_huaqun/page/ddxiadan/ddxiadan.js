@@ -12,6 +12,7 @@ Page({
   xgShow: false,
   cxShow: false,
   intoShow:false,
+  sum_money:'',
   data: {
     header_list:{
       customer_name:'',
@@ -23,7 +24,7 @@ Page({
       shipping_type:'',
       install_address:'',
       customer_number:'',
-      rowcount:''
+      rowcount:'',
     },
     update_name:{
       fj:"项目类别",
@@ -226,6 +227,7 @@ Page({
           }
         }
         _this.setData({
+          
           cxdk_list:cxdk,
           lcb_list:lcb,
           lcys_list:lcys,
@@ -236,7 +238,8 @@ Page({
           shfs_list:shfs,
           fk_list:fk,
           hd_list:hd,
-          kailiao_list
+          kailiao_list,
+          sum_money:_this.data.sum_money
         })
       },
       err: res => {
@@ -374,6 +377,10 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     var khmc = _this.data.name_list[e.detail.value]
     console.log(khmc)
+    if(khmc!=''){
+      var sql =''
+      sql = "SELECT fj,gh,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl FROM lightbelt WHERE khmc = '" + khmc + "'"
+    }
     _this.setData({
       khmc: khmc,
     })
@@ -581,8 +588,8 @@ Page({
       }
       if(list[i].fj == '铝型材' && list[i].gh != '' && list[i].sl != ''){
         for(var j=0; j<list1.length; j++){
-          if(list[i].gh == list1[j].ddxh && list[i].ddcd > 400){
-            danjia = parseFloat(list1[j].mmdj) + Math.ceil(((list[i].ddcd-400)/100) * list1[j].zjdj)
+          if(list[i].gh == list1[j].ddxh && list[i].ddcd > shoufei_text){
+            danjia = parseFloat(list1[j].mmdj) + Math.ceil(((list[i].ddcd-shoufei_text)/100) * list1[j].zjdj)
             list[i].dj = danjia
             if(list[i].sl != ''){
               var shuliang = parseFloat(list[i].sl)
@@ -591,7 +598,7 @@ Page({
             gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
             list[i].gl = gonglv
             break;
-          }else if(list[i].lcb == list1[j].ddxh && list[i].ddcd <= 400){
+          }else if(list[i].lcb == list1[j].ddxh && list[i].ddcd <= shoufei_text){
             danjia = parseFloat(list1[j].mmdj)
             list[i].dj = danjia
             if(list[i].sl != ''){
@@ -610,8 +617,14 @@ Page({
         }
       }
     }
+
+    var sum_money =0
+    for(var i = 0;i<=list.length;i++){
+       sum_money =sum_money + list[i].je
+    }
     _this.setData({
       list:list,
+      sum_money:sum_money
     })
     _this.qxShow()
 

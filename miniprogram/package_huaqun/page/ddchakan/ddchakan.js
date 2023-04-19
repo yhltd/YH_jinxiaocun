@@ -196,13 +196,13 @@ Page({
       _this.setData({
         kehu_panduan: true
       })
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc ='" + userInfo.name + "' order by shunxu,xdrq DESC "
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt where khmc ='" + userInfo.name + "' order by shunxu,xdrq DESC "
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt order by shunxu,xdrq DESC"
       title = _this.data.title2
     }
 
-    console.log(sql)
+    console.log('测试1'+sql)
     _this.setData({
       title
     })
@@ -215,12 +215,24 @@ Page({
         var list = res.result.recordset
         console.log(list)
         for (var i = 0; i < list.length; i++) {
+
+          if(list[i].hd == '通过'){
+            list[i].type = '2'
+          }else if(list[i].hd == '拒绝'){
+            list[i].type = '1'
+          }
+
+          if(list[i].fkzt == '已付款'){
+            list[i].type = '4'
+          }
+
           if (list[i].shunxu == '0') {
             list[i].shunxu = '优先处理'
           } else if (list[i].shunxu == '1') {
             list[i].shunxu = ''
           } else if (list[i].shunxu == '2') {
             list[i].shunxu = '推迟处理'
+            list[i].type = '3'
           }
         }
         _this.setData({
@@ -252,9 +264,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '% " + e[4] + " %' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '% " + e[4] + " %' order by shunxu,xdrq DESC"
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '%" + e[4] + "%' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '%" + e[4] + "%' order by shunxu,xdrq DESC"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -267,12 +279,23 @@ Page({
         var list = res.result.recordset
         console.log(list)
         for (var i = 0; i < list.length; i++) {
+          if(list[i].shendan == '通过'){
+            list[i].type = '2'
+          }else if(list[i].shunxu == '拒绝'){
+            list[i].type = '1'
+          }
+
+          if(list[i].fkzt == '已付款'){
+            list[i].type = '4'
+          }
+
           if (list[i].shunxu == '0') {
             list[i].shunxu = '优先处理'
           } else if (list[i].shunxu == '1') {
             list[i].shunxu = ''
           } else if (list[i].shunxu == '2') {
             list[i].shunxu = '推迟处理'
+            list[i].type = '3'
           }
         }
         _this.setData({

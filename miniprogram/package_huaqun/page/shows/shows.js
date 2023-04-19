@@ -20,6 +20,10 @@ Page({
       url: "../qtpeizhi/qtpeizhi"
     },
     {
+      text: "灯带价格标准",
+      url: "../shoufei_biaozhun/shoufei_biaozhun"
+    },
+    {
       text: "下拉配置表",
       url: "../xlpeizhi/xlpeizhi"
     },

@@ -101,6 +101,48 @@ button{
   border-bottom: 1rpx solid #F0F0F0;
   line-height: 70rpx;  
 }
+/* 未审核 */
+.list_view1{
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 70rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(250, 87, 87);
+  color: black;
+  border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0;
+  line-height: 70rpx;  
+}
+/* 已审核 */
+.list_view2{
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 70rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(187, 247, 77);
+  color: black;
+  border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0;
+  line-height: 70rpx;  
+}
+/* 已完成 */
+.list_view4{
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 70rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(151, 250, 204);
+  color: black;
+  border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0;
+  line-height: 70rpx;  
+}
 .list_view_fixed{
   display: flex;
   flex-direction: column;

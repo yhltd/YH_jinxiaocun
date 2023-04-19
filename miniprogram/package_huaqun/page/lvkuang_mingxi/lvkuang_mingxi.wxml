@@ -10,7 +10,7 @@
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
-              class="list_view" 
+              class="{{list[i].type=='1'?'list_view1':list[i].type=='2'?'list_view2':list[i].type=='3'?'list_view3':list[i].type=='4'?'list_view4':'list_view'}}" 
               style="width:{{item.width}}" data-index="{{i}}" 
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 

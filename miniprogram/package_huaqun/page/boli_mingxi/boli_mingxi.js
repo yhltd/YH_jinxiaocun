@@ -142,11 +142,11 @@ Page({
     var _this = this
     var sql = ''
     if(_this.data.userInfo.power == '管理员'){
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
     }else if(_this.data.userInfo.power=='玻璃厂'){
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
     }else{
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -156,6 +156,16 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
+        for(var i = 0;i <= list.length;i++){
+          if(list[i].shendan == '通过'){
+            list[i].type = '2'
+          }else if(list[i].shendan == '拒绝'){
+            list[i].type = '1'
+          }
+          if(list[i].shengchan == '已完成'){
+            list[i].type = '4'
+          }
+        }
         console.log(list)
         _this.setData({
           list: list
