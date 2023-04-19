@@ -125,6 +125,14 @@ Page({
     })
   },
 
+  bindPickerChange1: function (e) {
+    var _this = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      this_value: _this.data.gongyingshang_list[e.detail.value]
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -133,6 +141,39 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       userInfo:userInfo
+    })
+
+    var sql = "select name from userInfo where power = '玻璃厂'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        var gongyingshang_list = []
+        console.log(list)
+        for(var i = 0;i < list.length;i++){
+          if(list[i].name != ''){
+            gongyingshang_list.push(list[i].name)
+          }
+        }
+        console.log(gongyingshang_list)
+        _this.setData({
+          gongyingshang_list: gongyingshang_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
     var e = ['','']
     _this.tableShow(e)
@@ -144,7 +185,7 @@ Page({
     if(_this.data.userInfo.power == '管理员'){
       sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
     }else if(_this.data.userInfo.power=='玻璃厂'){
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
+      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过' and gongyingshang = '" + _this.data.userInfo.name + "'"
     }else{
       sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
     }
@@ -156,7 +197,8 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
-        for(var i = 0;i <= list.length;i++){
+        console.log(list)
+        for(var i = 0;i < list.length;i++){
           if(list[i].shendan == '通过'){
             list[i].type = '2'
           }else if(list[i].shendan == '拒绝'){
@@ -244,6 +286,21 @@ Page({
         this_value:e.currentTarget.dataset.value,
         xgShow2:true,
       })
+    }else if(column == "gongyingshang"){
+      if(_this.data.userInfo.power != '管理员'){
+        wx.showToast({
+          title: '非管理员账号，无修改权限！',
+          icon: 'none'
+        })
+        return;
+      }else{
+        _this.setData({
+          id: _this.data.list[e.currentTarget.dataset.index].id,
+          this_column:e.currentTarget.dataset.column,
+          this_value:e.currentTarget.dataset.value,
+          xgShow2:true,
+        })
+      }
     }
 
   },

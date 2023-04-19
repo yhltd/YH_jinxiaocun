@@ -11,7 +11,7 @@
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
-              class="{{list[i].type=='1'?'list_view1':list[i].type=='2'?'list_view2':list[i].type=='3'?'list_view3':list[i].type=='4'?'list_view4':'list_view'}}" 
+              class="{{list[i].type=='0'?'list_view1':list[i].type=='1'?'list_view2':list[i].type=='2'?'list_view3':list[i].type=='3'?'list_view4':'list_view'}}" 
               style="width:{{item.width}}" data-index="{{i}}" 
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 
@@ -49,10 +49,8 @@
     <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc" disabled="{{kehu_panduan}}"></input>
     <view class="lables">订单号</view>
     <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{ddh}}" type="text" name="ddh"></input>
-    <view class="lables">付款状态</view>
-    <picker bindchange="bindPickerChange" value="{{index}}" data-list_name="fkzt_list" data-column_name="fkzt" range="{{fkzt_list}}" hidden="{{userInfo.power == '客户'}}">
-      <input bindinput="onInput" data-column="fkzt" class="input_text_form" value="{{fkzt}}" type="text" name="fkzt" disabled="disabled" hidden="{{userInfo.power == '客户'}}"></input>
-    </picker>
+    <view class="lables">安装地址</view>
+    <input bindinput="onInput" data-column="azdz" class="input_text_form" value="{{azdz}}" type="text" name="azdz"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

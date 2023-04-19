@@ -3,5 +3,6 @@
   <view class="shoufei_title">
     收费标准(mm)：
   </view>
-  <input bindinput="onInput" data-column="shoufei_text" class="shoufei_text"  value="{{shoufei_text}}" type="number" name="shoufei_text" disabled="{{shoufei_dis}}"></input>
+  <input bindinput="onInput" data-column="shoufei_text" class="shoufei_text"  value="{{shoufei_text}}" type="number" name="shoufei_text"></input>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
 </view>

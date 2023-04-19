@@ -1496,7 +1496,7 @@ Page({
           if(boli_insert_sql_foot != ''){
             insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
           }
-
+          console.log(insert_sql)
           wx.cloud.callFunction({
             name: 'sqlserver_huaqun',
             data: {

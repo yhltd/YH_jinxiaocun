@@ -24,7 +24,15 @@ Page({
       hd: "审单",
     },
     list: [],
-    title: [{
+    title: [
+      {
+        text: "下单日期",
+        width: "250rpx",
+        columnName: "xdrq",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "客户名称",
         width: "250rpx",
         columnName: "khmc",
@@ -32,9 +40,23 @@ Page({
         isupd: true
       },
       {
-        text: "下单日期",
+        text: "审单",
         width: "250rpx",
-        columnName: "xdrq",
+        columnName: "hd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "订单完成",
+        width: "250rpx",
+        columnName: "wancheng",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "订单号",
+        width: "250rpx",
+        columnName: "ddh",
         type: "text",
         isupd: true
       },
@@ -46,9 +68,9 @@ Page({
         isupd: true
       },
       {
-        text: "送货地址",
+        text: "安装地址",
         width: "250rpx",
-        columnName: "shouhuo",
+        columnName: "azdz",
         type: "text",
         isupd: true
       },
@@ -67,16 +89,54 @@ Page({
         isupd: true
       },
       {
-        text: "安装地址",
+        text: "送货地址",
         width: "250rpx",
-        columnName: "azdz",
+        columnName: "shouhuo",
         type: "text",
         isupd: true
       },
       {
-        text: "订单号",
+        text: "订单总金额",
         width: "250rpx",
-        columnName: "ddh",
+        columnName: "sum_money",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "付款状态",
+        width: "250rpx",
+        columnName: "fkzt",
+        type: "text",
+        isupd: true
+      },
+
+    ],
+    title2: [
+      {
+        text: "下单日期",
+        width: "250rpx",
+        columnName: "xdrq",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "客户名称",
+        width: "250rpx",
+        columnName: "khmc",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "审单",
+        width: "250rpx",
+        columnName: "hd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "订单完成",
+        width: "250rpx",
+        columnName: "wancheng",
         type: "text",
         isupd: true
       },
@@ -88,14 +148,6 @@ Page({
         isupd: true
       },
       {
-        text: "审单",
-        width: "250rpx",
-        columnName: "hd",
-        type: "text",
-        isupd: true
-      },
-    ],
-    title2: [{
         text: "处理顺序",
         width: "250rpx",
         columnName: "shunxu",
@@ -103,16 +155,9 @@ Page({
         isupd: true
       },
       {
-        text: "客户名称",
+        text: "订单号",
         width: "250rpx",
-        columnName: "khmc",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "下单日期",
-        width: "250rpx",
-        columnName: "xdrq",
+        columnName: "ddh",
         type: "text",
         isupd: true
       },
@@ -124,9 +169,9 @@ Page({
         isupd: true
       },
       {
-        text: "送货地址",
+        text: "安装地址",
         width: "250rpx",
-        columnName: "shouhuo",
+        columnName: "azdz",
         type: "text",
         isupd: true
       },
@@ -145,30 +190,16 @@ Page({
         isupd: true
       },
       {
-        text: "安装地址",
+        text: "送货地址",
         width: "250rpx",
-        columnName: "azdz",
+        columnName: "shouhuo",
         type: "text",
         isupd: true
       },
       {
-        text: "订单号",
+        text: "订单总金额",
         width: "250rpx",
-        columnName: "ddh",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "付款状态",
-        width: "250rpx",
-        columnName: "fkzt",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "审单",
-        width: "250rpx",
-        columnName: "hd",
+        columnName: "sum_money",
         type: "text",
         isupd: true
       },
@@ -176,7 +207,7 @@ Page({
     fkzt_list: ['未付款', '已付款'],
     hd_list: ['通过', '未通过'],
     djbh: '',
-    fkzt :'',
+    azdz :'',
     xiala_panduan: '',
     kehu_panduan: false,
   },
@@ -196,61 +227,13 @@ Page({
       _this.setData({
         kehu_panduan: true
       })
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt where khmc ='" + userInfo.name + "' order by shunxu,xdrq DESC "
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt order by shunxu,xdrq DESC"
       title = _this.data.title2
     }
-
-    console.log('测试1'+sql)
+    var e = ['','', '1900-01-01', '2100-12-31','']
+    _this.tableShow(e)
     _this.setData({
       title
-    })
-    wx.cloud.callFunction({
-      name: 'sqlserver_huaqun',
-      data: {
-        query: sql
-      },
-      success: res => {
-        var list = res.result.recordset
-        console.log(list)
-        for (var i = 0; i < list.length; i++) {
-
-          if(list[i].hd == '通过'){
-            list[i].type = '2'
-          }else if(list[i].hd == '拒绝'){
-            list[i].type = '1'
-          }
-
-          if(list[i].fkzt == '已付款'){
-            list[i].type = '4'
-          }
-
-          if (list[i].shunxu == '0') {
-            list[i].shunxu = '优先处理'
-          } else if (list[i].shunxu == '1') {
-            list[i].shunxu = ''
-          } else if (list[i].shunxu == '2') {
-            list[i].shunxu = '推迟处理'
-            list[i].type = '3'
-          }
-        }
-        _this.setData({
-          list: list
-        })
-        console.log(list)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
     })
   },
 
@@ -264,9 +247,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '% " + e[4] + " %' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,wancheng,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,sum_money from lightbelt where khmc ='" + userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and isnull(azdz,'') like '% " + e[4] + " %' order by shunxu,xdrq DESC"
     } else {
-      var sql = "select distinct ddh,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,'' as type from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end like '%" + e[4] + "%' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,wancheng,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,sum_money from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and isnull(azdz,'') like '%" + e[4] + "%' order by shunxu,xdrq DESC"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -279,26 +262,17 @@ Page({
         var list = res.result.recordset
         console.log(list)
         for (var i = 0; i < list.length; i++) {
-          if(list[i].shendan == '通过'){
-            list[i].type = '2'
-          }else if(list[i].shunxu == '拒绝'){
-            list[i].type = '1'
-          }
-
-          if(list[i].fkzt == '已付款'){
-            list[i].type = '4'
-          }
-
-          if (list[i].shunxu == '0') {
+          if(list[i].shunxu == '0'){
             list[i].shunxu = '优先处理'
-          } else if (list[i].shunxu == '1') {
-            list[i].shunxu = ''
-          } else if (list[i].shunxu == '2') {
+          }else if(list[i].shunxu == '2'){
             list[i].shunxu = '推迟处理'
-            list[i].type = '3'
+          }else{
+            list[i].shunxu = ''
           }
         }
         _this.setData({
+          start_date:'',
+          stop_date:'',
           list: list
         })
         console.log(list)
@@ -369,7 +343,7 @@ Page({
       })
     } else if (column == "shunxu") {
       if (_this.data.userInfo.power == '管理员') {
-
+        
       } else {
         wx.showToast({
           title: '无排序权限！',
@@ -384,15 +358,75 @@ Page({
         yes_click: '优先处理',
         no_click: '推迟处理',
       })
-    } else {
+    }else if (column == "wancheng") {
+      if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
+        
+      } else {
+        wx.showToast({
+          title: '无完成订单权限！',
+          icon: 'none'
+        })
+        return;
+      }
+      _this.setData({
+        order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
+        this_column: column,
+        xgShow: true,
+        yes_click: '完成',
+        no_click: '未完成',
+      })
+    }else if (column == "khmc") {
+      if(_this.data.userInfo.power == '管理员'){
+        wx.showModal({
+          title: '提示',
+          content: '确认修改此条订单的明细信息？',
+          success(res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: "../ddxiadan/ddxiadan?djbh=" + JSON.stringify(order_number) + "&userInfo=" + JSON.stringify(_this.data.userInfo)
+              })
+            } else if (res.cancel) {
+              wx.showToast({
+                title: '已取消！',
+                icon: 'none'
+              })
+              return;
+            }
+          }
+        })
+      }else if(_this.data.userInfo.power == '客户'){
+        if(_this.data.list[e.currentTarget.dataset.index].hd == '通过'){
+          wx.showToast({
+            title: '审核已通过订单不允许修改！',
+            icon: 'none'
+          })
+          return;
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: '确认修改此条订单的明细信息？',
+            success(res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: "../ddxiadan/ddxiadan?djbh=" + JSON.stringify(order_number) + "&userInfo=" + JSON.stringify(_this.data.userInfo)
+                })
+              } else if (res.cancel) {
+                wx.showToast({
+                  title: '已取消！',
+                  icon: 'none'
+                })
+                return;
+              }
+            }
+          })
+        }
+      }
+    }else {
       wx.showModal({
         title: '提示',
         content: '确认查看此条订单的明细信息？',
         success(res) {
           if (res.confirm) {
-            // wx.navigateTo({
-            //   url: '../lvkuang_biaodan/lvkuang_biaodan?userInfo='+JSON.stringify(_this.data.userInfo) + '&order_number='+JSON.stringify(order_number)
-            // })
             wx.navigateTo({
               url: "../ddchakanxiangqing/ddchakanxiangqing?djbh=" + JSON.stringify(order_number) + "&userInfo=" + JSON.stringify(_this.data.userInfo)
             })
@@ -437,10 +471,7 @@ Page({
 
   clear_yesno:function(){
     var _this = this
-    if(_this.data.this_column == 'shunxu'){
-      var sql = "update lightbelt set " + _this.data.this_column + "='' where djbh='" + _this.data.order_number + "'"
-    }
-    
+    var sql = "update lightbelt set " + _this.data.this_column + "='' where djbh='" + _this.data.order_number + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -526,7 +557,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['', '']
+        var e = ['','', '1900-01-01', '2100-12-31','']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -568,7 +599,7 @@ Page({
             },
             success: res => {
               _this.qxShow()
-              var e = ['', '']
+              var e = ['','', '1900-01-01', '2100-12-31','']
               _this.tableShow(e)
               wx.showToast({
                 title: '删除成功！',
@@ -634,7 +665,7 @@ Page({
     if (stop_date == '') {
       stop_date = '2100-12-31'
     }
-    var e = [_this.data.khmc, _this.data.ddh,start_date,stop_date, _this.data.fkzt]
+    var e = [_this.data.khmc, _this.data.ddh,start_date,stop_date, _this.data.azdz]
     _this.tableShow(e)
     _this.qxShow()
   },

@@ -12,13 +12,7 @@ Page({
   cxShow: false,
   data: {
     list: [],
-    title: [{
-        text: "客户名称",
-        width: "250rpx",
-        columnName: "customer_name",
-        type: "text",
-        isupd: true
-      },
+    title: [
       {
         text: "下单日期",
         width: "250rpx",
@@ -27,51 +21,23 @@ Page({
         isupd: true
       },
       {
-        text: "单据编号",
+        text: "客户名称",
         width: "250rpx",
-        columnName: "order_number",
+        columnName: "customer_name",
         type: "text",
         isupd: true
       },
       {
-        text: "简码",
+        text: "审单",
         width: "250rpx",
-        columnName: "pinyin",
+        columnName: "shendan",
         type: "text",
         isupd: true
       },
       {
-        text: "送货地址",
+        text: "订单完成",
         width: "250rpx",
-        columnName: "shipping_address",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "联系电话",
-        width: "250rpx",
-        columnName: "phone",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "送货方式",
-        width: "250rpx",
-        columnName: "shipping_type",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "安装地址",
-        width: "250rpx",
-        columnName: "install_address",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "订单号",
-        width: "250rpx",
-        columnName: "customer_number",
+        columnName: "wancheng",
         type: "text",
         isupd: true
       },
@@ -83,9 +49,9 @@ Page({
         isupd: true
       },
       {
-        text: "审单",
+        text: "玻璃加工",
         width: "250rpx",
-        columnName: "shendan",
+        columnName: "boli_jiagong",
         type: "text",
         isupd: true
       },
@@ -104,100 +70,109 @@ Page({
         isupd: true
       },
       {
-        text: "玻璃加工",
-        width: "250rpx",
-        columnName: "boli_jiagong",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "包装",
         width: "250rpx",
         columnName: "baozhuang",
         type: "text",
         isupd: true
       },
+      {
+        text: "订单号",
+        width: "250rpx",
+        columnName: "customer_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "单据编号",
+        width: "250rpx",
+        columnName: "order_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "安装地址",
+        width: "250rpx",
+        columnName: "install_address",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "联系电话",
+        width: "250rpx",
+        columnName: "phone",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "送货方式",
+        width: "250rpx",
+        columnName: "shipping_type",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "送货地址",
+        width: "250rpx",
+        columnName: "shipping_address",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "简码",
+        width: "250rpx",
+        columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
     ],
-    title2: [{
+    title2: [
+      {
+        text: "下单日期",
+        width: "250rpx",
+        columnName: "insert_date",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "客户名称",
+        width: "250rpx",
+        columnName: "customer_name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "审单",
+        width: "250rpx",
+        columnName: "shendan",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "订单完成",
+        width: "250rpx",
+        columnName: "wancheng",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "付款状态",
+        width: "250rpx",
+        columnName: "pay",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "处理顺序",
         width: "250rpx",
         columnName: "shunxu",
         type: "text",
         isupd: true
-      }, {
-        text: "客户名称",
-        width: "250rpx",
-        columnName: "customer_name",
-        type: "text",
-        isupd: true
       },
       {
-        text: "下单日期",
+        text: "玻璃加工",
         width: "250rpx",
-        columnName: "insert_date",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "单据编号",
-        width: "250rpx",
-        columnName: "order_number",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "简码",
-        width: "250rpx",
-        columnName: "pinyin",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "送货地址",
-        width: "250rpx",
-        columnName: "shipping_address",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "联系电话",
-        width: "250rpx",
-        columnName: "phone",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "送货方式",
-        width: "250rpx",
-        columnName: "shipping_type",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "安装地址",
-        width: "250rpx",
-        columnName: "install_address",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "订单号",
-        width: "250rpx",
-        columnName: "customer_number",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "付款状态",
-        width: "250rpx",
-        columnName: "pay",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "审单",
-        width: "250rpx",
-        columnName: "shendan",
+        columnName: "boli_jiagong",
         type: "text",
         isupd: true
       },
@@ -216,22 +191,64 @@ Page({
         isupd: true
       },
       {
-        text: "玻璃加工",
-        width: "250rpx",
-        columnName: "boli_jiagong",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "包装",
         width: "250rpx",
         columnName: "baozhuang",
         type: "text",
         isupd: true
       },
+      {
+        text: "订单号",
+        width: "250rpx",
+        columnName: "customer_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "单据编号",
+        width: "250rpx",
+        columnName: "order_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "安装地址",
+        width: "250rpx",
+        columnName: "install_address",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "联系电话",
+        width: "250rpx",
+        columnName: "phone",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "送货方式",
+        width: "250rpx",
+        columnName: "shipping_type",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "送货地址",
+        width: "250rpx",
+        columnName: "shipping_address",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "简码",
+        width: "250rpx",
+        columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
     ],
     wancheng_list: ['未完成', '已完成'],
-    wancheng: '未完成',
+    wancheng: '',
     order_number: '',
     start_date: '',
     stop_date: '',
@@ -271,19 +288,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      sql = "select customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,'' as type from (select customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' group by customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
-    } else if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.shendan == '是') {
-      sql = "select shunxu,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,'' as type from (select case shunxu when '' then '1' else shunxu end as shunxu, customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' group by shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number "
-    } else {
-      sql = "select shunxu,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,'' as type from (select case shunxu when '' then '1' else shunxu end as shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where order_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and shendan = '通过' group by shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
-    }
-
-    if (_this.data.userInfo.power != '客户') {
-      if (e[4] == '未完成') {
-        sql = sql + " where (shendan != '通过' or kailiao != '完成' or zuzhuang != '完成' or baozhuang != '完成' or shengchan != row) ORDER BY shunxu,insert_date DESC"
-      } else if (e[4] == '已完成') {
-        sql = sql + " where (shendan = '通过' and kailiao = '完成' and zuzhuang = '完成' and baozhuang = '完成' and shengchan = row) ORDER BY shunxu,insert_date DESC"
-      }
+      sql = "select wancheng,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,type from (select wancheng,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[4] + "%' group by wancheng,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+    } else{
+      sql = "select shunxu,wancheng,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,type from (select wancheng,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[4] + "%' group by wancheng,shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number "
     }
 
     console.log(sql)
@@ -297,32 +304,12 @@ Page({
         var list = res.result.recordset
         console.log(list)
         for (var i = 0; i < list.length; i++) {
-          if (list[i].row == null && list[i].shengchan == null) {
-            list[i].boli_jiagong = '完成'
-            list[i].type = '4'
-          } else if (list[i].row > list[i].shengchan && list[i].shengchan > 0) {
-            list[i].boli_jiagong = '部分完成'
-          } else if (list[i].row > list[i].shengchan && list[i].shengchan == 0) {
-            list[i].boli_jiagong = '未完成'
-          } else if (list[i].row == list[i].shengchan) {
-            list[i].boli_jiagong = '完成'
-            list[i].type = '4'
-          }
-          if(list[i].shendan == '通过'){
-            list[i].type = '2'
-          }else if(list[i].shunxu == '拒绝'){
-            list[i].type = '1'
-          }
-          
           if(list[i].shunxu == '0'){
-            list[i].shunxu = '优先处理'
           }else if(list[i].shunxu == '1'){
             list[i].shunxu = ''
           }else if(list[i].shunxu == '2'){
             list[i].shunxu = '推迟处理'
-            list[i].type = '3'
           }
-          
         }
         console.log(list)
         _this.setData({
@@ -470,8 +457,24 @@ Page({
         yes_click: '优先处理',
         no_click: '推迟处理',
       })
-    }
-    else {
+    }else if (column == "wancheng") {
+      if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
+        
+      } else {
+        wx.showToast({
+          title: '无完成订单权限！',
+          icon: 'none'
+        })
+        return;
+      }
+      _this.setData({
+        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
+        this_column: column,
+        xgShow: true,
+        yes_click: '完成',
+        no_click: '未完成',
+      })
+    }else {
       wx.showModal({
         title: '提示',
         content: '确认查看此条订单的明细信息？',
@@ -500,6 +503,7 @@ Page({
       })
     }
     var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='" + _this.data.yes_click + "' where order_number='" + _this.data.order_number + "'"
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -531,10 +535,8 @@ Page({
 
   clear_yesno:function(){
     var _this = this
-    if(_this.data.this_column == 'shunxu'){
-      var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='' where order_number='" + _this.data.order_number + "'"
-    }
-    
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='' where order_number='" + _this.data.order_number + "'"
+
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {

@@ -10,7 +10,7 @@
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
-              class="{{list[i].type=='1'?'list_view1':list[i].type=='2'?'list_view2':list[i].type=='3'?'list_view3':list[i].type=='4'?'list_view4':'list_view'}}" 
+              class="{{list[i].type=='0'?'list_view1':list[i].type=='1'?'list_view2':list[i].type=='2'?'list_view3':list[i].type=='3'?'list_view4':'list_view'}}" 
               style="width:{{item.width}}" data-index="{{i}}" 
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 
@@ -47,7 +47,7 @@
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
-  <view class="lables">单据编号</view>
+  <view class="lables">订单号</view>
     <input bindinput="onInput" data-column="order_number" class="input_text_form"  value="{{order_number}}" type="text" name="order_number"></input>
     <view class="lables">客户名称</view>
     <input bindinput="onInput" data-column="customer_name" class="input_text_form"  value="{{customer_name}}" type="text" name="customer_name"></input>  
@@ -59,10 +59,8 @@
     <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
     </picker>
-    <view class="lables" hidden="{{userInfo.power == '客户'}}">完成情况</view>
-    <picker bindchange="bindPickerChange" value="{{index}}" data-list_name="wancheng_list" data-column_name="wancheng" range="{{wancheng_list}}" hidden="{{userInfo.power == '客户'}}">
-      <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng" disabled="disabled" hidden="{{userInfo.power == '客户'}}"></input>
-    </picker>
+    <view class="lables">安装地址</view>
+    <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

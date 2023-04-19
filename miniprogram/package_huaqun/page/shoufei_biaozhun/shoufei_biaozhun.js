@@ -1,13 +1,10 @@
 // package_huaqun/page/shoufei_biaozhun/shoufei_biaozhun.js
 Page({
-  shoufei_text,
-  shoufei_dis:false,
   /**
    * 页面的初始数据
    */
   data: {
-    shoufei_text,
-    shoufei_dis
+    shoufei_text:"",
   },
 
   /**
@@ -15,16 +12,6 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    var userInfo = JSON.parse(options.userInfo)
-    var shoufei_dis = _this.data.shoufei_dis
-    if(userInfo.power != '管理员'){
-      shoufei_dis:ture
-    }
-    _this.setData({
-      userInfo: userInfo,
-      shoufei_dis,
-    })
-    
     _this.tableShow()
   },
 
@@ -32,7 +19,6 @@ Page({
     var _this = this
     var sql = ""
     sql = "SELECT sfbz FROM shoufei_biaozhun"
-
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -41,8 +27,9 @@ Page({
       success: res => {
         var list = res.result.recordset
         console.log(list)
+        var shoufei_text = ""
         for (var i = 0; i < list.length; i++) {
-          shoufei_text = list[i]
+          shoufei_text = list[i].sfbz
         }
         _this.setData({
           shoufei_text: shoufei_text
@@ -56,6 +43,44 @@ Page({
           title: '请求失败！',
           icon: 'none',
           duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
+  },
+
+  upd1:function(){
+    var _this = this
+    console.log(_this.data.shoufei_text)
+    var sql = "update shoufei_biaozhun set sfbz = '" + _this.data.shoufei_text + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '修改成功！',
+          icon: 'none'
+        })
+        _this.tableShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
         })
         console.log("请求失败！")
       }

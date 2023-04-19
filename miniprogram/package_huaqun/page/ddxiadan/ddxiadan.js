@@ -144,6 +144,7 @@ Page({
     kailiao_list:[],
     list:[],
     ddxh_list_dj:[],
+    lishi_danjia_list:[],
     khmc: "",
     xdrq: "",
     djbh: "",
@@ -172,15 +173,192 @@ Page({
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var this_date = getNowDate()
+    var this_dan = options.djbh
+    console.log(this_dan)
+    if(this_dan != undefined){
+      this_dan = JSON.parse(options.djbh)
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: "select * from lightbelt where djbh = '" + this_dan + "'"
+        },
+        success: res => {
+          var list = res.result.recordset
+          console.log(list)
+          var khmc = ""
+          var xdrq = ""
+          var djbh = ""
+          var shouhuo = ""
+          var lxdh = ""
+          var shfs = ""
+          var azdz = ""
+          var ddh = ""
+          var sum_money = ""
+          var list_load = []
+          for(var i=0; i<list.length; i++){
+            khmc = list[i].khmc
+            xdrq = list[i].xdrq
+            djbh = this_dan
+            shouhuo = list[i].shouhuo
+            lxdh = list[i].lxdh
+            shfs = list[i].shfs
+            azdz = list[i].azdz
+            ddh = list[i].ddh
+            sum_money = list[i].sum_money
+            list_load.push({
+              fj:list[i].fj,
+              gh:list[i].gh,
+              lcys:list[i].lcys,
+              ddcd:list[i].ddcd,
+              sl:list[i].sl,
+              cxdk:list[i].cxdk,
+              cxdk_right:list[i].cxdk_right,
+              gy:list[i].gy,
+              gl:list[i].gl,
+              bz:list[i].bz,
+              dj:list[i].dj,
+              je:list[i].je,
+              chicun:list[i].chicun,      
+            })
+          }
+          _this.setData({
+            khmc,
+            xdrq,
+            header_list:{djbh:djbh},
+            shouhuo,
+            lxdh,
+            shfs,
+            azdz,
+            ddh,
+            sum_money,
+            list:list_load,
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    }else{
+      var bianhao_left = getBianHao()
+      console.log(bianhao_left)
+      var sql = "select djbh from lightbelt where djbh like '" + bianhao_left + "%'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var bianhao_list = res.result.recordset
+          var new_bianhao = "001" 
+          for(var i=0; i<bianhao_list.length; i++){
+            if(bianhao_list[i].djbh != '' && bianhao_list[i].djbh != null && bianhao_list[i].djbh != undefined){
+              var this_bianhao = bianhao_list[i].djbh.slice(10)
+              console.log(this_bianhao)
+              if(this_bianhao >= new_bianhao){
+                new_bianhao = (this_bianhao * 1 + 1).toString()
+                if(new_bianhao.length == 1){
+                  new_bianhao = "00" + new_bianhao.toString()
+                }else if(new_bianhao.length == 2){
+                  new_bianhao = "0" + new_bianhao.toString()
+                }
+                console.log(new_bianhao)
+              }
+            }
+          }
+          new_bianhao = bianhao_left.toString() + new_bianhao.toString()
+          var header_list = _this.data.header_list
+          header_list.djbh = new_bianhao
+          _this.setData({
+            header_list
+          })
+        },
+        err: res => {
+          wx.showToast({
+            title: '读取下拉列表错误！',
+            icon: 'none'
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+      _this.setData({
+        xdrq:this_date,
+      })
+    }
+
+
+
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: "select * from shoufei_biaozhun"
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          shoufei_biaozhun: list[0].sfbz
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
     if (userInfo.power == '客户'){
+      var sql = "SELECT xdrq,gh,lcys,gy,dj FROM lightbelt where khmc = '" + userInfo.name + "' order by xdrq desc"
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var list = res.result.recordset
+          console.log(list)
+          _this.setData({
+            lishi_danjia_list: list
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+
       _this.setData({
         userInfo:userInfo,
         khmc:userInfo.name, 
       })
     }
-    _this.setData({
-      xdrq:this_date,
-    })
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -287,56 +465,6 @@ Page({
       }
     })
 
-    var bianhao_left = getBianHao()
-    console.log(bianhao_left)
-
-    var sql = "select djbh from lightbelt where djbh like '" + bianhao_left + "%'"
-    wx.cloud.callFunction({
-      name: 'sqlserver_huaqun',
-      data: {
-        query: sql
-      },
-      success: res => {
-        var bianhao_list = res.result.recordset
-        var new_bianhao = "001" 
-        for(var i=0; i<bianhao_list.length; i++){
-          if(bianhao_list[i].djbh != '' && bianhao_list[i].djbh != null && bianhao_list[i].djbh != undefined){
-            var this_bianhao = bianhao_list[i].djbh.slice(10)
-            console.log(this_bianhao)
-            if(this_bianhao >= new_bianhao){
-              new_bianhao = (this_bianhao * 1 + 1).toString()
-              if(new_bianhao.length == 1){
-                new_bianhao = "00" + new_bianhao.toString()
-              }else if(new_bianhao.length == 2){
-                new_bianhao = "0" + new_bianhao.toString()
-              }
-              console.log(new_bianhao)
-            }
-          }
-        }
-        new_bianhao = bianhao_left.toString() + new_bianhao.toString()
-        var header_list = _this.data.header_list
-        header_list.djbh = new_bianhao
-        _this.setData({
-          header_list
-        })
-      },
-      err: res => {
-        wx.showToast({
-          title: '读取下拉列表错误！',
-          icon: 'none'
-        })
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
-      }
-    })
-
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -378,8 +506,31 @@ Page({
     var khmc = _this.data.name_list[e.detail.value]
     console.log(khmc)
     if(khmc!=''){
-      var sql =''
-      sql = "SELECT fj,gh,sl,cxdk,lcb,lcys,gy,dy,kg,pj,gl FROM lightbelt WHERE khmc = '" + khmc + "'"
+      var sql = "SELECT xdrq,gh,lcys,gy,dj FROM lightbelt where khmc = '" + khmc + "' order by xdrq desc"
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var list = res.result.recordset
+          console.log(list)
+          _this.setData({
+            lishi_danjia_list: list
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
     }
     _this.setData({
       khmc: khmc,
@@ -459,9 +610,9 @@ Page({
         icon: 'none'
       })
       return;
-    }else if(this_column != 'fj' && this_column != 'gh' && this_column != 'sl' && (this_leibie == '电源' || this_leibie == '开关' || this_leibie == '配件')){
+    }else if(this_column != 'fj' && this_column != 'gh' && this_column != 'sl' && this_column != 'je' && (this_leibie == '电源' || this_leibie == '开关' || this_leibie == '配件')){
       wx.showToast({
-        title: '项目类别选择了'+ this_leibie +'，此行只允许填写项目名称和数量（支）！',
+        title: '项目类别选择了'+ this_leibie +'，此行只允许填写项目名称、数量（支）和金额！',
         icon: 'none'
       })
       return;
@@ -576,6 +727,19 @@ Page({
     var list = _this.data.list
     var kailiao_list = _this.data.kailiao_list
     list[_this.data.this_index][_this.data.this_column] = _this.data.this_value
+    for(var i=0; i<list.length; i++){
+      if(list[i].dj != ''){
+        continue;
+      }else{
+        var danjia_list = _this.data.lishi_danjia_list
+        for(var j=0; j<danjia_list.length; j++){
+          if(list[i].gh == danjia_list[j].gh && list[i].lcys == danjia_list[j].lcys && list[i].gy == danjia_list[j].gy){
+            list[i].dj = danjia_list[j].dj
+            break;
+          }
+        }
+      }
+    }
     var list1 = _this.data.ddxh_list_dj
     console.log(_this.data.this_index)
     console.log(_this.data.this_column)
@@ -587,40 +751,37 @@ Page({
         gonglv = 0
       }
       if(list[i].fj == '铝型材' && list[i].gh != '' && list[i].sl != ''){
-        for(var j=0; j<list1.length; j++){
-          if(list[i].gh == list1[j].ddxh && list[i].ddcd > shoufei_text){
-            danjia = parseFloat(list1[j].mmdj) + Math.ceil(((list[i].ddcd-shoufei_text)/100) * list1[j].zjdj)
-            list[i].dj = danjia
-            if(list[i].sl != ''){
-              var shuliang = parseFloat(list[i].sl)
-              list[i].je = (danjia * shuliang).toFixed(2)
-            }
-            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
-            list[i].gl = gonglv
-            break;
-          }else if(list[i].lcb == list1[j].ddxh && list[i].ddcd <= shoufei_text){
-            danjia = parseFloat(list1[j].mmdj)
-            list[i].dj = danjia
-            if(list[i].sl != ''){
-              var shuliang = parseFloat(list[i].sl)
-              list[i].je = (danjia * shuliang).toFixed(2)
-            }
-            gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
-            list[i].gl = gonglv
-            break;
+        if(list[i].ddcd * 1 > _this.data.shoufei_biaozhun * 1){
+          if(list[i].sl != '' && list[i].dj != ''){
+            var shuliang = parseFloat(list[i].sl)
+            list[i].je = list[i].ddcd * 1 / 1000 * list[i].dj * shuliang
           }
+          gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
+          list[i].gl = gonglv
+        }else if(list[i].ddcd * 1 <= _this.data.shoufei_biaozhun * 1){
+          if(list[i].sl != ''){
+            var shuliang = parseFloat(list[i].sl)
+            list[i].je = _this.data.shoufei_biaozhun * 1 / 1000 * list[i].dj * shuliang
+          }
+          gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
+          list[i].gl = gonglv
         }
         for(var j=0; j<kailiao_list.length; j++){
           if(list[i].gh == kailiao_list[j].name && list[i].ddcd != '' && kailiao_list[j].chicun != ''){
             list[i].chicun = list[i].ddcd * 1 - kailiao_list[j].chicun * 1
           }
         }
+      }else if(list[i].fj == '房间柜号'){
+        if(list[i].sl != '' && list[i].dj != ''){
+          list[i].je = list[i].sl * list[i].dj
+        }
       }
     }
 
     var sum_money =0
-    for(var i = 0;i<=list.length;i++){
-       sum_money =sum_money + list[i].je
+    for(var i = 0;i<list.length;i++){
+       sum_money = sum_money + list[i].je * 1
+       sum_money = Math.round((sum_money) * 100) / 100; 
     }
     _this.setData({
       list:list,
@@ -756,7 +917,6 @@ Page({
 
   add1: function(){
     var _this = this
-    
     if (_this.data.khmc != '' && _this.data.xdrq != '' && _this.data.header_list.djbh != '' && _this.data.shouhuo != '' && _this.data.lxdh != '' && _this.data.shfs != '' && _this.data.azdz != ''){
       if(_this.data.list.length == 0){
         wx.showToast({
@@ -765,17 +925,19 @@ Page({
         })
         return;
       }
+
+      
       console.log(_this.data.khmc)
-      var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,lcys,ddcd,sl,cxdk,cxdk_right,gy,gl,bz,dj,je,chicun) values"
+      var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,lcys,ddcd,sl,cxdk,cxdk_right,gy,gl,bz,dj,je,chicun,sum_money) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"')"
+          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"','"+  _this.data.sum_money +"')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"')"
+          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"','"+  _this.data.sum_money +"')"
         }
       }
-      var sql = sql1 + sql2
+      var sql = "delete from lightbelt where djbh='" + _this.data.header_list.djbh + "';" + sql1 + sql2
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
