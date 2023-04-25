@@ -101,8 +101,8 @@
 <!------------------------->
 <!---------审核弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ shShow }}" position="bottom" custom-style="height: 90%;" >
-  <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:90%">
+<van-popup bind:click-overlay="qxShow" show="{{ shShow }}" position="bottom" custom-style="height: 30%;" >
+  <!-- <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:90%">
     <view class="table">
       <view class='table_header'>
         <block class="title" wx:for="{{shenhe_title}}">
@@ -126,7 +126,11 @@
         </view>
       </block>
     </view>
-  </scroll-view>
+  </scroll-view> -->
+  <view class="lables">仓库</view>
+    <picker bindchange="bindPickerChange_warehouse" value="{{index}}" data-column_name="warehouse" range="{{warehouse_list}}">
+      <input bindinput="onInput" data-column="warehouse" class="input_text_form"  value="{{warehouse}}" type="text" name="type" disabled="disabled"></input>
+    </picker>
 
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="selSH">审核</button>

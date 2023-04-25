@@ -153,8 +153,15 @@ Page({
       },
       {
         text: "类型",
-        width: "300rpx",
+        width: "150rpx",
         columnName: "type",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "仓库",
+        width: "200rpx",
+        columnName: "warehouse",
         type: "text",
         isupd: true
       },
@@ -694,6 +701,14 @@ Page({
     })
   },
 
+  bindPickerChange_warehouse: function(e){
+    var _this = this
+    console.log(_this.data.type_list[e.detail.value])
+    _this.setData({
+      warehouse: _this.data.warehouse_list[e.detail.value]
+    })
+  },
+
   selSH: function () {
     var _this = this  
     if(_this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '审核人'){
@@ -714,11 +729,11 @@ Page({
     var sql = ""
     console.log(_this.data.userInfo.power)
     if(_this.data.tiaojian != undefined){
-      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + _this.data.tiaojian[2] + "') and convert(date,sa.riqi)<=convert(date,'" + _this.data.tiaojian[2] + "') and (customer ='" + _this.data.tiaojian[1] + "') and sale_state = '审核中' and salesman = '" + _this.data.tiaojian[3] + "' order by sa.riqi desc,customer,sale_type"
+      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + _this.data.tiaojian[2] + "') and convert(date,sa.riqi)<=convert(date,'" + _this.data.tiaojian[2] + "') and (customer ='" + _this.data.tiaojian[1] + "') and sale_state = '审核中' and salesman = '" + _this.data.tiaojian[3] + "' order by sa.riqi desc,customer,sale_type"
     }else if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '审核人'){
-      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' order by sa.riqi desc,customer,sale_type"
+      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' order by sa.riqi desc,customer,sale_type"
     }else {
-      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' and salesman = '" + _this.data.userInfo.name + "' order by sa.riqi desc,customer,sale_type"
+      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' and salesman = '" + _this.data.userInfo.name + "' order by sa.riqi desc,customer,sale_type"
     }
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
@@ -726,7 +741,7 @@ Page({
         query: sql
       },
       success: res => {
-        console.log(sql)
+        console.log("慢慢来" + sql)
         var xiaojiheji = 0;
         var list = res.result.recordset 
         for(var i=0;i<list.length;i++){
@@ -787,6 +802,7 @@ Page({
       fahuo:'',
       sale_state:'',
       sale_type:'',
+      warehouse:''
     })
   },
 
@@ -833,6 +849,7 @@ Page({
         type:_this.data.list[e.currentTarget.dataset.index].type,
         fahuo:_this.data.list[e.currentTarget.dataset.index].fahuo,
         sale_type:_this.data.list[e.currentTarget.dataset.index].sale_type,
+        warehouse:_this.data.list[e.currentTarget.dataset.index].warehouse,
         xgShow:true,
       })
     }else{
@@ -844,46 +861,9 @@ Page({
         })
         return;
       }
-      if(_this.data.list[e.currentTarget.dataset.index].sale_state != '审核中'){
-        wx.showToast({
-          title: '此销售信息无需再次审核！',
-          icon: 'none',
-          duration: 3000
-        })
-        return;
-      }
-      var riqi = _this.data.list[e.currentTarget.dataset.index].riqi
-      var customer_id = _this.data.list[e.currentTarget.dataset.index].customer_id
-      var add_list = []
-      var list = _this.data.list
-      for(var i=0; i<list.length; i++){
-        if(list[i].riqi == riqi && list[i].customer_id == customer_id && list[i].sale_state == '审核中'){
-          add_list.push({
-            id:list[i].id,
-            riqi:list[i].riqi,
-            customer:list[i].customer,
-            sh_staff:list[i].sh_staff,
-            salesman:list[i].salesman,
-            pick:list[i].pick,
-            sale_type:list[i].sale_type,
-            product_name:list[i].product_name,
-            product_id:list[i].product_id,
-            spec:list[i].spec,
-            unit:list[i].unit,
-            price:list[i].price,
-            num:list[i].num,
-            xiaoji:list[i].xiaoji,
-            remarks:list[i].remarks,
-            type:list[i].type,
-            sale_state:list[i].sale_state,
-            warehouse:''
-          })
-        }
-      }
-      console.log(add_list)
       _this.get_kucun();
       _this.setData({
-        add_list:add_list,
+        id:_this.data.list[e.currentTarget.dataset.index].id,
         shShow:true
       })
     }
@@ -1479,23 +1459,18 @@ Page({
       var shenhe = e.detail.name
       var sql = ""
       if(shenhe =='审核通过'){
-        for(var i=0; i<_this.data.add_list.length; i++){
-          if(_this.data.add_list[i].warehouse == ''){
+          if(_this.data.warehouse == ''){
             wx.showToast({
-              title: '列表中第' + (i * 1 + 1) + '行未填写发出仓库！',
+              title: '未填写发出仓库！',
               icon: 'none',
               duration: 3000
             })
             return;
           }
-        }
-        for(var i=0; i<_this.data.add_list.length; i++){
-          sql = sql + "update sale set sale_state='" + shenhe + "',warehouse='" + _this.data.add_list[i].warehouse + "' where id=" + _this.data.add_list[i].id + ";"
-        }
+          sql = sql + "update sale set sale_state='" + shenhe + "',warehouse='" + _this.data.warehouse + "' where id=" + _this.data.id + ";"
       }else{
-        for(var i=0; i<_this.data.add_list.length; i++){
-          sql = sql + "update sale set sale_state='" + shenhe + "' where id=" + _this.data.add_list[i].id + ";"
-        }
+          sql = sql + "update sale set warehouse = '',sale_state='" + shenhe + "' where id=" + _this.data.id + ";"
+        
       }
       console.log(sql)
       wx.cloud.callFunction({
@@ -1529,6 +1504,7 @@ Page({
             sale_state:'',
             sale_type:'',
             add_list:[],
+            warehouset:'',
             xlShow1: false,
           })
           _this.qxShow()
