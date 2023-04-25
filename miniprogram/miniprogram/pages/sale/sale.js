@@ -20,63 +20,63 @@ Page({
     list: [],
     title: [{
         text: "日期",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "riqi",
         type: "text",
         isupd: true
       },
       {
         text: "客户名称",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "customer",
         type: "text",
         isupd: true
       },
       {
         text: "客户类别",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "leibie",
         type: "text",
         isupd: true
       },
       {
         text: "客户号",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "customer_num",
         type: "text",
         isupd: true
       },
       {
         text: "区域",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "area",
         type: "text",
         isupd: true
       },
       {
         text: "收货人员",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "sh_staff",
         type: "text",
         isupd: true
       },
       {
         text: "收货地址",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "address",
         type: "text",
         isupd: true
       },
       {
         text: "业务员",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "salesman",
         type: "text",
         isupd: true
       },
       {
         text: "拿货方式",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "pick",
         type: "text",
         isupd: true
@@ -97,70 +97,70 @@ Page({
       },
       {
         text: "品号",
-        width: "150rpx",
+        width: "300rpx",
         columnName: "pinhao",
         type: "text",
         isupd: true
       },
       {
         text: "规格",
-        width: "400rpx",
+        width: "300rpx",
         columnName: "spec",
         type: "text",
         isupd: true
       },
       {
         text: "产品属性",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "attribute",
         type: "text",
         isupd: true
       },
       {
         text: "单位",
-        width: "200rpx",
+        width: "150rpx",
         columnName: "unit",
         type: "text",
         isupd: true
       },
       {
         text: "销售单价",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "price",
         type: "text",
         isupd: true
       },
       {
         text: "销售数量",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "num",
         type: "text",
         isupd: true
       },
       {
         text: "小计",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "xiaoji",
         type: "text",
         isupd: true
       },
       {
         text: "备注",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "remarks",
         type: "text",
         isupd: true
       },
       {
         text: "类型",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "type",
         type: "text",
         isupd: true
       },
       {
         text: "审核状态",
-        width: "200rpx",
+        width: "300rpx",
         columnName: "sale_state",
         type: "text",
         isupd: true
@@ -173,7 +173,7 @@ Page({
     shenhe_title: [
     {
       text: "发出仓库",
-      width: "200rpx",
+      width: "400rpx",
       columnName: "warehouse",
       type: "text",
       isupd: true
@@ -236,7 +236,7 @@ Page({
     },
     {
       text: "产品名称",
-      width: "300rpx",
+      width: "500rpx",
       columnName: "product_name",
       type: "text",
       isupd: true
