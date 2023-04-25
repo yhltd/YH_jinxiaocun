@@ -42,7 +42,16 @@ Page({
       chicun:"开料尺寸",
     },
     list: [],
-    title: [{
+    title: [
+      {
+        text: "序号",
+        width: "80rpx",
+        width2: "calc(80vmin / 7.5)",
+        columnName: "rownum",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "项目类别",
         width: "275rpx",
         width2: "calc(275vmin / 7.5)",
@@ -595,7 +604,7 @@ Page({
     var this_leibie = _this.data.list[index].fj
     console.log(index)
     console.log(this_leibie)
-    if(this_column == "chicun" || this_column == "je" || this_column == "gl"){
+    if(this_column == "chicun" || this_column == "je" || this_column == "gl" || this_column == "rownum"){
       return;
     }
     if(this_column != 'fj' && this_leibie == ''){
@@ -610,9 +619,9 @@ Page({
         icon: 'none'
       })
       return;
-    }else if(this_column != 'fj' && this_column != 'gh' && this_column != 'sl' && this_column != 'je' && (this_leibie == '电源' || this_leibie == '开关' || this_leibie == '配件')){
+    }else if(this_column != 'fj' && this_column != 'gh' && this_column != 'sl' && this_column != 'dj' && (this_leibie == '电源' || this_leibie == '开关' || this_leibie == '配件')){
       wx.showToast({
-        title: '项目类别选择了'+ this_leibie +'，此行只允许填写项目名称、数量（支）和金额！',
+        title: '项目类别选择了'+ this_leibie +'，此行只允许填写项目名称、数量（支）和单价！',
         icon: 'none'
       })
       return;
@@ -746,7 +755,7 @@ Page({
     var danjia = 0
     var gonglv = 0
     for(var i=0; i<list.length; i++){
-      if(list[i].fj == '房间柜号' && list[i].gh != ''){
+      if((list[i].fj == '房间柜号' || list[i].fj == '电源') && list[i].gh != ''){
         danjia = 0
         gonglv = 0
       }
@@ -755,14 +764,19 @@ Page({
           if(list[i].sl != '' && list[i].dj != ''){
             var shuliang = parseFloat(list[i].sl)
             list[i].je = list[i].ddcd * 1 / 1000 * list[i].dj * shuliang
+            list[i].je = list[i].je.toFixed(2)
+            
           }
+          var shuliang = parseFloat(list[i].sl)
           gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
           list[i].gl = gonglv
         }else if(list[i].ddcd * 1 <= _this.data.shoufei_biaozhun * 1){
           if(list[i].sl != ''){
             var shuliang = parseFloat(list[i].sl)
             list[i].je = _this.data.shoufei_biaozhun * 1 / 1000 * list[i].dj * shuliang
+            list[i].je = list[i].je.toFixed(2)
           }
+          var shuliang = parseFloat(list[i].sl)
           gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
           list[i].gl = gonglv
         }
@@ -771,9 +785,10 @@ Page({
             list[i].chicun = list[i].ddcd * 1 - kailiao_list[j].chicun * 1
           }
         }
-      }else if(list[i].fj == '房间柜号'){
+      }else if(list[i].fj != '房间柜号'){
         if(list[i].sl != '' && list[i].dj != ''){
           list[i].je = list[i].sl * list[i].dj
+          list[i].je = list[i].je.toFixed(2)
         }
       }
     }
@@ -816,6 +831,14 @@ Page({
           xiala_panduan:0,
           xgShow:true,
         })
+      }else if(list[_this.data.this_index].fj == '电源' && _this.data.this_column == 'sl'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'dj',
+          this_value:list[_this.data.this_index].dj,
+          xiala_panduan:0,
+          xgShow:true,
+        })
       }
 
       if(list[_this.data.this_index].fj == '开关' && _this.data.this_column == 'fj'){
@@ -834,6 +857,14 @@ Page({
           xiala_panduan:0,
           xgShow:true,
         })
+      }else if(list[_this.data.this_index].fj == '开关' && _this.data.this_column == 'sl'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'dj',
+          this_value:list[_this.data.this_index].dj,
+          xiala_panduan:0,
+          xgShow:true,
+        })
       }
 
       if(list[_this.data.this_index].fj == '配件' && _this.data.this_column == 'fj'){
@@ -849,6 +880,14 @@ Page({
           this_type:'digit',
           this_column:'sl',
           this_value:list[_this.data.this_index].sl,
+          xiala_panduan:0,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '配件' && _this.data.this_column == 'sl'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'dj',
+          this_value:list[_this.data.this_index].dj,
           xiala_panduan:0,
           xgShow:true,
         })
@@ -908,6 +947,14 @@ Page({
           this_column:'gy',
           this_value:list[_this.data.this_index].gy,
           xiala_panduan:4,
+          xgShow:true,
+        })
+      }else if(list[_this.data.this_index].fj == '铝型材' && _this.data.this_column == 'gy'){
+        _this.setData({
+          this_type:'digit',
+          this_column:'dj',
+          this_value:list[_this.data.this_index].dj,
+          xiala_panduan:0,
           xgShow:true,
         })
       }

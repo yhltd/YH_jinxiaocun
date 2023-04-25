@@ -1318,13 +1318,10 @@ Page({
     insert_sql = insert_sql + sql_foot + ";"
     console.log(insert_sql)
 
-    var sql = ""
     var select_sql_head = "select * from refertable "
     var select_sql_foot = ""
 
     for(var i=0; i<body_list.length; i++){
-      sql = sql + "select * from lvkuang_xiadan where customer_name ='" + header_list.customer_name + "' and height='" + body_list[i].height + "' and width='" + body_list[i].width + "' and lvxingcai='" + body_list[i].lvxingcai + "' and lvcai_yanse='" + body_list[i].lvcai_yanse + "' and boli_shenjiagong='" + body_list[i].boli_shenjiagong + "' and boli_yanse='" + body_list[i].boli_yanse + "' and lashou_xinghao='" + body_list[i].lashou_xinghao + "' and lashou_shuliang_right='" + body_list[i].lashou_shuliang_right + "' and lashou_shuliang_left='" + body_list[i].lashou_shuliang_left + "' and lashouwei_select_left='" + body_list[i].lashouwei_select_left + "' and lashouwei_insert_left='" + body_list[i].lashouwei_insert_left + "' and lashouwei_select_right='" + body_list[i].lashouwei_select_right + "' and lashouwei_insert_right='" + body_list[i].lashouwei_insert_right + "' and jiaoliankong_fangxiang_left='" + body_list[i].jiaoliankong_fangxiang_left + "' and jiaoliankong_fangxiang_right='" + body_list[i].jiaoliankong_fangxiang_right + "' and kaijiaolian='" + body_list[i].kaijiaolian + "' and jiaolian1_select_left='" + body_list[i].jiaolian1_select_left + "' and jiaolian1_insert_left='" + body_list[i].jiaolian1_insert_left + "' and jiaolian1_select_right='" + body_list[i].jiaolian1_select_right + "' and jiaolian1_insert_right='" + body_list[i].jiaolian1_insert_right + "' and jiaolian2_select_left='" + body_list[i].jiaolian2_select_left + "' and jiaolian2_insert_left='" + body_list[i].jiaolian2_insert_left + "' and jiaolian2_select_right='" + body_list[i].jiaolian2_select_right + "' and jiaolian2_insert_right='" + body_list[i].jiaolian2_insert_right + "' and jiaolian3_select_left='" + body_list[i].jiaolian3_select_left + "' and jiaolian3_insert_left='" + body_list[i].jiaolian3_insert_left + "' and jiaolian3_select_right='" + body_list[i].jiaolian3_select_right + "' and jiaolian3_insert_right='" + body_list[i].jiaolian3_insert_right + "' and jiaolian4_select_left='" + body_list[i].jiaolian4_select_left + "' and jiaolian4_insert_left='" + body_list[i].jiaolian4_insert_left + "' and jiaolian4_select_right='" + body_list[i].jiaolian4_select_right + "' and jiaolian4_insert_right='" + body_list[i].jiaolian4_insert_right + "' and jiaolian5_select_left='" + body_list[i].jiaolian5_select_left + "' and jiaolian5_insert_left='" + body_list[i].jiaolian5_insert_left + "' and jiaolian5_select_right='" + body_list[i].jiaolian5_select_right + "' and jiaolian5_insert_right='" + body_list[i].jiaolian5_insert_right + "' and jiaolian6_select_left='" + body_list[i].jiaolian6_select_left + "' and jiaolian6_insert_left='" + body_list[i].jiaolian6_insert_left + "' and jiaolian6_select_right='" + body_list[i].jiaolian6_select_right + "' and jiaolian6_insert_right='" + body_list[i].jiaolian6_insert_right + "' and qita='" + body_list[i].qita + "' and width != '' and height != '';"
-
       if(body_list[i].lvxingcai != ''){
         if(select_sql_foot == ""){
           select_sql_foot = "where lkxh ='" + body_list[i].lvxingcai + "' "
@@ -1344,190 +1341,89 @@ Page({
         console.log(res)
         var list = res.result.recordsets
         var xuhao = ""
-        for(var i=0; i<6; i++){
-          if(list[i].length > 0){
-            if(xuhao == ""){
-              xuhao = (i * 1 + 1).toString()
-            }else{
-              xuhao = xuhao + "、" + (i * 1 + 1).toString()
-            }
-          }
-        }
+
+        var canzhao_list = res.result.recordsets[0]
+        console.log(canzhao_list)
+        var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
+        var boli_insert_sql_foot = ""
         
-        if(xuhao != ''){
-          wx.showModal({
-            title: '提示',
-            content: '表单中序号'+ i * 1 + 1 +'铝框与以往订单中的铝框重复，是否继续下单？',
-            success (res) {
-              if (res.confirm) {
-
-                var canzhao_list = res.result.recordsets[6]
-                console.log(canzhao_list)
-                var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
-                var boli_insert_sql_foot = ""
-                
-                for(var i=0; i<body_list.length; i++){
-                  if( body_list[i].boli_yanse != '' &&  body_list[i].boli_shenjiagong != '' &&  body_list[i].width != '' && body_list[i].height != '' && body_list[i].lvxingcai != '' && body_list[i].boli_yanse != '' && body_list[i].boli_shenjiagong != '' && (body_list[i].jiaoliankong_fangxiang_left != '' || body_list[i].jiaoliankong_fangxiang_right != '')){
-                    for(var j=0; j<canzhao_list.length; j++){
-                      var width = parseFloat(body_list[i].width)
-                      var height = parseFloat(body_list[i].height)
-                      var num = 0
-                      var num_left = parseFloat(body_list[i].jiaoliankong_fangxiang_left)
-                      if(num_left == NaN){
-                        num_left = 0
-                      }
-                      var num_right = parseFloat(body_list[i].jiaoliankong_fangxiang_right)
-                      if(num_right == NaN){
-                        num_right = 0
-                      }
-                      num = num_left + num_right
-                      if(width == NaN){
-                        width = 0
-                      }
-                      if(height == NaN){
-                        height = 0
-                      }
-                      if(canzhao_list[j].lkxh == body_list[i].lvxingcai && canzhao_list[j].yanse == body_list[i].lvcai_yanse){
-                        var this_width = parseFloat(canzhao_list[j].kuan)
-                        var this_height = parseFloat(canzhao_list[j].chang)
-                        if(this_width == NaN){
-                          this_width = 0
-                        }
-                        if(this_height == NaN){
-                          this_height = 0
-                        }
-                        width = width - this_width
-                        height = height - this_height
-                        if(boli_insert_sql_foot == ""){
-                          boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
-                        }else{
-                          boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
-                        }
-                      }
-                    }
-                  }
-                }
-
-                if(boli_insert_sql_foot != ''){
-                  insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
-                }
-
-                wx.cloud.callFunction({
-                  name: 'sqlserver_huaqun',
-                  data: {
-                    query: insert_sql
-                  },
-                  success: res => {
-                    console.log(res)
-                    wx.showToast({
-                      title: '下单成功！',
-                      icon: 'none'
-                    })
-                  },
-                  err: res => {
-                    console.log("错误!")
-                  },
-                  fail: res => {
-                    wx.showToast({
-                      title: '请求失败！',
-                      icon: 'none'
-                    })
-                    console.log("请求失败！")
-                  }
-                })
-
-              } else if (res.cancel) {
-                wx.showToast({
-                  title: '已取消！',
-                  icon: 'none'
-                })
-                return;
+        for(var i=0; i<body_list.length; i++){
+          if(body_list[i].boli_yanse != '' &&  body_list[i].boli_shenjiagong != '' &&body_list[i].width != '' && body_list[i].height != '' && body_list[i].lvxingcai != '' && body_list[i].boli_yanse != '' && body_list[i].boli_shenjiagong != '' && (body_list[i].jiaoliankong_fangxiang_left != '' || body_list[i].jiaoliankong_fangxiang_right != '')){
+            for(var j=0; j<canzhao_list.length; j++){
+              var width = parseFloat(body_list[i].width)
+              var height = parseFloat(body_list[i].height)
+              var num = 0
+              var num_left = parseFloat(body_list[i].jiaoliankong_fangxiang_left)
+              if(num_left == NaN){
+                num_left = 0
               }
-            }
-          })
-        }else{
-          var canzhao_list = res.result.recordsets[6]
-          console.log(canzhao_list)
-          var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
-          var boli_insert_sql_foot = ""
-          
-          for(var i=0; i<body_list.length; i++){
-            if(body_list[i].boli_yanse != '' &&  body_list[i].boli_shenjiagong != '' &&body_list[i].width != '' && body_list[i].height != '' && body_list[i].lvxingcai != '' && body_list[i].boli_yanse != '' && body_list[i].boli_shenjiagong != '' && (body_list[i].jiaoliankong_fangxiang_left != '' || body_list[i].jiaoliankong_fangxiang_right != '')){
-              for(var j=0; j<canzhao_list.length; j++){
-                var width = parseFloat(body_list[i].width)
-                var height = parseFloat(body_list[i].height)
-                var num = 0
-                var num_left = parseFloat(body_list[i].jiaoliankong_fangxiang_left)
-                if(num_left == NaN){
-                  num_left = 0
+              var num_right = parseFloat(body_list[i].jiaoliankong_fangxiang_right)
+              if(num_right == NaN){
+                num_right = 0
+              }
+              num = num_left + num_right
+              if(width == NaN){
+                width = 0
+              }
+              if(height == NaN){
+                height = 0
+              }
+              if(canzhao_list[j].lkxh == body_list[i].lvxingcai){
+                var this_width = parseFloat(canzhao_list[j].kuan)
+                var this_height = parseFloat(canzhao_list[j].chang)
+                if(this_width == NaN){
+                  this_width = 0
                 }
-                var num_right = parseFloat(body_list[i].jiaoliankong_fangxiang_right)
-                if(num_right == NaN){
-                  num_right = 0
+                if(this_height == NaN){
+                  this_height = 0
                 }
-                num = num_left + num_right
-                if(width == NaN){
-                  width = 0
-                }
-                if(height == NaN){
-                  height = 0
-                }
-                if(canzhao_list[j].lkxh == body_list[i].lvxingcai){
-                  var this_width = parseFloat(canzhao_list[j].kuan)
-                  var this_height = parseFloat(canzhao_list[j].chang)
-                  if(this_width == NaN){
-                    this_width = 0
-                  }
-                  if(this_height == NaN){
-                    this_height = 0
-                  }
-                  width = width - this_width
-                  height = height - this_height
-                  if(boli_insert_sql_foot == ""){
-                    boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
-                  }else{
-                    boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
-                  }
+                width = width - this_width
+                height = height - this_height
+                if(boli_insert_sql_foot == ""){
+                  boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                }else{
+                  boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
                 }
               }
             }
           }
-
-          if(boli_insert_sql_foot != ''){
-            insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
-          }
-          console.log(insert_sql)
-          wx.cloud.callFunction({
-            name: 'sqlserver_huaqun',
-            data: {
-              query: insert_sql
-            },
-            success: res => {
-              console.log(res)
-              wx.showToast({
-                title: '下单成功！',
-                icon: 'none'
-              })
-              var common_Interval = setInterval(()=>
-              {
-                wx.navigateBack({ 
-                  delta: 1
-                });
-                clearInterval(common_Interval);
-              }, 2000)
-            },
-            err: res => {
-              console.log("错误!")
-            },
-            fail: res => {
-              wx.showToast({
-                title: '请求失败！',
-                icon: 'none'
-              })
-              console.log("请求失败！")
-            }
-          })
         }
+
+        if(boli_insert_sql_foot != ''){
+          insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
+        }
+        console.log(insert_sql)
+        wx.cloud.callFunction({
+          name: 'sqlserver_huaqun',
+          data: {
+            query: insert_sql
+          },
+          success: res => {
+            console.log(res)
+            wx.showToast({
+              title: '下单成功！',
+              icon: 'none'
+            })
+            var common_Interval = setInterval(()=>
+            {
+              wx.navigateBack({ 
+                delta: 1
+              });
+              clearInterval(common_Interval);
+            }, 2000)
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
       },
       err: res => {
         console.log("错误!")
