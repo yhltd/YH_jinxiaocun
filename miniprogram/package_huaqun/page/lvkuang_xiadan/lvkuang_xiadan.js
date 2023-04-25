@@ -1368,7 +1368,7 @@ Page({
               if(height == NaN){
                 height = 0
               }
-              if(canzhao_list[j].lkxh == body_list[i].lvxingcai){
+              if(canzhao_list[j].lkxh == body_list[i].lvxingcai && canzhao_list[j].yanse == body_list[i].lvcai_yanse){
                 var this_width = parseFloat(canzhao_list[j].kuan)
                 var this_height = parseFloat(canzhao_list[j].chang)
                 if(this_width == NaN){
@@ -1384,6 +1384,7 @@ Page({
                 }else{
                   boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
                 }
+                break;
               }
             }
           }
