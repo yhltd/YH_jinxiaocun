@@ -101,7 +101,9 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-
+    if(userInfo.money_sel != '是'){
+      title.splice(7,1)
+    }
     var sql = "select '产品:' + product_name + ';规格:' + spec + ';单位:' + unit as name,id,product_name,spec,unit,price from product"
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',

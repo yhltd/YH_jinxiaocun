@@ -440,6 +440,12 @@ Page({
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var userPower = JSON.parse(options.userPower)
+    if(userInfo.money_sel != '是'){
+      shenhe_title.splice(15,1)
+      shenhe_title.splice(13,1)
+      title.splice(21,1)
+      title.splice(19,1)
+    }
     var tiaojian = options.tiaojian
     console.log(tiaojian)
     if(tiaojian != undefined){

@@ -549,7 +549,7 @@ Page({
   },
   selSH: function () {
     var _this = this  
-    if(_this.data.userInfo.power != '管理员'&& _this.data.userInfo.power != '审核人'){
+    if(_this.data.userInfo.power != '管理员'){
       wx.showToast({
         title: '此账号无权限审核数据！',
         icon: 'none',
