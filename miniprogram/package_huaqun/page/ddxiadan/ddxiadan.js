@@ -768,7 +768,7 @@ Page({
             
           }
           var shuliang = parseFloat(list[i].sl)
-          gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
+          gonglv = gonglv +Math.ceil(list[i].ddcd / 1000 * shuliang * 12) 
           list[i].gl = gonglv
         }else if(list[i].ddcd * 1 <= _this.data.shoufei_biaozhun * 1){
           if(list[i].sl != ''){
@@ -777,7 +777,7 @@ Page({
             list[i].je = list[i].je.toFixed(2)
           }
           var shuliang = parseFloat(list[i].sl)
-          gonglv = gonglv + Math.ceil(list[i].ddcd * 0.015) * shuliang
+          gonglv = gonglv + Math.ceil(list[i].ddcd / 1000 * shuliang * 12) 
           list[i].gl = gonglv
         }
         for(var j=0; j<kailiao_list.length; j++){
