@@ -1335,7 +1335,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: sql + select_sql
+        query: select_sql
       },
       success: res => {
         console.log(res)

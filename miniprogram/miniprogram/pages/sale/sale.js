@@ -18,119 +18,68 @@ Page({
   xlShow1: false,
   data: {
     list: [],
-    title: [{
+    title: [
+      {
         text: "日期",
         width: "300rpx",
         columnName: "riqi",
         type: "text",
         isupd: true
-      },
-      {
+      },{
         text: "客户名称",
         width: "300rpx",
         columnName: "customer",
         type: "text",
         isupd: true
-      },
-      {
-        text: "客户类别",
+      },{
+        text: "审核状态",
         width: "300rpx",
-        columnName: "leibie",
+        columnName: "sale_state",
         type: "text",
         isupd: true
-      },
-      {
-        text: "客户号",
-        width: "300rpx",
-        columnName: "customer_num",
+      },{
+        text: "仓库",
+        width: "200rpx",
+        columnName: "warehouse",
         type: "text",
         isupd: true
-      },
-      {
-        text: "区域",
-        width: "300rpx",
-        columnName: "area",
+      },{
+        text: "流水号",
+        width: "200rpx",
+        columnName: "id",
         type: "text",
         isupd: true
-      },
-      {
-        text: "收货人员",
-        width: "300rpx",
-        columnName: "sh_staff",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "收货地址",
-        width: "300rpx",
-        columnName: "address",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "业务员",
-        width: "300rpx",
-        columnName: "salesman",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "拿货方式",
-        width: "300rpx",
-        columnName: "pick",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "发货类型",
-        width: "300rpx",
-        columnName: "sale_type",
-        type: "text",
-        isupd: true
-      },
-      {
+      },{
         text: "产品名称",
         width: "300rpx",
         columnName: "product_name",
         type: "text",
         isupd: true
-      },
-      {
-        text: "品号",
-        width: "300rpx",
-        columnName: "pinhao",
-        type: "text",
-        isupd: true
-      },
-      {
+      },{
         text: "规格",
         width: "300rpx",
         columnName: "spec",
         type: "text",
         isupd: true
-      },
-      {
+      },{
         text: "产品属性",
         width: "300rpx",
         columnName: "attribute",
         type: "text",
         isupd: true
-      },
-      {
-        text: "单位",
-        width: "150rpx",
-        columnName: "unit",
-        type: "text",
-        isupd: true
-      },
-      {
+      },{
         text: "销售单价",
         width: "300rpx",
         columnName: "price",
         type: "text",
         isupd: true
-      },
-      {
+      },{
+        text: "单位",
+        width: "150rpx",
+        columnName: "unit",
+        type: "text",
+        isupd: true
+      },{
         text: "销售数量",
         width: "300rpx",
         columnName: "num",
@@ -157,22 +106,62 @@ Page({
         columnName: "type",
         type: "text",
         isupd: true
-      },
-      {
-        text: "仓库",
-        width: "200rpx",
-        columnName: "warehouse",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "审核状态",
+      },{
+        text: "客户号",
         width: "300rpx",
-        columnName: "sale_state",
+        columnName: "customer_num",
         type: "text",
         isupd: true
       },
-      
+      {
+        text: "区域",
+        width: "300rpx",
+        columnName: "area",
+        type: "text",
+        isupd: true
+      },{
+        text: "客户类别",
+        width: "300rpx",
+        columnName: "leibie",
+        type: "text",
+        isupd: true
+      },{
+        text: "收货人员",
+        width: "300rpx",
+        columnName: "sh_staff",
+        type: "text",
+        isupd: true
+      },{
+        text: "收货地址",
+        width: "300rpx",
+        columnName: "address",
+        type: "text",
+        isupd: true
+      },{
+        text: "业务员",
+        width: "300rpx",
+        columnName: "salesman",
+        type: "text",
+        isupd: true
+      },{
+        text: "拿货方式",
+        width: "300rpx",
+        columnName: "pick",
+        type: "text",
+        isupd: true
+      },{
+        text: "品号",
+        width: "300rpx",
+        columnName: "pinhao",
+        type: "text",
+        isupd: true
+      },{
+        text: "发货类型",
+        width: "300rpx",
+        columnName: "sale_type",
+        type: "text",
+        isupd: true
+      },
       
     ],
 
@@ -514,7 +503,8 @@ Page({
           name_list.push(list[i].warehouse)
         }
         _this.setData({
-          warehouse_list: name_list
+          warehouse_list: name_list,
+          all_warehouse_list:name_list
         })
         console.log(name_list)
       },
@@ -729,11 +719,11 @@ Page({
     var sql = ""
     console.log(_this.data.userInfo.power)
     if(_this.data.tiaojian != undefined){
-      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + _this.data.tiaojian[2] + "') and convert(date,sa.riqi)<=convert(date,'" + _this.data.tiaojian[2] + "') and (customer ='" + _this.data.tiaojian[1] + "') and sale_state = '审核中' and salesman = '" + _this.data.tiaojian[3] + "' order by sa.riqi desc,customer,sale_type"
+      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + _this.data.tiaojian[2] + "') and convert(date,sa.riqi)<=convert(date,'" + _this.data.tiaojian[2] + "') and (customer ='" + _this.data.tiaojian[1] + "') and sale_state = '审核中' and salesman = '" + _this.data.tiaojian[3] + "' order by sa.id desc,customer,sale_type"
     }else if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '审核人'){
-      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' order by sa.riqi desc,customer,sale_type"
+      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' order by sa.id desc,customer,sale_type"
     }else {
-      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' and salesman = '" + _this.data.userInfo.name + "' order by sa.riqi desc,customer,sale_type"
+      sql = "select sa.id,sa.riqi,customer_id,sh_staff,pick,product_id,sa.num,xiaoji,sa.remarks,type,customer,salesman,product_name,spec,unit,sa.price,p.pinyin,sa.sale_state,sa.sale_type,sa.leibie,sa.customer_num,sa.area,p.pinhao,p.attribute,sa.address,warehouse from (select s.id,s.riqi,customer_id,sh_staff,pick,wuliu_order,product_id,pihao,num,xiaoji,s.remarks,warehouse,type,express,customer,salesman,pinyin,fahuo,s.price,sale_state,sale_type,c.leibie,c.customer_num,c.area,c.address from sale s left join customerInfo c on s.customer_id=c.id) as sa left join product p on sa.product_id=p.id where convert(date,sa.riqi)>=convert(date,'" + e[0] + "') and convert(date,sa.riqi)<=convert(date,'" + e[1] + "') and (customer like '%" + e[2] + "%' or sa.pinyin like '%" + e[2] + "%') and (product_name like '%" + e[3] + "%' or p.pinyin like '%" + e[3] + "%') and sale_state like '%" + e[4] + "%' and sale_type like '%" + e[5] + "%' and salesman = '" + _this.data.userInfo.name + "' order by sa.id desc,customer,sale_type"
     }
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
@@ -745,8 +735,8 @@ Page({
         var xiaojiheji = 0;
         var list = res.result.recordset 
         for(var i=0;i<list.length;i++){
-          console.log(list[i])
-          console.log(list[i].xiaoji)
+          // console.log(list[i])
+          // console.log(list[i].xiaoji)
           xiaojiheji = xiaojiheji + list[i].xiaoji * 1
         }
         console.log(list)
@@ -861,11 +851,21 @@ Page({
         })
         return;
       }
-      _this.get_kucun();
+      if(_this.data.list[e.currentTarget.dataset.index].sale_state != '审核中'){
+        wx.showToast({
+          title: '此条信息已审核，无需再次审核',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
       _this.setData({
+        state_type:_this.data.list[e.currentTarget.dataset.index].type,
+        this_row:e.currentTarget.dataset.index,
         id:_this.data.list[e.currentTarget.dataset.index].id,
-        shShow:true
       })
+      _this.get_kucun();
+
     }
 
   },
@@ -940,8 +940,19 @@ Page({
           }
         }
         console.log(this_list)
+        var warehouse_list = []
+        for(var i=0; i<this_list.length; i++){
+          if(this_list[i].product_id == _this.data.list[_this.data.this_row].product_id){
+            warehouse_list.push(this_list[i].warehouse)
+          }
+        }
+        if(_this.data.state_type == '退货'){
+          warehouse_list = _this.data.all_warehouse_list
+        }
         _this.setData({
-          kucun_list: this_list
+          kucun_list: this_list,
+          warehouse_list,
+          shShow:true
         })
       },
       err: res => {
