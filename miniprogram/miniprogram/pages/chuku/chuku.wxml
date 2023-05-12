@@ -122,7 +122,7 @@
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="pick" range="{{express_list}}">
     <input bindinput="onInput" data-column="express" class="input_text_form"  value="{{express}}" type="text" name="express" disabled="disabled"></input>
   </picker>
-  <view class="lables">物流单号</view>
+  <view class="lables">备注</view>
   <input bindinput="onInput" data-column="wuliu_order" class="input_text_form" value="{{wuliu_order}}" type="text" name="wuliu_order"></input>
   <view class="lables">批号</view>
   <input bindinput="onInput" data-column="pihao" class="input_text_form" value="{{pihao}}" type="text" name="pihao"></input>

@@ -415,8 +415,8 @@ Page({
     if(userInfo.money_sel != '是'){
       shenhe_title.splice(12,1)
       shenhe_title.splice(10,1)
-      title.splice(17,1)
-      title.splice(15,1)
+      title.splice(10,1)
+      title.splice(8,1)
     }
     console.log(userPower)
     var tiaojian = options.tiaojian
@@ -840,6 +840,7 @@ Page({
         fahuo:_this.data.list[e.currentTarget.dataset.index].fahuo,
         sale_type:_this.data.list[e.currentTarget.dataset.index].sale_type,
         warehouse:_this.data.list[e.currentTarget.dataset.index].warehouse,
+        click_row:e.currentTarget.dataset.column,
         xgShow:true,
       })
     }else{
@@ -875,7 +876,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
-        query : "select id,warehouse,pihao,product_id,product_name,spec,unit,price,pinyin,r.num from (select product_id,warehouse,pihao,sum(case when state='审核通过' then convert(float,num) else 0 end) as num from ruku group by product_id,warehouse,pihao) as r left join product p on r.product_id=p.id;select id,warehouse,pihao,product_id,product_name,spec,unit,price,pinyin,s.num from (select product_id,warehouse,pihao,sum(case when type='销售' then convert(float,num) else -convert(float,num) end) as num from sale where sale_state = '审核通过' and chuku_state = '审核通过' and fahuo = '已发货' group by product_id,warehouse,pihao ) as s left join product p on s.product_id=p.id;"
+        query : "select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,r.num from (select riqi,product_id,warehouse,pihao,case when state='审核通过' then convert(float,num) else 0 end as num from ruku) as r left join product p on r.product_id=p.id where warehouse like '%%' and pihao like '%%' and product_name like '%%' order by riqi;select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,s.num from (select riqi,product_id,warehouse,pihao,case when type='销售' then convert(float,num) else -convert(float,num) end as num from sale where sale_state = '审核通过' and fahuo = '已发货' ) as s left join product p on s.product_id=p.id where warehouse like '%%' and pihao like '%%' and product_name like '%%' order by riqi"
       },
       success: res => {
         console.log(res)
@@ -893,29 +894,30 @@ Page({
             price:list1[i].price,
             pinyin:list1[i].pinyin,
             num:0,
+            numsum:0,
           })
         }
 
-        for(var i=0; i<list2.length; i++){
-          this_list.push({
-            warehouse:list2[i].warehouse,
-            pihao:list2[i].pihao,
-            product_id:list2[i].product_id,
-            product_name:list2[i].product_name,
-            spec:list2[i].spec,
-            unit:list2[i].unit,
-            price:list2[i].price,
-            pinyin:list2[i].pinyin,
-            num:0,
-          })
-        }
+        // for(var i=0; i<list2.length; i++){
+        //   this_list.push({
+        //     warehouse:list2[i].warehouse,
+        //     pihao:list2[i].pihao,
+        //     product_id:list2[i].product_id,
+        //     product_name:list2[i].product_name,
+        //     spec:list2[i].spec,
+        //     unit:list2[i].unit,
+        //     price:list2[i].price,
+        //     pinyin:list2[i].pinyin,
+        //     num:0,
+        //   })
+        // }
         console.log(list1)
         console.log(list2)
         console.log(this_list)
 
         for (var i = 0; i < this_list.length; i++) {
           for (var j = i + 1; j < this_list.length; j++) {
-            if (this_list[i].warehouse == this_list[j].warehouse && this_list[i].product_id == this_list[j].product_id) {
+            if (this_list[i].warehouse == this_list[j].warehouse && this_list[i].pihao == this_list[j].pihao && this_list[i].product_id == this_list[j].product_id) {
               this_list.splice(j, 1);
               j = j - 1;
             }
@@ -926,6 +928,7 @@ Page({
           for (var j =0;j<list1.length;j++) {
               if(this_list[i].warehouse == list1[j].warehouse && this_list[i].product_id == list1[j].product_id){
                 this_list[i].num = this_list[i].num * 1 + list1[j].num * 1
+                this_list[i].numsum = this_list[i].numsum * 1 + list1[j].num * 1
               }
           }
         }
@@ -935,7 +938,14 @@ Page({
         for (var i = 0;i<this_list.length;i++) {
           for (var j =0;j<list2.length;j++) {
               if(this_list[i].warehouse == list2[j].warehouse && this_list[i].product_id == list2[j].product_id){
-                this_list[i].num = this_list[i].num * 1 - list2[j].num * 1
+                this_list[i].numsum = this_list[i].num * 1 - list2[j].num * 1
+                if(this_list[i].num * 1 >= list2[j].num * 1){
+                  this_list[i].num = this_list[i].num * 1 - list2[j].num * 1
+                  list2[j].num = 0
+                }else{
+                  list2[j].num = list2[j].num * 1 - this_list[i].num * 1
+                  this_list[i].num = 0
+                }
               }
           }
         }
@@ -1478,10 +1488,19 @@ Page({
             })
             return;
           }
+          if(_this.data.list[_this.data.click_row].type == "退货"){
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            month = (month > 9) ? month : ("0" + month);
+            day = (day < 10) ? ("0" + day) : day;
+            var riqi = year + "-" + month + "-" + day
+            sql = sql + "insert into payment(pay,f_jine,remarks,customer_id,riqi) values('退货','" + _this.data.lis[_this.data.click_row].xiaoji + "'退货','" + _this.data.lis[_this.data.click_row].customer_id + "'" + riqi + "');"
+          }
           sql = sql + "update sale set sale_state='" + shenhe + "',warehouse='" + _this.data.warehouse + "' where id=" + _this.data.id + ";"
       }else{
           sql = sql + "update sale set warehouse = '',sale_state='" + shenhe + "' where id=" + _this.data.id + ";"
-        
       }
       console.log(sql)
       wx.cloud.callFunction({

@@ -97,7 +97,7 @@ Page({
         isupd: true
       },
       {
-        text: "物流单号",
+        text: "备注",
         width: "200rpx",
         columnName: "wuliu_order",
         type: "text",
@@ -255,7 +255,7 @@ Page({
       isupd: true
     },
     {
-      text: "物流单号",
+      text: "备注",
       width: "200rpx",
       columnName: "wuliu_order",
       type: "text",

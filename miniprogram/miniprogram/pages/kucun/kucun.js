@@ -77,6 +77,13 @@ Page({
         columnName: "num",
         type: "text",
         isupd: true
+      },
+      {
+        text: "库存总数",
+        width: "200rpx",
+        columnName: "numsum",
+        type: "text",
+        isupd: true
       }
     ],
     warehouse_list:[],
@@ -307,7 +314,7 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql="select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,r.num from (select product_id,warehouse,pihao,sum(case when state='审核通过' then convert(float,num) else 0 end) as num from ruku group by product_id,warehouse,pihao) as r left join product p on r.product_id=p.id where warehouse like '%%' and pihao like '%%' and product_name like '%%';select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,s.num from (select product_id,warehouse,pihao,sum(case when type='销售' then convert(float,num) else -convert(float,num) end) as num from sale where sale_state = '审核通过' and fahuo = '已发货' group by product_id,warehouse,pihao ) as s left join product p on s.product_id=p.id where warehouse like '%%' and pihao like '%%' and product_name like '%%'"
+    var sql="select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,r.num from (select riqi,product_id,warehouse,pihao,case when state='审核通过' then convert(float,num) else 0 end as num from ruku) as r left join product p on r.product_id=p.id where warehouse like '%" + e[0] + "%' and pihao like '%" + e[1] + "%' and product_name like '%" + e[2] + "%' order by riqi;select id,warehouse,pihao,product_id,product_name,pinhao,spec,attribute,unit,price,pinyin,s.num from (select riqi,product_id,warehouse,pihao,case when type='销售' then convert(float,num) else -convert(float,num) end as num from sale where sale_state = '审核通过' and fahuo = '已发货' ) as s left join product p on s.product_id=p.id where warehouse like '%" + e[0] + "%' and pihao like '%" + e[1] + "%' and product_name like '%" + e[2] + "%' order by riqi"
     wx.cloud.callFunction({
       name: 'sqlserver_zhejiang',
       data: {
@@ -332,24 +339,25 @@ Page({
             price:list1[i].price,
             pinyin:list1[i].pinyin,
             num:0,
+            numsum:0,
           })
         }
 
-        for(var i=0; i<list2.length; i++){
-          this_list.push({
-            warehouse:list2[i].warehouse,
-            pihao:list2[i].pihao,
-            product_id:list2[i].product_id,
-            product_name:list2[i].product_name,
-            pinhao:list2[i].pinhao,
-            spec:list2[i].spec,
-            attribute:list2[i].attribute,
-            unit:list2[i].unit,
-            price:list2[i].price,
-            pinyin:list2[i].pinyin,
-            num:0,
-          })
-        }
+        // for(var i=0; i<list2.length; i++){
+        //   this_list.push({
+        //     warehouse:list2[i].warehouse,
+        //     pihao:list2[i].pihao,
+        //     product_id:list2[i].product_id,
+        //     product_name:list2[i].product_name,
+        //     pinhao:list2[i].pinhao,
+        //     spec:list2[i].spec,
+        //     attribute:list2[i].attribute,
+        //     unit:list2[i].unit,
+        //     price:list2[i].price,
+        //     pinyin:list2[i].pinyin,
+        //     num:0,
+        //   })
+        // }
         console.log(list1)
         console.log(list2)
         console.log(this_list)
@@ -365,8 +373,9 @@ Page({
         
         for (var i = 0;i<this_list.length;i++) {
           for (var j =0;j<list1.length;j++) {
-              if(this_list[i].warehouse == list1[j].warehouse && this_list[i].pihao == list1[j].pihao && this_list[i].product_id == list1[j].product_id){
+              if(this_list[i].warehouse == list1[j].warehouse && this_list[i].product_id == list1[j].product_id){
                 this_list[i].num = this_list[i].num * 1 + list1[j].num * 1
+                this_list[i].numsum = this_list[i].numsum * 1 + list1[j].num * 1
               }
           }
         }
@@ -375,8 +384,16 @@ Page({
 
         for (var i = 0;i<this_list.length;i++) {
           for (var j =0;j<list2.length;j++) {
-              if(this_list[i].warehouse == list2[j].warehouse && this_list[i].pihao == list2[j].pihao && this_list[i].product_id == list2[j].product_id){
-                this_list[i].num = this_list[i].num * 1 - list2[j].num * 1
+              if(this_list[i].warehouse == list2[j].warehouse && this_list[i].product_id == list2[j].product_id){
+                this_list[i].numsum = this_list[i].num * 1 - list2[j].num * 1
+                if(this_list[i].num * 1 >= list2[j].num * 1){
+                  this_list[i].num = this_list[i].num * 1 - list2[j].num * 1
+                  list2[j].num = 0
+                }else{
+                  list2[j].num = list2[j].num * 1 - this_list[i].num * 1
+                  this_list[i].num = 0
+                }
+                
               }
           }
         }
