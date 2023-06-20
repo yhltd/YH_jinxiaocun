@@ -47,9 +47,9 @@
     <view class="lables">学生姓名</view>
     <input bindinput="onInput" data-column="xsxm" class="input_text_form"  value="{{xsxm}}" type="text" name="xsxm"></input>
     <view class="lables">定金金额</view>
-    <input bindinput="onInput" data-column="djje" class="input_text_form" value="{{djje}}" type="text" name="djje" ></input>
+    <input bindinput="onInput" data-column="djje" class="input_text_form" value="{{djje}}" type="number" name="djje" ></input>
     <view class="lables">学费金额</view>
-    <input bindinput="onInput" data-column="xfje" class="input_text_form" value="{{xfje}}" type="text" name="xfje" ></input>
+    <input bindinput="onInput" data-column="xfje" class="input_text_form" value="{{xfje}}" type="number" name="xfje" ></input>
     <view class="lables">缴费方式</view> 
     <picker bindchange="bindPickerChange6" value="{{index}}" range="{{tpaiment_list}}">
       <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" disabled="disabled"></input>
@@ -75,9 +75,9 @@
     <view class="lables">学生姓名</view>
     <input bindinput="onInput" data-column="xsxm" class="input_text_form"  value="{{xsxm}}" type="text" name="xsxm"></input>
     <view class="lables">定金金额</view>
-    <input bindinput="onInput" data-column="djje" class="input_text_form" value="{{djje}}" type="text" name="djje" ></input>
+    <input bindinput="onInput" data-column="djje" class="input_text_form" value="{{djje}}" type="number" name="djje" ></input>
     <view class="lables">学费金额</view>
-    <input bindinput="onInput" data-column="xfje" class="input_text_form" value="{{xfje}}" type="text" name="xfje" ></input>
+    <input bindinput="onInput" data-column="xfje" class="input_text_form" value="{{xfje}}" type="number" name="xfje" ></input>
     <view class="lables">缴费方式</view>
     <!-- <input bindinput="onInput" data-column="jffs" class="input_text_form" value="{{jffs}}" type="text" name="jffs" ></input> -->
     <picker bindchange="bindPickerChange6" value="{{index}}" range="{{tpaiment_list}}">

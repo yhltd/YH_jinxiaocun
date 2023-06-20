@@ -244,9 +244,8 @@ Page({
     if (!dataset.isupd) {
       return;
     }
-    if (new_value != "" || column == "username"
-      || column == "phone"){
-    var sql = "update member_info set username='" + _this.data.username + "', password='" + _this.data.password + "', name='" + _this.data.name + "', gender='" + _this.data.gender + "', state='" + _this.data.state + "', phone='" + _this.data.phone + "', birthday='" + _this.data.birthday +"', points='" + _this.data.points + "' where id='" + _this.data.list[index].id + "';"
+    if (new_value != ""){
+      var sql = "update member_info set " + column + " = '" + new_value + "' where id='" + _this.data.list[index].id + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -389,10 +388,11 @@ Page({
     if (e.detail.value.points == "") {
       e.detail.value.points = 0
     }
-    if (e.detail.value.username !="" && e.detail.value.password != "" && e.detail.value.name != "" && e.detail.value.gender != "" && e.detail.value.state != "" && e.detail.value.phone != "" && e.detail.value.birthday != "" && e.detail.value.points != "" ){
-    let sql = "insert into member_info(company,username,password,name,gender,state,phone,birthday,points) values('" + _this.data.company + "','" +
+    if (e.detail.value.username !="" && e.detail.value.password != "" && e.detail.value.name != "" && e.detail.value.gender != "" && e.detail.value.state != "" && e.detail.value.phone != "" && e.detail.value.birthday != "" ){
+    let sql = "insert into member_info(company,username,password,name,gender,state,phone,birthday) values('" + _this.data.company + "','" +
       e.detail.value.username + "','" + e.detail.value.password + "','" + e.detail.value.name + "','" +
-      e.detail.value.gender + "','" + e.detail.value.state +  ",'" + e.detail.value.phone + "','" + e.detail.value.birthday + "','" + e.detail.value.points + "')"
+      e.detail.value.gender + "','" + e.detail.value.state +  "','" + e.detail.value.phone + "','" + e.detail.value.birthday + "')"
+      console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -403,6 +403,7 @@ Page({
           title: "添加成功！",
           icon: "none"
         })
+        _this.init()
       },
       error: res => {
         console.log(res)
@@ -421,7 +422,7 @@ Page({
     })
     }else{
       wx.showToast({
-        title: "前六项不能为空！",
+        title: "信息不能为空！",
         icon:"none"
       })
     }

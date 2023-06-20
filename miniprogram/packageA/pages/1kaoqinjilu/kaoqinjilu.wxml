@@ -15,10 +15,10 @@
     <view style="height:30rpx"></view>
     <view class='maskWindowInputView'>
       <picker mode="date" value="{{date}}" fields="month" start="1900-01" end="2100-12" bindchange="bindDateChange1">
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入开始年月' hidden='{{!isMaskWindowInputShow}}' value="{{start_date}}"></input>
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入开始年月' hidden='{{!isMaskWindowInputShow}}' value="{{start_date}}" disabled="disabled"></input>
       </picker>
       <picker mode="date" value="{{date}}" fields="month" start="1900-01" end="2100-12" bindchange="bindDateChange2">
-        <input class='maskWindowInput' maxlength='100' placeholder='请输入结束年月' hidden='{{!isMaskWindowInputShow}}' value="{{stop_date}}"></input>
+        <input class='maskWindowInput' maxlength='100' placeholder='请输入结束年月' hidden='{{!isMaskWindowInputShow}}' value="{{stop_date}}" disabled="disabled"></input>
       </picker>
     </view>
     <view class='maskWindowBtnView'>

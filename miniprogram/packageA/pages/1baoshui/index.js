@@ -628,36 +628,60 @@ Page({
   时间：2020/5/20
   */
 
-  click_delete: function (e) {
-    var $collection = e.currentTarget.dataset
-    var id = $collection.id
-    var name = $collection.name
-    wx.showModal({
-      title: '操作选择',
-      content: '姓名为' + name + "，序号为" + id + "的成员被选中\r\n请选择操作",
-      showCancel: true, //是否显示取消按钮
-      cancelText: "取消", //默认是“取消”
-      cancelColor: '', //取消文字的颜色
-      confirmText: "编辑", //默认是“确定”
-      confirmColor: '#84B9F2', //确定文字的颜色
-      success: function (res) {
-        if (res.cancel) {
-          //点击取消,默认隐藏弹框
-          //这里可以callfunction！！！！
-        } else {
-          //点击编辑
-          wx.showToast({
-            title: '编辑姓名：' + name,
-            icon: 'none'
-          })
-        }
-      },
-      fail: function (res) {}, //接口调用失败的回调函数
-      complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+ click_delete: function (e) {
+  var that = this
+  if (that.data.result.del != 1) {
+    wx.showToast({
+      title: '您没有权限',
+      icon: 'none'
     })
+    return;
+  }
+  var $collection = e.currentTarget.dataset
+  var id = $collection.id
+  var name = $collection.name
+  var month = $collection.moth
+  var year = $collection.year
+  console.log(id, name, month, year)
+  wx.showModal({
+    title: '警告',
+    content: '正在删除姓名为' + name + "的报税信息\r\n删除后不能恢复\r\n请选择操作",
+    showCancel: true, //是否显示取消按钮
+    cancelText: "取消", //默认是“取消”
+    cancelColor: '', //取消文字的颜色
+    confirmText: "删除", //默认是“确定”
+    confirmColor: '#DD5044', //确定文字的颜色
+    success: function (res) {
+      if (res.cancel) {
+        //点击取消,默认隐藏弹框
+        //这里可以callfunction！！！！
+      } else {
+        //点击删除
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "delete from gongzi_gongzimingxi where id =" + id
+          },
+          success: res => {
+            console.log("成功删除")
+            that.baochi()
+          },
+          fail: err => {
+            console.log("失败!!!!")
+          }
+        })
+        wx.showToast({
+          title: '已删除，姓名：' + name,
+          icon: 'none'
+        })
+      }
+    },
+    fail: function (res) {}, //接口调用失败的回调函数
+    complete: function (res) {}, //接口调用结束的回调函数（调用成功、失败都会执行）
+  })
 
-    //修改之后刷新页面
-  },
+  //修改之后刷新页面
+},
 
 
 

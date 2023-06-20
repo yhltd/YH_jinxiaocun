@@ -36,18 +36,22 @@ Page({
             { text: "商品类别",width: "200rpx",columnName: "type",type: "text",isupd: true},
             { text: "商品名称", width: "200rpx", columnName: "product_name", type: "text", isupd: true},
             { text: "单位", width: "400rpx", columnName: "unit", type: "text", isupd: true},
-            { text: "单价", width: "250rpx", columnName: "price", type: "date", isupd: true},
-            { text: "成本", width: "250rpx", columnName: "chengben", type: "date", isupd: true},
-            { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "digit", isupd: true},
+            { text: "单价", width: "250rpx", columnName: "price", type: "text", isupd: true},
+            { text: "成本", width: "250rpx", columnName: "chengben", type: "text", isupd: true},
+            { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+            { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+            { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true},
             ],
 
     title2: [{ text: "商品编码", width: "100rpx", columnName: "product_name", type: "digit", isupd: true },
               { text: "商品类别", width: "250rpx", columnName: "type", type: "text", isupd: true },
               { text: "商品名称", width: "200rpx", columnName: "product_name", type: "text", isupd: true },
               { text: "单位", width: "400rpx", columnName: "unit", type: "text", isupd: true },
-              { text: "单价", width: "200rpx", columnName: "price", type: "text", isupd: true },
-              { text: "成本", width: "200rpx", columnName: "chengben", type: "date", isupd: true },
-              { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "date", isupd: true }
+              { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
+              { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+              { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+              { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+              { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true }
               
               ],
     input_hid: true,
@@ -279,17 +283,16 @@ Page({
   changed: function (e) {
     var _this = this;
     var dataset = _this.data.dataset_input;
-    var id = dataset.id;
+    var index = dataset.index;
+    var id = _this.data.list[index].id
     var column = dataset.column;
     var value = dataset.value;
-    var index = dataset.index;
     var new_value = e.detail.value.new;
     if (!dataset.isupd) {
       return;
     }
-    if (new_value != "" || column == "telephone"
-      || column == "password" || column == "staff"){
-    var sql = "update product set type='" + type + "', product_name='" + product_name + "', product_bianhao='" + product_bianhao + "', unit='" + unit + "', price='" + price + "', chengben='" + chengben + "', tingyong='" + tingyong + "' where id='" + _this.data.list[index].id + "';"
+    if (new_value != "" ){
+      var sql = "update product set " + column + " = '" + new_value + "' where id = '" + _this.data.list[index].id + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -648,7 +651,7 @@ Page({
       title: '打开Excel中',
       mask: 'true'
     })
-    var list = _this.data.list2;
+    var list = _this.data.list;
     var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "digit", isupd: true },
     { text: "商品编码", width: "250rpx", columnName: "product_bianhao", type: "text", isupd: true },
     { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
@@ -656,6 +659,8 @@ Page({
     { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
     { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
     { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+    { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+    { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
     { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
     
     ]
@@ -722,6 +727,8 @@ Page({
     { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
     { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
     { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+    { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+    { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
     { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
     ]
     var cloudList = {

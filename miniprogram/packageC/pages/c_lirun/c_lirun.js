@@ -103,7 +103,7 @@ Page({
     var sum3 = 0
     if(all.length > 0 && xiangmu_list.length > 0){
       for(var i=0; i<all.length; i++){
-        if(this_len <= xiangmu_list.length){
+        if(this_len < xiangmu_list.length){
           if(all[i].project == xiangmu_list[this_len].project){
             end_list.push({
               accounting:xiangmu_list[this_len].project,

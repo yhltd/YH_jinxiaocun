@@ -67,6 +67,209 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "迟到扣款",
+        width: 20,
+        columnName: "chidao_koukuan",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "迟到扣款",
+        width: 20,
+        columnName: "chidao_koukuan",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人医疗",
+        width: 20,
+        columnName: "geren_yiliao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业医疗",
+        width: 20,
+        columnName: "qiye_yiliao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人生育",
+        width: 20,
+        columnName: "geren_shengyu",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业生育",
+        width: 20,
+        columnName: "qiye_shengyu",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人公积金",
+        width: 20,
+        columnName: "geren_gongjijin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业公积金",
+        width: 20,
+        columnName: "qiye_gongjijin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "医疗技术",
+        width: 20,
+        columnName: "yiliao_jishu",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人年金",
+        width: 20,
+        columnName: "geren_nianjin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "滞纳金",
+        width: 20,
+        columnName: "zhinajin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "年金基数",
+        width: 20,
+        columnName: "nianjin_jishu",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "利息",
+        width: 20,
+        columnName: "lixi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人养老",
+        width: 20,
+        columnName: "geren_yanglao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业养老",
+        width: 20,
+        columnName: "qiye_yanglao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "岗位",
+        width: 20,
+        columnName: "gangwei",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "岗位工资",
+        width: 20,
+        columnName: "gangwei_gongzi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业失业",
+        width: 20,
+        columnName: "qiye_shiye",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "工资",
+        width: 20,
+        columnName: "gongzi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "税率",
+        width: 20,
+        columnName: "shuilv",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "跨度工资",
+        width: 20,
+        columnName: "kuadu_gongzi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业工伤",
+        width: 20,
+        columnName: "qiye_gongshang",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "职称津贴",
+        width: 20,
+        columnName: "jintie",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "企业年金",
+        width: 20,
+        columnName: "qiye_nianjin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "年金1%",
+        width: 20,
+        columnName: "nianjin1",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "加班费",
+        width: 20,
+        columnName: "jiabanfei",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "验算公式",
+        width: 20,
+        columnName: "yansuangongshi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "缺勤扣款",
+        width: 20,
+        columnName: "queqin_koukuan",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "个人失业",
+        width: 20,
+        columnName: "geren_shiye",
+        type: "text",
+        isupd: true
+      },
     ],
     page: "1",
     IsLastPage: false,
@@ -434,11 +637,10 @@ Page({
   //添加
   kuaisutianjia: function () {
     var that = this
-
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "insert into gongzi_peizhi (gongsi,kaoqin,kaoqin_peizhi,bumen,zhiwu) values('"+that.data.companyName+"','-','-','-','-')"
+        query: "insert into gongzi_peizhi (gongsi) values('"+that.data.companyName+"')"
       },
       success: res => {
         console.log("插入成功!!!!!!")

@@ -22,45 +22,53 @@ Page({
         txet: "订单号",
         index: 0,
         name : 'orderid',
-        fun : 'orderid'
+        fun : 'orderid',
+        type:'text',
       },
       {
         txet: "商品代码",
         index: 1,
         name : 'sp_dm',
-        fun : 'sp_dm'
+        fun : 'sp_dm',
+        type:'text',
       },
       {
         txet: "商品名称",
         index: 2,
         name : 'cpname',
-        fun : 'cpname'
+        fun : 'cpname',
+        type:'text',
       },
       {
         txet: "商品类别",
         index: 3,
         name : 'cplb',
-        fun : 'cplb'
+        fun : 'cplb',
+        type:'text',
       },{
         txet: "价格",
         index: 4,
         name : 'cpsj',
-        fun : 'cpsj'
+        fun : 'cpsj',
+        type:'number',
       },{
         txet: "数量",
         index: 5,
         name : 'cpsl',
-        fun : 'cpsl'
+        fun : 'cpsl',
+        type:'number',
       },{
         txet: "明细类型",
         index: 6,
         name : 'mxtype',
-        fun : 'mxtype'
+        fun : 'mxtype',
+        type:'text',
       },{
         txet: "收/进货方",
         index: 6,
         name : 'shou_h',
-        fun : 'shou_h'
+        fun : 'shou_h',
+        type:'text',
       }
       
     ],

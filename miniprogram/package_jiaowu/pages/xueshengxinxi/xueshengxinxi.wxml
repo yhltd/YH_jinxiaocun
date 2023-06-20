@@ -62,11 +62,11 @@
     <view class="lables">班级</view>
     <input bindinput="onInput" data-column="bj" class="input_text_form" value="{{bj}}" type="text" name="bj" ></input>
     <view class="lables">电话</view>
-    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
+    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="number" name="dh" ></input>
     <view class="lables">学费</view>
-    <input bindinput="onInput" data-column="xf" class="input_text_form" value="{{xf}}" type="text" name="xf" ></input>
+    <input bindinput="onInput" data-column="xf" class="input_text_form" value="{{xf}}" type="number" name="xf" ></input>
     <view class="lables">总课时</view>
-    <input bindinput="onInput" data-column="zks" class="input_text_form" value="{{zks}}" type="text" name="zks" ></input>
+    <input bindinput="onInput" data-column="zks" class="input_text_form" value="{{zks}}" type="number" name="zks" ></input>
     <view class="lables">状态</view>
     <picker bindchange="bindPickerChange3" value="{{index}}" range="{{zhuangtai_list}}">
       <input bindinput="onInput" data-column="zt" class="input_text_form" value="{{zt}}" type="text" name="zt" disabled="disabled"></input>
@@ -101,11 +101,11 @@
     <view class="lables">班级</view>
     <input bindinput="onInput" data-column="bj" class="input_text_form" value="{{bj}}" type="text" name="bj" ></input>
     <view class="lables">电话</view>
-    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
+    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="number" name="dh" ></input>
     <view class="lables">学费</view>
-    <input bindinput="onInput" data-column="xf" class="input_text_form" value="{{xf}}" type="text" name="xf" ></input>
+    <input bindinput="onInput" data-column="xf" class="input_text_form" value="{{xf}}" type="number" name="xf" ></input>
     <view class="lables">总课时</view>
-    <input bindinput="onInput" data-column="zks" class="input_text_form" value="{{zks}}" type="text" name="zks" ></input>
+    <input bindinput="onInput" data-column="zks" class="input_text_form" value="{{zks}}" type="number" name="zks" ></input>
     <view class="lables">状态</view>
     <picker bindchange="bindPickerChange3" value="{{index}}" range="{{zhuangtai_list}}">
       <input bindinput="onInput" data-column="zt" class="input_text_form" value="{{zt}}" type="text" name="zt" disabled="disabled"></input>

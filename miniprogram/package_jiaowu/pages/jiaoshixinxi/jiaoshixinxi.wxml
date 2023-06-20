@@ -62,7 +62,7 @@
     <view class="lables">学历</view>
     <input bindinput="onInput" data-column="xl" class="input_text_form" value="{{xl}}" type="text" name="xl" ></input>
     <view class="lables">联系电话</view>
-    <input bindinput="onInput" data-column="lxdh" class="input_text_form" value="{{lxdh}}" type="text" name="lxdh" ></input>
+    <input bindinput="onInput" data-column="lxdh" class="input_text_form" value="{{lxdh}}" type="number" name="lxdh" ></input>
     <view class="lables">入职日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="rzrq" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rzrq" class="input_text_form"  value="{{rzrq}}" type="date" name="rzrq" disabled="disabled"></input>
@@ -104,7 +104,7 @@
     <view class="lables">学历</view>
     <input bindinput="onInput" data-column="xl" class="input_text_form" value="{{xl}}" type="text" name="xl" ></input>
     <view class="lables">联系电话</view>
-    <input bindinput="onInput" data-column="lxdh" class="input_text_form" value="{{lxdh}}" type="text" name="lxdh" ></input>
+    <input bindinput="onInput" data-column="lxdh" class="input_text_form" value="{{lxdh}}" type="number" name="lxdh" ></input>
     <view class="lables">入职日期</view>
     <picker class="pick" mode="rzrq" value="{{rzrq}}" data-column_name="rzrq" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rzrq" class="input_text_form"  value="{{rq}}" type="date" name="rzrq" disabled="disabled"></input>

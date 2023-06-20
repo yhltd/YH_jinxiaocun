@@ -48,11 +48,11 @@
     <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" ></input>
     <view class="lables">用户类别</view>
-    <input bindinput="onInput" data-column="yhlb" class="input_text_form" value="{{yhlb}}" type="text" name="yhlb" ></input>
+    <input bindinput="onInput" data-column="yhlb" class="input_text_form" value="{{yhlb}}" type="number" name="yhlb" ></input>
     <view class="lables">年龄</view>
-    <input bindinput="onInput" data-column="nl" class="input_text_form" value="{{nl}}" type="text" name="nl" ></input>
+    <input bindinput="onInput" data-column="nl" class="input_text_form" value="{{nl}}" type="number" name="nl" ></input>
     <view class="lables">电话</view>
-    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
+    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="number" name="dh" ></input>
     <view class="lables">家庭住址</view>
     <input bindinput="onInput" data-column="jtzz" class="input_text_form" value="{{jtzz}}" type="text" name="jtzz" ></input>  
     <view class="lables">身份证号</view>
@@ -79,11 +79,11 @@
     <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" ></input>
     <view class="lables">用户类别</view>
-    <input bindinput="onInput" data-column="yhlb" class="input_text_form" value="{{yhlb}}" type="text" name="yhlb" ></input>
+    <input bindinput="onInput" data-column="yhlb" class="input_text_form" value="{{yhlb}}" type="number" name="yhlb" ></input>
     <view class="lables">年龄</view>
-    <input bindinput="onInput" data-column="nl" class="input_text_form" value="{{nl}}" type="text" name="nl" ></input>
+    <input bindinput="onInput" data-column="nl" class="input_text_form" value="{{nl}}" type="number" name="nl" ></input>
     <view class="lables">电话</view>
-    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" ></input>
+    <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="number" name="dh" ></input>
     <view class="lables">家庭住址</view>
     <input bindinput="onInput" data-column="jtzz" class="input_text_form" value="{{jtzz}}" type="text" name="jtzz" ></input>  
     <view class="lables">身份证号</view>

@@ -646,6 +646,16 @@ Page({
         riqi2:'2100-12-31'
       })
     }
+
+    if(_this.data.riqi1 > _this.data.riqi2){
+      wx.showToast({
+        title: '开始日期不能大于结束日期',
+        icon:'none',
+        duration: 2000//持续的时间
+      })
+      return;
+    }
+
     var e = [_this.data.riqi1,_this.data.riqi2]
     _this.tableShow(e)
     _this.qxShow()

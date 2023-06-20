@@ -331,7 +331,9 @@ Page({
             console.log(imgArr.length)
             _this.onClearCanvas()
             _this.onImport()
-            _this.onExport()
+            setTimeout(function() {
+              _this.onExport()
+            },5000)
         })
           .catch((e) => {
               console.error(e);

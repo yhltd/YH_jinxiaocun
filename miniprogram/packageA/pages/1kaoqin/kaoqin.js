@@ -9,7 +9,7 @@ Page({
     companyName: "",
     jiaqi: [],
     jiaqiLength: 0,
-    kaoqin_array:['出勤','请假','迟到'],
+    kaoqin_array:['出勤','旷勤','请假','迟到','早退'],
     maxpagenumber: 0,
     isMaskWindowShow: false,
     maskWindowList: ['全局姓名查询', '当月姓名查询'],
@@ -587,6 +587,97 @@ Page({
       }
     }
   },
+
+  //全勤天数和每年不同的法定休假日写入
+  jiaqi_refresh: function (e) {
+    var _this = this
+    //点击关闭左遮罩
+		var time = new Date();
+		var year = time.getFullYear();
+		var month = time.getMonth()+1;
+    var column_arr = ['E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN']
+    var this_date = format()
+    var day = new Date(year,month,0).getDate()
+    var sql = ""
+    for(var i=1; i<=day; i++){
+      var this_date2 = this_date + "-" + i
+      if(i<10){
+        this_date2 = this_date + "-0" + i
+      }
+      var week = new Date(this_date2).getDay();
+      if(sql == "" && (week == 0 || week == 6)){
+        sql = "update gongzi_kaoqinjilu set " + column_arr[i-1] + "='休'"
+      }else if(sql != "" && (week == 0 || week == 6)){
+        sql = sql + "," + column_arr[i-1] + "='休'"
+      }
+    }
+    if(sql != ''){
+      if(month < 10){
+        month = "0" + month
+      }
+      sql = sql + " where year='" + year + "' and moth='" + month + "'"
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: sql
+        },
+        success: res => {
+          wx.showToast({
+            title: '完成',
+            icon: 'none',
+            duration: 2200,
+          })
+          _this.baochi()
+        },
+        err: res => {
+          console.log("错误!", res)
+        }
+      })
+    }
+  },
+
+    dangyue_refresh: function (e) {
+      var _this = this
+      //点击关闭左遮罩
+      var time = new Date();
+      var year = time.getFullYear();
+      var month = time.getMonth()+1;
+      var column_arr = ['E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN']
+      var sql = ""
+      for(var i=1; i<=31; i++){
+        if(sql == ""){
+          sql = "update gongzi_kaoqinjilu set " + column_arr[i-1] + "=''"
+        }else{
+          sql = sql + "," + column_arr[i-1] + "=''"
+        }
+      }
+      if(sql != ''){
+        if(month < 10){
+          month = "0" + month
+        }
+        sql = sql + " where year='" + year + "' and moth='" + month + "'"
+        console.log(sql)
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: sql
+          },
+          success: res => {
+            wx.showToast({
+              title: '完成',
+              icon: 'none',
+              duration: 2200,
+            })
+            _this.baochi()
+          },
+          err: res => {
+            console.log("错误!", res)
+          }
+        })
+      }
+    },
+
   /**
    * 生命周期函数--监听页面显示
    */
@@ -654,149 +745,6 @@ Page({
       icon: 'none'
     })
   },
-
-
-  //全勤天数和每年不同的法定休假日写入
-  jiaqi: function (e) {
-    var that = this
-    //点击关闭左遮罩
-
-    console.log(that.data.list)
-    console.log(that.data.jiaqi)
-    const type = e.currentTarget.dataset.type;
-    const mode = e.currentTarget.dataset.mode;
-    if (mode == "left") {
-      this.setData({
-        leftDrawer: false
-      })
-    } else {
-      this.setData({
-        rightDrawer: false
-      })
-    }
-    if (that.data.isSearch) {
-      wx.showToast({
-        title: '请先同步数据',
-        icon: 'none'
-      })
-      return;
-    }
-
-    var youbiao = ['E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI']
-
-    var youbiaokachi = ['-', '-', '-', '-', '-', '休', '休', '-', '-', '-', '-', '-', '休', '休', '-', '-', '-', '-', '-', '休', '休', '-', '-', '-', '-', '-', '休', '休', '-', '-', '-', '-', '-', '休', '休', '-', '-', '-', '-', '-', '休', '休', ]
-
-    var jiaqiLength = that.data.jiaqiLength
-    var length = that.data.list.length
-    var monthLength = 0
-    var xingqi = 0
-    var month = 0
-    var year = 0
-
-    for (var loop = 0; loop < length; loop++) {
-      //判断月份对应的每月天数，只计算天数内的数据，超出部分记为错误
-      if (that.data.list[loop].moth == 1 || that.data.list[loop].moth == 3 || that.data.list[loop].moth == 5 || that.data.list[loop].moth == 7 || that.data.list[loop].moth == 8 || that.data.list[loop].moth == 10 || that.data.list[loop].moth == 12) {
-        monthLength = 31
-      } else if (that.data.list[loop].moth == 4 || that.data.list[loop].moth == 6 || that.data.list[loop].moth == 9 || that.data.list[loop].moth == 11) {
-        monthLength = 30
-      } else if (that.data.list[loop].moth == 2 || that.data.list[loop].year % 4 == 0) {
-        monthLength = 29
-      } else if (that.data.list[loop].moth == 2 || that.data.list[loop].year % 4 != 0) {
-        monthLength = 28
-      }
-
-
-      //模块作用：生成“xingqi”
-      //使用基姆拉尔森计算公式，因为JavaScript不支持数据类型，所以一部分在mssql中做，又因为mssql不支持if查询，所以一部分在JavaScript中做
-      //每个月第一天到底是星期几，分两种情况处理，1月2月，和其他月份
-      month = that.data.list[loop].moth
-      year = that.data.list[loop].year
-      if (month == 1) {
-        //2020年1月1日转化为2019年13月1日
-        month = "13"
-        year = year - 1
-        xingqi = Math.round(1 + 2 * month + Math.floor(3 * (month + 1) / 5) + year + Math.floor(year / 4) - Math.round(year / 100) + Math.round(year / 400) + 1) % 7
-      } else if (month == 2) {
-        //2020年2月1日转化为2019年14月1日
-        month = "14"
-        year = year - 1
-        xingqi = Math.round(1 + 2 * month + Math.round(3 * (month + 1) / 5) + year + Math.round(year / 4) - Math.round(year / 100) + Math.round(year / 400) + 1) % 7
-      } else {
-        xingqi = that.data.list[loop].xingqi
-      }
-      console.log(year, "年", month, "月1日    对应星期", xingqi)
-
-
-
-      //定义游标卡尺的循环变量
-      var a = 0
-      //type是判断是当月休假还是当月初始化的标志位
-      if (type == 'no') {
-        for (var i = 0; i < monthLength; i++) {
-          a = i + xingqi + 6
-          if (youbiaokachi[a] == '休') {
-            that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '休' where id =" + that.data.list[loop].id + " and AO = '" + this.data.companyName + "';"
-          }
-        }
-      } else if (type == 'chushihua') {
-        for (var i = 0; i < monthLength; i++) {
-          a = i + xingqi + 6
-          that.data.sql = that.data.sql + "update gongzi_kaoqinjilu set " + youbiao[i] + " = '" + youbiaokachi[a] + "' where id =" + that.data.list[loop].id + " and AO = '" + this.data.companyName + "';"
-        }
-      }
-      for (var ix = 0; ix < jiaqiLength; ix++) {
-        if (that.data.list[loop].year == that.data.jiaqi[ix].year) { //判断年份
-          if (that.data.list[loop].moth == that.data.jiaqi[ix].month) { //判断月份
-            //进行一个月中每天的判断
-            that.data.sql2 = that.data.sql2 + "update gongzi_kaoqinjilu set " + youbiao[that.data.jiaqi[ix].day - 1] + " = '休' where id =" + that.data.list[loop].id + " and AO = '" + this.data.companyName + "';"
-          }
-        }
-      }
-
-
-
-      console.log(that.data.sql2)
-      //拼接之后再调用云函数
-      wx.cloud.callFunction({
-        name: 'sqlServer_117',
-        data: {
-          query: that.data.sql
-        },
-        success: res => {
-          console.log("loading")
-        },
-        fail: err => {},
-        complete: () => {
-          //置空
-          that.setData({
-            sql: '',
-          })
-        }
-      })
-      wx.cloud.callFunction({
-        name: 'sqlServer_117',
-        data: {
-          query: that.data.sql2
-        },
-        success: res => {
-          console.log("loading")
-        },
-        fail: err => {},
-        complete: () => {
-          //置空
-          that.setData({
-            sql2: ''
-          })
-        }
-      })
-    }
-    that.onLoad()
-    that.baochi()
-  },
-
-
-
-
 
   /*函数名：统计
   描述：统计当月每位员工实际出勤的天数
@@ -1700,3 +1648,16 @@ Page({
     })
   },
 })
+
+function format()
+	{
+		//dataString是整数，否则要parseInt转换
+		var time = new Date();
+		var year = time.getFullYear();
+		var month = time.getMonth()+1;
+		var day = time.getDate();
+		var hour = time.getHours();
+		var minute = time.getMinutes();
+		var second = time.getSeconds();
+		return year+'-'+(month<10?'0'+month:month)
+	}

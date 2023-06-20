@@ -669,6 +669,43 @@ Page({
   },
 
 
+  birthday: function () {
+    var that = this
+    var sql = "select B from gongzi_renyuan where L like '"+that.data.companyName+"%' and month(convert(date,isnull(Q,'1900-01-01'))) = month(GETDATE()) and day(convert(date,isnull(Q,'1900-01-01'))) = day(GETDATE()) "
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var name_list = res.result.recordset
+        var name_str = ""
+        console.log(name_list)
+        for(var i=0; i<name_list.length; i++){
+          if(name_str == ""){
+            name_str = name_list[i].B
+          }else{
+            name_str = name_str + "\n" + name_list[i].B
+          }
+        }
+        if(name_str == ""){
+          name_str = "无人过生日"
+        }
+        wx.showToast({
+          title: name_str,
+          icon: "none"
+        })
+      },
+      err: res => {
+        console.log("错误!", res)
+      }
+    })
+
+
+  },
+
+
   /*刷新页面 */
   shuaxin: function (e) {
     var that = this

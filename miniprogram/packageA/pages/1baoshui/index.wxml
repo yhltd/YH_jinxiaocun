@@ -62,7 +62,7 @@
       <block wx:for="{{title}}" wx:key="">
         <view class="th {{(item.baoshui == '证件号码')?'change':''||(item.baoshui == '年金(个人部分)')?'change':'' || (item.baoshui == '准予扣除的捐赠额')?'change':''}}" data-baopan='{{item.baopan}}' style="{{item.baoshui=='姓名'?'position: sticky;top: 0;left: 0;':''}}">
           <view class="cell_label_header centerclass">
-            <text style="font-size:; font-weight:bold;">{{item.baoshui}}</text>
+            <text style="font-weight:bold;">{{item.baoshui}}</text>
           </view>
         </view>
       </block>
@@ -74,7 +74,7 @@
       <view class='table_main'>
         <!--序号 -->
         <view class='td' style="position: sticky;left:0;">
-          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name="{{item.B}}" data-type="text" data-doinb='B' data-x="{{item.B}}">{{item.B}}</view>
+          <view class="cell_label centerclass" bindlongpress="click_delete" bindtap="click_edit" data-id='{{item.id}}' data-name="{{item.B}}" data-type="text" data-doinb='B' data-x="{{item.B}}">{{item.B}}</view>
         </view>
         <view class='td' style="width: 300rpx">
           <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-name='{{item.B}}' data-type="number" data-x="{{item.E}}" data-doinb='E'>{{item.E}}</view>

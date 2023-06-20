@@ -95,7 +95,9 @@
         <view class='td' style="width:300rpx">
           <view class="cell_label centerclass">{{item.O}}</view>
         </view>
-
+        <view class='td'>
+          <view class="cell_label centerclass">{{item.P}}</view>
+        </view>
         <view class='td'>
           <view class="cell_label centerclass">{{item.Q}}</view>
         </view>
@@ -126,10 +128,10 @@
         <view class='td'>
           <view class="cell_label centerclass">{{item.Y}}</view>
         </view>
-        <view class='td' style="width:300rpx">
+        <view class='td' >
           <view class="cell_label centerclass">{{item.Z}}</view>
         </view>
-        <view class='td' style="width:300rpx">
+        <view class='td' >
           <view class="cell_label centerclass">{{item.AA}}</view>
         </view>
         <view class='td'>
@@ -182,5 +184,7 @@
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button>
+    <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="birthday" data-mode="left">今日生日</button>
   </view>
 </drawer>

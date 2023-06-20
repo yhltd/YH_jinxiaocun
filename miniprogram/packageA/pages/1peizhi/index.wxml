@@ -20,7 +20,7 @@
       <block wx:for="{{title}}" wx:key="key">
         <view class="th {{(item.peizhi == '身份证号码')?'change':''||(item.peizhi == '银行账号')?'change':''||(item.peizhi == '序号')?'tap':''}}" data-peizhi='{{item.peizhi}}'>
           <view class="cell_label_header centerclass" >
-            <text style="font-size:; font-weight:bold;">{{item.peizhi}}</text>
+            <text style=" font-weight:bold;">{{item.peizhi}}</text>
           </view>
         </view>
       </block>
@@ -50,6 +50,90 @@
         </view>
         <view class='td'>
           <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.zhiwu}}" data-doinb='zhiwu'>{{item.zhiwu}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.chidao_koukuan}}" data-doinb='chidao_koukuan'>{{item.chidao_koukuan}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.geren_yiliao}}" data-doinb='geren_yiliao'>{{item.geren_yiliao}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_yiliao}}" data-doinb='qiye_yiliao'>{{item.qiye_yiliao}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.geren_shengyu}}" data-doinb='geren_shengyu'>{{item.geren_shengyu}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_shengyu}}" data-doinb='qiye_shengyu'>{{item.qiye_shengyu}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.geren_gongjijin}}" data-doinb='geren_gongjijin'>{{item.geren_gongjijin}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_gongjijin}}" data-doinb='qiye_gongjijin'>{{item.qiye_gongjijin}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.yiliao_jishu}}" data-doinb='yiliao_jishu'>{{item.yiliao_jishu}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.geren_nianjin}}" data-doinb='geren_nianjin'>{{item.geren_nianjin}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.zhinajin}}" data-doinb='zhinajin'>{{item.zhinajin}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.nianjin_jishu}}" data-doinb='nianjin_jishu'>{{item.nianjin_jishu}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.lixi}}" data-doinb='lixi'>{{item.lixi}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.geren_yanglao}}" data-doinb='geren_yanglao'>{{item.geren_yanglao}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_yanglao}}" data-doinb='qiye_yanglao'>{{item.qiye_yanglao}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.gangwei}}" data-doinb='gangwei'>{{item.gangwei}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.gangwei_gongzi}}" data-doinb='gangwei_gongzi'>{{item.gangwei_gongzi}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_shiye}}" data-doinb='qiye_shiye'>{{item.qiye_shiye}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.gongzi}}" data-doinb='gongzi'>{{item.gongzi}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.shuilv}}" data-doinb='shuilv'>{{item.shuilv}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.kuadu_gongzi}}" data-doinb='kuadu_gongzi'>{{item.kuadu_gongzi}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_gongshang}}" data-doinb='qiye_gongshang'>{{item.qiye_gongshang}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.jintie}}" data-doinb='jintie'>{{item.jintie}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.qiye_nianjin}}" data-doinb='qiye_nianjin'>{{item.qiye_nianjin}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.nianjin1}}" data-doinb='nianjin1'>{{item.nianjin1}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.jiabanfei}}" data-doinb='jiabanfei'>{{item.jiabanfei}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.yansuangongshi}}" data-doinb='yansuangongshi'>{{item.yansuangongshi}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.queqin_koukuan}}" data-doinb='queqin_koukuan'>{{item.queqin_koukuan}}</view>
+        </view>
+        <view class='td'>
+          <view class="cell_label centerclass" bindtap="click_edit" data-id='{{item.id}}' data-gongsi='{{item.gongsi}}' data-type="text" data-x="{{item.geren_shiye}}" data-doinb='geren_shiye'>{{item.geren_shiye}}</view>
         </view>
       </view>
     </block>
@@ -96,7 +180,7 @@
     <button class="btn-primary-back" hover-class="btn-hover" bindtap="closeDrawer" data-mode="left">点击返回</button>
     <view style="height:20rpx"></view>
     <button class="btn-primary" hover-class="btn-hover" bindtap="shuaxin" data-mode="left">同步数据</button>
-    <view style="height:20rpx"></view>
-    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button>
+    <!-- <view style="height:20rpx"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel" data-mode="left">导出Excel</button> -->
   </view>
 </drawer>

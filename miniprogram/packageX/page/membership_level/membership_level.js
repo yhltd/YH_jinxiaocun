@@ -224,7 +224,7 @@ Page({
     }
     if (new_value != "" || column == "jibie"
       || column == "menkan" || column == "bili"){
-    var sql = "update member_jibie set jibie='" +  _this.data.jibie + "', menkan='" +  _this.data.menkan + "', bili='" +  _this.data.bili + "' where id='" + _this.data.list[index].id + "';"
+    var sql = "update member_jibie set " + column + " = '" + new_value + "' where id='" + _this.data.list[index].id + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -242,6 +242,7 @@ Page({
           ["list[" + index + "]." + column]: new_value,
           new: ""
         })
+        _this.init();
         _this.hid_view()
       },
       err: res => {
@@ -380,6 +381,7 @@ Page({
           title: "添加成功！",
           icon: "none"
         })
+        _this.init();
       },
       error: res => {
         console.log(res)

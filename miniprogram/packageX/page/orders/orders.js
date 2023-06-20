@@ -228,7 +228,7 @@ Page({
     }
     if (new_value != "" || column == "ddh"
       || column == "syy" || column == "hyxm"){
-    var sql = "update orders set riqi='" + _this.data.riqi + "', ddh='" + _this.data.ddh + "', hyzh='" + _this.data.hyzh + "', hyxm='" + _this.data.hyxm + "', yhfa='" + _this.data.yhfa + "', ssje='" + _this.data.ssje + "', yhje='" + _this.data.yhje + "', syy='" + _this.data.syy + "' where id='" + _this.data.list[index].id + "';"
+    var sql = "update orders set " + column + " = '" + new_value + "' where id='" + _this.data.list[index].id + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',
       data: {
@@ -246,6 +246,7 @@ Page({
           ["list[" + index + "]." + column]: new_value,
           new: ""
         })
+        _this.init();
         _this.hid_view()
       },
       err: res => {
@@ -446,6 +447,7 @@ Page({
           title: "添加成功！",
           icon: "none"
         })
+        _this.init()
       },
       error: res => {
         console.log(res)

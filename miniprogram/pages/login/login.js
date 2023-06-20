@@ -320,7 +320,7 @@ var login = function(that,info) {
         })
       }
     })
-  }else if(system=="云合信用卡管理系统") {
+  }else if(system=="云合智慧门店收银系统") {
     var xsql = "select * from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and account ='" + info.inputName + "'"
     wx.cloud.callFunction({
       
@@ -1116,7 +1116,7 @@ Page({
         system
       })
       arr = ["sqlServer_117","select B from baitaoquanxian_renyun GROUP BY B","B"]
-    } else if (system == "云合信用卡管理系统") {
+    } else if (system == "云合智慧门店收银系统") {
       _this.setData({
         system,
       }) 
@@ -1191,7 +1191,7 @@ Page({
       getCompanyTime(this,e.detail.value,'进销存')
     }else if(this.data.system=="云合分权编辑系统"){
       getCompanyTime(this,e.detail.value,'分权')
-    }else if(this.data.system=="云合信用卡管理系统"){
+    }else if(this.data.system=="云合智慧门店收银系统"){
       getCompanyTime(this,e.detail.value,'卡管理')
     }else if(this.data.system=="云合教务管理系统"){
       getCompanyTime(this,e.detail.value,'教务')

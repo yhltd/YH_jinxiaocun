@@ -178,6 +178,16 @@ Page({
     if(stop_date == ''){
       stop_date = "2100-12-31"
     }
+
+    if(start_date > stop_date){
+      wx.showToast({
+        title: '开始日期不能大于结束日期',
+        icon:'none',
+        duration: 2000//持续的时间
+      })
+      return;
+    }
+
     var e = [start_date,stop_date]
     _this.tableShow(e)
     

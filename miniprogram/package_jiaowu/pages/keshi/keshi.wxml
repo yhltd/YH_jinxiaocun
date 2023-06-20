@@ -53,13 +53,13 @@
       <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" disabled="disabled"></input>
     </picker>
     <view class="lables">课时</view>
-    <input bindinput="onInput" data-column="ks" class="input_text_form" value="{{ks}}" type="text" name="ks" ></input>
+    <input bindinput="onInput" data-column="ks" class="input_text_form" value="{{ks}}" type="number" name="ks" ></input>
     <view class="lables">责任教师</view>
     <picker bindchange="bindPickerChange2" value="{{index}}" range="{{jiaoshi_list}}">
       <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" disabled="disabled"></input>
     </picker>
     <view class="lables">每节课时金额</view>
-    <input bindinput="onInput" data-column="mjksje" class="input_text_form" value="{{mjksje}}" type="text" name="mjksje" ></input>
+    <input bindinput="onInput" data-column="mjksje" class="input_text_form" value="{{mjksje}}" type="number" name="mjksje" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -80,13 +80,13 @@
       <input bindinput="onInput" data-column="pxks" class="input_text_form" value="{{pxks}}" type="text" name="pxks" disabled="disabled"></input>
     </picker>
     <view class="lables">课时</view>
-    <input bindinput="onInput" data-column="ks" class="input_text_form" value="{{ks}}" type="text" name="ks" ></input>
+    <input bindinput="onInput" data-column="ks" class="input_text_form" value="{{ks}}" type="number" name="ks" ></input>
     <view class="lables">责任教师</view>
     <picker bindchange="bindPickerChange2" value="{{index}}" range="{{jiaoshi_list}}">
       <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs" disabled="disabled"></input>
     </picker>
     <view class="lables">每节课时金额</view>
-    <input bindinput="onInput" data-column="mjksje" class="input_text_form" value="{{mjksje}}" type="text" name="mjksje" ></input>
+    <input bindinput="onInput" data-column="mjksje" class="input_text_form" value="{{mjksje}}" type="number" name="mjksje" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
