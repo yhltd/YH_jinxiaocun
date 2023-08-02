@@ -9,6 +9,7 @@ Page({
   tjShow: false,
   rqxzShow1: false,
   xgShow: false,
+  xgShow2: false,
   cxShow: false,
   data: {
     update_name: {
@@ -40,16 +41,16 @@ Page({
         isupd: true
       },
       {
-        text: "审单",
+        text: "订单状态",
         width: "250rpx",
-        columnName: "hd",
+        columnName: "wancheng",
         type: "text",
         isupd: true
       },
       {
-        text: "订单完成",
+        text: "加工操作员",
         width: "250rpx",
-        columnName: "wancheng",
+        columnName: "jgczy",
         type: "text",
         isupd: true
       },
@@ -103,9 +104,9 @@ Page({
         isupd: true
       },
       {
-        text: "付款状态",
+        text: "完成时间",
         width: "250rpx",
-        columnName: "fkzt",
+        columnName: "wcsj",
         type: "text",
         isupd: true
       },
@@ -127,30 +128,16 @@ Page({
         isupd: true
       },
       {
-        text: "审单",
-        width: "250rpx",
-        columnName: "hd",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "订单完成",
+        text: "订单状态",
         width: "250rpx",
         columnName: "wancheng",
         type: "text",
         isupd: true
       },
       {
-        text: "付款状态",
+        text: "加工操作员",
         width: "250rpx",
-        columnName: "fkzt",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "处理顺序",
-        width: "250rpx",
-        columnName: "shunxu",
+        columnName: "jgczy",
         type: "text",
         isupd: true
       },
@@ -203,9 +190,14 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "完成时间",
+        width: "250rpx",
+        columnName: "wcsj",
+        type: "text",
+        isupd: true
+      },
     ],
-    fkzt_list: ['未付款', '已付款'],
-    hd_list: ['通过', '未通过'],
     djbh: '',
     azdz :'',
     xiala_panduan: '',
@@ -247,9 +239,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      var sql = "select distinct ddh,wancheng,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,sum_money from lightbelt where khmc ='" + _this.data.userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and isnull(azdz,'') like '%" + e[4] + "%' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as shunxu,sum_money,jgczy,wcsj from lightbelt where khmc ='" + _this.data.userInfo.name + "' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and isnull(azdz,'') like '%" + e[4] + "%' order by shunxu,xdrq DESC"
     } else {
-      var sql = "select distinct ddh,wancheng,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,sum_money from lightbelt where khmc like '%" + e[0] + "%' and khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and isnull(azdz,'') like '%" + e[4] + "%' order by shunxu,xdrq DESC"
+      var sql = "select distinct ddh,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,xdrq,djbh,shouhuo,lxdh,shfs,azdz,khmc,case when isnull(fkzt,'未付款') = '' then '未付款' else isnull(fkzt,'未付款') end as fkzt,isnull(hd,'')as hd,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as shunxu,sum_money,jgczy,wcsj from lightbelt where khmc like '%" + e[0] + "%' and ddh like '%" + e[1] + "%' and xdrq >= '" + e[2] + "' and xdrq <= '" + e[3] + "' and isnull(azdz,'') like '%" + e[4] + "%' order by shunxu,xdrq DESC"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -261,15 +253,6 @@ Page({
         console.log(res)
         var list = res.result.recordset
         console.log(list)
-        for (var i = 0; i < list.length; i++) {
-          if(list[i].shunxu == '0'){
-            list[i].shunxu = '优先处理'
-          }else if(list[i].shunxu == '2'){
-            list[i].shunxu = '推迟处理'
-          }else{
-            list[i].shunxu = ''
-          }
-        }
         _this.setData({
           start_date:'',
           stop_date:'',
@@ -295,8 +278,41 @@ Page({
     _this.setData({
       tjShow: false,
       xgShow: false,
+      xgShow2: false,
       cxShow: false,
       currentDate: new Date().getTime()
+    })
+  },
+
+  upd1:function(e){
+    var _this = this
+    var sql = "update lightbelt set jgczy='" + _this.data.this_value + "' where djbh='" + _this.data.order_number + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -307,63 +323,35 @@ Page({
     var order_number = _this.data.list[e.currentTarget.dataset.index].djbh
     console.log(index)
     console.log(column)
-    if (column == "hd") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')) {
-
+    if(column == 'jgczy'){
+      if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
+        if(_this.data.userInfo.power == '操作员' && _this.data.list[e.currentTarget.dataset.index].wancheng != '未审验'){
+          wx.showToast({
+            title: '此单已审验，不允许修改！',
+            icon: 'none'
+          })
+          return;
+        }
+        _this.setData({
+          order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
+          this_column: column,
+          this_value:_this.data.list[e.currentTarget.dataset.index].jgczy,
+          xgShow2: true,
+        })
       } else {
         wx.showToast({
-          title: '无审核权限！',
+          title: '无修改加工操作员权限！',
           icon: 'none'
         })
         return;
       }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
-        this_column: column,
-        xgShow: true,
-        yes_click: '通过',
-        no_click: '拒绝',
-      })
-    } else if (column == "fkzt") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')) {
-
-      } else {
-        wx.showToast({
-          title: '无付款权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
-        this_column: column,
-        xgShow: true,
-        yes_click: '已付款',
-        no_click: '未付款',
-      })
-    } else if (column == "shunxu") {
-      if (_this.data.userInfo.power == '管理员') {
-        
-      } else {
-        wx.showToast({
-          title: '无排序权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].djbh,
-        this_column: column,
-        xgShow: true,
-        yes_click: '优先处理',
-        no_click: '推迟处理',
-      })
-    }else if (column == "wancheng") {
+    }
+    else if (column == "wancheng") {
       if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
         
       } else {
         wx.showToast({
-          title: '无完成订单权限！',
+          title: '无修改订单状态权限！',
           icon: 'none'
         })
         return;
@@ -469,45 +457,9 @@ Page({
     })
   },
 
-  clear_yesno:function(){
+  click_01: function () {
     var _this = this
-    var sql = "update lightbelt set " + _this.data.this_column + "='' where djbh='" + _this.data.order_number + "'"
-    wx.cloud.callFunction({
-      name: 'sqlserver_huaqun',
-      data: {
-        query: sql
-      },
-      success: res => {
-        wx.showToast({
-          title: '完成！',
-          icon: 'none',
-          duration: 3000
-        })
-        var e = ['','', '1900-01-01', '2100-12-31','']
-        _this.tableShow(e)
-        _this.qxShow()
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
-  },
-
-  yes_click: function () {
-    var _this = this
-    if(_this.data.this_column == 'shunxu'){
-      var sql = "update lightbelt set " + _this.data.this_column + "='0' where djbh='" + _this.data.order_number + "'"
-    }else{
-      var sql = "update lightbelt set " + _this.data.this_column + "='" + _this.data.yes_click + "' where djbh='" + _this.data.order_number + "'"
-    }
+    var sql = "update lightbelt set " + _this.data.this_column + "='已审验' where djbh='" + _this.data.order_number + "'"
     
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
@@ -521,7 +473,6 @@ Page({
           duration: 3000
         })
         var e = ['','', '1900-01-01', '2100-12-31','']
-        // var e = ['', '',start_date,stop_date,'']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -539,13 +490,109 @@ Page({
     })
   },
 
-  no_click: function () {
+  click_02: function () {
     var _this = this
-    if(_this.data.this_column == 'shunxu'){
-      var sql = "update lightbelt set " + _this.data.this_column + "='2' where djbh='" + _this.data.order_number + "'"
-    }else{
-      var sql = "update lightbelt set " + _this.data.this_column + "='" + _this.data.no_click + "' where djbh='" + _this.data.order_number + "'"
-    }
+    var sql = "update lightbelt set " + _this.data.this_column + "='未审验' where djbh='" + _this.data.order_number + "'"
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  click_03: function () {
+    var _this = this
+    var sql = "update lightbelt set " + _this.data.this_column + "='优先处理' where djbh='" + _this.data.order_number + "'"
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  click_04: function () {
+    var _this = this
+    var sql = "update lightbelt set " + _this.data.this_column + "='推迟处理' where djbh='" + _this.data.order_number + "'"
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  click_05: function () {
+    var _this = this
+    var sql = "update lightbelt set " + _this.data.this_column + "='完成',wcsj=convert(date,GETDATE()) where djbh='" + _this.data.order_number + "'"
+    
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {

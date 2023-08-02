@@ -64,6 +64,27 @@ Page({
         isupd: true
       },
       {
+        text: "开拉手孔数量",
+        width: "250rpx",
+        columnName: "shuoming1",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开锁孔数量",
+        width: "250rpx",
+        columnName: "shuoming2",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开特殊孔数量",
+        width: "250rpx",
+        columnName: "beizhu",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "高度",
         width: "250rpx",
         columnName: "height",
@@ -78,20 +99,6 @@ Page({
         isupd: true
       },
       {
-        text: "孔位说明备注信息",
-        width: "300rpx",
-        columnName: "beizhu",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "审单",
-        width: "250rpx",
-        columnName: "shendan",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "生产状态",
         width: "250rpx",
         columnName: "shengchan",
@@ -99,16 +106,9 @@ Page({
         isupd: true
       },
       {
-        text: "开拉手孔位数据说明",
-        width: "1500rpx",
-        columnName: "shuoming1",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "开锁孔数据说明",
-        width: "1500rpx",
-        columnName: "shuoming2",
+        text: "完成时间",
+        width: "250rpx",
+        columnName: "shendan",
         type: "text",
         isupd: true
       },
@@ -183,11 +183,11 @@ Page({
     var _this = this
     var sql = ''
     if(_this.data.userInfo.power == '管理员'){
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
+      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
     }else if(_this.data.userInfo.power=='玻璃厂'){
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过' and gongyingshang = '" + _this.data.userInfo.name + "'"
+      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and  gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过' and gongyingshang = '" + _this.data.userInfo.name + "'"
     }else{
-      sql = "select id,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select order_number,shendan,insert_date from lvkuang_xiadan group by order_number,shendan,insert_date) as lvkuang on boli.order_number = lvkuang.order_number where pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
+      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and  pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -197,17 +197,6 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
-        console.log(list)
-        for(var i = 0;i < list.length;i++){
-          if(list[i].shendan == '通过'){
-            list[i].type = '2'
-          }else if(list[i].shendan == '拒绝'){
-            list[i].type = '1'
-          }
-          if(list[i].shengchan == '已完成'){
-            list[i].type = '4'
-          }
-        }
         console.log(list)
         _this.setData({
           list: list
@@ -267,10 +256,10 @@ Page({
         id: _this.data.list[e.currentTarget.dataset.index].id,
         this_column: column,
         xgShow:true,
-        yes_click: '已完成',
-        no_click: '未完成',
+        yes_click: '加工完成',
+        no_click: '正在加工',
       })
-    }else if(column == "beizhu" || column == "shuoming1" || column == "shuoming2" ){
+    }else if(column == "beizhu"){
       if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '玻璃厂'){
 
       }else{
@@ -492,6 +481,549 @@ Page({
         type:title[i].type,
         width:parseInt(title[i].width.split("r")[0]),
         columnName:title[i].columnName
+      })
+    }
+
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        var this_name = new Date().getTime() + ".xlsx"
+        var fileId = res.result.fileID
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获得临时路径",res.tempFilePath)
+            wx.getFileSystemManager().saveFile({
+              tempFilePath: res.tempFilePath,
+              filePath : wx.env.USER_DATA_PATH + "/" + getTime() + ".xlsx",
+              success : res=> {
+                let path_downLoad = res.savedFilePath
+                console.log("下载完成",res)
+                delCloudFile(fileId)
+                wx.openDocument({
+                  filePath: path_downLoad,
+                  fileType : 'xlsx',
+                  showMenu : true,
+                  success : res=> {
+                    wx.hideLoading({
+                      success: (res) => {},
+                    })
+                    console.log("用户打开文件")
+                  }
+                })
+              },
+              fail: res=>{
+                console.log(res)
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
+
+  out_put2:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    var title = [
+
+      {
+        text: "下单日期",
+        width: "250rpx",
+        columnName: "insert_date",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "单据编号",
+        width: "250rpx",
+        columnName: "order_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "简码",
+        width: "250rpx",
+        columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "所属供应商",
+        width: "250rpx",
+        columnName: "gongyingshang",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "玻璃颜色",
+        width: "250rpx",
+        columnName: "boli_yanse",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "玻璃深加工",
+        width: "250rpx",
+        columnName: "boli_shenjiagong",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "数量",
+        width: "250rpx",
+        columnName: "num",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开拉手孔数量",
+        width: "250rpx",
+        columnName: "shuoming1",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "高度",
+        width: "250rpx",
+        columnName: "height",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "宽度",
+        width: "250rpx",
+        columnName: "width",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "孔径",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "拉手孔间距",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开孔宽度从左向右",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "拉手位方向",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开孔高度从下向上1孔",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开孔高度从下向上2孔",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "宽度调节",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "高度调节",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "备注",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+
+    ]
+    var cloudList = {
+      name : '开拉手孔玻璃下单明细',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0]),
+        columnName:title[i].columnName
+      })
+    }
+
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        var this_name = new Date().getTime() + ".xlsx"
+        var fileId = res.result.fileID
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获得临时路径",res.tempFilePath)
+            wx.getFileSystemManager().saveFile({
+              tempFilePath: res.tempFilePath,
+              filePath : wx.env.USER_DATA_PATH + "/" + getTime() + ".xlsx",
+              success : res=> {
+                let path_downLoad = res.savedFilePath
+                console.log("下载完成",res)
+                delCloudFile(fileId)
+                wx.openDocument({
+                  filePath: path_downLoad,
+                  fileType : 'xlsx',
+                  showMenu : true,
+                  success : res=> {
+                    wx.hideLoading({
+                      success: (res) => {},
+                    })
+                    console.log("用户打开文件")
+                  }
+                })
+              },
+              fail: res=>{
+                console.log(res)
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
+
+  out_put3:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    var title = [
+      {
+        text: "下单日期",
+        width: "250rpx",
+        columnName: "insert_date",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "单据编号",
+        width: "250rpx",
+        columnName: "order_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "简码",
+        width: "250rpx",
+        columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "所属供应商",
+        width: "250rpx",
+        columnName: "gongyingshang",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "玻璃颜色",
+        width: "250rpx",
+        columnName: "boli_yanse",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "玻璃深加工",
+        width: "250rpx",
+        columnName: "boli_shenjiagong",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "数量",
+        width: "250rpx",
+        columnName: "num",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开拉手孔数量",
+        width: "250rpx",
+        columnName: "shuoming1",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "高度",
+        width: "250rpx",
+        columnName: "height",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "宽度",
+        width: "250rpx",
+        columnName: "width",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "孔径",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开孔宽度从左向右",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开孔高度从下向上",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "宽度调节",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "高度调节",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "备注",
+        width: "250rpx",
+        columnName: "dd",
+        type: "text",
+        isupd: true
+      },
+
+    ]
+    var cloudList = {
+      name : '开锁孔玻璃下单明细',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0]),
+        columnName:title[i].columnName
+      })
+    }
+
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        var this_name = new Date().getTime() + ".xlsx"
+        var fileId = res.result.fileID
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获得临时路径",res.tempFilePath)
+            wx.getFileSystemManager().saveFile({
+              tempFilePath: res.tempFilePath,
+              filePath : wx.env.USER_DATA_PATH + "/" + getTime() + ".xlsx",
+              success : res=> {
+                let path_downLoad = res.savedFilePath
+                console.log("下载完成",res)
+                delCloudFile(fileId)
+                wx.openDocument({
+                  filePath: path_downLoad,
+                  fileType : 'xlsx',
+                  showMenu : true,
+                  success : res=> {
+                    wx.hideLoading({
+                      success: (res) => {},
+                    })
+                    console.log("用户打开文件")
+                  }
+                })
+              },
+              fail: res=>{
+                console.log(res)
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
+
+  out_put4:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    var title_put = [
+    {
+      text: "下单日期",
+      width: "250rpx",
+      columnName: "insert_date",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "单据编号",
+      width: "250rpx",
+      columnName: "order_number",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "客户名称",
+      width: "250rpx",
+      columnName: "customer_name",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "数量",
+      width: "250rpx",
+      columnName: "num",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "高度",
+      width: "250rpx",
+      columnName: "height",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "宽度",
+      width: "250rpx",
+      columnName: "width",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "生产状态",
+      width: "250rpx",
+      columnName: "shengchan",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "完成时间",
+      width: "250rpx",
+      columnName: "shendan",
+      type: "text",
+      isupd: true
+    }]
+    console.log(title_put)
+    var cloudList = {
+      name : '铝材开料表',
+      items : [],
+      header : []
+    }
+    for(let i=0;i<title_put.length;i++){
+      cloudList.header.push({
+        item:title_put[i].text,
+        type:title_put[i].type,
+        width:parseInt(title_put[i].width.split("r")[0]),
+        columnName:title_put[i].columnName
       })
     }
 

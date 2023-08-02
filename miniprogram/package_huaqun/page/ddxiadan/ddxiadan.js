@@ -12,6 +12,8 @@ Page({
   xgShow: false,
   cxShow: false,
   intoShow:false,
+  xlShow: false,
+  xlShow2: false,
   sum_money:'',
   data: {
     header_list:{
@@ -148,7 +150,7 @@ Page({
         isupd: true
       },
     ],
-    xiangmu_leibie_list:['房间柜号','铝型材','电源','开关','配件'],
+    fj_list:[{name:'房间柜号'},{name:'铝型材'},{name:'电源'},{name:'开关'},{name:'配件'}],
     xiangmu_mingcheng_list:[],
     kailiao_list:[],
     list:[],
@@ -168,6 +170,8 @@ Page({
     xiala_panduan:0,
   },
 
+
+
   choiceDate: function (e) {
     //e.preventDefault(); 
     this.setData({
@@ -181,6 +185,9 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo,
+    })
     var this_date = getNowDate()
     var this_dan = options.djbh
     console.log(this_dan)
@@ -385,36 +392,35 @@ Page({
         var kg = []
         var pj = []
         var shfs = []
-        var fk=['未付款','已付款']
-        var hd = ['未通过','已通过']
+        var fk=[{name:'未付款'},{name:'已付款'}]
+        var hd = [{name:'未通过'},{name:'已通过'}]
         console.log('aaaaa',list)
         for(var i=0; i<list.length; i++){
           if(list[i].cxdk != '' && list[i].cxdk != null && list[i].cxdk != undefined){
-            cxdk.push(list[i].cxdk)
+            cxdk.push({name:list[i].cxdk})
           }else if(list[i].lcb != '' && list[i].lcb != null && list[i].lcb != undefined){
-            lcb.push(cxdk[i].lcb)
+            lcb.push({name:cxdk[i].lcb})
           }
           if(list[i].lcys != '' && list[i].lcys != null && list[i].lcys != undefined){
-            lcys.push(list[i].lcys)
+            lcys.push({name:list[i].lcys})
           }
           if(list[i].gy != '' && list[i].gy != null && list[i].gy != undefined){
-            gy.push(list[i].gy)
+            gy.push({name:list[i].gy})
           }
           if(list[i].dy != '' && list[i].dy != null && list[i].dy != undefined){
-            dy.push(list[i].dy)
+            dy.push({name:list[i].dy})
           }
           if(list[i].kg != '' && list[i].kg != null && list[i].kg != undefined){
-            kg.push(list[i].kg)
+            kg.push({name:list[i].kg})
           }
           if(list[i].pj != '' && list[i].pj != null && list[i].pj != undefined){
-            pj.push(list[i].pj)
+            pj.push({name:list[i].pj})
           }
           if(list[i].shfs != '' && list[i].shfs != null && list[i].shfs != undefined){
-            shfs.push(list[i].shfs)
+            shfs.push({name:list[i].shfs})
           }
         }
         _this.setData({
-          
           cxdk_list:cxdk,
           lcb_list:lcb,
           lcys_list:lcys,
@@ -453,11 +459,11 @@ Page({
         console.log(list)
         for(var i=0; i<list.length; i++){
           if(list[i].power == '客户'){
-            khmc.push(list[i].name)
+            khmc.push({name: list[i].name})
           }
         }
         _this.setData({
-          name_list:khmc,
+          khmc_list:khmc,
         })
         console.log(list)
       },
@@ -485,7 +491,7 @@ Page({
         console.log(list)
         for(var i=0; i<list.length; i++){
           if(list[i].ddxh != '' && list[i].ddxh != null && list[i].ddxh != undefined){
-            ddxh.push(list[i].ddxh)
+            ddxh.push({name:list[i].ddxh})
           }
         }
         _this.setData({
@@ -509,51 +515,106 @@ Page({
 
   },
 
-  bindPickerChange1: function(e) {
+  header_xiala: function (e) {
     var _this = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    var khmc = _this.data.name_list[e.detail.value]
-    console.log(khmc)
-    if(khmc!=''){
-      var sql = "SELECT xdrq,gh,lcys,gy,dj FROM lightbelt where khmc = '" + khmc + "' order by xdrq desc"
-      wx.cloud.callFunction({
-        name: 'sqlserver_huaqun',
-        data: {
-          query: sql
-        },
-        success: res => {
-          var list = res.result.recordset
-          console.log(list)
-          _this.setData({
-            lishi_danjia_list: list
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
+    console.log('列名：', e.currentTarget.dataset.column)
+    var column = e.currentTarget.dataset.column
+    var list = _this.data[column + "_list"]
+    if(_this.data.userInfo.power == '客户' && column == 'khmc'){
+      return;
     }
     _this.setData({
-      khmc: khmc,
+      list_xiala: list,
+      click_column:column,
+    })
+    console.log(list)
+    _this.setData({
+      xlShow2: true
     })
   },
 
-  bindPickerChange2: function(e) {
+  select2: function (e) {
     var _this = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    var shfs = _this.data.shfs_list[e.detail.value]
-    console.log(shfs)
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var click_column = _this.data.click_column
+      _this.setData({
+        xlShow2: false,
+        [click_column]:e.detail.name
+      })
+      if(click_column == 'khmc'){
+        var sql = "SELECT xdrq,gh,lcys,gy,dj FROM lightbelt where khmc = '" + _this.data.khmc + "' order by xdrq desc"
+        wx.cloud.callFunction({
+          name: 'sqlserver_huaqun',
+          data: {
+            query: sql
+          },
+          success: res => {
+            var list = res.result.recordset
+            console.log(list)
+            _this.setData({
+              lishi_danjia_list: list
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
+      }
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow2:false,
+      })
+    }
+  },
+
+  sel_xiala: function (e) {
+    var _this = this
+    console.log('列名：', e.currentTarget.dataset.column)
+    console.log('index：', e.currentTarget.dataset.index)
+    var list = _this.data[_this.data.this_column + "_list"]
+    if(_this.data.xiala_panduan == 0){
+      return;
+    }
+    if(_this.data.xiala_panduan == 2){
+      list = _this.data.ddxh_list
+    }else if(_this.data.xiala_panduan == 5){
+      list = _this.data.dy_list
+    }else if(_this.data.xiala_panduan == 6){
+      list = _this.data.kg_list
+    }else if(_this.data.xiala_panduan == 7){
+      list = _this.data.pj_list
+    }
     _this.setData({
-      shfs: shfs,
+      list_xiala: list,
     })
+    console.log(list)
+    _this.setData({
+      xlShow: true
+    })
+  },
+
+  select1: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var this_value = e.detail.name
+      _this.setData({
+        xlShow: false,
+        this_value
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow: false,
+      })
+    }
   },
 
   tableShow: function (e) {

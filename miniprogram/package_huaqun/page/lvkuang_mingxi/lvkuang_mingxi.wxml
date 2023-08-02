@@ -10,7 +10,7 @@
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
-              class="{{list[i].type=='0'?'list_view1':list[i].type=='1'?'list_view2':list[i].type=='2'?'list_view3':list[i].type=='3'?'list_view4':'list_view'}}" 
+              class="{{list[i].wancheng=='已审验'?'list_view1':list[i].wancheng=='优先处理'?'list_view2':list[i].wancheng=='推迟处理'?'list_view3':list[i].wancheng=='完成'?'list_view4':'list_view'}}" 
               style="width:{{item.width}}" data-index="{{i}}" 
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 
@@ -31,16 +31,20 @@
 <view class="bottom_view">
 	<button class="bt_bottom" bindtap="back" >返回</button>
   <button class="bt_bottom" bindtap="entering" >查询</button>
-  <!-- <button class="bt_bottom" bindtap="out_put" >导出表格</button> -->
+  <button class="bt_bottom" bindtap="out_put4" >铝材开料表</button>
 </view>
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 15%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
   <view class="bottom_view" style="height:10%;margin-top: 8%;">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="yes_click">{{yes_click}}</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="no_click">{{no_click}}</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="clear_yesno">清空</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_01">已审验</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_02">未审验</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_03">优先处理</button>
+  </view>
+  <view class="bottom_view" style="height:10%;margin-top: 8%;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_04">推迟处理</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_05">完成</button>
   </view>
 </van-popup>
 <!------------------------->
@@ -64,5 +68,17 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 35%;">
+  <input bindinput="onInput" style="margin:auto;margin-top:5%;width: 50%;" data-index="this_index" data-column="this_value" class="input_text_form" value="{{this_value}}" type="{{this_type}}" name="this_value"></input>
+  <view class="bottom_view" style="height:10%;margin-top: calc(50vmin / 7.5);">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">确定</button>
   </view>
 </van-popup>

@@ -276,7 +276,7 @@ button{
   bottom_view
 */
 .bottom_view{
-  height: 10%;
+  height: 6%;
   align-items: center;
   display: flex;
   bottom: 2%;

@@ -22,7 +22,7 @@ button{
   white-space: nowrap;
   margin-top: calc(0vmin / 7.5);
   height: 86%;
-  background-color: #f2f2f2;  
+  background-color: #FFFFFF;  
 }
 .sv_list2{
   width: auto;
@@ -241,7 +241,6 @@ button{
 }
 
 .bottom_view4{
-  height: 20%;
   align-items: center;
   /* display: flex; */
   bottom: 2%;

@@ -1,4 +1,4 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -31,7 +31,12 @@
 <view class="bottom_view">
 	<button class="bt_bottom" bindtap="back" >返回</button>
   <button class="bt_bottom" bindtap="entering" >查询</button>
-  <button class="bt_bottom" bindtap="out_put" >导出表格</button>
+  <button class="bt_bottom" bindtap="out_put" >玻璃下单表</button>
+</view>
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="out_put2" >开拉手孔表</button>
+  <button class="bt_bottom" bindtap="out_put3" >开锁孔表</button>
+  <!-- <button class="bt_bottom" bindtap="out_put4" >铝材开料表</button> -->
 </view>
 <!------------------------->
 <!---------查询弹窗--------->

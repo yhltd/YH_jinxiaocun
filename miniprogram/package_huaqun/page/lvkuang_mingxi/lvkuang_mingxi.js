@@ -9,6 +9,7 @@ Page({
   tjShow: false,
   rqxzShow1: false,
   xgShow: false,
+  xgShow2: false,
   cxShow: false,
   data: {
     list: [],
@@ -28,30 +29,16 @@ Page({
         isupd: true
       },
       {
-        text: "审单",
-        width: "250rpx",
-        columnName: "shendan",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "订单完成",
+        text: "订单状态",
         width: "250rpx",
         columnName: "wancheng",
         type: "text",
         isupd: true
       },
       {
-        text: "付款状态",
+        text: "单据编号",
         width: "250rpx",
-        columnName: "pay",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "玻璃加工",
-        width: "250rpx",
-        columnName: "boli_jiagong",
+        columnName: "order_number",
         type: "text",
         isupd: true
       },
@@ -59,6 +46,13 @@ Page({
         text: "开料",
         width: "250rpx",
         columnName: "kailiao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "铣孔",
+        width: "250rpx",
+        columnName: "shunxu",
         type: "text",
         isupd: true
       },
@@ -84,13 +78,6 @@ Page({
         isupd: true
       },
       {
-        text: "单据编号",
-        width: "250rpx",
-        columnName: "order_number",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "安装地址",
         width: "250rpx",
         columnName: "install_address",
@@ -105,13 +92,6 @@ Page({
         isupd: true
       },
       {
-        text: "送货方式",
-        width: "250rpx",
-        columnName: "shipping_type",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "送货地址",
         width: "250rpx",
         columnName: "shipping_address",
@@ -122,6 +102,13 @@ Page({
         text: "简码",
         width: "250rpx",
         columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "完成时间",
+        width: "250rpx",
+        columnName: "shendan",
         type: "text",
         isupd: true
       },
@@ -142,37 +129,16 @@ Page({
         isupd: true
       },
       {
-        text: "审单",
-        width: "250rpx",
-        columnName: "shendan",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "订单完成",
+        text: "订单状态",
         width: "250rpx",
         columnName: "wancheng",
         type: "text",
         isupd: true
       },
       {
-        text: "付款状态",
+        text: "单据编号",
         width: "250rpx",
-        columnName: "pay",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "处理顺序",
-        width: "250rpx",
-        columnName: "shunxu",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "玻璃加工",
-        width: "250rpx",
-        columnName: "boli_jiagong",
+        columnName: "order_number",
         type: "text",
         isupd: true
       },
@@ -180,6 +146,13 @@ Page({
         text: "开料",
         width: "250rpx",
         columnName: "kailiao",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "铣孔",
+        width: "250rpx",
+        columnName: "shunxu",
         type: "text",
         isupd: true
       },
@@ -205,13 +178,6 @@ Page({
         isupd: true
       },
       {
-        text: "单据编号",
-        width: "250rpx",
-        columnName: "order_number",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "安装地址",
         width: "250rpx",
         columnName: "install_address",
@@ -226,13 +192,6 @@ Page({
         isupd: true
       },
       {
-        text: "送货方式",
-        width: "250rpx",
-        columnName: "shipping_type",
-        type: "text",
-        isupd: true
-      },
-      {
         text: "送货地址",
         width: "250rpx",
         columnName: "shipping_address",
@@ -243,6 +202,13 @@ Page({
         text: "简码",
         width: "250rpx",
         columnName: "pinyin",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "完成时间",
+        width: "250rpx",
+        columnName: "shendan",
         type: "text",
         isupd: true
       },
@@ -274,6 +240,141 @@ Page({
 
   },
 
+  out_put4:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list_out;
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+    console.log(list)
+    var title_put = [
+    {
+      text: "下单日期",
+      width: "250rpx",
+      columnName: "insert_date",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "单据编号",
+      width: "250rpx",
+      columnName: "order_number",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "客户名称",
+      width: "250rpx",
+      columnName: "customer_name",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "数量",
+      width: "250rpx",
+      columnName: "num",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "高度",
+      width: "250rpx",
+      columnName: "height",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "宽度",
+      width: "250rpx",
+      columnName: "width",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "加工状态",
+      width: "250rpx",
+      columnName: "jiagong",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "完成时间",
+      width: "250rpx",
+      columnName: "shendan",
+      type: "text",
+      isupd: true
+    }]
+    console.log(title_put)
+    var cloudList = {
+      name : '铝材开料表',
+      items : [],
+      header : []
+    }
+    for(let i=0;i<title_put.length;i++){
+      cloudList.header.push({
+        item:title_put[i].text,
+        type:title_put[i].type,
+        width:parseInt(title_put[i].width.split("r")[0]),
+        columnName:title_put[i].columnName
+      })
+    }
+
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        var this_name = new Date().getTime() + ".xlsx"
+        var fileId = res.result.fileID
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获得临时路径",res.tempFilePath)
+            wx.getFileSystemManager().saveFile({
+              tempFilePath: res.tempFilePath,
+              filePath : wx.env.USER_DATA_PATH + "/" + getTime() + ".xlsx",
+              success : res=> {
+                let path_downLoad = res.savedFilePath
+                console.log("下载完成",res)
+                delCloudFile(fileId)
+                wx.openDocument({
+                  filePath: path_downLoad,
+                  fileType : 'xlsx',
+                  showMenu : true,
+                  success : res=> {
+                    wx.hideLoading({
+                      success: (res) => {},
+                    })
+                    console.log("用户打开文件")
+                  }
+                })
+              },
+              fail: res=>{
+                console.log(res)
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
+
   bindPickerChange: function (e) {
     var _this = this
     var column_name = e.target.dataset.column_name
@@ -288,32 +389,23 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      sql = "select wancheng,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,type from (select wancheng,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[4] + "%' group by wancheng,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay,shunxu ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number"
+      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[4] + "%'"
     } else{
-      sql = "select shunxu,wancheng,customer_name,insert_date,dd.order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang,boli.shengchan,boli.row,'' as boli_jiagong,type from (select wancheng,case shunxu when '' then '1' else shunxu end as shunxu,case when wancheng = '完成' then '3' when isnull(shunxu,'') = '' then '1' else shunxu end as type,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,pay,shendan,kailiao,zuzhuang,baozhuang from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[4] + "%' group by wancheng,shunxu,customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,shendan,kailiao,zuzhuang,baozhuang,pay,shunxu ) as dd left join (select order_number,sum(case shengchan when '完成' then 1 else 0 end) as shengchan,count(id) as row from boli_xiadan group by order_number) as boli on boli.order_number = dd.order_number "
+      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[4] + "%'"
     }
-
     console.log(sql)
-
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
         query: sql
       },
       success: res => {
-        var list = res.result.recordset
+        var list = res.result.recordsets[0]
         console.log(list)
-        for (var i = 0; i < list.length; i++) {
-          if(list[i].shunxu == '0'){
-          }else if(list[i].shunxu == '1'){
-            list[i].shunxu = ''
-          }else if(list[i].shunxu == '2'){
-            list[i].shunxu = '推迟处理'
-          }
-        }
-        console.log(list)
+        console.log(res.result.recordsets[1])
         _this.setData({
-          list: list
+          list: list,
+          list_out: res.result.recordsets[1]
         })
       },
       err: res => {
@@ -343,8 +435,42 @@ Page({
     _this.setData({
       tjShow: false,
       xgShow: false,
+      xgShow2: false,
       cxShow: false,
       currentDate: new Date().getTime()
+    })
+  },
+
+  upd1:function(e){
+    var _this = this
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='" + _this.data.this_value + "' where order_number='" + _this.data.order_number + "'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -352,112 +478,33 @@ Page({
     var _this = this
     var index = e.currentTarget.dataset.index
     var column = e.currentTarget.dataset.column
-    var order_number = _this.data.list[e.currentTarget.dataset.index].order_number
+    var order_number = _this.data.list[index].order_number
+    console.log(order_number)
     console.log(index)
     console.log(column)
-    if (column == "shendan") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.shendan == '是')) {
-
+    if (column == "kailiao" || column == "shunxu" || column == "zuzhuang" || column == "baozhuang") {
+      if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
+        if(_this.data.userInfo.power == '操作员' && _this.data.list[e.currentTarget.dataset.index].wancheng == '完成'){
+          wx.showToast({
+            title: '此单已完成，不允许修改！',
+            icon: 'none'
+          })
+          return;
+        }
+        _this.setData({
+          order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
+          this_column: column,
+          this_value:_this.data.list[e.currentTarget.dataset.index][column],
+          xgShow2: true,
+        })
       } else {
         wx.showToast({
-          title: '无审核权限！',
+          title: '无修改权限！',
           icon: 'none'
         })
         return;
       }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
-        this_column: column,
-        xgShow: true,
-        yes_click: '通过',
-        no_click: '拒绝',
-      })
-    } else if (column == "pay") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.pay == '是')) {
-
-      } else {
-        wx.showToast({
-          title: '无付款权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
-        this_column: column,
-        xgShow: true,
-        yes_click: '已付款',
-        no_click: '未付款',
-      })
-    } else if (column == "kailiao") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.kailiao == '是')) {
-
-      } else {
-        wx.showToast({
-          title: '无开料权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
-        this_column: column,
-        xgShow: true,
-        yes_click: '完成',
-        no_click: '未完成',
-      })
-    } else if (column == "zuzhuang") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.zuzhuang == '是')) {
-
-      } else {
-        wx.showToast({
-          title: '无组装权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
-        this_column: column,
-        xgShow: true,
-        yes_click: '完成',
-        no_click: '未完成',
-      })
-    } else if (column == "baozhuang") {
-      if (_this.data.userInfo.power == '管理员' || (_this.data.userInfo.power == '操作员' && _this.data.userInfo.baozhuang == '是')) {
-
-      } else {
-        wx.showToast({
-          title: '无包装权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
-        this_column: column,
-        xgShow: true,
-        yes_click: '完成',
-        no_click: '未完成',
-      })
-    } else if (column == "shunxu") {
-      if (_this.data.userInfo.power == '管理员') {
-
-      } else {
-        wx.showToast({
-          title: '无设置处理顺序权限！',
-          icon: 'none'
-        })
-        return;
-      }
-      _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
-        this_column: column,
-        xgShow: true,
-        yes_click: '优先处理',
-        no_click: '推迟处理',
-      })
-    }else if (column == "wancheng") {
+    } else if (column == "wancheng") {
       if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
         
       } else {
@@ -468,7 +515,7 @@ Page({
         return;
       }
       _this.setData({
-        order_number: _this.data.list[e.currentTarget.dataset.index].order_number,
+        order_number: _this.data.list[index].order_number,
         this_column: column,
         xgShow: true,
         yes_click: '完成',
@@ -495,15 +542,10 @@ Page({
     }
   },
 
-  yes_click: function () {
+  click_01: function () {
     var _this = this
-    if(_this.data.this_column == 'shunxu'){
-      _this.setData({
-        yes_click:0
-      })
-    }
-    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='" + _this.data.yes_click + "' where order_number='" + _this.data.order_number + "'"
-    console.log(sql)
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='已审验' where order_number='" + _this.data.order_number + "'"
+    
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -515,7 +557,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31', _this.data.wancheng]
+        var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -533,23 +575,22 @@ Page({
     })
   },
 
-  clear_yesno:function(){
+  click_02: function () {
     var _this = this
-    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='' where order_number='" + _this.data.order_number + "'"
-
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='未审验' where order_number='" + _this.data.order_number + "'"
+    
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
         query: sql
       },
       success: res => {
-       
         wx.showToast({
           title: '完成！',
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31',_this.data.wancheng]
+        var e = ['','', '1900-01-01', '2100-12-31','']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -567,14 +608,10 @@ Page({
     })
   },
 
-  no_click: function () {
+  click_03: function () {
     var _this = this
-    if(_this.data.this_column == 'shunxu'){
-      _this.setData({
-        no_click:2
-      })
-    }
-    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='" + _this.data.no_click + "' where order_number='" + _this.data.order_number + "'"
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='优先处理' where order_number='" + _this.data.order_number + "'"
+    
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -586,7 +623,73 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31', _this.data.wancheng]
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  click_04: function () {
+    var _this = this
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='推迟处理' where order_number='" + _this.data.order_number + "'"
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  click_05: function () {
+    var _this = this
+    var sql = "update lvkuang_xiadan set " + _this.data.this_column + "='完成',shendan=convert(date,GETDATE()) where order_number='" + _this.data.order_number + "'"
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '完成！',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','', '1900-01-01', '2100-12-31','']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -769,3 +872,23 @@ Page({
 
   }
 })
+
+function getTime(){
+  var myDate = new Date();
+  var year = myDate.getFullYear();
+  var month = myDate.getMonth()+1 > 10 ? myDate.getMonth() + 1 : "0" + (myDate.getMonth()+1);
+  var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
+  return year+"-"+month+"-"+day
+}
+
+function delCloudFile(fileId){
+  var fileIds = [];
+  fileIds.push(fileId);
+  wx.cloud.deleteFile({
+    fileList: fileIds,
+    success: res => {
+      console.log(res.fileList);
+    },
+    fail : console.error
+  })
+}

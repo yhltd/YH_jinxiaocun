@@ -28,6 +28,8 @@ Page({
       lsw:"拉手位",
       kjlk:"开铰链孔",
       jlkw:"铰链孔位",
+      fjpz:"附件配置",
+      jlpp:"铰链品牌"
     },
     list: [],
     title: [{
@@ -129,6 +131,18 @@ Page({
         columnName: "jlkw",
         type: "text",
         isupd: true
+      },{
+        text: "附件配置",
+        width: "275rpx",
+        columnName: "fjpz",
+        type: "text",
+        isupd: true
+      },{
+        text: "铰链品牌",
+        width: "275rpx",
+        columnName: "jlpp",
+        type: "text",
+        isupd: true
       },
     ],
   },
@@ -147,7 +161,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select id,isnull(cxdk,'') as cxdk,isnull(lxc,'') as lxc,isnull(lcys,'') as lcys,isnull(gy,'') as gy,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(shfs,'') as shfs,isnull(blsjg,'') as blsjg,isnull(blys,'') as blys,isnull(lsxh,'') as lsxh,isnull(lsw,'') as lsw,isnull(kjlk,'') as kjlk,isnull(jlkw,'') as jlkw,isnull(lxc_lk,'') as lxc_lk,isnull(lcys_lk,'') as lcys_lk from dropdowntable"
+        query: "select id,isnull(cxdk,'') as cxdk,isnull(lxc,'') as lxc,isnull(lcys,'') as lcys,isnull(gy,'') as gy,isnull(dy,'') as dy,isnull(kg,'') as kg,isnull(pj,'') as pj,isnull(shfs,'') as shfs,isnull(blsjg,'') as blsjg,isnull(blys,'') as blys,isnull(lsxh,'') as lsxh,isnull(lsw,'') as lsw,isnull(kjlk,'') as kjlk,isnull(jlkw,'') as jlkw,isnull(lxc_lk,'') as lxc_lk,isnull(lcys_lk,'') as lcys_lk,fjpz,jlpp from dropdowntable"
       },
       success: res => {
         var list = res.result.recordset
@@ -224,7 +238,8 @@ Page({
                 lsw: '',
                 kjlk: '',
                 jlkw: '',
-                
+                fjpz:'',
+                jlpp:'',
               })
               _this.qxShow()
               _this.tableShow()
@@ -323,6 +338,8 @@ Page({
                 lsw: '',
                 kjlk: '',
                 jlkw: '',
+                fjpz:'',
+                jlpp:'',
               })
               _this.qxShow()
               _this.tableShow()

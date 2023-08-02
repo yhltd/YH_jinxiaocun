@@ -39,59 +39,84 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
-        lashou_shuliang_right:'',
-        lashouwei_select_left:'',
-        lashouwei_insert_left:'',
-        lashouwei_select_right:'',
-        lashouwei_insert_right:'',
+
         jiaoliankong_fangxiang_left:'',
         jiaoliankong_fangxiang_right:'',
 
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
-        
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
-      },{ 
+      },
+      {
         height:'',
         width:'',
         num:'',
@@ -100,57 +125,84 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
         lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
         lashouwei_select_left:'',
         lashouwei_insert_left:'',
         lashouwei_select_right:'',
         lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
-      },{ 
+      },
+      {
         height:'',
         width:'',
         num:'',
@@ -159,57 +211,84 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
         lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
         lashouwei_select_left:'',
         lashouwei_insert_left:'',
         lashouwei_select_right:'',
         lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
-      },{ 
+      },
+      {
         height:'',
         width:'',
         num:'',
@@ -218,57 +297,84 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
         lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
         lashouwei_select_left:'',
         lashouwei_insert_left:'',
         lashouwei_select_right:'',
         lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
-      },{ 
+      },
+      {
         height:'',
         width:'',
         num:'',
@@ -277,57 +383,84 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
         lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
         lashouwei_select_left:'',
         lashouwei_insert_left:'',
         lashouwei_select_right:'',
         lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
-      },{ 
+      },
+      {
         height:'',
         width:'',
         num:'',
@@ -336,53 +469,1283 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
         lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
         lashouwei_select_left:'',
         lashouwei_insert_left:'',
         lashouwei_select_right:'',
         lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
@@ -398,353 +1761,1718 @@ Page({
         boli_shenjiagong:'',
         boli_yanse:'',
         lashou_xinghao:'',
-        lashou_shuliang_left:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
         lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
         lashouwei_select_left:'',
         lashouwei_insert_left:'',
         lashouwei_select_right:'',
         lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
         zhuangsuofangwei_insert_left1:'',
         zhuangsuofangwei_insert_left2:'',
         zhuangsuofangwei_insert_right1:'',
         zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
+
         kaijiaolian:'',
+
         jiaolian1_select_left:'',
         jiaolian1_insert_left:'',
         jiaolian1_select_right:'',
         jiaolian1_insert_right:'',
+
         jiaolian2_select_left:'',
         jiaolian2_insert_left:'',
         jiaolian2_select_right:'',
         jiaolian2_insert_right:'',
+
         jiaolian3_select_left:'',
         jiaolian3_insert_left:'',
         jiaolian3_select_right:'',
         jiaolian3_insert_right:'',
+
         jiaolian4_select_left:'',
         jiaolian4_insert_left:'',
         jiaolian4_select_right:'',
         jiaolian4_insert_right:'',
+
         jiaolian5_select_left:'',
         jiaolian5_insert_left:'',
         jiaolian5_select_right:'',
         jiaolian5_insert_right:'',
+
         jiaolian6_select_left:'',
         jiaolian6_insert_left:'',
         jiaolian6_select_right:'',
         jiaolian6_insert_right:'',
+
         qita:'',
+
         sum_shuliang1:'',
         danjia1:'',
         sum_jine1:'',
-        sum_shuliang2:'',
-        danjia2:'',
-        sum_jine2:'',
-      },{ 
-        height:'',
-        width:'',
-        num:'',
-        lvxingcai:'',
-        lvcai_yanse:'',
-        boli_shenjiagong:'',
-        boli_yanse:'',
-        lashou_xinghao:'',
-        lashou_shuliang_left:'',
-        lashou_shuliang_right:'',
-        lashouwei_select_left:'',
-        lashouwei_insert_left:'',
-        lashouwei_select_right:'',
-        lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
-        zhuangsuofangwei_insert_left1:'',
-        zhuangsuofangwei_insert_left2:'',
-        zhuangsuofangwei_insert_right1:'',
-        zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
-        kaijiaolian:'',
-        jiaolian1_select_left:'',
-        jiaolian1_insert_left:'',
-        jiaolian1_select_right:'',
-        jiaolian1_insert_right:'',
-        jiaolian2_select_left:'',
-        jiaolian2_insert_left:'',
-        jiaolian2_select_right:'',
-        jiaolian2_insert_right:'',
-        jiaolian3_select_left:'',
-        jiaolian3_insert_left:'',
-        jiaolian3_select_right:'',
-        jiaolian3_insert_right:'',
-        jiaolian4_select_left:'',
-        jiaolian4_insert_left:'',
-        jiaolian4_select_right:'',
-        jiaolian4_insert_right:'',
-        jiaolian5_select_left:'',
-        jiaolian5_insert_left:'',
-        jiaolian5_select_right:'',
-        jiaolian5_insert_right:'',
-        jiaolian6_select_left:'',
-        jiaolian6_insert_left:'',
-        jiaolian6_select_right:'',
-        jiaolian6_insert_right:'',
-        qita:'',
-        sum_shuliang1:'',
-        danjia1:'',
-        sum_jine1:'',
-        sum_shuliang2:'',
-        danjia2:'',
-        sum_jine2:'',
-      },{ 
-        height:'',
-        width:'',
-        num:'',
-        lvxingcai:'',
-        lvcai_yanse:'',
-        boli_shenjiagong:'',
-        boli_yanse:'',
-        lashou_xinghao:'',
-        lashou_shuliang_left:'',
-        lashou_shuliang_right:'',
-        lashouwei_select_left:'',
-        lashouwei_insert_left:'',
-        lashouwei_select_right:'',
-        lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
-        zhuangsuofangwei_insert_left1:'',
-        zhuangsuofangwei_insert_left2:'',
-        zhuangsuofangwei_insert_right1:'',
-        zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
-        kaijiaolian:'',
-        jiaolian1_select_left:'',
-        jiaolian1_insert_left:'',
-        jiaolian1_select_right:'',
-        jiaolian1_insert_right:'',
-        jiaolian2_select_left:'',
-        jiaolian2_insert_left:'',
-        jiaolian2_select_right:'',
-        jiaolian2_insert_right:'',
-        jiaolian3_select_left:'',
-        jiaolian3_insert_left:'',
-        jiaolian3_select_right:'',
-        jiaolian3_insert_right:'',
-        jiaolian4_select_left:'',
-        jiaolian4_insert_left:'',
-        jiaolian4_select_right:'',
-        jiaolian4_insert_right:'',
-        jiaolian5_select_left:'',
-        jiaolian5_insert_left:'',
-        jiaolian5_select_right:'',
-        jiaolian5_insert_right:'',
-        jiaolian6_select_left:'',
-        jiaolian6_insert_left:'',
-        jiaolian6_select_right:'',
-        jiaolian6_insert_right:'',
-        qita:'',
-        sum_shuliang1:'',
-        danjia1:'',
-        sum_jine1:'',
-        sum_shuliang2:'',
-        danjia2:'',
-        sum_jine2:'',
-      },{ 
-        height:'',
-        width:'',
-        num:'',
-        lvxingcai:'',
-        lvcai_yanse:'',
-        boli_shenjiagong:'',
-        boli_yanse:'',
-        lashou_xinghao:'',
-        lashou_shuliang_left:'',
-        lashou_shuliang_right:'',
-        lashouwei_select_left:'',
-        lashouwei_insert_left:'',
-        lashouwei_select_right:'',
-        lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
-        zhuangsuofangwei_insert_left1:'',
-        zhuangsuofangwei_insert_left2:'',
-        zhuangsuofangwei_insert_right1:'',
-        zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
-        kaijiaolian:'',
-        jiaolian1_select_left:'',
-        jiaolian1_insert_left:'',
-        jiaolian1_select_right:'',
-        jiaolian1_insert_right:'',
-        jiaolian2_select_left:'',
-        jiaolian2_insert_left:'',
-        jiaolian2_select_right:'',
-        jiaolian2_insert_right:'',
-        jiaolian3_select_left:'',
-        jiaolian3_insert_left:'',
-        jiaolian3_select_right:'',
-        jiaolian3_insert_right:'',
-        jiaolian4_select_left:'',
-        jiaolian4_insert_left:'',
-        jiaolian4_select_right:'',
-        jiaolian4_insert_right:'',
-        jiaolian5_select_left:'',
-        jiaolian5_insert_left:'',
-        jiaolian5_select_right:'',
-        jiaolian5_insert_right:'',
-        jiaolian6_select_left:'',
-        jiaolian6_insert_left:'',
-        jiaolian6_select_right:'',
-        jiaolian6_insert_right:'',
-        qita:'',
-        sum_shuliang1:'',
-        danjia1:'',
-        sum_jine1:'',
-        sum_shuliang2:'',
-        danjia2:'',
-        sum_jine2:'',
-      },{ 
-        height:'',
-        width:'',
-        num:'',
-        lvxingcai:'',
-        lvcai_yanse:'',
-        boli_shenjiagong:'',
-        boli_yanse:'',
-        lashou_xinghao:'',
-        lashou_shuliang_left:'',
-        lashou_shuliang_right:'',
-        lashouwei_select_left:'',
-        lashouwei_insert_left:'',
-        lashouwei_select_right:'',
-        lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
-        zhuangsuofangwei_insert_left1:'',
-        zhuangsuofangwei_insert_left2:'',
-        zhuangsuofangwei_insert_right1:'',
-        zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
-        kaijiaolian:'',
-        jiaolian1_select_left:'',
-        jiaolian1_insert_left:'',
-        jiaolian1_select_right:'',
-        jiaolian1_insert_right:'',
-        jiaolian2_select_left:'',
-        jiaolian2_insert_left:'',
-        jiaolian2_select_right:'',
-        jiaolian2_insert_right:'',
-        jiaolian3_select_left:'',
-        jiaolian3_insert_left:'',
-        jiaolian3_select_right:'',
-        jiaolian3_insert_right:'',
-        jiaolian4_select_left:'',
-        jiaolian4_insert_left:'',
-        jiaolian4_select_right:'',
-        jiaolian4_insert_right:'',
-        jiaolian5_select_left:'',
-        jiaolian5_insert_left:'',
-        jiaolian5_select_right:'',
-        jiaolian5_insert_right:'',
-        jiaolian6_select_left:'',
-        jiaolian6_insert_left:'',
-        jiaolian6_select_right:'',
-        jiaolian6_insert_right:'',
-        qita:'',
-        sum_shuliang1:'',
-        danjia1:'',
-        sum_jine1:'',
-        sum_shuliang2:'',
-        danjia2:'',
-        sum_jine2:'',
-      },{ 
-        height:'',
-        width:'',
-        num:'',
-        lvxingcai:'',
-        lvcai_yanse:'',
-        boli_shenjiagong:'',
-        boli_yanse:'',
-        lashou_xinghao:'',
-        lashou_shuliang_left:'',
-        lashou_shuliang_right:'',
-        lashouwei_select_left:'',
-        lashouwei_insert_left:'',
-        lashouwei_select_right:'',
-        lashouwei_insert_right:'',
-        jiaoliankong_fangxiang_left:'',
-        jiaoliankong_fangxiang_right:'',
-        zhuangsuofangxiang_select_left:'',
-        zhuangsuofangxiang_select_right:'',
-        zhuangsuofangwei_insert_left1:'',
-        zhuangsuofangwei_insert_left2:'',
-        zhuangsuofangwei_insert_right1:'',
-        zhuangsuofangwei_insert_right2:'',
-        zhuangsuoshuliang_insert_left1:'',
-        zhuangsuoshuliang_insert_left2:'',
-        zhuangsuoshuliang_insert_right1:'',
-        zhuangsuoshuliang_insert_right2:'',
-        kaijiaolian:'',
-        jiaolian1_select_left:'',
-        jiaolian1_insert_left:'',
-        jiaolian1_select_right:'',
-        jiaolian1_insert_right:'',
-        jiaolian2_select_left:'',
-        jiaolian2_insert_left:'',
-        jiaolian2_select_right:'',
-        jiaolian2_insert_right:'',
-        jiaolian3_select_left:'',
-        jiaolian3_insert_left:'',
-        jiaolian3_select_right:'',
-        jiaolian3_insert_right:'',
-        jiaolian4_select_left:'',
-        jiaolian4_insert_left:'',
-        jiaolian4_select_right:'',
-        jiaolian4_insert_right:'',
-        jiaolian5_select_left:'',
-        jiaolian5_insert_left:'',
-        jiaolian5_select_right:'',
-        jiaolian5_insert_right:'',
-        jiaolian6_select_left:'',
-        jiaolian6_insert_left:'',
-        jiaolian6_select_right:'',
-        jiaolian6_insert_right:'',
-        qita:'',
-        sum_shuliang1:'',
-        danjia1:'',
-        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
         sum_shuliang2:'',
         danjia2:'',
         sum_jine2:'',
       },
-    ]
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+      {
+        height:'',
+        width:'',
+        num:'',
+        lvxingcai:'',
+        lvcai_yanse:'',
+        boli_shenjiagong:'',
+        boli_yanse:'',
+        lashou_xinghao:'',
+
+        jiaoliankong_fangxiang_left:'',
+        jiaoliankong_fangxiang_right:'',
+
+        lashou_shuliang_right:'',
+        lashou_shuliang_left:'',
+
+        lashouwei_select_left:'',
+        lashouwei_insert_left:'',
+        lashouwei_select_right:'',
+        lashouwei_insert_right:'',
+
+        zhuangsuoshuliang_insert_left1:'',
+        zhuangsuoshuliang_insert_right1:'',
+
+        zhuangsuofangwei_insert_left1:'',
+        zhuangsuofangwei_insert_left2:'',
+        zhuangsuofangwei_insert_right1:'',
+        zhuangsuofangwei_insert_right2:'',
+
+        kaijiaolian:'',
+
+        jiaolian1_select_left:'',
+        jiaolian1_insert_left:'',
+        jiaolian1_select_right:'',
+        jiaolian1_insert_right:'',
+
+        jiaolian2_select_left:'',
+        jiaolian2_insert_left:'',
+        jiaolian2_select_right:'',
+        jiaolian2_insert_right:'',
+
+        jiaolian3_select_left:'',
+        jiaolian3_insert_left:'',
+        jiaolian3_select_right:'',
+        jiaolian3_insert_right:'',
+
+        jiaolian4_select_left:'',
+        jiaolian4_insert_left:'',
+        jiaolian4_select_right:'',
+        jiaolian4_insert_right:'',
+
+        jiaolian5_select_left:'',
+        jiaolian5_insert_left:'',
+        jiaolian5_select_right:'',
+        jiaolian5_insert_right:'',
+
+        jiaolian6_select_left:'',
+        jiaolian6_insert_left:'',
+        jiaolian6_select_right:'',
+        jiaolian6_insert_right:'',
+
+        qita:'',
+
+        sum_shuliang1:'',
+        danjia1:'',
+        sum_jine1:'',
+
+        fujian_select1:'',
+        fujian_select2:'',
+        fujian_select3:'',
+        fujian_select4:'',
+
+        pinpai_select1:'',
+        pinpai_select2:'',
+        pinpai_select3:'',
+        pinpai_select4:'',
+
+        fujian_shuliang1:'',
+        fujian_shuliang2:'',
+        fujian_shuliang3:'',
+        fujian_shuliang4:'',
+
+        sum_shuliang2:'',
+        danjia2:'',
+        sum_jine2:'',
+      },
+    ],
   },
 
   /**
@@ -889,7 +3617,47 @@ Page({
         var jiaolian6_select_right = [{name:''}]
         var zhuangsuofangxiang_select_left = [{name:''}]
         var zhuangsuofangxiang_select_right = [{name:''}]
+        var zhuangsuofangxiang_select_left = [{name:''}]
+        var zhuangsuofangxiang_select_right = [{name:''}]
+        var fujian_select1 =[{name:''}]
+        var fujian_select2 =[{name:''}]
+        var fujian_select3 =[{name:''}]
+        var fujian_select4 =[{name:''}]
+        var pinpai_select1 = [{name:''}]
+        var pinpai_select2 = [{name:''}]
+        var pinpai_select3 = [{name:''}]
+        var pinpai_select4 = [{name:''}]
         for(var i=0; i<list.length; i++){
+          if(list[i].jlpp != '' && list[i].jlpp != null && list[i].jlpp != undefined){
+            pinpai_select1.push({
+              name:list[i].jlpp,
+            })
+            pinpai_select2.push({
+              name:list[i].jlpp,
+            })
+            pinpai_select3.push({
+              name:list[i].jlpp,
+            })
+            pinpai_select4.push({
+              name:list[i].jlpp,
+            })
+          }
+
+          if(list[i].fjpz != '' && list[i].fjpz != null && list[i].fjpz != undefined){
+            fujian_select1.push({
+              name:list[i].fjpz,
+            })
+            fujian_select2.push({
+              name:list[i].fjpz,
+            })
+            fujian_select3.push({
+              name:list[i].fjpz,
+            })
+            fujian_select4.push({
+              name:list[i].fjpz,
+            })
+          }
+
           if(list[i].shfs != '' && list[i].shfs != null && list[i].shfs != undefined){
             shipping_type.push({
               name:list[i].shfs,
@@ -1002,6 +3770,14 @@ Page({
           jiaolian6_select_right,
           zhuangsuofangxiang_select_left,
           zhuangsuofangxiang_select_right,
+          fujian_select1,
+          fujian_select2,
+          fujian_select3,
+          fujian_select4,
+          pinpai_select1,
+          pinpai_select2,
+          pinpai_select3,
+          pinpai_select4,
         })
       },
       err: res => {
@@ -1198,6 +3974,60 @@ Page({
       var click_index = _this.data.click_index
       var click_column = _this.data.click_column
       body_list[click_index][click_column] = new_val
+      if(click_column == 'jiaolian1_select_left'){
+        body_list[click_index].jiaolian1_select_right = new_val
+        if(new_val == '距中'){
+          if(body_list[click_index].height != ""){
+            body_list[click_index].jiaolian1_insert_left = body_list[click_index].height / 2
+            body_list[click_index].jiaolian1_insert_right = body_list[click_index].height / 2
+          }
+        }
+      }
+      if(click_column == 'jiaolian2_select_left'){
+        body_list[click_index].jiaolian2_select_right = new_val
+        if(new_val == '距中'){
+          if(body_list[click_index].height != ""){
+            body_list[click_index].jiaolian2_insert_left = body_list[click_index].height / 2
+            body_list[click_index].jiaolian2_insert_right = body_list[click_index].height / 2
+          }
+        }
+      }
+      if(click_column == 'jiaolian3_select_left'){
+        body_list[click_index].jiaolian3_select_right = new_val
+        if(new_val == '距中'){
+          if(body_list[click_index].height != ""){
+            body_list[click_index].jiaolian3_insert_left = body_list[click_index].height / 2
+            body_list[click_index].jiaolian3_insert_right = body_list[click_index].height / 2
+          }
+        }
+      }
+      if(click_column == 'jiaolian4_select_left'){
+        body_list[click_index].jiaolian4_select_right = new_val
+        if(new_val == '距中'){
+          if(body_list[click_index].height != ""){
+            body_list[click_index].jiaolian4_insert_left = body_list[click_index].height / 2
+            body_list[click_index].jiaolian4_insert_right = body_list[click_index].height / 2
+          }
+        }
+      }
+      if(click_column == 'jiaolian5_select_left'){
+        body_list[click_index].jiaolian5_select_right = new_val
+        if(new_val == '距中'){
+          if(body_list[click_index].height != ""){
+            body_list[click_index].jiaolian5_insert_left = body_list[click_index].height / 2
+            body_list[click_index].jiaolian5_insert_right = body_list[click_index].height / 2
+          }
+        }
+      }
+      if(click_column == 'jiaolian6_select_left'){
+        body_list[click_index].jiaolian6_select_right = new_val
+        if(new_val == '距中'){
+          if(body_list[click_index].height != ""){
+            body_list[click_index].jiaolian6_insert_left = body_list[click_index].height / 2
+            body_list[click_index].jiaolian6_insert_right = body_list[click_index].height / 2
+          }
+        }
+      }
       _this.setData({
         xlShow: false,
         body_list
@@ -1243,6 +4073,128 @@ Page({
     _this.setData({
       body_list 
     })
+  },
+
+  copy_01:function(){
+    var _this = this
+    var this_list = _this.data.body_list
+    var panduan = false
+    for(var i=this_list.length-2; i>=0; i--){
+      if(this_list[i].height != "" && this_list[i + 1].height == ""){
+        panduan = true
+        break;
+      }
+    }
+    if(panduan){
+        var _this = this
+        wx.showModal({
+          title: '提示',
+          content: '确认复制表单'+ (i * 1+1*1) +'到表单'+ (i*1+2*1) +'？',
+          success (res) {
+            if (res.confirm) {
+              this_list[i+1].height=this_list[i].height
+              this_list[i+1].width=this_list[i].width
+              this_list[i+1].num=this_list[i].num
+              this_list[i+1].lvxingcai=this_list[i].lvxingcai
+              this_list[i+1].lvcai_yanse=this_list[i].lvcai_yanse
+              this_list[i+1].boli_shenjiagong=this_list[i].boli_shenjiagong
+              this_list[i+1].boli_yanse=this_list[i].boli_yanse
+              this_list[i+1].lashou_xinghao=this_list[i].lashou_xinghao
+
+              this_list[i+1].jiaoliankong_fangxiang_left=this_list[i].jiaoliankong_fangxiang_left
+              this_list[i+1].jiaoliankong_fangxiang_right=this_list[i].jiaoliankong_fangxiang_right
+
+              this_list[i+1].lashou_shuliang_right=this_list[i].lashou_shuliang_right
+              this_list[i+1].lashou_shuliang_left=this_list[i].lashou_shuliang_left
+
+              this_list[i+1].lashouwei_select_left=this_list[i].lashouwei_select_left
+              this_list[i+1].lashouwei_insert_left=this_list[i].lashouwei_insert_left
+              this_list[i+1].lashouwei_select_right=this_list[i].lashouwei_select_right
+              this_list[i+1].lashouwei_insert_right=this_list[i].lashouwei_insert_right
+
+              this_list[i+1].zhuangsuoshuliang_insert_left1=this_list[i].zhuangsuoshuliang_insert_left1
+              this_list[i+1].zhuangsuoshuliang_insert_right1=this_list[i].zhuangsuoshuliang_insert_right1
+
+              this_list[i+1].zhuangsuofangwei_insert_left1=this_list[i].zhuangsuofangwei_insert_left1
+              this_list[i+1].zhuangsuofangwei_insert_left2=this_list[i].zhuangsuofangwei_insert_left2
+              this_list[i+1].zhuangsuofangwei_insert_right1=this_list[i].zhuangsuofangwei_insert_right1
+              this_list[i+1].zhuangsuofangwei_insert_right2=this_list[i].zhuangsuofangwei_insert_right2
+
+              this_list[i+1].kaijiaolian=this_list[i].kaijiaolian
+
+              this_list[i+1].jiaolian1_select_left=this_list[i].jiaolian1_select_left
+              this_list[i+1].jiaolian1_insert_left=this_list[i].jiaolian1_insert_left
+              this_list[i+1].jiaolian1_select_right=this_list[i].jiaolian1_select_right
+              this_list[i+1].jiaolian1_insert_right=this_list[i].jiaolian1_insert_right
+
+              this_list[i+1].jiaolian2_select_left=this_list[i].jiaolian2_select_left
+              this_list[i+1].jiaolian2_insert_left=this_list[i].jiaolian2_insert_left
+              this_list[i+1].jiaolian2_select_right=this_list[i].jiaolian2_select_right
+              this_list[i+1].jiaolian2_insert_right=this_list[i].jiaolian2_insert_right
+
+              this_list[i+1].jiaolian3_select_left=this_list[i].jiaolian3_select_left
+              this_list[i+1].jiaolian3_insert_left=this_list[i].jiaolian3_insert_left
+              this_list[i+1].jiaolian3_select_right=this_list[i].jiaolian3_select_right
+              this_list[i+1].jiaolian3_insert_right=this_list[i].jiaolian3_insert_right
+
+              this_list[i+1].jiaolian4_select_left=this_list[i].jiaolian4_select_left
+              this_list[i+1].jiaolian4_insert_left=this_list[i].jiaolian4_insert_left
+              this_list[i+1].jiaolian4_select_right=this_list[i].jiaolian4_select_right
+              this_list[i+1].jiaolian4_insert_right=this_list[i].jiaolian4_insert_right
+
+              this_list[i+1].jiaolian5_select_left=this_list[i].jiaolian5_select_left
+              this_list[i+1].jiaolian5_insert_left=this_list[i].jiaolian5_insert_left
+              this_list[i+1].jiaolian5_select_right=this_list[i].jiaolian5_select_right
+              this_list[i+1].jiaolian5_insert_right=this_list[i].jiaolian5_insert_right
+
+              this_list[i+1].jiaolian6_select_left=this_list[i].jiaolian6_select_left
+              this_list[i+1].jiaolian6_insert_left=this_list[i].jiaolian6_insert_left
+              this_list[i+1].jiaolian6_select_right=this_list[i].jiaolian6_select_right
+              this_list[i+1].jiaolian6_insert_right=this_list[i].jiaolian6_insert_right
+
+              this_list[i+1].qita=this_list[i].qita
+
+              this_list[i+1].sum_shuliang1=this_list[i].sum_shuliang1
+              this_list[i+1].danjia1=this_list[i].danjia1
+              this_list[i+1].sum_jine1=this_list[i].sum_jine1
+
+              this_list[i+1].fujian_select1=this_list[i].fujian_select1
+              this_list[i+1].fujian_select2=this_list[i].fujian_select2
+              this_list[i+1].fujian_select3=this_list[i].fujian_select3
+              this_list[i+1].fujian_select4=this_list[i].fujian_select4
+
+              this_list[i+1].pinpai_select1=this_list[i].pinpai_select1
+              this_list[i+1].pinpai_select2=this_list[i].pinpai_select2
+              this_list[i+1].pinpai_select3=this_list[i].pinpai_select3
+              this_list[i+1].pinpai_select4=this_list[i].pinpai_select4
+
+              this_list[i+1].fujian_shuliang1=this_list[i].fujian_shuliang1
+              this_list[i+1].fujian_shuliang2=this_list[i].fujian_shuliang2
+              this_list[i+1].fujian_shuliang3=this_list[i].fujian_shuliang3
+              this_list[i+1].fujian_shuliang4=this_list[i].fujian_shuliang4
+
+              this_list[i+1].sum_shuliang2=this_list[i].sum_shuliang2
+              this_list[i+1].danjia2=this_list[i].danjia2
+              this_list[i+1].sum_jine2=this_list[i].sum_jine2
+              console.log(this_list)
+              _this.setData({
+                body_list: this_list
+              })
+              wx.showToast({
+                title: '完成！',
+                icon: 'none'
+              })
+              return;
+            } else if (res.cancel) {
+              wx.showToast({
+                title: '已取消！',
+                icon: 'none'
+              })
+              return;
+            }
+          }
+        })
+      }
   },
 
   save:function(){
@@ -1306,13 +4258,13 @@ Page({
       return;
     }
 
-    var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita,zhuangsuofangxiang_select_left,zhuangsuofangxiang_select_right,zhuangsuofangwei_insert_left1,zhuangsuofangwei_insert_left2,zhuangsuofangwei_insert_right1,zhuangsuofangwei_insert_right2,zhuangsuoshuliang_insert_left1,zhuangsuoshuliang_insert_left2,zhuangsuoshuliang_insert_right1,zhuangsuoshuliang_insert_right2,num,sum_shuliang1,danjia1,sum_jine1,sum_shuliang2,danjia2,sum_jine2) values "
+    var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,num,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,zhuangsuoshuliang_insert_left1,zhuangsuoshuliang_insert_right1,zhuangsuofangwei_insert_left1,zhuangsuofangwei_insert_left2,zhuangsuofangwei_insert_right1,zhuangsuofangwei_insert_right2,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita,sum_shuliang1,danjia1,sum_jine1,fujian_select1,fujian_select2,fujian_select3,fujian_select4,pinpai_select1,pinpai_select2,pinpai_select3,pinpai_select4,fujian_shuliang1,fujian_shuliang2,fujian_shuliang3,fujian_shuliang4,sum_shuliang2,danjia2,sum_jine2,guanlian) values "
     var sql_foot = ""
     for(var i=0; i<body_list.length; i++){
       if(sql_foot == ''){
-        sql_foot = "('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].zhuangsuofangxiang_select_left + "','" + body_list[i].zhuangsuofangxiang_select_right + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_left2 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuoshuliang_insert_right2 + "','" + body_list[i].num + "','" + body_list[i].sum_shuliang1 + "','" + body_list[i].danjia1 + "','" + body_list[i].sum_jine1 + "','" + body_list[i].sum_shuliang2 + "','" + body_list[i].danjia2 + "','" + body_list[i].sum_jine2 + "')"
+        sql_foot = "('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].num + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].sum_shuliang1 + "','" + body_list[i].danjia1 + "','" + body_list[i].sum_jine1 + "','" + body_list[i].fujian_select1 + "','" + body_list[i].fujian_select2 + "','" + body_list[i].fujian_select3 + "','" + body_list[i].fujian_select4 + "','" + body_list[i].pinpai_select1 + "','" + body_list[i].pinpai_select2 + "','" + body_list[i].pinpai_select3 + "','" + body_list[i].pinpai_select4 + "','" + body_list[i].fujian_shuliang1 + "','" + body_list[i].fujian_shuliang2 + "','" + body_list[i].fujian_shuliang3 + "','" + body_list[i].fujian_shuliang4 + "','" + body_list[i].sum_shuliang2 + "','" + body_list[i].danjia2 + "','" + body_list[i].sum_jine2 + "','" + header_list.order_number + i + "')"
       }else{
-        sql_foot = sql_foot + ",('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].zhuangsuofangxiang_select_left + "','" + body_list[i].zhuangsuofangxiang_select_right + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_left2 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuoshuliang_insert_right2 + "','" + body_list[i].num + "','" + body_list[i].sum_shuliang1 + "','" + body_list[i].danjia1 + "','" + body_list[i].sum_jine1 + "','" + body_list[i].sum_shuliang2 + "','" + body_list[i].danjia2 + "','" + body_list[i].sum_jine2 + "')"
+        sql_foot = sql_foot + ",('" + header_list.customer_name + "','" + header_list.insert_date + "','" + header_list.order_number + "','" + header_list.pinyin + "','" + header_list.shipping_address + "','" + header_list.phone + "','" + header_list.shipping_type + "','" + header_list.install_address + "','" + header_list.customer_number + "','" + body_list[i].height + "','" + body_list[i].width + "','" + body_list[i].num + "','" + body_list[i].lvxingcai + "','" + body_list[i].lvcai_yanse + "','" + body_list[i].boli_shenjiagong + "','" + body_list[i].boli_yanse + "','" + body_list[i].lashou_xinghao + "','" + body_list[i].jiaoliankong_fangxiang_left + "','" + body_list[i].jiaoliankong_fangxiang_right + "','" + body_list[i].lashou_shuliang_right + "','" + body_list[i].lashou_shuliang_left + "','" + body_list[i].lashouwei_select_left + "','" + body_list[i].lashouwei_insert_left + "','" + body_list[i].lashouwei_select_right + "','" + body_list[i].lashouwei_insert_right + "','" + body_list[i].zhuangsuoshuliang_insert_left1 + "','" + body_list[i].zhuangsuoshuliang_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_left1 + "','" + body_list[i].zhuangsuofangwei_insert_left2 + "','" + body_list[i].zhuangsuofangwei_insert_right1 + "','" + body_list[i].zhuangsuofangwei_insert_right2 + "','" + body_list[i].kaijiaolian + "','" + body_list[i].jiaolian1_select_left + "','" + body_list[i].jiaolian1_insert_left + "','" + body_list[i].jiaolian1_select_right + "','" + body_list[i].jiaolian1_insert_right + "','" + body_list[i].jiaolian2_select_left + "','" + body_list[i].jiaolian2_insert_left + "','" + body_list[i].jiaolian2_select_right + "','" + body_list[i].jiaolian2_insert_right + "','" + body_list[i].jiaolian3_select_left + "','" + body_list[i].jiaolian3_insert_left + "','" + body_list[i].jiaolian3_select_right + "','" + body_list[i].jiaolian3_insert_right + "','" + body_list[i].jiaolian4_select_left + "','" + body_list[i].jiaolian4_insert_left + "','" + body_list[i].jiaolian4_select_right + "','" + body_list[i].jiaolian4_insert_right + "','" + body_list[i].jiaolian5_select_left + "','" + body_list[i].jiaolian5_insert_left + "','" + body_list[i].jiaolian5_select_right + "','" + body_list[i].jiaolian5_insert_right + "','" + body_list[i].jiaolian6_select_left + "','" + body_list[i].jiaolian6_insert_left + "','" + body_list[i].jiaolian6_select_right + "','" + body_list[i].jiaolian6_insert_right + "','" + body_list[i].qita + "','" + body_list[i].sum_shuliang1 + "','" + body_list[i].danjia1 + "','" + body_list[i].sum_jine1 + "','" + body_list[i].fujian_select1 + "','" + body_list[i].fujian_select2 + "','" + body_list[i].fujian_select3 + "','" + body_list[i].fujian_select4 + "','" + body_list[i].pinpai_select1 + "','" + body_list[i].pinpai_select2 + "','" + body_list[i].pinpai_select3 + "','" + body_list[i].pinpai_select4 + "','" + body_list[i].fujian_shuliang1 + "','" + body_list[i].fujian_shuliang2 + "','" + body_list[i].fujian_shuliang3 + "','" + body_list[i].fujian_shuliang4 + "','" + body_list[i].sum_shuliang2 + "','" + body_list[i].danjia2 + "','" + body_list[i].sum_jine2 + "','" + header_list.order_number + i + "')"
       }
     }
     insert_sql = insert_sql + sql_foot + ";"
@@ -1344,7 +4296,7 @@ Page({
 
         var canzhao_list = res.result.recordsets[0]
         console.log(canzhao_list)
-        var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width) values "
+        var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shuoming1,shuoming2,shengchan,guanlian) values "
         var boli_insert_sql_foot = ""
         
         for(var i=0; i<body_list.length; i++){
@@ -1379,10 +4331,29 @@ Page({
                 }
                 width = width - this_width
                 height = height - this_height
+                var shuoming1 = 0
+                var shuoming2 = 0
+                if(body_list[i].zhuangsuoshuliang_insert_left1 != ""){
+                  shuoming2 = shuoming2 + body_list[i].zhuangsuoshuliang_insert_left1 * 1
+                }
+                if(body_list[i].zhuangsuoshuliang_insert_right1 != ""){
+                  shuoming2 = shuoming2 + body_list[i].zhuangsuoshuliang_insert_right1 * 1
+                }
+                if((body_list[i].lashou_xinghao == "明装96拉手孔" || body_list[i].lashou_xinghao == "明装128拉手孔" || body_list[i].lashou_xinghao == "特殊孔拉手") && (body_list[i].lvxingcai == "小圆边铝框" || body_list[i].lvxingcai == "前20后45铝框")){
+                  if(body_list[i].lashouwei_insert_left != ""){
+                    shuoming1 = shuoming1 + body_list[i].lashouwei_insert_left * 1
+                  }
+                  if(body_list[i].lashouwei_insert_right != ""){
+                    shuoming1 = shuoming1 + body_list[i].lashouwei_insert_right * 1
+                  }
+                  if(shuoming1 < 13){
+                    shuoming1 = 0
+                  }
+                }
                 if(boli_insert_sql_foot == ""){
-                  boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                  boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "','" + shuoming1 + "','" + shuoming2 + "','正在加工','"  + header_list.order_number + i + "')"
                 }else{
-                  boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "')"
+                  boli_insert_sql_foot = boli_insert_sql_foot + ",('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "','" + shuoming1 + "','" + shuoming2 + "','正在加工','"  + header_list.order_number + i + "')"
                 }
                 break;
               }
@@ -1595,7 +4566,36 @@ Page({
     var this_value = _this.data.this_value
     var list = _this.data.body_list
     list[index * 1][this_column] = this_value
-
+    if(this_column == 'jiaolian1_insert_left'){
+      list[index * 1].jiaolian1_insert_right = this_value
+    }
+    if(this_column == 'jiaolian2_insert_left'){
+      list[index * 1].jiaolian2_insert_right = this_value
+    }
+    if(this_column == 'jiaolian3_insert_left'){
+      list[index * 1].jiaolian3_insert_right = this_value
+    }
+    if(this_column == 'jiaolian4_insert_left'){
+      list[index * 1].jiaolian4_insert_right = this_value
+    }
+    if(this_column == 'jiaolian5_insert_left'){
+      list[index * 1].jiaolian5_insert_right = this_value
+    }
+    if(this_column == 'jiaolian6_insert_left'){
+      list[index * 1].jiaolian6_insert_right = this_value
+    }
+    if(this_column == 'jiaoliankong_fangxiang_left'){
+      list[index * 1].lashou_shuliang_right = this_value
+    }
+    if(this_column == 'jiaoliankong_fangxiang_right'){
+      list[index * 1].lashou_shuliang_left = this_value
+    }
+    if(this_column == 'lashouwei_select_left'){
+      list[index * 1].lashouwei_select_right = this_value
+    }
+    if(this_column == 'lashouwei_insert_left'){
+      list[index * 1].lashouwei_insert_right = this_value
+    }
     if(list[index * 1].height != '' && list[index * 1].width != '' && list[index * 1].num != ''){
       list[index].sum_shuliang1 = Math.round(list[index * 1].height * list[index * 1].width / 1000000 * list[index * 1].num * 1000) / 1000 
     }else{
