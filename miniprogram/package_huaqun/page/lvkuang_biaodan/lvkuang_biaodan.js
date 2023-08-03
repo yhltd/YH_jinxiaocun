@@ -688,127 +688,7 @@ Page({
       columnName: "E",
       type: "text",
       isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "F",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "G",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "H",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "I",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "J",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "K",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "L",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "M",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "N",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "O",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "P",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "Q",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "R",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "S",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "T",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "U",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "V",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "W",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "X",
-      type: "text",
-      isupd: true
-    },{
-      text: "",
-      width: "400rpx",
-      columnName: "Y",
-      type: "text",
-      isupd: true
-    },]
+    }]
 
   },
 
@@ -980,795 +860,264 @@ Page({
     }
     var body_list = _this.data.body_list
     var body_list_end = []
-    //序号
-    body_list_end.push({
-      A:'序号',
-      B:'1',
-      C:'',
-      D:'',
-      E:'',
-      F:'2',
-      G:'',
-      H:'',
-      I:'',
-      J:'3',
-      K:'',
-      L:'',
-      M:'',
-      N:'4',
-      O:'',
-      P:'',
-      Q:'',
-      R:'5',
-      S:'',
-      T:'',
-      U:'',
-      V:'6',
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //第二行标题
-    body_list_end.push({
-      A:'',
-      B:'H&高',
-      C:'',
-      D:'W&宽',
-      E:'',
-      F:'H&高',
-      G:'',
-      H:'W&宽',
-      I:'',
-      J:'H&高',
-      K:'',
-      L:'W&宽',
-      M:'',
-      N:'H&高',
-      O:'',
-      P:'W&宽',
-      Q:'',
-      R:'H&高',
-      S:'',
-      T:'W&宽',
-      U:'',
-      V:'H&高',
-      W:'',
-      X:'W&宽',
-      Y:'',
-    })
-    //下单数量
-    body_list_end.push({
-      A:'下单数量',
-      B:body_list[0].num,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].num,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].num,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].num,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].num,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].num,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //尺寸
-    body_list_end.push({
-      A:'尺寸',
-      B:body_list[0].height,
-      C:'',
-      D:body_list[0].width,
-      E:'',
-      F:body_list[1].height,
-      G:'',
-      H:body_list[1].width,
-      I:'',
-      J:body_list[2].height,
-      K:'',
-      L:body_list[2].width,
-      M:'',
-      N:body_list[3].height,
-      O:'',
-      P:body_list[3].width,
-      Q:'',
-      R:body_list[4].height,
-      S:'',
-      T:body_list[4].width,
-      U:'',
-      V:body_list[5].height,
-      W:'',
-      X:body_list[5].width,
-      Y:'',
-    })
 
-    //铝型材
-    body_list_end.push({
-      A:'铝型材',
-      B:body_list[0].lvxingcai,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].lvxingcai,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].lvxingcai,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].lvxingcai,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].lvxingcai,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].lvxingcai,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //铝材颜色
-    body_list_end.push({
-      A:'铝材颜色',
-      B:body_list[0].lvcai_yanse,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].lvcai_yanse,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].lvcai_yanse,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].lvcai_yanse,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].lvcai_yanse,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].lvcai_yanse,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //玻璃深加工
-    body_list_end.push({
-      A:'玻璃深加工',
-      B:body_list[0].boli_shenjiagong,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].boli_shenjiagong,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].boli_shenjiagong,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].boli_shenjiagong,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].boli_shenjiagong,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].boli_shenjiagong,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //玻璃颜色
-    body_list_end.push({
-      A:'玻璃颜色',
-      B:body_list[0].boli_yanse,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].boli_yanse,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].boli_yanse,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].boli_yanse,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].boli_yanse,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].boli_yanse,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //拉手型号
-    body_list_end.push({
-      A:'拉手型号',
-      B:body_list[0].lashou_xinghao,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].lashou_xinghao,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].lashou_xinghao,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].lashou_xinghao,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].lashou_xinghao,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].lashou_xinghao,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //有拉手数量（个）
-    body_list_end.push({
-      A:'有拉手数量（个）',
-      B:'右边拉手',
-      C:body_list[0].lashou_shuliang_right,
-      D:'左边拉手',
-      E:body_list[0].lashou_shuliang_left,
-      F:'右边拉手',
-      G:body_list[1].lashou_shuliang_right,
-      H:'左边拉手',
-      I:body_list[1].lashou_shuliang_left,
-      J:'右边拉手',
-      K:body_list[2].lashou_shuliang_right,
-      L:'左边拉手',
-      M:body_list[2].lashou_shuliang_left,
-      N:'右边拉手',
-      O:body_list[3].lashou_shuliang_right,
-      P:'左边拉手',
-      Q:body_list[3].lashou_shuliang_left,
-      R:'右边拉手',
-      S:body_list[4].lashou_shuliang_right,
-      T:'左边拉手',
-      U:body_list[4].lashou_shuliang_left,
-      V:'右边拉手',
-      W:body_list[5].lashou_shuliang_right,
-      X:'左边拉手',
-      Y:body_list[5].lashou_shuliang_left,
-    })
-    //拉手位
-    body_list_end.push({
-      A:'拉手位',
-      B:body_list[0].lashouwei_select_left,
-      C:body_list[0].lashouwei_insert_left,
-      D:body_list[0].lashouwei_select_right,
-      E:body_list[0].lashouwei_insert_right,
-      F:body_list[1].lashouwei_select_left,
-      G:body_list[1].lashouwei_insert_left,
-      H:body_list[1].lashouwei_select_right,
-      I:body_list[1].lashouwei_insert_right,
-      J:body_list[2].lashouwei_select_left,
-      K:body_list[2].lashouwei_insert_left,
-      L:body_list[2].lashouwei_select_right,
-      M:body_list[2].lashouwei_insert_right,
-      N:body_list[3].lashouwei_select_left,
-      O:body_list[3].lashouwei_insert_left,
-      P:body_list[3].lashouwei_select_right,
-      Q:body_list[3].lashouwei_insert_right,
-      R:body_list[4].lashouwei_select_left,
-      S:body_list[4].lashouwei_insert_left,
-      T:body_list[4].lashouwei_select_right,
-      U:body_list[4].lashouwei_insert_right,
-      V:body_list[5].lashouwei_select_left,
-      W:body_list[5].lashouwei_insert_left,
-      X:body_list[5].lashouwei_select_right,
-      Y:body_list[5].lashouwei_insert_right,
-    })
-    //左右开标题
-    body_list_end.push({
-      A:'',
-      B:'左开',
-      C:'',
-      D:'右开',
-      E:'',
-      F:'左开',
-      G:'',
-      H:'右开',
-      I:'',
-      J:'左开',
-      K:'',
-      L:'右开',
-      M:'',
-      N:'左开',
-      O:'',
-      P:'右开',
-      Q:'',
-      R:'左开',
-      S:'',
-      T:'右开',
-      U:'',
-      V:'左开',
-      W:'',
-      X:'右开',
-      Y:'',
-    })
-    //铰链孔方向及数量（个）
-    body_list_end.push({
-      A:'铰链孔方向及数量（个）',
-      B:body_list[0].jiaoliankong_fangxiang_left,
-      C:'',
-      D:body_list[0].jiaoliankong_fangxiang_right,
-      E:'',
-      F:body_list[1].jiaoliankong_fangxiang_left,
-      G:'',
-      H:body_list[1].jiaoliankong_fangxiang_right,
-      I:'',
-      J:body_list[2].jiaoliankong_fangxiang_left,
-      K:'',
-      L:body_list[2].jiaoliankong_fangxiang_right,
-      M:'',
-      N:body_list[3].jiaoliankong_fangxiang_left,
-      O:'',
-      P:body_list[3].jiaoliankong_fangxiang_right,
-      Q:'',
-      R:body_list[4].jiaoliankong_fangxiang_left,
-      S:'',
-      T:body_list[4].jiaoliankong_fangxiang_right,
-      U:'',
-      V:body_list[5].jiaoliankong_fangxiang_left,
-      W:'',
-      X:body_list[5].jiaoliankong_fangxiang_right,
-      Y:'',
-    })
-    //装锁方向
-    body_list_end.push({
-      A:'装锁方向',
-      B:body_list[0].zhuangsuofangxiang_select_left,
-      C:'从右向左',
-      D:body_list[0].zhuangsuofangxiang_select_right,
-      E:'从左向右',
-      F:body_list[1].zhuangsuofangxiang_select_left,
-      G:'从右向左',
-      H:body_list[1].zhuangsuofangxiang_select_right,
-      I:'从左向右',
-      J:body_list[2].zhuangsuofangxiang_select_left,
-      K:'从右向左',
-      L:body_list[2].zhuangsuofangxiang_select_right,
-      M:'从左向右',
-      N:body_list[3].zhuangsuofangxiang_select_left,
-      O:'从右向左',
-      P:body_list[3].zhuangsuofangxiang_select_right,
-      Q:'从左向右',
-      R:body_list[4].zhuangsuofangxiang_select_left,
-      S:'从右向左',
-      T:body_list[4].zhuangsuofangxiang_select_right,
-      U:'从左向右',
-      V:body_list[5].zhuangsuofangxiang_select_left,
-      W:'从右向左',
-      X:body_list[5].zhuangsuofangxiang_select_right,
-      Y:'从左向右',
-    })
-    //装锁方位
-    body_list_end.push({
-      A:'装锁方位',
-      B:body_list[0].zhuangsuofangwei_insert_left1,
-      C:body_list[0].zhuangsuofangwei_insert_left2,
-      D:body_list[0].zhuangsuofangwei_insert_right1,
-      E:body_list[0].zhuangsuofangwei_insert_right2,
-      F:body_list[1].zhuangsuofangwei_insert_left1,
-      G:body_list[1].zhuangsuofangwei_insert_left2,
-      H:body_list[1].zhuangsuofangwei_insert_right1,
-      I:body_list[1].zhuangsuofangwei_insert_right2,
-      J:body_list[2].zhuangsuofangwei_insert_left1,
-      K:body_list[2].zhuangsuofangwei_insert_left2,
-      L:body_list[2].zhuangsuofangwei_insert_right1,
-      M:body_list[2].zhuangsuofangwei_insert_right2,
-      N:body_list[3].zhuangsuofangwei_insert_left1,
-      O:body_list[3].zhuangsuofangwei_insert_left2,
-      P:body_list[3].zhuangsuofangwei_insert_right1,
-      Q:body_list[3].zhuangsuofangwei_insert_right2,
-      R:body_list[4].zhuangsuofangwei_insert_left1,
-      S:body_list[4].zhuangsuofangwei_insert_left2,
-      T:body_list[4].zhuangsuofangwei_insert_right1,
-      U:body_list[4].zhuangsuofangwei_insert_right2,
-      V:body_list[5].zhuangsuofangwei_insert_left1,
-      W:body_list[5].zhuangsuofangwei_insert_left2,
-      X:body_list[5].zhuangsuofangwei_insert_right1,
-      Y:body_list[5].zhuangsuofangwei_insert_right2,
-    })
-    //装锁数量
-    body_list_end.push({
-      A:'装锁数量',
-      B:body_list[0].zhuangsuoshuliang_insert_left1,
-      C:body_list[0].zhuangsuoshuliang_insert_left2,
-      D:body_list[0].zhuangsuoshuliang_insert_right1,
-      E:body_list[0].zhuangsuoshuliang_insert_right2,
-      F:body_list[1].zhuangsuoshuliang_insert_left1,
-      G:body_list[1].zhuangsuoshuliang_insert_left2,
-      H:body_list[1].zhuangsuoshuliang_insert_right1,
-      I:body_list[1].zhuangsuoshuliang_insert_right2,
-      J:body_list[2].zhuangsuoshuliang_insert_left1,
-      K:body_list[2].zhuangsuoshuliang_insert_left2,
-      L:body_list[2].zhuangsuoshuliang_insert_right1,
-      M:body_list[2].zhuangsuoshuliang_insert_right2,
-      N:body_list[3].zhuangsuoshuliang_insert_left1,
-      O:body_list[3].zhuangsuoshuliang_insert_left2,
-      P:body_list[3].zhuangsuoshuliang_insert_right1,
-      Q:body_list[3].zhuangsuoshuliang_insert_right2,
-      R:body_list[4].zhuangsuoshuliang_insert_left1,
-      S:body_list[4].zhuangsuoshuliang_insert_left2,
-      T:body_list[4].zhuangsuoshuliang_insert_right1,
-      U:body_list[4].zhuangsuoshuliang_insert_right2,
-      V:body_list[5].zhuangsuoshuliang_insert_left1,
-      W:body_list[5].zhuangsuoshuliang_insert_left2,
-      X:body_list[5].zhuangsuoshuliang_insert_right1,
-      Y:body_list[5].zhuangsuoshuliang_insert_right2,
-    })
-    //开铰链孔
-    body_list_end.push({
-      A:'开铰链孔',
-      B:body_list[0].kaijiaolian,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].kaijiaolian,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].kaijiaolian,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].kaijiaolian,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].kaijiaolian,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].kaijiaolian,
-      W:'',
-      X:'',
-      Y:'',
-    })
-    //铰链孔位1
-    body_list_end.push({
-      A:'铰链孔位1',
-      B:body_list[0].jiaolian1_select_left,
-      C:body_list[0].jiaolian1_insert_left,
-      D:body_list[0].jiaolian1_select_right,
-      E:body_list[0].jiaolian1_insert_right,
-      F:body_list[1].jiaolian1_select_left,
-      G:body_list[1].jiaolian1_insert_left,
-      H:body_list[1].jiaolian1_select_right,
-      I:body_list[1].jiaolian1_insert_right,
-      J:body_list[2].jiaolian1_select_left,
-      K:body_list[2].jiaolian1_insert_left,
-      L:body_list[2].jiaolian1_select_right,
-      M:body_list[2].jiaolian1_insert_right,
-      N:body_list[3].jiaolian1_select_left,
-      O:body_list[3].jiaolian1_insert_left,
-      P:body_list[3].jiaolian1_select_right,
-      Q:body_list[3].jiaolian1_insert_right,
-      R:body_list[4].jiaolian1_select_left,
-      S:body_list[4].jiaolian1_insert_left,
-      T:body_list[4].jiaolian1_select_right,
-      U:body_list[4].jiaolian1_insert_right,
-      V:body_list[5].jiaolian1_select_left,
-      W:body_list[5].jiaolian1_insert_left,
-      X:body_list[5].jiaolian1_select_right,
-      Y:body_list[5].jiaolian1_insert_right,
-    })
-    //铰链孔位2
-    body_list_end.push({
-      A:'铰链孔位2',
-      B:body_list[0].jiaolian2_select_left,
-      C:body_list[0].jiaolian2_insert_left,
-      D:body_list[0].jiaolian2_select_right,
-      E:body_list[0].jiaolian2_insert_right,
-      F:body_list[1].jiaolian2_select_left,
-      G:body_list[1].jiaolian2_insert_left,
-      H:body_list[1].jiaolian2_select_right,
-      I:body_list[1].jiaolian2_insert_right,
-      J:body_list[2].jiaolian2_select_left,
-      K:body_list[2].jiaolian2_insert_left,
-      L:body_list[2].jiaolian2_select_right,
-      M:body_list[2].jiaolian2_insert_right,
-      N:body_list[3].jiaolian2_select_left,
-      O:body_list[3].jiaolian2_insert_left,
-      P:body_list[3].jiaolian2_select_right,
-      Q:body_list[3].jiaolian2_insert_right,
-      R:body_list[4].jiaolian2_select_left,
-      S:body_list[4].jiaolian2_insert_left,
-      T:body_list[4].jiaolian2_select_right,
-      U:body_list[4].jiaolian2_insert_right,
-      V:body_list[5].jiaolian2_select_left,
-      W:body_list[5].jiaolian2_insert_left,
-      X:body_list[5].jiaolian2_select_right,
-      Y:body_list[5].jiaolian2_insert_right,
-    })
-    //铰链孔位3
-    body_list_end.push({
-      A:'铰链孔位3',
-      B:body_list[0].jiaolian3_select_left,
-      C:body_list[0].jiaolian3_insert_left,
-      D:body_list[0].jiaolian3_select_right,
-      E:body_list[0].jiaolian3_insert_right,
-      F:body_list[1].jiaolian3_select_left,
-      G:body_list[1].jiaolian3_insert_left,
-      H:body_list[1].jiaolian3_select_right,
-      I:body_list[1].jiaolian3_insert_right,
-      J:body_list[2].jiaolian3_select_left,
-      K:body_list[2].jiaolian3_insert_left,
-      L:body_list[2].jiaolian3_select_right,
-      M:body_list[2].jiaolian3_insert_right,
-      N:body_list[3].jiaolian3_select_left,
-      O:body_list[3].jiaolian3_insert_left,
-      P:body_list[3].jiaolian3_select_right,
-      Q:body_list[3].jiaolian3_insert_right,
-      R:body_list[4].jiaolian3_select_left,
-      S:body_list[4].jiaolian3_insert_left,
-      T:body_list[4].jiaolian3_select_right,
-      U:body_list[4].jiaolian3_insert_right,
-      V:body_list[5].jiaolian3_select_left,
-      W:body_list[5].jiaolian3_insert_left,
-      X:body_list[5].jiaolian3_select_right,
-      Y:body_list[5].jiaolian3_insert_right,
-    })
-    //铰链孔位4
-    body_list_end.push({
-      A:'铰链孔位4',
-      B:body_list[0].jiaolian4_select_left,
-      C:body_list[0].jiaolian4_insert_left,
-      D:body_list[0].jiaolian4_select_right,
-      E:body_list[0].jiaolian4_insert_right,
-      F:body_list[1].jiaolian4_select_left,
-      G:body_list[1].jiaolian4_insert_left,
-      H:body_list[1].jiaolian4_select_right,
-      I:body_list[1].jiaolian4_insert_right,
-      J:body_list[2].jiaolian4_select_left,
-      K:body_list[2].jiaolian4_insert_left,
-      L:body_list[2].jiaolian4_select_right,
-      M:body_list[2].jiaolian4_insert_right,
-      N:body_list[3].jiaolian4_select_left,
-      O:body_list[3].jiaolian4_insert_left,
-      P:body_list[3].jiaolian4_select_right,
-      Q:body_list[3].jiaolian4_insert_right,
-      R:body_list[4].jiaolian4_select_left,
-      S:body_list[4].jiaolian4_insert_left,
-      T:body_list[4].jiaolian4_select_right,
-      U:body_list[4].jiaolian4_insert_right,
-      V:body_list[5].jiaolian4_select_left,
-      W:body_list[5].jiaolian4_insert_left,
-      X:body_list[5].jiaolian4_select_right,
-      Y:body_list[5].jiaolian4_insert_right,
-    })
-    //铰链孔位5
-    body_list_end.push({
-      A:'铰链孔位5',
-      B:body_list[0].jiaolian5_select_left,
-      C:body_list[0].jiaolian5_insert_left,
-      D:body_list[0].jiaolian5_select_right,
-      E:body_list[0].jiaolian5_insert_right,
-      F:body_list[1].jiaolian5_select_left,
-      G:body_list[1].jiaolian5_insert_left,
-      H:body_list[1].jiaolian5_select_right,
-      I:body_list[1].jiaolian5_insert_right,
-      J:body_list[2].jiaolian5_select_left,
-      K:body_list[2].jiaolian5_insert_left,
-      L:body_list[2].jiaolian5_select_right,
-      M:body_list[2].jiaolian5_insert_right,
-      N:body_list[3].jiaolian5_select_left,
-      O:body_list[3].jiaolian5_insert_left,
-      P:body_list[3].jiaolian5_select_right,
-      Q:body_list[3].jiaolian5_insert_right,
-      R:body_list[4].jiaolian5_select_left,
-      S:body_list[4].jiaolian5_insert_left,
-      T:body_list[4].jiaolian5_select_right,
-      U:body_list[4].jiaolian5_insert_right,
-      V:body_list[5].jiaolian5_select_left,
-      W:body_list[5].jiaolian5_insert_left,
-      X:body_list[5].jiaolian5_select_right,
-      Y:body_list[5].jiaolian5_insert_right,
-    })
-    //铰链孔位6
-    body_list_end.push({
-      A:'铰链孔位6',
-      B:body_list[0].jiaolian6_select_left,
-      C:body_list[0].jiaolian6_insert_left,
-      D:body_list[0].jiaolian6_select_right,
-      E:body_list[0].jiaolian6_insert_right,
-      F:body_list[1].jiaolian6_select_left,
-      G:body_list[1].jiaolian6_insert_left,
-      H:body_list[1].jiaolian6_select_right,
-      I:body_list[1].jiaolian6_insert_right,
-      J:body_list[2].jiaolian6_select_left,
-      K:body_list[2].jiaolian6_insert_left,
-      L:body_list[2].jiaolian6_select_right,
-      M:body_list[2].jiaolian6_insert_right,
-      N:body_list[3].jiaolian6_select_left,
-      O:body_list[3].jiaolian6_insert_left,
-      P:body_list[3].jiaolian6_select_right,
-      Q:body_list[3].jiaolian6_insert_right,
-      R:body_list[4].jiaolian6_select_left,
-      S:body_list[4].jiaolian6_insert_left,
-      T:body_list[4].jiaolian6_select_right,
-      U:body_list[4].jiaolian6_insert_right,
-      V:body_list[5].jiaolian6_select_left,
-      W:body_list[5].jiaolian6_insert_left,
-      X:body_list[5].jiaolian6_select_right,
-      Y:body_list[5].jiaolian6_insert_right,
-    })
-    //其他项目（说明）
-    body_list_end.push({
-      A:'其他项目（说明）',
-      B:body_list[0].qita,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].qita,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].qita,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].qita,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].qita,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].qita,
-      W:'',
-      X:'',
-      Y:'',
-    })
-
-    //表头
-    body_list_end.push({
-      A:'',
-      B:'数量',
-      C:'单价',
-      D:'金额',
-      E:'',
-      F:'数量',
-      G:'单价',
-      H:'金额',
-      I:'',
-      J:'数量',
-      K:'单价',
-      L:'金额',
-      M:'',
-      N:'数量',
-      O:'单价',
-      P:'金额',
-      Q:'',
-      R:'数量',
-      S:'单价',
-      T:'金额',
-      U:'',
-      V:'数量',
-      W:'单价',
-      X:'金额',
-      Y:'',
-    })
-
-    //平方
-    body_list_end.push({
-      A:'平方',
-      B:body_list[0].sum_shuliang1,
-      C:body_list[0].danjia1,
-      D:body_list[0].sum_jine1,
-      E:'',
-      F:body_list[1].sum_shuliang1,
-      G:body_list[1].danjia1,
-      H:body_list[1].sum_jine1,
-      I:'',
-      J:body_list[2].sum_shuliang1,
-      K:body_list[2].danjia1,
-      L:body_list[2].sum_jine1,
-      M:'',
-      N:body_list[3].sum_shuliang1,
-      O:body_list[3].danjia1,
-      P:body_list[3].sum_jine1,
-      Q:'',
-      R:body_list[4].sum_shuliang1,
-      S:body_list[4].danjia1,
-      T:body_list[4].sum_jine1,
-      U:'',
-      V:body_list[5].sum_shuliang1,
-      W:body_list[5].danjia1,
-      X:body_list[5].sum_jine1,
-      Y:'',
-    })
-
-    //周长
-    body_list_end.push({
-      A:'周长',
-      B:body_list[0].sum_shuliang2,
-      C:body_list[0].danjia2,
-      D:body_list[0].sum_jine2,
-      E:'',
-      F:body_list[1].sum_shuliang2,
-      G:body_list[1].danjia2,
-      H:body_list[1].sum_jine2,
-      I:'',
-      J:body_list[2].sum_shuliang2,
-      K:body_list[2].danjia2,
-      L:body_list[2].sum_jine2,
-      M:'',
-      N:body_list[3].sum_shuliang2,
-      O:body_list[3].danjia2,
-      P:body_list[3].sum_jine2,
-      Q:'',
-      R:body_list[4].sum_shuliang2,
-      S:body_list[4].danjia2,
-      T:body_list[4].sum_jine2,
-      U:'',
-      V:body_list[5].sum_shuliang2,
-      W:body_list[5].danjia2,
-      X:body_list[5].sum_jine2,
-      Y:'',
-    })
-
-    //金额
-    body_list_end.push({
-      A:'金额',
-      B:body_list[0].money,
-      C:'',
-      D:'',
-      E:'',
-      F:body_list[1].money,
-      G:'',
-      H:'',
-      I:'',
-      J:body_list[2].money,
-      K:'',
-      L:'',
-      M:'',
-      N:body_list[3].money,
-      O:'',
-      P:'',
-      Q:'',
-      R:body_list[4].money,
-      S:'',
-      T:'',
-      U:'',
-      V:body_list[5].money,
-      W:'',
-      X:'',
-      Y:'',
-    })
+    for(var i=0; i<body_list.length; i++){
+      body_list_end.push({
+        A:'',
+        B:'',
+        C:'',
+        D:'',
+        E:'',
+      })
+      //序号
+      body_list_end.push({
+        A:'序号',
+        B:(i+1) + "",
+        C:'',
+        D:'',
+        E:'',
+      })
+      //第二行标题
+      body_list_end.push({
+        A:'',
+        B:'H&高',
+        C:'',
+        D:'W&宽',
+        E:'',
+      })
+      //尺寸
+      body_list_end.push({
+        A:'尺寸',
+        B:body_list[i].height,
+        C:'',
+        D:body_list[i].width,
+        E:'',
+      })
+      //下单数量
+      body_list_end.push({
+        A:'下单数量',
+        B:body_list[i].num,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //铝型材
+      body_list_end.push({
+        A:'铝型材',
+        B:body_list[i].lvxingcai,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //铝材颜色
+      body_list_end.push({
+        A:'铝材颜色',
+        B:body_list[i].lvcai_yanse,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //玻璃深加工
+      body_list_end.push({
+        A:'玻璃深加工',
+        B:body_list[i].boli_shenjiagong,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //玻璃颜色
+      body_list_end.push({
+        A:'玻璃颜色',
+        B:body_list[i].boli_yanse,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //拉手型号
+      body_list_end.push({
+        A:'拉手型号',
+        B:body_list[i].lashou_xinghao,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //铰链孔方向
+      body_list_end.push({
+        A:'铰链孔方向',
+        B:'左开门',
+        C:'',
+        D:'右开门',
+        E:'',
+      })
+      //开门方向数量
+      body_list_end.push({
+        A:'开门方向数量',
+        B:body_list[i].jiaoliankong_fangxiang_left,
+        C:'',
+        D:body_list[i].jiaoliankong_fangxiang_right,
+        E:'',
+      })
+      //有拉手数量（个）
+      body_list_end.push({
+        A:'有拉手数量（个）',
+        B:body_list[i].lashou_shuliang_right,
+        C:'',
+        D:body_list[i].lashou_shuliang_left,
+        E:'',
+      })
+      //拉手位方向
+      body_list_end.push({
+        A:'拉手位方向',
+        B:'从下向上',
+        C:'从右向左',
+        D:'从下向上',
+        E:'从左向右',
+      })
+      //拉手位
+      body_list_end.push({
+        A:'拉手位',
+        B:body_list[i].lashouwei_select_left,
+        C:body_list[i].lashouwei_insert_left,
+        D:body_list[i].lashouwei_select_right,
+        E:body_list[i].lashouwei_insert_right,
+      })
+      //装锁数量
+      body_list_end.push({
+        A:'装锁数量',
+        B:body_list[i].zhuangsuoshuliang_insert_left1,
+        C:'',
+        D:body_list[i].zhuangsuoshuliang_insert_right1,
+        E:'',
+      })
+      //锁孔位方向
+      body_list_end.push({
+        A:'锁孔位方向',
+        B:'从下向上',
+        C:'从右向左',
+        D:'从下向上',
+        E:'从左向右',
+      })
+      //锁孔位
+      body_list_end.push({
+        A:'锁孔位',
+        B:body_list[i].zhuangsuofangwei_insert_left1,
+        C:body_list[i].zhuangsuofangwei_insert_left2,
+        D:body_list[i].zhuangsuofangwei_insert_right1,
+        E:body_list[i].zhuangsuofangwei_insert_right2,
+      })
+      //开铰链孔
+      body_list_end.push({
+        A:'开铰链孔',
+        B:body_list[i].kaijiaolian,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //铰链孔位1
+      body_list_end.push({
+        A:'铰链孔位1',
+        B:body_list[i].jiaolian1_select_left,
+        C:body_list[i].jiaolian1_insert_left,
+        D:body_list[i].jiaolian1_select_right,
+        E:body_list[i].jiaolian1_insert_right,
+      })
+      //铰链孔位2
+      body_list_end.push({
+        A:'铰链孔位2',
+        B:body_list[i].jiaolian2_select_left,
+        C:body_list[i].jiaolian2_insert_left,
+        D:body_list[i].jiaolian2_select_right,
+        E:body_list[i].jiaolian2_insert_right,
+      })
+      //铰链孔位3
+      body_list_end.push({
+        A:'铰链孔位3',
+        B:body_list[i].jiaolian3_select_left,
+        C:body_list[i].jiaolian3_insert_left,
+        D:body_list[i].jiaolian3_select_right,
+        E:body_list[i].jiaolian3_insert_right,
+      })
+      //铰链孔位4
+      body_list_end.push({
+        A:'铰链孔位4',
+        B:body_list[i].jiaolian4_select_left,
+        C:body_list[i].jiaolian4_insert_left,
+        D:body_list[i].jiaolian4_select_right,
+        E:body_list[i].jiaolian4_insert_right,
+      })
+      //铰链孔位5
+      body_list_end.push({
+        A:'铰链孔位5',
+        B:body_list[i].jiaolian5_select_left,
+        C:body_list[i].jiaolian5_insert_left,
+        D:body_list[i].jiaolian5_select_right,
+        E:body_list[i].jiaolian5_insert_right,
+      })
+      //铰链孔位2
+      body_list_end.push({
+        A:'铰链孔位6',
+        B:body_list[i].jiaolian6_select_left,
+        C:body_list[i].jiaolian6_insert_left,
+        D:body_list[i].jiaolian6_select_right,
+        E:body_list[i].jiaolian6_insert_right,
+      })
+      //附件配置
+      body_list_end.push({
+        A:'附件配置',
+        B:body_list[i].fujian_select1,
+        C:body_list[i].fujian_select2,
+        D:body_list[i].fujian_select3,
+        E:body_list[i].fujian_select4,
+      })
+      //铰链品牌
+      body_list_end.push({
+        A:'铰链品牌',
+        B:body_list[i].pinpai_select1,
+        C:body_list[i].pinpai_select2,
+        D:body_list[i].pinpai_select3,
+        E:body_list[i].pinpai_select4,
+      })
+      //数量
+      body_list_end.push({
+        A:'数量',
+        B:body_list[i].fujian_shuliang1,
+        C:body_list[i].fujian_shuliang2,
+        D:body_list[i].fujian_shuliang3,
+        E:body_list[i].fujian_shuliang4,
+      })
+      //其他项目（说明）
+      body_list_end.push({
+        A:'其他项目（说明）',
+        B:body_list[i].qita,
+        C:'',
+        D:'',
+        E:'',
+      })
+      //
+      body_list_end.push({
+        A:'',
+        B:'数量',
+        C:'单价',
+        D:'金额',
+        E:'',
+      })
+      //平方
+      body_list_end.push({
+        A:'平方',
+        B:body_list[i].sum_shuliang1,
+        C:body_list[i].danjia1,
+        D:body_list[i].sum_jine1,
+        E:'',
+      })
+      //周长
+      body_list_end.push({
+        A:'周长',
+        B:body_list[i].sum_shuliang2,
+        C:body_list[i].danjia2,
+        D:body_list[i].sum_jine2,
+        E:'',
+      })
+    }
 
     cloudList.items = body_list_end
     console.log(cloudList)

@@ -844,7 +844,6 @@ Page({
       },
       success: function(res){
         console.log("获取云储存id")
-        var this_name = new Date().getTime() + ".xlsx"
         var fileId = res.result.fileID
         wx.cloud.downloadFile({
           fileID : res.result.fileID,
@@ -861,12 +860,22 @@ Page({
                   filePath: path_downLoad,
                   fileType : 'xlsx',
                   showMenu : true,
-                  success : res=> {
+                  success: function(res) {
+                    console.log('打开文档成功');
                     wx.hideLoading({
                       success: (res) => {},
                     })
-                    console.log("用户打开文件")
-                  }
+									},
+									fail: function(error) {
+                    console.log(error)
+                    wx.hideLoading({
+                      success: (res) => {},
+                    })
+										wx.showToast({
+											icon: 'none',
+											title: '打开文件失败'
+										});
+									},
                 })
               },
               fail: res=>{
