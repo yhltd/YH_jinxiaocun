@@ -2,9 +2,10 @@ page{
   background-color: #F0F8FF;
 }
 .shangpin{display: flex;
+  height: 85px;
 width: 100%;
 background-color: white;
-border-bottom: 0.5px solid #5B5B5B;
+/* border-bottom: 0.5px solid #5B5B5B; */
 margin-bottom: 7px;
 padding: 8px;
 
@@ -127,7 +128,6 @@ left: 46%;
 }
 
 .list_ps2{
-
   margin-bottom: -2%;
 }
 
@@ -190,4 +190,17 @@ color: white;
   left: 26.5%;
   margin-top: -12%;
   font-size: 62%;
+}
+
+.jiahao1 {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  position: fixed;
+  bottom: 150rpx;
+  right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
 }

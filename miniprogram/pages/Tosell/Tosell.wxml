@@ -12,29 +12,26 @@
   <button class="button_css3" bindtap="getExcel">导出</button>
 </view>
 <view class=' main'>
-  <view class='list_ps' wx:for="{{szzhi}}" wx:key="item" wx:for-index='i' data-uid="{{item._id}}" data-id="{{i}}" bindlongpress="shanchu" bindtap='upd'>
+  <view class='list_ps' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='upd'>
     <view class='shangpin'>
       <image class="shangpin-img" src="{{szzhi[i].mark1}}" mode="widthFix"></image>
-
-      <!-- <text class='shangpin-text'  data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n<text class="Hs">售价：<text class="red">{{szzhi[i].cpsj}}</text>\n进价：<text class="red">{{szzhi[i].cpjj}}</text>\n类别：<text class="red">{{szzhi[i].cplb}}</text>\n明细类别：<text class="red">{{szzhi[i].mxtype}}</text>     -->
-      <!--   
-         </text></text> -->
       <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].cplb}}\n单号：{{szzhi[i].orderid}}\n客户/进货方:{{szzhi[i].shou_h}}\n明细类别：
       <text class="red">{{szzhi[i].mxtype}}</text> </text>
       <view class="Hs1">
         时间：
         <text class="red">{{szzhi[i].time}}</text>
-        <!--从数据库中查到的信息就只保留前面的年月日-->
-        <!-- 时间：<text class="red">{{szzhi[i].shijian}}</text> -->
       </view>
+      <checkbox data-hang="{{i}}" value="{{szzhi[i].orderid}}" checked="{{szzhi[i].checkbox}}" style="margin-left: 10px;margin-top: 40px;"></checkbox>
     </view>
-
     <view class='shangpin-jin' data-id="{{i}}">
-
       <view class='shangpin-input'>
         <text class="Hs">数量：</text>{{szzhi[i].cpsl}}</view>
       <view class='shangpin-input'>
-        <text class="Hs">金额：</text>{{szzhi[i].cpsj * szzhi[i].cpsl}}</view>
+        <text class="Hs">金额：</text>{{szzhi[i].cpsj * szzhi[i].cpsl}}
+        </view>
     </view>
+    
   </view>
 </view>
+
+<image class='jiahao2' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/print_btn.png' bindtap='print_out'> </image>

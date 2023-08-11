@@ -1,4 +1,5 @@
 // pages/Tosell/Tosell.js
+import QR from '../utils/weapp-qrcode-base64.js'
 var app = getApp()
 Page({
 
@@ -84,6 +85,14 @@ Page({
       },
       success(res) {
         console.log(res.result)
+        for(var i=0; i<res.result.length; i++){
+          var imgData = QR.drawImg(res.result[i].sp_dm, {
+            typeNumber: 4,
+            errorCorrectLevel: 'M',
+            size: 500
+          })
+          res.result[i].qrcode = imgData
+        }
         that.setData({
           all: res.result
         })

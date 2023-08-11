@@ -329,7 +329,7 @@ button{
   bottom: 2%;
 }
 .bt_bottom{
-  width: 15%;
+  width: 30%;
   background-color: #009688;
   color: #E6E6E6;
   /* height: 75rpx; */

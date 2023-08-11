@@ -1,4 +1,5 @@
 // pages/shangpinxuanze/shangpinxuanze.js
+import QR from '../utils/weapp-qrcode-base64.js'
 var app = getApp()
 var jg
 var sl
@@ -61,11 +62,17 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,0 as isSelect from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
+        sql: "select *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
       },
       success: res=> {
         console.log(res.result)
         for(var i=0;i<res.result.length;i++){
+          var imgData = QR.drawImg(res.result[i].sp_dm, {
+            typeNumber: 4,
+            errorCorrectLevel: 'M',
+            size: 500
+         })
+         res.result[i].qrcode = imgData
           if(res.result[i].mark1 != null){
             res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
           }
@@ -156,7 +163,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "SELECT * from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
+          sql: "SELECT ,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
         },
         success(res) {
           that.setData({
@@ -190,7 +197,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "SELECT * from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
+          sql: "SELECT *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
         },
         success(res) {
           that.setData({
@@ -264,17 +271,58 @@ Page({
     wx.navigateTo({
       url: '/pages/xinjianshangpin/xinjianshangpin',
     })
-
   },
+
+  print_out:function(){
+    var _this = this
+    var list = _this.data.all
+    var output_list = []
+    console.log(list)
+    for(var i=0; i<list.length; i++){
+      if(list[i].isSelect == 0 && list[i].checkbox == true){
+        output_list.push({
+          sp_dm: "商品代码：" + list[i].sp_dm,
+          mingcheng: "商品名称：" + list[i].name,
+        })
+      }
+    }
+    console.log(output_list)
+    if(output_list.length == 0){
+      wx.showToast({
+        title: '未读取到选中商品',
+        icon: 'none',
+        duration: 2000
+       })
+       return;
+    }
+    wx.navigateTo({
+      url: '../../packageJ/page/printQR/printQR?list=' + JSON.stringify(output_list),
+    })
+  },
+
   srJg: function(e) {
     var that = this
     dtid = e.target.dataset.id
     console.log(dtid)
-    var _id = that.data.all[dtid].id
-    console.log(_id)
-    wx.navigateTo({
-      url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id,
-    })
+    if(dtid != undefined){
+      var _id = that.data.all[dtid].id
+      wx.navigateTo({
+        url: '/pages/shangpinchazhao/shangpinchazhao?_id=' + _id,
+      })
+    }else{
+      var hang = e.target.dataset.hang
+      var all = that.data.all
+      if(all[hang].checkbox == true){
+        all[hang].checkbox = ""
+      }else{
+        all[hang].checkbox = true
+      }
+      that.setData({
+        all
+      })
+      console.log(that.data.all)
+    }
+
   },
 
   use_book:function(){

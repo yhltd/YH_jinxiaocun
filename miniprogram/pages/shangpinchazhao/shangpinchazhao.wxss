@@ -52,3 +52,10 @@ color: #ffffff;
   right: 67%;
   z-index: 9;
 }
+
+.qr_code {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+}

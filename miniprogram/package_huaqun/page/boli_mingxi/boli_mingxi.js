@@ -113,8 +113,11 @@ Page({
         isupd: true
       },
     ],
-    shengchan_list:['已完成','未完成'],
+    shengchan_list:['正在加工','加工完成'],
     pinyin:'',
+    start_date:'',
+    stop_date:'',
+    shengchan:'',
   },
 
   bindPickerChange: function (e) {
@@ -175,7 +178,7 @@ Page({
         console.log("请求失败！")
       }
     })
-    var e = ['','']
+    var e = ['','','1900-01-01', '2100-12-31']
     _this.tableShow(e)
   },
 
@@ -183,11 +186,11 @@ Page({
     var _this = this
     var sql = ''
     if(_this.data.userInfo.power == '管理员'){
-      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%'"
+      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1]+"%' and insert_date >= '"+ e[2] +"' and insert_date <= '"+ e[3] +"'"
     }else if(_this.data.userInfo.power=='玻璃厂'){
-      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and  gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过' and gongyingshang = '" + _this.data.userInfo.name + "'"
+      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and  gongyingshang = '" + _this.data.userInfo.name + "' and pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过' and gongyingshang = '" + _this.data.userInfo.name + "' and insert_date >= '"+ e[2] +"' and insert_date <= '"+ e[3] +"'"
     }else{
-      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and  pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过'"
+      sql = "select id,'' as dd,customer_name,insert_date,boli.order_number,pinyin,gongyingshang,boli_yanse,boli_shenjiagong,num,height,width,shengchan,beizhu,shendan,shuoming1,shuoming2 ,'' as type from boli_xiadan as boli left join (select customer_name,order_number,shendan,insert_date,guanlian,wancheng from lvkuang_xiadan ) as lvkuang on boli.guanlian = lvkuang.guanlian where (lvkuang.wancheng != '' and lvkuang.wancheng != '未审验' and lvkuang.wancheng != '推迟处理') and  pinyin like '%" + e[0] + "%' and isnull(shengchan,'') like '%" + e[1] + "%' and shendan = '通过' and insert_date >= '"+ e[2] +"' and insert_date <= '"+ e[3] +"'"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -308,7 +311,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','']
+        var e = ['','','1900-01-01', '2100-12-31']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -341,7 +344,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','']
+        var e = ['','','1900-01-01', '2100-12-31']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -408,7 +411,7 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.pinyin,_this.data.shengchan]
+    var e = [_this.data.pinyin,_this.data.shengchan,_this.data.start_date,_this.data.stop_date]
     _this.tableShow(e)
     _this.qxShow()
   },
@@ -431,7 +434,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','']
+        var e = ['','','1900-01-01', '2100-12-31']
         _this.tableShow(e)
         _this.qxShow()
       },

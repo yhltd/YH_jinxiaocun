@@ -106,12 +106,12 @@ Page({
       stop_date = "2100-12-31 23:59:59"
     }
 
-    console.log("SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" )
+    console.log("SELECT *,'' as checkbox,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" )
 
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "SELECT *,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" 
+        sql: "SELECT *,'' as checkbox,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" 
       },
       success(res) {
         for(var i=0;i<res.result.length;i++){
@@ -133,6 +133,33 @@ Page({
 
       }
     });
+  },
+
+  print_out:function(){
+    var _this = this
+    var list = _this.data.szzhi
+    var output_list = []
+    console.log(list)
+    for(var i=0; i<list.length; i++){
+      if(list[i].checkbox == true){
+        output_list.push({
+          sp_dm: "订单号：" + list[i].orderid,
+          mingcheng: "时间：" + list[i].time2,
+        })
+      }
+    }
+    console.log(output_list)
+    if(output_list.length == 0){
+      wx.showToast({
+        title: '未读取到选中商品',
+        icon: 'none',
+        duration: 2000
+       })
+       return;
+    }
+    wx.navigateTo({
+      url: '../../packageJ/page/printQR/printQR?list=' + JSON.stringify(output_list),
+    })
   },
 
   choiceDate: function (e) {
@@ -256,11 +283,28 @@ Page({
 
   upd: function (e) {
     var _this = this;
-    var id = e.currentTarget.dataset.uid
+    var id = e.target.dataset.id
     console.log(e.currentTarget.dataset)
-    wx.navigateTo({
-      url: '/pages/Tosell_update/Tosell_update?id=' + id + '&fun=update',
-    })
+    console.log(id)
+    if(id != undefined){
+      var uid = _this.data.szzhi[id]._id
+      wx.navigateTo({
+        url: '/pages/Tosell_update/Tosell_update?id=' + uid + '&fun=update',
+      })
+    }else{
+      var hang = e.target.dataset.hang
+      var all = _this.data.szzhi
+      if(all[hang].checkbox == true){
+        all[hang].checkbox = ""
+      }else{
+        all[hang].checkbox = true
+      }
+      _this.setData({
+        szzhi: all
+      })
+      console.log(_this.data.szzhi)
+    }
+
   },
 
   xiugai: function(e) {

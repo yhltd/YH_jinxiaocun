@@ -213,12 +213,13 @@ Page({
         isupd: true
       },
     ],
-    wancheng_list: ['未完成', '已完成'],
+    wancheng_list: ['未审验', '已审验','优先处理','推迟处理','完成'],
     wancheng: '',
     order_number: '',
     start_date: '',
     stop_date: '',
     customer_name:'',
+    install_address:'',
   },
 
   /**
@@ -235,7 +236,7 @@ Page({
       userInfo: userInfo,
       title,
     })
-    var e = ['','', '1900-01-01', '2100-12-31', _this.data.wancheng]
+    var e = ['','', '1900-01-01', '2100-12-31', '', '']
     _this.tableShow(e)
 
   },
@@ -389,9 +390,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[4] + "%'"
+      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
     } else{
-      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[4] + "%'"
+      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -456,7 +457,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
+        var e = ['','', '1900-01-01', '2100-12-31', '', '']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -557,7 +558,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
+        var e = ['','', '1900-01-01', '2100-12-31', '', '']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -590,7 +591,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31','']
+        var e = ['','', '1900-01-01', '2100-12-31', '', '']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -623,7 +624,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31','']
+        var e = ['','', '1900-01-01', '2100-12-31', '', '']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -656,7 +657,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31','']
+        var e = ['','', '1900-01-01', '2100-12-31', '', '']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -689,7 +690,7 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        var e = ['','', '1900-01-01', '2100-12-31','']
+        var e = ['','', '1900-01-01', '2100-12-31', '', '']
         _this.tableShow(e)
         _this.qxShow()
       },
@@ -756,7 +757,7 @@ Page({
             
             success: res => {
               _this.qxShow()
-              var e = ['', '','1900-01-01', '2100-12-31', _this.data.wancheng]
+              var e = ['','', '1900-01-01', '2100-12-31', '', '']
               _this.tableShow(e)
               wx.showToast({
                 title: '删除成功！',
@@ -817,7 +818,7 @@ Page({
     if (stop_date == '') {
       stop_date = '2100-12-31'
     }
-    var e = [_this.data.order_number,_this.data.customer_name, start_date, stop_date, _this.data.wancheng]
+    var e = [_this.data.order_number,_this.data.customer_name, start_date, stop_date, _this.data.wancheng,_this.data.install_address]
     _this.tableShow(e)
     _this.qxShow()
   },

@@ -7,7 +7,12 @@ var cpxinxi = []
 var slxinxi = []
 var jgxinxi = []
 var app = getApp()
-
+var jg
+var sl
+var dtid
+var cpid
+var cpjg = []
+var cpsl = []
 var common = require('../../utils/common.js');
 Page({
 
@@ -15,8 +20,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    jghide: "none",
     szzhi: [],
-    szjg: [],
+    szje: [],
     szsl: [],
     rkSum: 0,
     rkck: "确认出库",
@@ -24,7 +30,8 @@ Page({
     hidden1: true,
     hidden2: false,
     sjkj: "",
-    ddh: ""
+    ddh: "",
+    shangpin_list: [],
   },
 
   /**
@@ -41,6 +48,259 @@ Page({
       szjg: [],
       szsl: []
     });
+    var gongsi = app.globalData.gongsi
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
+      },
+      success(res) {
+        for(var i=0;i<res.result.length;i++){
+          if(res.result[i].mark1 != null){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
+        }
+        that.setData({
+          shangpin_list: res.result,
+          szzhi: res.result,
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+  },
+
+  srJg: function(e) {
+    console.log("触发点击")
+    var _this = this
+    dtid = e.currentTarget.dataset.id
+    console.log(dtid)
+    _this.setData({
+      jghide: "flex",
+      cpid: dtid,
+      cpsl: _this.data.szsl,
+      cpjg: _this.data.szje,
+      backhidden: false
+    })
+  },
+
+  spClose: function(e) {
+    var that = this
+    that.setData({
+      jghide: true,
+      jghide: "none",
+      backhidden: true
+    })
+  },
+
+  cunsl: function(e) {
+    sl = e.detail.value
+  },
+  cunjg: function(e) {
+    jg = e.detail.value
+  },
+
+zongjia_refresh:function(){
+  var that = this
+  var zongjia = that.data.rkSum
+  zongjia = 0
+  for(let idx=0;idx < cpsl.length ;idx++){
+    if(cpsl[idx] != '' && cpsl[idx] != undefined && cpjg[idx] != '' && cpjg[idx] != undefined){
+      zongjia += parseInt(cpsl[idx]) * parseInt(cpjg[idx])
+    }
+  }
+  that.setData({
+    rkSum: zongjia
+  })
+},
+
+  tjjg: function(e) {
+    var that = this
+    that.setData({
+      jghide: true,
+      jghide: "none",
+      backhidden: true
+    })
+    var zongjia = that.data.rkSum
+    if (sl != null && jg != null) {
+      cpsl[dtid] = sl
+      cpjg[dtid] = jg
+      zongjia = 0
+      for(let idx=0;idx < cpsl.length ;idx++){
+        if(cpsl[idx] != '' && cpsl[idx] != undefined && cpjg[idx] != '' && cpjg[idx] != undefined){
+          zongjia += parseInt(cpsl[idx]) * parseInt(cpjg[idx])
+        }
+      }
+    }
+    for (var i = 0; i < cpsl.length; i++) {
+      if (cpjg[i] == null) {
+        cpjg[i] = ""
+        cpsl[i] = ""
+      }
+    }
+    that.setData({
+      jghide: "none",
+      cpid: dtid,
+      szsl: cpsl,
+      szje: cpjg,
+      rkSum: zongjia
+    })
+  },
+
+  qrcode: function(e){
+    var _this = this
+
+    wx.showModal({
+      title: '提示',
+      content: '请选择扫码类型',
+      confirmText: '商品',
+      showCancel: true,
+      cancelText:'订单',
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击商品按钮')
+          wx.scanCode({
+            success: (res) => {
+            wx.showToast({
+             title: '成功',
+             icon: 'success',
+             duration: 2000
+            })
+            console.log(res.result)
+            console.log(_this.data.szzhi)
+            console.log(_this.data.szsl)
+            console.log(_this.data.szje)
+            console.log(_this.data.shangpin_list)
+            var panduan = false
+            var qr_sp_dm = res.result
+            for(var i=0; i<_this.data.szzhi.length; i++){
+              if(_this.data.szzhi[i].sp_dm == qr_sp_dm){
+                panduan = true
+                var szsl = _this.data.szsl
+                szsl[i] = (szsl[i] * 1) + 1
+                _this.setData({
+                  szsl
+                })
+                wx.pageScrollTo({
+                  scrollTop: 168+i*97,
+                  duration: 300
+                })
+                break;
+              }
+            }
+            if(panduan == false){
+              for(var i=0; i<_this.data.shangpin_list.length; i++){
+                if(_this.data.shangpin_list[i].sp_dm == qr_sp_dm){
+                  var szzhi = _this.data.szzhi
+                  var szsl = _this.data.szsl
+                  var szje = _this.data.szje
+                  szzhi.push(_this.data.shangpin_list[i])
+                  szsl.push(1)
+                  szje.push(0)
+                  _this.setData({
+                    szzhi,
+                    szsl,
+                    szje
+                  })
+                  wx.pageScrollTo({
+                    scrollTop: 168+i*szzhi.length,
+                    duration: 300
+                  })
+                  break;
+                }
+              }
+            }
+            _this.zongjia_refresh()
+            },
+            fail: (res) => {
+            wx.showToast({
+             title: '失败',
+             icon: 'error',
+             duration: 2000
+            })
+            },
+            complete: (res) => {
+            } 
+            })
+        } else if (res.cancel) {
+          console.log('用户点击订单按钮')
+          wx.scanCode({
+            success: (res) => {
+              wx.showToast({
+              title: '成功',
+              icon: 'success',
+              duration: 2000
+              })
+              console.log(res.result)
+              console.log(_this.data.szzhi)
+              console.log(_this.data.szsl)
+              console.log(_this.data.szje)
+              console.log(_this.data.shangpin_list)
+              var panduan = false
+              var qr_order_dm = res.result
+              var sql = "select * from yh_jinxiaocun_mingxi where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
+              wx.cloud.callFunction({
+                name: "sqlConnection",
+                data: {
+                  sql: sql
+                },
+                success(res) {
+                  console.log(res.result)
+                  var order_list = res.result
+                  for(var i=0; i<order_list.length; i++){
+                    var this_sp_dm = order_list[i].sp_dm
+                    panduan = false
+                    for(var j=0; j<_this.data.szzhi.length; j++){
+                      if(this_sp_dm = _this.data.szzhi[j].sp_dm){
+                        panduan = true
+                        var szsl = _this.data.szsl
+                        szsl[i] = (szsl[i] * 1) + 1
+                        _this.setData({
+                          szsl
+                        })
+                        break;
+                      }
+                    }
+                    if(panduan == false){
+                      for(var j=0; j<_this.data.shangpin_list.length; j++){
+                        if(_this.data.shangpin_list[j].sp_dm == this_sp_dm){
+                          var szzhi = _this.data.szzhi
+                          var szsl = _this.data.szsl
+                          var szje = _this.data.szje
+                          szzhi.push(_this.data.shangpin_list[j])
+                          szsl.push(1)
+                          szje.push(0)
+                          _this.setData({
+                            szzhi,
+                            szsl,
+                            szje
+                          })
+                          break;
+                        }
+                      }
+                    }
+                  }
+                  _this.zongjia_refresh()
+                },
+                fail(res) {
+                  console.log("失败", res)
+                }
+              });
+            },
+            fail: (res) => {
+            wx.showToast({
+             title: '失败',
+             icon: 'error',
+             duration: 2000
+            })
+            },
+            complete: (res) => {
+            } 
+            })
+        }
+      }
+    })
   },
 
   /**

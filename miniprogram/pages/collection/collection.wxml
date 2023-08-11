@@ -19,6 +19,7 @@
 				<view class='shangpinpm' data-id="{{i}}">类别：{{all[i].lei_bie}}</view>
 				<view class='shangpinpm' data-id="{{i}}">单位：{{all[i].dan_wei}}</view>
 			</view>
+      <checkbox data-hang="{{i}}" value="{{all[i].sp_dm}}" checked="{{all[i].checkbox}}" ></checkbox>
 		</view>
 
 
@@ -30,3 +31,4 @@
 	</view>
 </view>
 <image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao1.png' bindtap='jiahao1'> </image>
+<image class='jiahao2' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/print_btn.png' bindtap='print_out'> </image>

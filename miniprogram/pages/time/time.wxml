@@ -1,9 +1,9 @@
 <!-- pages/time/time.wxml -->
 <import src="/pages/template/tabber.wxml" />
-
+<import src="/pages/template/ruku_upd.wxml" />
 <view class='main'>
   <view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
-    <view class='shangpin'>
+    <view class='shangpin' bindtap='srJg' data-id="{{i}}">
       <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
       <view class="shangpin-text" data-id="{{i}}">
         <view class="shangpinpm">商品名称： {{szzhi[i].name}}</view>
@@ -44,4 +44,6 @@
   </picker>
 </view>
 
+<template is="ruku_upd" data="{{jghide,cpid,cpsl,cpjg,szzhi}}" />
 <template is="tabbar" data="{{tabbar,rkSum,rkck}}" />
+<image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qrcode.png' bindtap='qrcode'> </image>

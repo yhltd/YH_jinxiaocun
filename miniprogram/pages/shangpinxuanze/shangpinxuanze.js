@@ -10,7 +10,6 @@ var zongjia
 var all = []
 var app = getApp()
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -43,13 +42,15 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where zh_name = '" + finduser + "' and gs_name = '"+gongsi+"'"
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
       },
       success(res) {
         console.log("成功", res)
         console.log(res.result)
         for(var i=0;i<res.result.length;i++){
-          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          if(res.result[i].mark1 != null){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
         }
         that.setData({
           all: res.result,
@@ -76,7 +77,6 @@ Page({
           ["all["+i+"].isSelect"] : 0
         })
       }
-
     }
   },
 
@@ -108,17 +108,19 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where zh_name = '" + finduser + "' and gs_name = '"+gongsi+"'"
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
       },
       success(res) {
         for(var i=0;i<res.result.length;i++){
-          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          if(res.result[i].mark1 != null){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '') 
+          }
         }
         that.setData({
           all: res.result,
         })
         console.log(wx.getStorageSync('sz'))
-        if(wx.getStorageSync('sz') != undefined){
+        if(wx.getStorageSync('sz') != undefined && wx.getStorageSync('sz') != ""){
           let sz = JSON.parse(wx.getStorageSync('sz'));
           for(let i=0;i<res.result.length;i++){
             if(sz[res.result[i].id] != undefined){
