@@ -319,7 +319,7 @@ Page({
     var _this = this
     if(_this.data.Customer_id == ''){
       wx.showToast({
-        title: '客户名称未填写！',
+        title: '未读取到对应客户！',
         icon: 'none'
       })
       return;
@@ -342,7 +342,9 @@ Page({
         return;
       }
     }
-
+    _this.setData({
+      idd: customer_list[i].id
+    })
     var add_list = _this.data.add_list
     var chanpin = _this.data.listChanPin
     for(var i=0; i<chanpin.length; i++){
@@ -502,6 +504,23 @@ Page({
       currentDate: e.detail,
       [column]: e.detail.value
     })
+    if(column = "Customer_id"){
+      var customer_list = _this.data.listKeHu
+      var panduan = false
+      for(var i=0; i<customer_list.length; i++){
+        if(customer_list[i].name == e.detail.value && e.detail.value != ''){
+          _this.setData({
+            idd: customer_list[i].id
+          })
+          panduan = true
+        }
+      }
+      if(panduan = false){
+        _this.setData({
+          idd: ''
+        })
+      }
+    }
   },
 
   
