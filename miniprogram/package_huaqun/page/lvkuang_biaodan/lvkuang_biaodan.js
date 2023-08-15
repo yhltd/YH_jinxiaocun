@@ -844,6 +844,9 @@ Page({
     }
 
     var title = _this.data.title
+
+
+
     var cloudList = {
       name : '铝框下单明细',
       items : [],
@@ -860,7 +863,20 @@ Page({
     }
     var body_list = _this.data.body_list
     var body_list_end = []
-
+    body_list_end.push({
+      A:'客户名称：' + _this.data.body_list[0].customer_name,
+      B:'下单日期：' + _this.data.body_list[0].insert_date,
+      C:'单据编号：' + _this.data.body_list[0].order_number,
+      D:'简码：' + _this.data.body_list[0].pinyin,
+      E:'送货地址：' + _this.data.body_list[0].shipping_address,
+    })
+    body_list_end.push({
+      A:'联系电话：' + _this.data.body_list[0].phone,
+      B:'送货方式：' + _this.data.body_list[0].shipping_type,
+      C:'安装地址：' + _this.data.body_list[0].install_address,
+      D:'订单号：' + _this.data.body_list[0].customer_number,
+      E:'',
+    })
     for(var i=0; i<body_list.length; i++){
       body_list_end.push({
         A:'',
