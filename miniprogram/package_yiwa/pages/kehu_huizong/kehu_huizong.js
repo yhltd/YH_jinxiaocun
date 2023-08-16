@@ -383,12 +383,13 @@ Page({
                   if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
                     if(arr_item[1].indexOf("(") != -1){
                       var this_zhong = arr_item[1].split("(")[1].replace(")","")
-                      sum = sum + arr_item[0] * this_zhong * 1
+                      sum = sum + (this_zhong * 1)
                     }else{
-                      sum = sum + arr_item[0] * arr_item[1]
+                      sum = sum + (arr_item[1] * 1)
                     }
                   }
                 }
+                
               }
             }
             list[i].sum = sum
@@ -408,22 +409,31 @@ Page({
                   if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
                     if(arr_item[1].indexOf("(") != -1){
                       var this_zhong = arr_item[1].split("(")[1].replace(")","")
-                      sum = sum + arr_item[0] * this_zhong * 1
+                      sum = sum +  arr_item[0] * this_zhong * 1
                     }else{
                       sum = sum + arr_item[0] * arr_item[1]
                     }
+                    
                   }
                 }
               }
               sum_row[tempArr[i]] = sum
             }
           }
+          console.log(sum_row)
           var sum = 0
-          for(var i=0; i<list.length; i++){
-            if(list[i].sum != ''){
-              sum = sum + list[i].sum * 1
+          var key_list = Object.keys(sum_row)
+
+          for(var i=0; i<key_list.length; i++){
+            if(key_list[i] != 'NameofProduct'){
+              sum = sum + (sum_row[key_list[i]] * 1)
             }
           }
+          // for(var i=0; i<list.length; i++){
+          //   if(list[i].sum != ''){
+          //     sum = sum + list[i].sum * 1
+          //   }
+          // }
           sum_row.sum = sum
           list.push(sum_row)
           console.log(list)

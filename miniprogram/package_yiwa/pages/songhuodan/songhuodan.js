@@ -207,7 +207,9 @@ Page({
             }
             console.log(item)
             zhongliang_list.push(JSON.parse(JSON.stringify(item)))
-            list[i].zongjia = zhongliang_sum * list[i].Theunitprice
+
+            list[i].zongjia = zhongliang_sum * list[i].Theunitprice 
+            list[i].zongjia = list[i].zongjia.toFixed(2)
             list[i].number = list[i].number + "(" + zhongliang_sum + ")"
             
           }
