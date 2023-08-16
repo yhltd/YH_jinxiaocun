@@ -39,13 +39,14 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+   
+
     _this.setData({
       userInfo,
       riqi:getNowDate()
     })
     _this.tableShow()
   },
-
   tableShow: function () {
     var _this = this
     var sql = ""
@@ -109,6 +110,24 @@ Page({
       currentDate: e.detail,
       [column]: e.detail.value
     })
+    if(column = "name"){
+      var customer_list = _this.data.kehu_list
+      var panduan = false
+      for(var i=0; i<customer_list.length; i++){
+        if(customer_list[i].name == e.detail.value && e.detail.value != ''){
+          _this.setData({
+            customer_id: customer_list[i].id
+          })
+          panduan = true
+
+        }
+      }
+      if(panduan = false){
+        _this.setData({
+          idd: ''
+        })
+      }
+    }
   },
 
 

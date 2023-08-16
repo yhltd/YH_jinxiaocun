@@ -39,6 +39,7 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    
     if (options.aa != undefined){
       var aa = JSON.parse(options.aa)
       console.log(aa.riqi)
@@ -63,6 +64,34 @@ Page({
       })
       _this.tableShow()
     }
+
+    var sql_siji = "select * from userInfo where power = '司机'"
+    console.log(sql_siji)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql_siji
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          siji_list: list,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
 
   },
 
@@ -286,11 +315,28 @@ Page({
 
   onInput: function (e) {
     var _this = this
+    var panduan
     let column = e.currentTarget.dataset.column
     _this.setData({
       currentDate: e.detail,
       [column]: e.detail.value
     })
+    if (column = "siji_name" ){
+      var customer_list = _this.data.siji_list
+      for(var i=0; i<customer_list.length; i++){
+        if(customer_list[i].name == e.detail.value && e.detail.value != ''){
+          _this.setData({
+            idd: customer_list[i].id
+            })
+         }
+         panduan = true
+        }  
+        if(panduan = false){
+          _this.setData({
+            idd: ''
+          })
+        }
+      }
   },
 
   upd1:function(){
@@ -517,38 +563,38 @@ Page({
     }
   },
 
-  siji_xiala_show:function(){
-    var _this = this
-    var siji_name = _this.data.siji_name
-    var sql_siji = "select * from userInfo where power = '司机' and name like '%" + siji_name + "%'"
-    console.log(sql_siji)
-    wx.cloud.callFunction({
-      name: 'sqlserver_yiwa',
-      data: {
-        query: sql_siji
-      },
-      success: res => {
-        console.log(res)
-        var list = res.result.recordset
-        console.log(list)
-        _this.setData({
-          siji_list: list,
-          xlShow:true,
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
-  },
+  // siji_xiala_show:function(){
+  //   var _this = this
+  //   var siji_name = _this.data.siji_name
+  //   var sql_siji = "select * from userInfo where power = '司机' and name like '%" + siji_name + "%'"
+  //   console.log(sql_siji)
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_yiwa',
+  //     data: {
+  //       query: sql_siji
+  //     },
+  //     success: res => {
+  //       console.log(res)
+  //       var list = res.result.recordset
+  //       console.log(list)
+  //       _this.setData({
+  //         siji_list: list,
+  //         xlShow:true,
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
 
   add2:function(){
     var _this = this

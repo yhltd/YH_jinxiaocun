@@ -37,7 +37,7 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
   <view class="lables">业务员：</view>
-  <input class="input_text_form" bindlongpress="yewu_xiala_show" type="text" bindinput="onInput" value="{{yewu_name}}" data-column="yewu_name" name="yewu_name" ></input>
+  <input class="input_text_form"  type="text" bindinput="onInput" value="{{yewu_name}}" data-column="yewu_name" name="yewu_name" ></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->

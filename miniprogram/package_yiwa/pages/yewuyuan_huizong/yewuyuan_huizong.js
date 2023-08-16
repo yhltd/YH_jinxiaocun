@@ -41,6 +41,36 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var yewu_name = _this.data.yewu_name
+    var sql_yewu = "select * from userInfo where power = '业务员' and name like '%" + yewu_name + "%'"
+    console.log(sql_yewu)
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql_yewu
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          yewu_list: list,
+          xlShow:false,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+      
     _this.setData({
       userInfo,
       riqi:getNowDate()
@@ -215,9 +245,28 @@ Page({
     let column = e.currentTarget.dataset.column
     _this.setData({
       currentDate: e.detail,
-      [column]: e.detail.value
+      idd: e.detail.value
     })
-  },
+    if(column == "yewu_name"){
+       var customer_list = this.data.yewu_list
+       var panduan = false
+       for (var i = 0; i<customer_list.length; i++){
+          if (customer_list[i].name == e.detail.value && e.detail.value != ''){
+            _this.setData({
+              currentDate: e.detail,
+              idd: customer_list[i].id
+            })
+            panduan =true
+          }
+       }
+       if(panduan = false){
+        _this.setData({
+          idd: ''
+        })
+      }
+       
+      }
+},
 
   upd1:function(){
     var _this = this
