@@ -77,7 +77,7 @@ Page({
         isupd: true
       },
     ],
-    qx_list:['管理员','业务员','司机','客户'],
+    qx_list:['管理员','业务员','报货员','司机','客户'],
     id:'',
     username: '', 
     password: '',

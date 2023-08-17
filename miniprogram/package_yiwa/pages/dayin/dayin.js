@@ -128,12 +128,12 @@ Page({
     ctx.fillText(zongjia, width / 2, y)
 
     y = y + 50
-
-
-
+    console.log(zhongliang_list)
     for (var i = 0; i < zhongliang_list.length; i++) {
       ctx.setFontSize(17)
-      ctx.fillText(zhongliang_list[i][1] + '重量', width / 2, y)
+      ctx.setTextAlign('left')
+      ctx.fillText(zhongliang_list[i][1] + '重量', 10, y)
+      ctx.setTextAlign('center')
       y = y + 13
       ctx.moveTo(0, y)
       ctx.lineTo((width_all - width) / 2 + width, y)
@@ -158,6 +158,9 @@ Page({
           shunxu = 1
           y = y + 20
         }
+      }
+      if(shunxu != 1){
+        y = y + 20
       }
     }
 
@@ -185,11 +188,12 @@ Page({
 
     y = y + 20
     ctx.setFontSize(17)
-    ctx.fillText('备注1:' + beizhu1, width / 2, y)
+    ctx.setTextAlign('left')
+    ctx.fillText('备注1:' + beizhu1, 10, y)
     y = y + 30
-    ctx.fillText('备注2:' + beizhu2, width / 2, y)
+    ctx.fillText('备注2:' + beizhu2, 10, y)
     y = y + 50
-
+    ctx.setTextAlign('center')
     var sql = "select u2.qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id where u1.id =" + sel_id
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
@@ -514,7 +518,7 @@ Page({
 
 
     for (var i = 0; i < zhongliang_list.length; i++) {
-      printUtil.printlnText(4, 240, height, zhongliang_list[i][1] + '重量');
+      printUtil.printlnText(4, 15, height, zhongliang_list[i][1] + '重量');
       height = height + 40
       printUtil.printBox(0, height, 700, height);
       height = height + 10
@@ -538,6 +542,9 @@ Page({
           height = height + 40
         }
       }
+      if(shunxu != 1){
+        height = height + 40
+      }
     }
 
     height = height + 40
@@ -559,9 +566,9 @@ Page({
     }
 
     height = height + 40
-    printUtil.printlnText(4, 240, height, '备注1:' + beizhu1);
+    printUtil.printlnText(4, 15, height, '备注1:' + beizhu1);
     height = height + 40
-    printUtil.printlnText(4, 240, height, '备注2:' + beizhu2);
+    printUtil.printlnText(4, 15, height, '备注2:' + beizhu2);
     height = height + 80
 
     //二维码
@@ -621,7 +628,7 @@ Page({
 
 
     for (var i = 0; i < zhongliang_list.length; i++) {
-      printUtil.printlnText(4, 240, height, zhongliang_list[i][1] + '重量');
+      printUtil.printlnText(4, 15, height, zhongliang_list[i][1] + '重量');
       height = height + 40
       printUtil.printBox(0, height, 700, height);
       height = height + 10
@@ -645,6 +652,9 @@ Page({
           height = height + 40
         }
       }
+      if(shunxu != 1){
+        height = height + 40
+      }
     }
 
     height = height + 40
@@ -666,9 +676,9 @@ Page({
     }
 
     height = height + 40
-    printUtil.printlnText(4, 240, height, '备注1:' + beizhu1);
+    printUtil.printlnText(4, 15, height, '备注1:' + beizhu1);
     height = height + 40
-    printUtil.printlnText(4, 240, height, '备注2:' + beizhu2);
+    printUtil.printlnText(4, 15, height, '备注2:' + beizhu2);
     height = height + 80
 
     //二维码

@@ -152,7 +152,8 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
   <view class="lables">客户</view>
-  <input bindinput="onInput" bindlongpress="kehu_select" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+  <!-- <input bindinput="onInput" bindlongpress="kehu_select" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input> -->
+  <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
   <view class="lables">日期</view>
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
     <input bindinput="onInput" data-column="riqi" class="input_text_form"  value="{{riqi}}" type="text" name="riqi" disabled="disabled"></input>

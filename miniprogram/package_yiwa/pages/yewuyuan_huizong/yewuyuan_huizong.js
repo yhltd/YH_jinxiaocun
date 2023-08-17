@@ -14,6 +14,7 @@ Page({
   xlShow:false,
   data: {
     riqi:'',
+    riqi2:'',
     select_customer:[],
     list: [],
     yewu_id:'',
@@ -73,7 +74,8 @@ Page({
       
     _this.setData({
       userInfo,
-      riqi:getNowDate()
+      riqi:getNowDate(),
+      riqi2:getNowDate(),
     })
     _this.tableShow()
   },
@@ -515,9 +517,9 @@ Page({
     }
     if(sql_foot != ''){
       sql_foot = sql_foot + ")"
-      var sql = sql_head + sql_foot + " and riqi = '" + _this.data.riqi + "' order by NameofProduct;"
-      var sql2 = "select NameofProduct from Detailsoforder " + sql_foot + " and riqi = '" + _this.data.riqi + "' group by NameofProduct order by NameofProduct;"
-      var sql3 = "select Customer_id,name from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id " + sql_foot + " and riqi = '" + _this.data.riqi + "' group by Customer_id,name order by name;"
+      var sql = sql_head + sql_foot + " and riqi >= '" + _this.data.riqi + "' and riqi <= '" + _this.data.riqi2 + "' order by NameofProduct;"
+      var sql2 = "select NameofProduct from Detailsoforder " + sql_foot + " and riqi >= '" + _this.data.riqi + "' and riqi <= '" + _this.data.riqi2 + "' group by NameofProduct order by NameofProduct;"
+      var sql3 = "select Customer_id,name from Detailsoforder as de left join (select id,name from userInfo) as us on us.id = de.Customer_id " + sql_foot + " and riqi >= '" + _this.data.riqi + "' and riqi <= '" + _this.data.riqi2 + "' group by Customer_id,name order by name;"
       console.log(sql) 
       console.log(sql2)
       wx.cloud.callFunction({

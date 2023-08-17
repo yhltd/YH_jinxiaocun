@@ -33,12 +33,19 @@
   <button class="bt_bottom" bindtap="out_put">导出</button>
 </view>
 
-<van-popup bind:click-overlay="qxShow" show="{{ xzkhShow }}" position="bottom" custom-style="height: 80%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xzkhShow }}" position="bottom" custom-style="height: 90%;" >
 
   <view style="display: flex;margin-top: 2%;">
-    <view class="lables" style="margin-left: 3%;margin-top: 5%;">日期：</view>
+    <view class="lables" style="margin-left: 3%;margin-top: 5%;">起始日期：</view>
     <picker class="input_text_form" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
     <view style="margin-top: 10rpx;">{{riqi}}</view>
+    </picker>
+  </view>
+
+  <view style="display: flex;margin-top: 2%;">
+    <view class="lables" style="margin-left: 3%;margin-top: 5%;">结束日期：</view>
+    <picker class="input_text_form" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+    <view style="margin-top: 10rpx;">{{riqi2}}</view>
     </picker>
   </view>
 

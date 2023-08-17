@@ -1,4 +1,5 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="margin-top: 2%;">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="margin-top: 2%">
   <view class="table">
     <block class="list_row">
       <view class="table_main">
@@ -3937,7 +3938,7 @@
     </block>
   </view>
 </scroll-view>
-
+</scroll-view>
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->

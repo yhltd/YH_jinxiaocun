@@ -1,6 +1,6 @@
 <view style="display: flex;">
   <view class="lables">客户名称：</view>
-  <input bindinput="onInput_text" class="input_text_form" bindlongpress="kehu_select"  bindinput="onInput" value="{{Customer_id}}" data-column="Customer_id" name="Customer_id" disabled="{{userInfo.power == '客户'}}"></input>
+  <input bindinput="onInput_text" class="input_text_form" bindinput="onInput" value="{{Customer_id}}" data-column="Customer_id" name="Customer_id" disabled="{{userInfo.power == '客户'}}"></input>
 </view>
 <view style="display: flex;">
   <view class="lables">单据编号：</view>

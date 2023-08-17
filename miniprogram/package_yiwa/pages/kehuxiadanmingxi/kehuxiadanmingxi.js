@@ -78,7 +78,7 @@ Page({
     let power = _this.data.userInfo.power;
     let id = _this.data.userInfo.id;
     var sql
-    if (power=='管理员'){
+    if (power=='管理员' || power == '报货员'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,zhuangtai from Detailsoforder as DC left join (select id,name,power from userInfo) as us on us.id = DC.Customer_id where us.name like '%" + e[0] + "%' and  DC.riqi between '" + e[1] + "' and '" + e[2] + "' group by Documentnumber,name,us.id,riqi,Customer_id,zhuangtai "
     }else if (power=='客户'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,zhuangtai from Detailsoforder as DC left join (select id,name,power from userInfo) as us on us.id = DC.Customer_id where us.name like '%" + e[0] + "%' and DC.Customer_id='"+ id +"' and  DC.riqi between '" + e[1] + "' and '" + e[2] + "' group by Documentnumber,name,us.id,riqi,Customer_id,zhuangtai"
@@ -139,9 +139,9 @@ Page({
     console.log(Documentnumber)
 
     if(column == 'zhuangtai'){
-      if(_this.data.userInfo.power != '管理员'){
+      if(_this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '报货员'){
         wx.showToast({
-          title: '非管理员无权限设置！',
+          title: '非管理员或报货员无权限设置！',
           icon: 'none',
           duration: 3000
         })

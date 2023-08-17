@@ -127,6 +127,34 @@ Page({
         console.log("请求失败！")
       }
     })
+
+    var sql = "select max(riqi) as riqi from Detailsoforder"
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var riqi = res.result.recordset[0].riqi
+        if(riqi != null){
+          _this.setData({
+            riqi: riqi
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
   },
 
   tableShow: function (e) {
@@ -135,7 +163,6 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
-        //query: "select * from (select * from (select *,'' as zongjia from (select * from (select * from (select df.id,Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,huikuang,zhongliang_num,name as kehu,phone as kehu_phone,driver,salesman,beizhu from Detailsoforder as df left join (select id,name,phone,driver,salesman from userInfo) as us on df.Customer_id = us.id) as df2 left join (select id as siji_id,name as siji,phone as siji_phone from userInfo) as us2 on df2.driver = us2.siji_id) as df3 left join (select id as yewuyuan_id,name as yewuyuan,phone as yewuyuan_phone from userInfo) as us3 on df3.salesman = us3.yewuyuan_id) as df4 left join (select Customer_id as kehu_id,NameofProduct as production_name,unit as danwei,isnull(sum(CONVERT(float,isnull(number,0))) - sum(CONVERT(float,isnull(huikuang,0))),0) as qiankuang from Detailsoforder where riqi < '" + e[1] + "' group by Customer_id,NameofProduct,unit) as kuang_left on df4.Customer_id = kuang_left.kehu_id and df4.NameofProduct = kuang_left.production_name and df4.unit = kuang_left.danwei) as df5 left join (select NameofProduct as product_name,unit as danwei1,zhongliang,kuang from DetailedConfiguration) as dc on df5.NameofProduct = dc.product_name and df5.unit = dc.danwei1 where Customer_id = " + e[0] + " and riqi = '" + e[1] + "') as df6 left join (select Customer_id as c_id,kuang_num as qichu_kuang,NameofProduct as ming,unit as dw from DetailsofProducts) as kuang on df6.NameofProduct = kuang.ming and df6.unit = kuang.dw and df6.Customer_id = kuang.c_id;select * from beizhu;"
         query: sql
       },
       success: res => {
@@ -414,6 +441,24 @@ Page({
     _this.setData({
       [column]: e.detail.value
     })
+    if(column == 'name' && e.detail.value != ""){
+      var kehu_list = _this.data.kehu_list
+      var panduan = false
+      for(var i=0; i<kehu_list.length; i++){
+        if(kehu_list[i].name == e.detail.value){
+          _this.setData({
+            kehu_id: kehu_list[i].id
+          })
+          panduan = true
+          break;
+        }
+      }
+      if(panduan == false){
+        _this.setData({
+          kehu_id: ""
+        })
+      }
+    }
   },
  
   onInput2: function (e) {
@@ -545,7 +590,6 @@ Page({
       leibie:"",
       area:"",
       name:"",
-      riqi:"",
     })
   },
 
@@ -643,44 +687,44 @@ Page({
         console.log(sql)
         var kehu_list = res.result.recordset
         console.log(kehu_list)
-        for (var i = 0;i<kehu_list.length;i++){
-          console.log(kehu_list[i]) 
-          if (kehu_list[i].baocun != "已保存" || _this.data.userInfo.power == '管理员'){
-            sql_end = sql1 + sql2 + sql3 + sql4
-            wx.cloud.callFunction({
-              name: 'sqlserver_yiwa',
-              data: {
-                query: sql_end
-              },
-              success: res => {
-                console.log(res)
-                wx.showToast({
-                  title: '保存成功！',
-                  icon: 'none',
-                  duration: 3000
-                })
-                var e = [_this.data.sel_id,_this.data.sel_riqi]
-                _this.tableShow(e)
-              },
-              err: res => {
-                console.log("错误!")
-              },
-              fail: res => {
-                wx.showToast({
-                  title: '请求失败！',
-                  icon: 'none',
-                  duration: 3000
-                })
-                console.log("请求失败！")
-              }
-            })
-          }else{
-            wx.showToast({
-              title: '该订单已保存过一次，无法再次保存！',
-              icon: 'none',
-              duration: 3000
-            })
-          }
+        // for (var i = 0;i<kehu_list.length;i++){
+        //   console.log(kehu_list[i]) 
+        // }
+        if (_this.data.riqi == getNowDate() || _this.data.userInfo.power == '管理员'){
+          sql_end = sql1 + sql2 + sql3 + sql4
+          wx.cloud.callFunction({
+            name: 'sqlserver_yiwa',
+            data: {
+              query: sql_end
+            },
+            success: res => {
+              console.log(res)
+              wx.showToast({
+                title: '保存成功！',
+                icon: 'none',
+                duration: 3000
+              })
+              var e = [_this.data.sel_id,_this.data.sel_riqi]
+              _this.tableShow(e)
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        }else{
+          wx.showToast({
+            title: '非管理员只允许修改当日送货单！',
+            icon: 'none',
+            duration: 3000
+          })
         }
       },
       err: res => {
@@ -750,3 +794,36 @@ Page({
 
   }
 })
+
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }

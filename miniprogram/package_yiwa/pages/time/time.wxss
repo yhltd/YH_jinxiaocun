@@ -51,7 +51,7 @@ page {
   margin-top: 32%;
   display: block;
   z-index: -9;
-  margin-bottom: 20%;
+  /* margin-bottom: 20%; */
 }
 
 .shangpin-text {

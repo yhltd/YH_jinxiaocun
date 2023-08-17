@@ -45,9 +45,9 @@ Page({
       isupd: true
     },
     {
-      text: "单位",
+      text: "数量",
       width: "250rpx",
-      columnName: "unit",
+      columnName: "number",
       type: "text",
       isupd: true
     },
@@ -59,13 +59,26 @@ Page({
       isupd: true
     },
     {
-      text: "数量",
+      text: "重量",
       width: "250rpx",
-      columnName: "number",
+      columnName: "zhongliang_num",
       type: "text",
       isupd: true
     },
-    
+    {
+      text: "回筐",
+      width: "250rpx",
+      columnName: "huikuang",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "单位",
+      width: "250rpx",
+      columnName: "unit",
+      type: "text",
+      isupd: true
+    },
   ],
   
   id:'',
@@ -91,7 +104,7 @@ Page({
     })
     var sql
     console.log(userInfo)
-    if (userInfo.power=='管理员'){
+    if (userInfo.power=='管理员' || userInfo.power=='报货员'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' group by Documentnumber,name,us.id,riqi,Customer_id "
     }else if (userInfo.power=='客户'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ userInfo.id +"' and us.power='客户' group by Documentnumber,name,us.id,riqi,Customer_id "
@@ -133,12 +146,12 @@ Page({
     
     var sql=''
     console.log(userInfo.power=='管理员')
-    if (userInfo.power=='管理员'){
-      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"'"
+    if (userInfo.power=='管理员' || userInfo.power=='报货员'){
+      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number,zhongliang_num,huikuang from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"'"
     }else if (userInfo.power=='客户'){
-      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ userInfo.id +"' and us.power='客户'"
+      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number,zhongliang_num,huikuang from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ userInfo.id +"' and us.power='客户'"
     }else if (userInfo.power=='业务员'){
-      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.salesman = '"+ userInfo.id +"' and us.power='客户'"
+      sql ="select DC.id,us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number,zhongliang_num,huikuang from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.salesman = '"+ userInfo.id +"' and us.power='客户'"
     }else{
       wx.showToast({
         title: '无权限！',
@@ -155,6 +168,16 @@ Page({
       success: res => {
         var list = res.result.recordset
         console.log(list)
+        for(var i=0; i<list.length; i++){
+          var zhongliang_sum = 0
+          if(list[i].zhongliang_num != ''){
+            var arr = list[i].zhongliang_num.split(",")
+            for(var j=0; j<arr.length; j++){
+              zhongliang_sum = zhongliang_sum + (arr[j] * 1)
+            }
+          }
+          list[i].zhongliang_num = zhongliang_sum
+        }
         _this.setData({
           list2:list,
         })
@@ -245,7 +268,7 @@ Page({
     var sql
     console.log(Documentnumber)
     console.log()
-    if (_this.data.userInfo.power=='管理员'){
+    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' group by Documentnumber,name,us.id,riqi,Customer_id "
     }else if (_this.data.userInfo.power=='客户'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ _this.data.userInfo.id +"' and us.power='客户' group by Documentnumber,name,us.id,riqi,Customer_id "
@@ -285,7 +308,7 @@ Page({
     })
     
     var sql=''
-    if (_this.data.userInfo.power=='管理员'){
+    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"'"
     }else if (_this.data.userInfo.power=='客户'){
       sql ="select us.id as uid,us.name,DC.Customer_id,DC.Documentnumber,DC.riqi,DC.NameofProduct,DC.unit,DC.Theunitprice,DC.number from Detailsoforder as DC left join (select id,name,power,salesman from userInfo) as us on us.id = DC.Customer_id where number != 0 and DC.Documentnumber = '"+ Documentnumber +"' and us.id = '"+ _this.data.userInfo.id +"' and us.power='客户'"
@@ -338,7 +361,8 @@ Page({
     var _this = this
     var this_row = e.currentTarget.dataset.index
     console.log(_this.data.list2[e.currentTarget.dataset.index].Documentnumber)
-    if (_this.data.userInfo.power=='管理员'){
+    console.log(_this.data.list[0].riqi)
+    if (_this.data.userInfo.power=='管理员' || (_this.data.userInfo.power=='报货员' && _this.data.list[0].riqi == getNowDate())){
       _this.setData({
         id: _this.data.list2[e.currentTarget.dataset.index].id,
         Customer_id: _this.data.list2[e.currentTarget.dataset.index].Customer_id, 
@@ -352,7 +376,7 @@ Page({
       })
     }else{
       wx.showToast({
-        title: '无权限！',
+        title: '非管理员只允许修改当日订单！',
         icon: 'none'
       })
     }
@@ -424,7 +448,7 @@ Page({
       return;
     }
     var sql
-    if (_this.data.userInfo.power=='管理员' ){
+    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
       sql ="insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values('" + _this.data.list[0].Customer_id + "','" + _this.data.Documentnumber + "','" + _this.data.list[0].riqi + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.number + "')"
     }else{
       wx.showToast({
@@ -484,7 +508,7 @@ Page({
     var i =e.currentTarget.dataset.index
     console.log(_this.data.number)
     var sql
-    if (_this.data.userInfo.power=='管理员'){
+    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
       wx.showModal({
         title: '提示',
         content: '是否修改？',
@@ -543,7 +567,7 @@ Page({
     console.log(_this.data.this_index)
     console.log(_this.data.list2[i].id)
     var sql
-    if (_this.data.userInfo.power=='管理员'){
+    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
       wx.showModal({
         title: '提示',
         content: '是否删除？',
@@ -671,3 +695,35 @@ Page({
   }
 })
 
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }
