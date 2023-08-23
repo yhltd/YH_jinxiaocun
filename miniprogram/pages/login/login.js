@@ -627,7 +627,7 @@ var login = function(that,info) {
     })
   //结束
   
-  }else if(system =="华群家具材料"){
+  }else if(system =="华群家具材料" && that.data.gongsi == '订单管理系统'){
     console.log(system)
     var sql = "select * from userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
     wx.cloud.callFunction({
@@ -647,6 +647,49 @@ var login = function(that,info) {
           var user_list = list[0]
           wx.navigateTo({
             url:'../../package_huaqun/page/shows/shows?userInfo='+JSON.stringify(user_list)
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  //结束
+  
+  }else if(system =="华群家具材料" && that.data.gongsi == '配送管理系统'){
+    console.log(system)
+    var sql = "select * from erqi_userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data:{
+        query : sql
+      },
+      success : res =>{
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length == 0){
+          wx.showToast({
+            title: '用户名或密码错误',
+            icon:'none',
+          })
+        }else{
+          var user_list = list[0]
+          wx.navigateTo({
+            url:'../../package_huaqun_erqi/page/shows/shows?userInfo='+JSON.stringify(user_list)
           })
         }
       },
@@ -992,8 +1035,8 @@ Page({
     }else if(system == '华群家具材料'){
       _this.setData({
         system,
-        gongsi : '华群家具材料',
-        pickerArray: ['华群家具材料']
+        gongsi : '订单管理系统',
+        pickerArray: ['订单管理系统','配送管理系统']
       })
       return;
     }else if(system == '幻尘萌'){

@@ -298,6 +298,16 @@
       ]
     },
     {
+      "root": "package_huaqun_erqi",
+      "name": "HuaQunJiaJuCaiLiaoErQi",
+      "pages": [
+        "page/shows/shows",
+        "page/userInfo/userInfo",
+        "page/peisong/peisong",
+        "page/peisong_mingxi/peisong_mingxi"
+      ]
+    },
+    {
       "root": "package_yiwa",
       "name": "YiWaDeDanTengXiaoWaLi",
       "pages": [

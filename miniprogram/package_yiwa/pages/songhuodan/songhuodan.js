@@ -690,7 +690,9 @@ Page({
         // for (var i = 0;i<kehu_list.length;i++){
         //   console.log(kehu_list[i]) 
         // }
-        if (_this.data.riqi == getNowDate() || _this.data.userInfo.power == '管理员'){
+        console.log(getNowDate())
+        console.log(_this.data.riqi)
+        if (_this.data.riqi >= getNowDate() || _this.data.userInfo.power == '管理员'){
           sql_end = sql1 + sql2 + sql3 + sql4
           wx.cloud.callFunction({
             name: 'sqlserver_yiwa',

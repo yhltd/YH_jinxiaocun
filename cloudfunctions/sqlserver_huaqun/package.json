@@ -12,6 +12,7 @@
   "dependencies": {
     "mssql": "^6.2.0",
     "mssql2": "^3.3.1",
-    "wx-server-sdk": "^1.8.3"
+    "wx-server-sdk": "^1.8.3",
+    "axios": "latest"
   }
 }
