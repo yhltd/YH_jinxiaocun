@@ -1,0 +1,10 @@
+/* pages/hangyeremen/hangyeremen.wxss */
+.biaoti{
+  display: flex;
+justify-content: center
+}
+.str1{
+  text-indent: 75rpx;
+
+  text-align: left;
+}

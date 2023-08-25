@@ -304,7 +304,8 @@
         "page/shows/shows",
         "page/userInfo/userInfo",
         "page/peisong/peisong",
-        "page/peisong_mingxi/peisong_mingxi"
+        "page/peisong_mingxi/peisong_mingxi",
+        "page/dayin/dayin"
       ]
     },
     {
@@ -349,6 +350,57 @@
         "pages/kaoqin_mingxi/kaoqin_mingxi",
         "pages/kaoqin_guanli/kaoqin_guanli",
         "pages/jihua_mingxi/jihua_mingxi"
+      ]
+    },
+    {
+      "root": "package_yunhe",
+      "name": "yunhe",
+      "pages": [
+        "pages/shouye/shouye",
+        "pages/index/index",
+        "pages/shouquan/shouquan",
+        "pages/gongsijieshao/gongsijieshao",
+        "pages/anlixiangqing/anlixiangqing",
+        "pages/hangyeremen/hangyeremen",
+        "pages/jiaruwomen/jiaruwomen",
+        "pages/userConsole/userConsole",
+        "pages/storageConsole/storageConsole",
+        "pages/databaseGuide/databaseGuide",
+        "pages/addFunction/addFunction",
+        "pages/deployFunctions/deployFunctions",
+        "pages/chooseLib/chooseLib",
+        "pages/xinxi/xinxi",
+        "pages/chanpin/chanpin",
+        "pages/yonghu/yonghu",
+        "pages/huakuai1/huakuai1",
+        "pages/huakuai2/huakuai2",
+        "pages/zhuti1/zhuti1",
+        "pages/zhuti2/zhuti2",
+        "pages/anli1/anli1",
+        "pages/anli2/anli2",
+        "pages/anli3/anli3",
+        "pages/anli4/anli4",
+        "pages/xiaochengxu/xiaochengxu",
+        "pages/chanpin1/chanpin1",
+        "pages/chanpin2/chanpin2",
+        "pages/chanpin3/chanpin3",
+        "pages/chanpin4/chanpin4",
+        "pages/kefu/kefu",
+        "pages/gouwuche/gouwuche",
+        "pages/jiaru/jiaru",
+        "pages/goumai/goumai",
+        "pages/jutixinxi/jutixinxi",
+        "pages/daishouhuo/daishouhuo",
+        "pages/fahuozhong/fahuozhong",
+        "pages/daifukuang/daifukuang",
+        "pages/daipingjia/daipingjia",
+        "pages/shouhuodizhi/shouhuodizhi",
+        "pages/dingdanxiangqing/dingdanxiangqing",
+        "pages/shezhi/shezhi",
+        "pages/shezhi1/shezhi1",
+        "pages/shezhi2/shezhi2",
+        "pages/xiangqing/xiangqing",
+        "pages/xiangqingxiugai/xiangqingxiugai"
       ]
     }
   ],

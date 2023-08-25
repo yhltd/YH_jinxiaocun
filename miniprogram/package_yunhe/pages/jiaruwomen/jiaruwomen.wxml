@@ -1,0 +1,26 @@
+<view class="lianxi-women">
+    <image class='lianxiwomen-image'  src="{{imageUrl+'xiaochengxukaifa.png'}}"> </image>
+</view>
+
+<view class="container">
+  <view class="divLine">
+  </view>
+</view>
+
+   <view>
+     <block wx:for="{{items}}"  wx:key="">
+       <view class="lianxiwomen">
+       <view>
+          <view class='lianxi-image' >
+           <image src="{{item.src}}" class="lianxi">
+           </image>
+           </view>
+           {{item.name}}
+           </view>
+           <view class="container">
+  <view class="divLine">
+  </view>
+</view>
+       </view>
+      </block>
+    </view>

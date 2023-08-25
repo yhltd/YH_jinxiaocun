@@ -1,0 +1,53 @@
+/* pages/dingdanxiangqing/dingdanxiangqing.wxss */
+.image1{
+width: 300rpx;
+height: 300rpx;
+
+float: left;
+}
+.view1{
+margin: 80rpx 0 0 0 
+
+}
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height:20rpx;
+}
+.image2{
+  width: 100%;
+  height: 350rpx
+
+}
+.image3{
+  height: 60rpx;
+  width:  60rpx;
+  float: left
+}
+.view4{
+  height: 100rpx;
+  width: 100%;
+  padding-bottom:2%;
+}
+.view5{
+  width: 100%;
+  display: flex
+}
+.view6{
+  width: 100%;
+  display: flex
+}
+.image4{
+   width: 1%;
+   background-color:#EE0000;
+   height: 50rpx;
+   float: left
+}
+.xing1{
+  height: 60rpx;
+  width: 60rpx;
+  
+  display: inline-block;
+  
+   
+}

@@ -1,0 +1,24 @@
+/* pages/jutixinxi/jutixinxi.wxss */
+.text{
+  width: 90%;
+  margin: 0 0 0 5%;
+  text-indent: 75rpx;
+
+  text-align: left;
+ font-size:35rpx;
+}
+.text1{
+  font-weight:700;
+  font-size:50rpx;
+  text-align: center;
+}
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height:5rpx;
+
+}
+.text_shijian{
+   color: #a39c9c;
+   font-size:35rpx;
+}

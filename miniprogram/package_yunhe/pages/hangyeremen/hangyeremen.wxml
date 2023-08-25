@@ -1,0 +1,16 @@
+<!--pages/hangyeremen/hangyeremen.wxml-->
+<view style="font-size:24px"  class='biaoti'>
+<view>
+人工智能软件，桌面机器人
+</view>
+</view>
+<image src="{{imageUrl+'jiqiren.png'}}"></image>
+<view class='str1'>自动化业务流程可带来实质性价值。在这种自动化必须快速，低成本，变更频繁的情况下，依靠演示集成可以是一个很好的解决方案，特别是当性能要求不高时帮助组织更快速地实现业务流程自动化，减少资金。
+</view>
+<view class='str1'>其中一个重要的推论是将过程自动化应用于使用更传统方法可能不值得自动化的低价值场景的能力提供使业务分析师在创建和更改自动化流程中发挥重要作用的工具。
+</view>
+<view class='str1'>意图是帮助组织在更短的时间内完成这些工作,允许应用程序用户界面的功能通过可重用的服务公开。通过将所有直接应用程序交互封装在对象中，可以避免旧的演示集成技术的许多问题，更适合面向服务的世界。
+</view>
+<view class='biaoti'>快扫码关注吧！
+</view>
+<image src="{{imageUrl+'erweima.png'}}"></image>

@@ -1,0 +1,16 @@
+<!--pages/jutixinxi/jutixinxi.wxml-->
+
+<view class='text1' >{{all.text1}}</view>
+<view class="text_shijian">{{shijian}}</view>
+<view class="container">
+<!-- 分割线 -->
+<view class="divLine"></view>
+</view>
+<view class='text'>
+<view >{{all.text3}}</view>
+<view >{{all.text4}}</view>
+<view >{{all.text5}}</view>
+<view >{{all.text6}}</view>
+<view >{{all.text7}}</view>
+<view >{{all.text8}}</view>
+</view>

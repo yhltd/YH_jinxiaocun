@@ -1,0 +1,26 @@
+
+
+<view class='shouhuo'>收货地址:</view>
+
+<view class="container">
+     <!-- 分割线 -->
+  <view class="divLine"></view>
+</view>
+
+<!-- 
+<view class='shouhang'>
+<image class="image1" src='{{all.image1}}'></image>
+<view class='chanpinming'>{{all.chanpinming}}</view>
+<view class='erhang'>
+<image class='qian' src='{{all.image3}}'></image>
+<view class='jiage'> {{all.jiagezheng}}.{{all.jiagexiao}}</view>
+</view>
+</view>
+
+<button bindtap="zhifu" >微信支付</button> -->
+<view class="container">
+    <input type="text" bindinput="getOrderCode" style="border:1px solid #ccc;"  />
+    <button bindtap="pay">立即支付</button>
+</view>
+
+

@@ -1,0 +1,11 @@
+/* pages/shezhi/shezhi.wxss */
+.button{
+  width: 100%;
+display: flex;
+height: 100%;
+flex-wrap: wrap 
+}
+.button1{
+  width:50%;
+  height: 100rpx
+}

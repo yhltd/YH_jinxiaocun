@@ -1,0 +1,22 @@
+/* pages/jiaruwomen/jiaruwomen.wxss */
+.lianxi{
+  height: 60rpx;
+  width:  60rpx;
+}
+.lianxiwomen{
+   flex-direction: column;
+}
+.lianxi-image{
+  float: left
+}
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height:5rpx;
+}
+.lianxi-women{
+  display: flex;
+ justify-content: center; 
+ 
+}
+

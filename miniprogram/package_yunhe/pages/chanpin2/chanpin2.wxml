@@ -1,0 +1,44 @@
+<!--pages/chanpin1/chanpin1.wxml-->
+<view class='chanpinimageda'>
+<image class="chanpin-imageda" src='{{all.image1}}'></image>
+</view>
+<import src="/pages/template/tabbar.wxml"/> 
+ <template is="tabBar" data="{{tabBar}}"/>
+
+ <view class='chanpin1-1'> 
+
+  <image class='tuijian' src='{{all.image2}}'></image>
+  <view>{{all.chanpinming}}</view>
+  </view>
+   <view class='chanpin1-2' >
+   <image class="qian" src="{{all.image3}}"></image> 
+  <view class='qian-text1'>{{all.jiagezheng}}</view>
+  <view class="qian-text2">.{{all.jiagexiao}}</view>
+  </view>
+
+
+ <view class="container">
+     <!-- 分割线 -->
+  <view class="divLine"></view>
+</view>
+
+<view class='chanpin-kong1'> </view>
+<view class='chanpin1-text1'>{{all.text1}}</view>
+<view class='chanpin1-text2'>{{all.text2}}</view>
+<view class='image2-height'>
+<image class="chanpin-image2" src='{{all.image4}}'></image>
+</view>
+
+ <view class='chanpin1-text3'>
+ <view >{{all.text3}}</view>
+ <view>{{all.text4}}</view>
+<view>{{all.text5}}</view>
+<view>{{all.text6}}</view>
+<view>{{all.text7}}</view>
+<view>{{all.text8}}</view>
+<view>{{all.text9}}</view>
+<view>{{all.text10}}</view>
+<view>{{all.text11}}</view>
+</view>
+
+

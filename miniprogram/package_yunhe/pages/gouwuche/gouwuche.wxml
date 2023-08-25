@@ -1,0 +1,15 @@
+<!--pages/gouwuche/gouwuche.wxml-->
+<block  wx:for="{{all}}" wx:for-index='i' wx:key="" >
+<view class="chanpin0">
+<navigator  url="/pages/chanpin1/chanpin1?id={{all[i]._id}}">
+<image class="chanpin0-image" src='{{all[i].path}}' ></image>
+</navigator>
+<view class='text'>
+<text class="chanpin-text1">{{all[i].mingzi}}</text>
+
+<text class="chanpin-text2"  bindtap='quxiaoshoucang'data-id='{{all[i]._id}}'>取消收藏</text>
+</view>
+<!-- <navigator url='/pages/goumai/goumai' class='chanpin-text3' >立即购买</navigator> -->
+</view>
+<view class="person-line"></view>
+</block> 

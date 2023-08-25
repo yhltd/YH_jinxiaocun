@@ -25,6 +25,7 @@ App({
     sec_dd2: '4b2aa95a84d',
     sec_dd3: 'c045accac4',
     imageInfopath: "cloud://yhltd-lzok7.7968-yhltd-lzok7/tupian/",
+    imageInfopath2:"cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/yhltd_wechar/tupian/",
     cookie: "",
     nickName: "",
     gender: "",

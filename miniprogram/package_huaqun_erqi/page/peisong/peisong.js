@@ -102,6 +102,13 @@ Page({
     ],
     this_img: '',
     this_column: '',
+    wancheng_list: [
+      {name: '配货作业中'},
+      {name: '配货完成'},
+      {name: '完成'},
+      {name: '未完成-缺货'},
+      {name: '未完成-配错货'},
+    ]
   },
 
   /**
@@ -122,8 +129,48 @@ Page({
       userInfo,
       onload_panduan
     })
+
+    var sql = "select isnull(company,'') as name from erqi_userInfo where isnull(company,'') != '' group by company"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var customer_name_list = res.result.recordset
+        console.log(customer_name_list)
+        _this.setData({
+          customer_name_list
+        })
+      },
+      err: res => {
+        wx.showToast({
+          title: '读取下拉列表错误！',
+          icon: 'none'
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+
+    
     if(options.order_number == undefined){
       var bianhao_left = getBianHao()
+      var list = _this.data.list
+      if(_this.data.userInfo.power == '客户'){
+        list[0].customer_name = userInfo.company
+        list[0].customer_name_renyuan = userInfo.name
+        list[0].customer_name_riqi = getNowDate()
+        _this.setData({
+          list
+        })
+      }
       var sql = "select order_number from erqi_peisongdan where order_number like '" + bianhao_left + "%'"
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
@@ -173,7 +220,88 @@ Page({
         }
       })
     }else{
+      var sql = "select * from erqi_peisongdan where order_number='" + options.order_number + "'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var list = res.result.recordset
+          console.log(list)
+          _this.setData({
+            list
+          })
+        },
+        err: res => {
+          wx.showToast({
+            title: '读取下拉列表错误！',
+            icon: 'none'
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+    }
+  },
 
+  sel_xiala: function (e) {
+    var _this = this
+    console.log('列名：', e.currentTarget.dataset.column)
+    if(_this.data.this_column == 'wancheng'){
+      var list = _this.data[_this.data.this_column + "_list"]
+      _this.setData({
+        list_xiala: list,
+      })
+      console.log(list)
+      _this.setData({
+        xlShow: true,
+        xgShow: false
+      })
+    }else if(_this.data.this_column == 'customer_name'){
+      var list = []
+      var xunhuan_list = _this.data[_this.data.this_column + "_list"]
+      console.log(_this.data.this_value)
+      if(_this.data.this_value != ''){
+        for(var i=0; i<xunhuan_list.length; i++){
+          if(xunhuan_list[i].name.indexOf(_this.data.this_value) != -1){
+            list.push(xunhuan_list[i])
+          }
+        }
+      }else{
+        list = xunhuan_list
+      }
+      _this.setData({
+        list_xiala: list,
+      })
+      console.log(list)
+      _this.setData({
+        xlShow: true,
+        xgShow: false
+      })
+    }
+  },
+
+  select1: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      _this.setData({
+        xlShow: false,
+        xgShow: true,
+        this_value: new_val
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow: false,
+        xgShow: true,
+      })
     }
   },
 
@@ -187,8 +315,12 @@ Page({
       })
       return;
     }
+
+    wx.showLoading({
+      title: '保存文字',
+    })
     if(list[0].id == "" || list[0].id == undefined){
-      var sql = "insert into erqi_peisongdan(order_number,insert_date,customer_name,customer_name_renyuan,customer_name_riqi,customer_need_text,customer_need_text_renyuan,customer_need_text_riqi,customer_need_img1,customer_need_img1_renyuan,customer_need_img1_riqi,customer_need_img2,customer_need_img2_renyuan,customer_need_img2_riqi,customer_need_img3,customer_need_img3_renyuan,customer_need_img3_riqi,songhuo_address,songhuo_address_renyuan,songhuo_address_riqi,anzhuang_address,anzhuang_address_renyuan,anzhuang_address_riqi,phone,phone_renyuan,phone_riqi,customer_order,customer_order_renyuan,customer_order_riqi,songhuo_danhao,songhuo_danhao_renyuan,songhuo_danhao_riqi,peihuo_img1,peihuo_img1_renyuan,peihuo_img1_riqi,peihuo_img2,peihuo_img2_renyuan,peihuo_img2_riqi,peihuo_img3,peihuo_img3_renyuan,peihuo_img3_riqi,peihuo_img4,peihuo_img4_renyuan,peihuo_img4_riqi,peihuo_img5,peihuo_img5_renyuan,peihuo_img5_riqi,peisong_img1,peisong_img1_renyuan,peisong_img1_riqi,peisong_img2,peisong_img2_renyuan,peisong_img2_riqi,peisong_img3,peisong_img3_renyuan,peisong_img3_riqi,wancheng,wancheng_renyuan,wancheng_riqi,beizhu,beizhu_renyuan,beizhu_riqi,kucun_text,kucun_text_renyuan,kucun_text_riqi,kucun_img1,kucun_img1_renyuan,kucun_img1_riqi,kucun_img2,kucun_img2_renyuan,kucun_img2_riqi,kucun_img3,kucun_img3_renyuan,kucun_img3_riqi) output inserted.id values('" + list[0].order_number + "','" + list[0].insert_date + "','" + list[0].customer_name + "','" + list[0].customer_name_renyuan + "','" + list[0].customer_name_riqi + "','" + list[0].customer_need_text + "','" + list[0].customer_need_text_renyuan + "','" + list[0].customer_need_text_riqi + "','" + list[0].customer_need_img1 + "','" + list[0].customer_need_img1_renyuan + "','" + list[0].customer_need_img1_riqi + "','" + list[0].customer_need_img2 + "','" + list[0].customer_need_img2_renyuan + "','" + list[0].customer_need_img2_riqi + "','" + list[0].customer_need_img3 + "','" + list[0].customer_need_img3_renyuan + "','" + list[0].customer_need_img3_riqi + "','" + list[0].songhuo_address + "','" + list[0].songhuo_address_renyuan + "','" + list[0].songhuo_address_riqi + "','" + list[0].anzhuang_address + "','" + list[0].anzhuang_address_renyuan + "','" + list[0].anzhuang_address_riqi + "','" + list[0].phone + "','" + list[0].phone_renyuan + "','" + list[0].phone_riqi + "','" + list[0].customer_order + "','" + list[0].customer_order_renyuan + "','" + list[0].customer_order_riqi + "','" + list[0].songhuo_danhao + "','" + list[0].songhuo_danhao_renyuan + "','" + list[0].songhuo_danhao_riqi + "','" + list[0].peihuo_img1 + "','" + list[0].peihuo_img1_renyuan + "','" + list[0].peihuo_img1_riqi + "','" + list[0].peihuo_img2 + "','" + list[0].peihuo_img2_renyuan + "','" + list[0].peihuo_img2_riqi + "','" + list[0].peihuo_img3 + "','" + list[0].peihuo_img3_renyuan + "','" + list[0].peihuo_img3_riqi + "','" + list[0].peihuo_img4 + "','" + list[0].peihuo_img4_renyuan + "','" + list[0].peihuo_img4_riqi + "','" + list[0].peihuo_img5 + "','" + list[0].peihuo_img5_renyuan + "','" + list[0].peihuo_img5_riqi + "','" + list[0].peisong_img1 + "','" + list[0].peisong_img1_renyuan + "','" + list[0].peisong_img1_riqi + "','" + list[0].peisong_img2 + "','" + list[0].peisong_img2_renyuan + "','" + list[0].peisong_img2_riqi + "','" + list[0].peisong_img3 + "','" + list[0].peisong_img3_renyuan + "','" + list[0].peisong_img3_riqi + "','" + list[0].wancheng + "','" + list[0].wancheng_renyuan + "','" + list[0].wancheng_riqi + "','" + list[0].beizhu + "','" + list[0].beizhu_renyuan + "','" + list[0].beizhu_riqi + "','" + list[0].kucun_text + "','" + list[0].kucun_text_renyuan + "','" + list[0].kucun_text_riqi + "','" + list[0].kucun_img1 + "','" + list[0].kucun_img1_renyuan + "','" + list[0].kucun_img1_riqi + "','" + list[0].kucun_img2 + "','" + list[0].kucun_img2_renyuan + "','" + list[0].kucun_img2_riqi + "','" + list[0].kucun_img3 + "','" + list[0].kucun_img3_renyuan + "','" + list[0].kucun_img3_riqi + "')"
+      var sql = "insert into erqi_peisongdan(order_number,insert_date,customer_name,customer_name_renyuan,customer_name_riqi,customer_need_text,customer_need_text_renyuan,customer_need_text_riqi,customer_need_img1_renyuan,customer_need_img1_riqi,customer_need_img2_renyuan,customer_need_img2_riqi,customer_need_img3_renyuan,customer_need_img3_riqi,songhuo_address,songhuo_address_renyuan,songhuo_address_riqi,anzhuang_address,anzhuang_address_renyuan,anzhuang_address_riqi,phone,phone_renyuan,phone_riqi,customer_order,customer_order_renyuan,customer_order_riqi,songhuo_danhao,songhuo_danhao_renyuan,songhuo_danhao_riqi,peihuo_img1_renyuan,peihuo_img1_riqi,peihuo_img2_renyuan,peihuo_img2_riqi,peihuo_img3_renyuan,peihuo_img3_riqi,peihuo_img4_renyuan,peihuo_img4_riqi,peihuo_img5_renyuan,peihuo_img5_riqi,peisong_img1_renyuan,peisong_img1_riqi,peisong_img2_renyuan,peisong_img2_riqi,peisong_img3_renyuan,peisong_img3_riqi,wancheng,wancheng_renyuan,wancheng_riqi,beizhu,beizhu_renyuan,beizhu_riqi,kucun_text,kucun_text_renyuan,kucun_text_riqi,kucun_img1_renyuan,kucun_img1_riqi,kucun_img2_renyuan,kucun_img2_riqi,kucun_img3_renyuan,kucun_img3_riqi) output inserted.id values('" + list[0].order_number + "','" + list[0].insert_date + "','" + list[0].customer_name + "','" + list[0].customer_name_renyuan + "','" + list[0].customer_name_riqi + "','" + list[0].customer_need_text + "','" + list[0].customer_need_text_renyuan + "','" + list[0].customer_need_text_riqi + "','" + list[0].customer_need_img1_renyuan + "','" + list[0].customer_need_img1_riqi + "','" + list[0].customer_need_img2_renyuan + "','" + list[0].customer_need_img2_riqi + "','" + list[0].customer_need_img3_renyuan + "','" + list[0].customer_need_img3_riqi + "','" + list[0].songhuo_address + "','" + list[0].songhuo_address_renyuan + "','" + list[0].songhuo_address_riqi + "','" + list[0].anzhuang_address + "','" + list[0].anzhuang_address_renyuan + "','" + list[0].anzhuang_address_riqi + "','" + list[0].phone + "','" + list[0].phone_renyuan + "','" + list[0].phone_riqi + "','" + list[0].customer_order + "','" + list[0].customer_order_renyuan + "','" + list[0].customer_order_riqi + "','" + list[0].songhuo_danhao + "','" + list[0].songhuo_danhao_renyuan + "','" + list[0].songhuo_danhao_riqi + "','" + list[0].peihuo_img1_renyuan + "','" + list[0].peihuo_img1_riqi + "','" + list[0].peihuo_img2_renyuan + "','" + list[0].peihuo_img2_riqi + "','" + list[0].peihuo_img3_renyuan + "','" + list[0].peihuo_img3_riqi + "','" + list[0].peihuo_img4_renyuan + "','" + list[0].peihuo_img4_riqi + "','" + list[0].peihuo_img5_renyuan + "','" + list[0].peihuo_img5_riqi + "','" + list[0].peisong_img1_renyuan + "','" + list[0].peisong_img1_riqi + "','" + list[0].peisong_img2_renyuan + "','" + list[0].peisong_img2_riqi + "','" + list[0].peisong_img3_renyuan + "','" + list[0].peisong_img3_riqi + "','" + list[0].wancheng + "','" + list[0].wancheng_renyuan + "','" + list[0].wancheng_riqi + "','" + list[0].beizhu + "','" + list[0].beizhu_renyuan + "','" + list[0].beizhu_riqi + "','" + list[0].kucun_text + "','" + list[0].kucun_text_renyuan + "','" + list[0].kucun_text_riqi + "','" + list[0].kucun_img1_renyuan + "','" + list[0].kucun_img1_riqi + "','" + list[0].kucun_img2_renyuan + "','" + list[0].kucun_img2_riqi + "','" + list[0].kucun_img3_renyuan + "','" + list[0].kucun_img3_riqi + "')"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
@@ -197,15 +329,446 @@ Page({
         },
         success: res => {
           console.log(res)
-          wx.showToast({
-            title: '保存成功！',
-            icon: 'none'
+          wx.hideLoading()
+          list[0].id = res.result.recordset[0].id
+          var sql = "update erqi_peisongdan set customer_need_img1='" + list[0].customer_need_img1 + "' where id=" + list[0].id
+          wx.showLoading({
+            title: '保存照片1',
+          })
+          wx.cloud.callFunction({
+            name: 'sqlserver_huaqun',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              wx.hideLoading()
+              var sql = "update erqi_peisongdan set customer_need_img2='" + list[0].customer_need_img2 + "' where id=" + list[0].id
+              wx.showLoading({
+                title: '保存照片2',
+              })
+              wx.cloud.callFunction({
+                name: 'sqlserver_huaqun',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(res)
+                  wx.hideLoading()
+                  var sql = "update erqi_peisongdan set customer_need_img3='" + list[0].customer_need_img3 + "' where id=" + list[0].id
+                  wx.showLoading({
+                    title: '保存照片3',
+                  })
+                  wx.cloud.callFunction({
+                    name: 'sqlserver_huaqun',
+                    data: {
+                      query: sql
+                    },
+                    success: res => {
+                      console.log(res)
+                      wx.hideLoading()
+                      var sql = "update erqi_peisongdan set peihuo_img1='" + list[0].peihuo_img1 + "' where id=" + list[0].id
+                      wx.showLoading({
+                        title: '保存照片4',
+                      })
+                      wx.cloud.callFunction({
+                        name: 'sqlserver_huaqun',
+                        data: {
+                          query: sql
+                        },
+                        success: res => {
+                          console.log(res)
+                          wx.hideLoading()
+                          var sql = "update erqi_peisongdan set peihuo_img2='" + list[0].peihuo_img2 + "' where id=" + list[0].id
+                          wx.showLoading({
+                            title: '保存照片5',
+                          })
+                          wx.cloud.callFunction({
+                            name: 'sqlserver_huaqun',
+                            data: {
+                              query: sql
+                            },
+                            success: res => {
+                              console.log(res)
+                              wx.hideLoading()
+                              var sql = "update erqi_peisongdan set peihuo_img3='" + list[0].peihuo_img3 + "' where id=" + list[0].id
+                              wx.showLoading({
+                                title: '保存照片6',
+                              })
+                              wx.cloud.callFunction({
+                                name: 'sqlserver_huaqun',
+                                data: {
+                                  query: sql
+                                },
+                                success: res => {
+                                  console.log(res)
+                                  wx.hideLoading()
+                                  var sql = "update erqi_peisongdan set peihuo_img4='" + list[0].peihuo_img4 + "' where id=" + list[0].id
+                                  wx.showLoading({
+                                    title: '保存照片7',
+                                  })
+                                  wx.cloud.callFunction({
+                                    name: 'sqlserver_huaqun',
+                                    data: {
+                                      query: sql
+                                    },
+                                    success: res => {
+                                      console.log(res)
+                                      wx.hideLoading()
+                                      var sql = "update erqi_peisongdan set peihuo_img5='" + list[0].peihuo_img5 + "' where id=" + list[0].id
+                                      wx.showLoading({
+                                        title: '保存照片8',
+                                      })
+                                      wx.cloud.callFunction({
+                                        name: 'sqlserver_huaqun',
+                                        data: {
+                                          query: sql
+                                        },
+                                        success: res => {
+                                          console.log(res)
+                                          wx.hideLoading()
+                                          var sql = "update erqi_peisongdan set peisong_img1='" + list[0].peisong_img1 + "' where id=" + list[0].id
+                                          wx.showLoading({
+                                            title: '保存照片9',
+                                          })
+                                          wx.cloud.callFunction({
+                                            name: 'sqlserver_huaqun',
+                                            data: {
+                                              query: sql
+                                            },
+                                            success: res => {
+                                              console.log(res)
+                                              wx.hideLoading()
+                                              var sql = "update erqi_peisongdan set peisong_img2='" + list[0].peisong_img2 + "' where id=" + list[0].id
+                                              wx.showLoading({
+                                                title: '保存照片10',
+                                              })
+                                              wx.cloud.callFunction({
+                                                name: 'sqlserver_huaqun',
+                                                data: {
+                                                  query: sql
+                                                },
+                                                success: res => {
+                                                  console.log(res)
+                                                  wx.hideLoading()
+                                                  var sql = "update erqi_peisongdan set peisong_img3='" + list[0].peisong_img3 + "' where id=" + list[0].id
+                                                  wx.showLoading({
+                                                    title: '保存照片11',
+                                                  })
+                                                  wx.cloud.callFunction({
+                                                    name: 'sqlserver_huaqun',
+                                                    data: {
+                                                      query: sql
+                                                    },
+                                                    success: res => {
+                                                      console.log(res)
+                                                      wx.hideLoading()
+                                                      var sql = "update erqi_peisongdan set kucun_img1='" + list[0].kucun_img1 + "' where id=" + list[0].id
+                                                      wx.showLoading({
+                                                        title: '保存照片12',
+                                                      })
+                                                      wx.cloud.callFunction({
+                                                        name: 'sqlserver_huaqun',
+                                                        data: {
+                                                          query: sql
+                                                        },
+                                                        success: res => {
+                                                          console.log(res)
+                                                          wx.hideLoading()
+                                                          var sql = "update erqi_peisongdan set kucun_img2='" + list[0].kucun_img2 + "' where id=" + list[0].id
+                                                          wx.showLoading({
+                                                            title: '保存照片13',
+                                                          })
+                                                          wx.cloud.callFunction({
+                                                            name: 'sqlserver_huaqun',
+                                                            data: {
+                                                              query: sql
+                                                            },
+                                                            success: res => {
+                                                              console.log(res)
+                                                              wx.hideLoading()
+                                                              var sql = "update erqi_peisongdan set kucun_img3='" + list[0].kucun_img3 + "' where id=" + list[0].id
+                                                              wx.showLoading({
+                                                                title: '保存照片14',
+                                                              })
+                                                              wx.cloud.callFunction({
+                                                                name: 'sqlserver_huaqun',
+                                                                data: {
+                                                                  query: sql
+                                                                },
+                                                                success: res => {
+                                                                  console.log(res)
+                                                                  wx.hideLoading()
+                                                                  _this.setData({
+                                                                    list
+                                                                  })
+                                                                  wx.showToast({
+                                                                    title: '已保存！',
+                                                                    icon: 'none'
+                                                                  })
+                                                                },
+                                                                err: res => {
+                                                                  wx.hideLoading()
+                                                                  wx.showToast({
+                                                                    title: '错误！',
+                                                                    icon: 'none'
+                                                                  })
+                                                                  console.log("错误!")
+                                                                },
+                                                                fail: res => {
+                                                                  wx.hideLoading()
+                                                                  wx.showToast({
+                                                                    title: '请求失败！',
+                                                                    icon: 'none'
+                                                                  })
+                                                                  console.log("请求失败！")
+                                                                }
+                                                              })
+                                                            },
+                                                            err: res => {
+                                                              wx.hideLoading()
+                                                              wx.showToast({
+                                                                title: '错误！',
+                                                                icon: 'none'
+                                                              })
+                                                              console.log("错误!")
+                                                            },
+                                                            fail: res => {
+                                                              wx.hideLoading()
+                                                              wx.showToast({
+                                                                title: '请求失败！',
+                                                                icon: 'none'
+                                                              })
+                                                              console.log("请求失败！")
+                                                            }
+                                                          })
+                                                        },
+                                                        err: res => {
+                                                          wx.hideLoading()
+                                                          wx.showToast({
+                                                            title: '错误！',
+                                                            icon: 'none'
+                                                          })
+                                                          console.log("错误!")
+                                                        },
+                                                        fail: res => {
+                                                          wx.hideLoading()
+                                                          wx.showToast({
+                                                            title: '请求失败！',
+                                                            icon: 'none'
+                                                          })
+                                                          console.log("请求失败！")
+                                                        }
+                                                      })
+                                                    },
+                                                    err: res => {
+                                                      wx.hideLoading()
+                                                      wx.showToast({
+                                                        title: '错误！',
+                                                        icon: 'none'
+                                                      })
+                                                      console.log("错误!")
+                                                    },
+                                                    fail: res => {
+                                                      wx.hideLoading()
+                                                      wx.showToast({
+                                                        title: '请求失败！',
+                                                        icon: 'none'
+                                                      })
+                                                      console.log("请求失败！")
+                                                    }
+                                                  })
+                                                },
+                                                err: res => {
+                                                  wx.hideLoading()
+                                                  wx.showToast({
+                                                    title: '错误！',
+                                                    icon: 'none'
+                                                  })
+                                                  console.log("错误!")
+                                                },
+                                                fail: res => {
+                                                  wx.hideLoading()
+                                                  wx.showToast({
+                                                    title: '请求失败！',
+                                                    icon: 'none'
+                                                  })
+                                                  console.log("请求失败！")
+                                                }
+                                              })
+                                            },
+                                            err: res => {
+                                              wx.hideLoading()
+                                              wx.showToast({
+                                                title: '错误！',
+                                                icon: 'none'
+                                              })
+                                              console.log("错误!")
+                                            },
+                                            fail: res => {
+                                              wx.hideLoading()
+                                              wx.showToast({
+                                                title: '请求失败！',
+                                                icon: 'none'
+                                              })
+                                              console.log("请求失败！")
+                                            }
+                                          })
+                                        },
+                                        err: res => {
+                                          wx.hideLoading()
+                                          wx.showToast({
+                                            title: '错误！',
+                                            icon: 'none'
+                                          })
+                                          console.log("错误!")
+                                        },
+                                        fail: res => {
+                                          wx.hideLoading()
+                                          wx.showToast({
+                                            title: '请求失败！',
+                                            icon: 'none'
+                                          })
+                                          console.log("请求失败！")
+                                        }
+                                      })
+                                    },
+                                    err: res => {
+                                      wx.hideLoading()
+                                      wx.showToast({
+                                        title: '错误！',
+                                        icon: 'none'
+                                      })
+                                      console.log("错误!")
+                                    },
+                                    fail: res => {
+                                      wx.hideLoading()
+                                      wx.showToast({
+                                        title: '请求失败！',
+                                        icon: 'none'
+                                      })
+                                      console.log("请求失败！")
+                                    }
+                                  })
+                                },
+                                err: res => {
+                                  wx.hideLoading()
+                                  wx.showToast({
+                                    title: '错误！',
+                                    icon: 'none'
+                                  })
+                                  console.log("错误!")
+                                },
+                                fail: res => {
+                                  wx.hideLoading()
+                                  wx.showToast({
+                                    title: '请求失败！',
+                                    icon: 'none'
+                                  })
+                                  console.log("请求失败！")
+                                }
+                              })
+                            },
+                            err: res => {
+                              wx.hideLoading()
+                              wx.showToast({
+                                title: '错误！',
+                                icon: 'none'
+                              })
+                              console.log("错误!")
+                            },
+                            fail: res => {
+                              wx.hideLoading()
+                              wx.showToast({
+                                title: '请求失败！',
+                                icon: 'none'
+                              })
+                              console.log("请求失败！")
+                            }
+                          })
+                        },
+                        err: res => {
+                          wx.hideLoading()
+                          wx.showToast({
+                            title: '错误！',
+                            icon: 'none'
+                          })
+                          console.log("错误!")
+                        },
+                        fail: res => {
+                          wx.hideLoading()
+                          wx.showToast({
+                            title: '请求失败！',
+                            icon: 'none'
+                          })
+                          console.log("请求失败！")
+                        }
+                      })
+                    },
+                    err: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '错误！',
+                        icon: 'none'
+                      })
+                      console.log("错误!")
+                    },
+                    fail: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '请求失败！',
+                        icon: 'none'
+                      })
+                      console.log("请求失败！")
+                    }
+                  })
+                },
+                err: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '错误！',
+                    icon: 'none'
+                  })
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none'
+                  })
+                  console.log("请求失败！")
+                }
+              })
+            },
+            err: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '错误！',
+                icon: 'none'
+              })
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
           })
         },
         err: res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '错误！',
+            icon: 'none'
+          })
           console.log("错误!")
         },
         fail: res => {
+          wx.hideLoading()
           wx.showToast({
             title: '请求失败！',
             icon: 'none'
@@ -214,7 +777,461 @@ Page({
         }
       })
     }else{
-      
+      var sql = "update erqi_peisongdan set order_number='" + list[0].order_number + "',insert_date='" + list[0].insert_date + "',customer_name='" + list[0].customer_name + "',customer_name_renyuan='" + list[0].customer_name_renyuan + "',customer_name_riqi='" + list[0].customer_name_riqi + "',customer_need_text='" + list[0].customer_need_text + "',customer_need_text_renyuan='" + list[0].customer_need_text_renyuan + "',customer_need_text_riqi='" + list[0].customer_need_text_riqi + "',customer_need_img1_renyuan='" + list[0].customer_need_img1_renyuan + "',customer_need_img1_riqi='" + list[0].customer_need_img1_riqi + "',customer_need_img2_renyuan='" + list[0].customer_need_img2_renyuan + "',customer_need_img2_riqi='" + list[0].customer_need_img2_riqi + "',customer_need_img3_renyuan='" + list[0].customer_need_img3_renyuan + "',customer_need_img3_riqi='" + list[0].customer_need_img3_riqi + "',songhuo_address='" + list[0].songhuo_address + "',songhuo_address_renyuan='" + list[0].songhuo_address_renyuan + "',songhuo_address_riqi='" + list[0].songhuo_address_riqi + "',anzhuang_address='" + list[0].anzhuang_address + "',anzhuang_address_renyuan='" + list[0].anzhuang_address_renyuan + "',anzhuang_address_riqi='" + list[0].anzhuang_address_riqi + "',phone='" + list[0].phone + "',phone_renyuan='" + list[0].phone_renyuan + "',phone_riqi='" + list[0].phone_riqi + "',customer_order='" + list[0].customer_order + "',customer_order_renyuan='" + list[0].customer_order_renyuan + "',customer_order_riqi='" + list[0].customer_order_riqi + "',songhuo_danhao='" + list[0].songhuo_danhao + "',songhuo_danhao_renyuan='" + list[0].songhuo_danhao_renyuan + "',songhuo_danhao_riqi='" + list[0].songhuo_danhao_riqi + "',peihuo_img1_renyuan='" + list[0].peihuo_img1_renyuan + "',peihuo_img1_riqi='" + list[0].peihuo_img1_riqi + "',peihuo_img2_renyuan='" + list[0].peihuo_img2_renyuan + "',peihuo_img2_riqi='" + list[0].peihuo_img2_riqi + "',peihuo_img3_renyuan='" + list[0].peihuo_img3_renyuan + "',peihuo_img3_riqi='" + list[0].peihuo_img3_riqi + "',peihuo_img4_renyuan='" + list[0].peihuo_img4_renyuan + "',peihuo_img4_riqi='" + list[0].peihuo_img4_riqi + "',peihuo_img5_renyuan='" + list[0].peihuo_img5_renyuan + "',peihuo_img5_riqi='" + list[0].peihuo_img5_riqi + "',peisong_img1_renyuan='" + list[0].peisong_img1_renyuan + "',peisong_img1_riqi='" + list[0].peisong_img1_riqi + "',peisong_img2_renyuan='" + list[0].peisong_img2_renyuan + "',peisong_img2_riqi='" + list[0].peisong_img2_riqi + "',peisong_img3_renyuan='" + list[0].peisong_img3_renyuan + "',peisong_img3_riqi='" + list[0].peisong_img3_riqi + "',wancheng='" + list[0].wancheng + "',wancheng_renyuan='" + list[0].wancheng_renyuan + "',wancheng_riqi='" + list[0].wancheng_riqi + "',beizhu='" + list[0].beizhu + "',beizhu_renyuan='" + list[0].beizhu_renyuan + "',beizhu_riqi='" + list[0].beizhu_riqi + "',kucun_text='" + list[0].kucun_text + "',kucun_text_renyuan='" + list[0].kucun_text_renyuan + "',kucun_text_riqi='" + list[0].kucun_text_riqi + "',kucun_img1_renyuan='" + list[0].kucun_img1_renyuan + "',kucun_img1_riqi='" + list[0].kucun_img1_riqi + "',kucun_img2_renyuan='" + list[0].kucun_img2_renyuan + "',kucun_img2_riqi='" + list[0].kucun_img2_riqi + "',kucun_img3_renyuan='" + list[0].kucun_img3_renyuan + "',kucun_img3_riqi='" + list[0].kucun_img3_riqi + "' where id =" + list[0].id
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          wx.hideLoading()
+          var sql = "update erqi_peisongdan set customer_need_img1='" + list[0].customer_need_img1 + "' where id=" + list[0].id
+          wx.showLoading({
+            title: '保存照片1',
+          })
+          wx.cloud.callFunction({
+            name: 'sqlserver_huaqun',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              wx.hideLoading()
+              var sql = "update erqi_peisongdan set customer_need_img2='" + list[0].customer_need_img2 + "' where id=" + list[0].id
+              wx.showLoading({
+                title: '保存照片2',
+              })
+              wx.cloud.callFunction({
+                name: 'sqlserver_huaqun',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(res)
+                  wx.hideLoading()
+                  var sql = "update erqi_peisongdan set customer_need_img3='" + list[0].customer_need_img3 + "' where id=" + list[0].id
+                  wx.showLoading({
+                    title: '保存照片3',
+                  })
+                  wx.cloud.callFunction({
+                    name: 'sqlserver_huaqun',
+                    data: {
+                      query: sql
+                    },
+                    success: res => {
+                      console.log(res)
+                      wx.hideLoading()
+                      var sql = "update erqi_peisongdan set peihuo_img1='" + list[0].peihuo_img1 + "' where id=" + list[0].id
+                      wx.showLoading({
+                        title: '保存照片4',
+                      })
+                      wx.cloud.callFunction({
+                        name: 'sqlserver_huaqun',
+                        data: {
+                          query: sql
+                        },
+                        success: res => {
+                          console.log(res)
+                          wx.hideLoading()
+                          var sql = "update erqi_peisongdan set peihuo_img2='" + list[0].peihuo_img2 + "' where id=" + list[0].id
+                          wx.showLoading({
+                            title: '保存照片5',
+                          })
+                          wx.cloud.callFunction({
+                            name: 'sqlserver_huaqun',
+                            data: {
+                              query: sql
+                            },
+                            success: res => {
+                              console.log(res)
+                              wx.hideLoading()
+                              var sql = "update erqi_peisongdan set peihuo_img3='" + list[0].peihuo_img3 + "' where id=" + list[0].id
+                              wx.showLoading({
+                                title: '保存照片6',
+                              })
+                              wx.cloud.callFunction({
+                                name: 'sqlserver_huaqun',
+                                data: {
+                                  query: sql
+                                },
+                                success: res => {
+                                  console.log(res)
+                                  wx.hideLoading()
+                                  var sql = "update erqi_peisongdan set peihuo_img4='" + list[0].peihuo_img4 + "' where id=" + list[0].id
+                                  wx.showLoading({
+                                    title: '保存照片7',
+                                  })
+                                  wx.cloud.callFunction({
+                                    name: 'sqlserver_huaqun',
+                                    data: {
+                                      query: sql
+                                    },
+                                    success: res => {
+                                      console.log(res)
+                                      wx.hideLoading()
+                                      var sql = "update erqi_peisongdan set peihuo_img5='" + list[0].peihuo_img5 + "' where id=" + list[0].id
+                                      wx.showLoading({
+                                        title: '保存照片8',
+                                      })
+                                      wx.cloud.callFunction({
+                                        name: 'sqlserver_huaqun',
+                                        data: {
+                                          query: sql
+                                        },
+                                        success: res => {
+                                          console.log(res)
+                                          wx.hideLoading()
+                                          var sql = "update erqi_peisongdan set peisong_img1='" + list[0].peisong_img1 + "' where id=" + list[0].id
+                                          wx.showLoading({
+                                            title: '保存照片9',
+                                          })
+                                          wx.cloud.callFunction({
+                                            name: 'sqlserver_huaqun',
+                                            data: {
+                                              query: sql
+                                            },
+                                            success: res => {
+                                              console.log(res)
+                                              wx.hideLoading()
+                                              var sql = "update erqi_peisongdan set peisong_img2='" + list[0].peisong_img2 + "' where id=" + list[0].id
+                                              wx.showLoading({
+                                                title: '保存照片10',
+                                              })
+                                              wx.cloud.callFunction({
+                                                name: 'sqlserver_huaqun',
+                                                data: {
+                                                  query: sql
+                                                },
+                                                success: res => {
+                                                  console.log(res)
+                                                  wx.hideLoading()
+                                                  var sql = "update erqi_peisongdan set peisong_img3='" + list[0].peisong_img3 + "' where id=" + list[0].id
+                                                  wx.showLoading({
+                                                    title: '保存照片11',
+                                                  })
+                                                  wx.cloud.callFunction({
+                                                    name: 'sqlserver_huaqun',
+                                                    data: {
+                                                      query: sql
+                                                    },
+                                                    success: res => {
+                                                      console.log(res)
+                                                      wx.hideLoading()
+                                                      var sql = "update erqi_peisongdan set kucun_img1='" + list[0].kucun_img1 + "' where id=" + list[0].id
+                                                      wx.showLoading({
+                                                        title: '保存照片12',
+                                                      })
+                                                      wx.cloud.callFunction({
+                                                        name: 'sqlserver_huaqun',
+                                                        data: {
+                                                          query: sql
+                                                        },
+                                                        success: res => {
+                                                          console.log(res)
+                                                          wx.hideLoading()
+                                                          var sql = "update erqi_peisongdan set kucun_img2='" + list[0].kucun_img2 + "' where id=" + list[0].id
+                                                          wx.showLoading({
+                                                            title: '保存照片13',
+                                                          })
+                                                          wx.cloud.callFunction({
+                                                            name: 'sqlserver_huaqun',
+                                                            data: {
+                                                              query: sql
+                                                            },
+                                                            success: res => {
+                                                              console.log(res)
+                                                              wx.hideLoading()
+                                                              var sql = "update erqi_peisongdan set kucun_img3='" + list[0].kucun_img3 + "' where id=" + list[0].id
+                                                              wx.showLoading({
+                                                                title: '保存照片14',
+                                                              })
+                                                              wx.cloud.callFunction({
+                                                                name: 'sqlserver_huaqun',
+                                                                data: {
+                                                                  query: sql
+                                                                },
+                                                                success: res => {
+                                                                  console.log(res)
+                                                                  wx.hideLoading()
+                                                                  _this.setData({
+                                                                    list
+                                                                  })
+                                                                  wx.showToast({
+                                                                    title: '已保存！',
+                                                                    icon: 'none'
+                                                                  })
+                                                                },
+                                                                err: res => {
+                                                                  wx.hideLoading()
+                                                                  wx.showToast({
+                                                                    title: '错误！',
+                                                                    icon: 'none'
+                                                                  })
+                                                                  console.log("错误!")
+                                                                },
+                                                                fail: res => {
+                                                                  wx.hideLoading()
+                                                                  wx.showToast({
+                                                                    title: '请求失败！',
+                                                                    icon: 'none'
+                                                                  })
+                                                                  console.log("请求失败！")
+                                                                }
+                                                              })
+                                                            },
+                                                            err: res => {
+                                                              wx.hideLoading()
+                                                              wx.showToast({
+                                                                title: '错误！',
+                                                                icon: 'none'
+                                                              })
+                                                              console.log("错误!")
+                                                            },
+                                                            fail: res => {
+                                                              wx.hideLoading()
+                                                              wx.showToast({
+                                                                title: '请求失败！',
+                                                                icon: 'none'
+                                                              })
+                                                              console.log("请求失败！")
+                                                            }
+                                                          })
+                                                        },
+                                                        err: res => {
+                                                          wx.hideLoading()
+                                                          wx.showToast({
+                                                            title: '错误！',
+                                                            icon: 'none'
+                                                          })
+                                                          console.log("错误!")
+                                                        },
+                                                        fail: res => {
+                                                          wx.hideLoading()
+                                                          wx.showToast({
+                                                            title: '请求失败！',
+                                                            icon: 'none'
+                                                          })
+                                                          console.log("请求失败！")
+                                                        }
+                                                      })
+                                                    },
+                                                    err: res => {
+                                                      wx.hideLoading()
+                                                      wx.showToast({
+                                                        title: '错误！',
+                                                        icon: 'none'
+                                                      })
+                                                      console.log("错误!")
+                                                    },
+                                                    fail: res => {
+                                                      wx.hideLoading()
+                                                      wx.showToast({
+                                                        title: '请求失败！',
+                                                        icon: 'none'
+                                                      })
+                                                      console.log("请求失败！")
+                                                    }
+                                                  })
+                                                },
+                                                err: res => {
+                                                  wx.hideLoading()
+                                                  wx.showToast({
+                                                    title: '错误！',
+                                                    icon: 'none'
+                                                  })
+                                                  console.log("错误!")
+                                                },
+                                                fail: res => {
+                                                  wx.hideLoading()
+                                                  wx.showToast({
+                                                    title: '请求失败！',
+                                                    icon: 'none'
+                                                  })
+                                                  console.log("请求失败！")
+                                                }
+                                              })
+                                            },
+                                            err: res => {
+                                              wx.hideLoading()
+                                              wx.showToast({
+                                                title: '错误！',
+                                                icon: 'none'
+                                              })
+                                              console.log("错误!")
+                                            },
+                                            fail: res => {
+                                              wx.hideLoading()
+                                              wx.showToast({
+                                                title: '请求失败！',
+                                                icon: 'none'
+                                              })
+                                              console.log("请求失败！")
+                                            }
+                                          })
+                                        },
+                                        err: res => {
+                                          wx.hideLoading()
+                                          wx.showToast({
+                                            title: '错误！',
+                                            icon: 'none'
+                                          })
+                                          console.log("错误!")
+                                        },
+                                        fail: res => {
+                                          wx.hideLoading()
+                                          wx.showToast({
+                                            title: '请求失败！',
+                                            icon: 'none'
+                                          })
+                                          console.log("请求失败！")
+                                        }
+                                      })
+                                    },
+                                    err: res => {
+                                      wx.hideLoading()
+                                      wx.showToast({
+                                        title: '错误！',
+                                        icon: 'none'
+                                      })
+                                      console.log("错误!")
+                                    },
+                                    fail: res => {
+                                      wx.hideLoading()
+                                      wx.showToast({
+                                        title: '请求失败！',
+                                        icon: 'none'
+                                      })
+                                      console.log("请求失败！")
+                                    }
+                                  })
+                                },
+                                err: res => {
+                                  wx.hideLoading()
+                                  wx.showToast({
+                                    title: '错误！',
+                                    icon: 'none'
+                                  })
+                                  console.log("错误!")
+                                },
+                                fail: res => {
+                                  wx.hideLoading()
+                                  wx.showToast({
+                                    title: '请求失败！',
+                                    icon: 'none'
+                                  })
+                                  console.log("请求失败！")
+                                }
+                              })
+                            },
+                            err: res => {
+                              wx.hideLoading()
+                              wx.showToast({
+                                title: '错误！',
+                                icon: 'none'
+                              })
+                              console.log("错误!")
+                            },
+                            fail: res => {
+                              wx.hideLoading()
+                              wx.showToast({
+                                title: '请求失败！',
+                                icon: 'none'
+                              })
+                              console.log("请求失败！")
+                            }
+                          })
+                        },
+                        err: res => {
+                          wx.hideLoading()
+                          wx.showToast({
+                            title: '错误！',
+                            icon: 'none'
+                          })
+                          console.log("错误!")
+                        },
+                        fail: res => {
+                          wx.hideLoading()
+                          wx.showToast({
+                            title: '请求失败！',
+                            icon: 'none'
+                          })
+                          console.log("请求失败！")
+                        }
+                      })
+                    },
+                    err: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '错误！',
+                        icon: 'none'
+                      })
+                      console.log("错误!")
+                    },
+                    fail: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '请求失败！',
+                        icon: 'none'
+                      })
+                      console.log("请求失败！")
+                    }
+                  })
+                },
+                err: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '错误！',
+                    icon: 'none'
+                  })
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none'
+                  })
+                  console.log("请求失败！")
+                }
+              })
+            },
+            err: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '错误！',
+                icon: 'none'
+              })
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              })
+              console.log("请求失败！")
+            }
+          })
+        },
+        err: res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '错误！',
+            icon: 'none'
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
     }
   },
 
@@ -299,6 +1316,15 @@ Page({
           encoding: 'base64', //编码格式
           success: res => { //成功的回调
             console.log('data:image/png;base64,' + res.data)
+            var size = res.data.length / 1048576
+            console.log(size)
+            if(size > 2){
+              wx.showToast({
+                title: '图片转化后超过2M，不允许上传！',
+                icon: 'none'
+              })
+              return;
+            }
             var list = _this.data.list
             list[0][_this.data.this_column] = 'data:image/png;base64,' + res.data
             list[0][_this.data.this_column + "_renyuan"] = _this.data.userInfo.name
@@ -329,10 +1355,19 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var column = e.currentTarget.dataset.column
-    if(column == 'songhuo_danhao' || column == 'peihuo_img1' || column == 'peihuo_img2' || column == 'peihuo_img3' || column == 'peihuo_img4' || column == 'peihuo_img5' || column == 'peisong_img1' || column == 'peisong_img2' || column == 'peisong_img3' || column == 'wancheng' || column == 'beizhu'){
+    if(column == 'customer_name' || column == 'songhuo_danhao' || column == 'peihuo_img1' || column == 'peihuo_img2' || column == 'peihuo_img3' || column == 'peihuo_img4' || column == 'peihuo_img5' || column == 'peisong_img1' || column == 'peisong_img2' || column == 'peisong_img3' || column == 'wancheng' || column == 'beizhu'){
       if(_this.data.userInfo.power == '客户'){
         wx.showToast({
           title: '客户不允许编辑此处！',
+          icon: 'none'
+        })
+        return;
+      }
+    }
+    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_img2' || column == 'customer_need_img3' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'songhuo_danhao' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 != ''){
+      if(_this.data.userInfo.power != '管理员'){
+        wx.showToast({
+          title: '工作进行到配货时不允许编辑此处！',
           icon: 'none'
         })
         return;

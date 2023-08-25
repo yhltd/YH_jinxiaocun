@@ -1,0 +1,35 @@
+/* pages/xinxi/xinxi.wxss */
+.xinwen_image{
+  width: 100%;
+  height: 400rpx
+}
+.text{
+  display: flex;
+  height: 120rpx;
+  /* width: 100%; */
+  padding: 20rpx 0 0 0 
+}
+.text1{
+height: 100rpx;
+margin: 5rpx 0 0 20rpx;
+ width: 80%
+}
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height:5rpx;
+
+}
+.image1{
+  height: 100rpx;
+  width: 100rpx
+}
+.jinru-image{
+  float: right;
+  width: 50rpx;
+  height: 50rpx;
+ margin: 20rpx 0 0 0 
+}
+.shijianchuo{
+  font-size:25rpx;
+}

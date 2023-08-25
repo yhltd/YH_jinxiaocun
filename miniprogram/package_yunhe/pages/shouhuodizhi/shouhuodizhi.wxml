@@ -1,0 +1,29 @@
+<!--pages/shouhuodizhi/shouhuodizhi.wxml-->
+<view class='block1'  >
+<view class='block2'>
+<view class='view1'>姓名 :  </view>
+<view class='view1'>手机号码:</view>
+<view class='view1'>地址:</view>
+</view>
+<view  class='block3'>
+<view class='view1'>{{xingming}}</view>
+<view class='view1'>{{shoujihaoma}}</view>
+<view class='view1'>{{dizhi}}</view>
+</view>
+</view>
+<view class="container">
+<!-- 分割线 -->
+<view class="divLine"></view>
+</view>
+
+<view class='box'>
+<form bindsubmit='dizhi'>
+
+  <view class='view2'>   收 货 人 ：  <input placeholder="姓名"  name='xingming'></input></view>
+   <view class='view2'>  联系方式：  <input placeholder="手机号码"  name='shoujihaoma'></input></view>
+   <view class='view2'>  详细地址：  <input placeholder="请输入新的地址"  name='xindizhi'></input></view>
+
+
+      <button form-type='submit' >确认</button>
+  </form>
+</view>

@@ -1,0 +1,5 @@
+/* pages/gongsijieshao/gongsijieshao.wxss */
+.shsj{
+  text-indent: 75rpx;
+  text-align: left;
+}

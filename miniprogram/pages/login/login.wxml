@@ -1,4 +1,5 @@
 <view class="top-bgimage" style="height: 25%;">
+<view bindtap="goyh" style="color:white;font-size: 15dp;padding-left: 10dp;">云合</view>
   <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
   <view class="container">
     <view class="userinfo">

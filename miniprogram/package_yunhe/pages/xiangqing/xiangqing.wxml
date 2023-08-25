@@ -1,0 +1,11 @@
+<!--pages/xiangqing/xiangqing.wxml-->
+<view>详情</view>
+<block wx:for="{{all}}" wx:for-index='i' wx:key="" >
+<!-- <view>路径：{{all[i].path}}</view> -->
+<view class='button'>
+<image class='image' src='{{all[i].path}}'></image>
+
+<button class='button1' bindtap='button1'data-id='{{all[i]._id}}'>修改{{i}}</button>
+<button class='button2' bindtap='button2'data-id='{{all[i]._id}}'>删除</button>
+</view>
+</block>

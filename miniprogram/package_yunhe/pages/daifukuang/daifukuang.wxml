@@ -1,0 +1,19 @@
+<!--pages/fahuozhong/fahuozhong.wxml-->
+
+
+<block  wx:for="{{all}}" wx:for-index='i' wx:key="" >
+<view class="chanpin0">
+<navigator  url="/pages/dingdanxiangqing/dingdanxiangqing?id={{all[i]._id}}">
+<image class="chanpin0-image" src='{{all[i].path}}' ></image>
+</navigator>
+<view class='text'>
+<text class="chanpin-text1">{{all[i].mingzi}}</text>
+
+<text class="chanpin-text2"  bindtap='fahuozhong'data-id='{{all[i]._id}}'>立即购买</text>
+</view>
+<!-- <navigator url='/pages/goumai/goumai' class='chanpin-text3' >立即购买</navigator> -->
+</view>
+<view class="person-line"></view>
+</block> 
+
+

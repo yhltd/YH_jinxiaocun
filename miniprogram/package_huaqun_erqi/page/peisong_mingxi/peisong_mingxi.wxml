@@ -1,2 +1,103 @@
-<!--package_huaqun_erqi/page/peisong_mingxi/peisong_mingxi.wxml-->
-<text>package_huaqun_erqi/page/peisong_mingxi/peisong_mingxi.wxml</text>
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view class="list_view" wx:for="{{title}}" wx:for-item="item" wx:key="item"  style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="entering">查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
+  <view class="lables">姓名</view>
+  <input bindinput="onInput" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
+  <view class="lables">公司</view>
+  <input bindinput="onInput" data-column="company" class="input_text_form" value="{{company}}" type="text" name="company"></input>
+  <view class="lables">账号</view>
+  <input bindinput="onInput" data-column="username" class="input_text_form" value="{{username}}" type="text" name="username"></input>
+  <view class="lables">密码</view>
+  <input bindinput="onInput" data-column="password" class="input_text_form" value="{{password}}" type="text" name="password"></input>
+  <view class="lables">权限</view>
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
+    <input bindinput="onInput" data-column="power" class="input_text_form" value="{{power}}" type="text" name="power" disabled="disabled"></input>
+  </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 52%;">
+  <view class="lables">配送情况</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="wancheng" range="{{wancheng_list}}">
+    <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng" disabled="disabled"></input>
+  </picker>
+  <view class="lables">配送区域</view>
+  <input bindinput="onInput" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
+  <view class="lables">商品库存信息</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="kucun" range="{{kucun_list}}">
+    <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled" style="{{userInfo.power=='客户'?'display:none':''}}"></input>
+  </picker>
+  <view class="bottom_view" style="height:10%">
+    <button style="width: 23%;" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button style="width: 23%;" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button style="width: 23%;" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="goto">配送单</button>
+    <button style="width: 23%;" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="print">打印</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;">
+  <view class="lables">起始日期</view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
+  </picker>
+  <view class="lables">结束日期</view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
+  </picker>
+  <view class="lables">客户名称</view>
+  <input bindinput="onInput" data-column="customer_name" class="input_text_form" value="{{customer_name}}" type="text" name="customer_name"></input>
+  <view class="lables">配送情况</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="wancheng" range="{{wancheng_list}}">
+    <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng" disabled="disabled"></input>
+  </picker>
+  <view class="lables">配送区域</view>
+  <input bindinput="onInput" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
+  <view class="lables">安装地址</view>
+  <input bindinput="onInput" data-column="anzhuang_address" class="input_text_form" value="{{anzhuang_address}}" type="text" name="anzhuang_address"></input>
+  <view class="lables">客户订单号</view>
+  <input bindinput="onInput" data-column="customer_order" class="input_text_form" value="{{customer_order}}" type="text" name="customer_order"></input>
+  <view class="lables">送货单号</view>
+  <input bindinput="onInput" data-column="songhuo_danhao" class="input_text_form" value="{{songhuo_danhao}}" type="text" name="songhuo_danhao"></input>
+  <view class="lables">单号</view>
+  <input bindinput="onInput" data-column="order_number" class="input_text_form" value="{{order_number}}" type="text" name="order_number"></input>
+  <view class="lables">商品库存信息</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="kucun" range="{{kucun_list}}">
+    <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled"></input>
+  </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

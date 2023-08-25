@@ -1,0 +1,3 @@
+<!--pages/dingdanxiangqing/dingdanxiangqing.wxml-->
+<import src="/pages/template/dingdan.wxml"/> 
+ <template is="dingdan" data="{{all,alll,allll,wuliu,beijing,shijian,xiayibu,one_1,one_2,two_1,two_2}}"/>

@@ -1,0 +1,20 @@
+<template name="chanpinye"> 
+<block class="chanpin0" wx:for="{{all}}" wx:for-index='i' wx:key="" >
+<view class="container">
+     <!-- 分割线 -->
+  <view class="divLine"></view>
+</view>
+ <navigator url="/pages/chanpin1/chanpin1?id={{all[i]._id}}">
+<image mode='aspectFit' class="chanpin0-image" src='{{all[i].path}}' ></image>
+</navigator>
+<text class="chanpin-text">{{all[i].mingzi}}</text>
+<navigator  url="../chanpin1/chanpin1?id={{all[i]._id}}">
+<view  class='jinru'>
+<view class='jinru-text'>进去看看</view>
+<image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/yhltd_wechar/tupian/jinru.png" class='jinru-image'></image>
+
+</view>
+</navigator>
+</block> 
+</template> 
+

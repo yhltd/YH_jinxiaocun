@@ -1,0 +1,12 @@
+<!--pages/gongsijieshao/gongsijieshao.wxml-->
+<view class="lianxiwomen">
+<image class='lianxiwomen-image'  src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/yhltd_wechar/tupian/yunheweilai.jpg'> </image>
+</view>
+<view class="shsj">云合未来计算机技术有限公司是一家面向全球客户提供领先的应用软件产品、信息服务及行业解决方案的IT企业。公司把握前沿技术，在财务自动化工具，桌面仿人工RPA，移动互联、电子商务、云计算、大数据、物联网等领域自主研发了多项技术解决方案，基于IT业务的生命周期，建立了ONESTOP一站式服务；涵盖云技术、大数据、移动终端，由后台到前台，可实现由云到端的方案整体技术架构体系、应用方案体系的构建。
+</view>
+<view class="shsj">我们的特色就是价格亲民，品质好，开发时间快，技术实力雄厚。
+</view>
+<view class="shsj">业务包括：软件开发、网站建设、手机app、公众号、小程序、ERP 、CRM 。</view>
+<view class="shsj">开发案例产品有：军工系统（CS）、中小企业办公系统（特）。教务系统、办公系统，财务软件，Excel PDF办公类软件自动化工具，物流系统、审计系统、网站建设、OA管理系统、点餐系统、分销商城、区块链、公交车小程序、电商小程序、家具小程序、农鲜配送app、叫车软件。
+</view>
+

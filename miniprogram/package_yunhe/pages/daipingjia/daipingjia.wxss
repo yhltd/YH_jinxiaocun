@@ -1,0 +1,41 @@
+/* pages/fahuozhong/fahuozhong.wxss */
+/* pages/gouwuche/gouwuche.wxss */
+.chanpin0-image{
+width: 300rpx;
+height:300rpx;
+float: left
+}
+.chanpin-text1{
+ 
+ margin: 70rpx 0rpx 0rpx 0rpx
+ 
+}
+.chanpin-text2{
+  margin: 30% 0 0 70% ;
+ /* margin: 100rpx 0rpx 0rpx 0rpx; */
+ font-size:25rpx;
+}
+.chanpin-text3{
+  font-size:30rpx ; 
+  color: red;
+ 
+   
+}
+.text{
+  height: 300rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 30rpx
+}
+.chanpin0{
+ display: flex;
+ height: 300rpx;
+ width: 100%
+}
+.person-line {  
+    width: 100;  
+    height: 5rpx;  
+    background: lightgray;  
+    
+}

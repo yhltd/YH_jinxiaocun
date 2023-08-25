@@ -1,0 +1,16 @@
+/* pages/xiangqing/xiangqing.wxss */
+.button1{
+width: 20%;
+height: 100rpx
+}
+.button2{
+width: 20%;
+height: 100rpx
+}
+.button{
+  display: flex
+}
+.image{
+  width: 200rpx;
+  height: 200rpx
+}

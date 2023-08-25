@@ -1,0 +1,10 @@
+<import src="../template/chanpinye.wxml"/> 
+ <template is="chanpinye" data="{{all,imageUrl}}"/>
+
+<view style="margin-bottom: 100px;height: 10px;"></view>
+ <van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../images/shouye.png">首页</van-tabbar-item>
+  <van-tabbar-item icon="../../images/xinxi.png">信息</van-tabbar-item>
+  <van-tabbar-item icon="../../images/chanpin.png">产品</van-tabbar-item>
+  <van-tabbar-item icon="../../images/yonghu.png">用户</van-tabbar-item>
+</van-tabbar>

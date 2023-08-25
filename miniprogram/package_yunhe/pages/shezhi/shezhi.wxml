@@ -1,0 +1,14 @@
+<!--pages/shezhi/shezhi.wxml-->
+
+<view>控制台</view>
+<view class='button'>
+<view class='button1'> <button  bindtap='button1' >1</button>  </view>
+<view class='button1'> <button  bindtap='button2' >2</button>  </view>
+<view class='button1'> <button  bindtap='button3' >3</button>  </view>
+<view class='button1'> <button  bindtap='button4' >4</button>  </view>
+<view class='button1'> <button  bindtap='button5' >5</button>  </view>
+<view class='button1'> <button  bindtap='button6' >6</button>  </view>
+<view class='button1'> <button  bindtap='button7' >7</button>  </view>
+<view class='button1'> <button  bindtap='button' >8</button>  </view>
+<view class='button1'> <button  bindtap='button' >9</button>  </view>
+</view>

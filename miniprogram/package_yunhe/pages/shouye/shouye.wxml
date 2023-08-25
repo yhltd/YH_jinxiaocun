@@ -1,0 +1,150 @@
+<import src="/pages/template/tabbar.wxml"/> 
+ <template is="tabBar" data="{{tabBar}}"/>
+
+
+<view class="swiper-yangshi">
+
+<swiper 
+ indicator-dots='true' autoplay='true' interval='5000'>
+<swiper-item wx:for="{{all}}" wx:for-index='i' wx:key="" >
+<image class="post-swiper" src='{{all[i].path}}' ></image>
+</swiper-item>
+</swiper>
+</view>
+
+<view class="container">
+<!-- 分割线 -->
+<view class="divLine"></view>
+</view>
+
+<view>
+<block wx:for="{{items}}"  wx:key="">
+<view class="category-info">
+<navigator url="{{item.url}}"> 
+<image src="{{item.src}}" class="category-image">
+</image>
+<view class="category-text">{{item.name}}
+</view>
+</navigator>
+</view>
+</block>
+</view>
+
+
+<view class="container">
+<!-- 分割线 -->
+<view class="divLine"></view>
+</view>
+
+<block>
+<navigator url="/pages/chanpin1/chanpin1?id=XE58QYnnuWjciwHc"> 
+<image src="{{imageUrl+'gongsi1.png'}}" class='gongsi-img'>
+</image>
+       </navigator> 
+       <navigator url="/pages/chanpin1/chanpin1?id=XE58SeSiwXKAQonq"> 
+        <image src="{{imageUrl+'gongsi2.png'}}" class='gongsi-img'></image>
+        </navigator> 
+        </block>
+<view>
+<block wx:for="{{all1}}" wx:for-index='j' wx:key="">
+<image class='gongsi-img' src='{{all1[j].path}}' ></image>
+</block>
+</view>
+
+    <view class="container">
+     <!-- 分割线 -->
+  <view class="divLine"></view>
+</view>
+
+<view class="flex-wrp xiantiao">
+  <image class="xiantiao-image1" src="{{imageUrl+'xiantiao.png'}}"></image>
+  <view class="liansifangshi">案例展示</view>
+  <image class="xiantiao-image1" src="{{imageUrl+'xiantiao.png'}}"></image>
+</view>
+
+   
+
+<block wx:for="{{anlizhanshi}}" wx:key="">
+     <block wx:for="{{item}}" wx:key="">
+      <view class="anlizhanshi1">
+      <navigator url="{{item.url}}"> 
+        <image src="{{item.src}}" 
+        class="anlitupian"></image>
+        <view class="category-text">{{item.name}}</view>
+        </navigator>
+      </view>
+      </block>
+     </block>
+     <!-- <block wx:for="{{all2}}"wx:for-index='x' wx:key="">
+      <view class="anlizhanshi1">
+      <navigator url="{{item.url}}"> 
+        <image src="{{all2[x].path}}" 
+        class="anlitupian"></image>
+        <view class="category-text">{{item.name}}</view>
+        </navigator>
+      </view>
+      </block> -->
+
+<view class="container">
+     <!-- 分割线 -->
+  <view class="divLine">
+  </view>
+</view>
+
+<view class="flex-wrp xiantiao">
+  <image class="xiantiao-image1" src="{{imageUrl+'xiantiao.png'}}"></image>
+  <view class="liansifangshi">行业资讯</view>
+  <image class="xiantiao-image1" src="{{imageUrl+'xiantiao.png'}}"></image>
+</view>
+
+
+
+<!-- <view class="zixun">
+ <navigator url="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/yhltd_wechar/tupian/xiaochengxu"> 
+  <image class="zixun-image" src="{{imageUrl+'xiaochengxuzixun.png'}}" >
+ </image>
+  </navigator> 
+ <view class="zixun-text">什么是小程序？</view>
+</view> -->
+
+<view class="zixun">
+ <navigator wx:for="{{all3}}"wx:for-index='y' wx:key="" url="{{all3.url}}"> 
+  <image class="zixun-image" src="{{all3[y].path}}" >
+ </image>
+  </navigator> 
+ 
+</view>
+
+<view class="container">
+     <!-- 分割线 -->
+  <view class="divLine">
+  </view>
+</view>
+
+<view class="flex-wrp xiantiao">
+  <image class="xiantiao-image1" src="{{imageUrl+'xiantiao.png'}}"></image>
+  <view class="liansifangshi">联系我们</view>
+  <image class="xiantiao-image1" src="{{imageUrl+'xiantiao.png'}}"></image>
+</view>
+    
+<view class="lianxiwomen" style="text-align: center;">
+    <image mode='aspectFit' style="width: 60%;"  class='lianxiwomen-image'  src="{{all4[0].path}}"> </image>
+</view>
+   <view >
+    <view class="liansifangshi">{{all4[0].text1}}</view>
+    <view class="liansifangshi">{{all4[0].text2}}</view>
+   <view class="liansifangshi">{{all4[0].text3}}</view>
+    <view style="margin-bottom: 100px;" class="liansifangshi">{{all4[0].text4}}</view>
+   <view class="liansifangshi">{{all4[0].text5}}</view>
+    </view> 
+    <view class="shuiyin">
+   {{all4[0].text6}}
+    <view class="dianhuashuiyin">{{all4[0].text7}}</view>
+    </view>
+
+<van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../images/shouye.png">首页</van-tabbar-item>
+  <van-tabbar-item icon="../../images/xinxi.png">信息</van-tabbar-item>
+  <van-tabbar-item icon="../../images/chanpin.png">产品</van-tabbar-item>
+  <van-tabbar-item icon="../../images/yonghu.png">用户</van-tabbar-item>
+</van-tabbar>

@@ -1,0 +1,20 @@
+<!--pages/shezhi2/shezhi2.wxml-->
+<!--pages/shezhi1/shezhi1.wxml-->
+<view class='box'>
+<form bindsubmit='changeBigImg'>
+
+
+<view >图片名称：
+<input name='tupianmingchen'></input>
+</view>
+<view>路径:
+<input name='lujing'></input>
+</view>
+<view>绑定属性:
+<input name='bangdingshuxing'></input>
+</view>
+<button form-type='submit'>选取图片并上传</button>
+<button>删除</button>
+</form>
+</view>
+<view bindtap='xiangqing'>详情</view>

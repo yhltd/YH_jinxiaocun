@@ -1,0 +1,82 @@
+/* pages/anli2/anli2.wxss */
+/* pages/chanpin1/chanpin1.wxss */
+.divLine{
+ background: #E0E3DA;
+ width: 100%;
+ height:20rpx;
+}
+.chanpin1-1{
+  width: 100%;
+  height: 100%;
+  flex-wrap :wrap;
+}
+.chanpin1-2{
+  display :flex;
+  height:35px;
+}
+.qian{
+  height: 15px;
+  width: 15px;
+  margin: 10px;
+  
+}
+.qian-text1{
+  color:red;
+  font-size:25px
+}
+.qian-text2{
+font-size:15px;
+color:red;
+margin: 10px 0px 0px -1px
+}
+.tuijian{
+  height: 30px;
+  width: 30px;
+  float: left
+}
+.chanpin1-text1{
+  text-align: center;
+  font-size: 30px;
+height: 60px
+}
+.chanpin1-text2{
+  font-size: 13px;
+  display:flex;
+ text-align: center;
+ margin: 0% 5% 0% 5%;
+ height: 60px
+}
+.chanpin1-text3{
+   display:flex;
+   flex-direction:column;
+   padding-bottom:30%;
+  margin: 0% 5% 0% 5%;
+  font-size: 10px;
+  height: 150%;
+ color: #a39c9c;
+}
+.image2-height{
+  height: 100%rpx
+}
+.chanpin-kong1{
+  height:30px
+}
+.chanpin-imageda{
+  width: 96%;
+  height: 900rpx
+}
+.chanpinimageda{
+  display: flex;
+  width: 100%;
+  height: 650rpx;
+  margin: 1% 2% 1% 2%
+}
+.chanpin-image3{
+ width: 100%;
+  height: 700rpx
+}
+.video{
+  width: 100%;
+  height: 500rpx;
+   
+}

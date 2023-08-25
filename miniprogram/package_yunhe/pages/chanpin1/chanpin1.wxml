@@ -1,0 +1,58 @@
+
+<import src="/pages/template/tabbar.wxml"/> 
+ <template is="tabBar" data="{{tabBar}}"/>
+ <swiper class="chanpinimageda" indicator-dots='true' autoplay='true' interval='5000'>
+<swiper-item>
+ <image  src='{{all.image1}}'wx:if="{{all.image1!=null}}"></image>
+ </swiper-item>
+<swiper-item>
+ <image  src='{{all.image1}}'wx:if="{{all.image1!=null}}"></image>
+ </swiper-item>
+<swiper-item>
+ <image  src='{{all.image1}}'wx:if="{{all.image1!=null}}"></image>
+ </swiper-item>
+ </swiper>
+<!-- <view class='chanpinimageda'>
+<image class="chanpin-imageda" src='{{all.image1}}'wx:if="{{all.image1!=null}}"></image>
+</view> -->
+
+ <view class='chanpin1-1'> 
+
+  <image class='tuijian' src='{{all.image2}}'wx:if="{{all.image2!=null}}"></image>
+  <view wx:if="{{all.chanpinming!=null}}">{{all.chanpinming}}</view>
+  </view>
+   <view class='chanpin1-2' >
+   <image class="qian" src="{{all.image3}}"wx:if="{{all.image3!=null}}"></image> 
+  <view class='qian-text1'wx:if="{{all.jiagezheng!=null}}"> {{all.jiagezheng}} </view>
+  <view class="qian-text2"wx:if="{{all.jiagexiao!=null}}">.{{all.jiagexiao}}</view>
+  </view>
+
+
+ <view class="container">
+     <!-- 分割线 -->
+  <view class="divLine"></view>
+</view>
+<video class='video' src='{{all.shipin}}'wx:if="{{all.shipin!=null}}"></video>
+
+<view class='chanpin1-text1'wx:if="{{all.text1!=null}}">{{all.text1}}</view>
+<view class='chanpin1-text2'wx:if="{{all.text2!=null}}">{{all.text2}}</view>
+<view class='image2-height'>
+
+<image class="chanpin-image2" src='{{all.image4}}'wx:if="{{all.image4!=null}}"></image>
+<image class="chanpin-image3" src='{{all.image5}}'wx:if="{{all.image5!=null}}"></image>
+<image class="chanpin-image3" src='{{all.image6}}'wx:if="{{all.image6!=null}}"></image>
+<image class="chanpin-image3" src='{{all.image7}}' wx:if="{{all.image7!=null}}"></image>
+</view>
+
+ <view class='chanpin1-text3'>
+  <view >特点：</view>
+ <view wx:if="{{all.text3!=null}}">{{all.text3}}</view>
+ <view wx:if="{{all.text4!=null}}">{{all.text4}}</view>
+<view wx:if="{{all.text5!=null}}">{{all.text5}}</view>
+<view wx:if="{{all.text6!=null}}">{{all.text6}}</view>
+<view wx:if="{{all.text7!=null}}">{{all.text7}}</view>
+<view wx:if="{{all.text8!=null}}">{{all.text8}}</view>
+<view wx:if="{{all.text9!=null}}">{{all.text9}}</view>
+</view>
+
+

@@ -1,0 +1,69 @@
+<!--pages/xiangqingxiugai/xiangqingxiugai.wxml-->
+
+<view class='box'>
+<form bindsubmit='changeBigImg'>
+
+<view>总标题:
+<input name='mingzi'></input>
+
+
+</view>
+
+<view>内容一:
+<input name='text3'></input>
+</view>
+<view>内容二:
+<input name='text4'></input>
+</view>
+<view>内容三:
+<input name='text5'></input>
+</view>
+<view>内容四:
+<input name='text6'></input>
+</view>
+<view>内容五:
+<input name='text7'></input>
+</view>
+<view>内容六:
+<input name='text8'></input>
+</view>
+
+<view>图片一:
+<input name='image2'></input>
+</view>
+<view>图片二:
+<input name='image3'></input>
+</view>
+<view>图片三:
+<input name='image4'></input>
+</view>
+<view>图片四:
+<input name='image5'></input>
+</view>
+<view>图片五:
+<input name='image6'></input>
+</view>
+<view>图片六:
+<input name='image7'></input>
+</view>
+
+<view>大标题:
+<input name='chanpinming'></input>
+</view>
+<view>小标题一:
+<input name='text1'></input>
+</view>
+<view>小标题二:
+<input name='text2'></input>
+</view>
+
+<view>价格整数:
+<input name='jiagezheng'></input>
+</view>
+<view>价格小数:
+<input name='jiagexiao'></input>
+</view>
+
+<button form-type='submit'>选择图片并修改</button>
+</form>
+</view>
