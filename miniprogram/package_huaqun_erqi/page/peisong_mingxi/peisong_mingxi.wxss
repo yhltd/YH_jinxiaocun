@@ -173,18 +173,12 @@ button{
   line-height: 70rpx;  
 }
 
-.list_view7{
-  display: flex;
-  flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
-  justify-content: center;
-  align-items: center;
-  background-color: pink;
-  color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx;  
+.list_text2{
+  color: pink;
+}
+
+.list_text3{
+  color: #0b544c;
 }
 
 .list_view_fixed{

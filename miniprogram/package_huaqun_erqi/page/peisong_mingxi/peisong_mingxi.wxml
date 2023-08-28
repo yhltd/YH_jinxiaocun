@@ -7,8 +7,8 @@
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
-        <view class="list_view" wx:for="{{title}}" wx:for-item="item" wx:key="item"  style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
-          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        <view class="{{list_item.wancheng=='完成'?'list_view2':list_item.wancheng=='未完成-缺货'?'list_view3':list_item.wancheng=='未完成-配错货'?'list_view4':list_item.wancheng=='配货作业中'?'list_view5':list_item.wancheng=='配货完成'?'list_view6':'list_view'}}" wx:for="{{title}}" wx:for-item="item" wx:key="item"  style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
+          <view class="{{list_item.kucun=='处理当中'?'list_text2':list_item.kucun=='处理完成'?'list_text3':list_text}}">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
     </block>
@@ -53,7 +53,7 @@
   </picker>
   <view class="lables">配送区域</view>
   <input bindinput="onInput" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
-  <view class="lables">商品库存信息</view>
+  <view class="lables" style="{{userInfo.power=='客户'?'display:none':''}}">商品库存信息</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="kucun" range="{{kucun_list}}">
     <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled" style="{{userInfo.power=='客户'?'display:none':''}}"></input>
   </picker>
@@ -92,9 +92,9 @@
   <input bindinput="onInput" data-column="songhuo_danhao" class="input_text_form" value="{{songhuo_danhao}}" type="text" name="songhuo_danhao"></input>
   <view class="lables">单号</view>
   <input bindinput="onInput" data-column="order_number" class="input_text_form" value="{{order_number}}" type="text" name="order_number"></input>
-  <view class="lables">商品库存信息</view>
+  <view class="lables" style="{{userInfo.power=='客户'?'display:none':''}}">商品库存信息</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="kucun" range="{{kucun_list}}">
-    <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled"></input>
+    <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled" style="{{userInfo.power=='客户'?'display:none':''}}"></input>
   </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

@@ -20,7 +20,15 @@ Page({
         columnName: "name",
         type: "text",
         isupd: true
-      },{
+      },
+      {
+        text: "公司",
+        width: "250rpx",
+        columnName: "company",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "账号",
         width: "250rpx",
         columnName: "username",

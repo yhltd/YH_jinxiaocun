@@ -87,6 +87,13 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    if(userInfo.power == '客户'){
+      var title = _this.data.title
+      title.length = title.length - 1
+      _this.setData({
+        title
+      })
+    }
     console.log(userInfo)
     _this.setData({
       userInfo

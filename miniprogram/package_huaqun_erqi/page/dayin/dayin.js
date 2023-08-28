@@ -76,7 +76,7 @@ Page({
 
   getUserInfo: function () {
     var _this = this;
-    var length = 1000
+    var length = 600
     wx.getSystemInfo({
       success: res => {
         _this.setData({
