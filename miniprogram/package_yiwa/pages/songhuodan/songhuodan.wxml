@@ -50,6 +50,13 @@
       </view>
 
       <view class="table_main">
+        <view class="title_text" style="width:200rpx;height:70rpx;">业务经理:</view>
+        <view class="list_view2" bindtap="beizhu_click"    data-index="0" data-column="yewu_jingli" data-value="{{yewu_jingli}}" style="width:300rpx">{{yewu_jingli}}</view>
+        <view class="title_text" style="width:200rpx;height:70rpx;">电话:</view>
+        <view class="list_view2" bindtap="beizhu_click"    data-index="0" data-column="yewu_jingli_phone" data-value="{{yewu_jingli_phone}}" style="width:300rpx">{{yewu_jingli_phone}}</view>
+      </view>
+
+      <view class="table_main">
         <view class="title_text" style="width:200rpx;height:70rpx;">日期:</view>
         <view class="list_view"   data-index="0" data-column="siji" data-value="{{head_list.riqi}}" style="width:300rpx">{{head_list.riqi}}</view>
         <view class="title_text" style="width:200rpx;height:70rpx;">客户地址:</view>

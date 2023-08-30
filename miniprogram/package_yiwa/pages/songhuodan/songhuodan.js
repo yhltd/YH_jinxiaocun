@@ -138,7 +138,8 @@ Page({
         var riqi = res.result.recordset[0].riqi
         if(riqi != null){
           _this.setData({
-            riqi: riqi
+            riqi: riqi,
+            insert_riqi: riqi
           })
         }
       },
@@ -178,8 +179,9 @@ Page({
           return;
         }
         var beizhu1 = res.result.recordsets[1][0].beizhu
+        var yewu_jingli = res.result.recordsets[1][0].yewu_jingli
+        var yewu_jingli_phone = res.result.recordsets[1][0].yewu_jingli_phone
         var beizhu2 = list[0].beizhu
-
         var head_list = {
           kehu:list[0].kehu,
           kehu_phone:list[0].kehu_phone,
@@ -264,6 +266,8 @@ Page({
           huankuang_list,
           beizhu1,
           beizhu2,
+          yewu_jingli,
+          yewu_jingli_phone,
           zongjia,
         })
       },
@@ -293,6 +297,8 @@ Page({
     var zongjia = _this.data.zongjia
     var sel_id = _this.data.sel_id
     var sel_riqi = _this.data.sel_riqi
+    var yewu_jingli = _this.data.yewu_jingli
+    var yewu_jingli_phone = _this.data.yewu_jingli_phone
     if(sel_id == ''){
       wx.showToast({
         title: '请查询后再使用此功能！',
@@ -308,7 +314,7 @@ Page({
       return;
     }
     wx.navigateTo({
-      url: "../dayin/dayin?head_list=" + JSON.stringify(head_list) + "&list=" + JSON.stringify(list) + "&zhongliang_list=" + JSON.stringify(zhongliang_list) + "&huankuang_list=" + JSON.stringify(huankuang_list) + "&beizhu1=" + JSON.stringify(beizhu1) + "&beizhu2=" + JSON.stringify(beizhu2) + "&zongjia=" + JSON.stringify(zongjia) + "&sel_id=" + JSON.stringify(sel_id) + "&sel_riqi=" + JSON.stringify(sel_riqi)
+      url: "../dayin/dayin?head_list=" + JSON.stringify(head_list) + "&list=" + JSON.stringify(list) + "&zhongliang_list=" + JSON.stringify(zhongliang_list) + "&huankuang_list=" + JSON.stringify(huankuang_list) + "&beizhu1=" + JSON.stringify(beizhu1) + "&beizhu2=" + JSON.stringify(beizhu2) + "&zongjia=" + JSON.stringify(zongjia) + "&sel_id=" + JSON.stringify(sel_id) + "&sel_riqi=" + JSON.stringify(sel_riqi) + "&yewu_jingli=" + JSON.stringify(yewu_jingli) + "&yewu_jingli_phone=" + JSON.stringify(yewu_jingli_phone)
     })
   },
 
@@ -668,7 +674,9 @@ Page({
     }
     var sql3 = ""
     if(_this.data.userInfo.power == "管理员"){
-      sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1 + "' where id=1;"
+      sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1 + "',yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
+    }else{
+      sql3 = "update beizhu set yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }
     
     var sql4 = ""
@@ -677,7 +685,7 @@ Page({
     // var sql_end = sql1 + sql2 + sql3 + sql4
     // console.log(sql_end) 
     console.log(sql4)
-    var sql="select baocun from Detailsoforder where Customer_id = '" + _this.data.sel_id + "'and riqi = '" + _this.data.sel_riqi + "'"
+    var sql="select baocun from Detailsoforder where Customer_id = '" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
@@ -692,8 +700,9 @@ Page({
         // }
         console.log(getNowDate())
         console.log(_this.data.riqi)
-        if (_this.data.riqi >= getNowDate() || _this.data.userInfo.power == '管理员'){
+        if (_this.data.riqi == _this.data.head_list.riqi || _this.data.userInfo.power == '管理员'){
           sql_end = sql1 + sql2 + sql3 + sql4
+          console.log(sql_end)
           wx.cloud.callFunction({
             name: 'sqlserver_yiwa',
             data: {

@@ -825,6 +825,10 @@ Page({
             type: "number",
             isupd: true
           })
+          var this_sum = title[title.length-1]
+          console.log(this_sum)
+          title[title.length-1] = title[1]
+          title[1] = this_sum
           var riqi = _this.data.riqi
           _this.setData({
             title,

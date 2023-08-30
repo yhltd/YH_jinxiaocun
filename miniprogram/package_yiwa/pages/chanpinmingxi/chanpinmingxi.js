@@ -211,6 +211,7 @@ Page({
   clickView:function(e){
     var _this = this
     _this.setData({
+      index: e.currentTarget.dataset.index,
       id: _this.data.list[e.currentTarget.dataset.index].id,
       NameofProduct: _this.data.list[e.currentTarget.dataset.index].NameofProduct, 
       unit: _this.data.list[e.currentTarget.dataset.index].unit,
@@ -278,6 +279,10 @@ Page({
         query: sql
       },
       success: res => {
+        var list = _this.data.list
+        var index = _this.data.index
+        list[index].Theunitprice = _this.data.Theunitprice
+        list[index].kuang_num = _this.data.kuang_num
         _this.setData({
             id:'',
             NameofProduct: '', 
@@ -287,9 +292,8 @@ Page({
         })
         _this.qxShow()
         console.log(_this.data.cxcpmc)
-        var e = [_this.data.cxcpmc,_this.data.cxkhmc]
-         _this.tableShow(e)
-
+        // var e = [_this.data.cxcpmc,_this.data.cxkhmc]
+        //  _this.tableShow(e)
         wx.showToast({
           title: '修改成功！',
           icon: 'none'

@@ -679,7 +679,8 @@ Page({
                 for(var k=0; k<this_arr.length; k++){
                   var arr_item = this_arr[k].split("*")
                   if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
-                    sum = sum + arr_item[0] * arr_item[1]
+                    var this_money = Math.round(arr_item[0] * arr_item[1] * 100) / 100
+                    sum = sum + this_money
                   }
                 }
               }
@@ -699,7 +700,8 @@ Page({
                 for(var k=0; k<this_arr.length; k++){
                   var arr_item = this_arr[k].split("*")
                   if(arr_item[1] != '' && arr_item[1] != null && arr_item[1] != undefined){
-                    sum = sum + arr_item[0] * arr_item[1]
+                    var this_money = Math.round(arr_item[0] * arr_item[1] * 100) / 100
+                    sum = sum + this_money
                   }
                 }
               }
@@ -750,7 +752,6 @@ Page({
             type: "number",
             isupd: true
           })
-
           _this.setData({
             title,
             list

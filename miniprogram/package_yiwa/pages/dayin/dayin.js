@@ -54,6 +54,8 @@ Page({
     var huankuang_list = _this.data.huankuang_list
     var beizhu1 = _this.data.beizhu1
     var beizhu2 = _this.data.beizhu2
+    var yewu_jingli = _this.data.yewu_jingli
+    var yewu_jingli_phone = _this.data.yewu_jingli_phone
     var zongjia = _this.data.zongjia
     var sel_id = _this.data.sel_id
     var sel_riqi = _this.data.sel_riqi
@@ -91,27 +93,31 @@ Page({
     ctx.setTextAlign('right')
     ctx.fillText('电话：' + head_list.yewuyuan_phone, width, 115)
     ctx.setTextAlign('left')
-    ctx.fillText('日期：' + sel_riqi, 0, 135)
+    ctx.fillText('业务经理：' + yewu_jingli, 0, 135)
+    ctx.setTextAlign('right')
+    ctx.fillText('电话：' + yewu_jingli_phone, width, 135)
     ctx.setTextAlign('left')
-    ctx.fillText('地址：' + head_list.customer_address, 0, 155)
+    ctx.fillText('日期：' + sel_riqi, 0, 155)
+    ctx.setTextAlign('left')
+    ctx.fillText('地址：' + head_list.customer_address, 0, 175)
     console.log(head_list)
 
-    ctx.moveTo(0, 175)
-    ctx.lineTo((width_all - width) / 2 + width, 175)
+    ctx.moveTo(0, 195)
+    ctx.lineTo((width_all - width) / 2 + width, 195)
 
     ctx.setFontSize(16)
     ctx.setTextAlign('center')
-    ctx.fillText('产品', width / 2 - width / 11 * 4, 195)
-    ctx.fillText('数量', width / 2 - width / 11 * 1.4, 195)
-    ctx.fillText('单价', width / 2 + width / 11 * 1.4, 195)
-    ctx.fillText('总价', width / 2 + width / 11 * 4, 195)
+    ctx.fillText('产品', width / 2 - width / 11 * 4, 215)
+    ctx.fillText('数量', width / 2 - width / 11 * 1.4, 215)
+    ctx.fillText('单价', width / 2 + width / 11 * 1.4, 215)
+    ctx.fillText('总价', width / 2 + width / 11 * 4, 215)
 
 
-    ctx.moveTo(0, 210)
-    ctx.lineTo((width_all - width) / 2 + width, 210)
+    ctx.moveTo(0, 230)
+    ctx.lineTo((width_all - width) / 2 + width, 230)
 
     ctx.setFontSize(14)
-    var y = 235;
+    var y = 255;
     for (let i = 0; i < list.length; i++, y += 30) {
       ctx.fillText(list[i].NameofProduct, width / 2 - width / 11 * 4, y);
       ctx.fillText(list[i].number, width / 2 - width / 11 * 1.4, y);
@@ -130,13 +136,13 @@ Page({
     y = y + 50
     console.log(zhongliang_list)
     for (var i = 0; i < zhongliang_list.length; i++) {
+      ctx.moveTo(0, y)
+      ctx.lineTo((width_all - width) / 2 + width, y)
+      y = y + 20
       ctx.setFontSize(17)
       ctx.setTextAlign('left')
       ctx.fillText(zhongliang_list[i][1] + '重量', 10, y)
       ctx.setTextAlign('center')
-      y = y + 13
-      ctx.moveTo(0, y)
-      ctx.lineTo((width_all - width) / 2 + width, y)
       y = y + 20
       var shunxu = 1
       ctx.setFontSize(14)
@@ -459,6 +465,8 @@ Page({
     var huankuang_list = _this.data.huankuang_list
     var beizhu1 = _this.data.beizhu1
     var beizhu2 = _this.data.beizhu2
+    var yewu_jingli = _this.data.yewu_jingli
+    var yewu_jingli_phone = _this.data.yewu_jingli_phone
     var zongjia = _this.data.zongjia
     var sel_id = _this.data.sel_id
     var sel_riqi = _this.data.sel_riqi
@@ -487,6 +495,9 @@ Page({
     height = height + 40
     printUtil.printlnText(4, 15, height, '业务员：' + head_list.yewuyuan);
     printUtil.printlnText(4, 395, height, '电话：' + head_list.yewuyuan_phone);
+    height = height + 40
+    printUtil.printlnText(4, 15, height, '业务经理' + yewu_jingli);
+    printUtil.printlnText(4, 395, height, '电话：' + yewu_jingli_phone);
     height = height + 40
     printUtil.printlnText(4, 15, height, '日期：' + sel_riqi);
     height = height + 40
@@ -518,10 +529,10 @@ Page({
 
 
     for (var i = 0; i < zhongliang_list.length; i++) {
-      printUtil.printlnText(4, 15, height, zhongliang_list[i][1] + '重量');
-      height = height + 40
       printUtil.printBox(0, height, 700, height);
       height = height + 10
+      printUtil.printlnText(4, 15, height, zhongliang_list[i][1] + '重量');
+      height = height + 40
       var shunxu = 1
       for (var j = 2; j < zhongliang_list[i].length; j++) {
         if (shunxu == 1) {
@@ -600,6 +611,9 @@ Page({
     printUtil.printlnText(4, 15, height, '业务员：' + head_list.yewuyuan);
     printUtil.printlnText(4, 395, height, '电话：' + head_list.yewuyuan_phone);
     height = height + 40
+    printUtil.printlnText(4, 15, height, '业务经理' + yewu_jingli);
+    printUtil.printlnText(4, 395, height, '电话：' + yewu_jingli_phone);
+    height = height + 40
     printUtil.printlnText(4, 15, height, '日期：' + sel_riqi);
 
     height = height + 40
@@ -628,10 +642,10 @@ Page({
 
 
     for (var i = 0; i < zhongliang_list.length; i++) {
-      printUtil.printlnText(4, 15, height, zhongliang_list[i][1] + '重量');
-      height = height + 40
       printUtil.printBox(0, height, 700, height);
       height = height + 10
+      printUtil.printlnText(4, 15, height, zhongliang_list[i][1] + '重量');
+      height = height + 40
       var shunxu = 1
       for (var j = 2; j < zhongliang_list[i].length; j++) {
         if (shunxu == 1) {
@@ -729,6 +743,8 @@ Page({
     var huankuang_list = JSON.parse(options.huankuang_list)
     var beizhu1 = JSON.parse(options.beizhu1)
     var beizhu2 = JSON.parse(options.beizhu2)
+    var yewu_jingli = JSON.parse(options.yewu_jingli)
+    var yewu_jingli_phone = JSON.parse(options.yewu_jingli_phone)
     var zongjia = JSON.parse(options.zongjia)
     var sel_id = JSON.parse(options.sel_id)
     var sel_riqi = JSON.parse(options.sel_riqi)
@@ -739,6 +755,8 @@ Page({
       huankuang_list,
       beizhu1,
       beizhu2,
+      yewu_jingli,
+      yewu_jingli_phone,
       zongjia,
       sel_id,
       sel_riqi,
