@@ -60,14 +60,15 @@ Page({
         width: "250rpx",
         columnName: "songhuo_danhao",
         type: "text",
-        isupd: true
+        isupd: true,
+        
       },
       {
         text: "单号",
         width: "250rpx",
         columnName: "order_number",
         type: "text",
-        isupd: true
+        isupd: true,
       },
       {
         text: "商品库存信息",
@@ -77,7 +78,7 @@ Page({
         isupd: true
       },
     ],
-    wancheng_list :['配货作业中','配货完成','完成','未完成-缺货','未完成-配错货'],
+    wancheng_list :['优先处理','配货作业中','配货完成','完成','未完成-缺货','未完成-配错货'],
     kucun_list: ['安排处理','处理当中','处理完成']
   },
 
@@ -124,7 +125,9 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select id,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '' then 1 when '配货作业中' then 2 when '未完成-配错货' then 3 when '未完成-缺货' then 4 when '配货完成' then 5 when '完成' then 6 end as shunxu,case when kucun != '' then kucun when kucun_text != '' then '安排处理' else '' end as kucun,customer_need_text from erqi_peisongdan where insert_date >= '" + e[0] + "' and insert_date <= '" + e[1] + "' and customer_name like '%" + e[2] + "%' and anzhuang_address like '%" + e[3] + "%' and customer_order like '%" + e[4] + "%' and songhuo_danhao like '%" + e[5] + "%' and order_number like '%" + e[6] + "%'"
+    var sql = "select id,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu,case when kucun != '' then kucun when kucun_text != '' then '安排处理' else '' end as kucun,customer_need_text from erqi_peisongdan where insert_date >= '" + e[0] + "' and insert_date <= '" + e[1] + "' and customer_name like '%" + e[2] + "%' and anzhuang_address like '%" + e[3] + "%' and customer_order like '%" + e[4] + "%' and songhuo_danhao like '%" + e[5] + "%' and order_number like '%" + e[6] + "%' order by shunxu,id"
+    // var sql = "select id,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu "
+    
     if(e[7] != ''){
       sql = sql + " and wancheng ='" + e[7] + "'"
     }

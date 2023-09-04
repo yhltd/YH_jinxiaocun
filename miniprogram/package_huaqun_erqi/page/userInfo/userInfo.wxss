@@ -17,6 +17,7 @@ button{
   flex-direction: column;
 }
 
+
 .sv_list{
   width: auto;
   white-space: nowrap;

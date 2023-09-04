@@ -46,7 +46,15 @@ button{
   position: sticky;
   top: 0;
 }
-
+/* .table_main:nth-child(7){
+  color: chartreuse !important ;
+}
+.table tr td:nth-child(8){
+  color:lawngreen !important;
+}
+.table tr td:nth-child(9){
+  color:lawngreen;
+} */
 .title{
   height: 100%;
   margin-right: 23rpx;
@@ -77,6 +85,7 @@ button{
   display: inline-flex;
   height: 7%;
 }
+
 
 .table_main_bottom{
   height: 7%;
@@ -110,7 +119,7 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: green;
+  background-color: rgb(104, 162, 177);
   color: black;
   border-right: 1rpx solid #F0F0F0;
   border-bottom: 1rpx solid #F0F0F0;
@@ -166,7 +175,33 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: blue;
+  background-color: rgb(120, 120, 165);
+  color: black;
+  border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0;
+  line-height: 70rpx;  
+}
+.list_view7{
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 70rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(103, 201, 141);
+  color: black;
+  border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0;
+  line-height: 70rpx;  
+}
+.list_view8{
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 70rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(238, 187, 217);
   color: black;
   border-right: 1rpx solid #F0F0F0;
   border-bottom: 1rpx solid #F0F0F0;

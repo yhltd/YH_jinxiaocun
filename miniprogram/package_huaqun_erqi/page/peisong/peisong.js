@@ -103,6 +103,7 @@ Page({
     this_img: '',
     this_column: '',
     wancheng_list: [
+      {name: '优先处理'},
       {name: '配货作业中'},
       {name: '配货完成'},
       {name: '完成'},
@@ -313,7 +314,7 @@ Page({
         title: '未填写客户名称！',
         icon: 'none'
       })
-      return;
+         return customer_name_riqi;
     }
 
     wx.showLoading({
@@ -750,6 +751,7 @@ Page({
               console.log("错误!")
             },
             fail: res => {
+              console.log(res)
               wx.hideLoading()
               wx.showToast({
                 title: '请求失败！',
@@ -1392,12 +1394,12 @@ Page({
     list[index][this_column] = this_value
     var userInfo = _this.data.userInfo
     list[index][this_column + '_renyuan'] = userInfo.name
-    list[index][this_column + '_riqi'] = getNowDate()
-    if(this_column == 'customer_name' && this_value != '' && list[index]['wancheng'] == ''){
-      list[index]['wancheng'] = "配货作业中"
-      list[index]['wancheng_renyuan'] = userInfo.name
-      list[index]['wancheng_riqi'] = getNowDate()
-    }
+    list[index][this_column + '_riqi'] = getNowDate1()
+    // if(this_column == 'customer_name' && this_value != '' && list[index]['wancheng'] == ''){
+    //   list[index]['wancheng'] = "配货作业中"
+    //   list[index]['wancheng_renyuan'] = userInfo.name
+    //   list[index]['wancheng_riqi'] = getNowDate()
+    // }
     console.log(list[index * 1])
     _this.setData({
       list:list,
@@ -1425,9 +1427,9 @@ Page({
   onInput22: function () {
     var _this = this
     var date = new Date(_this.data.currentDate)
-    var Y = date.getFullYear() + '-'
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    var Y = date.getFullYear() + '年'
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '月'
+    var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())+ '日'
 
     var riqi = Y + M + D
     var header_list = _this.data.header_list
@@ -1534,7 +1536,43 @@ function getBianHao() {
   var currentdate = "PS"+ year.toString() + month.toString() + day.toString() ;
   return currentdate;
  }
-
+ function getNowDate1() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var sign3 = "年";
+  var sign4 = "月";
+  var sign5 = "日";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign3 + month + sign4 + day + sign5 + " " + hour + sign2 + minutes + sign2 + seconds ;
+  // var currentdate = year + sign1 + month + sign1 + day ;
+  console.log(currentdate)
+  return currentdate;
+ }
  function getNowDate() {
   var date = new Date();
   var sign1 = "-";
