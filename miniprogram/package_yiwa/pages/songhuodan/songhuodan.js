@@ -489,6 +489,13 @@ Page({
       })
       return;
     }
+    if(column == 'beizhu2' && _this.data.userInfo.power != '管理员'){
+      wx.showToast({
+        title: '只有管理员账号可以修改备注2！',
+        icon: 'none'
+      })
+      return;
+    }
     _this.setData({
       this_column:column,
       this_value:value,
@@ -502,6 +509,13 @@ Page({
     var index = e.currentTarget.dataset.index
     var value = e.currentTarget.dataset.value
     if(column != 'huikuang'){
+      return;
+    }
+    if(column == 'huikuang' && _this.data.userInfo.power == '司机' && _this.data.riqi != _this.data.head_list.riqi){
+      wx.showToast({
+        title: '只可更改当天回筐数量！',
+        icon: 'none'
+      })
       return;
     }
     _this.setData({
@@ -666,22 +680,25 @@ Page({
 
     var huankuang_list = _this.data.huankuang_list
     var sql2 = ""
-    if(huankuang_list.length > 0){
-      for(var i=0; i<huankuang_list.length; i++){
-        sql2 = sql2 + "update Detailsoforder set huikuang ='" + huankuang_list[i].huikuang + "' where id=" + huankuang_list[i].id + ";"
+    if(_this.data.userInfo.power == "司机" ){
+      if(huankuang_list.length > 0){
+        for(var i=0; i<huankuang_list.length; i++){
+          sql2 = sql2 + "update Detailsoforder set huikuang ='" + huankuang_list[i].huikuang + "' where id=" + huankuang_list[i].id + ";"
+        }
+        console.log(sql2)
       }
-      console.log(sql2)
     }
     var sql3 = ""
+    var sql4 = ""
     if(_this.data.userInfo.power == "管理员"){
-      sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1 + "',yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
+      sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1  + "',yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }else{
       sql3 = "update beizhu set yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }
+    sql4 = "update Detailsoforder set  beizhu = '" + _this.data.beizhu1  +", baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
+   
     
-    var sql4 = ""
     
-    sql4 = "update Detailsoforder set beizhu = '" + _this.data.beizhu2 + "',baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
     // var sql_end = sql1 + sql2 + sql3 + sql4
     // console.log(sql_end) 
     console.log(sql4)

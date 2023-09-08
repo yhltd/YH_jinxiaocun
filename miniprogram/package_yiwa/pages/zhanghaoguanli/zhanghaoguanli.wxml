@@ -50,6 +50,12 @@
     </picker>
     <view class="lables">客户地址</view>
     <input bindinput="onInput" data-column="customer_address" class="input_text_form"  value="{{customer_address}}" type="text" name="customer_address"></input>
+    <view class="lables">下单权限</view>
+    <input bindinput="onInput" data-column="fahuoquanxian" class="input_text_form"  value="{{fahuoquanxian}}" type="text" name="fahuoquanxian"></input>
+    <view class="lables">下单权限</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" data-column="zhongliang" range="{{xiala_list}}" >
+      <input bindinput="onInput" data-column="zhongliang" class="input_text_form"  value="{{zhongliang}}" type="text" name="zhongliang" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -69,6 +75,10 @@
     <input bindinput="onInput" data-column="phone" class="input_text_form"  value="{{phone}}" type="text" name="phone"></input>
     <view class="lables">客户地址</view>
     <input bindinput="onInput" data-column="customer_address" class="input_text_form"  value="{{customer_address}}" type="text" name="customer_address"></input>
+    <view class="lables">下单权限</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column="fahuoquanxian" range="{{xiala_list}}" >
+      <input bindinput="onInput1" data-column="fahuoquanxian" class="input_text_form"  value="{{fahuoquanxian}}" type="text" name="fahuoquanxian" disabled="disabled"></input>
+    </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>

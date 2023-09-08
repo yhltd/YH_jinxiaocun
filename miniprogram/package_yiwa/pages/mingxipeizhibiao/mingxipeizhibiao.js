@@ -55,6 +55,8 @@ Page({
     Theunitprice:'',
     zhongliang:'',
     kuang:'',
+    jiuNameofproduct:'',
+    jiuTheunitprice:'',
   },
 
   /**
@@ -72,7 +74,9 @@ Page({
         console.log(list)
         _this.setData({
           list:list,
+         
         })
+       
       },
       err: res => {
         console.log("错误!")
@@ -140,8 +144,11 @@ Page({
       Theunitprice: _this.data.list[e.currentTarget.dataset.index].Theunitprice,
       zhongliang:_this.data.list[e.currentTarget.dataset.index].zhongliang,
       kuang:_this.data.list[e.currentTarget.dataset.index].kuang,
+      jiuNameofproduct:_this.data.list[e.currentTarget.dataset.index].NameofProduct,
+     jiuTheunitprice: _this.data.list[e.currentTarget.dataset.index].Theunitprice,
       xgShow:true,
     })
+    console.log(this.data.jiuNameofproduct,this.data.jiuTheunitprice)
   },
 
   bindPickerChange: function(e){
@@ -281,6 +288,7 @@ Page({
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
+    
     _this.setData({
       currentDate: e.detail,
       [column]: e.detail.value
@@ -289,12 +297,15 @@ Page({
 
   upd1:function(){
     var _this = this
+    console.log(_this.data.jiuNameofproduct, _this.data.jiuTheunitprice)
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
+      
       data: {
-        query: "update DetailedConfiguration set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit + "',Theunitprice='" + _this.data.Theunitprice + "',zhongliang='" + _this.data.zhongliang + "',kuang='" + _this.data.kuang + "' where id=" + _this.data.id
+        query: "update DetailedConfiguration set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit + "',Theunitprice='" + _this.data.Theunitprice + "',zhongliang='" + _this.data.zhongliang + "',kuang='" + _this.data.kuang + "' where id=" + _this.data.id + ";update DetailsofProducts set NameofProduct='" + _this.data.NameofProduct + "',unit='" + _this.data.unit +  "',Theunitprice='" + _this.data.Theunitprice +"',zhongliang='" + _this.data.zhongliang + "',kuang='" + _this.data.kuang + "' where NameofProduct='" + _this.data.jiuNameofproduct  +"' and Theunitprice='" + _this.data.jiuTheunitprice + "'"
       },
       success: res => {
+        console.log(res)
         _this.setData({
             id:'',
             NameofProduct:'',
@@ -302,11 +313,13 @@ Page({
             Theunitprice:'',
             zhongliang:'',
             kuang:'',
+            jiuNameofproduct:'',
+            jiuTheunitprice:'',
         })
         _this.qxShow()
         var e = ['']
          _this.tableShow(e)
-
+        
         wx.showToast({
           title: '修改成功！',
           icon: 'none'

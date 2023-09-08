@@ -242,7 +242,7 @@ Page({
     var Documentnumber = _this.data.list[e.currentTarget.dataset.index].Documentnumber
     console.log(Documentnumber)
     var sql
-    if (power=='管理员'){
+    if (power=='管理员' || power=='报货员'){
       sql ="delete from Detailsoforder where Documentnumber='"+ Documentnumber +"'"
     }else{
       wx.showToast({

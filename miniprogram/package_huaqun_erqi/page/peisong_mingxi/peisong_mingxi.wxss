@@ -133,7 +133,7 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: red;
+  /* background-color: red; */
   color: black;
   border-right: 1rpx solid #F0F0F0;
   border-bottom: 1rpx solid #F0F0F0;
@@ -209,7 +209,7 @@ button{
 }
 
 .list_text2{
-  color: pink;
+  color: black;
 }
 
 .list_text3{

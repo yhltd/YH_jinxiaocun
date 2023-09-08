@@ -76,7 +76,15 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "下单权限",
+        width: "320rpx",
+        columnName: "fahuoquanxian",
+        type: "text",
+        isupd: true
+      },
     ],
+    xiala_list:['是','否'],
     qx_list:['管理员','业务员','报货员','司机','客户'],
     id:'',
     username: '', 
@@ -88,6 +96,7 @@ Page({
     driver: '',
     qr_code: '',
     customer_address:'',
+    fahuoquanxian:'',
   },
 
   /**
@@ -105,7 +114,7 @@ Page({
       name: 'sqlserver_yiwa',
       data: {
         //query: "select u3.id,u3.username,u3.password,u3.name,u3.phone,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u1.phone,'')as phone,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id where u3.name like '%" + e[0] + "%';select u3.id,u3.username,u3.password,u3.name,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id"
-        query:"select u3.id,u3.username,u3.password,u3.name,u3.phone,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code,u3.customer_address from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u1.phone,'')as phone,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,isnull( u1.customer_address, '' ) AS customer_address,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id where u3.name like '%" + e[0] + "%';select u3.id,u3.username,u3.password,u3.name,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code,u3.customer_address from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,isnull( u1.customer_address, '' ) AS customer_address,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id"
+        query:"select u3.id,u3.username,u3.password,u3.name,u3.phone,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code,u3.customer_address,u3.fahuoquanxian from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u1.phone,'')as phone,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,isnull( u1.customer_address, '' ) AS customer_address,isnull( u1.fahuoquanxian, '' ) AS fahuoquanxian,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id where u3.name like '%" + e[0] + "%';select u3.id,u3.username,u3.password,u3.name,u3.power,u3.salesman,isnull(u4.name,'')as driver,u3.qr_code,u3.customer_address,u3.fahuoquanxian from (select u1.id,u1.username,u1.password,u1.name,isnull(u1.power,'')as power,isnull(u2.name,'')as salesman,isnull(u1.driver,'')as driver,isnull( u1.customer_address, '' ) AS customer_address,isnull( u1.fahuoquanxian, '' ) AS fahuoquanxian,case isnull(u1.qr_code,'') when '' then '否' else '是' end as qr_code from userInfo as u1 left join userInfo as u2 on u1.salesman = u2.id) as u3 left join userInfo as u4 on u3.driver = u4.id"
       },
       success: res => {
         console.log(res)
@@ -148,7 +157,7 @@ Page({
         console.log("请求失败！")
       }
     })
-
+    
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
@@ -177,7 +186,26 @@ Page({
     })
 
   },
+  bindPickerChange1: function(e){
+    var _this = this
+    var column = e.currentTarget.dataset.column
+    console.log(column)
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    _this.setData({
+      [column]:_this.data.xiala_list[e.detail.value]
+    })
 
+  },
+  onInput1: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    console.log(1)
+    console.log(column)
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
+  },
   qxShow: function () {
     var _this = this
     _this.setData({
@@ -203,6 +231,7 @@ Page({
         driver: _this.data.list[e.currentTarget.dataset.index].driver,
         qr_code: _this.data.list[e.currentTarget.dataset.index].qr_code,
         customer_address: _this.data.list[e.currentTarget.dataset.index].customer_address,
+        fahuoquanxian: _this.data.list[e.currentTarget.dataset.index].fahuoquanxian,
         xgShow:true,
       })
     }else if(column == 'salesman' && _this.data.list[e.currentTarget.dataset.index].power == '客户'){
@@ -326,7 +355,7 @@ Page({
         name: 'sqlserver_yiwa',
         data: {
           // query: "insert into userInfo(username,password,name,power,phone)output inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.power + "','" + _this.data.phone + "')"
-          query:"insert into userInfo(username,password,name,power,phone,customer_address)output inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.power + "','" + _this.data.phone + "','" + _this.data.customer_address + "')"
+          query:"insert into userInfo(username,password,name,power,phone,customer_address,fahuoquanxian)output inserted.id values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.power + "','" + _this.data.phone + "','" + _this.data.customer_address +"','" + _this.data.fahuoquanxian + "')"
         },
         success: res => {
           console.log(_this.data.customer_address)
@@ -361,6 +390,7 @@ Page({
                 driver: '',
                 qr_code: '',
                 customer_address:'',
+                fahuoquanxian:'',
               })
               _this.qxShow()
               var e = ['']
@@ -392,6 +422,7 @@ Page({
             driver: '',
             qr_code: '',
             customer_address:'',
+            fahuoquanxian:'',
             list:Customer_id,
           })
           _this.qxShow()
@@ -431,7 +462,7 @@ Page({
       name: 'sqlserver_yiwa',
       data: {
         //query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',phone='" + _this.data.phone + "' where id=" + _this.data.id  
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',phone='" + _this.data.phone + "',customer_address='" + _this.data.customer_address + "' where id=" + _this.data.id  
+        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',phone='" + _this.data.phone + "',customer_address='" + _this.data.customer_address + "',fahuoquanxian='" + _this.data.fahuoquanxian+ "' where id=" + _this.data.id  
       },
       success: res => {
         _this.setData({
@@ -445,6 +476,7 @@ Page({
             driver: '',
             qr_code: '',
             customer_address:'',
+            fahuoquanxian:'',
         })
         _this.qxShow()
         var e = ['']
@@ -492,6 +524,7 @@ Page({
                 driver: '',
                 qr_code: '',
                 customer_address:'',
+                fahuoquanxian:'',
               })
               _this.qxShow()
               var e = ['']
@@ -530,6 +563,7 @@ Page({
                 driver: '',
                 qr_code: '',
                 customer_address:'',
+                fahuoquanxian:'',
               })
               _this.qxShow()
               var e = ['']

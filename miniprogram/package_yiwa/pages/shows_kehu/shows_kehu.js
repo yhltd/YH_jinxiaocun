@@ -54,6 +54,13 @@ go: function (e) {
     })
     return;
   }
+  if(index == 0  && _this.data.userInfo.power == '客户' && _this.data.userInfo.fahuoquanxian == '否'){
+    wx.showToast({
+      title: '客户有未付款订单，请先结款！',
+      icon: 'none'
+    })
+    return;
+  }
 
   if((index == 2 || index == 3 || index == 4 || index == 5 || index == 6) && _this.data.userInfo.power == '客户'){
     wx.showToast({
@@ -72,7 +79,7 @@ go: function (e) {
   }
 
   if(url != ''){
-    if(index == 0 && _this.data.userInfo.power == '客户'){
+    if(index == 0 && _this.data.userInfo.power == '客户' ){
       wx.navigateTo({
         url: "../time/time?userInfo=" + JSON.stringify(_this.data.userInfo)
       })

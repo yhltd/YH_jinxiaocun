@@ -284,6 +284,7 @@ Page({
         list[index].Theunitprice = _this.data.Theunitprice
         list[index].kuang_num = _this.data.kuang_num
         _this.setData({
+            list,
             id:'',
             NameofProduct: '', 
             unit: '',

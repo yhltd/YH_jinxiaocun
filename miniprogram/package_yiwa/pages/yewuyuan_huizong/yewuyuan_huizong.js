@@ -13,6 +13,7 @@ Page({
   cxShow: false,
   xlShow:false,
   data: {
+    idd:'',
     riqi:'',
     riqi2:'',
     select_customer:[],
@@ -83,7 +84,7 @@ Page({
   tableShow: function () {
     var _this = this
     var sql = ""
-    if(_this.data.userInfo.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '报货员'){
       sql = "select * from userInfo where power ='客户'"
     }else if(_this.data.userInfo.power == '业务员'){
       sql = "select * from userInfo where power ='客户' and salesman ='" + _this.data.userInfo.id + "'"
@@ -254,19 +255,20 @@ Page({
        var panduan = false
        for (var i = 0; i<customer_list.length; i++){
           if (customer_list[i].name == e.detail.value && e.detail.value != ''){
+            
             _this.setData({
               currentDate: e.detail,
-              idd: customer_list[i].id
+              yewu_id: customer_list[i].id
             })
             panduan =true
           }
        }
        if(panduan = false){
         _this.setData({
-          idd: ''
+          yewu_id: ''
         })
       }
-       
+       console.log(_this.data.yewu_id)
       }
 },
 
@@ -422,7 +424,7 @@ Page({
   refresh_start:function(){
     var _this = this
     var sql = ""
-    if(_this.data.yewu_id != '' && _this.data.yewu_name != ''){
+    if(_this.data.yewu_id != ''){
       sql = "select * from userInfo where power ='客户' and salesman ='" + _this.data.yewu_id + "'"
     }else{
       sql = "select * from userInfo where power ='客户'"
@@ -470,7 +472,7 @@ Page({
   refresh:function(){
     var _this = this
     var select_customer = []
-    if(_this.data.userInfo.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '报货员'){
       _this.setData({
         xgShow:true,
         yewu_id:'',

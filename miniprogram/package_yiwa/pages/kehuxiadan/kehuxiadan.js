@@ -127,7 +127,7 @@ Page({
     })
     
     var name = _this.data.Customer_id
-    if (userInfo.power=='管理员'){
+    if (userInfo.power=='管理员' || userInfo.power=='报货员'){
       sql="select id,name from userInfo where power='客户' and name like '%" + name + "%'"
     }else if (userInfo.power=='业务员'){
       sql="select id,name from userInfo where power='客户' and salesman = '"+  userInfo.id +"' and name like '%" + name + "%'"
@@ -142,7 +142,8 @@ Page({
         var list = res.result.recordset
         console.log(list)
         _this.setData({
-          listKeHu:list
+          listKeHu:list,
+          listKeHu_yuan:list,
         })
         _this.qxShow()
       },
@@ -217,7 +218,7 @@ Page({
     var name = _this.data.Customer_id
     var userInfo = _this.data.userInfo
     var sql = ""
-    if (userInfo.power=='管理员'){
+    if (userInfo.power=='管理员' || userInfo.power=='报货员'){
       sql="select id,name from userInfo where power='客户' and name like '%" + name + "%'"
     }else if (userInfo.power=='业务员'){
       sql="select id,name from userInfo where power='客户' and salesman = '"+  userInfo.id +"' and name like '%" + name + "%'"
@@ -333,6 +334,7 @@ Page({
     }
     
     console.log(_this.data.add_list)
+    // var customer_list = _this.data.listKeHu
     for(var i=0; i<_this.data.add_list.length; i++){
       if(_this.data.add_list[i].number == '' || _this.data.add_list[i].number == undefined){
         wx.showToast({
@@ -342,9 +344,9 @@ Page({
         return;
       }
     }
-    _this.setData({
-      idd: customer_list[i].id
-    })
+    // _this.setData({
+    //   idd: _this.data.Customer_id
+    // })
     var add_list = _this.data.add_list
     var chanpin = _this.data.listChanPin
     for(var i=0; i<chanpin.length; i++){
@@ -402,8 +404,9 @@ Page({
           //   clearInterval(common_Interval);
           // }, 2000)
           _this.setData({
-            add_list:"",
+            add_list:[],
             Customer_id:"",
+            listKeHu: _this.data.listKeHu_yuan,
           })
           var bianhao_left = getBianHao()
     var riqi= getNowDate()
@@ -521,6 +524,7 @@ Page({
         })
       }
     }
+    console.log(_this.data.idd)
   },
 
   

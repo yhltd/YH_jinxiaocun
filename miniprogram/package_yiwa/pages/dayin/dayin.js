@@ -496,7 +496,7 @@ Page({
     printUtil.printlnText(4, 15, height, '业务员：' + head_list.yewuyuan);
     printUtil.printlnText(4, 395, height, '电话：' + head_list.yewuyuan_phone);
     height = height + 40
-    printUtil.printlnText(4, 15, height, '业务经理' + yewu_jingli);
+    printUtil.printlnText(4, 15, height, '业务经理：' + yewu_jingli);
     printUtil.printlnText(4, 395, height, '电话：' + yewu_jingli_phone);
     height = height + 40
     printUtil.printlnText(4, 15, height, '日期：' + sel_riqi);
@@ -611,7 +611,7 @@ Page({
     printUtil.printlnText(4, 15, height, '业务员：' + head_list.yewuyuan);
     printUtil.printlnText(4, 395, height, '电话：' + head_list.yewuyuan_phone);
     height = height + 40
-    printUtil.printlnText(4, 15, height, '业务经理' + yewu_jingli);
+    printUtil.printlnText(4, 15, height, '业务经理：' + yewu_jingli);
     printUtil.printlnText(4, 395, height, '电话：' + yewu_jingli_phone);
     height = height + 40
     printUtil.printlnText(4, 15, height, '日期：' + sel_riqi);

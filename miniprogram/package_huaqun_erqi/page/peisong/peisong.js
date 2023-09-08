@@ -14,6 +14,7 @@ Page({
   xlShow: false,
   rqxzShow2: false,
   data: {
+    kongjian: 3,
     minDate: new Date(2000, 1, 1).getTime(),
     maxDate: new Date(2099, 12, 31).getTime(),
     currentDate: new Date().getTime(),
@@ -100,6 +101,7 @@ Page({
         kucun_img3_riqi: '',
       }
     ],
+    baocun:'保存',
     this_img: '',
     this_column: '',
     wancheng_list: [
@@ -242,6 +244,7 @@ Page({
           console.log("错误!")
         },
         fail: res => {
+          console.log(res)
           wx.showToast({
             title: '请求失败！',
             icon: 'none'
@@ -306,7 +309,7 @@ Page({
     }
   },
 
-  save: function(e){
+  save: function(){
     var _this = this
     var list = _this.data.list
     if(list[0].customer_name == ""){
@@ -331,428 +334,428 @@ Page({
         success: res => {
           console.log(res)
           wx.hideLoading()
-          list[0].id = res.result.recordset[0].id
-          var sql = "update erqi_peisongdan set customer_need_img1='" + list[0].customer_need_img1 + "' where id=" + list[0].id
           wx.showLoading({
-            title: '保存照片1',
+            title: '保存图片',
           })
+          list[0].id = res.result.recordset[0].id
+          var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',customer_need_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-02.jpg',customer_need_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-03.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+          console.log(sql)
+          
+          if(list[0].customer_need_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-01.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-01.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+          
+          if(list[0].customer_need_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-02.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].customer_need_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-03.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-04.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-04.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-05.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-05.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-06.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-06.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img4.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img4.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-07.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-07.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img5.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img5.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-08.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-08.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peisong_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peisong_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-09.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-09.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peisong_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peisong_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-10.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-10.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peisong_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peisong_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-11.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-11.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].kucun_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].kucun_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-12.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-12.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].kucun_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].kucun_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-13.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-13.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].kucun_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].kucun_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-14.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+             wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-14.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
           wx.cloud.callFunction({
             name: 'sqlserver_huaqun',
             data: {
               query: sql
             },
             success: res => {
-              console.log(res)
-              wx.hideLoading()
-              var sql = "update erqi_peisongdan set customer_need_img2='" + list[0].customer_need_img2 + "' where id=" + list[0].id
-              wx.showLoading({
-                title: '保存照片2',
+              _this.setData({
+                baocun: '已保存'
               })
-              wx.cloud.callFunction({
-                name: 'sqlserver_huaqun',
-                data: {
-                  query: sql
-                },
-                success: res => {
-                  console.log(res)
-                  wx.hideLoading()
-                  var sql = "update erqi_peisongdan set customer_need_img3='" + list[0].customer_need_img3 + "' where id=" + list[0].id
-                  wx.showLoading({
-                    title: '保存照片3',
-                  })
-                  wx.cloud.callFunction({
-                    name: 'sqlserver_huaqun',
-                    data: {
-                      query: sql
-                    },
-                    success: res => {
-                      console.log(res)
-                      wx.hideLoading()
-                      var sql = "update erqi_peisongdan set peihuo_img1='" + list[0].peihuo_img1 + "' where id=" + list[0].id
-                      wx.showLoading({
-                        title: '保存照片4',
-                      })
-                      wx.cloud.callFunction({
-                        name: 'sqlserver_huaqun',
-                        data: {
-                          query: sql
-                        },
-                        success: res => {
-                          console.log(res)
-                          wx.hideLoading()
-                          var sql = "update erqi_peisongdan set peihuo_img2='" + list[0].peihuo_img2 + "' where id=" + list[0].id
-                          wx.showLoading({
-                            title: '保存照片5',
-                          })
-                          wx.cloud.callFunction({
-                            name: 'sqlserver_huaqun',
-                            data: {
-                              query: sql
-                            },
-                            success: res => {
-                              console.log(res)
-                              wx.hideLoading()
-                              var sql = "update erqi_peisongdan set peihuo_img3='" + list[0].peihuo_img3 + "' where id=" + list[0].id
-                              wx.showLoading({
-                                title: '保存照片6',
-                              })
-                              wx.cloud.callFunction({
-                                name: 'sqlserver_huaqun',
-                                data: {
-                                  query: sql
-                                },
-                                success: res => {
-                                  console.log(res)
-                                  wx.hideLoading()
-                                  var sql = "update erqi_peisongdan set peihuo_img4='" + list[0].peihuo_img4 + "' where id=" + list[0].id
-                                  wx.showLoading({
-                                    title: '保存照片7',
-                                  })
-                                  wx.cloud.callFunction({
-                                    name: 'sqlserver_huaqun',
-                                    data: {
-                                      query: sql
-                                    },
-                                    success: res => {
-                                      console.log(res)
-                                      wx.hideLoading()
-                                      var sql = "update erqi_peisongdan set peihuo_img5='" + list[0].peihuo_img5 + "' where id=" + list[0].id
-                                      wx.showLoading({
-                                        title: '保存照片8',
-                                      })
-                                      wx.cloud.callFunction({
-                                        name: 'sqlserver_huaqun',
-                                        data: {
-                                          query: sql
-                                        },
-                                        success: res => {
-                                          console.log(res)
-                                          wx.hideLoading()
-                                          var sql = "update erqi_peisongdan set peisong_img1='" + list[0].peisong_img1 + "' where id=" + list[0].id
-                                          wx.showLoading({
-                                            title: '保存照片9',
-                                          })
-                                          wx.cloud.callFunction({
-                                            name: 'sqlserver_huaqun',
-                                            data: {
-                                              query: sql
-                                            },
-                                            success: res => {
-                                              console.log(res)
-                                              wx.hideLoading()
-                                              var sql = "update erqi_peisongdan set peisong_img2='" + list[0].peisong_img2 + "' where id=" + list[0].id
-                                              wx.showLoading({
-                                                title: '保存照片10',
-                                              })
-                                              wx.cloud.callFunction({
-                                                name: 'sqlserver_huaqun',
-                                                data: {
-                                                  query: sql
-                                                },
-                                                success: res => {
-                                                  console.log(res)
-                                                  wx.hideLoading()
-                                                  var sql = "update erqi_peisongdan set peisong_img3='" + list[0].peisong_img3 + "' where id=" + list[0].id
-                                                  wx.showLoading({
-                                                    title: '保存照片11',
-                                                  })
-                                                  wx.cloud.callFunction({
-                                                    name: 'sqlserver_huaqun',
-                                                    data: {
-                                                      query: sql
-                                                    },
-                                                    success: res => {
-                                                      console.log(res)
-                                                      wx.hideLoading()
-                                                      var sql = "update erqi_peisongdan set kucun_img1='" + list[0].kucun_img1 + "' where id=" + list[0].id
-                                                      wx.showLoading({
-                                                        title: '保存照片12',
-                                                      })
-                                                      wx.cloud.callFunction({
-                                                        name: 'sqlserver_huaqun',
-                                                        data: {
-                                                          query: sql
-                                                        },
-                                                        success: res => {
-                                                          console.log(res)
-                                                          wx.hideLoading()
-                                                          var sql = "update erqi_peisongdan set kucun_img2='" + list[0].kucun_img2 + "' where id=" + list[0].id
-                                                          wx.showLoading({
-                                                            title: '保存照片13',
-                                                          })
-                                                          wx.cloud.callFunction({
-                                                            name: 'sqlserver_huaqun',
-                                                            data: {
-                                                              query: sql
-                                                            },
-                                                            success: res => {
-                                                              console.log(res)
-                                                              wx.hideLoading()
-                                                              var sql = "update erqi_peisongdan set kucun_img3='" + list[0].kucun_img3 + "' where id=" + list[0].id
-                                                              wx.showLoading({
-                                                                title: '保存照片14',
-                                                              })
-                                                              wx.cloud.callFunction({
-                                                                name: 'sqlserver_huaqun',
-                                                                data: {
-                                                                  query: sql
-                                                                },
-                                                                success: res => {
-                                                                  console.log(res)
-                                                                  wx.hideLoading()
-                                                                  _this.setData({
-                                                                    list
-                                                                  })
-                                                                  wx.showToast({
-                                                                    title: '已保存！',
-                                                                    icon: 'none'
-                                                                  })
-                                                                },
-                                                                err: res => {
-                                                                  wx.hideLoading()
-                                                                  wx.showToast({
-                                                                    title: '错误！',
-                                                                    icon: 'none'
-                                                                  })
-                                                                  console.log("错误!")
-                                                                },
-                                                                fail: res => {
-                                                                  wx.hideLoading()
-                                                                  wx.showToast({
-                                                                    title: '请求失败！',
-                                                                    icon: 'none'
-                                                                  })
-                                                                  console.log("请求失败！")
-                                                                }
-                                                              })
-                                                            },
-                                                            err: res => {
-                                                              wx.hideLoading()
-                                                              wx.showToast({
-                                                                title: '错误！',
-                                                                icon: 'none'
-                                                              })
-                                                              console.log("错误!")
-                                                            },
-                                                            fail: res => {
-                                                              wx.hideLoading()
-                                                              wx.showToast({
-                                                                title: '请求失败！',
-                                                                icon: 'none'
-                                                              })
-                                                              console.log("请求失败！")
-                                                            }
-                                                          })
-                                                        },
-                                                        err: res => {
-                                                          wx.hideLoading()
-                                                          wx.showToast({
-                                                            title: '错误！',
-                                                            icon: 'none'
-                                                          })
-                                                          console.log("错误!")
-                                                        },
-                                                        fail: res => {
-                                                          wx.hideLoading()
-                                                          wx.showToast({
-                                                            title: '请求失败！',
-                                                            icon: 'none'
-                                                          })
-                                                          console.log("请求失败！")
-                                                        }
-                                                      })
-                                                    },
-                                                    err: res => {
-                                                      wx.hideLoading()
-                                                      wx.showToast({
-                                                        title: '错误！',
-                                                        icon: 'none'
-                                                      })
-                                                      console.log("错误!")
-                                                    },
-                                                    fail: res => {
-                                                      wx.hideLoading()
-                                                      wx.showToast({
-                                                        title: '请求失败！',
-                                                        icon: 'none'
-                                                      })
-                                                      console.log("请求失败！")
-                                                    }
-                                                  })
-                                                },
-                                                err: res => {
-                                                  wx.hideLoading()
-                                                  wx.showToast({
-                                                    title: '错误！',
-                                                    icon: 'none'
-                                                  })
-                                                  console.log("错误!")
-                                                },
-                                                fail: res => {
-                                                  wx.hideLoading()
-                                                  wx.showToast({
-                                                    title: '请求失败！',
-                                                    icon: 'none'
-                                                  })
-                                                  console.log("请求失败！")
-                                                }
-                                              })
-                                            },
-                                            err: res => {
-                                              wx.hideLoading()
-                                              wx.showToast({
-                                                title: '错误！',
-                                                icon: 'none'
-                                              })
-                                              console.log("错误!")
-                                            },
-                                            fail: res => {
-                                              wx.hideLoading()
-                                              wx.showToast({
-                                                title: '请求失败！',
-                                                icon: 'none'
-                                              })
-                                              console.log("请求失败！")
-                                            }
-                                          })
-                                        },
-                                        err: res => {
-                                          wx.hideLoading()
-                                          wx.showToast({
-                                            title: '错误！',
-                                            icon: 'none'
-                                          })
-                                          console.log("错误!")
-                                        },
-                                        fail: res => {
-                                          wx.hideLoading()
-                                          wx.showToast({
-                                            title: '请求失败！',
-                                            icon: 'none'
-                                          })
-                                          console.log("请求失败！")
-                                        }
-                                      })
-                                    },
-                                    err: res => {
-                                      wx.hideLoading()
-                                      wx.showToast({
-                                        title: '错误！',
-                                        icon: 'none'
-                                      })
-                                      console.log("错误!")
-                                    },
-                                    fail: res => {
-                                      wx.hideLoading()
-                                      wx.showToast({
-                                        title: '请求失败！',
-                                        icon: 'none'
-                                      })
-                                      console.log("请求失败！")
-                                    }
-                                  })
-                                },
-                                err: res => {
-                                  wx.hideLoading()
-                                  wx.showToast({
-                                    title: '错误！',
-                                    icon: 'none'
-                                  })
-                                  console.log("错误!")
-                                },
-                                fail: res => {
-                                  wx.hideLoading()
-                                  wx.showToast({
-                                    title: '请求失败！',
-                                    icon: 'none'
-                                  })
-                                  console.log("请求失败！")
-                                }
-                              })
-                            },
-                            err: res => {
-                              wx.hideLoading()
-                              wx.showToast({
-                                title: '错误！',
-                                icon: 'none'
-                              })
-                              console.log("错误!")
-                            },
-                            fail: res => {
-                              wx.hideLoading()
-                              wx.showToast({
-                                title: '请求失败！',
-                                icon: 'none'
-                              })
-                              console.log("请求失败！")
-                            }
-                          })
-                        },
-                        err: res => {
-                          wx.hideLoading()
-                          wx.showToast({
-                            title: '错误！',
-                            icon: 'none'
-                          })
-                          console.log("错误!")
-                        },
-                        fail: res => {
-                          wx.hideLoading()
-                          wx.showToast({
-                            title: '请求失败！',
-                            icon: 'none'
-                          })
-                          console.log("请求失败！")
-                        }
-                      })
-                    },
-                    err: res => {
-                      wx.hideLoading()
-                      wx.showToast({
-                        title: '错误！',
-                        icon: 'none'
-                      })
-                      console.log("错误!")
-                    },
-                    fail: res => {
-                      wx.hideLoading()
-                      wx.showToast({
-                        title: '请求失败！',
-                        icon: 'none'
-                      })
-                      console.log("请求失败！")
-                    }
-                  })
-                },
-                err: res => {
-                  wx.hideLoading()
-                  wx.showToast({
-                    title: '错误！',
-                    icon: 'none'
-                  })
-                  console.log("错误!")
-                },
-                fail: res => {
-                  wx.hideLoading()
-                  wx.showToast({
-                    title: '请求失败！',
-                    icon: 'none'
-                  })
-                  console.log("请求失败！")
-                }
+              wx.hideLoading()
+              wx.showToast({
+                title: '保存成功',
+                icon: 'none'
               })
             },
             err: res => {
-              wx.hideLoading()
               wx.showToast({
-                title: '错误！',
+                title: '保存错误！',
                 icon: 'none'
               })
               console.log("错误!")
             },
             fail: res => {
               console.log(res)
-              wx.hideLoading()
               wx.showToast({
                 title: '请求失败！',
                 icon: 'none'
@@ -760,6 +763,9 @@ Page({
               console.log("请求失败！")
             }
           })
+
+          
+          console.log(sql)
         },
         err: res => {
           wx.hideLoading()
@@ -789,426 +795,427 @@ Page({
         success: res => {
           console.log(res)
           wx.hideLoading()
-          var sql = "update erqi_peisongdan set customer_need_img1='" + list[0].customer_need_img1 + "' where id=" + list[0].id
           wx.showLoading({
-            title: '保存照片1',
+            title: '保存图片',
           })
+          var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',customer_need_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-02.jpg',customer_need_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-03.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+          console.log(sql)
+
+          if(list[0].customer_need_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-01.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-01.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+          
+          if(list[0].customer_need_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-02.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].customer_need_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-03.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-04.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-04.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-05.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-05.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-06.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-06.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img4.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img4.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-07.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-07.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peihuo_img5.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img5.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-08.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-08.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peisong_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peisong_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-09.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-09.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peisong_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peisong_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-10.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-10.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].peisong_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].peisong_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-11.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-11.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].kucun_img1.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].kucun_img1.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-12.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-12.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].kucun_img2.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].kucun_img2.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-13.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-13.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+
+          if(list[0].kucun_img3.indexOf("base64") != -1){
+            var fsm = wx.getFileSystemManager();
+            var buffer = wx.base64ToArrayBuffer(list[0].kucun_img3.split(',')[1]);
+            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-14.jpg';
+            fsm.writeFileSync(fileName, buffer, 'binary');
+            console.log(fileName);
+            wx.uploadFile({
+              url: 'http://yhocn.cn:9087/file/upload',
+              header: { "Content-Type": "multipart/form-data" },
+              filePath: fileName,
+              name: 'file',
+              formData:{
+              name: list[0].order_number +'-14.jpg',
+              path: '/huaqun_erqi/',
+              kongjian: _this.data.kongjian,
+              },
+              success(res){
+                console.log(res.data);
+                if(res.data.indexOf("存储空间不足") != -1){
+                  wx.showToast({
+                    title: '存储空间不足！',
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
           wx.cloud.callFunction({
             name: 'sqlserver_huaqun',
             data: {
               query: sql
             },
             success: res => {
-              console.log(res)
-              wx.hideLoading()
-              var sql = "update erqi_peisongdan set customer_need_img2='" + list[0].customer_need_img2 + "' where id=" + list[0].id
-              wx.showLoading({
-                title: '保存照片2',
+              _this.setData({
+                baocun: '已保存'
               })
-              wx.cloud.callFunction({
-                name: 'sqlserver_huaqun',
-                data: {
-                  query: sql
-                },
-                success: res => {
-                  console.log(res)
-                  wx.hideLoading()
-                  var sql = "update erqi_peisongdan set customer_need_img3='" + list[0].customer_need_img3 + "' where id=" + list[0].id
-                  wx.showLoading({
-                    title: '保存照片3',
-                  })
-                  wx.cloud.callFunction({
-                    name: 'sqlserver_huaqun',
-                    data: {
-                      query: sql
-                    },
-                    success: res => {
-                      console.log(res)
-                      wx.hideLoading()
-                      var sql = "update erqi_peisongdan set peihuo_img1='" + list[0].peihuo_img1 + "' where id=" + list[0].id
-                      wx.showLoading({
-                        title: '保存照片4',
-                      })
-                      wx.cloud.callFunction({
-                        name: 'sqlserver_huaqun',
-                        data: {
-                          query: sql
-                        },
-                        success: res => {
-                          console.log(res)
-                          wx.hideLoading()
-                          var sql = "update erqi_peisongdan set peihuo_img2='" + list[0].peihuo_img2 + "' where id=" + list[0].id
-                          wx.showLoading({
-                            title: '保存照片5',
-                          })
-                          wx.cloud.callFunction({
-                            name: 'sqlserver_huaqun',
-                            data: {
-                              query: sql
-                            },
-                            success: res => {
-                              console.log(res)
-                              wx.hideLoading()
-                              var sql = "update erqi_peisongdan set peihuo_img3='" + list[0].peihuo_img3 + "' where id=" + list[0].id
-                              wx.showLoading({
-                                title: '保存照片6',
-                              })
-                              wx.cloud.callFunction({
-                                name: 'sqlserver_huaqun',
-                                data: {
-                                  query: sql
-                                },
-                                success: res => {
-                                  console.log(res)
-                                  wx.hideLoading()
-                                  var sql = "update erqi_peisongdan set peihuo_img4='" + list[0].peihuo_img4 + "' where id=" + list[0].id
-                                  wx.showLoading({
-                                    title: '保存照片7',
-                                  })
-                                  wx.cloud.callFunction({
-                                    name: 'sqlserver_huaqun',
-                                    data: {
-                                      query: sql
-                                    },
-                                    success: res => {
-                                      console.log(res)
-                                      wx.hideLoading()
-                                      var sql = "update erqi_peisongdan set peihuo_img5='" + list[0].peihuo_img5 + "' where id=" + list[0].id
-                                      wx.showLoading({
-                                        title: '保存照片8',
-                                      })
-                                      wx.cloud.callFunction({
-                                        name: 'sqlserver_huaqun',
-                                        data: {
-                                          query: sql
-                                        },
-                                        success: res => {
-                                          console.log(res)
-                                          wx.hideLoading()
-                                          var sql = "update erqi_peisongdan set peisong_img1='" + list[0].peisong_img1 + "' where id=" + list[0].id
-                                          wx.showLoading({
-                                            title: '保存照片9',
-                                          })
-                                          wx.cloud.callFunction({
-                                            name: 'sqlserver_huaqun',
-                                            data: {
-                                              query: sql
-                                            },
-                                            success: res => {
-                                              console.log(res)
-                                              wx.hideLoading()
-                                              var sql = "update erqi_peisongdan set peisong_img2='" + list[0].peisong_img2 + "' where id=" + list[0].id
-                                              wx.showLoading({
-                                                title: '保存照片10',
-                                              })
-                                              wx.cloud.callFunction({
-                                                name: 'sqlserver_huaqun',
-                                                data: {
-                                                  query: sql
-                                                },
-                                                success: res => {
-                                                  console.log(res)
-                                                  wx.hideLoading()
-                                                  var sql = "update erqi_peisongdan set peisong_img3='" + list[0].peisong_img3 + "' where id=" + list[0].id
-                                                  wx.showLoading({
-                                                    title: '保存照片11',
-                                                  })
-                                                  wx.cloud.callFunction({
-                                                    name: 'sqlserver_huaqun',
-                                                    data: {
-                                                      query: sql
-                                                    },
-                                                    success: res => {
-                                                      console.log(res)
-                                                      wx.hideLoading()
-                                                      var sql = "update erqi_peisongdan set kucun_img1='" + list[0].kucun_img1 + "' where id=" + list[0].id
-                                                      wx.showLoading({
-                                                        title: '保存照片12',
-                                                      })
-                                                      wx.cloud.callFunction({
-                                                        name: 'sqlserver_huaqun',
-                                                        data: {
-                                                          query: sql
-                                                        },
-                                                        success: res => {
-                                                          console.log(res)
-                                                          wx.hideLoading()
-                                                          var sql = "update erqi_peisongdan set kucun_img2='" + list[0].kucun_img2 + "' where id=" + list[0].id
-                                                          wx.showLoading({
-                                                            title: '保存照片13',
-                                                          })
-                                                          wx.cloud.callFunction({
-                                                            name: 'sqlserver_huaqun',
-                                                            data: {
-                                                              query: sql
-                                                            },
-                                                            success: res => {
-                                                              console.log(res)
-                                                              wx.hideLoading()
-                                                              var sql = "update erqi_peisongdan set kucun_img3='" + list[0].kucun_img3 + "' where id=" + list[0].id
-                                                              wx.showLoading({
-                                                                title: '保存照片14',
-                                                              })
-                                                              wx.cloud.callFunction({
-                                                                name: 'sqlserver_huaqun',
-                                                                data: {
-                                                                  query: sql
-                                                                },
-                                                                success: res => {
-                                                                  console.log(res)
-                                                                  wx.hideLoading()
-                                                                  _this.setData({
-                                                                    list
-                                                                  })
-                                                                  wx.showToast({
-                                                                    title: '已保存！',
-                                                                    icon: 'none'
-                                                                  })
-                                                                },
-                                                                err: res => {
-                                                                  wx.hideLoading()
-                                                                  wx.showToast({
-                                                                    title: '错误！',
-                                                                    icon: 'none'
-                                                                  })
-                                                                  console.log("错误!")
-                                                                },
-                                                                fail: res => {
-                                                                  wx.hideLoading()
-                                                                  wx.showToast({
-                                                                    title: '请求失败！',
-                                                                    icon: 'none'
-                                                                  })
-                                                                  console.log("请求失败！")
-                                                                }
-                                                              })
-                                                            },
-                                                            err: res => {
-                                                              wx.hideLoading()
-                                                              wx.showToast({
-                                                                title: '错误！',
-                                                                icon: 'none'
-                                                              })
-                                                              console.log("错误!")
-                                                            },
-                                                            fail: res => {
-                                                              wx.hideLoading()
-                                                              wx.showToast({
-                                                                title: '请求失败！',
-                                                                icon: 'none'
-                                                              })
-                                                              console.log("请求失败！")
-                                                            }
-                                                          })
-                                                        },
-                                                        err: res => {
-                                                          wx.hideLoading()
-                                                          wx.showToast({
-                                                            title: '错误！',
-                                                            icon: 'none'
-                                                          })
-                                                          console.log("错误!")
-                                                        },
-                                                        fail: res => {
-                                                          wx.hideLoading()
-                                                          wx.showToast({
-                                                            title: '请求失败！',
-                                                            icon: 'none'
-                                                          })
-                                                          console.log("请求失败！")
-                                                        }
-                                                      })
-                                                    },
-                                                    err: res => {
-                                                      wx.hideLoading()
-                                                      wx.showToast({
-                                                        title: '错误！',
-                                                        icon: 'none'
-                                                      })
-                                                      console.log("错误!")
-                                                    },
-                                                    fail: res => {
-                                                      wx.hideLoading()
-                                                      wx.showToast({
-                                                        title: '请求失败！',
-                                                        icon: 'none'
-                                                      })
-                                                      console.log("请求失败！")
-                                                    }
-                                                  })
-                                                },
-                                                err: res => {
-                                                  wx.hideLoading()
-                                                  wx.showToast({
-                                                    title: '错误！',
-                                                    icon: 'none'
-                                                  })
-                                                  console.log("错误!")
-                                                },
-                                                fail: res => {
-                                                  wx.hideLoading()
-                                                  wx.showToast({
-                                                    title: '请求失败！',
-                                                    icon: 'none'
-                                                  })
-                                                  console.log("请求失败！")
-                                                }
-                                              })
-                                            },
-                                            err: res => {
-                                              wx.hideLoading()
-                                              wx.showToast({
-                                                title: '错误！',
-                                                icon: 'none'
-                                              })
-                                              console.log("错误!")
-                                            },
-                                            fail: res => {
-                                              wx.hideLoading()
-                                              wx.showToast({
-                                                title: '请求失败！',
-                                                icon: 'none'
-                                              })
-                                              console.log("请求失败！")
-                                            }
-                                          })
-                                        },
-                                        err: res => {
-                                          wx.hideLoading()
-                                          wx.showToast({
-                                            title: '错误！',
-                                            icon: 'none'
-                                          })
-                                          console.log("错误!")
-                                        },
-                                        fail: res => {
-                                          wx.hideLoading()
-                                          wx.showToast({
-                                            title: '请求失败！',
-                                            icon: 'none'
-                                          })
-                                          console.log("请求失败！")
-                                        }
-                                      })
-                                    },
-                                    err: res => {
-                                      wx.hideLoading()
-                                      wx.showToast({
-                                        title: '错误！',
-                                        icon: 'none'
-                                      })
-                                      console.log("错误!")
-                                    },
-                                    fail: res => {
-                                      wx.hideLoading()
-                                      wx.showToast({
-                                        title: '请求失败！',
-                                        icon: 'none'
-                                      })
-                                      console.log("请求失败！")
-                                    }
-                                  })
-                                },
-                                err: res => {
-                                  wx.hideLoading()
-                                  wx.showToast({
-                                    title: '错误！',
-                                    icon: 'none'
-                                  })
-                                  console.log("错误!")
-                                },
-                                fail: res => {
-                                  wx.hideLoading()
-                                  wx.showToast({
-                                    title: '请求失败！',
-                                    icon: 'none'
-                                  })
-                                  console.log("请求失败！")
-                                }
-                              })
-                            },
-                            err: res => {
-                              wx.hideLoading()
-                              wx.showToast({
-                                title: '错误！',
-                                icon: 'none'
-                              })
-                              console.log("错误!")
-                            },
-                            fail: res => {
-                              wx.hideLoading()
-                              wx.showToast({
-                                title: '请求失败！',
-                                icon: 'none'
-                              })
-                              console.log("请求失败！")
-                            }
-                          })
-                        },
-                        err: res => {
-                          wx.hideLoading()
-                          wx.showToast({
-                            title: '错误！',
-                            icon: 'none'
-                          })
-                          console.log("错误!")
-                        },
-                        fail: res => {
-                          wx.hideLoading()
-                          wx.showToast({
-                            title: '请求失败！',
-                            icon: 'none'
-                          })
-                          console.log("请求失败！")
-                        }
-                      })
-                    },
-                    err: res => {
-                      wx.hideLoading()
-                      wx.showToast({
-                        title: '错误！',
-                        icon: 'none'
-                      })
-                      console.log("错误!")
-                    },
-                    fail: res => {
-                      wx.hideLoading()
-                      wx.showToast({
-                        title: '请求失败！',
-                        icon: 'none'
-                      })
-                      console.log("请求失败！")
-                    }
-                  })
-                },
-                err: res => {
-                  wx.hideLoading()
-                  wx.showToast({
-                    title: '错误！',
-                    icon: 'none'
-                  })
-                  console.log("错误!")
-                },
-                fail: res => {
-                  wx.hideLoading()
-                  wx.showToast({
-                    title: '请求失败！',
-                    icon: 'none'
-                  })
-                  console.log("请求失败！")
-                }
+              wx.hideLoading()
+              wx.showToast({
+                title: '保存成功',
+                icon: 'none'
               })
             },
             err: res => {
-              wx.hideLoading()
               wx.showToast({
-                title: '错误！',
+                title: '保存错误！',
                 icon: 'none'
               })
               console.log("错误!")
             },
             fail: res => {
-              wx.hideLoading()
+              console.log(res)
               wx.showToast({
                 title: '请求失败！',
                 icon: 'none'
@@ -1262,44 +1269,39 @@ Page({
 
   imgdown: function(e){
     var _this = this
-    var base64data = _this.data.this_value;   // base64
-    const fsm = wx.getFileSystemManager();
-    const FILE_BASE_NAME = 'tmp_base64src' + getNowTime(); //自定义文件名
-    const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64data) || [];
-    if (!format) {
-      return (new Error('ERROR_BASE64SRC_PARSE'));
-    }
-    const filePath = `${wx.env.USER_DATA_PATH}/${FILE_BASE_NAME}.${format}`;
-    const buffer = wx.base64ToArrayBuffer(bodyData);
-    fsm.writeFile({
-      filePath,
-      data: buffer,
-      encoding: 'binary',
-      success(r) {
-        console.log(r,'r')
-        console.log(filePath,'filePath')
-        wx.saveImageToPhotosAlbum({
-          filePath:filePath,
-          success(res) {
-            wx.showToast({
-              title: '保存成功，请到手机相册查看',
-              icon: 'none'
+    var url = _this.data.this_value;   // base64
+    if(url.indexOf("http") != -1){
+      wx.downloadFile({
+        url: url, //仅为示例，并非真实的资源
+        success (res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          if (res.statusCode === 200) {
+            wx.saveImageToPhotosAlbum({
+              filePath:res.tempFilePath,
+              success(res) {
+                wx.showToast({
+                  title: '保存成功，请到手机相册查看',
+                  icon: 'none'
+                })
+                console.log(res)
+              },
+              fail: function(err) {
+                wx.showToast({
+                  title: '保存失败',
+                  icon: 'none'
+                })
+                console.log('保存失败', err);
+              }
             })
-            console.log(res)
-          },
-          fail: function(err) {
-            wx.showToast({
-              title: '保存失败',
-              icon: 'none'
-            })
-            console.log('保存失败', err);
           }
-        })
-      },
-      fail() {
-        return (new Error('ERROR_BASE64SRC_WRITE'));
-      },
-    });
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '下载失败，请检查图片是否已保存',
+        icon: 'none'
+      })
+    }
   },
 
   imgload: function(e){
@@ -1313,30 +1315,40 @@ Page({
       success(res) {
         console.log(res)
         console.log(res.tempFiles)
-        wx.getFileSystemManager().readFile({
-          filePath: res.tempFiles[0].tempFilePath, //选择图片返回的相对路径
-          encoding: 'base64', //编码格式
-          success: res => { //成功的回调
-            console.log('data:image/png;base64,' + res.data)
-            var size = res.data.length / 1048576
-            console.log(size)
-            if(size > 2){
-              wx.showToast({
-                title: '图片转化后超过2M，不允许上传！',
-                icon: 'none'
-              })
-              return;
-            }
-            var list = _this.data.list
-            list[0][_this.data.this_column] = 'data:image/png;base64,' + res.data
-            list[0][_this.data.this_column + "_renyuan"] = _this.data.userInfo.name
-            list[0][_this.data.this_column + "_riqi"] = getNowDate()
-            _this.setData({
-              list
+        wx.compressImage({
+          src: res.tempFiles[0].tempFilePath, // 图片路径
+          quality: 50, // 压缩质量
+          success: function(res) {
+            console.log(res.tempFilePath)
+            wx.getFileSystemManager().readFile({
+              filePath: res.tempFilePath, //选择图片返回的相对路径
+              encoding: 'base64', //编码格式
+              success: res => { //成功的回调
+                console.log('data:image/png;base64,' + res.data)
+                var size = res.data.length / 1048576
+                console.log(size)
+                if(size > 3){
+                  wx.showToast({
+                    title: '图片转化后超过3M，不允许上传！',
+                    icon: 'none'
+                  })
+                  return;
+                }
+                var list = _this.data.list
+                list[0][_this.data.this_column] = 'data:image/png;base64,' + res.data
+                list[0][_this.data.this_column + "_renyuan"] = _this.data.userInfo.name
+                list[0][_this.data.this_column + "_riqi"] = getNowDate1()
+                _this.setData({
+                  list
+                })
+                _this.qxShow()
+                console.log(list)
+              }
             })
-            _this.qxShow()
-            console.log(list)
-          }
+          },
+          fail: function(res) {
+            console.log(res)
+          },
         })
       }
     })
@@ -1440,6 +1452,150 @@ Page({
     _this.qxShow22()
   },
 
+  chean_list: function() {
+    var _this = this
+    _this.setData({
+      list:[
+        {
+          id:'',
+          order_number: '',
+          insert_date: '',
+          customer_name: '',
+          customer_name_renyuan: '',
+          customer_name_riqi: '',
+          customer_need_text: '',
+          customer_need_text_renyuan: '',
+          customer_need_text_riqi: '',
+          customer_need_img1: '',
+          customer_need_img1_renyuan: '',
+          customer_need_img1_riqi: '',
+          customer_need_img2: '',
+          customer_need_img2_renyuan: '',
+          customer_need_img2_riqi: '',
+          customer_need_img3: '',
+          customer_need_img3_renyuan: '',
+          customer_need_img3_riqi: '',
+          songhuo_address: '',
+          songhuo_address_renyuan: '',
+          songhuo_address_riqi: '',
+          anzhuang_address: '',
+          anzhuang_address_renyuan: '',
+          anzhuang_address_riqi: '',
+          phone: '',
+          phone_renyuan: '',
+          phone_riqi: '',
+          customer_order: '',
+          customer_order_renyuan: '',
+          customer_order_riqi: '',
+          songhuo_danhao: '',
+          songhuo_danhao_renyuan: '',
+          songhuo_danhao_riqi: '',
+          peihuo_img1: '',
+          peihuo_img1_renyuan: '',
+          peihuo_img1_riqi: '',
+          peihuo_img2: '',
+          peihuo_img2_renyuan: '',
+          peihuo_img2_riqi: '',
+          peihuo_img3: '',
+          peihuo_img3_renyuan: '',
+          peihuo_img3_riqi: '',
+          peihuo_img4: '',
+          peihuo_img4_renyuan: '',
+          peihuo_img4_riqi: '',
+          peihuo_img5: '',
+          peihuo_img5_renyuan: '',
+          peihuo_img5_riqi: '',
+          peisong_img1: '',
+          peisong_img1_renyuan: '',
+          peisong_img1_riqi: '',
+          peisong_img2: '',
+          peisong_img2_renyuan: '',
+          peisong_img2_riqi: '',
+          peisong_img3: '',
+          peisong_img3_renyuan: '',
+          peisong_img3_riqi: '',
+          wancheng: '',
+          wancheng_renyuan: '',
+          wancheng_riqi: '',
+          beizhu: '',
+          beizhu_renyuan: '',
+          beizhu_riqi: '',
+          kucun_text: '',
+          kucun_text_renyuan: '',
+          kucun_text_riqi: '',
+          kucun_img1: '',
+          kucun_img1_renyuan: '',
+          kucun_img1_riqi: '',
+          kucun_img2: '',
+          kucun_img2_renyuan: '',
+          kucun_img2_riqi: '',
+          kucun_img3: '',
+          kucun_img3_renyuan: '',
+          kucun_img3_riqi: '',
+        }
+      ],
+    })
+    var bianhao_left = getBianHao()
+    var list = _this.data.list
+    if(_this.data.userInfo.power == '客户'){
+      list[0].customer_name = userInfo.company
+      list[0].customer_name_renyuan = userInfo.name
+      list[0].customer_name_riqi = getNowDate1()
+      _this.setData({
+        list
+      })
+    }
+    var sql = "select order_number from erqi_peisongdan where order_number like '" + bianhao_left + "%'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var bianhao_list = res.result.recordset
+        var new_bianhao = "001" 
+        for(var i=0; i<bianhao_list.length; i++){
+          if(bianhao_list[i].order_number != '' && bianhao_list[i].order_number != null && bianhao_list[i].order_number != undefined){
+            var this_bianhao = bianhao_list[i].order_number.slice(10)
+            console.log(this_bianhao)
+            if(this_bianhao >= new_bianhao){
+              new_bianhao = (this_bianhao * 1 + 1).toString()
+              if(new_bianhao.length == 1){
+                new_bianhao = "00" + new_bianhao.toString()
+              }else if(new_bianhao.length == 2){
+                new_bianhao = "0" + new_bianhao.toString()
+              }
+              console.log(new_bianhao)
+            }
+          }
+        }
+        new_bianhao = bianhao_left.toString() + new_bianhao.toString()
+        var list = _this.data.list
+        list[0].order_number = new_bianhao
+        list[0].insert_date = getNowDate()
+        console.log(list)
+        _this.setData({
+          list,
+          baocun:'保存'
+        })
+      },
+      err: res => {
+        wx.showToast({
+          title: '读取下拉列表错误！',
+          icon: 'none'
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
   qxShow22: function () {
     var _this = this
     _this.setData({
@@ -1452,6 +1608,426 @@ Page({
     _this.setData({
       currentDate: event.detail,
     });
+  },
+
+  async upd_pic1(){
+    if(this.list[0].customer_need_img1.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img1.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-01.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-01.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic2(){
+    if(this.list[0].customer_need_img2.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img2.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-02.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-02.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic3(){
+    if(this.list[0].customer_need_img3.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img3.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-03.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-03.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic4(){
+    if(this.list[0].peihuo_img1.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peihuo_img1.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-04.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-04.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic5(){
+    if(this.list[0].peihuo_img2.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peihuo_img2.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-05.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-05.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic6(){
+    if(this.list[0].peihuo_img3.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peihuo_img3.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-06.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-06.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic7(){
+    if(this.list[0].peihuo_img4.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peihuo_img4.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-07.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-07.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic8(){
+    if(this.list[0].peihuo_img5.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peihuo_img5.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-08.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-08.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic9(){
+    if(this.list[0].peisong_img1.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peisong_img1.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-09.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-09.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic10(){
+    if(this.list[0].peisong_img2.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peisong_img2.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-10.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-10.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic11(){
+    if(this.list[0].peisong_img3.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].peisong_img3.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-11.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-11.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic12(){
+    if(this.list[0].kucun_img1.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].kucun_img1.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-12.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-12.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic13(){
+    if(this.list[0].kucun_img2.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].kucun_img2.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-13.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-13.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
+
+  async upd_pic14(){
+    if(this.list[0].kucun_img3.indexOf("base64") != -1){
+      var fsm = wx.getFileSystemManager();
+      var buffer = wx.base64ToArrayBuffer(this.list[0].kucun_img3.split(',')[1]);
+      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-14.jpg';
+      fsm.writeFileSync(fileName, buffer, 'binary');
+      console.log(fileName);
+       wx.uploadFile({
+        url: 'http://yhocn.cn:9087/file/upload',
+        header: { "Content-Type": "multipart/form-data" },
+        filePath: fileName,
+        name: 'file',
+        formData:{
+        name: this.list[0].order_number +'-14.jpg',
+        path: '/huaqun_erqi/',
+        kongjian: _this.data.kongjian,
+        },
+        success(res){
+          console.log(res.data);
+          if(res.data.indexOf("存储空间不足") != -1){
+            wx.showToast({
+              title: '存储空间不足！',
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
   },
 
   /**
@@ -1573,6 +2149,7 @@ function getBianHao() {
   console.log(currentdate)
   return currentdate;
  }
+ 
  function getNowDate() {
   var date = new Date();
   var sign1 = "-";
@@ -1638,3 +2215,5 @@ function getBianHao() {
   var currentdate = year + month + day + hour + minutes + seconds
   return currentdate;
  }
+
+ 

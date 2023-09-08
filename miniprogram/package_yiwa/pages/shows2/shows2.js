@@ -45,6 +45,7 @@ go: function (e) {
   var index = e.currentTarget.dataset.index;
   var url = _this.data.showList[index].url
   var text = _this.data.showList[index].text
+  
   console.log(index)
 
   if((index == 0 || index == 1 || index == 2 || index == 5) && _this.data.userInfo.power == '司机'){
@@ -55,7 +56,7 @@ go: function (e) {
     return;
   }
 
-  if((index == 0 || index == 2 || index == 3 || index == 4 || index == 5 || index == 6) && _this.data.userInfo.power == '报货员'){
+  if( index == 6 && _this.data.userInfo.power == '报货员'){
     wx.showToast({
       title: '报货员无权限查看！',
       icon: 'none'
@@ -70,7 +71,7 @@ go: function (e) {
     })
     return;
   }
-
+ 
   if((index == 3 || index == 4 || index == 6 ) && _this.data.userInfo.power == '业务员'){
     wx.showToast({
       title: '业务员无权限查看！',

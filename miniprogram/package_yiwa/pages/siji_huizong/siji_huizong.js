@@ -99,9 +99,9 @@ Page({
   tableShow: function () {
     var _this = this
     var sql = ""
-    if(_this.data.userInfo.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '报货员'){
       sql = "select * from userInfo where power ='客户'"
-    }else if(_this.data.userInfo.power == '司机'){
+    }else if(_this.data.userInfo.power == '司机' ){
       sql = "select * from userInfo where power ='客户' and driver ='" + _this.data.userInfo.id + "'"
     }
     console.log(sql)
@@ -324,20 +324,23 @@ Page({
     })
     if (column = "siji_name" ){
       var customer_list = _this.data.siji_list
+
       for(var i=0; i<customer_list.length; i++){
         if(customer_list[i].name == e.detail.value && e.detail.value != ''){
           _this.setData({
-            idd: customer_list[i].id
+            siji_id: customer_list[i].id
             })
          }
+         
          panduan = true
         }  
         if(panduan = false){
           _this.setData({
-            idd: ''
+            siji_id: ''
           })
         }
       }
+     
   },
 
   upd1:function(){
@@ -493,7 +496,9 @@ Page({
   refresh_start:function(){
     var _this = this
     var sql = ""
-    if(_this.data.siji_id != '' && _this.data.siji_name != ''){
+    console.log(_this.data.siji_id)
+    if(_this.data.siji_id != ''){
+      
       sql = "select * from userInfo where power ='客户' and driver ='" + _this.data.siji_id + "'"
     }else{
       sql = "select * from userInfo where power ='客户'"
@@ -543,7 +548,7 @@ Page({
   refresh:function(){
     var _this = this
     var select_customer = []
-    if(_this.data.userInfo.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '报货员'){
       _this.setData({
         xgShow:true,
         siji_id:'',
@@ -867,11 +872,13 @@ Page({
       },
       success: res => {
         console.log(res)
+        
         wx.showToast({
           title: '保存成功！',
           icon: 'none',
           duration: 3000
         })
+       
       },
       err: res => {
         console.log("错误!")
@@ -889,6 +896,7 @@ Page({
 
   save:function(){
     var _this = this
+
     if(_this.data.customer_arr.length == 0){
       wx.showToast({
         title: '未生成报货汇总单，请生成后再试！',
@@ -899,7 +907,7 @@ Page({
     var customer_arr = _this.data.customer_arr
     var id_list = ""
     var riqi = _this.data.refresh_riqi
-    var driver_id = ""
+    var driver_id = this.data.siji_id
     var maker = _this.data.userInfo.id
     for(var i=0; i<customer_arr.length; i++){
       if(customer_arr[i] != ''){
@@ -914,6 +922,7 @@ Page({
       driver_id = _this.data.userInfo.id
     }
     var insert_arr = [riqi,id_list,driver_id,maker]
+   
     var sql = "select * from driver_order where riqi='" + riqi + "' and driver_id = '" + driver_id + "' and maker = '" + maker + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',

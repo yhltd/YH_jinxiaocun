@@ -224,7 +224,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="save">保存</button>
+  <button class="bt_bottom" bindtap="save">{{baocun}}</button>
+  <button class="bt_bottom" bindtap="chean_list">生成新单</button>
 </view>
 
 <!--表单下拉选择-->

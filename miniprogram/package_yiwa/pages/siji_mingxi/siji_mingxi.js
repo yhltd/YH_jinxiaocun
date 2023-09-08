@@ -64,7 +64,7 @@ Page({
     var _this = this
     var sql
     console.log(_this.data.userInfo.power=='管理员')
-    if (_this.data.userInfo.power=='管理员'){
+    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
       sql ="select do.id,do.riqi,do.customer_id,isnull(us.name,'') as maker ,isnull(uss.name,'') as driver_id from driver_order as do LEFT JOIN (select * from userInfo) as us on do.maker=us.id LEFT JOIN (select * from userInfo) as uss on driver_id=uss.id where do.riqi between '"+ e[0] +"' and '"+ e[1] +"' and isnull(uss.name,'') like '%"+ e[2] +"%' and us.name like '%"+ e[3] +"%'"
     }else if (_this.data.userInfo.power=='司机'){
       sql ="select do.id,do.riqi,do.customer_id,isnull(us.name,'') as maker ,isnull(uss.name,'') as driver_id from driver_order as do LEFT JOIN (select * from userInfo) as us on do.maker=us.id LEFT JOIN (select * from userInfo) as uss on driver_id=uss.id where uss.power='司机' and do.riqi between '"+ e[0] +"' and '"+ e[1] +"'and isnull(uss.name,'') like '%"+ e[2] +"%' and us.name like '%"+ e[3] +"%'"

@@ -50,7 +50,7 @@ Page({
   tableShow: function () {
     var _this = this
     var sql = ""
-    if(_this.data.userInfo.power == '管理员'){
+    if(_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '报货员'){
       sql = "select * from userInfo where power ='客户'"
     }else if(_this.data.userInfo.power == '业务员'){
       sql = "select * from userInfo where power ='客户' and salesman ='" + _this.data.userInfo.id + "'"

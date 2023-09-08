@@ -289,6 +289,19 @@ Page({
 
   del1:function(){
     var _this = this
+    wx.request({
+      url: 'http://yhocn.cn:9087/file/delete', //仅为示例，并非真实的接口地址
+      data: {
+        order_number: _this.data.order_number,
+        path: '/huaqun_erqi/',
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success (res) {
+        console.log(res.data)
+      }
+    })
     if(_this.data.userInfo.power != '管理员'){
       wx.showToast({
         title: '非管理员不允许删除！',
@@ -329,6 +342,71 @@ Page({
       }
     })
   },
+  // del1:function(){
+  //   var _this = this
+  //   if(_this.data.userInfo.power != '管理员'){
+  //     wx.showToast({
+  //       title: '非管理员不允许删除！',
+  //       icon: 'none'
+  //     })
+  //     return;
+  //   }
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_huaqun',
+  //     data: {
+  //       query: "delete from erqi_peisongdan where id='" + _this.data.id + "'"
+  //     },
+  //     success: res => {
+  //       wx.cloud.deleteFile({
+  //         fileList: [
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-01.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-02.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-03.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-04.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-05.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-06.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-07.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-08.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-09.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-10.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-11.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-12.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-13.jpg',
+  //           'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/huaqun_img_linshi/' + _this.data.order_number + '-14.jpg',
+  //         ],
+  //           success: res => {
+  //             // handle success
+  //             console.log(res.fileList)
+  //           },
+  //           fail: console.error
+  //       })
+  //       _this.setData({
+  //         id:'',
+  //         wancheng: '', 
+  //         quyu: '',
+  //         kucun: '',
+  //         order_number: '',
+  //     })
+  //       _this.qxShow()
+  //       var e = ['1900-01-01','2100-12-31','','','','','','','']
+  //       _this.tableShow(e)
+  //       wx.showToast({
+  //         title: '删除成功！',
+  //         icon: 'none'
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none'
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
 
   entering:function(){
     var _this=this
