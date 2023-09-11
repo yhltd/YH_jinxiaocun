@@ -492,7 +492,52 @@ Page({
     insert : function(){
       var _this = this;
       if(_this.data.zeng){
-        var this_date = new Date()
+        var userNum = app.globalData.userNum
+        if(userNum != undefined && userNum != null){
+          if(userNum != ""){
+            var sql = "select count(id) as id from Account where company='" + _this.data.userInfo.company + "'"
+            wx.cloud.callFunction({
+              name : 'sqlServer_cw',
+              data : {
+                query : sql
+              },
+              success : res =>{
+                if(res.result.recordset[0].id * 1 >= userNum * 1){
+                  wx.showToast({
+                    title: '已有账号数量过多，请删除无用账号后再试！',
+                    icon: 'none'
+                  })
+                }else{
+                  _this.zeng()
+                }
+              },
+              err : res =>{
+                console.log("错误："+res)
+              },
+              fail : res=>{
+                console.log("请求失败！"+res)
+              }
+            })
+          }else{
+            _this.zeng()
+          }
+        }else{
+          _this.zeng()
+        }
+        
+      }else{
+        wx.showToast({
+          title: '无新增权限',
+          icon: "none",
+          duration: 1000
+        })
+      }
+
+    },
+
+    zeng: function(){
+      var _this = this
+      var this_date = new Date()
         var this_year = this_date.getFullYear()
         var this_month = this_date.getMonth() + 1
         if(this_month < 10){
@@ -531,14 +576,6 @@ Page({
             })
           }
         })
-      }else{
-        wx.showToast({
-          title: '无新增权限',
-          icon: "none",
-          duration: 1000
-        })
-      }
-
     },
 
     moreDo: function(e){

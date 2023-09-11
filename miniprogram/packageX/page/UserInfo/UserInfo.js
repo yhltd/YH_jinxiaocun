@@ -1,4 +1,5 @@
 // miniprogram/packageX/page/UserInfo/UserInfo.js
+const app = getApp();
 Page({
 
   /**
@@ -413,10 +414,48 @@ Page({
   entering: function () {
     var _this = this;
     if(_this.data.sheetqx5.Add=="1"){
-    _this.setData({
-      addTable: false,
-      mask_hid: false,
-    })
+      var userNum = app.globalData.userNum
+      console.log(userNum)
+      if(userNum != undefined && userNum != null){
+        if(userNum != ""){
+          var sql = "select count(id) as id from users where company = '" + _this.data.gongsi + "'"
+          wx.cloud.callFunction({
+            name: 'sqlserver_xinyongka',
+            data: {
+              sql: sql
+            },
+            success: res => {
+              if(res.result[0].id * 1 >= userNum * 1){
+                wx.showToast({
+                  title: '已有账号数量过多，请删除无用账号后再试！',
+                  icon: 'none'
+                })
+              }else{
+                _this.setData({
+                  addTable: false,
+                  mask_hid: false,
+                })
+              }
+            },
+            error: res => {
+              console.log(res)
+            },
+            fail: res => {
+              console.log(res)
+            }
+          })
+        }else{
+          _this.setData({
+            addTable: false,
+            mask_hid: false,
+          })
+        }
+      }else{
+        _this.setData({
+          addTable: false,
+          mask_hid: false,
+        })
+      }
     }else{
       wx.showToast({
         title: '无权限',

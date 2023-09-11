@@ -146,9 +146,52 @@ Page({
 
   inquire:function(){
     var _this = this
-    _this.setData({
-      tjShow: true
-    })
+    var userNum = app.globalData.userNum
+    if(userNum != undefined && userNum != null){
+      if(userNum != ""){
+        var sql = "select count(id) as id from user_info where company ='" + app.globalData.gongsi + "'"
+        wx.cloud.callFunction({
+          name: 'sqlServer_PC',
+          data: {
+            query: sql
+          },
+          success: res => {
+            console.log(res.result.recordset[0].id)
+            console.log(userNum)
+            if(res.result.recordset[0].id * 1 >= userNum * 1){
+              wx.showToast({
+                title: '已有账号数量过多，请删除无用账号后再试！',
+                icon: 'none'
+              })
+            }else{
+              _this.setData({
+                tjShow: true
+              })
+            }
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
+      }else{
+        _this.setData({
+          tjShow: true
+        })
+      }
+    }else{
+      _this.setData({
+        tjShow: true
+      })
+    }
+
   },
 
   qxShow: function () {

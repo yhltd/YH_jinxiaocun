@@ -43,6 +43,7 @@ var login = function(that,info) {
             icon:'success'
           })
           app.globalData.gongsi = that.data.gongsi;
+          app.globalData.userNum = that.data.userNum;
         } else {
           console.log("数据库返回为空！返回res长度为：", res.result.recordset.length)
           wx.showToast({
@@ -80,6 +81,7 @@ var login = function(that,info) {
             icon:'success'
           })
           app.globalData.userInfo = userInfo
+          app.globalData.userNum = that.data.userNum;
           console.log(app.globalData.userInfo)
         } else {
           console.log("数据库返回为空！返回res长度为：", res.result.recordset.length)
@@ -127,6 +129,7 @@ var login = function(that,info) {
             app.globalData.passwod = passwod,
             app.globalData.adminis = adminis,
             app.globalData.gongsi = gongsi
+            app.globalData.userNum = that.data.userNum;
           console.log("密码对")
           //登录状态写入缓存
           wx.setStorage({
@@ -173,6 +176,7 @@ var login = function(that,info) {
           wx.navigateTo({
             url: '../../package_jiaowu/pages/shows/shows?userInfo='+JSON.stringify(userInfo)
           })
+          app.globalData.userNum = that.data.userNum;
         } else {
           console.log("密码错误")
           wx.showToast({
@@ -260,6 +264,7 @@ var login = function(that,info) {
           wx.navigateTo({
             url: '../../100lie_page/pages/shows/shows?userInfo='+JSON.stringify(user)
           })
+          app.globalData.userNum = that.data.userNum;
           wx.showToast({
             title: '登录成功',
           })
@@ -346,7 +351,7 @@ var login = function(that,info) {
             })
 
           }
-
+          app.globalData.userNum = that.data.userNum;
 
         } else {
           wx.showToast({
@@ -402,6 +407,7 @@ var login = function(that,info) {
           console.log("paichan"+info.inputName)
           app.globalData.gongsi = that.data.gongsi
           app.globalData.finduser = info.inputName
+          app.globalData.userNum = that.data.userNum;
         } else {
           wx.showToast({
             title: '用户名密码错误',
@@ -822,12 +828,12 @@ var login = function(that,info) {
 function getCompanyTime(that,info,sort_name){
   var date = new Date()
   var nowTime = date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
-  var sql = "select CASE WHEN endtime < '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE WHEN mark2<'"+nowTime+"' THEN 1 ELSE 0 END as mark2 from control_soft_time where soft_name ='"+sort_name+"'"
-    
-  if(sort_name=='云合未来财务系统' || sort_name=='云合排产管理系统'){
+  var sql = "select CASE WHEN endtime < '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE WHEN mark2<'"+nowTime+"' THEN 1 ELSE 0 END as mark2,mark1,isnull(mark3,'') as mark3 from control_soft_time where soft_name ='"+sort_name+"'"
+
+  if(sort_name=='财务' || sort_name=='排产' || sort_name=='人事' || sort_name=='进销存' || sort_name=='分权' || sort_name=='门店' || sort_name=='教务'){
     sql += " and name = '"+that.data.gongsi+"'"
   }
-
+  console.log(sql)
   wx.cloud.callFunction({
     name : 'sqlServer_system',
     data : {
@@ -836,11 +842,24 @@ function getCompanyTime(that,info,sort_name){
     success : res=> {
       var list = res.result.recordset
       var result = ""
+      console.log(list)
       if(list[0].endtime == 1){
         result = "工具到期，请联系我公司续费"
       }else if(list[0].mark2 == 1){
         result = "服务器到期，请联系我公司续费"
       }
+      if(list[0].mark3 != null && list[0].mark3 != undefined){
+        list[0].mark3 = list[0].mark3.trim()
+        if(list[0].mark3 != ""){
+          list[0].mark3 = list[0].mark3.split(":")[1]
+          list[0].mark3 = list[0].mark3.replace("(","")
+          list[0].mark3 = list[0].mark3.replace(")","")
+        }
+        that.setData({
+          userNum: list[0].mark3
+        })
+      }
+      console.log(list[0].mark3)
       if(result==""){
         login(that,info)
       }else{
@@ -1168,12 +1187,12 @@ Page({
       getCompanyTime(this,e.detail.value,'排产')
     }else if(this.data.system=="云合人事管理系统"){
       getCompanyTime(this,e.detail.value,'人事')
-    }else if(this.data.system=="云合进销存系统"){
+    }else if(this.data.system=="云合未来进销存系统"){
       getCompanyTime(this,e.detail.value,'进销存')
     }else if(this.data.system=="云合分权编辑系统"){
       getCompanyTime(this,e.detail.value,'分权')
     }else if(this.data.system=="云合智慧门店收银系统"){
-      getCompanyTime(this,e.detail.value,'卡管理')
+      getCompanyTime(this,e.detail.value,'门店')
     }else if(this.data.system=="云合教务管理系统"){
       getCompanyTime(this,e.detail.value,'教务')
     }else if(this.data.system=="零售管理系统" || this.data.system == "销售管理系统" || this.data.system == "浙江省磐安外贸药业"){

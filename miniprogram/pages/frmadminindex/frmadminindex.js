@@ -146,9 +146,46 @@ Page({
     }
   },
   navgiate: function() {
-    wx.navigateTo({
-      url: "/pages/frmadminform/frmadminform"
-    });
+    var _this = this
+    var userNum = app.globalData.userNum
+    console.log(userNum)
+    var sql = "select count(_id) as id from yh_jinxiaocun_user where gongsi ='" + app.globalData.gongsi + "'"
+    console.log(sql)
+    if(userNum != undefined && userNum != null){
+      if(userNum != ""){
+        wx.cloud.callFunction({
+          name: "sqlConnection",
+          data: {
+            sql: sql
+          },
+          success(res) {
+            console.log("成功", res)
+            console.log(res.result[0].id)
+            if(res.result[0].id * 1 >= userNum * 1){
+              wx.showToast({
+                title: '已有账号数量过多，请删除无用账号后再试！',
+                icon: 'none'
+              })
+            }else{
+              wx.navigateTo({
+                url: "/pages/frmadminform/frmadminform"
+              });
+            }
+          },
+          fail(res) {
+            console.log("失败", res)
+          }
+        });
+      }else{
+        wx.navigateTo({
+          url: "/pages/frmadminform/frmadminform"
+        });
+      }
+    }else{
+      wx.navigateTo({
+        url: "/pages/frmadminform/frmadminform"
+      });
+    }
   },
   navgiate2: function(e) {
     wx.navigateTo({

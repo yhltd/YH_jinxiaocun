@@ -33,7 +33,7 @@ go: function (e) {
   var text = _this.data.showList[index].text
   console.log(_this.data.userInfo.power)
   if(index == 0 || index == 2){
-    if (_this.data.userInfo.power=="管理员"){
+    if (_this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="报货员"){
       if(url != ''){
         wx.navigateTo({
           url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)

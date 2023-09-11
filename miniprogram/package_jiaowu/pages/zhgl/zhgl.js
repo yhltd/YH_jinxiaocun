@@ -323,7 +323,7 @@ Page({
 
   inquire: function () {
     var _this = this
-
+    var userNum = app.globalData.userNum
     if(_this.data.quanxian_zeng != '√'){
       wx.showToast({
         title: '无新增权限！',
@@ -333,19 +333,80 @@ Page({
       return;
     }
 
-    _this.setData({
-      tjShow: true,
-      dlm: "",
-      mm: "",
-      xm: "",
-      yhlb: "",
-      nl: "",
-      dh:"",
-      jtzz:"",
-      sfzh:"",
-      xl:"",
-      zt:"",
-    })
+    if(userNum != undefined && userNum != null){
+      if(userNum != ""){
+        var sql = "select count(id) as id from teacher where Company ='" + _this.data.userInfo.Company + "'"
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: sql
+          },
+          success: res => {
+            console.log(res.result[0].id)
+            console.log(userNum)
+            if(res.result[0].id * 1 >= userNum * 1){
+              wx.showToast({
+                title: '已有账号数量过多，请删除无用账号后再试！',
+                icon: 'none'
+              })
+            }else{
+              _this.setData({
+                tjShow: true,
+                dlm: "",
+                mm: "",
+                xm: "",
+                yhlb: "",
+                nl: "",
+                dh:"",
+                jtzz:"",
+                sfzh:"",
+                xl:"",
+                zt:"",
+              })
+            }
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
+      }else{
+        _this.setData({
+          tjShow: true,
+          dlm: "",
+          mm: "",
+          xm: "",
+          yhlb: "",
+          nl: "",
+          dh:"",
+          jtzz:"",
+          sfzh:"",
+          xl:"",
+          zt:"",
+        })
+      }
+    }else{
+      _this.setData({
+        tjShow: true,
+        dlm: "",
+        mm: "",
+        xm: "",
+        yhlb: "",
+        nl: "",
+        dh:"",
+        jtzz:"",
+        sfzh:"",
+        xl:"",
+        zt:"",
+      })
+    }
   },
 
   qxShow: function () {

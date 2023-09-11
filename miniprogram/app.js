@@ -7,6 +7,7 @@ var cpsum =0
 var dateUtil = require('./utils/date.js');
 App({
   globalData: {
+    userNum:'',
     gongsi:"",
     finduser: "",
     passwod: "",

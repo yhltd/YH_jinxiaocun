@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
   /**
@@ -720,13 +721,55 @@ Page({
           
         } else {
           //点击跳转到详细添加页
-          wx.navigateTo({
-            url: '../1renyuanxinxiguanli_edit/index?length='+that.data.list.length+"&companyName="+that.data.companyName
-          })
-          wx.showToast({
-            title: '正在跳转',
-            icon: 'none'
-          })
+          var userNum = app.globalData.userNum
+          if(userNum != undefined && userNum != null){
+            if(userNum != ""){
+              var sql = "select count(id) as id from gongzi_renyuan where L like '%" + that.data.companyName + "%'"
+              console.log(sql)
+              wx.cloud.callFunction({
+                name: 'sqlServer_117',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(res.result.recordset[0].id)
+                  if(res.result.recordset[0].id * 1 >= userNum * 1){
+                    wx.showToast({
+                      title: '已有账号数量过多，请删除无用账号后再试！',
+                      icon: 'none'
+                    })
+                  }else{
+                    wx.navigateTo({
+                      url: '../1renyuanxinxiguanli_edit/index?length='+that.data.list.length+"&companyName="+that.data.companyName
+                    })
+                    wx.showToast({
+                      title: '正在跳转',
+                      icon: 'none'
+                    })
+                  }
+                },
+                err: res => {
+                  console.log("错误!", res)
+                }
+              })
+            }else{
+              wx.navigateTo({
+                url: '../1renyuanxinxiguanli_edit/index?length='+that.data.list.length+"&companyName="+that.data.companyName
+              })
+              wx.showToast({
+                title: '正在跳转',
+                icon: 'none'
+              })
+            }
+          }else{
+            wx.navigateTo({
+              url: '../1renyuanxinxiguanli_edit/index?length='+that.data.list.length+"&companyName="+that.data.companyName
+            })
+            wx.showToast({
+              title: '正在跳转',
+              icon: 'none'
+            })
+          }
         }
       },
       fail: function (res) {}, //接口调用失败的回调函数

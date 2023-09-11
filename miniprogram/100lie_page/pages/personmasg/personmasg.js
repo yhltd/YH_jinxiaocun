@@ -1,4 +1,5 @@
 // 100lie_page/pages/personmasg/personmasg.js
+var app = getApp();
 Page({
 
   /**
@@ -96,19 +97,68 @@ Page({
   //添加
   add:function(){
     var that=this
-    that.setData({
-      input_hid:false,
-      mask_hid:false,
-      name:"",
-      num:"",
-      pwd:"",
-      zhuangtai:"",
-      bumen:"",
-      email:"",
-      phone:"",
-      bianhao:"",
-      id:"",
-    })
+    var userNum = app.globalData.userNum
+    if(userNum != undefined && userNum != null){
+      if(userNum != ""){
+        var sql = "select count(id) as id from baitaoquanxian_renyun where B='" + that.data.gongsi + "'"
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data:{
+            query : sql
+          },
+          success(res){
+            if(res.result.recordset[0].id * 1 >= userNum * 1){
+              wx.showToast({
+                title: '已有账号数量过多，请删除无用账号后再试！',
+                icon: 'none'
+              })
+            }else{
+              that.setData({
+                input_hid:false,
+                mask_hid:false,
+                name:"",
+                num:"",
+                pwd:"",
+                zhuangtai:"",
+                bumen:"",
+                email:"",
+                phone:"",
+                bianhao:"",
+                id:"",
+              })
+            }
+          }
+        })
+      }else{
+        that.setData({
+          input_hid:false,
+          mask_hid:false,
+          name:"",
+          num:"",
+          pwd:"",
+          zhuangtai:"",
+          bumen:"",
+          email:"",
+          phone:"",
+          bianhao:"",
+          id:"",
+        })
+      }
+    }else{
+      that.setData({
+        input_hid:false,
+        mask_hid:false,
+        name:"",
+        num:"",
+        pwd:"",
+        zhuangtai:"",
+        bumen:"",
+        email:"",
+        phone:"",
+        bianhao:"",
+        id:"",
+      })
+    }
 },
 
 

@@ -27,7 +27,7 @@
 
       <view bindtap="navgiate" data-page="askList/askList?type=PatAlive" data-pro="put">
         <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/iconfont-iconfont-new.png"></image>
-        <navigator url='/pages/frmadminform/frmadminform'>
+        <navigator>
           <text>新建</text>
         </navigator>
       </view>

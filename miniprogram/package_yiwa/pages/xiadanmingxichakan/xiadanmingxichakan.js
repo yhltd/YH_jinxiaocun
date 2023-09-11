@@ -257,6 +257,33 @@ Page({
       }
     })
 
+    var sql = "select max(riqi) as riqi from Detailsoforder"
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var riqi = res.result.recordset[0].riqi
+        if(riqi != null){
+          _this.setData({
+            insert_riqi: riqi
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
   },
 
 
@@ -362,7 +389,7 @@ Page({
     var this_row = e.currentTarget.dataset.index
     console.log(_this.data.list2[e.currentTarget.dataset.index].Documentnumber)
     console.log(_this.data.list[0].riqi)
-    if (_this.data.userInfo.power=='管理员' || (_this.data.userInfo.power=='报货员' && _this.data.list[0].riqi == getNowDate())){
+    if (_this.data.userInfo.power=='管理员' || (_this.data.userInfo.power=='报货员' && _this.data.list[0].riqi == _this.data.insert_riqi)){
       _this.setData({
         id: _this.data.list2[e.currentTarget.dataset.index].id,
         Customer_id: _this.data.list2[e.currentTarget.dataset.index].Customer_id, 
@@ -399,14 +426,22 @@ Page({
 
   inquire: function () {
     var _this = this
-    _this.setData({
-      tjShow: true,
-      id:'',
-      NameofProduct: '', 
-      unit: '',
-      Theunitprice :'',
-      number :'',
-    })
+    if (_this.data.userInfo.power=='管理员' || (_this.data.userInfo.power=='报货员' && _this.data.list[0].riqi == _this.data.insert_riqi)){
+      _this.setData({
+        tjShow: true,
+        id:'',
+        NameofProduct: '', 
+        unit: '',
+        Theunitprice :'',
+        number :'',
+      })
+    }else{
+      wx.showToast({
+        title: '非管理员只允许修改当日订单！',
+        icon: 'none'
+      })
+    }
+
   },
   add1: function(){
     var _this = this
@@ -567,7 +602,7 @@ Page({
     console.log(_this.data.this_index)
     console.log(_this.data.list2[i].id)
     var sql
-    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
+    if (_this.data.userInfo.power=='管理员' || (_this.data.userInfo.power=='报货员' && _this.data.list[0].riqi == _this.data.insert_riqi)){
       wx.showModal({
         title: '提示',
         content: '是否删除？',
@@ -613,7 +648,7 @@ Page({
       })
      }else{
       wx.showToast({
-        title: '无权限！',
+        title: '非管理员只允许修改当日订单！',
         icon: 'none'
       })
     }
