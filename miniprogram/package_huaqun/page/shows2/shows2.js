@@ -28,6 +28,14 @@ Page({
     text: "玻璃下单明细",
     url: "../boli_mingxi/boli_mingxi"
   },
+  {
+    text: "配送单",
+    url: "../../../package_huaqun_erqi/page/peisong/peisong"
+  },
+  {
+    text: "配送单明细",
+    url: "../../../package_huaqun_erqi/page/peisong_mingxi/peisong_mingxi"
+  },
  ]
  },
  

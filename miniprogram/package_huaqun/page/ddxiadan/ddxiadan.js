@@ -27,6 +27,7 @@ Page({
       install_address:'',
       customer_number:'',
       rowcount:'',
+      luruyuan:'',
     },
     update_name:{
       fj:"项目类别",
@@ -49,6 +50,14 @@ Page({
         text: "序号",
         width: "80rpx",
         width2: "calc(80vmin / 7.5)",
+        columnName: "rownum",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "录入员",
+        width: "80rpx",
+        width2: "calc(275vmin / 7.5)",
         columnName: "rownum",
         type: "text",
         isupd: true
@@ -220,6 +229,7 @@ Page({
             shfs = list[i].shfs
             azdz = list[i].azdz
             ddh = list[i].ddh
+            luruyuan = list[i].luruyuan
             sum_money = list[i].sum_money
             list_load.push({
               fj:list[i].fj,
@@ -247,6 +257,7 @@ Page({
             azdz,
             ddh,
             sum_money,
+            luruyuan,
             list:list_load,
           })
         },
@@ -293,7 +304,8 @@ Page({
           var header_list = _this.data.header_list
           header_list.djbh = new_bianhao
           _this.setData({
-            header_list
+            header_list,
+            luruyuan:_this.data.userInfo.name
           })
         },
         err: res => {
@@ -372,7 +384,7 @@ Page({
 
       _this.setData({
         userInfo:userInfo,
-        khmc:userInfo.name, 
+        khmc:userInfo.company, 
       })
     }
     wx.cloud.callFunction({
@@ -451,7 +463,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "select * from userInfo"
+        query: "select company,power from userInfo"
       },
       success: res => {
         var list = res.result.recordset
@@ -459,7 +471,7 @@ Page({
         console.log(list)
         for(var i=0; i<list.length; i++){
           if(list[i].power == '客户'){
-            khmc.push({name: list[i].name})
+            khmc.push({name: list[i].company})
           }
         }
         _this.setData({
@@ -1036,13 +1048,13 @@ Page({
 
       
       console.log(_this.data.khmc)
-      var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,lcys,ddcd,sl,cxdk,cxdk_right,gy,gl,bz,dj,je,chicun,sum_money) values"
+      var sql1 = "insert into lightbelt(khmc,xdrq,djbh,shouhuo,lxdh,shfs,azdz,ddh,fj,gh,lcys,ddcd,sl,cxdk,cxdk_right,gy,gl,bz,dj,je,chicun,sum_money,luruyuan) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"','"+  _this.data.sum_money +"')"
+          sql2 = "('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"','"+  _this.data.sum_money +"','"+  _this.data.luruyuan +"')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"','"+  _this.data.sum_money +"')"
+          sql2 = sql2 + ",('" + _this.data.khmc + "','"+ _this.data.xdrq +"','" + _this.data.header_list.djbh +"','" + _this.data.shouhuo +"','"+ _this.data.lxdh +"','"+  _this.data.shfs +"','"+  _this.data.azdz +"','"+  _this.data.ddh +"','"+  _this.data.list[i].fj +"','"+  _this.data.list[i].gh +"','"+  _this.data.list[i].lcys +"','"+  _this.data.list[i].ddcd +"','"+  _this.data.list[i].sl +"','"+  _this.data.list[i].cxdk +"','"+  _this.data.list[i].cxdk_right +"','"+  _this.data.list[i].gy +"','"+  _this.data.list[i].gl +"','"+  _this.data.list[i].bz +"','"+  _this.data.list[i].dj +"','"+  _this.data.list[i].je +"','"+  _this.data.list[i].chicun +"','"+  _this.data.sum_money +"','"+  _this.data.luruyuan +"')"
         }
       }
       var sql = "delete from lightbelt where djbh='" + _this.data.header_list.djbh + "';" + sql1 + sql2

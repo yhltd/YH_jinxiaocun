@@ -990,10 +990,15 @@ Page({
       })
       return;
     }else if(system == '华群家具材料'){
+      // _this.setData({
+      //   system,
+      //   gongsi : '订单管理系统',
+      //   pickerArray: ['订单管理系统','配送管理系统']
+      // })
       _this.setData({
         system,
         gongsi : '订单管理系统',
-        pickerArray: ['订单管理系统','配送管理系统']
+        pickerArray: ['订单管理系统']
       })
       return;
     }else if(system == '幻尘萌'){

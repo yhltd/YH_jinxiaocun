@@ -46,6 +46,11 @@
   <input bindinput="onInput" data-column="ddh" class="input_text_head" value="{{ddh}}" type="text" name="ddh" style="margin-bottom: calc(10vmin / 7.5);"></input>
 </view>
 
+<view style="display: flex;">
+  <view class="lables_head" style="font-size: calc(40vmin / 7.5)">录 入 员</view>
+  <input bindinput="onInput" data-column="luruyuan" class="input_text_head" value="{{luruyuan}}" type="text" name="luruyuan" style="margin-bottom: calc(10vmin / 7.5);"></input>
+</view>
+
 
 <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="min-height:40%">
   <view class="table">

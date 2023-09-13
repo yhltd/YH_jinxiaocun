@@ -48,6 +48,11 @@
   <input bindinput="onInput_text" data-column="install_address" class="input_text_form" value="{{header_list.install_address}}" type="text" name="install_address"></input>
 </view>
 
+<view style="display: flex;">
+  <view class="lables">录入员：</view>
+  <input bindinput="onInput_text" data-column="customer_name_renyuan" class="input_text_form" value="{{header_list.customer_name_renyuan}}" type="text" name="customer_name_renyuan"></input>
+</view>
+
 <!-- <view style="display: flex;">
     <view class="lables">安装地址：</view>
   <input bindinput="onInput_text" data-column="install_address" class="input_text_form" value="{{header_list.install_address}}" type="text" name="install_address" ></input>

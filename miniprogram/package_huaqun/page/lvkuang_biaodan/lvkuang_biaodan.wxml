@@ -7,6 +7,10 @@
         <view class="title_text forborder" style="width:calc(500vmin / 7.5)">1</view>
       </view>
       <view class="table_main">
+        <view class="title_text forborder" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">录入员</view>
+        <view class="title_text forborder" data-column="customer_name_renyuan" data-value="{{customer_name_renyuan}}" style="width:calc(500vmin / 7.5)"></view>
+      </view>
+      <view class="table_main">
         <view class="title_text forborder" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0;"></view>
         <view class="title_text" style="width:calc(250vmin / 7.5)">H&高</view>
         <view class="title_text forborder" style="width:calc(250vmin / 7.5)">W&宽</view>

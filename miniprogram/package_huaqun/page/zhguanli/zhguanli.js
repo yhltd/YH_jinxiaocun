@@ -29,6 +29,13 @@ Page({
         isupd: true
       },
       {
+        text: "公司",
+        width: "250rpx",
+        columnName: "company",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "姓名",
         width: "250rpx",
         columnName: "name",
@@ -105,6 +112,7 @@ Page({
     kailiao: '',
     zuzhuang: '',
     baozhuang: '',
+    company:'',
   },
 
   /**
@@ -183,6 +191,7 @@ Page({
       username: _this.data.list[e.currentTarget.dataset.index].username, 
       password: _this.data.list[e.currentTarget.dataset.index].password,
       pinyin: _this.data.list[e.currentTarget.dataset.index].pinyin,
+      company: _this.data.list[e.currentTarget.dataset.index].company,
       name: _this.data.list[e.currentTarget.dataset.index].name,
       power: _this.data.list[e.currentTarget.dataset.index].power,
       money:  _this.data.list[e.currentTarget.dataset.index].money,
@@ -242,6 +251,14 @@ Page({
       })
       return;
     }
+    if(_this.data.company == ''){
+      wx.showToast({
+        title: '请输公司！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
     if(_this.data.power == ''){
       wx.showToast({
         title: '请输权限！',
@@ -254,13 +271,14 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "insert into userInfo(username,password,name,pinyin,power,money,shendan,pay,kailiao,zuzhuang,baozhuang) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "','" + _this.data.money + "','" + _this.data.shendan + "','" + _this.data.pay + "','" + _this.data.kailiao + "','" + _this.data.zuzhuang + "','" + _this.data.baozhuang + "')"
+          query: "insert into userInfo(username,password,name,pinyin,power,money,shendan,pay,kailiao,zuzhuang,baozhuang,company) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "','" + _this.data.money + "','" + _this.data.shendan + "','" + _this.data.pay + "','" + _this.data.kailiao + "','" + _this.data.zuzhuang + "','" + _this.data.baozhuang + "','" + _this.data.company + "')"
         },
         success: res => {
           _this.setData({
             id:'',
             username: '', 
             password: '',
+            company: '',
             name: '',
             power: '',
             pinyin:'',
@@ -306,13 +324,14 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "',money='" + _this.data.money + "',shendan='" + _this.data.shendan + "',pay='" + _this.data.pay + "',kailiao='" + _this.data.kailiao + "',zuzhuang='" + _this.data.zuzhuang + "',baozhuang='" + _this.data.baozhuang + "' where id=" + _this.data.id  
+        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "',money='" + _this.data.money + "',shendan='" + _this.data.shendan + "',pay='" + _this.data.pay + "',kailiao='" + _this.data.kailiao + "',zuzhuang='" + _this.data.zuzhuang + "',baozhuang='" + _this.data.baozhuang + "',company='" + _this.data.company + "' where id=" + _this.data.id  
       },
       success: res => {
         _this.setData({
             id:'',
             username: '', 
             password: '',
+            company: '',
             name: '',
             pinyin:'',
             power: '',
@@ -357,6 +376,7 @@ Page({
             id:'',
             username: '', 
             password: '',
+            company: '',
             pinyin:'',
             name: '',
             power: '',

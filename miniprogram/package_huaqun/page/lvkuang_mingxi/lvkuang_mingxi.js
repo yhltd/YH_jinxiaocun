@@ -43,6 +43,13 @@ Page({
         isupd: true
       },
       {
+        text: "录入员",
+        width: "250rpx",
+        columnName: "customer_name_renyuan",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "开料",
         width: "250rpx",
         columnName: "kailiao",
@@ -139,6 +146,13 @@ Page({
         text: "单据编号",
         width: "250rpx",
         columnName: "order_number",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "录入员",
+        width: "250rpx",
+        columnName: "customer_name_renyuan",
         type: "text",
         isupd: true
       },
@@ -390,9 +404,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.name + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
+      sql = "select customer_name_renyuan,insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.company + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by customer_name_renyuan,insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.company + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
     } else{
-      sql = "select insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
+      sql = "select customer_name_renyuan,insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by customer_name_renyuan,insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -401,6 +415,7 @@ Page({
         query: sql
       },
       success: res => {
+        console.log(res)
         var list = res.result.recordsets[0]
         console.log(list)
         console.log(res.result.recordsets[1])
