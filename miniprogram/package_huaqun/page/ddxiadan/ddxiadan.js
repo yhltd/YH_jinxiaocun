@@ -54,14 +54,7 @@ Page({
         type: "text",
         isupd: true
       },
-      {
-        text: "录入员",
-        width: "80rpx",
-        width2: "calc(275vmin / 7.5)",
-        columnName: "rownum",
-        type: "text",
-        isupd: true
-      },
+     
       {
         text: "项目类别",
         width: "275rpx",

@@ -95,7 +95,7 @@ Page({
       userInfo
     })
     var sql = ""
-    if(userInfo.power == '管理员'){
+    if(userInfo.power == '管理员' || userInfo.power == '报货员' ){
       sql = "select id,name from userInfo where power = '客户'"
     }else{
       sql = "select id,name from userInfo where power = '客户' and driver = '" + userInfo.id + "'"
@@ -182,6 +182,8 @@ Page({
         var yewu_jingli = res.result.recordsets[1][0].yewu_jingli
         var yewu_jingli_phone = res.result.recordsets[1][0].yewu_jingli_phone
         var beizhu2 = list[0].beizhu
+        console.log(beizhu1)
+        console.log(beizhu2)
         var head_list = {
           kehu:list[0].kehu,
           kehu_phone:list[0].kehu_phone,
@@ -253,7 +255,8 @@ Page({
         var zongjia = 0
         for(var i=0; i<list.length; i++){
           if(list[i].zongjia != '' && list[i].zongjia != undefined && list[i].zongjia != null){
-            zongjia = zongjia * 1 + list[i].zongjia * 1
+            zongjia = (zongjia * 1 + list[i].zongjia * 1).toFixed(2)
+            // zongjia = zongjia * 1 + list[i].zongjia * 1
           }
         }
         zongjia = "总价：" + zongjia
@@ -334,7 +337,7 @@ Page({
     var _this = this
     var sql = ""
     var userInfo = _this.data.userInfo
-    if(userInfo.power == '管理员'){
+    if(userInfo.power == '管理员' || userInfo.power == '报货员'){
       sql = "select id,name from userInfo where power = '客户' and name like '%" + _this.data.name + "%'"
     }else{
       sql = "select id,name from userInfo where power = '客户' and driver = '" + userInfo.id + "' and name like '%" + _this.data.name + "%'"
@@ -482,20 +485,22 @@ Page({
     var value = e.currentTarget.dataset.value 
     console.log(column)
     console.log(value)
-    if(column == 'beizhu1' && _this.data.userInfo.power != '管理员'){
+    if(column == 'beizhu1' ){
+      if(_this.data.userInfo.power != '报货员'  &&  _this.data.userInfo.power != '管理员'  ){
       wx.showToast({
-        title: '只有管理员账号可以修改备注1！',
+        title: '只有管理员或报货员账号可以修改备注1！',
         icon: 'none'
       })
       return;
-    }
-    if(column == 'beizhu2' && _this.data.userInfo.power != '管理员'){
+    }}
+    if(column == 'beizhu2' ){
+      if( _this.data.userInfo.power != '报货员' && _this.data.userInfo.power != '管理员' ){
       wx.showToast({
-        title: '只有管理员账号可以修改备注2！',
+        title: '只有管理员或报货员账号可以修改备注2！',
         icon: 'none'
       })
       return;
-    }
+    }}
     _this.setData({
       this_column:column,
       this_value:value,
@@ -689,12 +694,12 @@ Page({
     
     var sql3 = ""
     var sql4 = ""
-    if(_this.data.userInfo.power == "管理员"){
+    if(_this.data.userInfo.power == "管理员" || _this.data.userInfo.power == "报货员"){
       sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1  + "',yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }else{
       sql3 = "update beizhu set yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }
-    sql4 = "update Detailsoforder set  beizhu = '" + _this.data.beizhu1  +"', baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
+    sql4 = "update Detailsoforder set  beizhu = '" + _this.data.beizhu2  +"', baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
    
     
     
@@ -716,7 +721,7 @@ Page({
         // }
         console.log(getNowDate())
         console.log(_this.data.riqi)
-        if (_this.data.insert_riqi == _this.data.head_list.riqi || _this.data.userInfo.power == '管理员'){
+        if (_this.data.insert_riqi == _this.data.head_list.riqi || _this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '报货员'){
           sql_end = sql1 + sql2 + sql3 + sql4
           console.log(sql_end)
           wx.cloud.callFunction({

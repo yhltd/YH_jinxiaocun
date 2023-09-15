@@ -56,13 +56,13 @@ go: function (e) {
     return;
   }
 
-  if( index == 6 && _this.data.userInfo.power == '报货员'){
-    wx.showToast({
-      title: '报货员无权限查看！',
-      icon: 'none'
-    })
-    return;
-  }
+  // if( index == 6 && _this.data.userInfo.power == '报货员'){
+  //   wx.showToast({
+  //     title: '报货员无权限查看！',
+  //     icon: 'none'
+  //   })
+  //   return;
+  // }
 
   if((index == 2 || index == 3 || index == 4 || index == 5 || index == 6) && _this.data.userInfo.power == '客户'){
     wx.showToast({

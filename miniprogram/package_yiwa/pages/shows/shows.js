@@ -48,7 +48,22 @@ go: function (e) {
     }
   }
   
-  if(index == 1 || index == 3){
+  if(index == 1 ){
+    if ((_this.data.userInfo.power=="管理员" )){
+      if(url != ''){
+        wx.navigateTo({
+          url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)
+        })
+      }
+    }else{
+      wx.showToast({
+        title: '非管理员账号无权限查看！',
+        icon: 'none'
+      })
+      return;
+    }
+  }
+  if(index == 3){
     if ((_this.data.userInfo.power=="管理员" || _this.data.userInfo.power=="业务员")){
       if(url != ''){
         wx.navigateTo({
@@ -57,13 +72,12 @@ go: function (e) {
       }
     }else{
       wx.showToast({
-        title: '非管理员或业务员账号无权限查看！',
+        title: '非管理员账号无权限查看！',
         icon: 'none'
       })
       return;
     }
   }
-  
 
   
   

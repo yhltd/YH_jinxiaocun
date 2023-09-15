@@ -336,7 +336,7 @@ Page({
     _this.setData({
       ee
     })
-    _this.page_show(ee)
+    _this.tableShow(ee)
   },
 
   page_down_click () {
@@ -361,7 +361,7 @@ Page({
     _this.setData({
       ee
     })
-    _this.page_show(ee)
+    _this.tableShow(ee)
   },
 
   page_show: function (e) {
