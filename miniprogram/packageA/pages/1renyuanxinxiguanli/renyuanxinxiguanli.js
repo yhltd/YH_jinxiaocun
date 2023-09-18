@@ -601,7 +601,7 @@ Page({
   //用于刷新页面时保持页数，或者跳转到某一页
   baochi: function () {
     var that = this
-    var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, *,(select count(R_id) from gongzi_renyuanManager where R_id = gongzi_renyuan.id) as num from gongzi_renyuan) temp_row where rownumber > (( '"+that.data.page+"' - 1) * 100) and L like '"+that.data.companyName+"%'"
+    var sql = "select top 100 *,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user2 from(select row_number() over(order by cast(id as int) asc) as rownumber, *,(select count(R_id) from gongzi_renyuanManager where R_id = gongzi_renyuan.id) as num from gongzi_renyuan) temp_row where rownumber > (( '"+that.data.page+"' - 1) * 100) and L like '"+that.data.companyName+"%'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -610,6 +610,7 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
+        console.log(list)
         for(var i=0;i<list.length;i++){
           if(list[i].num==12){
             list[i].num = "全部设置"
@@ -628,6 +629,95 @@ Page({
       }
     })
   },
+
+  bangding:function(e){
+    var _this = this
+    var list = _this.data.list
+    var id = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '提示',
+      content: '是否使用当前微信绑定此账号？',
+      success: function(res) {
+        if (res.confirm) {
+          var this_id = wx.getStorageSync('openid')
+          console.log(this_id)
+          wx.login({
+            success: (res) => {
+                console.log(res);
+                _this.setData({
+                    wxCode: res.code,
+                })
+                // ====== 【获取OpenId】
+                let m_code = _this.data.wxCode; // 获取code
+                let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+                let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+                console.log("m_code:" + m_code);
+                let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+                wx.request({
+                    url: url,
+                    success: (res) => {
+                        console.log(res);
+                        _this.setData({
+                            wxOpenId: res.data.openid
+                        })
+                        //获取到你的openid
+                        console.log("====openID=======");
+                        console.log(_this.data.wxOpenId);
+                        var sql = "update gongzi_renyuan set wechart_user = '" + _this.data.wxOpenId + "' where id=" +  id
+                        console.log(sql)
+                        wx.cloud.callFunction({
+                          name: 'sqlServer_117',
+                          data:{
+                            query : sql
+                          },
+                          success(res){
+                            console.log(res)
+                            wx.showToast({
+                              title: '绑定成功',
+                              icon:"none"
+                            })
+                            _this.baochi()
+                          }
+                        })
+                    }
+                })
+            }
+        })
+        }
+      }
+    })
+  },
+
+
+  jiebang:function(e){
+    var _this = this
+    var id = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '提示',
+      content: '是否解除此账号的微信绑定？',
+      success: function(res) {
+        if (res.confirm) {
+          var sql = "update gongzi_renyuan set wechart_user = '' where id=" +  id
+          console.log(sql)
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data:{
+              query : sql
+            },
+            success(res){
+              console.log(res)
+              wx.showToast({
+                title: '解绑成功',
+                icon:"none"
+              })
+              _this.baochi()
+            }
+          })
+        }
+      }
+    })
+  },
+
 
   upd_access : function(e){
     var _this = this;

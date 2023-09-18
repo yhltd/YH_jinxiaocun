@@ -31,6 +31,10 @@
           data-value="{{list_item.do}}" data-input_type="text" bindtap="clickView" style="width:300rpx">
           <view class="list_text">{{list_item.do}}</view>
         </view>
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="wechart_user2"
+          data-value="{{list_item.wechart_user2}}" data-input_type="text" bindtap="clickView" bindlongpress="jiebang" style="width:300rpx">
+          <view class="list_text">{{list_item.wechart_user2}}</view>
+        </view>
       </view>
     </block>
   </view>

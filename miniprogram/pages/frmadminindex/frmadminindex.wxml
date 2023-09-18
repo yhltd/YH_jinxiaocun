@@ -39,14 +39,16 @@
   <view>
     <view class="list-title-left">用户名</view>
     <view class="list-title-right">状态</view>
+    <view class="list-title-right">绑定微信</view>
     <view class="list-title-right">编辑</view>
     <view class="clear"></view>
   </view>
 
   <block wx:for="{{listAll}}" wx:key="*this.index">
-    <view data-index="{{index}}" hidden="{{item.isShow==0}}" data-name="{{item._id}}" class="{{item.checked==true?'red bc':'bc'}}" bindtap='select'>
+    <view data-index="{{index}}" hidden="{{item.isShow==0}}" data-name="{{item._id}}" class="{{item.checked==true?'red bc':'bc'}}">
       <view class="list-content-left">{{item.name}}</view>
       <view class="list-content-right">{{item.Btype}}</view>
+      <view data-index="{{index}}" bindlongpress="jiebang" bindtap="bangding" class="list-content-right">{{item.wechart_user2}}</view>
       <view class="list-content-right">
         <image style="width: 50rpx;height: 50rpx;" bindtap="navgiate2" data-id="{{item._id}}" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/039aca64ea8386f7b6f814cfad13c979.png"/>
       </view>

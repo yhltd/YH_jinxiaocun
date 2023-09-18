@@ -11,6 +11,7 @@ Page({
       {text:"账号",width:"300rpx",type:"text",columnName:"name"},
       {text:"密码",width:"300rpx",type:"text",columnName:"pwd"},
       {text:"操作密码",width:"300rpx",type:"text",columnName:"do"},
+      {text:"绑定微信",width:"300rpx",type:"text",columnName:"wechart_user"},
     ],
     array: ['科目总账', '开支项目', '部门设置','账号管理','凭证汇总','智能看板','现金流量','资产负债','利益损益','极简台账','极简总账'],
     index:0,
@@ -107,7 +108,7 @@ Page({
         where2 = ""
       }
   
-      var sql = "select a.id,a.rownum,a.name,a.pwd,a.do,a.bianhao from (select *,row_number() over(order by id) as rownum from Account where company = '"+_this.data.userInfo.company+"') as a "+where+where2
+      var sql = "select a.id,a.rownum,a.name,a.pwd,a.do,a.bianhao,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user2 from (select *,row_number() over(order by id) as rownum from Account where company = '"+_this.data.userInfo.company+"') as a "+where+where2
 
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
@@ -328,39 +329,98 @@ Page({
         var value = e.currentTarget.dataset.value;
         var input_type = e.currentTarget.dataset.input_type;
         var money_type = e.currentTarget.dataset.money_type;
-        _this.setData({
-          value_input : value,
-          index_input : index,
-          column_input : column,
-          upd_db_id,
-          money_type
-        })
-    
-        if(input_type=="date"){
-          if(value!=""){
-            var arr = value.split(" ");
-            var arr1 = arr[0].split("-")
-            var arr2 = arr[1].split(":")
-            _this.setData({
-              ["dateArray["+0+"].value"] : arr1[0],
-              ["dateArray["+1+"].value"] : arr1[1],
-              ["dateArray["+2+"].value"] : arr1[2],
-              ["dateArray["+3+"].value"] : arr2[0],
-              ["dateArray["+4+"].value"] : arr2[1],
-              ["dateArray["+5+"].value"] : arr2[2]
+        if(column == 'wechart_user2'){
+            var list = _this.data.list
+            var index = e.currentTarget.dataset.index
+            wx.showModal({
+              title: '提示',
+              content: '是否使用当前微信绑定此账号？',
+              success: function(res) {
+                if (res.confirm) {
+                  var this_id = wx.getStorageSync('openid')
+                  console.log(this_id)
+                  wx.login({
+                    success: (res) => {
+                        console.log(res);
+                        _this.setData({
+                            wxCode: res.code,
+                        })
+                        // ====== 【获取OpenId】
+                        let m_code = _this.data.wxCode; // 获取code
+                        let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+                        let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+                        console.log("m_code:" + m_code);
+                        let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+                        wx.request({
+                            url: url,
+                            success: (res) => {
+                                console.log(res);
+                                _this.setData({
+                                    wxOpenId: res.data.openid
+                                })
+                                //获取到你的openid
+                                console.log("====openID=======");
+                                console.log(_this.data.wxOpenId);
+                                var sql = "update Account set wechart_user = '" + _this.data.wxOpenId + "' where id=" +  list[index].id
+                                console.log(sql)
+                                wx.cloud.callFunction({
+                                  name: 'sqlServer_cw',
+                                  data:{
+                                    query : sql
+                                  },
+                                  success(res){
+                                    console.log(res)
+                                    wx.showToast({
+                                      title: '绑定成功',
+                                      icon:"none"
+                                    })
+                                    _this.init();
+                                  }
+                                })
+                            }
+                        })
+                    }
+                })
+                }
+              }
             })
-          }
-          _this.setData({
-            isDate : false,
-            input_type: "date"
-          })
         }else{
           _this.setData({
-            isDate : true,
-            input_type: "text"
+            value_input : value,
+            index_input : index,
+            column_input : column,
+            upd_db_id,
+            money_type
           })
+      
+          if(input_type=="date"){
+            if(value!=""){
+              var arr = value.split(" ");
+              var arr1 = arr[0].split("-")
+              var arr2 = arr[1].split(":")
+              _this.setData({
+                ["dateArray["+0+"].value"] : arr1[0],
+                ["dateArray["+1+"].value"] : arr1[1],
+                ["dateArray["+2+"].value"] : arr1[2],
+                ["dateArray["+3+"].value"] : arr2[0],
+                ["dateArray["+4+"].value"] : arr2[1],
+                ["dateArray["+5+"].value"] : arr2[2]
+              })
+            }
+            _this.setData({
+              isDate : false,
+              input_type: "date"
+            })
+          }else{
+            _this.setData({
+              isDate : true,
+              input_type: "text"
+            })
+          }
+          _this.showView(_this,"input");
         }
-        _this.showView(_this,"input");
+
+        
       }else{
         wx.showToast({
           title: '无修改权限',
@@ -369,6 +429,36 @@ Page({
         })
       }
 
+    },
+
+    jiebang:function(e){
+      var _this = this
+      var list = _this.data.list
+      var index = e.currentTarget.dataset.index
+      wx.showModal({
+        title: '提示',
+        content: '是否解除此账号的微信绑定？',
+        success: function(res) {
+          if (res.confirm) {
+            var sql = "update Account set wechart_user = '' where id=" +  list[index].id 
+            console.log(sql)
+            wx.cloud.callFunction({
+              name: 'sqlServer_cw',
+              data:{
+                query : sql
+              },
+              success(res){
+                console.log(res)
+                wx.showToast({
+                  title: '解绑成功',
+                  icon:"none"
+                })
+                _this.init()
+              }
+            })
+          }
+        }
+      })
     },
 
     save: function(e){

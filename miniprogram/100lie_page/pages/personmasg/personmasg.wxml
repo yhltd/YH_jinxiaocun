@@ -12,6 +12,7 @@
   <view class="td" bindtap="update" data-index="{{index}}" >{{item.email}}</view>
   <view class="td" bindtap="update" data-index="{{index}}" >{{item.phone}}</view>
   <view class="td" bindtap="update" data-index="{{index}}" >{{item.bianhao}}</view>
+  <view class="td" bindlongpress="jiebang" bindtap="bangding" data-index="{{index}}" >{{item.wechart_user}}</view>
 </view>
 </view>
 </scroll-view>

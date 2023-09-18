@@ -76,7 +76,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,'1' as isShow from yh_jinxiaocun_user where gongsi = '" + gongsi + "'"
+        sql: "select *,'1' as isShow,case when ifnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user2 from yh_jinxiaocun_user where gongsi = '" + gongsi + "'"
       },
       success(res) {
         console.log("成功", res)
@@ -91,6 +91,96 @@ Page({
     });
 
   },
+
+  bangding:function(e){
+    var _this = this
+    var list = _this.data.listAll
+    var index = e.currentTarget.dataset.index
+    wx.showModal({
+      title: '提示',
+      content: '是否使用当前微信绑定此账号？',
+      success: function(res) {
+        if (res.confirm) {
+          var this_id = wx.getStorageSync('openid')
+          console.log(this_id)
+          wx.login({
+            success: (res) => {
+                console.log(res);
+                _this.setData({
+                    wxCode: res.code,
+                })
+                // ====== 【获取OpenId】
+                let m_code = _this.data.wxCode; // 获取code
+                let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+                let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+                console.log("m_code:" + m_code);
+                let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+                wx.request({
+                    url: url,
+                    success: (res) => {
+                        console.log(res);
+                        _this.setData({
+                            wxOpenId: res.data.openid
+                        })
+                        //获取到你的openid
+                        console.log("====openID=======");
+                        console.log(_this.data.wxOpenId);
+                        var sql = "update yh_jinxiaocun_user set wechart_user = '" + _this.data.wxOpenId + "' where _id='" +  list[index]._id + "'"
+                        console.log(sql)
+                        wx.cloud.callFunction({
+                          name: 'sqlConnection',
+                          data:{
+                            sql : sql
+                          },
+                          success(res){
+                            console.log(res)
+                            wx.showToast({
+                              title: '绑定成功',
+                              icon:"none"
+                            })
+                            _this.onShow()
+                          }
+                        })
+                    }
+                })
+            }
+        })
+        }
+      }
+    })
+  },
+  
+  
+  jiebang:function(e){
+    var _this = this
+    var list = _this.data.listAll
+    var index = e.currentTarget.dataset.index
+    wx.showModal({
+      title: '提示',
+      content: '是否解除此账号的微信绑定？',
+      success: function(res) {
+        if (res.confirm) {
+          var sql = "update yh_jinxiaocun_user set wechart_user = '' where _id='" +  list[index]._id + "'"
+          console.log(sql)
+          wx.cloud.callFunction({
+            name: 'sqlConnection',
+            data:{
+              sql : sql
+            },
+            success(res){
+              console.log(res)
+              wx.showToast({
+                title: '解绑成功',
+                icon:"none"
+              })
+              _this.onShow()
+            }
+          })
+        }
+      }
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面隐藏

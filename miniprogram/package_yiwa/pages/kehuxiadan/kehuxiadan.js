@@ -318,9 +318,9 @@ Page({
   },
   add1: function(){
     var _this = this
-    var riqi =getNowDate()
-    var sql ="select us.id as uid,us.name,us.power,DC.Customer_id,DC.riqi from Detailsoforder as DC left join (select id,name,power from userInfo) as us on us.id = DC.Customer_id where us.name like '%" + _this.data.userInfo.username + "%' and  DC.riqi  ='" + riqi + "'and  us.power ='业务员'"
-    
+    var riqi = _this.data.riqi
+    var sql = "select * from Detailsoforder where Customer_id = '" + _this.data.idd + "' and riqi = '" + riqi + "'"
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
@@ -328,21 +328,13 @@ Page({
       },
       success: res => {
         console.log(res)
-        wx.showToast({
-          title: '客户已有订单，请联系报货员更改！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
-        return;
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail:res =>{
-
-     
-
-
+        if(res.result.recordset.length > 0 &&(_this.data.userInfo.power !='管理员' && _this.data.userInfo.power !='报货员')){
+          wx.showToast({
+            title: '客户已有订单，请联系报货员更改！',
+            icon: 'none'
+          })
+          return;
+        }else{
     if(_this.data.Customer_id == ''){
       wx.showToast({
         title: '未读取到对应客户！',
@@ -493,6 +485,13 @@ Page({
           console.log("请求失败！")
         }
       })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail:res =>{
+        console.log(res)
     },
   }) 
   },

@@ -31,7 +31,7 @@
 
 <!--标题栏-->
 <scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
-	<view class='table' style="width:100%;display:flex;align-items: center;justify-content: center;margin-left: 65rpx;">
+	<view class='table' style="width:100%;display:flex;align-items: center;justify-content: center;margin-left: 130rpx;">
 		<view class='table_header'>
 			<block wx:for="{{title}}" wx:key="">
 				<view class="th {{(item.renyuanxinxiguanli == '编号')?'tap_120':''||(item.renyuanxinxiguanli == '操作栏')?'change_x':''}}" data-renyuanxinxiguanli='{{item.renyuanxinxiguanli}}'>
@@ -66,6 +66,9 @@
 					<view><button class='del' data-id='{{item.id}}' bindtap='onDel' disabled="{{result.del!=1}}">删除</button></view>
 					<view style="width:10rpx"></view>
 					<view><button class='update' data-id='{{item.id}}' disabled="{{result.upd!=1}}" bindtap='onUpdate'>修改</button></view>
+				</view>
+        <view class='td'>
+					<view data-id='{{item.id}}' bindtap='bangding' bindlongpress='jiebang' class="cell_label centerclass">{{item.wechart_user2}}</view>
 				</view>
 			</view>
 		</block>

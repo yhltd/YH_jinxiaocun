@@ -92,7 +92,7 @@ App({
                 var objz = {};
                 objz.avatarUrl = res.userInfo.avatarUrl;
                 objz.nickName = res.userInfo.nickName;
-                //console.log(objz);
+                console.log(objz);
                 wx.setStorageSync('userInfo', objz);//存储userInfo
               }
             });

@@ -73,7 +73,7 @@ page {
 
 .list-title-right {
   box-sizing: border-box;
-  width: 33%;
+  width: 22%;
   border: 2rpx solid #eaeaea;
   float: left;
   line-height: 76rpx;
@@ -97,7 +97,7 @@ page {
 
 .list-content-right {
   box-sizing: border-box;
-  width: 33%;
+  width: 22%;
   border: 2rpx solid #eaeaea;
   float: left;
   line-height: 76rpx;

@@ -16,7 +16,8 @@
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
-              bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}">
+              bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}"
+              bindlongpress="{{item.columnName=='wechart_user2'?'jiebang':''}}" >
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>

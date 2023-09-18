@@ -1,4 +1,5 @@
 // 100lie_page/pages/work_bench/work_bench.js
+var app = getApp();
 Page({
 
   /**
@@ -91,11 +92,70 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    var userInfo = JSON.parse(options.userInfo)
-    _this.setData({
-      userInfo:userInfo,
+    var userInfo = options.userInfo
+    if(userInfo == undefined){
+      wx.login({
+        success: (res) => {
+            console.log(res);
+            _this.setData({
+                wxCode: res.code,
+            })
+            // ====== 【获取OpenId】
+            let m_code = _this.data.wxCode; // 获取code
+            let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+            let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+            console.log("m_code:" + m_code);
+            let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+            wx.request({
+                url: url,
+                success: (res) => {
+                    console.log(res);
+                    _this.setData({
+                        wxOpenId: res.data.openid
+                    })
+                    //获取到你的openid
+                    console.log("====openID=======");
+                    console.log(_this.data.wxOpenId);
+                    var sql = "select * from baitaoquanxian_renyun where wechart_user = '" + _this.data.wxOpenId + "'"
+                    console.log(sql)
+                    wx.cloud.callFunction({
+                      name: 'sqlServer_117',
+                      data:{
+                        query : sql
+                      },
+                      success(res){
+                        console.log(res)
+                        var list = res.result.recordset
+                        console.log(list)
+                        if(list.length > 0){
+                          _this.setData({
+                            userInfo: list[0]
+                          })
+                          _this.user_set()
+                        }else{
+                          wx.showToast({
+                            title: '未绑定账号信息',
+                            icon:"none"
+                          })
+                        }
+                      }
+                    })
+                }
+            })
+        }
     })
-    var sql = "select * from baitaoquanxian_gongsi where B='" + userInfo.B + "'; select * from baitaoquanxian_copy1 where renyuan_id ='" + userInfo.renyuan_id + "' and chashanquanxian ='修改'; select C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM,AN,AO,AP,AQ,AR,ASS,AT,AU,AV,AW,AX,AY,AZ,BA,BB,BC,BD,BE,BF,BG,BH,BI,BJ,BK,BL,BM,BN,BO,BP,BQ,BR,BS,BT,BU,BV,BW,BX,BYY,BZ,CA,CB,CC,CD,CE,CF,CG,CH,CI,CJ,CK,CL,CM,CN,CO,CP,CQ,CR,CS,CT,CU,CV,CW,CX from baitaoquanxian_copy1 where renyuan_id ='" + userInfo.renyuan_id + "' and chashanquanxian ='查询';select ins,del,upd,sel from baitaoquanxian_department where company='" + _this.data.userInfo.B + "' and view_name ='工作台' and department_name ='" + _this.data.userInfo.bumen + "'"
+    }else{
+      var userInfo = JSON.parse(options.userInfo)
+      _this.setData({
+        userInfo:userInfo,
+      })
+      _this.user_set()
+    }
+  },
+
+  user_set:function(){
+    var _this = this
+    var sql = "select * from baitaoquanxian_gongsi where B='" +  _this.data.userInfo.B + "'; select * from baitaoquanxian_copy1 where renyuan_id ='" + _this.data.userInfo.renyuan_id + "' and chashanquanxian ='修改'; select C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM,AN,AO,AP,AQ,AR,ASS,AT,AU,AV,AW,AX,AY,AZ,BA,BB,BC,BD,BE,BF,BG,BH,BI,BJ,BK,BL,BM,BN,BO,BP,BQ,BR,BS,BT,BU,BV,BW,BX,BYY,BZ,CA,CB,CC,CD,CE,CF,CG,CH,CI,CJ,CK,CL,CM,CN,CO,CP,CQ,CR,CS,CT,CU,CV,CW,CX from baitaoquanxian_copy1 where renyuan_id ='" + _this.data.userInfo.renyuan_id + "' and chashanquanxian ='查询';select ins,del,upd,sel from baitaoquanxian_department where company='" + _this.data.userInfo.B + "' and view_name ='工作台' and department_name ='" + _this.data.userInfo.bumen + "'"
 
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -175,7 +235,6 @@ Page({
         console.log("请求失败！")
       }
     })
-
   },
 
   

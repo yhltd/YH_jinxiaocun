@@ -113,7 +113,74 @@ Page({
     })
   },
   onLoad: function () {
-    
+    var _this = this
+    if(app.globalData.finduser == ''){
+      wx.login({
+        success: (res) => {
+            console.log(res);
+            _this.setData({
+                wxCode: res.code,
+            })
+            // ====== 【获取OpenId】
+            let m_code = _this.data.wxCode; // 获取code
+            let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+            let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+            console.log("m_code:" + m_code);
+            let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+            wx.request({
+                url: url,
+                success: (res) => {
+                    console.log(res);
+                    _this.setData({
+                        wxOpenId: res.data.openid
+                    })
+                    //获取到你的openid
+                    console.log("====openID=======");
+                    console.log(_this.data.wxOpenId);
+                    var sql = "select * from yh_jinxiaocun_user where wechart_user = '" + _this.data.wxOpenId + "'"
+                    console.log(sql)
+                    wx.cloud.callFunction({
+                      name: 'sqlConnection',
+                      data:{
+                        sql : sql
+                      },
+                      success(res){
+                        console.log(res)
+                        var list = res.result
+                        console.log(list)
+                        if(list.length > 0){
+                          var listAll = []
+                          listAll.push(res.result)
+                          var gongsi = listAll[0][0].gongsi
+                          var finduser = listAll[0][0].name
+                          var passwod = listAll[0][0].password
+                
+                          var adminis = listAll[0][0].AdminIS
+                            // openid = listAll[0]._openid,          
+                            // app.globalData.openid = openid,
+                            app.globalData.finduser = finduser,
+                            app.globalData.passwod = passwod,
+                            app.globalData.adminis = adminis,
+                            app.globalData.gongsi = gongsi
+                          console.log("密码对")
+                          //登录状态写入缓存
+                          wx.setStorage({
+                            key: "IsLogin",
+                            data: true
+                          })
+                        }else{
+                          wx.showToast({
+                            title: '未绑定账号信息',
+                            icon:"none"
+                          })
+                        }
+                      }
+                    })
+                }
+            })
+        }
+    })
+    }
   },
   onShow: function () {
     // if (app.globalData.gongsi == null || app.globalData.finduser == null) {

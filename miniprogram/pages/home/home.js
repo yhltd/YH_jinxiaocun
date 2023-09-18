@@ -150,6 +150,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var _this = this;
     wx.setNavigationBarTitle({
       title: '人资管理系统'
     })
@@ -159,11 +160,65 @@ Page({
     })
 
     var id = options.id;
-
-    var _this = this;
-    _this.setData({
-      id
+    id = undefined
+    if(id == undefined){
+      wx.login({
+        success: (res) => {
+            console.log(res);
+            _this.setData({
+                wxCode: res.code,
+            })
+            // ====== 【获取OpenId】
+            let m_code = _this.data.wxCode; // 获取code
+            let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+            let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+            console.log("m_code:" + m_code);
+            let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+            wx.request({
+                url: url,
+                success: (res) => {
+                    console.log(res);
+                    _this.setData({
+                        wxOpenId: res.data.openid
+                    })
+                    //获取到你的openid
+                    console.log("====openID=======");
+                    console.log(_this.data.wxOpenId);
+                    var sql = "select id from gongzi_renyuan where wechart_user = '" + _this.data.wxOpenId + "'"
+                    console.log(sql)
+                    wx.cloud.callFunction({
+                      name: 'sqlServer_117',
+                      data:{
+                        query : sql
+                      },
+                      success(res){
+                        console.log(res)
+                        var list = res.result.recordset
+                        console.log(list)
+                        if(list.length > 0){
+                          _this.setData({
+                            id: list[0].id
+                          })
+                          _this.getLooks(_this,_this.data.id)
+                        }else{
+                          wx.showToast({
+                            title: '未绑定账号信息',
+                            icon:"none"
+                          })
+                        }
+                      }
+                    })
+                }
+            })
+        }
     })
+    }else{
+      _this.setData({
+        id
+      })
+    }
+
+
   },
 
   getLooks : function(_this,id){

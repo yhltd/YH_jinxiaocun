@@ -128,15 +128,71 @@ Page({
   },
   onLoad : function(options){
     var _this = this;
-    
     var user = JSON.parse(options.userInfo)
-    var bianhao = user.bianhao
-    _this.setData({
-      userInfo : JSON.parse(options.userInfo),
-      bianhao : bianhao
+    if(user == undefined){
+      wx.login({
+        success: (res) => {
+            console.log(res);
+            _this.setData({
+                wxCode: res.code,
+            })
+            // ====== 【获取OpenId】
+            let m_code = _this.data.wxCode; // 获取code
+            let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ; // appid
+            let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3; // 小程序密钥
+            console.log("m_code:" + m_code);
+            let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+            wx.request({
+                url: url,
+                success: (res) => {
+                    console.log(res);
+                    _this.setData({
+                        wxOpenId: res.data.openid
+                    })
+                    //获取到你的openid
+                    console.log("====openID=======");
+                    console.log(_this.data.wxOpenId);
+                    var sql = "select * from Account where wechart_user = '" + _this.data.wxOpenId + "'"
+                    console.log(sql)
+                    wx.cloud.callFunction({
+                      name: 'sqlServer_cw',
+                      data:{
+                        query : sql
+                      },
+                      success(res){
+                        console.log(res)
+                        var list = res.result.recordset
+                        console.log(list)
+                        if(list.length > 0){
+                          var bianhao = list[0].bianhao
+                          _this.setData({
+                            userInfo : list[0],
+                            bianhao : bianhao
+                          })
+                          _this.getSpace()
+                          _this.init();
+                        }else{
+                          wx.showToast({
+                            title: '未绑定账号信息',
+                            icon:"none"
+                          })
+                        }
+                      }
+                    })
+                }
+            })
+        }
     })
-    _this.getSpace()
-    _this.init();
+    }else{
+      var bianhao = user.bianhao
+      _this.setData({
+        userInfo : JSON.parse(options.userInfo),
+        bianhao : bianhao
+      })
+      _this.getSpace()
+      _this.init();
+    }
+
   },
 
   onShow : function(){
