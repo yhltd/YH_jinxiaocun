@@ -318,6 +318,31 @@ Page({
   },
   add1: function(){
     var _this = this
+    var riqi =getNowDate()
+    var sql ="select us.id as uid,us.name,us.power,DC.Customer_id,DC.riqi from Detailsoforder as DC left join (select id,name,power from userInfo) as us on us.id = DC.Customer_id where us.name like '%" + _this.data.userInfo.username + "%' and  DC.riqi  ='" + riqi + "'and  us.power ='业务员'"
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_yiwa',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        wx.showToast({
+          title: '客户已有订单，请联系报货员更改！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+        return;
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail:res =>{
+
+     
+
+
     if(_this.data.Customer_id == ''){
       wx.showToast({
         title: '未读取到对应客户！',
@@ -468,6 +493,8 @@ Page({
           console.log("请求失败！")
         }
       })
+    },
+  }) 
   },
 
   tab_del:function(e){
@@ -510,6 +537,7 @@ Page({
     if(column = "Customer_id"){
       var customer_list = _this.data.listKeHu
       var panduan = false
+      console.log(customer_list)
       for(var i=0; i<customer_list.length; i++){
         if(customer_list[i].name == e.detail.value && e.detail.value != ''){
           _this.setData({

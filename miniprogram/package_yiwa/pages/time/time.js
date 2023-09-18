@@ -30,7 +30,8 @@ Page({
     hideen2: false,
     pd: 0,
     sjkj: "",
-    ddh: ""
+    ddh: "",
+    userInfo:"",
   },
 
   /**
@@ -294,40 +295,13 @@ Page({
   },
 
   querenRk: function () {
+
     var _this = this
     var rk_list = _this.data.szzhi
     var panduan = false
-    for(var i=0; i<rk_list.length; i++){
-      if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
-        panduan = true
-      }
-    }
-    if(panduan == false){
-      wx.showToast({
-        title: '请至少填写一种商品数量！',
-        icon: 'none'
-      })
-      return;
-    }
-    var userInfo = _this.data.userInfo
-    var sql1 = "insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values "
-    var sql2 = ""
-    for (var i = 0; i < rk_list.length; i++) {
-      if (sql2 == "") {
-        if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
-          sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
-        }else if(rk_list[i].kuang == '是'){
-          sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','0')"
-        }
-      } else {
-        if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
-          sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
-        }else if(rk_list[i].kuang == '是'){
-          sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','0')"
-        }
-      }
-    }
-    var sql = sql1 + sql2
+ 
+    var riqi = getNowDate()
+    var sql ="select us.id as uid,us.name,us.power,DC.Customer_id,DC.riqi from Detailsoforder as DC left join (select id,name,power from userInfo) as us on us.id = DC.Customer_id where us.name like '%" + _this.data.userInfo.username + "%' and  DC.riqi  ='" + riqi + "'and us.power ='客户' "
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
@@ -335,28 +309,82 @@ Page({
         query: sql
       },
       success: res => {
+        console.log(res)
         wx.showToast({
-          title: '下单成功！',
-          icon: 'none'
+          title: '客户已有订单，请联系报货员更改！',
+          icon: 'none',
         })
-        var common_Interval = setInterval(() => {
-          wx.navigateBack({
-            delta: 1
-          });
-          clearInterval(common_Interval);
-        }, 2000)
+        return;
       },
       err: res => {
+        console.log(res)
         console.log("错误!")
       },
       fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
-      }
-    })
+        console.log(res)
+    // for(var i=0; i<rk_list.length; i++){
+    //   if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
+    //     panduan = true
+    //   }
+    // }
+    // if(panduan == false){
+    //   wx.showToast({
+    //     title: '请至少填写一种商品数量！',
+    //     icon: 'none'
+    //   })
+    //   return;
+    // }
+    // var userInfo = _this.data.userInfo
+    // var sql1 = "insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values "
+    // var sql2 = ""
+    // for (var i = 0; i < rk_list.length; i++) {
+    //   if (sql2 == "") {
+    //     if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
+    //       sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
+    //     }else if(rk_list[i].kuang == '是'){
+    //       sql2 = "('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','0')"
+    //     }
+    //   } else {
+    //     if(rk_list[i].num != undefined && rk_list[i].num != '' && rk_list[i].num != null){
+    //       sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','" + rk_list[i].num + "')"
+    //     }else if(rk_list[i].kuang == '是'){
+    //       sql2 = sql2 + ",('" + userInfo.id + "','" + _this.data.Documentnumber + "','" + _this.data.riqi + "','" + rk_list[i].NameofProduct + "','" + rk_list[i].unit + "','" + rk_list[i].Theunitprice + "','0')"
+    //     }
+    //   }
+    // }
+    // var sql = sql1 + sql2
+    // console.log(sql)
+    // wx.cloud.callFunction({
+    //   name: 'sqlserver_yiwa',
+    //   data: {
+    //     query: sql
+    //   },
+    //   success: res => {
+    //     wx.showToast({
+    //       title: '下单成功！',
+    //       icon: 'none'
+    //     })
+    //     var common_Interval = setInterval(() => {
+    //       wx.navigateBack({
+    //         delta: 1
+    //       });
+    //       clearInterval(common_Interval);
+    //     }, 2000)
+    //   },
+    //   err: res => {
+    //     console.log("错误!")
+    //   },
+    //   fail: res => {
+    //     wx.showToast({
+    //       title: '请求失败！',
+    //       icon: 'none'
+    //     })
+    //     console.log("请求失败！")
+    //   }
+    // })
+
+  }
+})
   },
 })
 

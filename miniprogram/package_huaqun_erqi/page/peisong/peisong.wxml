@@ -180,12 +180,12 @@
           <view class="list_view"  data-index="0" data-column="shoukuan_riqi" data-value="{{list[0].shoukuan_riqi}}" style="width:calc(250vmin / 7.5)">{{list[0].shoukuan_riqi}}</view>
         </view>
 
-        <view class="table_main">
+        <!-- <view class="table_main">
           <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">完成情况</view>
           <view class="list_view" bindtap="clickView" data-index="0" data-column="wancheng" data-value="{{list[0].wancheng}}" style="width:calc(500vmin / 7.5)">{{list[0].wancheng}}</view>
           <view class="list_view"  data-index="0" data-column="wancheng_renyuan" data-value="{{list[0].wancheng_renyuan}}" style="width:calc(250vmin / 7.5)">{{list[0].wancheng_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="wancheng_riqi" data-value="{{list[0].wancheng_riqi}}" style="width:calc(250vmin / 7.5)">{{list[0].wancheng_riqi}}</view>
-        </view>
+        </view> -->
 
         <view class="table_main">
           <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(70vmin / 7.5);position:sticky;left:0">完成情况</view>
