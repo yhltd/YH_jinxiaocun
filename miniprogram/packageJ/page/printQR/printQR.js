@@ -3,6 +3,7 @@ var Promisify = require('../utils/utils.js')
 var Buffer = require('/buffer').Buffer;
 const app = getApp();
 import QR from './weapp-qrcode-base64.js'
+var wxbarcode = require('../utils/index.js');
 Page({
 
   /**
@@ -21,7 +22,7 @@ Page({
     width_user_all: 0,
     width_user: 0,
     height_user: 0,
-
+    ishidden:false,
     mask_hid: true,
     updComment_hid: true,
 
@@ -85,7 +86,8 @@ Page({
   setCanvas: function (comment_order) {
     var _this = this;
     _this.setData({
-      jishu: 0
+      jishu: 0,
+      ishidden:false
     })
     var list = _this.data.list
     var type = _this.data.type
@@ -96,6 +98,8 @@ Page({
     console.log(width)
     console.log(height)
     const ctx = wx.createCanvasContext('outCanvas')
+    ctx.clearRect(0,0,width,height)
+    ctx.draw()
     console.log('赋值前')
     ctx.setFillStyle('#000000')
     ctx.setFontSize(35)
@@ -105,11 +109,15 @@ Page({
       console.log(list[i].sp_dm)
       ctx.fillText(list[i].sp_dm, 50, 440+i*500);
       ctx.fillText(list[i].mingcheng, 50, 490+i*500);
-      var imgData = QR.drawImg(list[i].sp_dm, {
+      var imgData = QR.drawImg(list[i].sp_dm.replace("订单号：",'').replace("商品代码：",''), {
         typeNumber: 4,
         errorCorrectLevel: 'M',
         size: 500
       })
+      console.log(imgData)
+      console.log(list[i].sp_dm)
+      console.log(list[i].sp_dm.replace("订单号：",'').replace("商品代码：",''))
+      wxbarcode.barcode('barcode' + i, list[i].sp_dm.replace("订单号：",'').replace("商品代码：",''), 680, 200);
       new Promise((resolve, reject) => {	
         console.log('第一步')
         const fs = wx.getFileSystemManager();
@@ -132,6 +140,61 @@ Page({
         ctx.drawImage(res, 100, 10 + z, 380, 380)
         z = z + 500
       })
+    }
+    setTimeout(function() {
+      ctx.draw()
+      var this_xiabiao = 0
+      for(var i=0; i<list.length; i++){
+        wx.canvasToTempFilePath({
+          canvasId: 'barcode' + i,
+          success: function (res) {
+            console.log(res.tempFilePath)
+            console.log(this_xiabiao)
+            list[this_xiabiao].path = res.tempFilePath
+            _this.setData({
+              list,
+              ishidden:true
+            })
+            console.log(_this.data.list)
+            this_xiabiao = this_xiabiao + 1
+          }
+        })
+      }
+    }, 3000);
+  },
+
+  setCanvas_yiwei: function (comment_order) {
+    var _this = this;
+    _this.setData({
+      jishu: 0
+    })
+    var list = _this.data.list
+    var type = _this.data.type
+    var width_all = _this.data.width_user_all
+    var width = _this.data.width_user
+    var height = _this.data.height_user
+    console.log(width_all)
+    console.log(width)
+    console.log(height)
+    const ctx = wx.createCanvasContext('outCanvas')
+    ctx.clearRect(0,0,width,height)
+    ctx.draw()
+    console.log('赋值前')
+    ctx.setFillStyle('#000000')
+    ctx.setFontSize(35)
+    var y = 10;
+    var z = 10;
+    for (let i = 0; i < list.length; i++, y += 150) {
+      console.log(list[i].sp_dm)
+      ctx.fillText(list[i].sp_dm, 50, 440+i*500);
+      ctx.fillText(list[i].mingcheng, 50, 490+i*500);
+      var imgData = QR.drawImg(list[i].sp_dm.replace("订单号：",'').replace("商品代码：",''), {
+        typeNumber: 4,
+        errorCorrectLevel: 'M',
+        size: 500
+      })
+      ctx.drawImage(list[i].path, 100, 10 + z, 380, 380)
+      z = z + 500
     }
     setTimeout(function() {
       ctx.draw()

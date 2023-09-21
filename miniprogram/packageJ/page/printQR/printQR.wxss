@@ -62,7 +62,7 @@ button{
   bottom: 2%;
 }
 .bt_bottom{
-  width: 39%;
+  width: 28%;
   background-color: #282B33;
   color: #E6E6E6;
   height: 80rpx;
@@ -70,7 +70,7 @@ button{
   line-height: 80rpx;
 }
 .bt_bottom_hover{
-  width: 39%;
+  width: 28%;
   background-color: #2D2D2D;
   color: #E6E6E6;
   height: 80rpx;

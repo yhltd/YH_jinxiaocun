@@ -10,7 +10,9 @@
 </view>
 
 <view class="bottom_view">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="setCanvas_yiwei" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>条形码</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="setCanvas" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>二维码</button>
 </view>
 
 <scroll-view class="temp_day_box" scroll-x bindscroll='scrollCanvas'>
@@ -19,7 +21,12 @@
   </view>
 </scroll-view>
 
-<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
+
+
+<block  class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+  <canvas wx:if="{{!ishidden}}" class="canvas" canvas-id="barcode{{i}}" ></canvas>
+</block>
+<view class="mask" bindtap="hid_view" style="width: 1080rpx;height:200rpx" hidden="{{mask_hid}}"></view>
 
 <view class="updComment_view" hidden="{{updComment_hid}}">
   <form bindsubmit="updComment">
