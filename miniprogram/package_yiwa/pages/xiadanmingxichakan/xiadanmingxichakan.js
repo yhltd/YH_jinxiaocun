@@ -226,6 +226,7 @@ Page({
       name: 'sqlserver_yiwa',
       data: {
         query: "select NameofProduct,unit,Theunitprice from DetailedConfiguration"
+        // query:"select DC.NameofProduct,DC.unit,DC.Theunitprice from Detailsoforder as DC  where number != 0 and DC.Documentnumber = '"+ _this.data.Documentnumber +"' and DC.Customer.id ='"+ _this.data.Customer_id +"'"
       },
       success: res => {
         console.log(res)
@@ -483,46 +484,109 @@ Page({
       return;
     }
     var sql
-    if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
-      sql ="insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values('" + _this.data.list[0].Customer_id + "','" + _this.data.Documentnumber + "','" + _this.data.list[0].riqi + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.number + "')"
-    }else{
-      wx.showToast({
-        title: '无权限！',
-        icon: 'none'
-      })
-      return;
-    }
+    sql ="select * from Detailsoforder  where NameofProduct = '"+ _this.data.NameofProduct +"' and  Documentnumber = '"+ _this.data.Documentnumber +"'"
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
         query: sql
       },
       success: res => {
-        _this.setData({
-          
-          NameofProduct:'',
-          unit:'',
-          Theunitprice:'',
-          number:'',
+        var sql
+        if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
+          sql ="update  Detailsoforder set Theunitprice= '" + _this.data.Theunitprice + "',number='" + _this.data.number + "'where NameofProduct = '"+ _this.data.NameofProduct +"' and  Documentnumber = '"+ _this.data.Documentnumber +"'"
+        }else{
+          wx.showToast({
+            title: '无权限！',
+            icon: 'none'
+          })
+          return;
+        }
+        console.log(sql)
+        wx.cloud.callFunction({
+          name: 'sqlserver_yiwa',
+          data: {
+            query: sql
+          },
+          success: res => {
+            _this.setData({
+              
+              NameofProduct:'',
+              unit:'',
+              Theunitprice:'',
+              number:'',
+            })
+            _this.qxShow()
+            _this.tableShow()
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
         })
-        _this.qxShow()
-        _this.tableShow()
-        wx.showToast({
-          title: '添加成功！',
-          icon: 'none'
-        })
+        
+
+
       },
       err: res => {
         console.log("错误!")
       },
       fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
+        var sql
+        if (_this.data.userInfo.power=='管理员' || _this.data.userInfo.power=='报货员'){
+          sql ="insert into Detailsoforder(Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number) values('" + _this.data.list[0].Customer_id + "','" + _this.data.Documentnumber + "','" + _this.data.list[0].riqi + "','" + _this.data.NameofProduct + "','" + _this.data.unit + "','" + _this.data.Theunitprice + "','" + _this.data.number + "')"
+        }else{
+          wx.showToast({
+            title: '无权限！',
+            icon: 'none'
+          })
+          return;
+        }
+        wx.cloud.callFunction({
+          name: 'sqlserver_yiwa',
+          data: {
+            query: sql
+          },
+          success: res => {
+            _this.setData({
+              
+              NameofProduct:'',
+              unit:'',
+              Theunitprice:'',
+              number:'',
+            })
+            _this.qxShow()
+            _this.tableShow()
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
         })
-        console.log("请求失败！")
       }
     })
+
+    
   },
 
 

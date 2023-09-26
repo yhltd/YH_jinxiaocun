@@ -160,7 +160,7 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select * from (select * from (select *,'' as zongjia from (select * from (select * from (select df.id,Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,huikuang,zhongliang_num,name as kehu,phone as kehu_phone,driver,salesman,beizhu,customer_address,baocun from Detailsoforder as df left join (select id,name,phone,driver,salesman,customer_address from userInfo) as us on df.Customer_id = us.id) as df2 left join (select id as siji_id,name as siji,phone as siji_phone from userInfo) as us2 on df2.driver = us2.siji_id) as df3 left join (select id as yewuyuan_id,name as yewuyuan,phone as yewuyuan_phone from userInfo) as us3 on df3.salesman = us3.yewuyuan_id) as df4 left join (select Customer_id as kehu_id,NameofProduct as production_name,unit as danwei,isnull(sum(CONVERT(float,isnull(number,0))) - sum(CONVERT(float,isnull(huikuang,0))),0) as qiankuang from Detailsoforder where riqi < '" + e[1] + "' group by Customer_id,NameofProduct,unit) as kuang_left on df4.Customer_id = kuang_left.kehu_id and df4.NameofProduct = kuang_left.production_name and df4.unit = kuang_left.danwei) as df5 left join (select NameofProduct as product_name,unit as danwei1,zhongliang,kuang from DetailedConfiguration) as dc on df5.NameofProduct = dc.product_name and df5.unit = dc.danwei1 where Customer_id = '" + e[0] + "' and riqi = '" + e[1] + "') as df6 left join (select Customer_id as c_id,kuang_num as qichu_kuang,NameofProduct as ming,unit as dw from DetailsofProducts) as kuang on df6.NameofProduct = kuang.ming and df6.unit = kuang.dw and df6.Customer_id = kuang.c_id;select * from beizhu;"
+    var sql = "select * from (select * from (select *,'' as zongjia from (select * from (select * from (select df.id,Customer_id,Documentnumber,riqi,NameofProduct,unit,Theunitprice,number,huikuang,zhongliang_num,name as kehu,phone as kehu_phone,driver,salesman,beizhu,beizhu1,customer_address,baocun from Detailsoforder as df left join (select id,name,phone,driver,salesman,customer_address from userInfo) as us on df.Customer_id = us.id) as df2 left join (select id as siji_id,name as siji,phone as siji_phone from userInfo) as us2 on df2.driver = us2.siji_id) as df3 left join (select id as yewuyuan_id,name as yewuyuan,phone as yewuyuan_phone from userInfo) as us3 on df3.salesman = us3.yewuyuan_id) as df4 left join (select Customer_id as kehu_id,NameofProduct as production_name,unit as danwei,isnull(sum(CONVERT(float,isnull(number,0))) - sum(CONVERT(float,isnull(huikuang,0))),0) as qiankuang from Detailsoforder where riqi < '" + e[1] + "' group by Customer_id,NameofProduct,unit) as kuang_left on df4.Customer_id = kuang_left.kehu_id and df4.NameofProduct = kuang_left.production_name and df4.unit = kuang_left.danwei) as df5 left join (select NameofProduct as product_name,unit as danwei1,zhongliang,kuang from DetailedConfiguration) as dc on df5.NameofProduct = dc.product_name and df5.unit = dc.danwei1 where Customer_id = '" + e[0] + "' and riqi = '" + e[1] + "') as df6 left join (select Customer_id as c_id,kuang_num as qichu_kuang,NameofProduct as ming,unit as dw from DetailsofProducts) as kuang on df6.NameofProduct = kuang.ming and df6.unit = kuang.dw and df6.Customer_id = kuang.c_id;select * from beizhu;"
     wx.cloud.callFunction({
       name: 'sqlserver_yiwa',
       data: {
@@ -178,9 +178,11 @@ Page({
           })
           return;
         }
-        var beizhu1 = res.result.recordsets[1][0].beizhu
+        // var beizhu1 = res.result.recordsets[1][0].beizhu1
+        // var beizhu2 = res.result.recordsets[1][0].beizhu
         var yewu_jingli = res.result.recordsets[1][0].yewu_jingli
         var yewu_jingli_phone = res.result.recordsets[1][0].yewu_jingli_phone
+        var beizhu1 = list[0].beizhu1
         var beizhu2 = list[0].beizhu
         console.log(beizhu1)
         console.log(beizhu2)
@@ -695,11 +697,12 @@ Page({
     var sql3 = ""
     var sql4 = ""
     if(_this.data.userInfo.power == "管理员" || _this.data.userInfo.power == "报货员"){
-      sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1  + "',yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
+      // sql3 = "update beizhu set beizhu = '" + _this.data.beizhu1  + "',yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
+      sql3 = "update beizhu set yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }else{
       sql3 = "update beizhu set yewu_jingli = '" + _this.data.yewu_jingli + "',yewu_jingli_phone = '" + _this.data.yewu_jingli_phone + "' where id=1;"
     }
-    sql4 = "update Detailsoforder set  beizhu = '" + _this.data.beizhu2  +"', baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
+    sql4 = "update Detailsoforder set  beizhu = '" + _this.data.beizhu2  +"',beizhu1 = '" + _this.data.beizhu1  +"', baocun='已保存' where Customer_id ='" + _this.data.sel_id + "' and riqi = '" + _this.data.sel_riqi + "';"
    
     
     

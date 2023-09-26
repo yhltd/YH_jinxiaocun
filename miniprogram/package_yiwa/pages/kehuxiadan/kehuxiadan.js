@@ -328,7 +328,7 @@ Page({
       },
       success: res => {
         console.log(res)
-        if(res.result.recordset.length > 0 &&(_this.data.userInfo.power !='管理员' && _this.data.userInfo.power !='报货员')){
+        if(res.result.recordset.length > 0 ){
           wx.showToast({
             title: '客户已有订单，请联系报货员更改！',
             icon: 'none'
