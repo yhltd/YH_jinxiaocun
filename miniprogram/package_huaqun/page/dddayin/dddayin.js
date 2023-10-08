@@ -74,16 +74,36 @@ Page({
     ctx.fillText( order1.djbh, 240, 40)
     ctx.setTextAlign('left')
     ctx.fillText('安装地址：' + order1.azdz, 0, 60)
-    ctx.setTextAlign('left')
-    ctx.fillText(order2.lcb, 0, 80)
-    ctx.setTextAlign('left')
-    ctx.fillText(order2.lcys, 0, 80)
-    ctx.setTextAlign('left')
-    ctx.fillText(order2.gy, 0, 80)
-    ctx.setTextAlign('left')
-    ctx.fillText(order2.ddcd, 0, 80)
-    ctx.setTextAlign('left')
-    ctx.fillText(order2.sl, 0, 80)
+
+    var this_height = 80
+    var this_column = 1
+    for(var i=0; i<order2.length; i++){
+      ctx.setTextAlign('left')
+      if(order2[i].fj == '房间柜号'){
+        this_column = 1
+        ctx.fillText(order2[i].gh, 0, this_height)
+        this_height = this_height + 20
+      }else if(order2[i].fj == '铝型材'){
+        this_column = 1
+        ctx.fillText(order2[i].gh, 0, this_height)
+        ctx.fillText(order2[i].lcys, 140, this_height)
+        ctx.fillText(order2[i].gy, 200, this_height)
+        ctx.fillText(order2[i].ddcd, 280, this_height)
+        ctx.fillText(order2[i].sl, 320, this_height)
+        this_height = this_height + 20
+      }else{
+        if(this_column == 1){
+          ctx.fillText(order2[i].gh, 0, this_height)
+          ctx.fillText(order2[i].sl, 120, this_height)
+          this_column = this_column + 1
+        }else{
+          ctx.fillText(order2[i].gh, 200, this_height)
+          ctx.fillText(order2[i].sl, 320, this_height)
+          this_column = 1
+          this_height = this_height + 20
+        }
+      }
+    }
     ctx.draw()
   },
 
@@ -310,7 +330,8 @@ Page({
 
   printTo : function(){
     var _this = this;
-    var order = _this.data.order
+    var order1 = _this.data.order1
+    var order2 = _this.data.order2
     wx.showLoading({
       title: '正在写入...',
     })
@@ -318,20 +339,86 @@ Page({
     let printUtil = new PrintUtil(1000, 1);
     var height = 20
     printUtil.setFontWidthAndHeight(1, 1);
-    printUtil.printlnText(4, 15, height, '天龙五金灯控系统' );
+    printUtil.printlnText(4, 200, height, '天龙五金灯控系统' );
     height = height + 40
-    printUtil.printlnText(4, 15, height, '客户：' + order.customer_name);
+    printUtil.printlnText(4, 15, height, '客户：' + order1.khmc);
     height = height
-    printUtil.printlnText(4, 200, height, '日期：' + order.date);
+    printUtil.printlnText(4, 200, height, '日期：' + order1.xdrq);
     height = height
-    printUtil.printlnText(4, 300, height,  order.order_number);
+    printUtil.printlnText(4, 420, height,  order1.djbh);
     height = height + 40
-    printUtil.printlnText(4, 15, height, '送货地址：' + order.songhuo_address);
+    printUtil.printlnText(4, 15, height, '安装地址：' + order1.azdz);
     height = height + 40
-    printUtil.printlnText(4, 15, height, '安装地址：' + order.anzhuang_address);
+
+    var this_column = 1
+    for(var i=0; i<order2.length; i++){
+      if(order2[i].fj == '房间柜号'){
+        this_column = 1
+        printUtil.printlnText(4, 15, height, order2[i].gh);
+        height = height + 40
+      }else if(order2[i].fj == '铝型材'){
+        this_column = 1
+        printUtil.printlnText(4, 15, height, order2[i].gh);
+        printUtil.printlnText(4, 250, height, order2[i].lcys);
+        printUtil.printlnText(4, 350, height, order2[i].gy);
+        printUtil.printlnText(4, 500, height, order2[i].ddcd);
+        printUtil.printlnText(4, 600, height, order2[i].sl);
+        height = height + 40
+      }else{
+        if(this_column == 1){
+          printUtil.printlnText(4, 15, height, order2[i].gh);
+          printUtil.printlnText(4, 250, height, order2[i].sl);
+          this_column = this_column + 1
+        }else{
+          printUtil.printlnText(4, 350, height, order2[i].gh);
+          printUtil.printlnText(4, 560, height, order2[i].sl);
+          this_column = 1
+          height = height + 40
+        }
+      }
+    }
+
+    printUtil = new PrintUtil(height, 1);
+    var height = 20
+    printUtil.setFontWidthAndHeight(1, 1);
+    printUtil.printlnText(4, 200, height, '天龙五金灯控系统' );
     height = height + 40
-    printUtil.printlnText(4, 15, height, '需求：' + order.customer_need_text1);
-    height = height + 20
+    printUtil.printlnText(4, 15, height, '客户：' + order1.khmc);
+    height = height
+    printUtil.printlnText(4, 200, height, '日期：' + order1.xdrq);
+    height = height
+    printUtil.printlnText(4, 420, height,  order1.djbh);
+    height = height + 40
+    printUtil.printlnText(4, 15, height, '安装地址：' + order1.azdz);
+    height = height + 40
+
+    var this_column = 1
+    for(var i=0; i<order2.length; i++){
+      if(order2[i].fj == '房间柜号'){
+        this_column = 1
+        printUtil.printlnText(4, 15, height, order2[i].gh);
+        height = height + 40
+      }else if(order2[i].fj == '铝型材'){
+        this_column = 1
+        printUtil.printlnText(4, 15, height, order2[i].gh);
+        printUtil.printlnText(4, 250, height, order2[i].lcys);
+        printUtil.printlnText(4, 350, height, order2[i].gy);
+        printUtil.printlnText(4, 500, height, order2[i].ddcd);
+        printUtil.printlnText(4, 600, height, order2[i].sl);
+        height = height + 40
+      }else{
+        if(this_column == 1){
+          printUtil.printlnText(4, 15, height, order2[i].gh);
+          printUtil.printlnText(4, 250, height, order2[i].sl);
+          this_column = this_column + 1
+        }else{
+          printUtil.printlnText(4, 350, height, order2[i].gh);
+          printUtil.printlnText(4, 560, height, order2[i].sl);
+          this_column = 1
+          height = height + 40
+        }
+      }
+    }
 
     let buffer = printUtil.getData();
     const maxChunk = 20;

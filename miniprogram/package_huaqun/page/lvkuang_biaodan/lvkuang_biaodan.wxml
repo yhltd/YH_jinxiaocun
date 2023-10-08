@@ -3948,7 +3948,8 @@
 <!------------------------->
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="out_put">导出表格</button>
-  <button class="bt_bottom" bindtap="print">打印</button>
+  <button class="bt_bottom" bindtap="print">打印1</button>
+  <button class="bt_bottom" bindtap="print2">打印2</button>
 </view>
 
 

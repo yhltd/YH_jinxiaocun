@@ -101,24 +101,124 @@ Page({
 
         height = height + 20
         ctx.setTextAlign('left')
-        ctx.fillText(list[i].fujian_select1, 0, height)
-        ctx.fillText(list[i].fujian_select2, 80, height)
-        ctx.fillText(list[i].fujian_select3, 160, height)
-        ctx.fillText(list[i].fujian_select4, 240, height)
+        ctx.fillText('铰链孔方向', 0, height)
+        ctx.fillText('左开门', 80, height)
+        ctx.fillText('', 160, height)
+        ctx.fillText('右开门', 240, height)
+        ctx.fillText('', 320, height)
 
         height = height + 20
         ctx.setTextAlign('left')
-        ctx.fillText(list[i].pinpai_select1, 0, height)
-        ctx.fillText(list[i].pinpai_select2, 80, height)
-        ctx.fillText(list[i].pinpai_select3, 160, height)
-        ctx.fillText(list[i].pinpai_select4, 240, height)
+        ctx.fillText('开门方向数量', 0, height)
+        ctx.fillText(list[i].jiaoliankong_fangxiang_left, 80, height)
+        ctx.fillText('', 160, height)
+        ctx.fillText(list[i].jiaoliankong_fangxiang_right, 240, height)
+        ctx.fillText('', 320, height)
 
         height = height + 20
         ctx.setTextAlign('left')
-        ctx.fillText(list[i].fujian_shuliang1, 0, height)
-        ctx.fillText(list[i].fujian_shuliang2, 80, height)
-        ctx.fillText(list[i].fujian_shuliang3, 160, height)
-        ctx.fillText(list[i].fujian_shuliang4, 240, height)
+        ctx.fillText('有拉手数量(个)', 0, height)
+        ctx.fillText(list[i].lashou_shuliang_right, 80, height)
+        ctx.fillText('', 160, height)
+        ctx.fillText(list[i].lashou_shuliang_left, 240, height)
+        ctx.fillText('', 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('拉手位方向', 0, height)
+        ctx.fillText('从下向上', 80, height)
+        ctx.fillText('从右向左', 160, height)
+        ctx.fillText('从下向上', 240, height)
+        ctx.fillText('从左向右', 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('拉手位', 0, height)
+        ctx.fillText(list[i].lashouwei_select_left, 80, height)
+        ctx.fillText(list[i].lashouwei_insert_left, 160, height)
+        ctx.fillText(list[i].lashouwei_select_right, 240, height)
+        ctx.fillText(list[i].lashouwei_insert_right, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('装锁数量', 0, height)
+        ctx.fillText(list[i].zhuangsuoshuliang_insert_left1, 80, height)
+        ctx.fillText('', 160, height)
+        ctx.fillText(list[i].zhuangsuoshuliang_insert_right1, 240, height)
+        ctx.fillText('', 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('锁孔位方向', 0, height)
+        ctx.fillText('从下向上', 80, height)
+        ctx.fillText('从右向左', 160, height)
+        ctx.fillText('从下向上', 240, height)
+        ctx.fillText('从左向右', 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('锁孔位', 0, height)
+        ctx.fillText(list[i].zhuangsuofangwei_insert_left1, 80, height)
+        ctx.fillText(list[i].zhuangsuofangwei_insert_left2, 160, height)
+        ctx.fillText(list[i].zhuangsuofangwei_insert_right1, 240, height)
+        ctx.fillText(list[i].zhuangsuofangwei_insert_right2, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('开铰链孔', 0, height)
+        ctx.fillText(list[i].kaijiaolian, 80, height)
+        ctx.fillText('', 160, height)
+        ctx.fillText('', 240, height)
+        ctx.fillText('', 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('铰链孔位1', 0, height)
+        ctx.fillText(list[i].jiaolian1_select_left, 80, height)
+        ctx.fillText(list[i].jiaolian1_insert_left, 160, height)
+        ctx.fillText(list[i].jiaolian1_select_right, 240, height)
+        ctx.fillText(list[i].jiaolian1_insert_right, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('铰链孔位2', 0, height)
+        ctx.fillText(list[i].jiaolian2_select_left, 80, height)
+        ctx.fillText(list[i].jiaolian2_insert_left, 160, height)
+        ctx.fillText(list[i].jiaolian2_select_right, 240, height)
+        ctx.fillText(list[i].jiaolian2_insert_right, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('铰链孔位3', 0, height)
+        ctx.fillText(list[i].jiaolian3_select_left, 80, height)
+        ctx.fillText(list[i].jiaolian3_insert_left, 160, height)
+        ctx.fillText(list[i].jiaolian3_select_right, 240, height)
+        ctx.fillText(list[i].jiaolian3_insert_right, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('铰链孔位4', 0, height)
+        ctx.fillText(list[i].jiaolian4_select_left, 80, height)
+        ctx.fillText(list[i].jiaolian4_insert_left, 160, height)
+        ctx.fillText(list[i].jiaolian4_select_right, 240, height)
+        ctx.fillText(list[i].jiaolian4_insert_right, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('铰链孔位5', 0, height)
+        ctx.fillText(list[i].jiaolian5_select_left, 80, height)
+        ctx.fillText(list[i].jiaolian5_insert_left, 160, height)
+        ctx.fillText(list[i].jiaolian5_select_right, 240, height)
+        ctx.fillText(list[i].jiaolian5_insert_right, 320, height)
+
+        height = height + 20
+        ctx.setTextAlign('left')
+        ctx.fillText('铰链孔位6', 0, height)
+        ctx.fillText(list[i].jiaolian6_select_left, 80, height)
+        ctx.fillText(list[i].jiaolian6_insert_left, 160, height)
+        ctx.fillText(list[i].jiaolian6_select_right, 240, height)
+        ctx.fillText(list[i].jiaolian6_insert_right, 320, height)
+        
         height = height + 50
       }
     }
@@ -406,13 +506,118 @@ Page({
         printUtil.printlnText(4, 290, height, list[i].fujian_shuliang3);
         printUtil.printlnText(4, 420, height, list[i].fujian_shuliang4);
 
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔方向');
+        printUtil.printlnText(5, 150, height, '左开门');
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, '右开门');
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '开门方向数量');
+        printUtil.printlnText(5, 200, height, list[i].jiaoliankong_fangxiang_left);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, list[i].jiaoliankong_fangxiang_right);
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '有拉手数量(个)');
+        printUtil.printlnText(5, 200, height, list[i].lashou_shuliang_right);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, list[i].lashou_shuliang_left);
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '拉手位方向');
+        printUtil.printlnText(5, 150, height, '从下向上');
+        printUtil.printlnText(5, 270, height, '从右向左');
+        printUtil.printlnText(5, 390, height, '从下向上');
+        printUtil.printlnText(5, 510, height, '从左向右');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '拉手位');
+        printUtil.printlnText(5, 150, height, list[i].lashouwei_select_left);
+        printUtil.printlnText(5, 270, height, list[i].lashouwei_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].lashouwei_select_right);
+        printUtil.printlnText(5, 510, height, list[i].lashouwei_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '装锁数量');
+        printUtil.printlnText(5, 150, height, list[i].zhuangsuoshuliang_insert_left1);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, list[i].zhuangsuoshuliang_insert_right1);
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '锁孔位方向');
+        printUtil.printlnText(5, 150, height, '从下向上');
+        printUtil.printlnText(5, 270, height, '从右向左');
+        printUtil.printlnText(5, 390, height, '从下向上');
+        printUtil.printlnText(5, 510, height, '从左向右');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '锁孔位');
+        printUtil.printlnText(5, 150, height, list[i].zhuangsuofangwei_insert_left1);
+        printUtil.printlnText(5, 270, height, list[i].zhuangsuofangwei_insert_left2);
+        printUtil.printlnText(5, 390, height, list[i].zhuangsuofangwei_insert_right1);
+        printUtil.printlnText(5, 510, height, list[i].zhuangsuofangwei_insert_right2);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '开铰链孔');
+        printUtil.printlnText(5, 150, height, list[i].kaijiaolian);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, '');
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位1');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian1_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian1_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian1_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian1_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位2');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian2_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian2_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian2_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian2_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位3');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian3_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian3_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian3_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian3_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位4');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian4_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian4_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian4_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian4_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位5');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian5_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian5_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian5_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian5_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位6');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian6_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian6_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian6_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian6_insert_right);
+
         height = height + 100
       }
     }
 
     printUtil = new PrintUtil(height, 1);
 
-    height = 20
+    var height = 20
     for(var i=0; i<list.length; i++){
       if(list[i].lvxingcai != ""){
         printUtil.setFontWidthAndHeight(1, 1);
@@ -462,6 +667,111 @@ Page({
         printUtil.printlnText(4, 160, height, list[i].fujian_shuliang2);
         printUtil.printlnText(4, 290, height, list[i].fujian_shuliang3);
         printUtil.printlnText(4, 420, height, list[i].fujian_shuliang4);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔方向');
+        printUtil.printlnText(5, 150, height, '左开门');
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, '右开门');
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '开门方向数量');
+        printUtil.printlnText(5, 200, height, list[i].jiaoliankong_fangxiang_left);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, list[i].jiaoliankong_fangxiang_right);
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '有拉手数量(个)');
+        printUtil.printlnText(5, 200, height, list[i].lashou_shuliang_right);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, list[i].lashou_shuliang_left);
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '拉手位方向');
+        printUtil.printlnText(5, 150, height, '从下向上');
+        printUtil.printlnText(5, 270, height, '从右向左');
+        printUtil.printlnText(5, 390, height, '从下向上');
+        printUtil.printlnText(5, 510, height, '从左向右');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '拉手位');
+        printUtil.printlnText(5, 150, height, list[i].lashouwei_select_left);
+        printUtil.printlnText(5, 270, height, list[i].lashouwei_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].lashouwei_select_right);
+        printUtil.printlnText(5, 510, height, list[i].lashouwei_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '装锁数量');
+        printUtil.printlnText(5, 150, height, list[i].zhuangsuoshuliang_insert_left1);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, list[i].zhuangsuoshuliang_insert_right1);
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '锁孔位方向');
+        printUtil.printlnText(5, 150, height, '从下向上');
+        printUtil.printlnText(5, 270, height, '从右向左');
+        printUtil.printlnText(5, 390, height, '从下向上');
+        printUtil.printlnText(5, 510, height, '从左向右');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '锁孔位');
+        printUtil.printlnText(5, 150, height, list[i].zhuangsuofangwei_insert_left1);
+        printUtil.printlnText(5, 270, height, list[i].zhuangsuofangwei_insert_left2);
+        printUtil.printlnText(5, 390, height, list[i].zhuangsuofangwei_insert_right1);
+        printUtil.printlnText(5, 510, height, list[i].zhuangsuofangwei_insert_right2);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '开铰链孔');
+        printUtil.printlnText(5, 150, height, list[i].kaijiaolian);
+        printUtil.printlnText(5, 270, height, '');
+        printUtil.printlnText(5, 390, height, '');
+        printUtil.printlnText(5, 510, height, '');
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位1');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian1_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian1_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian1_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian1_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位2');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian2_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian2_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian2_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian2_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位3');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian3_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian3_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian3_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian3_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位4');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian4_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian4_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian4_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian4_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位5');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian5_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian5_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian5_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian5_insert_right);
+
+        height = height + 40
+        printUtil.printlnText(5, 0, height, '铰链孔位6');
+        printUtil.printlnText(5, 150, height, list[i].jiaolian6_select_left);
+        printUtil.printlnText(5, 270, height, list[i].jiaolian6_insert_left);
+        printUtil.printlnText(5, 390, height, list[i].jiaolian6_select_right);
+        printUtil.printlnText(5, 510, height, list[i].jiaolian6_insert_right);
 
         height = height + 100
       }

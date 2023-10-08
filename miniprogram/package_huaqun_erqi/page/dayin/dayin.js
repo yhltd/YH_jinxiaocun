@@ -19,7 +19,9 @@ Page({
     width_user_all: 0,
     width_user: 0,
     height_user: 0,
-
+    wenzi_column: 'customer_need_text1',
+    wenzi_list:['配送文字1','配送文字2'],
+    wenzi_list2:['customer_need_text1','customer_need_text2'],
     mask_hid: true,
     updComment_hid: true,
 
@@ -76,7 +78,7 @@ Page({
     ctx.setTextAlign('left')
     ctx.fillText('安装地址：' + order.anzhuang_address, 0, 80)
     ctx.setTextAlign('left')
-    ctx.fillText('需求：' + order.customer_need_text1, 0, 100)
+    ctx.fillText('需求：' + order[_this.data.wenzi_column], 0, 100)
     ctx.draw()
   },
 
@@ -323,7 +325,7 @@ Page({
     height = height + 40
     printUtil.printlnText(4, 35, height, '安装地址：' + order.anzhuang_address);
     height = height + 40
-    printUtil.printlnText(4, 35, height, '需求：' + order.customer_need_text1);
+    printUtil.printlnText(4, 35, height, '需求：' + order[_this.data.wenzi_column]);
     height = height + 20
 
     let buffer = printUtil.getData();
@@ -375,6 +377,19 @@ Page({
     _this.getUserInfo(height)
     _this.setCanvas()
 
+  },
+
+
+  bindPickerChange1:function(e){
+    var _this = this
+    var this_index = e.detail.value
+    console.log()
+    var this_select = _this.data.wenzi_list2[this_index]
+    _this.setData({
+      wenzi_column: this_select
+    })
+    console.log(e)
+    _this.setCanvas()
   },
 
   /**

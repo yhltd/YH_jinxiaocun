@@ -47,7 +47,7 @@
           <view class="list_view"  data-index="0" data-column="customer_need_text1_riqi" data-value="{{list[0].customer_need_text1_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text1_riqi}}</view>
         </view>
         <view class="table_main_neirong">
-          <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送文字1</view>
+          <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送文字2</view>
           <view class="list_view" bindtap="clickView" data-index="0" data-column="customer_need_text2" data-value="{{list[0].customer_need_text2}}" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2}}</view>
           <view class="list_view"  data-index="0" data-column="customer_need_text2_renyuan" data-value="{{list[0].customer_need_text2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="customer_need_text2_riqi" data-value="{{list[0].customer_need_text2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2_riqi}}</view>

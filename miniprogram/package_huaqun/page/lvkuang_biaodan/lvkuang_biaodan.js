@@ -1184,11 +1184,20 @@ Page({
   },
   print: function(){
     var _this = this
-    var list = _this.list
-    var list2 = _this.list2
-        wx.navigateTo({
-          url: "../lkdayin/lkdayin?order1=" + JSON.stringify(_this.data.list[0]) +"&order2=" + JSON.stringify(_this.data.list2) 
-        })
+    var list = _this.data.body_list
+    console.log(list)
+    wx.navigateTo({
+      url: "../lkdayin/lkdayin?order1=" + JSON.stringify(list)
+    })
+  },
+
+  print2: function(){
+    var _this = this
+    var list = _this.data.body_list
+    console.log(list)
+    wx.navigateTo({
+      url: "../lkdayin2/lkdayin2?order1=" + JSON.stringify(list)
+    })
   },
 
   /**

@@ -15,9 +15,6 @@
 
 <view class="bottom_view">
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button>
-  <picker class="bt_bottom" bindchange="bindPickerChange1" value="{{index}}" range="{{wenzi_list}}">
-    <button class="bt_bottom" style="width:100%" hover-class="bt_bottom_hover"bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>选择配送文字</button>
-  </picker>
 </view>
 
 <view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
