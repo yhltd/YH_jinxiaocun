@@ -40,8 +40,19 @@
           <view class="list_view"  data-index="0" data-column="customer_need_img1_renyuan" data-value="{{list[0].customer_need_img1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img1_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="customer_need_img1_riqi" data-value="{{list[0].customer_need_img1_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img1_riqi}}</view>
         </view>
-
         <view class="table_main_neirong">
+          <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送文字1</view>
+          <view class="list_view" bindtap="clickView" data-index="0" data-column="customer_need_text1" data-value="{{list[0].customer_need_text1}}" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text1}}</view>
+          <view class="list_view"  data-index="0" data-column="customer_need_text1_renyuan" data-value="{{list[0].customer_need_text1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text1_renyuan}}</view>
+          <view class="list_view"  data-index="0" data-column="customer_need_text1_riqi" data-value="{{list[0].customer_need_text1_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text1_riqi}}</view>
+        </view>
+        <view class="table_main_neirong">
+          <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送文字1</view>
+          <view class="list_view" bindtap="clickView" data-index="0" data-column="customer_need_text2" data-value="{{list[0].customer_need_text2}}" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2}}</view>
+          <view class="list_view"  data-index="0" data-column="customer_need_text2_renyuan" data-value="{{list[0].customer_need_text2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2_renyuan}}</view>
+          <view class="list_view"  data-index="0" data-column="customer_need_text2_riqi" data-value="{{list[0].customer_need_text2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2_riqi}}</view>
+        </view>
+        <!-- <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">客户需求(照片2)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
             <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img2" data-value="{{list[0].customer_need_img2}}" src="{{list[0].customer_need_img2}}"></image>
@@ -57,7 +68,7 @@
           </view>
           <view class="list_view"  data-index="0" data-column="customer_need_img3_renyuan" data-value="{{list[0].customer_need_img3_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img3_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="customer_need_img3_riqi" data-value="{{list[0].customer_need_img3_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img3_riqi}}</view>
-        </view>
+        </view> -->
 
         <view class="table_main">
           <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(140vmin / 7.5);position:sticky;left:0">送货地址</view>

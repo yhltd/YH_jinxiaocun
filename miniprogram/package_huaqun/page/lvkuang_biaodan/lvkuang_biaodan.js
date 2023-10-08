@@ -1182,7 +1182,14 @@ Page({
       }
     })
   },
-
+  print: function(){
+    var _this = this
+    var list = _this.list
+    var list2 = _this.list2
+        wx.navigateTo({
+          url: "../lkdayin/lkdayin?order1=" + JSON.stringify(_this.data.list[0]) +"&order2=" + JSON.stringify(_this.data.list2) 
+        })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

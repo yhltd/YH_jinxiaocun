@@ -207,7 +207,7 @@ Page({
     var _this = this
     var danhao = _this.data.order_number
     console.log(danhao)
-    var sql = "select customer_name,customer_order,customer_need_text from erqi_peisongdan where order_number='" + danhao + "'"
+    var sql = "select customer_name,order_number,customer_order,customer_need_text,customer_need_text1,customer_need_text2,songhuo_address,anzhuang_address from erqi_peisongdan where order_number='" + danhao + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {

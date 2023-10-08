@@ -36,12 +36,12 @@ Page({
         customer_need_img1: '',
         customer_need_img1_renyuan: '',
         customer_need_img1_riqi: '',
-        customer_need_img2: '',
-        customer_need_img2_renyuan: '',
-        customer_need_img2_riqi: '',
-        customer_need_img3: '',
-        customer_need_img3_renyuan: '',
-        customer_need_img3_riqi: '',
+        customer_need_text1: '',
+        customer_need_text1_renyuan: '',
+        customer_need_text1_riqi: '',
+        customer_need_text2: '',
+        customer_need_text2_renyuan: '',
+        customer_need_text2_riqi: '',
         songhuo_address: '',
         songhuo_address_renyuan: '',
         songhuo_address_riqi: '',
@@ -336,7 +336,7 @@ Page({
       title: '保存文字',
     })
     if(list[0].id == "" || list[0].id == undefined){
-      var sql = "insert into erqi_peisongdan(order_number,insert_date,customer_name,customer_name_renyuan,customer_name_riqi,customer_need_text,customer_need_text_renyuan,customer_need_text_riqi,customer_need_img1_renyuan,customer_need_img1_riqi,customer_need_img2_renyuan,customer_need_img2_riqi,customer_need_img3_renyuan,customer_need_img3_riqi,songhuo_address,songhuo_address_renyuan,songhuo_address_riqi,anzhuang_address,anzhuang_address_renyuan,anzhuang_address_riqi,phone,phone_renyuan,phone_riqi,customer_order,customer_order_renyuan,customer_order_riqi,songhuo_danhao,songhuo_danhao_renyuan,songhuo_danhao_riqi,peihuo_img1_renyuan,peihuo_img1_riqi,peihuo_img2_renyuan,peihuo_img2_riqi,peihuo_img3_renyuan,peihuo_img3_riqi,peihuo_img4_renyuan,peihuo_img4_riqi,peihuo_img5_renyuan,peihuo_img5_riqi,peisong_img1_renyuan,peisong_img1_riqi,peisong_img2_renyuan,peisong_img2_riqi,peisong_img3_renyuan,peisong_img3_riqi,wancheng,wancheng_renyuan,wancheng_riqi,beizhu,beizhu_renyuan,beizhu_riqi,kucun_text,kucun_text_renyuan,kucun_text_riqi,kucun_img1_renyuan,kucun_img1_riqi,kucun_img2_renyuan,kucun_img2_riqi,kucun_img3_renyuan,kucun_img3_riqi,money,money_renyuan,money_riqi,shoukuan,shoukuan_renyuan,shoukuan_riqi) output inserted.id values('" + list[0].order_number + "','" + list[0].insert_date + "','" + list[0].customer_name + "','" + list[0].customer_name_renyuan + "','" + list[0].customer_name_riqi + "','" + list[0].customer_need_text + "','" + list[0].customer_need_text_renyuan + "','" + list[0].customer_need_text_riqi + "','" + list[0].customer_need_img1_renyuan + "','" + list[0].customer_need_img1_riqi + "','" + list[0].customer_need_img2_renyuan + "','" + list[0].customer_need_img2_riqi + "','" + list[0].customer_need_img3_renyuan + "','" + list[0].customer_need_img3_riqi + "','" + list[0].songhuo_address + "','" + list[0].songhuo_address_renyuan + "','" + list[0].songhuo_address_riqi + "','" + list[0].anzhuang_address + "','" + list[0].anzhuang_address_renyuan + "','" + list[0].anzhuang_address_riqi + "','" + list[0].phone + "','" + list[0].phone_renyuan + "','" + list[0].phone_riqi + "','" + list[0].customer_order + "','" + list[0].customer_order_renyuan + "','" + list[0].customer_order_riqi + "','" + list[0].songhuo_danhao + "','" + list[0].songhuo_danhao_renyuan + "','" + list[0].songhuo_danhao_riqi + "','" + list[0].peihuo_img1_renyuan + "','" + list[0].peihuo_img1_riqi + "','" + list[0].peihuo_img2_renyuan + "','" + list[0].peihuo_img2_riqi + "','" + list[0].peihuo_img3_renyuan + "','" + list[0].peihuo_img3_riqi + "','" + list[0].peihuo_img4_renyuan + "','" + list[0].peihuo_img4_riqi + "','" + list[0].peihuo_img5_renyuan + "','" + list[0].peihuo_img5_riqi + "','" + list[0].peisong_img1_renyuan + "','" + list[0].peisong_img1_riqi + "','" + list[0].peisong_img2_renyuan + "','" + list[0].peisong_img2_riqi + "','" + list[0].peisong_img3_renyuan + "','" + list[0].peisong_img3_riqi + "','" + list[0].wancheng + "','" + list[0].wancheng_renyuan + "','" + list[0].wancheng_riqi + "','" + list[0].beizhu + "','" + list[0].beizhu_renyuan + "','" + list[0].beizhu_riqi + "','" + list[0].kucun_text + "','" + list[0].kucun_text_renyuan + "','" + list[0].kucun_text_riqi + "','" + list[0].kucun_img1_renyuan + "','" + list[0].kucun_img1_riqi + "','" + list[0].kucun_img2_renyuan + "','" + list[0].kucun_img2_riqi + "','" + list[0].kucun_img3_renyuan + "','" + list[0].kucun_img3_riqi + "','" + list[0].money + "','" + list[0].money_renyuan + "','" + list[0].money_riqi + "','" + list[0].shoukuan + "','" + list[0].shoukuan_renyuan + "','" + list[0].shoukuan_riqi + "')"
+      var sql = "insert into erqi_peisongdan(order_number,insert_date,customer_name,customer_name_renyuan,customer_name_riqi,customer_need_text,customer_need_text_renyuan,customer_need_text_riqi,customer_need_img1_renyuan,customer_need_img1_riqi,customer_need_text1，customer_need_text1_renyuan,customer_need_text1_riqi,customer_need_text2，customer_need_text2_renyuan,customer_need_text2_riqi,songhuo_address,songhuo_address_renyuan,songhuo_address_riqi,anzhuang_address,anzhuang_address_renyuan,anzhuang_address_riqi,phone,phone_renyuan,phone_riqi,customer_order,customer_order_renyuan,customer_order_riqi,songhuo_danhao,songhuo_danhao_renyuan,songhuo_danhao_riqi,peihuo_img1_renyuan,peihuo_img1_riqi,peihuo_img2_renyuan,peihuo_img2_riqi,peihuo_img3_renyuan,peihuo_img3_riqi,peihuo_img4_renyuan,peihuo_img4_riqi,peihuo_img5_renyuan,peihuo_img5_riqi,peisong_img1_renyuan,peisong_img1_riqi,peisong_img2_renyuan,peisong_img2_riqi,peisong_img3_renyuan,peisong_img3_riqi,wancheng,wancheng_renyuan,wancheng_riqi,beizhu,beizhu_renyuan,beizhu_riqi,kucun_text,kucun_text_renyuan,kucun_text_riqi,kucun_img1_renyuan,kucun_img1_riqi,kucun_img2_renyuan,kucun_img2_riqi,kucun_img3_renyuan,kucun_img3_riqi,money,money_renyuan,money_riqi,shoukuan,shoukuan_renyuan,shoukuan_riqi) output inserted.id values('" + list[0].order_number + "','" + list[0].insert_date + "','" + list[0].customer_name + "','" + list[0].customer_name_renyuan + "','" + list[0].customer_name_riqi + "','" + list[0].customer_need_text + "','" + list[0].customer_need_text_renyuan + "','" + list[0].customer_need_text_riqi + "','" + list[0].customer_need_img1_renyuan + "','" + list[0].customer_need_img1_riqi+ "','" + list[0].customer_need_text1 + "','" + list[0].customer_need_text1_renyuan + "','" + list[0].customer_need_text1_riqi + "','"  + list[0].customer_need_text2 + "','" + list[0].customer_need_text2_renyuan + "','" + list[0].customer_need_text2_riqi + "','" + list[0].songhuo_address + "','" + list[0].songhuo_address_renyuan + "','" + list[0].songhuo_address_riqi + "','" + list[0].anzhuang_address + "','" + list[0].anzhuang_address_renyuan + "','" + list[0].anzhuang_address_riqi + "','" + list[0].phone + "','" + list[0].phone_renyuan + "','" + list[0].phone_riqi + "','" + list[0].customer_order + "','" + list[0].customer_order_renyuan + "','" + list[0].customer_order_riqi + "','" + list[0].songhuo_danhao + "','" + list[0].songhuo_danhao_renyuan + "','" + list[0].songhuo_danhao_riqi + "','" + list[0].peihuo_img1_renyuan + "','" + list[0].peihuo_img1_riqi + "','" + list[0].peihuo_img2_renyuan + "','" + list[0].peihuo_img2_riqi + "','" + list[0].peihuo_img3_renyuan + "','" + list[0].peihuo_img3_riqi + "','" + list[0].peihuo_img4_renyuan + "','" + list[0].peihuo_img4_riqi + "','" + list[0].peihuo_img5_renyuan + "','" + list[0].peihuo_img5_riqi + "','" + list[0].peisong_img1_renyuan + "','" + list[0].peisong_img1_riqi + "','" + list[0].peisong_img2_renyuan + "','" + list[0].peisong_img2_riqi + "','" + list[0].peisong_img3_renyuan + "','" + list[0].peisong_img3_riqi + "','" + list[0].wancheng + "','" + list[0].wancheng_renyuan + "','" + list[0].wancheng_riqi + "','" + list[0].beizhu + "','" + list[0].beizhu_renyuan + "','" + list[0].beizhu_riqi + "','" + list[0].kucun_text + "','" + list[0].kucun_text_renyuan + "','" + list[0].kucun_text_riqi + "','" + list[0].kucun_img1_renyuan + "','" + list[0].kucun_img1_riqi + "','" + list[0].kucun_img2_renyuan + "','" + list[0].kucun_img2_riqi + "','" + list[0].kucun_img3_renyuan + "','" + list[0].kucun_img3_riqi + "','" + list[0].money + "','" + list[0].money_renyuan + "','" + list[0].money_riqi + "','" + list[0].shoukuan + "','" + list[0].shoukuan_renyuan + "','" + list[0].shoukuan_riqi + "')"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
@@ -350,7 +350,7 @@ Page({
             title: '保存图片',
           })
           list[0].id = res.result.recordset[0].id
-          var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',customer_need_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-02.jpg',customer_need_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-03.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+          var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
           console.log(sql)
           
           if(list[0].customer_need_img1.indexOf("base64") != -1){
@@ -381,61 +381,61 @@ Page({
             })
           }
           
-          if(list[0].customer_need_img2.indexOf("base64") != -1){
-            var fsm = wx.getFileSystemManager();
-            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
-            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
-            fsm.writeFileSync(fileName, buffer, 'binary');
-            console.log(fileName);
-             wx.uploadFile({
-              url: 'http://yhocn.cn:9087/file/upload',
-              header: { "Content-Type": "multipart/form-data" },
-              filePath: fileName,
-              name: 'file',
-              formData:{
-              name: list[0].order_number +'-02.jpg',
-              path: '/huaqun_erqi/',
-              kongjian: _this.data.kongjian,
-              },
-              success(res){
-                console.log(res.data);
-                if(res.data.indexOf("存储空间不足") != -1){
-                  wx.showToast({
-                    title: '存储空间不足！',
-                    icon: 'none'
-                  })
-                }
-              }
-            })
-          }
+          // if(list[0].customer_need_img2.indexOf("base64") != -1){
+          //   var fsm = wx.getFileSystemManager();
+          //   var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
+          //   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
+          //   fsm.writeFileSync(fileName, buffer, 'binary');
+          //   console.log(fileName);
+          //    wx.uploadFile({
+          //     url: 'http://yhocn.cn:9087/file/upload',
+          //     header: { "Content-Type": "multipart/form-data" },
+          //     filePath: fileName,
+          //     name: 'file',
+          //     formData:{
+          //     name: list[0].order_number +'-02.jpg',
+          //     path: '/huaqun_erqi/',
+          //     kongjian: _this.data.kongjian,
+          //     },
+          //     success(res){
+          //       console.log(res.data);
+          //       if(res.data.indexOf("存储空间不足") != -1){
+          //         wx.showToast({
+          //           title: '存储空间不足！',
+          //           icon: 'none'
+          //         })
+          //       }
+          //     }
+          //   })
+          // }
 
-          if(list[0].customer_need_img3.indexOf("base64") != -1){
-            var fsm = wx.getFileSystemManager();
-            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
-            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
-            fsm.writeFileSync(fileName, buffer, 'binary');
-            console.log(fileName);
-             wx.uploadFile({
-              url: 'http://yhocn.cn:9087/file/upload',
-              header: { "Content-Type": "multipart/form-data" },
-              filePath: fileName,
-              name: 'file',
-              formData:{
-              name: list[0].order_number +'-03.jpg',
-              path: '/huaqun_erqi/',
-              kongjian: _this.data.kongjian,
-              },
-              success(res){
-                console.log(res.data);
-                if(res.data.indexOf("存储空间不足") != -1){
-                  wx.showToast({
-                    title: '存储空间不足！',
-                    icon: 'none'
-                  })
-                }
-              }
-            })
-          }
+          // if(list[0].customer_need_img3.indexOf("base64") != -1){
+          //   var fsm = wx.getFileSystemManager();
+          //   var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
+          //   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
+          //   fsm.writeFileSync(fileName, buffer, 'binary');
+          //   console.log(fileName);
+          //    wx.uploadFile({
+          //     url: 'http://yhocn.cn:9087/file/upload',
+          //     header: { "Content-Type": "multipart/form-data" },
+          //     filePath: fileName,
+          //     name: 'file',
+          //     formData:{
+          //     name: list[0].order_number +'-03.jpg',
+          //     path: '/huaqun_erqi/',
+          //     kongjian: _this.data.kongjian,
+          //     },
+          //     success(res){
+          //       console.log(res.data);
+          //       if(res.data.indexOf("存储空间不足") != -1){
+          //         wx.showToast({
+          //           title: '存储空间不足！',
+          //           icon: 'none'
+          //         })
+          //       }
+          //     }
+          //   })
+          // }
 
           if(list[0].peihuo_img1.indexOf("base64") != -1){
             var fsm = wx.getFileSystemManager();
@@ -797,7 +797,7 @@ Page({
         }
       })
     }else{
-      var sql = "update erqi_peisongdan set order_number='" + list[0].order_number + "',insert_date='" + list[0].insert_date + "',customer_name='" + list[0].customer_name + "',customer_name_renyuan='" + list[0].customer_name_renyuan + "',customer_name_riqi='" + list[0].customer_name_riqi + "',customer_need_text='" + list[0].customer_need_text + "',customer_need_text_renyuan='" + list[0].customer_need_text_renyuan + "',customer_need_text_riqi='" + list[0].customer_need_text_riqi + "',customer_need_img1_renyuan='" + list[0].customer_need_img1_renyuan + "',customer_need_img1_riqi='" + list[0].customer_need_img1_riqi + "',customer_need_img2_renyuan='" + list[0].customer_need_img2_renyuan + "',customer_need_img2_riqi='" + list[0].customer_need_img2_riqi + "',customer_need_img3_renyuan='" + list[0].customer_need_img3_renyuan + "',customer_need_img3_riqi='" + list[0].customer_need_img3_riqi + "',songhuo_address='" + list[0].songhuo_address + "',songhuo_address_renyuan='" + list[0].songhuo_address_renyuan + "',songhuo_address_riqi='" + list[0].songhuo_address_riqi + "',anzhuang_address='" + list[0].anzhuang_address + "',anzhuang_address_renyuan='" + list[0].anzhuang_address_renyuan + "',anzhuang_address_riqi='" + list[0].anzhuang_address_riqi + "',phone='" + list[0].phone + "',phone_renyuan='" + list[0].phone_renyuan + "',phone_riqi='" + list[0].phone_riqi + "',customer_order='" + list[0].customer_order + "',customer_order_renyuan='" + list[0].customer_order_renyuan + "',customer_order_riqi='" + list[0].customer_order_riqi + "',songhuo_danhao='" + list[0].songhuo_danhao + "',songhuo_danhao_renyuan='" + list[0].songhuo_danhao_renyuan + "',songhuo_danhao_riqi='" + list[0].songhuo_danhao_riqi + "',peihuo_img1_renyuan='" + list[0].peihuo_img1_renyuan + "',peihuo_img1_riqi='" + list[0].peihuo_img1_riqi + "',peihuo_img2_renyuan='" + list[0].peihuo_img2_renyuan + "',peihuo_img2_riqi='" + list[0].peihuo_img2_riqi + "',peihuo_img3_renyuan='" + list[0].peihuo_img3_renyuan + "',peihuo_img3_riqi='" + list[0].peihuo_img3_riqi + "',peihuo_img4_renyuan='" + list[0].peihuo_img4_renyuan + "',peihuo_img4_riqi='" + list[0].peihuo_img4_riqi + "',peihuo_img5_renyuan='" + list[0].peihuo_img5_renyuan + "',peihuo_img5_riqi='" + list[0].peihuo_img5_riqi + "',peisong_img1_renyuan='" + list[0].peisong_img1_renyuan + "',peisong_img1_riqi='" + list[0].peisong_img1_riqi + "',peisong_img2_renyuan='" + list[0].peisong_img2_renyuan + "',peisong_img2_riqi='" + list[0].peisong_img2_riqi + "',peisong_img3_renyuan='" + list[0].peisong_img3_renyuan + "',peisong_img3_riqi='" + list[0].peisong_img3_riqi + "',wancheng='" + list[0].wancheng + "',wancheng_renyuan='" + list[0].wancheng_renyuan + "',wancheng_riqi='" + list[0].wancheng_riqi + "',beizhu='" + list[0].beizhu + "',beizhu_renyuan='" + list[0].beizhu_renyuan + "',beizhu_riqi='" + list[0].beizhu_riqi + "',kucun_text='" + list[0].kucun_text + "',kucun_text_renyuan='" + list[0].kucun_text_renyuan + "',kucun_text_riqi='" + list[0].kucun_text_riqi + "',kucun_img1_renyuan='" + list[0].kucun_img1_renyuan + "',kucun_img1_riqi='" + list[0].kucun_img1_riqi + "',kucun_img2_renyuan='" + list[0].kucun_img2_renyuan + "',kucun_img2_riqi='" + list[0].kucun_img2_riqi + "',kucun_img3_renyuan='" + list[0].kucun_img3_renyuan + "',kucun_img3_riqi='" + list[0].kucun_img3_riqi + "',money='" + list[0].money + "',money_renyuan='" + list[0].money_renyuan + "',money_riqi='" + list[0].money_riqi + "',shoukuan='" + list[0].shoukuan + "',shoukuan_renyuan='" + list[0].shoukuan_renyuan + "',shoukuan_riqi='" + list[0].shoukuan_riqi + "' where id =" + list[0].id
+      var sql = "update erqi_peisongdan set order_number='" + list[0].order_number + "',insert_date='" + list[0].insert_date + "',customer_name='" + list[0].customer_name + "',customer_name_renyuan='" + list[0].customer_name_renyuan + "',customer_name_riqi='" + list[0].customer_name_riqi + "',customer_need_text='" + list[0].customer_need_text + "',customer_need_text_renyuan='" + list[0].customer_need_text_renyuan + "',customer_need_text_riqi='" + list[0].customer_need_text_riqi + "',customer_need_img1_renyuan='" + list[0].customer_need_img1_renyuan + "',customer_need_img1_riqi='" + list[0].customer_need_img1_riqi + "',customer_need_text1='" + list[0].customer_need_text1 + "',customer_need_text1_renyuan='" + list[0].customer_need_text1_renyuan + "',customer_need_text1_riqi='" + list[0].customer_need_text1_riqi +"',customer_need_text2='" + list[0].customer_need_text2 + "',customer_need_text2_renyuan='" + list[0].customer_need_text2_renyuan + "',customer_need_text2_riqi='" + list[0].customer_need_text2_riqi + "',songhuo_address='" + list[0].songhuo_address + "',songhuo_address_renyuan='" + list[0].songhuo_address_renyuan + "',songhuo_address_riqi='" + list[0].songhuo_address_riqi + "',anzhuang_address='" + list[0].anzhuang_address + "',anzhuang_address_renyuan='" + list[0].anzhuang_address_renyuan + "',anzhuang_address_riqi='" + list[0].anzhuang_address_riqi + "',phone='" + list[0].phone + "',phone_renyuan='" + list[0].phone_renyuan + "',phone_riqi='" + list[0].phone_riqi + "',customer_order='" + list[0].customer_order + "',customer_order_renyuan='" + list[0].customer_order_renyuan + "',customer_order_riqi='" + list[0].customer_order_riqi + "',songhuo_danhao='" + list[0].songhuo_danhao + "',songhuo_danhao_renyuan='" + list[0].songhuo_danhao_renyuan + "',songhuo_danhao_riqi='" + list[0].songhuo_danhao_riqi + "',peihuo_img1_renyuan='" + list[0].peihuo_img1_renyuan + "',peihuo_img1_riqi='" + list[0].peihuo_img1_riqi + "',peihuo_img2_renyuan='" + list[0].peihuo_img2_renyuan + "',peihuo_img2_riqi='" + list[0].peihuo_img2_riqi + "',peihuo_img3_renyuan='" + list[0].peihuo_img3_renyuan + "',peihuo_img3_riqi='" + list[0].peihuo_img3_riqi + "',peihuo_img4_renyuan='" + list[0].peihuo_img4_renyuan + "',peihuo_img4_riqi='" + list[0].peihuo_img4_riqi + "',peihuo_img5_renyuan='" + list[0].peihuo_img5_renyuan + "',peihuo_img5_riqi='" + list[0].peihuo_img5_riqi + "',peisong_img1_renyuan='" + list[0].peisong_img1_renyuan + "',peisong_img1_riqi='" + list[0].peisong_img1_riqi + "',peisong_img2_renyuan='" + list[0].peisong_img2_renyuan + "',peisong_img2_riqi='" + list[0].peisong_img2_riqi + "',peisong_img3_renyuan='" + list[0].peisong_img3_renyuan + "',peisong_img3_riqi='" + list[0].peisong_img3_riqi + "',wancheng='" + list[0].wancheng + "',wancheng_renyuan='" + list[0].wancheng_renyuan + "',wancheng_riqi='" + list[0].wancheng_riqi + "',beizhu='" + list[0].beizhu + "',beizhu_renyuan='" + list[0].beizhu_renyuan + "',beizhu_riqi='" + list[0].beizhu_riqi + "',kucun_text='" + list[0].kucun_text + "',kucun_text_renyuan='" + list[0].kucun_text_renyuan + "',kucun_text_riqi='" + list[0].kucun_text_riqi + "',kucun_img1_renyuan='" + list[0].kucun_img1_renyuan + "',kucun_img1_riqi='" + list[0].kucun_img1_riqi + "',kucun_img2_renyuan='" + list[0].kucun_img2_renyuan + "',kucun_img2_riqi='" + list[0].kucun_img2_riqi + "',kucun_img3_renyuan='" + list[0].kucun_img3_renyuan + "',kucun_img3_riqi='" + list[0].kucun_img3_riqi + "',money='" + list[0].money + "',money_renyuan='" + list[0].money_renyuan + "',money_riqi='" + list[0].money_riqi + "',shoukuan='" + list[0].shoukuan + "',shoukuan_renyuan='" + list[0].shoukuan_renyuan + "',shoukuan_riqi='" + list[0].shoukuan_riqi + "' where id =" + list[0].id
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
@@ -810,7 +810,7 @@ Page({
           wx.showLoading({
             title: '保存图片',
           })
-          var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',customer_need_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-02.jpg',customer_need_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-03.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+          var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
           console.log(sql)
 
           if(list[0].customer_need_img1.indexOf("base64") != -1){
@@ -841,61 +841,61 @@ Page({
             })
           }
           
-          if(list[0].customer_need_img2.indexOf("base64") != -1){
-            var fsm = wx.getFileSystemManager();
-            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
-            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
-            fsm.writeFileSync(fileName, buffer, 'binary');
-            console.log(fileName);
-            wx.uploadFile({
-              url: 'http://yhocn.cn:9087/file/upload',
-              header: { "Content-Type": "multipart/form-data" },
-              filePath: fileName,
-              name: 'file',
-              formData:{
-              name: list[0].order_number +'-02.jpg',
-              path: '/huaqun_erqi/',
-              kongjian: _this.data.kongjian,
-              },
-              success(res){
-                console.log(res.data);
-                if(res.data.indexOf("存储空间不足") != -1){
-                  wx.showToast({
-                    title: '存储空间不足！',
-                    icon: 'none'
-                  })
-                }
-              }
-            })
-          }
+          // if(list[0].customer_need_img2.indexOf("base64") != -1){
+          //   var fsm = wx.getFileSystemManager();
+          //   var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
+          //   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
+          //   fsm.writeFileSync(fileName, buffer, 'binary');
+          //   console.log(fileName);
+          //   wx.uploadFile({
+          //     url: 'http://yhocn.cn:9087/file/upload',
+          //     header: { "Content-Type": "multipart/form-data" },
+          //     filePath: fileName,
+          //     name: 'file',
+          //     formData:{
+          //     name: list[0].order_number +'-02.jpg',
+          //     path: '/huaqun_erqi/',
+          //     kongjian: _this.data.kongjian,
+          //     },
+          //     success(res){
+          //       console.log(res.data);
+          //       if(res.data.indexOf("存储空间不足") != -1){
+          //         wx.showToast({
+          //           title: '存储空间不足！',
+          //           icon: 'none'
+          //         })
+          //       }
+          //     }
+          //   })
+          // }
 
-          if(list[0].customer_need_img3.indexOf("base64") != -1){
-            var fsm = wx.getFileSystemManager();
-            var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
-            const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
-            fsm.writeFileSync(fileName, buffer, 'binary');
-            console.log(fileName);
-            wx.uploadFile({
-              url: 'http://yhocn.cn:9087/file/upload',
-              header: { "Content-Type": "multipart/form-data" },
-              filePath: fileName,
-              name: 'file',
-              formData:{
-              name: list[0].order_number +'-03.jpg',
-              path: '/huaqun_erqi/',
-              kongjian: _this.data.kongjian,
-              },
-              success(res){
-                console.log(res.data);
-                if(res.data.indexOf("存储空间不足") != -1){
-                  wx.showToast({
-                    title: '存储空间不足！',
-                    icon: 'none'
-                  })
-                }
-              }
-            })
-          }
+          // if(list[0].customer_need_img3.indexOf("base64") != -1){
+          //   var fsm = wx.getFileSystemManager();
+          //   var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
+          //   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
+          //   fsm.writeFileSync(fileName, buffer, 'binary');
+          //   console.log(fileName);
+          //   wx.uploadFile({
+          //     url: 'http://yhocn.cn:9087/file/upload',
+          //     header: { "Content-Type": "multipart/form-data" },
+          //     filePath: fileName,
+          //     name: 'file',
+          //     formData:{
+          //     name: list[0].order_number +'-03.jpg',
+          //     path: '/huaqun_erqi/',
+          //     kongjian: _this.data.kongjian,
+          //     },
+          //     success(res){
+          //       console.log(res.data);
+          //       if(res.data.indexOf("存储空间不足") != -1){
+          //         wx.showToast({
+          //           title: '存储空间不足！',
+          //           icon: 'none'
+          //         })
+          //       }
+          //     }
+          //   })
+          // }
 
           if(list[0].peihuo_img1.indexOf("base64") != -1){
             var fsm = wx.getFileSystemManager();
@@ -1390,7 +1390,7 @@ Page({
         return;
       }
     }
-    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_img2' || column == 'customer_need_img3' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'songhuo_danhao' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 != ''){
+    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_text1' || column == 'customer_need_text2' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'songhuo_danhao' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 != ''){
       if(_this.data.userInfo.power != '管理员'){
         wx.showToast({
           title: '工作进行到配货时不允许编辑此处！',
@@ -1480,12 +1480,12 @@ Page({
           customer_need_img1: '',
           customer_need_img1_renyuan: '',
           customer_need_img1_riqi: '',
-          customer_need_img2: '',
-          customer_need_img2_renyuan: '',
-          customer_need_img2_riqi: '',
-          customer_need_img3: '',
-          customer_need_img3_renyuan: '',
-          customer_need_img3_riqi: '',
+          customer_need_text1: '',
+          customer_need_text1_renyuan: '',
+          customer_need_text1_riqi: '',
+          customer_need_text2: '',
+          customer_need_text2_renyuan: '',
+          customer_need_text2_riqi: '',
           songhuo_address: '',
           songhuo_address_renyuan: '',
           songhuo_address_riqi: '',
@@ -1657,65 +1657,65 @@ Page({
     }
   },
 
-  async upd_pic2(){
-    if(this.list[0].customer_need_img2.indexOf("base64") != -1){
-      var fsm = wx.getFileSystemManager();
-      var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img2.split(',')[1]);
-      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-02.jpg';
-      fsm.writeFileSync(fileName, buffer, 'binary');
-      console.log(fileName);
-       wx.uploadFile({
-        url: 'http://yhocn.cn:9087/file/upload',
-        header: { "Content-Type": "multipart/form-data" },
-        filePath: fileName,
-        name: 'file',
-        formData:{
-        name: this.list[0].order_number +'-02.jpg',
-        path: '/huaqun_erqi/',
-        kongjian: _this.data.kongjian,
-        },
-        success(res){
-          console.log(res.data);
-          if(res.data.indexOf("存储空间不足") != -1){
-            wx.showToast({
-              title: '存储空间不足！',
-              icon: 'none'
-            })
-          }
-        }
-      })
-    }
-  },
+  // async upd_pic2(){
+  //   if(this.list[0].customer_need_img2.indexOf("base64") != -1){
+  //     var fsm = wx.getFileSystemManager();
+  //     var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img2.split(',')[1]);
+  //     const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-02.jpg';
+  //     fsm.writeFileSync(fileName, buffer, 'binary');
+  //     console.log(fileName);
+  //      wx.uploadFile({
+  //       url: 'http://yhocn.cn:9087/file/upload',
+  //       header: { "Content-Type": "multipart/form-data" },
+  //       filePath: fileName,
+  //       name: 'file',
+  //       formData:{
+  //       name: this.list[0].order_number +'-02.jpg',
+  //       path: '/huaqun_erqi/',
+  //       kongjian: _this.data.kongjian,
+  //       },
+  //       success(res){
+  //         console.log(res.data);
+  //         if(res.data.indexOf("存储空间不足") != -1){
+  //           wx.showToast({
+  //             title: '存储空间不足！',
+  //             icon: 'none'
+  //           })
+  //         }
+  //       }
+  //     })
+  //   }
+  // },
 
-  async upd_pic3(){
-    if(this.list[0].customer_need_img3.indexOf("base64") != -1){
-      var fsm = wx.getFileSystemManager();
-      var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img3.split(',')[1]);
-      const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-03.jpg';
-      fsm.writeFileSync(fileName, buffer, 'binary');
-      console.log(fileName);
-       wx.uploadFile({
-        url: 'http://yhocn.cn:9087/file/upload',
-        header: { "Content-Type": "multipart/form-data" },
-        filePath: fileName,
-        name: 'file',
-        formData:{
-        name: this.list[0].order_number +'-03.jpg',
-        path: '/huaqun_erqi/',
-        kongjian: _this.data.kongjian,
-        },
-        success(res){
-          console.log(res.data);
-          if(res.data.indexOf("存储空间不足") != -1){
-            wx.showToast({
-              title: '存储空间不足！',
-              icon: 'none'
-            })
-          }
-        }
-      })
-    }
-  },
+  // async upd_pic3(){
+  //   if(this.list[0].customer_need_img3.indexOf("base64") != -1){
+  //     var fsm = wx.getFileSystemManager();
+  //     var buffer = wx.base64ToArrayBuffer(this.list[0].customer_need_img3.split(',')[1]);
+  //     const fileName = wx.env.USER_DATA_PATH + '/'+ this.list[0].order_number +'-03.jpg';
+  //     fsm.writeFileSync(fileName, buffer, 'binary');
+  //     console.log(fileName);
+  //      wx.uploadFile({
+  //       url: 'http://yhocn.cn:9087/file/upload',
+  //       header: { "Content-Type": "multipart/form-data" },
+  //       filePath: fileName,
+  //       name: 'file',
+  //       formData:{
+  //       name: this.list[0].order_number +'-03.jpg',
+  //       path: '/huaqun_erqi/',
+  //       kongjian: _this.data.kongjian,
+  //       },
+  //       success(res){
+  //         console.log(res.data);
+  //         if(res.data.indexOf("存储空间不足") != -1){
+  //           wx.showToast({
+  //             title: '存储空间不足！',
+  //             icon: 'none'
+  //           })
+  //         }
+  //       }
+  //     })
+  //   }
+  // },
 
   async upd_pic4(){
     if(this.list[0].peihuo_img1.indexOf("base64") != -1){

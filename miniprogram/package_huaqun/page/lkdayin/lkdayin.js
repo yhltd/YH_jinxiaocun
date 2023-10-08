@@ -45,7 +45,8 @@ Page({
 
   setCanvas: function (comment_order) {
     var _this = this;
-    var order = _this.data.order
+    var order1 = _this.data.order1
+    var order2 = _this.data.order2
     var width_all = _this.data.width_user_all
     var width = _this.data.width_user
     var height = _this.data.height_user
@@ -64,19 +65,25 @@ Page({
 
     ctx.setFontSize(12)
     ctx.setTextAlign('left')
-    ctx.fillText('天龙五金配送单', 120, 20)
+    ctx.fillText('天龙五金灯带配送单', 120, 20)
     ctx.setTextAlign('left')
-    ctx.fillText('客户：' + order.customer_name, 0, 40)
+    ctx.fillText('客户：' + order1.khmc, 0, 40)
     ctx.setTextAlign('left')
-    ctx.fillText('日期：' + order.date, 100, 40)
+    ctx.fillText('日期：' + order1.xdrq, 100, 40)
     ctx.setTextAlign('left')
-    ctx.fillText( order.order_number, 240, 40)
+    ctx.fillText( order1.djbh, 240, 40)
     ctx.setTextAlign('left')
-    ctx.fillText('送货地址：' + order.songhuo_address, 0, 60)
+    ctx.fillText('安装地址：' + order1.azdz, 0, 60)
     ctx.setTextAlign('left')
-    ctx.fillText('安装地址：' + order.anzhuang_address, 0, 80)
+    ctx.fillText(order2.lcb, 0, 80)
     ctx.setTextAlign('left')
-    ctx.fillText('需求：' + order.customer_need_text1, 0, 100)
+    ctx.fillText(order2.lcys, 0, 80)
+    ctx.setTextAlign('left')
+    ctx.fillText(order2.gy, 0, 80)
+    ctx.setTextAlign('left')
+    ctx.fillText(order2.ddcd, 0, 80)
+    ctx.setTextAlign('left')
+    ctx.fillText(order2.sl, 0, 80)
     ctx.draw()
   },
 
@@ -311,19 +318,19 @@ Page({
     let printUtil = new PrintUtil(1000, 1);
     var height = 20
     printUtil.setFontWidthAndHeight(1, 1);
-    printUtil.printlnText(4, 200, height, '天龙五金配送单' );
+    printUtil.printlnText(4, 15, height, '天龙五金配送单' );
     height = height + 40
-    printUtil.printlnText(4, 35, height, '客户：' + order.customer_name);
+    printUtil.printlnText(4, 15, height, '客户：' + order.customer_name);
     height = height
-    printUtil.printlnText(4, 220, height, '日期：' + order.date);
+    printUtil.printlnText(4, 200, height, '日期：' + order.date);
     height = height
-    printUtil.printlnText(4, 420, height,  order.order_number);
+    printUtil.printlnText(4, 300, height,  order.order_number);
     height = height + 40
-    printUtil.printlnText(4, 35, height, '送货地址：' + order.songhuo_address);
+    printUtil.printlnText(4, 15, height, '送货地址：' + order.songhuo_address);
     height = height + 40
-    printUtil.printlnText(4, 35, height, '安装地址：' + order.anzhuang_address);
+    printUtil.printlnText(4, 15, height, '安装地址：' + order.anzhuang_address);
     height = height + 40
-    printUtil.printlnText(4, 35, height, '需求：' + order.customer_need_text1);
+    printUtil.printlnText(4, 15, height, '需求：' + order.customer_need_text1);
     height = height + 20
 
     let buffer = printUtil.getData();

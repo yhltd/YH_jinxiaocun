@@ -3947,8 +3947,8 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-  <!-- <button class="bt_bottom" bindtap="refresh">清空</button> -->
   <button class="bt_bottom" bindtap="out_put">导出表格</button>
+  <button class="bt_bottom" bindtap="print">打印</button>
 </view>
 
 
