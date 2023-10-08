@@ -359,7 +359,7 @@ Page({
     for(var i=0; i<list.length; i++){
       if(list[i].lvxingcai != ""){
         printUtil.setFontWidthAndHeight(1, 1);
-        printUtil.printlnText(4, 200, height, '天龙五金配送单' );
+        printUtil.printlnText(4, 200, height, '天龙五金铝框' );
 
         height = height + 40
         printUtil.printlnText(4, 35, height, '客户：' + list[i].customer_name);
@@ -416,7 +416,7 @@ Page({
     for(var i=0; i<list.length; i++){
       if(list[i].lvxingcai != ""){
         printUtil.setFontWidthAndHeight(1, 1);
-        printUtil.printlnText(4, 200, height, '天龙五金配送单' );
+        printUtil.printlnText(4, 200, height, '天龙五金铝框' );
 
         height = height + 40
         printUtil.printlnText(4, 35, height, '客户：' + list[i].customer_name);

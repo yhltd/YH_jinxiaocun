@@ -358,11 +358,11 @@ Page({
         height = height + 40
       }else if(order2[i].fj == '铝型材'){
         this_column = 1
-        printUtil.printlnText(4, 15, height, order2[i].gh);
-        printUtil.printlnText(4, 250, height, order2[i].lcys);
-        printUtil.printlnText(4, 350, height, order2[i].gy);
-        printUtil.printlnText(4, 500, height, order2[i].ddcd);
-        printUtil.printlnText(4, 600, height, order2[i].sl);
+        printUtil.printlnText(4, 0, height, order2[i].gh);
+        printUtil.printlnText(4, 280, height, order2[i].lcys);
+        printUtil.printlnText(4, 380, height, order2[i].gy);
+        printUtil.printlnText(4, 530, height, order2[i].ddcd);
+        printUtil.printlnText(4, 580, height, order2[i].sl);
         height = height + 40
       }else{
         if(this_column == 1){
@@ -400,11 +400,11 @@ Page({
         height = height + 40
       }else if(order2[i].fj == '铝型材'){
         this_column = 1
-        printUtil.printlnText(4, 15, height, order2[i].gh);
-        printUtil.printlnText(4, 250, height, order2[i].lcys);
-        printUtil.printlnText(4, 350, height, order2[i].gy);
-        printUtil.printlnText(4, 500, height, order2[i].ddcd);
-        printUtil.printlnText(4, 600, height, order2[i].sl);
+        printUtil.printlnText(4, 0, height, order2[i].gh);
+        printUtil.printlnText(4, 280, height, order2[i].lcys);
+        printUtil.printlnText(4, 380, height, order2[i].gy);
+        printUtil.printlnText(4, 530, height, order2[i].ddcd);
+        printUtil.printlnText(4, 580, height, order2[i].sl);
         height = height + 40
       }else{
         if(this_column == 1){
