@@ -39,6 +39,9 @@ Page({
     })
     
     var options = {
+      grid:{
+        containLabel:true
+      },
       xAxis: {
         type: 'category',
         data: ['累计收入','累计支出','学费收入','累计结余',]

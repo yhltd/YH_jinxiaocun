@@ -169,7 +169,7 @@ Page({
   addtocart:function(){
     var _this = this
     var cartlist = _this.data.cart_list
-    if(_this.data.window_name == ''){
+    if(_this.data.window_name == '' || _this.data.window_name == null || _this.data.window_name == undefined){
       wx.showToast({
         title: '未读取到商品名称！',
         icon: 'none',
@@ -177,7 +177,7 @@ Page({
       })
       return;
     }
-    if(_this.data.window_num == ''){
+    if(_this.data.window_num == '' || _this.data.window_num == null || _this.data.window_num == undefined){
       wx.showToast({
         title: '未读取到商品数量！',
         icon: 'none',
@@ -185,9 +185,17 @@ Page({
       })
       return;
     }
-    if(_this.data.window_guige == ''){
+    if(_this.data.window_guige == '' || _this.data.window_guige == null || _this.data.window_guige == undefined){
       wx.showToast({
         title: '未读取到商品规格！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if(_this.data.window_price == '' || _this.data.window_price == null || _this.data.window_price == undefined){
+      wx.showToast({
+        title: '未读取到商品单价！',
         icon: 'none',
         duration: 3000
       })

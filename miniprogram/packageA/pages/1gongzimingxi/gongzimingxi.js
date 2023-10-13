@@ -691,7 +691,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "' and BD = '" + that.data.companyName + "'"
+          query: "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%' and BD = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -711,7 +711,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where C ='" + input + "' and BD = '" + that.data.companyName + "'"
+          query: "select top 100 * from gongzi_gongzimingxi where C like '%" + input + "%' and BD = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -731,7 +731,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_117",
         data: {
-          query: "select top 100 * from gongzi_gongzimingxi where D ='" + input + "' and BD = '" + that.data.companyName + "'"
+          query: "select top 100 * from gongzi_gongzimingxi where D like '%" + input + "%' and BD = '" + that.data.companyName + "'"
         },
         success: res => {
           console.log("姓名查询成功！", res.result)
@@ -759,7 +759,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and C='" + that.data.title_bumen + "'and D='" + that.data.title_gangwei + "' and BD = '" + that.data.companyName + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%' and C like '%" + that.data.title_bumen + "%' and D like '%" + that.data.title_gangwei + "%' and BD = '" + that.data.companyName + "'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -776,7 +776,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and D='" + that.data.title_gangwei + "' and BD = '" + that.data.companyName + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%' and D like '%" + that.data.title_gangwei + "%' and BD = '" + that.data.companyName + "'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -793,7 +793,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "'and C='" + that.data.title_bumen + "' and BD = '" + that.data.companyName + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%' and C like '%" + that.data.title_bumen + "%' and BD = '" + that.data.companyName + "'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)
@@ -810,7 +810,7 @@ Page({
         wx.cloud.callFunction({
           name: "sqlServer_117",
           data: {
-            query: "select top 100 * from gongzi_gongzimingxi where B ='" + input + "' and BD = '" + that.data.companyName + "'"
+            query: "select top 100 * from gongzi_gongzimingxi where B like '%" + input + "%' and BD = '" + that.data.companyName + "'"
           },
           success: res => {
             console.log("姓名查询成功！", res.result)

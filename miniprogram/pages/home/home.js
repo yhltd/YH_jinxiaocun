@@ -160,7 +160,6 @@ Page({
     })
 
     var id = options.id;
-    id = undefined
     if(id == undefined){
       wx.login({
         success: (res) => {

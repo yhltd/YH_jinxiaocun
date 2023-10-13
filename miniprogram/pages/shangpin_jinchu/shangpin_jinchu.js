@@ -24,7 +24,7 @@ Page({
         sql: sql
       },
       success(res) {
-        var product_list = []
+        var product_list = ['']
         for(var i=0; i<res.result.length; i++){
           product_list.push(res.result[i].cpname)
         }

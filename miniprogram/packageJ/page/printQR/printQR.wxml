@@ -16,6 +16,7 @@
 </view>
 
 <scroll-view class="temp_day_box" scroll-x bindscroll='scrollCanvas'>
+  <image mode="widthFix" style="width: 100% !important;height: 100% !important;" src="{{this_photo}}"></image>
   <view class="canvas_height" style='transform: translateX(-{{canvasLen}}px);'>
     <canvas class="canvas" canvas-id="outCanvas" hidden="{{!mask_hid}}" style="width:{{width_user}}px;height:{{height_user}}px;"></canvas>
   </view>
@@ -26,7 +27,6 @@
 <block  class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
   <canvas wx:if="{{!ishidden}}" class="canvas" canvas-id="barcode{{i}}" ></canvas>
 </block>
-<view class="mask" bindtap="hid_view" style="width: 1080rpx;height:200rpx" hidden="{{mask_hid}}"></view>
 
 <view class="updComment_view" hidden="{{updComment_hid}}">
   <form bindsubmit="updComment">

@@ -44,7 +44,7 @@
       <view class="tui-line-cell">
         <view class="tui-title">▹ 审批日期：</view>
         <picker mode="date" bindchange="updateDate" data-column="riqi">
-          <input placeholder-class="phcolor" class="tui-input" name="riqi" placeholder="请输入审批日期" maxlength="50" type="date" value="{{list[0].riqi}}" />
+          <input placeholder-class="phcolor" class="tui-input" name="riqi" placeholder="请输入审批日期" maxlength="50" type="date" value="{{list[0].riqi}}" disabled="disabled"/>
         </picker>
       </view>
     </tui-list-cell>

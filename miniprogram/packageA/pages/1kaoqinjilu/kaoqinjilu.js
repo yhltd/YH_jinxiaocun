@@ -785,10 +785,12 @@ Page({
   baochi: function () {
     var that = this
     console.log(that.data.page)
+    var sql = "select top 100 (2+2*moth+3*(moth+1)/5+[year]+[year]/4-[year]/100+[year]/400)%7 as xingqi, * from gongzi_kaoqinjilu where AO = '" + this.data.companyName + "'"
+    // var sql = "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '" + that.data.companyName + "'"
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 * from(select row_number() over(order by cast(id as int) asc) as rownumber, * from gongzi_kaoqinmingxi) temp_row where rownumber > (( '" + that.data.page + "' - 1) * 100) and K = '" + that.data.companyName + "'"
+        query: sql
       },
       success: res => {
         this.setData({

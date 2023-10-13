@@ -11,7 +11,7 @@
 <view style="height:30rpx"></view>
 <block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item">
   <view class='xinjian' wx:if="{{item.txet == '商品代码'}}"> {{item.txet}}:
-    <input type="number" data-id="{{item.index}}" bindinput="input"></input>
+    <input type="txet" data-id="{{item.index}}" bindinput="input"></input>
   </view>
   <view class='xinjian' wx:else> {{item.txet}}:
     <input type="txet" data-id="{{item.index}}" bindinput="input"></input>

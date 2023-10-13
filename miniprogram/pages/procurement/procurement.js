@@ -20,7 +20,7 @@ Page({
     szjg: [],
     szsl: [],
     rkSum: 0,
-    rkck: "",
+    rkck: "刷新",
     startTime: 0,
     endTime: 0,
     product_name:'',
@@ -90,7 +90,13 @@ Page({
     })
   },
 
-
+  querenRk:function(){
+    var _this = this
+    _this.setData({
+      product_name:''
+    })
+    _this.init()
+  },
 
   bindTouchStart: function (e) { //触碰开始
     var _this = this
@@ -177,42 +183,6 @@ Page({
     wx.navigateTo({
       url: '/pages/shangpinxuanze/shangpinxuanze?fun=qichu',
     })
-  },
-  querenRk: function () {
-return;
-
-    // var app = getApp()
-    // var that = this;
-    // const db = wx.cloud.database();
-    // pd = 0
-    // console.log(szzhi.length)
-    // if (that.data.date == "") {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '请选择入库时间',
-    //   })
-    // } else {
-    //   var finduser = app.globalData.finduser
-    //   var gongsi = app.globalData.gongsi
-    //   for (var i = 0; i < szzhi.length; i++) {
-    //     wx.cloud.callFunction({
-    //       name: "sqlConnection",
-    //       data: {
-    //         sql: "INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian)values('" + szzhi[i].sp_dm + "','" + szzhi[i].lei_bie + "','" + szzhi[i].name + "','" + jgxinxi[i] + "','" + slxinxi[i] + "','" + finduser + "','" + gongsi + "','" + that.data.date + "')"
-    //       },
-    //       success(res) {
-    //         console.log("成功", res)
-    //         wx.showToast({
-    //           title: '初期数录入成功',
-    //         }, that.onShow())
-    //       },
-    //       fail(res) {
-    //         console.log("失败", res)
-
-    //       }
-    //     });
-    //   }
-    // }
   },
   bindDateChange: function (e) {
     var that = this

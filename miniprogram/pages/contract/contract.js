@@ -11,7 +11,10 @@ Page({
     backhidden: true,
     id: '',
     updIndex: -1,
-    isStock: false
+    isStock: false,
+    beizhu:'',
+    lianxifangshi:'',
+    lianxidizhi:'',
   },
 
   /**
@@ -221,6 +224,9 @@ Page({
   tianjia: function () {
     var that = this;
     that.setData({
+      beizhu:'',
+      lianxifangshi:'',
+      lianxidizhi:'',
       hidden1: !that.data.hidden1,
       backhidden: false,
       updIndex: -1

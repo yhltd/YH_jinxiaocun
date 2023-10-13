@@ -139,7 +139,32 @@ Page({
   add1: function () {
     var _this = this
     let user = _this.data.userInfo.Company;
-   
+    if(_this.data.thiscolumn == "" || _this.data.gongshi == ""){
+      wx.showToast({
+        title: '信息填写不全',
+        icon :'none',
+      })
+      return;
+    }
+    var this_gongshi = _this.data.gongshi
+    var lie = ""
+    for(var i=0; i<this_gongshi.length;i++){
+      var this_str = this_gongshi.substring(i,i+1)
+      var this_asc = this_gongshi.charCodeAt(i)
+      console.log(this_asc)
+      if((this_asc >= 65 && this_asc <= 90) || (this_asc >= 97 && this_asc <= 122)){
+        lie = lie + this_str
+      }else{
+        if(_this.data.thiscolumn.toUpperCase() == lie.toUpperCase()){
+          wx.showToast({
+            title: '设置公式的列不能包含本身',
+            icon :'none',
+          })
+          return;
+        }
+        lie = ""
+      }
+    }
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
@@ -176,6 +201,32 @@ Page({
 
   upd1:function(){
     var _this = this
+    if(_this.data.thiscolumn == "" || _this.data.gongshi == ""){
+      wx.showToast({
+        title: '信息填写不全',
+        icon :'none',
+      })
+      return;
+    }
+    var this_gongshi = _this.data.gongshi
+    var lie = ""
+    for(var i=0; i<this_gongshi.length;i++){
+      var this_str = this_gongshi.substring(i,i+1)
+      var this_asc = this_gongshi.charCodeAt(i)
+      console.log(this_asc)
+      if((this_asc >= 65 && this_asc <= 90) || (this_asc >= 97 && this_asc <= 122)){
+        lie = lie + this_str
+      }else{
+        if(_this.data.thiscolumn.toUpperCase() == lie.toUpperCase()){
+          wx.showToast({
+            title: '设置公式的列不能包含本身',
+            icon :'none',
+          })
+          return;
+        }
+        lie = ""
+      }
+    }
     wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {

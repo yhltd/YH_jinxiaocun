@@ -7,8 +7,8 @@ var cpxinxi = []
 var slxinxi = []
 var jgxinxi = []
 var app = getApp()
-var jg
-var sl
+var jg = ""
+var sl = ""
 var dtid
 var cpid
 var cpjg = []
@@ -38,6 +38,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    cpjg = []
+    cpsl = []
     wx.setStorageSync('khname', null)
     var that = this;
     cpxinxi = []
@@ -72,6 +74,8 @@ Page({
   },
 
   srJg: function(e) {
+    sl = ""
+    jg = ""
     console.log("触发点击")
     var _this = this
     dtid = e.currentTarget.dataset.id
@@ -122,8 +126,17 @@ zongjia_refresh:function(){
       jghide: "none",
       backhidden: true
     })
+    console.log(sl)
+    console.log(jg)
     var zongjia = that.data.rkSum
-    if (sl != null && jg != null) {
+    if (sl != "" && jg != "") {
+      if(sl*1 <=0 || jg*1 <=0 ){
+        wx.showToast({
+          title: '数量和价格必须大于0',
+          icon:'none'
+        })
+        return;
+      }
       cpsl[dtid] = sl
       cpjg[dtid] = jg
       zongjia = 0
@@ -132,6 +145,12 @@ zongjia_refresh:function(){
           zongjia += parseInt(cpsl[idx]) * parseInt(cpjg[idx])
         }
       }
+    }else{
+      wx.showToast({
+        title: '请填写数量和价格',
+        icon:'none'
+      })
+      return;
     }
     for (var i = 0; i < cpsl.length; i++) {
       if (cpjg[i] == null) {

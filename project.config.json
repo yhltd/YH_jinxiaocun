@@ -37,7 +37,7 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "lazyloadPlaceholderEnable": false,
-    "ignoreUploadUnusedFiles": false,
+    "ignoreUploadUnusedFiles": true,
     "ignoreDevUnusedFiles": false,
     "localPlugins": false,
     "condition": false
@@ -52,7 +52,6 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "libVersion": "2.24.5",
   "packOptions": {
     "ignore": [],
     "include": []

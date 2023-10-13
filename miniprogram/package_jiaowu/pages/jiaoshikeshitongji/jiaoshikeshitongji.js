@@ -28,23 +28,16 @@ Page({
         isupd: true
       },
       {
-        text: "上课课时",
+        text: "学生姓名",
+        width: "200rpx",
+        columnName: "student_name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "总课时",
         width: "200rpx",
         columnName: "keshi",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "每节金额",
-        width: "200rpx",
-        columnName: "jine",
-        type: "text",
-        isupd: true
-      },
-      {
-        text: "工资核算",
-        width: "200rpx",
-        columnName: "gongzihesuan",
         type: "text",
         isupd: true
       },
@@ -77,15 +70,15 @@ Page({
   tableShow: function (e) {
     var _this = this
     let user = _this.data.userInfo.Company;
+    var sql = "select student_name,teacher_name,course,sum(keshi) as keshi,Company from keshi_detail where riqi >= '" + e[1] + "' and riqi <= '" + e[2] + "' and teacher_name like '%" + e[0] + "%' and Company = '"+user+"' group by student_name,teacher_name,course,Company"
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select teacher_name,course,keshi,jine,keshi*jine as gongzihesuan from keshi_detail where teacher_name like '%" + e[0] + "%'and riqi >='" + e[1] + "' and riqi <='" + e[2] + "' and Company='"+user+"'"
+        sql: sql
       },
       success: res => {
         console.log(res.result)
         var list = res.result
-        
         _this.setData({
           list: list
         })

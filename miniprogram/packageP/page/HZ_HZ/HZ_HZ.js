@@ -1,4 +1,3 @@
-import * as pc_list from '../PC_PC/PC_PC'
 const app = getApp();
 
 Page({
@@ -273,6 +272,7 @@ Page({
   selListDingDan: function (e, callback) {
     var _this = this
     let user = app.globalData.gongsi;
+    
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
@@ -733,9 +733,9 @@ Page({
     let user = app.globalData.gongsi;
     var sql = ""
     if (e[0] == "") {
-      sql = "select mt.name as type,mi.name as name,mi.num as num,isnull((select name from module_info where id = mi.parent_id),'') as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and o.order_id like'%" + e[1] + "%' group by mt.name, mi.name, mi.num, mi.parent_id"
+      sql = "select mt.name as type,mi.name as name,mi.num as num,isnull((select name from module_info where id = mi.parent_id),'') as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and isnull(mt.name,'') != '' and o.order_id like'%" + e[1] + "%' group by mt.name, mi.name, mi.num, mi.parent_id"
     } else {
-      sql = "select mt.name as type,mi.name as name,mi.num as num,isnull((select name from module_info where id = mi.parent_id),'') as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and mi.type_id = '" + e[0] + "' and o.order_id like'%" + e[1] + "%' group by mt.name,mi.name,mi.num,mi.parent_id"
+      sql = "select mt.name as type,mi.name as name,mi.num as num,isnull((select name from module_info where id = mi.parent_id),'') as parentName,sum(wd.work_num) as workNum from work_module as wm left join module_info as mi on wm.module_id = mi.id left join module_type as mt on mi.type_id = mt.id left join work_detail as wd on wm.work_id = wd.id left join order_info as o on wd.order_id=o.id where wd.company = '" + user + "' and isnull(mt.name,'') != '' and mi.type_id = '" + e[0] + "' and o.order_id like'%" + e[1] + "%' group by mt.name,mi.name,mi.num,mi.parent_id"
     }
     console.log(sql)
     wx.cloud.callFunction({

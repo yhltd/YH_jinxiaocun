@@ -181,19 +181,6 @@ Page({
     })
   },
 
-
-
-
-  xiangqing: function(e) {
-    var _this = this;
-    _this.setData({
-      details: false,
-      mask_hid: false,
-      handle:true
-    })
-    _this.init2()
-  },
-
   sanchu:function() {
     var _this = this;
     var id = _this.data.list[_this.data.dataset_input.index].id;
@@ -389,9 +376,9 @@ Page({
       e.detail.value.points = 0
     }
     if (e.detail.value.username !="" && e.detail.value.password != "" && e.detail.value.name != "" && e.detail.value.gender != "" && e.detail.value.state != "" && e.detail.value.phone != "" && e.detail.value.birthday != "" ){
-    let sql = "insert into member_info(company,username,password,name,gender,state,phone,birthday) values('" + _this.data.company + "','" +
+    let sql = "insert into member_info(company,username,password,name,gender,state,phone,birthday,points) values('" + _this.data.company + "','" +
       e.detail.value.username + "','" + e.detail.value.password + "','" + e.detail.value.name + "','" +
-      e.detail.value.gender + "','" + e.detail.value.state +  "','" + e.detail.value.phone + "','" + e.detail.value.birthday + "')"
+      e.detail.value.gender + "','" + e.detail.value.state +  "','" + e.detail.value.phone + "','" + e.detail.value.birthday + "',0)"
       console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_xinyongka',

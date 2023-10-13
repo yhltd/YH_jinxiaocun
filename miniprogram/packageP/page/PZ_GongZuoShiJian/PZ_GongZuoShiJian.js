@@ -379,13 +379,11 @@ Page({
                 query: "insert into time_config(week,morning_start,morning_end,noon_start,noon_end,night_start,night_end,company) values('" + this.data.activeNames + "','" + this.data.monring1 + "','" + this.data.monring2 + "','" + this.data.noon1 + "','" + this.data.noon2 + "','" + this.data.night1 + "','" + this.data.night2 + "','" + user + "')"
               },
               success: res => {
+
                 wx.showToast({
                   title: '保存成功！',
                   icon: 'none',
                   duration: 3000
-                })
-                wx.hideLoading({
-
                 })
               },
               err: res => {
@@ -411,9 +409,6 @@ Page({
                   title: '保存成功！',
                   icon: 'none'
                 })
-                wx.hideLoading({
-
-                })
               },
               err: res => {
                 console.log("错误!")
@@ -428,9 +423,6 @@ Page({
               }
             })
           }
-          wx.hideLoading({
-
-          })
         }
       },
       err: res => {
@@ -455,6 +447,11 @@ Page({
         query: "delete from holiday_config where id='" + this.data.delId + "' and company='" + user + "'"
       },
       success: res => {
+        wx.showToast({
+          title: '删除成功！',
+          icon: 'none',
+          duration: 3000
+        })
         _this.setData({
           delId: ""
         })

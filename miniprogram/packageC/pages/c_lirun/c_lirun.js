@@ -225,9 +225,16 @@ Page({
       },
       success: res => {
         var list = res.result.recordsets
-        list = _this.get_list(list)
+        this_list = _this.get_list(list)
+        console.log(this_list)
+        for(var i=0; i<this_list.length; i++){
+          if(this_list[i].accounting.indexOf("科目：") != -1){
+            console.log("dd")
+            this_list[i].accounting = "　" + this_list[i].accounting
+          }
+        }
         _this.setData({
-          list,
+          this_list,
         })
       },
       err: res => {
@@ -303,6 +310,7 @@ Page({
     var stop_date = nowDate[1] + "-12-31"
 
     sql = "select '项目：'+project as project,'科目：'+accounting as accounting,0.0 as benqi,0.0 as bennian,0.0 as shangqi from SimpleData where company='"+ userInfo.company +"' group by project,accounting order by project,accounting;select '项目：'+project as project,'科目：'+accounting as accounting,(sum(receipts)-sum(payment)) as benqi,0.0 as bennian,0.0 as shangqi from SimpleData where company='"+ userInfo.company +"' and insert_date>='" + start_date + "' and insert_date<='" + stop_date + "' group by project,accounting;select '项目：'+project as project,'科目：'+accounting as accounting,0.0 as benqi,(sum(receipts)-sum(payment)) as bennian,0.0 as shangqi from SimpleData where company='"+ userInfo.company +"' and insert_date>='" + start_date + "' and insert_date<='" + stop_date + "' group by project,accounting;select '项目：'+project as project,'科目：'+accounting as accounting,0.0 as benqi,0.0 as bennian,(sum(receipts)-sum(payment)) as shangqi from SimpleData where company='"+ userInfo.company +"' and insert_date<'" + start_date + "'  group by project,accounting;"
+    console.log(sql)
     wx.cloud.callFunction({
       name : 'sqlServer_cw',
       data : {
@@ -313,6 +321,12 @@ Page({
         var this_list = res.result.recordsets
         this_list = _this.get_list(this_list)
         console.log(this_list)
+        for(var i=0; i<this_list.length; i++){
+          if(this_list[i].accounting.indexOf("科目：") != -1){
+            console.log("dd")
+            this_list[i].accounting = "　" + this_list[i].accounting
+          }
+        }
         _this.setData({
           list : this_list,
         })

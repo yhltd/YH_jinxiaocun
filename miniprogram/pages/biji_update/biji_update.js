@@ -158,6 +158,13 @@ Page({
     var value2 = that.data.value2
     var value3 = that.data.value3
     var value4 = that.data.value4
+    if(value0 == '' || value1 == '' || value2 == '' || value3 == ''){
+      wx.showToast({
+        title: '信息填写不全，请检查',
+        icon:'none'
+      })
+      return;
+    }
     var ssql = ""
     if(fun == 'update'){
       ssql = "update yh_jinxiaocun_zhengli set sp_dm ='" + value0 + "',`name` = '" + value1 + "',lei_bie ='" + value2 + "',dan_wei ='" + value3 + "',beizhu ='" + value4 + "' where id =" + id;

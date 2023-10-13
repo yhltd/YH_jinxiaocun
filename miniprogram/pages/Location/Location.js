@@ -10,7 +10,10 @@ Page({
     jinhuo: '',
     backhidden: true,
     updIndex: -1,
-    isStock: false
+    isStock: false,
+    beizhu:'',
+    lianxifangshi:'',
+    lianxidizhi:'',
   },
 
   /**
@@ -252,6 +255,13 @@ Page({
     console.log(beizhu)
     console.log(lianxifangshi)
     console.log(lianxidizhi)
+    if(beizhu == '' || lianxifangshi == '' || lianxidizhi == ''){
+      wx.showToast({
+        title: '信息填写不全',
+        icon:'none'
+      })
+      return;
+    }
     if (beizhu != null || lianxifangshi != null) {
       const db = wx.cloud.database()
       var finduser = app.globalData.finduser

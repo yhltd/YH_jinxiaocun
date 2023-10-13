@@ -1,8 +1,8 @@
 // pages/time/time.js
 var app = getApp()
 var common = require('../../utils/common.js');
-var jg
-var sl
+var jg = ""
+var sl = ""
 var szzhi = [] //
 var szsl = []
 var szje = []
@@ -130,6 +130,8 @@ Page({
     cpxinxi = []
     slxinxi = []
     jgxinxi = []
+    cpjg = []
+    cpsl = []
     that.setData({
       szzhi: [],
       szjg: [],
@@ -205,6 +207,8 @@ Page({
   },
 
   srJg: function(e) {
+    sl = ""
+    jg = ""
     console.log("触发点击")
     var _this = this
     dtid = e.currentTarget.dataset.id
@@ -257,7 +261,14 @@ tjjg: function(e) {
   //   backhidden: true
   // })
   var zongjia = that.data.rkSum
-  if (sl != null && jg != null) {
+  if (sl != "" && jg != "") {
+    if(sl*1 <=0 || jg*1 <=0 ){
+      wx.showToast({
+        title: '数量和价格必须大于0',
+        icon:'none'
+      })
+      return;
+    }
     console.log(cpsl)
     console.log(cpjg)
     cpsl[dtid] = sl
@@ -268,6 +279,12 @@ tjjg: function(e) {
         zongjia += parseInt(cpsl[idx]) * parseInt(cpjg[idx])
       }
     }
+  }else{
+    wx.showToast({
+      title: '请填写数量和价格',
+      icon:'none'
+    })
+    return;
   }
   for (var i = 0; i < cpsl.length; i++) {
     if (cpjg[i] == null) {
@@ -496,7 +513,26 @@ tjjg: function(e) {
                   // that.setData({
                   //   all: res.result[id][0].beizhu
                   // })
-
+                  wx.cloud.callFunction({
+                    name: "sqlConnection",
+                    data: {
+                      sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
+                    },
+                    success(res) {
+                      for(var i=0;i<res.result.length;i++){
+                        if(res.result[i].mark1 != null){
+                          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+                        }
+                      }
+                      that.setData({
+                        shangpin_list: res.result,
+                        szzhi:res.result
+                      })
+                    },
+                    fail(res) {
+                      console.log("失败", res)
+                    }
+                  });
                 },
                 fail(res) {
                   console.log("失败", res)

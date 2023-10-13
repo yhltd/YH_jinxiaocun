@@ -86,7 +86,7 @@ Page({
       success(res) {
         console.log(res.result)
         for(var i=0; i<res.result.length; i++){
-          var imgData = QR.drawImg(res.result[i].sp_dm, {
+          var imgData = QR.drawImg(res.result[i].cpid, {
             typeNumber: 4,
             errorCorrectLevel: 'M',
             size: 500

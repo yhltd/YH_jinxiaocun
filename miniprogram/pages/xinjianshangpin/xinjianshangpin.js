@@ -6,6 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    value0:'',
+    value1:'',
+    value2:'',
+    value4:'',
     bigImg: "",
     list: [{
         txet: "商品代码",
@@ -38,9 +42,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var _this = this
     if (options.query != null) {
       console.log(options.query)
     }
+    var sql = "select sp_dm from yh_jinxiaocun_jichuziliao where gs_name ='" + app.globalData.gongsi + "'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: sql
+      },
+      success(res) {
+        console.log("商品列表", res.result)
+        _this.setData({
+          product_id:res.result
+        })
+        // 在返回结果中会包含新创建的记录的 _id
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
   },
 
   /**
@@ -189,6 +212,24 @@ Page({
     console.log(finduser)
     console.log(value0)
     const db = wx.cloud.database();
+    if(value0 == '' || value1 == '' || value2 == '' || value4 == ''){
+      wx.showToast({
+        title: '信息填写不全，请检查',
+        icon:'none'
+      })
+      return;
+    }
+    var product_id = that.data.product_id
+    for(var i=0; i<product_id.length; i++){
+      if(product_id[i].sp_dm == value0){
+        wx.showToast({
+          title: '商品代码重复',
+          'icon': 'none',
+          duration: 3000
+        })
+        return;
+      }
+    }
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {

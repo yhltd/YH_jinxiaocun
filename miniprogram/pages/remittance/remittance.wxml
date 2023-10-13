@@ -29,8 +29,8 @@
 	</view>
 
 
-	<view class=' main'>
-		<view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
+	<view class=' main' style="padding-bottom: 100px;">
+		<view class='list'  wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
 			<view class='shangpin' bindtap='srJg' data-id="{{i}}">
 				<image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
 				<view class="shangpin-text" data-id="{{i}}">

@@ -250,6 +250,9 @@ Page({
               sql: "DELETE FROM yh_jinxiaocun_mingxi where _id = '" + uid + "'"
             },
             success: res=> {
+              wx.showToast({
+                title: '删除成功',
+              })
               that.onLoad()
             },
             fail: res=> {

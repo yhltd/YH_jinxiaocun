@@ -87,7 +87,8 @@ Page({
     var _this = this;
     _this.setData({
       jishu: 0,
-      ishidden:false
+      ishidden:false,
+      mask_hid: true
     })
     var list = _this.data.list
     var type = _this.data.type
@@ -160,13 +161,28 @@ Page({
           }
         })
       }
+      wx.canvasToTempFilePath({
+        x: 0,  
+        y: 0,  
+        width: _this.data.width_user,  
+        height: _this.data.height_user,  
+        canvasId: 'outCanvas', 
+        success: function (res) {    
+          console.log(res.tempFilePath);
+          _this.setData({
+            this_photo: res.tempFilePath,
+            mask_hid: false
+          })
+        }
+      })
     }, 3000);
   },
 
   setCanvas_yiwei: function (comment_order) {
     var _this = this;
     _this.setData({
-      jishu: 0
+      jishu: 0,
+      mask_hid: true
     })
     var list = _this.data.list
     var type = _this.data.type
@@ -198,6 +214,20 @@ Page({
     }
     setTimeout(function() {
       ctx.draw()
+      wx.canvasToTempFilePath({
+        x: 0,  
+        y: 0,  
+        width: _this.data.width_user,  
+        height: _this.data.height_user,  
+        canvasId: 'outCanvas', 
+        success: function (res) {    
+          console.log(res.tempFilePath);
+          _this.setData({
+            this_photo: res.tempFilePath,
+            mask_hid: false
+          })
+        }
+      })
     }, 3000);
   },
 
@@ -222,6 +252,9 @@ Page({
       title: '正在打印',
       icon: "none",
       duration: 2000
+    })
+    _this.setData({
+      mask_hid: true
     })
     var width = _this.data.width_user
     var height = _this.data.height_user
@@ -601,6 +634,9 @@ Page({
     } else {
       callback ? callback() : '';
     }
+    _this.setData({
+      mask_hid: false
+    })
   },
 
   //发送数据

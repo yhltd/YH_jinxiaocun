@@ -1,6 +1,6 @@
 // pages/shangpinxuanze/shangpinxuanze.js
-var jg
-var sl
+var jg = ""
+var sl = ""
 var dtid
 var cpid
 var cpjg = []
@@ -208,6 +208,8 @@ Page({
 
   srJg: function(e) {
     var that = this
+    sl = ""
+    jg = ""
     dtid = e.currentTarget.dataset.id
     if(that.data.fun=='qichu'){
       var dm = e.currentTarget.dataset.dm
@@ -248,7 +250,14 @@ Page({
       backhidden: true
     })
     zongjia = that.data.rkSum
-    if (sl != null && jg != null) {
+    if (sl != "" && jg != "") {
+      if(sl*1 <=0 || jg*1 <=0 ){
+        wx.showToast({
+          title: '数量和价格必须大于0',
+          icon:'none'
+        })
+        return;
+      }
       cpsl[dtid] = sl
       cpjg[dtid] = jg
       zongjia = 0
@@ -257,6 +266,12 @@ Page({
           zongjia += parseInt(cpsl[idx]) * parseInt(cpjg[idx])
         }
       }
+    }else{
+      wx.showToast({
+        title: '请填写数量和价格',
+        icon:'none'
+      })
+      return;
     }
 
 

@@ -62,14 +62,13 @@
 
 <view class="row-box row-list clearfix">
 
-	<view>
+	<!-- <view>
 		<navigator url='../upload/page/page'>
 			<icon class="iconfont icon-zongjie"></icon>
 			<text>所属机构:</text>
 			<text>{{listAll[0].jigoudaima}}</text>
-			<!-- <icon class="iconfont icon-fangxiangyou"></icon> -->
 		</navigator>
-	</view>
+	</view> -->
 
 	<view>
 		<navigator url='../upload/page/page'>

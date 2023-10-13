@@ -267,7 +267,9 @@
     <view class="lables">排产数量</view>
     <input bindinput="onInput3" data-column="pcsl" class="input_text_form" value="{{pcsl}}" type="digit" name="cpmc"></input>
     <view class="lables">开始生产日期</view>
-    <input bindinput="onInput3" data-column="xdrq" bindtap="selRIQI" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq" disabled="disabled"></input>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="xdrq" bindchange="choiceDate">
+    <input bindinput="onInput3" data-column="xdrq" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq" disabled="disabled"></input>
+    </picker>
     <view class="lables">预计完成日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="wcrq" bindchange="choiceDate">
       <input bindinput="onInput3" data-column="wcrq" class="input_text_form" value="{{wcrq}}" type="text" name="wcrq" disabled="disabled"></input>

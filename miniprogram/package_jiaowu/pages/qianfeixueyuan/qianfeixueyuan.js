@@ -103,10 +103,12 @@ Page({
   tableShow: function (e) {
     var _this = this
     let user = _this.data.userInfo.Company;
+    var sql = "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid+money else 0 end) from payment ) mall ,ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+user+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull((select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour,Allhour,Type FROM student where RealName LIKE '%" + _this.data.xsxm + "%' and ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+user+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) > 0"
+    // var sql = "select * from student where Nocost is not null and Nocost>0 and RealName like '%" + _this.data.xsxm + "%' and Company='"+user+"'"
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
-        sql: "select * from student where Nocost is not null and Nocost>0 and RealName like '%" + _this.data.xsxm + "%' and Company='"+user+"'"
+        sql: sql
       },
       success: res => {
         console.log(res.result)

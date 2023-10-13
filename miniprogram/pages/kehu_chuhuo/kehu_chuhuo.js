@@ -23,7 +23,7 @@ Page({
         sql: sql
       },
       success(res) {
-        var customer_list = []
+        var customer_list = ['']
         for(var i=0; i<res.result.length; i++){
           customer_list.push(res.result[i].shou_h)
         } 
@@ -380,4 +380,131 @@ Page({
     })
   },
 
+  out_put4:function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.szzhi;
+    if(list.length == 0){
+      wx.showToast({
+        title: '无可导出数据，请查询后再试！',
+        icon: 'none'
+      })
+      return;
+    }
+    console.log(list)
+    var title_put = [
+    {
+      text: "供货商/客户",
+      width: "250rpx",
+      columnName: "shou_h",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "商品代码",
+      width: "250rpx",
+      columnName: "sp_dm",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "商品名称",
+      width: "250rpx",
+      columnName: "cpname",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "商品类别",
+      width: "250rpx",
+      columnName: "cplb",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "入库/出库数量",
+      width: "250rpx",
+      columnName: "ruku_num",
+      type: "number",
+      isupd: true
+    },
+    {
+      text: "入库/出库金额",
+      width: "250rpx",
+      columnName: "ruku_price",
+      type: "number",
+      isupd: true
+    },
+    ]
+    console.log(title_put)
+    var cloudList = {
+      name : '客户|供应商查询',
+      items : [],
+      header : []
+    }
+    for(let i=0;i<title_put.length;i++){
+      cloudList.header.push({
+        item:title_put[i].text,
+        type:title_put[i].type,
+        width:parseInt(title_put[i].width.split("r")[0]),
+        columnName:title_put[i].columnName
+      })
+    }
+
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name: 'getExcel',
+      data: {
+        list: cloudList
+      },
+      success: function (res) {
+        var fileid =  res.result.fileID
+        console.log(fileid)
+        console.log("获取云储存id")
+        wx.getSavedFileList({
+          success: function(res) {
+              console.log(res.fileList);
+          }
+        });
+        wx.cloud.downloadFile({
+          fileID: res.result.fileID,
+          success: res => {
+            console.log("获取临时路径")
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: 'true',
+              fileType: 'xlsx',
+              success: res => {
+                console.log("打开Excel")
+              }
+            })
+            wx.hideLoading({
+              success: (res) => {},
+            })
+          }
+        })
+      },
+      fail: res => {
+        console.log(res)
+      }
+    })
+  },
+
 })
+
+function delCloudFile(fileId){
+  var fileIds = [];
+  fileIds.push(fileId);
+  wx.cloud.deleteFile({
+    fileList: fileIds,
+    success: res => {
+      console.log(res.fileList);
+    },
+    fail : console.error
+  })
+}

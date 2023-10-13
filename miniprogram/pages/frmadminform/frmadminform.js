@@ -31,7 +31,7 @@ Page({
 
     ],
     AdminIS: 'false',
-    Btype: null,
+    Btype: '正常',
     jigoudaima: null,
     gongsi: null,
     Createdate_i: "",
@@ -108,12 +108,14 @@ Page({
     //   duration: 2000
     // }) 
     const that = this;
-    var gongsi, uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima;
+    var gongsi, uname, pass, pass2, AdminIS, Btype, Createdate, jigoudaima,AdminIS,Btype;
     uname = e.detail.value.username,
       pass = e.detail.value.pwd,
       pass2 = e.detail.value.pwd2,
       gongsi = e.detail.value.gongsi,
-      jigoudaima = e.detail.value.jigoudaima
+      AdminIS = that.data.AdminIS
+      Btype = that.data.Btype
+      // jigoudaima = e.detail.value.jigoudaima
     if (pass2 != pass) {
       wx.showToast({
         title: '两次密码不一致，请修改',
@@ -126,6 +128,22 @@ Page({
       wx.showToast({
         title: '数据不能为空！',
         // icon: 'success',
+        duration: 2000
+      })
+      return
+    }
+    if (AdminIS == "") {
+      wx.showToast({
+        title: '请选择该账号是否为管理员',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (Btype == "") {
+      wx.showToast({
+        title: '请选择该账号状态',
+        icon: 'none',
         duration: 2000
       })
       return
@@ -157,7 +175,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "insert into yh_jinxiaocun_user (gongsi,_id,name,password,AdminIS,Btype,jigoudaima,Createdate)VALUES('" + gongsi + "','"+ uname +"','" + uname + "','" + pass + "','" + that.data.AdminIS + "','" + that.data.Btype + "','" + jigoudaima + "','" + time + "')"
+        sql: "insert into yh_jinxiaocun_user (gongsi,_id,name,password,AdminIS,Btype,Createdate)VALUES('" + gongsi + "','"+ uname +"','" + uname + "','" + pass + "','" + that.data.AdminIS + "','" + that.data.Btype + "','" + time + "')"
       },
       success(res) {
         console.log("成功")
@@ -183,11 +201,13 @@ Page({
   },
 
   radioChange(e) {
-    //  console.log('radio发生change事件，携带value值为：', e.detail.value)
-    console.log(e.detail.value)
+    var that = this;
+    console.log('2radio发生change事件，携带value值为：', e.detail.value)
     this.setData({
-      Btype: e.detail.value
-    });
+        Btype: e.detail.value
+      },
+      console.log(this.data.Btype)
+    );
   },
   AdminISradioChange(e) {
     // console.log('radio发生change事件，携带value值为：', e.detail.value)

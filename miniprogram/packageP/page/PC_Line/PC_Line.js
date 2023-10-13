@@ -84,6 +84,9 @@ Page({
     var _this = this
     var list = _this.data.month_list
     var options = {
+      grid:{
+        containLabel:true
+      },
       xAxis: {
         type: 'category',   // 还有其他的type，可以去官网喵两眼哦
         data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],   // x轴数据
@@ -97,7 +100,11 @@ Page({
         {
           name: '当月订单',
           data: [list[0].month1, list[0].month2, list[0].month3, list[0].month4, list[0].month5, list[0].month6, list[0].month7,list[0].month8,list[0].month9,list[0].month10,list[0].month11,list[0].month12],
-          type: 'line'
+          type: 'line',
+          label: {
+            show: true,
+            position: 'top'
+          }
         },
       ]
     }

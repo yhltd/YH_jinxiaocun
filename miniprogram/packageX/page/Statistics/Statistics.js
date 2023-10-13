@@ -61,6 +61,14 @@ Page({
       },
       success: res => {
         console.log("select-success", res)
+        var list = res.result
+        for(var i=0; i<res.result.length;i++){
+          res.result[i].profit = Math.round(res.result[i].profit * 100) / 100
+          res.result[i].repayment = Math.round(res.result[i].repayment * 100) / 100
+          res.result[i].swipe = Math.round(res.result[i].swipe * 100) / 100
+          res.result[i].the_total_fee = Math.round(res.result[i].the_total_fee * 100) / 100
+        }
+        console.log(res.result)
         _this.setData({
           list: res.result,
           skr: "",

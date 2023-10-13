@@ -19,7 +19,7 @@
 				<view class='shangpinpm' data-id="{{i}}">类别：{{all[i].lei_bie}}</view>
 				<view class='shangpinpm' data-id="{{i}}">单位：{{all[i].dan_wei}}</view>
 			</view>
-      <checkbox data-hang="{{i}}" value="{{all[i].sp_dm}}" checked="{{all[i].checkbox}}" ></checkbox>
+      <checkbox style="zoom:1.5" data-hang="{{i}}" value="{{all[i].sp_dm}}" checked="{{all[i].checkbox}}" ></checkbox>
 		</view>
 
 

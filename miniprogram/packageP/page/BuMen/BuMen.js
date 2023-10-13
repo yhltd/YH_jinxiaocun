@@ -396,6 +396,10 @@ Page({
     var _this = this
     _this.setData({
       tjShow: true,
+      dadd: '否',
+      ddel: '否',
+      dupd: '否',
+      dsel: '否',
     })
     _this.wlShow()
   },
