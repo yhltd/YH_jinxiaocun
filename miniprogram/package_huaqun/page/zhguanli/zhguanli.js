@@ -57,6 +57,13 @@ Page({
         isupd: true
       },
       {
+        text: "区域",
+        width: "250rpx",
+        columnName: "quyu",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "填写铝框金额权限",
         width: "300rpx",
         columnName: "money",
@@ -99,7 +106,7 @@ Page({
         isupd: true
       },
     ],
-
+    quyu_list:[],
     id:'',
     username: '', 
     password: '',
@@ -113,6 +120,7 @@ Page({
     zuzhuang: '',
     baozhuang: '',
     company:'',
+    quyu:'',
   },
 
   /**
@@ -120,8 +128,74 @@ Page({
    */
   onLoad(options) {
     var _this = this
+    var sql = "select isnull(quyu,'') as name from dropdowntable where isnull(quyu,'') != ''"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          quyu_list: list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
     var e = ['','']
     _this.tableShow(e)
+  },
+
+  header_xiala: function (e) {
+    var _this = this
+    console.log('列名：', e.currentTarget.dataset.column)
+    var column = e.currentTarget.dataset.column
+    var list = _this.data[column + "_list"]
+    var list2 = []
+    console.log(list)
+    for(var i=0; i< list.length; i++){
+      var name = list[i].name
+      console.log(name.indexOf(_this.data.quyu))
+      if(name.indexOf(_this.data.quyu) > -1){
+        list2.push({name:name})
+      }
+    }
+    console.log(list2)
+    _this.setData({
+      list_xiala: list2,
+      click_column:column,
+    })
+    console.log(list)
+    _this.setData({
+      xlShow2: true
+    })
+  },
+
+  select2: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var click_column = _this.data.click_column
+      _this.setData({
+        xlShow2: false,
+        [click_column]:new_val
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow2:false,
+      })
+    }
   },
 
   bindPickerChange1: function(e){
@@ -200,6 +274,7 @@ Page({
       kailiao:  _this.data.list[e.currentTarget.dataset.index].kailiao,
       zuzhuang:  _this.data.list[e.currentTarget.dataset.index].zuzhuang,
       baozhuang:  _this.data.list[e.currentTarget.dataset.index].baozhuang,
+      quyu:  _this.data.list[e.currentTarget.dataset.index].quyu,
       xgShow:true,
     })
   },
@@ -271,7 +346,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlserver_huaqun',
         data: {
-          query: "insert into userInfo(username,password,name,pinyin,power,money,shendan,pay,kailiao,zuzhuang,baozhuang,company) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "','" + _this.data.money + "','" + _this.data.shendan + "','" + _this.data.pay + "','" + _this.data.kailiao + "','" + _this.data.zuzhuang + "','" + _this.data.baozhuang + "','" + _this.data.company + "')"
+          query: "insert into userInfo(username,password,name,pinyin,power,money,shendan,pay,kailiao,zuzhuang,baozhuang,company,quyu) values('" + _this.data.username + "','" + _this.data.password + "','" + _this.data.name + "','" + _this.data.pinyin + "','" + _this.data.power + "','" + _this.data.money + "','" + _this.data.shendan + "','" + _this.data.pay + "','" + _this.data.kailiao + "','" + _this.data.zuzhuang + "','" + _this.data.baozhuang + "','" + _this.data.company + "','" + _this.data.quyu + "')"
         },
         success: res => {
           _this.setData({
@@ -288,6 +363,7 @@ Page({
             kailiao: '',
             zuzhuang: '',
             baozhuang: '',
+            quyu:'',
           })
           _this.qxShow()
           var e = ['','']
@@ -324,7 +400,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "',money='" + _this.data.money + "',shendan='" + _this.data.shendan + "',pay='" + _this.data.pay + "',kailiao='" + _this.data.kailiao + "',zuzhuang='" + _this.data.zuzhuang + "',baozhuang='" + _this.data.baozhuang + "',company='" + _this.data.company + "' where id=" + _this.data.id  
+        query: "update userInfo set username='" + _this.data.username + "',password='" + _this.data.password + "',name='" + _this.data.name + "',pinyin='" + _this.data.pinyin + "',power='" + _this.data.power + "',money='" + _this.data.money + "',shendan='" + _this.data.shendan + "',pay='" + _this.data.pay + "',kailiao='" + _this.data.kailiao + "',zuzhuang='" + _this.data.zuzhuang + "',baozhuang='" + _this.data.baozhuang + "',company='" + _this.data.company + "',quyu='" + _this.data.quyu + "' where id=" + _this.data.id  
       },
       success: res => {
         _this.setData({
@@ -341,6 +417,7 @@ Page({
             kailiao: '',
             zuzhuang: '',
             baozhuang: '',
+            quyu:'',
         })
         _this.qxShow()
         var e = ['','']
@@ -386,6 +463,7 @@ Page({
             kailiao: '',
             zuzhuang: '',
             baozhuang: '',
+            quyu:'',
           })
           _this.qxShow()
           var e = ['','']

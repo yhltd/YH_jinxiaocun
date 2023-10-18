@@ -93,7 +93,8 @@ Page({
       },
     ],
     wancheng_list :['优先处理','配货作业中','配货完成','完成','未完成-缺货','未完成-配错货'],
-    kucun_list: ['安排处理','处理当中','处理完成']
+    kucun_list: ['安排处理','处理当中','处理完成'],
+    quyu:'',
   },
 
   /**
@@ -113,8 +114,74 @@ Page({
     _this.setData({
       userInfo
     })
+    var sql = "select isnull(quyu,'') as name from dropdowntable where isnull(quyu,'') != ''"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          quyu_list: list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
     var e = ['1900-01-01','2100-12-31','','','','','','','']
     _this.tableShow(e)
+  },
+
+  header_xiala: function (e) {
+    var _this = this
+    console.log('列名：', e.currentTarget.dataset.column)
+    var column = e.currentTarget.dataset.column
+    var list = _this.data[column + "_list"]
+    var list2 = []
+    console.log(list)
+    for(var i=0; i< list.length; i++){
+      var name = list[i].name
+      console.log(name.indexOf(_this.data.quyu))
+      if(name.indexOf(_this.data.quyu) > -1){
+        list2.push({name:name})
+      }
+    }
+    console.log(list2)
+    _this.setData({
+      list_xiala: list2,
+      click_column:column,
+    })
+    console.log(list)
+    _this.setData({
+      xlShow2: true
+    })
+  },
+
+  select2: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var click_column = _this.data.click_column
+      _this.setData({
+        xlShow2: false,
+        [click_column]:new_val
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow2:false,
+      })
+    }
   },
 
   bindPickerChange: function(e){

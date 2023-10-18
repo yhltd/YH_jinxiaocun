@@ -23,27 +23,6 @@
 </view>
 
 <!------------------------->
-<!---------添加弹窗--------->
-<!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
-  <view class="lables">姓名</view>
-  <input bindinput="onInput" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
-  <view class="lables">公司</view>
-  <input bindinput="onInput" data-column="company" class="input_text_form" value="{{company}}" type="text" name="company"></input>
-  <view class="lables">账号</view>
-  <input bindinput="onInput" data-column="username" class="input_text_form" value="{{username}}" type="text" name="username"></input>
-  <view class="lables">密码</view>
-  <input bindinput="onInput" data-column="password" class="input_text_form" value="{{password}}" type="text" name="password"></input>
-  <view class="lables">权限</view>
-  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
-    <input bindinput="onInput" data-column="power" class="input_text_form" value="{{power}}" type="text" name="power" disabled="disabled"></input>
-  </picker>
-  <view class="bottom_view" style="height:10%">
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
-  </view>
-</van-popup>
-<!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 52%;">
@@ -52,7 +31,7 @@
     <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng" disabled="disabled"></input>
   </picker>
   <view class="lables">配送区域</view>
-  <input bindinput="onInput" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
+  <input bindinput="onInput" bindlongpress="header_xiala" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
   <view class="lables" style="{{userInfo.power=='客户'?'display:none':''}}">商品库存信息</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="kucun" range="{{kucun_list}}">
     <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled" style="{{userInfo.power=='客户'?'display:none':''}}"></input>
@@ -83,7 +62,7 @@
     <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng" disabled="disabled"></input>
   </picker>
   <view class="lables">配送区域</view>
-  <input bindinput="onInput" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
+  <input bindinput="onInput" bindlongpress="header_xiala" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
   <view class="lables">安装地址</view>
   <input bindinput="onInput" data-column="anzhuang_address" class="input_text_form" value="{{anzhuang_address}}" type="text" name="anzhuang_address"></input>
   <view class="lables">客户订单号</view>
@@ -101,3 +80,6 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

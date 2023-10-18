@@ -50,6 +50,8 @@
     <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
       <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
     </picker>
+    <view class="lables">区域</view>
+    <input bindinput="onInput" bindlongpress="header_xiala" data-column="quyu" class="input_text_form"  value="{{quyu}}" type="text" name="quyu"></input>
     <view class="lables">填写铝框金额权限</view>
     <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="money" range="{{quanxian_list}}">
       <input bindinput="onInput" data-column="money" class="input_text_form"  value="{{money}}" type="text" name="money" disabled="disabled"></input>
@@ -97,6 +99,8 @@
     <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="power" range="{{quanxian_type}}">
       <input bindinput="onInput" data-column="power" class="input_text_form"  value="{{power}}" type="text" name="power" disabled="disabled"></input>
     </picker>
+    <view class="lables">区域</view>
+    <input bindinput="onInput" bindlongpress="header_xiala" data-column="quyu" class="input_text_form"  value="{{quyu}}" type="text" name="quyu"></input>
     <view class="lables">填写铝框金额权限</view>
     <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="money" range="{{quanxian_list}}">
       <input bindinput="onInput" data-column="money" class="input_text_form"  value="{{money}}" type="text" name="money" disabled="disabled"></input>
@@ -141,3 +145,6 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
