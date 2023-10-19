@@ -50,6 +50,7 @@ Page({
     var width_all = _this.data.width_user_all
     var width = _this.data.width_user
     var height = _this.data.height_user
+    // console.log(order2)
     console.log(width_all)
     console.log(width)
     console.log(height)
@@ -77,6 +78,7 @@ Page({
 
     var this_height = 80
     var this_column = 1
+    var lvxingcai =""
     for(var i=0; i<order2.length; i++){
       ctx.setTextAlign('left')
       if(order2[i].fj == '房间柜号'){
@@ -85,16 +87,21 @@ Page({
         this_height = this_height + 20
       }else if(order2[i].fj == '铝型材'){
         this_column = 1
-        ctx.fillText(order2[i].gh, 0, this_height)
-        ctx.fillText(order2[i].lcys, 140, this_height)
-        ctx.fillText(order2[i].gy, 200, this_height)
-        ctx.fillText(order2[i].ddcd, 280, this_height)
-        ctx.fillText(order2[i].sl, 320, this_height)
+        lvxingcai = order2[i].gh +"  "+ order2[i].lcys +"  "+ order2[i].gy +"  "+ order2[i].ddcd+"  "+ order2[i].sl 
+        console.log(lvxingcai)
+        ctx.fillText(lvxingcai, 0, this_height)
+        console.log(lvxingcai.length)
+        // ctx.fillText(order2[i].gh, 0, this_height)
+       
+        // ctx.fillText(order2[i].lcys, 140, this_height)
+        // ctx.fillText(order2[i].gy, 200, this_height)
+        // ctx.fillText(order2[i].ddcd, 280, this_height)
+        // ctx.fillText(order2[i].sl, 320, this_height)
         this_height = this_height + 20
       }else{
         if(this_column == 1){
           ctx.fillText(order2[i].gh, 0, this_height)
-          ctx.fillText(order2[i].sl, 120, this_height)
+          ctx.fillText(order2[i].sl, 140, this_height)
           this_column = this_column + 1
         }else{
           ctx.fillText(order2[i].gh, 200, this_height)
@@ -351,6 +358,7 @@ Page({
     height = height + 40
 
     var this_column = 1
+    var lxingcai=""
     for(var i=0; i<order2.length; i++){
       if(order2[i].fj == '房间柜号'){
         this_column = 1
@@ -358,11 +366,17 @@ Page({
         height = height + 40
       }else if(order2[i].fj == '铝型材'){
         this_column = 1
-        printUtil.printlnText(4, 0, height, order2[i].gh);
-        printUtil.printlnText(4, 280, height, order2[i].lcys);
-        printUtil.printlnText(4, 380, height, order2[i].gy);
-        printUtil.printlnText(4, 530, height, order2[i].ddcd);
-        printUtil.printlnText(4, 580, height, order2[i].sl);
+        lxingcai = order2[i].gh +"  " + order2[i].lcys + "  " +order2[i].gy+"  "+ order2[i].ddcd +"  "+order2[i].sl
+        printUtil.printlnText(4, 15, height, lxingcai);
+        console.log(lxingcai.length)
+        if(lxingcai.length > 40){
+          height = height + 10
+        }
+        // printUtil.printlnText(4, 0, height, order2[i].gh);
+        // printUtil.printlnText(4, 280, height, order2[i].lcys);
+        // printUtil.printlnText(4, 380, height, order2[i].gy);
+        // printUtil.printlnText(4, 530, height, order2[i].ddcd);
+        // printUtil.printlnText(4, 580, height, order2[i].sl);
         height = height + 40
       }else{
         if(this_column == 1){
@@ -393,6 +407,7 @@ Page({
     height = height + 40
 
     var this_column = 1
+    var lxingcai =""
     for(var i=0; i<order2.length; i++){
       if(order2[i].fj == '房间柜号'){
         this_column = 1
@@ -400,11 +415,16 @@ Page({
         height = height + 40
       }else if(order2[i].fj == '铝型材'){
         this_column = 1
-        printUtil.printlnText(4, 0, height, order2[i].gh);
-        printUtil.printlnText(4, 280, height, order2[i].lcys);
-        printUtil.printlnText(4, 380, height, order2[i].gy);
-        printUtil.printlnText(4, 530, height, order2[i].ddcd);
-        printUtil.printlnText(4, 580, height, order2[i].sl);
+        lxingcai = order2[i].gh +"  " + order2[i].lcys + "  " +order2[i].gy+"  "+ order2[i].ddcd +"  "+order2[i].sl
+        printUtil.printlnText(4, 15, height, lxingcai);
+        if(lxingcai.length > 40){
+          height = height + 10
+        }
+        // printUtil.printlnText(4, 0, height, order2[i].gh);
+        // printUtil.printlnText(4, 280, height, order2[i].lcys);
+        // printUtil.printlnText(4, 380, height, order2[i].gy);
+        // printUtil.printlnText(4, 530, height, order2[i].ddcd);
+        // printUtil.printlnText(4, 580, height, order2[i].sl);
         height = height + 40
       }else{
         if(this_column == 1){
