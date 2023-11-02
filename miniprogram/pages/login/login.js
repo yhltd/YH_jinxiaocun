@@ -676,6 +676,49 @@ var login = function(that,info) {
     })
   //结束
   
+  }else if(system =="瑞利达物资贸易" ){
+    console.log(system)
+    var sql = "select * from userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data:{
+        query : sql
+      },
+      success : res =>{
+        var list = res.result.recordset
+        console.log(list)
+        if(list.length == 0){
+          wx.showToast({
+            title: '用户名或密码错误',
+            icon:'none',
+          })
+        }else{
+          var user_list = list[0]
+          wx.navigateTo({
+            url:'../../package_ruilida/page/shows/shows?userInfo='+JSON.stringify(user_list)
+          })
+        }
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        console.log(res)
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+      complete: () => {
+        that.setData({
+          lock : true
+        })
+      }
+    })
+  //结束
+  
   }else if(system =="华群家具材料" && that.data.gongsi == '配送管理系统'){
     console.log(system)
     var sql = "select * from erqi_userInfo where username ='" + info.inputName + "' and password = '" + info.inputPwd + "'"
@@ -999,6 +1042,18 @@ Page({
         system,
         gongsi : '订单管理系统',
         pickerArray: ['订单管理系统']
+      })
+      return;
+    }else if(system == '瑞利达物资贸易'){
+      // _this.setData({
+      //   system,
+      //   gongsi : '订单管理系统',
+      //   pickerArray: ['订单管理系统','配送管理系统']
+      // })
+      _this.setData({
+        system,
+        gongsi : '瑞利达物资贸易',
+        pickerArray: ['瑞利达物资贸易']
       })
       return;
     }else if(system == '幻尘萌'){

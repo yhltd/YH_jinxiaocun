@@ -1,0 +1,282 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <view class="title_text">供应商基本信息：</view>
+    <van-cell-group inset>
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.bianhao }}"
+        data-column="name"
+        label="编号"
+        placeholder="请输入编号"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.name }}"
+        data-column="name"
+        label="名称"
+        placeholder="请输入名称"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.gongyingshang_dengji }}"
+        data-column="gongyingshang_dengji"
+        bind:click-input="xiala_show"
+        label="等级"
+        placeholder="请输入等级"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.suozai_diqu }}"
+        data-column="suozai_diqu"
+        bind:click-input="ssq_show"
+        label="地区"
+        placeholder="请输入地区"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.dizhi }}"
+        data-column="dizhi"
+        label="地址"
+        placeholder="请输入地址"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.beizhu }}"
+        data-column="beizhu"
+        label="备注"
+        placeholder="请输入备注"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.caigouyuan }}"
+        data-column="caigouyuan"
+        bind:click-input="xiala_show"
+        label="采购员"
+        placeholder="请输入采购员"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.jianzuo_kehu }}"
+        data-column="jianzuo_kehu"
+        bind:click-input="xiala_show"
+        label="兼做客户"
+        placeholder="请输入兼做客户"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.zhuyao_yewu }}"
+        data-column="zhuyao_yewu"
+        label="主要业务" 
+        placeholder="请输入主要业务"
+        border="false"
+      />
+    </van-cell-group>
+  </view>
+
+
+  <view style="padding-top: 10px;">
+    <view class="title_text">收件信息：</view>
+    <van-cell-group inset>
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.shoujian_name }}"
+        data-column="shoujian_name"
+        label="收件人姓名"
+        placeholder="请输入收件人姓名"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.shoujian_phone }}"
+        data-column="shoujian_phone"
+        label="收件人电话"
+        placeholder="请输入收件人电话"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.shoujian_dizhi }}"
+        data-column="shoujian_dizhi"
+        label="收件人地址"
+        placeholder="请输入收件人地址"
+        border="false"
+      />
+    </van-cell-group>
+    <view class="bottom_view" style="margin-top: 10px;">
+      <button class="bt_bottom" style="width:40%" bindtap="copy_lianxiren">复制主联系人</button>
+    </view>
+  </view>
+
+
+  <view style="padding-top: 10px;">
+    <view class="title_text">开票信息：</view>
+    <van-cell-group inset>
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.kaipiao_danwei }}"
+        data-column="kaipiao_danwei"
+        label="单位名称"
+        placeholder="请输入单位名称"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.shibiehao }}"
+        data-column="shibiehao"
+        label="纳税人识别号"
+        placeholder="请输入纳税人识别号"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.kaipiao_dizhi }}"
+        data-column="kaipiao_dizhi"
+        label="开票地址"
+        placeholder="请输入开票地址"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.kaipiao_dianhua }}"
+        data-column="kaipiao_dianhua"
+        label="电话"
+        placeholder="请输入电话"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.kaipiao_yinhang }}"
+        data-column="kaipiao_yinhang"
+        label="开户银行"
+        placeholder="请输入开户银行"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ gongying_body.kaipiao_zhanghao }}"
+        data-column="kaipiao_zhanghao"
+        label="银行账号"
+        placeholder="请输入银行账号"
+        border="false"
+      />
+    </van-cell-group>
+  </view>
+
+  <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
+    <view class="title1">
+      <view class="title_item">联系人信息{{i+1}}：</view>
+      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display: {{i==0?'none':'flex'}};" data-index="{{i}}"/>
+    </view> 
+    <van-cell-group inset>
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.name }}"
+        data-column="name"
+        data-index="{{i}}"
+        label="姓名"
+        placeholder="请输入姓名"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.department }}"
+        data-column="department"
+        data-index="{{i}}"
+        label="部门"
+        placeholder="请输入部门"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.zhiwu }}"
+        data-column="zhiwu"
+        data-index="{{i}}"
+        label="职务"
+        placeholder="请输入职务"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.phone }}"
+        data-column="phone"
+        data-index="{{i}}"
+        label="电话"
+        placeholder="请输入电话"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.address }}"
+        data-column="address"
+        data-index="{{i}}"
+        label="地址"
+        placeholder="地址"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.type }}"
+        data-column="type"
+        data-index="{{i}}"
+        bind:click-input="xiala_show"
+        label="类型"
+        placeholder="请输入类型"
+        border="false"
+        readonly="true"
+      />
+    </van-cell-group>
+  </view>
+  <view class="bottom_view" style="padding-bottom: 10px;">
+    <button class="bt_bottom" bindtap="add_lianxiren">添加联系人</button>
+  </view>
+</scroll-view>
+
+<view class="bottom_view"> 
+  <button class="bt_bottom" style="{{gongying_body.id==''?'display:none;':''}}" bindtap="file_goto">文件上传</button>
+  <button class="bt_bottom" bindtap="save">保存</button>
+  <button class="bt_bottom" bindtap="back">取消</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+
+<!------------------------->
+<!---------省市区选择--------->
+<!------------------------->
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ ssqShow }}" position="bottom" >
+  <van-area area-list="{{ areaList }}" bind:confirm="area_select"/>
+</van-popup>

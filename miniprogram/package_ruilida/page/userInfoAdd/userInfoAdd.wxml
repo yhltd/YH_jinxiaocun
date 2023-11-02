@@ -1,0 +1,63 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-field
+        size="large"
+        model:value="{{ name }}"
+        data-column="name"
+        label="姓名"
+        placeholder="请输入姓名"
+        border="false"
+      />
+
+      <van-field
+        size="large"
+        model:value="{{ username }}"
+        data-column="username"
+        label="账号"
+        placeholder="请输入账号"
+        border="false"
+      />
+
+      <van-field
+        size="large"
+        model:value="{{ password }}"
+        data-column="password"
+        label="密码"
+        placeholder="请输入密码"
+        border="false"
+      />
+
+      <van-field
+        size="large"
+        model:value="{{ power }}"
+        data-column="power"
+        bind:click-input="xiala_show"
+        label="权限"
+        placeholder="请输入权限"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        size="large"
+        model:value="{{ shenpi }}"
+        data-column="shenpi"
+        bind:click-input="xiala_show"
+        label="审核人"
+        placeholder="请输入审核人"
+        border="false"
+        readonly="true"
+      />
+
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="save">确定</button>
+  <button class="bt_bottom" bindtap="back">取消</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

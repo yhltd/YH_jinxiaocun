@@ -1,0 +1,51 @@
+<view style="display: flex;">
+  <view class="lables">区域：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables">订单类型：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="order_type" class="input_text_form" value="{{order_type}}" type="text" name="order_type" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables">订单号：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="order_number" class="input_text_form" value="{{order_number}}" type="text" name="order_number" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables">客户：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="customer" class="input_text_form" value="{{customer}}" type="text" name="customer" disabled="disabled"></input>
+</view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="select_weizhi">送货选点</button>
+  <button class="bt_bottom" bindtap="select_peizhi">读取地址</button>
+</view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="chean_marke">清空选点</button>
+  <button class="bt_bottom" bindtap="save">保存计划</button>
+</view>
+
+<map bindmarkertap="click_marker" id="map" longitude="{{longitude}}" latitude=" {{latitude}}" markers="{{markers}}" scale="13" polyline="{{polyline}}"></map>
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:50vh">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view class="list_view" wx:for="{{title}}" wx:for-item="item" wx:key="item"  style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

@@ -1,4 +1,9 @@
 // package_huaqun/page/zhguanli/zhguanli.js
+const chooseLocation = requirePlugin('chooseLocation');
+var QQMapWX = require("../utils/qqmap-wx-jssdk");
+var qqmapsdk = new QQMapWX({
+  key: 'KKRBZ-TBCW3-TXD37-OWJED-QYFPF-VYFCL'
+});
 Page({
 
   /**
@@ -64,6 +69,13 @@ Page({
         isupd: true
       },
       {
+        text: "送货地址",
+        width: "250rpx",
+        columnName: "address_name",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "填写铝框金额权限",
         width: "300rpx",
         columnName: "money",
@@ -105,6 +117,20 @@ Page({
         type: "text",
         isupd: true
       },
+      // {
+      //   text: "定位位置",
+      //   width: "250rpx",
+      //   columnName: "dingwei",
+      //   type: "text",
+      //   isupd: true
+      // },
+      // {
+      //   text: "定位时间",
+      //   width: "250rpx",
+      //   columnName: "dingwei_shijian",
+      //   type: "text",
+      //   isupd: true
+      // },
     ],
     quyu_list:[],
     id:'',
@@ -153,6 +179,19 @@ Page({
         console.log("请求失败！")
       }
     })
+    wx.getLocation({
+      isHighAccuracy: true,
+      type: 'gcj02',
+      success (res) {
+        console.log(res)
+        var latitude = res.latitude
+        var longitude = res.longitude
+        _this.setData({
+          latitude: latitude,
+          longitude: longitude,
+         })
+      }
+     })
     var e = ['','']
     _this.tableShow(e)
   },
@@ -260,23 +299,51 @@ Page({
 
   clickView:function(e){
     var _this = this
-    _this.setData({
-      id: _this.data.list[e.currentTarget.dataset.index].id,
-      username: _this.data.list[e.currentTarget.dataset.index].username, 
-      password: _this.data.list[e.currentTarget.dataset.index].password,
-      pinyin: _this.data.list[e.currentTarget.dataset.index].pinyin,
-      company: _this.data.list[e.currentTarget.dataset.index].company,
-      name: _this.data.list[e.currentTarget.dataset.index].name,
-      power: _this.data.list[e.currentTarget.dataset.index].power,
-      money:  _this.data.list[e.currentTarget.dataset.index].money,
-      shendan:  _this.data.list[e.currentTarget.dataset.index].shendan,
-      pay:  _this.data.list[e.currentTarget.dataset.index].pay,
-      kailiao:  _this.data.list[e.currentTarget.dataset.index].kailiao,
-      zuzhuang:  _this.data.list[e.currentTarget.dataset.index].zuzhuang,
-      baozhuang:  _this.data.list[e.currentTarget.dataset.index].baozhuang,
-      quyu:  _this.data.list[e.currentTarget.dataset.index].quyu,
-      xgShow:true,
-    })
+    console.log(e)
+    var column = e.target.dataset.column
+    if(column == 'address_name'){
+      wx.showModal({
+        title: '提示',
+        content: '将跳转到地址选择，是否继续？',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            _this.setData({
+              id: _this.data.list[e.currentTarget.dataset.index].id,
+            })
+            const key = 'SEUBZ-4CGL4-YC3UO-FW2T5-W5DVT-QVFJJ'; //使用在腾讯位置服务申请的key
+            const referer = '进销存云合'; //调用插件的app的名称
+            const location = JSON.stringify({
+              latitude: _this.data.latitude,
+              longitude: _this.data.longitude
+            });
+            wx.navigateTo({
+              url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }else{
+      _this.setData({
+        id: _this.data.list[e.currentTarget.dataset.index].id,
+        username: _this.data.list[e.currentTarget.dataset.index].username, 
+        password: _this.data.list[e.currentTarget.dataset.index].password,
+        pinyin: _this.data.list[e.currentTarget.dataset.index].pinyin,
+        company: _this.data.list[e.currentTarget.dataset.index].company,
+        name: _this.data.list[e.currentTarget.dataset.index].name,
+        power: _this.data.list[e.currentTarget.dataset.index].power,
+        money:  _this.data.list[e.currentTarget.dataset.index].money,
+        shendan:  _this.data.list[e.currentTarget.dataset.index].shendan,
+        pay:  _this.data.list[e.currentTarget.dataset.index].pay,
+        kailiao:  _this.data.list[e.currentTarget.dataset.index].kailiao,
+        zuzhuang:  _this.data.list[e.currentTarget.dataset.index].zuzhuang,
+        baozhuang:  _this.data.list[e.currentTarget.dataset.index].baozhuang,
+        quyu:  _this.data.list[e.currentTarget.dataset.index].quyu,
+        xgShow:true,
+      })
+    }
   },
 
   inquire: function () {
@@ -525,7 +592,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    const location = chooseLocation.getLocation(); // 如果点击确认选点按钮，则返回选点结果对象，否则返回null
+    console.log(location)
+    if(location != null && _this.data.id != ''){
+      console.log(location.name)
+      var sql = "update userInfo set address = '" + location.latitude + ',' + location.longitude + "',address_name = '" + location.name + "' where id = " + _this.data.id
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          var e = ['','']
+          _this.tableShow(e)
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          console.log("请求失败！")
+        }
+      })
+    }
   },
 
   /**

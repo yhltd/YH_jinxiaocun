@@ -1,0 +1,63 @@
+map{
+  height: 75vh;
+  width: 100vw;
+}
+
+.sv_list{
+  margin-top: 10px;
+  width: auto;
+  white-space: nowrap;
+  margin-top: 0px;
+  height: 13vh;
+  background-color: #ffffff;  
+}
+
+.lables{
+  /* font-size: 35rpx;
+  width: 25%;
+  margin-top: 20rpx;
+  padding-left: 20rpx; */
+  font-size: calc(35vmin / 7.5);
+  width: 30%;
+  margin-top: calc(20vmin / 7.5);
+  padding-left: calc(20vmin / 7.5);
+}
+
+.input_text_form{
+  /* border: 5rpx solid #E6E6E6; */
+  border: calc(5vmin / 7.5) solid #E6E6E6;
+  /* margin: auto; */
+  width: 52.5%;
+  /* height: 64rpx; */
+  height: calc(64vmin / 7.5);
+  align-items: center;
+  /* margin-top: 10rpx;
+  border-radius: 19rpx; */
+  margin-top: calc(10vmin / 7.5);
+  border-radius: calc(19vmin / 7.5);
+  padding-left: 1.5%;
+  margin-bottom:1.5% ;
+}
+
+.bottom_view{
+  margin-top: 30rpx;
+  height: 10%;
+  align-items: center;
+  display: flex;
+  bottom: 2%;
+}
+
+.bt_bottom{
+  width: 30%;
+  background-color: #009688;
+  color: #E6E6E6;
+  margin: auto;
+}
+
+.bt_bottom_hover{
+  width: 30%;
+  background-color: #009688;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+}

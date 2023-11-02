@@ -1,0 +1,234 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <view class="title_text">收支信息：</view>
+    <van-cell-group inset>
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.dianpu }}"
+        data-column="dianpu"
+        label="对应店铺"
+        placeholder="点击选择对应店铺"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.danju_leixing }}"
+        data-column="danju_leixing"
+        label="单据类型"
+        placeholder="点击选择单据类型"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.danju_bianhao }}"
+        data-column="danju_bianhao"
+        label="单据编号"
+        placeholder="点击选择单据编号"
+        border="false"
+        bind:click-input="danju_click"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.shouzhi_bianhao }}"
+        data-column="shouzhi_bianhao"
+        label="记账单号"
+        placeholder="请填写记账单号"
+        border="false"
+        readonly="true"
+      />
+
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="shouzhi_riqi" bindchange="choiceDate">
+        <van-field
+          bind:input="onInput"
+          model:value="{{ shouzhi_body.shouzhi_riqi }}"
+          data-column="shouzhi_riqi"
+          label="记账日期"
+          placeholder="请选择记账日期"
+          border="false"
+          readonly="true"
+        />
+      </picker>
+
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.jizhangren }}"
+        data-column="jizhangren"
+        label="记账人"
+        placeholder="点击选择记账人"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.jizhang_type }}"
+        data-column="jizhang_type"
+        label="记账分类"
+        placeholder="点击选择记账分类"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.jizhang_zhanghu }}"
+        data-column="jizhang_zhanghu"
+        label="记账账户"
+        placeholder="请选择记账账户"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.jizhang_jine }}"
+        data-column="jizhang_jine"
+        label="记账金额"
+        placeholder="请填写记账金额"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.kedi_shuie }}"
+        data-column="kedi_shuie"
+        label="可抵税额"
+        placeholder="请填写可抵税额"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.zhaiyao }}"
+        data-column="zhaiyao"
+        label="摘要"
+        placeholder="请输入摘要"
+        border="false"
+      />
+    </van-cell-group>
+  </view>
+
+  <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
+    <view class="title1">
+      <view class="title_item">记账明细{{i+1}}：</view>
+      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display: {{i==0?'none':'flex'}};" data-index="{{i}}"/>
+    </view> 
+    <van-cell-group inset>
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.mingxi_type }}"
+        data-column="mingxi_type"
+        data-index="{{i}}"
+        label="明细类型"
+        placeholder="请选择明细类型"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.yongtu }}"
+        data-column="yongtu"
+        data-index="{{i}}"
+        label="用途"
+        placeholder="请输入用途"
+        border="false"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.jizhang_jine }}"
+        data-column="jizhang_jine"
+        data-index="{{i}}"
+        label="记账金额"
+        placeholder="请输入记账金额"
+        border="false"
+        type="digit"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.kedi_shuie }}"
+        data-column="kedi_shuie"
+        data-index="{{i}}"
+        label="其中可抵税额"
+        placeholder="请输入可抵税额"
+        border="false"
+        type="digit"
+      />
+    </van-cell-group>
+  </view>
+  <view class="bottom_view" style="padding-bottom: 10px;">
+    <button class="bt_bottom" bindtap="add_lianxiren">添加明细</button>
+  </view>
+</scroll-view>
+
+<view class="bottom_view"> 
+  <button class="bt_bottom" bindtap="save">保存</button>
+  <button class="bt_bottom" bindtap="back">取消</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+<!--选择采购单-->
+<van-popup
+  show="{{ caigou_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 90%"
+  bind:close="qxShow"
+  z-index="90"
+>
+  <view style="height: 22%;">
+    <view style="display: flex;">
+      <view class="lables">起始日期：</view>
+        <input bindinput="onInput_text" bindtap="selRIQI2" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
+    </view>
+    <view style="display: flex;">
+      <view class="lables">结束日期：</view>
+        <input bindinput="onInput_text" bindtap="selRIQI2" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
+    </view>
+    <view style="display: flex;">
+      <view class="lables">供应商：</view>
+      <input bindinput="onInput_text" bindtap="xiala_show" data-column="gongyingshang" class="input_text_form" data-index="cx" value="{{gongyingshang}}" type="text" name="gongyingshang" disabled="disabled"></input>
+    </view>
+  </view>
+  <scroll-view scroll-x="true" scroll-y="true" style="margin-top:10px;height:66%;background-color: #e9e9e9;padding-bottom: 10px;">
+    <view style="padding-top: 10px;" wx:for="{{caigou_list}}" wx:for-index="i" wx:key="item" >
+      <van-cell-group wx:if="{{item.isselect == 1}}" inset data-index="{{i}}" bindtap="caigou_select">
+        <van-cell title="{{item.bianhao}}" use-label-slot>
+          <view slot="label">
+            <text>店铺：{{item.dianpu}} \n</text>
+            <text>供应商：{{item.gongyingshang}} \n</text>
+            <text>日期：{{item.gongyingshang}} \n</text>
+            <text decode="{{true}}">价税合计：{{item.jiashui_xiaoji}} &nbsp;&nbsp;已付款：{{item.yifu}} &nbsp;&nbsp;未付款：{{item.weifu}}</text>
+          </view>
+        </van-cell>
+      </van-cell-group>
+    </view>
+  </scroll-view>
+  <view class="bottom_view_sel" style="margin-top: 10px;">
+    <button class="bt_bottom" bindtap="sel_caigou">查询</button>
+  </view>
+</van-popup>
+
+<!--  查询dateTime拉选-->
+<van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow2 }}" position="bottom" custom-style="height: 70%;">
+  <van-datetime-picker type="date" value="{{ currentDate }}" min-date="{{ minDate }}" max-date="{{ maxDate }}" bind:input="onInputDate" bind:confirm="onInput22" bind:cancel="qxShow22" />
+</van-popup>

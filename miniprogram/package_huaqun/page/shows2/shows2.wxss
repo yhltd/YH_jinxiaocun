@@ -21,7 +21,7 @@ page{
 }
 .item{
   width: 73%;
-  height: 9.5%;
+  height: 7.3%; 
   display: flex;
   align-items: center;
   background-color:rgba(213,226,220,0.7);
@@ -32,11 +32,11 @@ page{
   padding-left: 30px;  
   justify-content: space-between;
   box-shadow: 10rpx 10rpx 20rpx black;
-  margin-bottom: 50rpx;
+  margin-bottom: 25rpx;
 }
 .item_hover{
   width: 73%;
-  height: 9.5%;
+  height: 7.3%; 
   display: flex;
   align-items: center;
   background-color:rgba(213,226,220,0.7);
@@ -47,7 +47,7 @@ page{
   padding-left: 30px;  
   justify-content: space-between;
   box-shadow: 10rpx 10rpx 20rpx black;
-  margin-bottom: 50rpx;
+  margin-bottom: 25rpx;
 }
 .img{
   width: 30px;

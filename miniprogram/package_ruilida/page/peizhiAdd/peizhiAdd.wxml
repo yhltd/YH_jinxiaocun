@@ -1,0 +1,23 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-field
+        size="large"
+        model:value="{{ name }}"
+        data-column="name"
+        label="{{type}}"
+        placeholder="请输入{{type}}"
+        border="false"
+      />
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" hidden="{{id == '' || !(type == '仓库' || type == '店铺' || type == '核算单位')}}" bindtap="moren">设为默认</button>
+  <button class="bt_bottom" bindtap="save">确定</button>
+  <button class="bt_bottom" bindtap="back">取消</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

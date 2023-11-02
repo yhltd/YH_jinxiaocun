@@ -1,0 +1,19 @@
+<view style="display: flex;">
+  <view class="lables">选择计划：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="jihua_name" class="input_text_form" value="{{jihua_name}}" type="text" name="jihua_name" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables">选择终点：</view>
+  <input bindinput="onInput_text" bindtap="header_xiala" data-column="zhongdian_name" class="input_text_form" value="{{zhongdian_name}}" type="text" name="zhongdian_name" disabled="disabled"></input>
+</view>
+
+<view class="main">
+  <view class="lables">实时定位：</view>
+  <switch class="switch" bindchange="switch_change" checked="{{switch_val}}"></switch>
+</view>
+
+<map id="map" longitude="{{longitude}}" latitude=" {{latitude}}" markers="{{markers}}" scale="13" polyline="{{polyline}}"></map>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

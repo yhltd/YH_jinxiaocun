@@ -1,0 +1,20 @@
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+<view style="display: flex;">
+  <view class="lables">送货员：</view>
+  <input bindinput="onInput_text" bindlongpress="header_xiala" data-column="songhuoyuan" class="input_text_form" value="{{songhuoyuan}}" type="text" name="songhuoyuan" ></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables">时间：</view>
+  <input bindinput="onInput_text" data-column="last_date" class="input_text_form" value="{{last_date}}" type="date" name="last_date" disabled="disabled"></input>
+</view>
+</scroll-view>
+<map id="map" longitude="{{longitude}}" latitude=" {{latitude}}" markers="{{markers}}" scale="13" polyline="{{polyline}}"></map>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="sel_weizhi">查询位置</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

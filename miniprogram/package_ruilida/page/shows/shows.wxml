@@ -1,0 +1,32 @@
+<view style="margin-top: 10px;">
+  <van-cell-group inset>
+    <van-cell title="欢迎您：{{userInfo.name}}" value="日期：{{this_date}}"/>
+  </van-cell-group>
+</view>
+
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="margin-top: 10px;">
+    <van-cell-group inset>
+      <van-grid square column-num="3">
+        <van-grid-item wx:for="{{title}}" wx:key="text" bindtap="go" data-index="{{index}}" icon="photo-o" text="{{item.text}}" />
+      </van-grid>
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+
+<van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
+  <van-tabbar-item icon="../../image/changyong_close.png">常用</van-tabbar-item>
+  <van-tabbar-item icon="../../image/xiaoshou_close.png">销售</van-tabbar-item>
+  <van-tabbar-item icon="../../image/caigou_close.png">采购</van-tabbar-item>
+  <van-tabbar-item icon="../../image/kucun_close.png">库存</van-tabbar-item>
+  <van-tabbar-item icon="../../image/jichu_open.png">基础资料</van-tabbar-item>
+</van-tabbar>
+
+
+<van-action-sheet
+  show="{{gongneng_show}}"
+  actions="{{gongneng_actions}}"
+  bind:close="onClose"
+  bind:select="onSelect"
+/>

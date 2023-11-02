@@ -36,6 +36,18 @@ Page({
     text: "配送单明细",
     url: "../../../package_huaqun_erqi/page/peisong_mingxi/peisong_mingxi"
   },
+  {
+    text: "位置查看",
+    url: "../../../package_huaqun_erqi/page/map/map"
+  },
+  {
+    text: "实时定位",
+    url: "../../../package_huaqun_erqi/page/dingwei/dingwei"
+  },
+  {
+    text: "配送计划",
+    url: "../../../package_huaqun_erqi/page/peisong_jihua/peisong_jihua"
+  },
  ]
  },
  
@@ -65,6 +77,38 @@ Page({
    if(index == 4 && _this.data.userInfo.power != '玻璃厂' && _this.data.userInfo.power != '管理员'){
     wx.showToast({
       title: '非玻璃厂账号无权限查看玻璃下单明细！',
+      icon: 'none'
+    })
+    return;
+   }
+
+   if((index == 5 || index == 6) && _this.data.userInfo.power == '玻璃厂' ){
+    wx.showToast({
+      title: '玻璃厂账号无权使用配送单！',
+      icon: 'none'
+    })
+    return;
+   }
+
+   if(index == 7 && _this.data.userInfo.power != '管理员'){
+    wx.showToast({
+      title: '非管理员账号无权使用位置查看功能！',
+      icon: 'none'
+    })
+    return;
+   }
+
+   if(index == 8 && _this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '操作员'){
+    wx.showToast({
+      title: '非操作员账号无权使用实时定位功能！',
+      icon: 'none'
+    })
+    return;
+   }
+
+   if(index == 9 && _this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '操作员'){
+    wx.showToast({
+      title: '非操作员账号无权使用配送计划功能！',
       icon: 'none'
     })
     return;

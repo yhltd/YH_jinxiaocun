@@ -1,0 +1,16 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true" style="height:88%">
+  <view bindtap="click_view" style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+    <van-cell-group inset>
+      <van-cell title="{{list_item.name}}" label="{{list_item.username}}" />
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <view class="bt_text">合计：{{num}}个</view>
+  <button class="bt_bottom" bindtap="entering">功能</button>
+</view>
+
+<button class="tianjia" bindtap='tianjia'>
+  <image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao1.png'> </image>
+</button>
