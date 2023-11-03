@@ -55,7 +55,7 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from peizhi where type = '商品分类';select * from peizhi where type = '质保等级'"
+    var sql = "select * from peizhi where type = '商品分类';select * from peizhi where type = '质保等级';select * from peizhi_shuilv;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -65,9 +65,12 @@ Page({
         console.log(res)
         var type_list = res.result.recordsets[0]
         var zhibao_dengji_list = res.result.recordsets[1]
+        var peizhi_shuilv = res.result.recordsets[2][0]
+        console.log(peizhi_shuilv)
         _this.setData({
           type_list,
-          zhibao_dengji_list
+          zhibao_dengji_list,
+          peizhi_shuilv
         })
       },
       err: res => {
@@ -116,7 +119,7 @@ Page({
         }
       })
     }else{
-      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'P0000'),2,4)) + 1 as bianhao from product_item"
+      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'P0000'),2,4)) + 1 as bianhao from product_item;select * from peizhi_shuilv"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -124,13 +127,17 @@ Page({
         },
         success: res => {
           console.log(res)
-          var max_bianhao = res.result.recordset[0].bianhao
+          var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,4)
           console.log(this_bianhao)
           this_bianhao = "P" + this_bianhao
           console.log(this_bianhao)
           var lianxi_list = _this.data.lianxi_list
+          var peizhi_shuilv = res.result.recordsets[1][0]
           lianxi_list[0].bianhao = this_bianhao
+          lianxi_list[0].lingshou_bili = peizhi_shuilv.lingshou
+          lianxi_list[0].pifa_bili = peizhi_shuilv.pifa
+          lianxi_list[0].dakehu_bili = peizhi_shuilv.dakehu
           _this.setData({
             lianxi_list
           })
@@ -184,11 +191,11 @@ Page({
               guige:'',
               bianhao:this_bianhao,
               lingshou_price:'',
-              lingshou_bili:'',
+              lingshou_bili: _this.data.peizhi_shuilv.lingshou,
               pifa_price:'',
-              pifa_bili:'',
+              pifa_bili: _this.data.peizhi_shuilv.pifa,
               dakehu_price:'',
-              dakehu_bili:'',
+              dakehu_bili: _this.data.peizhi_shuilv.dakehu,
               caigou_price:'',
               jinxiang:'',
               xiaoxiang:'',
@@ -202,11 +209,11 @@ Page({
               guige:'',
               bianhao:_this.data.lianxi_list[0].bianhao + "-01",
               lingshou_price:'',
-              lingshou_bili:'',
+              lingshou_bili: _this.data.peizhi_shuilv.lingshou,
               pifa_price:'',
-              pifa_bili:'',
+              pifa_bili: _this.data.peizhi_shuilv.pifa,
               dakehu_price:'',
-              dakehu_bili:'',
+              dakehu_bili: _this.data.peizhi_shuilv.dakehu,
               caigou_price:'',
               jinxiang:'',
               xiaoxiang:'',
@@ -260,6 +267,78 @@ Page({
         icon: 'none'
       })
       return;
+    }
+    for(var i=0; i<lianxi_list.length; i++){
+      if(lianxi_list[i].lingshou_price == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写零售价格',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].lingshou_bili == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写零售上浮比例',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].pifa_price == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写批发价格',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].pifa_bili == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写批发上浮比例',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].dakehu_price == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写大客户价格',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].dakehu_bili == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写大客户上浮比例',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].caigou_price == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写采购价格',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].jinxiang == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写进项税率',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].xiaoxiang == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写销项税率',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].enable == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写是否启用',
+          icon: 'none'
+        })
+        return;
+      }
     }
     if(product_body.id == ''){
       wx.showLoading({

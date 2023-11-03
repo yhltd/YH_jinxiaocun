@@ -79,6 +79,14 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.zhanghaoguanli_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     var sql = "select * from userInfo where name like '%" + e[0] + "%' and power like '%" + e[1] + "%';select name from userPower"    
     console.log(sql)
     wx.cloud.callFunction({
@@ -121,6 +129,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.zhanghaoguanli_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../userInfoAdd/userInfoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
     })
@@ -131,6 +147,14 @@ Page({
     console.log(e.target.dataset.index)
     var index = e.target.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.zhanghaoguanli_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../userInfoAdd/userInfoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
     })
@@ -141,6 +165,14 @@ Page({
     console.log(e.target.dataset.index)
     var index = e.target.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.zhanghaoguanli_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',

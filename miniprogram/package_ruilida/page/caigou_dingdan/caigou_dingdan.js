@@ -136,6 +136,14 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_dingdan_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     var sql = "select * from caigou_dingdan where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and gongyingshang like '%" + e[2] + "%';select * from caigou_dingdan_item;select * from gongyingshang"
     console.log(sql)
     wx.cloud.callFunction({
@@ -190,6 +198,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_dingdan_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../caigou_dingdanAdd/caigou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
     })
@@ -200,6 +216,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_dingdan_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../caigou_dingdanAdd/caigou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
     })
@@ -210,6 +234,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_dingdan_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',
@@ -392,7 +424,7 @@ Page({
     var title_put = this_column
     console.log(title_put)
     var cloudList = {
-      name : '商品资料',
+      name : '采购订单',
       items : [],
       header : []
     }

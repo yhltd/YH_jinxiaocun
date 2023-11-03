@@ -23,7 +23,7 @@ Page({
         url: '../xiaoshou_kaipiao/xiaoshou_kaipiao',
       },
       {
-        text:'收支记录',
+        text:'收入记录',
         url: '../caigou_fukuan/caigou_fukuan',
       },
     ],
@@ -40,7 +40,7 @@ Page({
     _this.setData({
       userInfo,
       this_date
-    })
+    }) 
   },
 
   go:function(e){
@@ -48,9 +48,15 @@ Page({
     var index = e.target.dataset.index
     console.log(index)
     var url = _this.data.title[index].url
-    wx.navigateTo({
-      url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo),
-    })
+    if(_this.data.title[index].text == '收入记录'){
+      wx.navigateTo({
+        url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&shouzhi_type=收入记录",
+      })
+    }else{
+      wx.navigateTo({
+        url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo),
+      })
+    }
   },
 
   /**
@@ -67,7 +73,7 @@ Page({
     var _this = this
     var id = _this.data.userInfo.id
     console.log(id)
-    var sql = "select * from userInfo where id=" + id
+    var sql = "select * from userInfo where id=" + id + ";select * from userPower;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -75,7 +81,14 @@ Page({
       },
       success: res => {
         console.log(res)
-        var userInfo = res.result.recordset[0]
+        var userInfo = res.result.recordsets[0][0]
+        var userPower = res.result.recordsets[1]
+        for(var i=0; i<userPower.length; i++){
+          if(userInfo.power == userPower[i].name){
+            userInfo.power_mingxi = userPower[i]
+            break;
+          }
+        }
         console.log(userInfo)
         _this.setData({
           userInfo
@@ -102,6 +115,10 @@ Page({
     if (event.detail == 4) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 3) {
+      wx.redirectTo({
+        url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
     } else if (event.detail == 2) {
       wx.redirectTo({

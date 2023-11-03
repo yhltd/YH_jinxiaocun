@@ -75,7 +75,15 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable from product as p left join product_item as item on p.id = item.product_id where name like '%" + e[0] + "%' and type like '%" + e[1] + "%' and enable like '%" + e[2] + "%'"
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shangpin_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    var sql = "select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable from product as p left join product_item as item on p.id = item.product_id where name like '%" + e[0] + "%' and type like '%" + e[1] + "%' and enable like '%" + e[2] + "%';select * from peizhi_shuilv;"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -84,8 +92,25 @@ Page({
       },
       success: res => {
         console.log(res)
-        var list = res.result.recordset
+        var list = res.result.recordsets[0]
+        var peizhi_shuilv = res.result.recordsets[1][0]
         console.log(list)
+        var fujia_shuilv = 1
+        if(peizhi_shuilv.zhuangtai == '是'){
+          fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
+        }
+        console.log(fujia_shuilv)
+        for(var i=0; i<list.length; i++){
+          var jinxiang = list[i].jinxiang / 100
+          var xiaoxiang = list[i].xiaoxiang / 100
+          var pifa_bili = list[i].pifa_bili / 100
+          var lingshou_bili = list[i].lingshou_bili / 100
+          var dakehu_bili = list[i].dakehu_bili / 100
+          var caigou_price = list[i].caigou_price * 1
+          list[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
+          list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
+          list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
+        }
         _this.setData({
           list: list,
           num: list.length,
@@ -108,6 +133,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shangpin_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../productAdd/productAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
     })
@@ -118,6 +151,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shangpin_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../productAdd/productAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
     })
@@ -128,6 +169,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shangpin_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',

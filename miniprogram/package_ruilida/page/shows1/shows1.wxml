@@ -19,7 +19,7 @@
   <van-tabbar-item icon="../../image/changyong_close.png">常用</van-tabbar-item>
   <van-tabbar-item icon="../../image/xiaoshou_close.png">销售</van-tabbar-item>
   <van-tabbar-item icon="../../image/caigou_open.png">采购</van-tabbar-item>
-  <van-tabbar-item icon="../../image/kucun_close.png">库存</van-tabbar-item>
+  <van-tabbar-item icon="../../image/kucun_close.png">统计</van-tabbar-item>
   <van-tabbar-item icon="../../image/jichu_close.png">基础资料</van-tabbar-item>
 </van-tabbar>
 

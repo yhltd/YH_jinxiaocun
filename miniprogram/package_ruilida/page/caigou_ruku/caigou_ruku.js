@@ -22,11 +22,6 @@ Page({
         type: "text",
         width: "250rpx",
       },{
-        name:'交货日期',
-        columnName: 'jiaohuo_riqi',
-        type: "text",
-        width: "250rpx",
-      },{
         name:'供应商',
         columnName: 'gongyingshang',
         type: "text",
@@ -37,8 +32,13 @@ Page({
         type: "text",
         width: "250rpx",
       },{
+        name:'仓库',
+        columnName: 'cangku',
+        type: "text",
+        width: "250rpx",
+      },{
         name:'商品编号',
-        columnName: 'shangpin_bianhao',
+        columnName: 'shangpin_bianma',
         type: "text",
         width: "250rpx",
       },{
@@ -49,6 +49,21 @@ Page({
       },{
         name:'规格',
         columnName: 'guige',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'材质',
+        columnName: 'caizhi',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'技术标准',
+        columnName: 'jishu_biaozhun',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'质保等级',
+        columnName: 'zhibao_dengji',
         type: "text",
         width: "250rpx",
       },{
@@ -83,8 +98,8 @@ Page({
         width: "250rpx",
       }
     ],
-    all_result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
-    result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
+    all_result: ['订单编号', '日期','供应商','店铺','仓库','商品编号','商品名称','规格','材质','技术标准','质保等级','单位','数量','单价','金额','行备注','备注'],
+    result: ['订单编号', '日期','供应商','店铺','仓库','商品编号','商品名称','规格','材质','技术标准','质保等级','单位','数量','单价','金额','行备注','备注'],
     gongneng_list:[
       {
         name:'查询'
@@ -136,6 +151,14 @@ Page({
 
   tableShow: function (e) {
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_ruku_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     var sql = "select * from caigou_ruku where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and gongyingshang like '%" + e[2] + "%';select * from caigou_ruku_item;select * from gongyingshang"
     console.log(sql)
     wx.cloud.callFunction({
@@ -190,6 +213,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_ruku_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../caigou_rukuAdd/caigou_rukuAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
     })
@@ -200,6 +231,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_ruku_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../caigou_rukuAdd/caigou_rukuAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
     })
@@ -210,6 +249,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_ruku_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',
@@ -402,7 +449,7 @@ Page({
     var title_put = this_column
     console.log(title_put)
     var cloudList = {
-      name : '商品资料',
+      name : '采购入库',
       items : [],
       header : []
     }
@@ -415,23 +462,27 @@ Page({
       })
     }
     var item = []
+    
     for(var i=0; i<list.length; i++){
       for(var j=0; j<list[i].item.length; j++){
         item.push({
           bianhao: list[i].bianhao,
           riqi: list[i].riqi,
-          jiaohuo_riqi: list[i].item[j].jiaohuo_riqi,
           gongyingshang: list[i].gongyingshang,
           dianpu: list[i].dianpu,
-          shangpin_bianhao: list[i].item[j].shangpin_bianma,
+          cangku: list[i].cangku,
+          shangpin_bianma: list[i].item[j].shangpin_bianma,
           name: list[i].item[j].name,
           guige: list[i].item[j].guige,
+          caizhi: list[i].item[j].caizhi,
+          jishu_biaozhun: list[i].item[j].jishu_biaozhun,
+          zhibao_dengji: list[i].item[j].zhibao_dengji,
           danwei: list[i].item[j].danwei,
           shuliang: list[i].item[j].shuliang,
           caigou_danjia: list[i].item[j].caigou_danjia,
           jiashui_xiaoji: list[i].item[j].jiashui_xiaoji,
-          beizhu: list[i].item[j].beizhu,
-          beizhu2: list[i].beizhu,
+          beizhu: list[i].beizhu,
+          beizhu2: list[i].item[j].beizhu,
         })
       }
     }

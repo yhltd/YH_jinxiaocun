@@ -13,11 +13,7 @@ Page({
     result: [],
     gongneng_list:[
       {
-        name:'查询'
-      },{
         name:'刷新'
-      },{
-        name:'导出Excel'
       }
     ],
     quanxuan_value: true,
@@ -64,6 +60,14 @@ Page({
   tableShow: function (e) {
     var _this = this
     var id = _this.data.userInfo.id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.peizhi_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     var sql = "select * from userInfo where id=" + id
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -123,6 +127,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.peizhi_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../peizhiAdd/peizhiAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + '&type=' + _this.data.type,
     })
@@ -133,6 +145,14 @@ Page({
     console.log(e.target.dataset.index)
     var index = e.target.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.peizhi_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../peizhiAdd/peizhiAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + '&type=' + _this.data.type,
     })
@@ -143,6 +163,14 @@ Page({
     console.log(e.target.dataset.index)
     var index = e.target.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.peizhi_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',

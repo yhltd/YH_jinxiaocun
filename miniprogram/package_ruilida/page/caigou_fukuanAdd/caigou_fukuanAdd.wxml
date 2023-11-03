@@ -216,7 +216,7 @@
           <view slot="label">
             <text>店铺：{{item.dianpu}} \n</text>
             <text>供应商：{{item.gongyingshang}} \n</text>
-            <text>日期：{{item.gongyingshang}} \n</text>
+            <text>日期：{{item.riqi}} \n</text>
             <text decode="{{true}}">价税合计：{{item.jiashui_xiaoji}} &nbsp;&nbsp;已付款：{{item.yifu}} &nbsp;&nbsp;未付款：{{item.weifu}}</text>
           </view>
         </van-cell>
@@ -227,6 +227,50 @@
     <button class="bt_bottom" bindtap="sel_caigou">查询</button>
   </view>
 </van-popup>
+
+
+<!--选择销售单-->
+<van-popup
+  show="{{ xiaoshou_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 90%"
+  bind:close="qxShow"
+  z-index="90"
+>
+  <view style="height: 22%;">
+    <view style="display: flex;">
+      <view class="lables">起始日期：</view>
+        <input bindinput="onInput_text" bindtap="selRIQI2" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
+    </view>
+    <view style="display: flex;">
+      <view class="lables">结束日期：</view>
+        <input bindinput="onInput_text" bindtap="selRIQI2" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
+    </view>
+    <view style="display: flex;">
+      <view class="lables">客户：</view>
+      <input bindinput="onInput_text" bindtap="xiala_show" data-column="kehu" class="input_text_form" data-index="cx" value="{{kehu}}" type="text" name="kehu" disabled="disabled"></input>
+    </view>
+  </view>
+  <scroll-view scroll-x="true" scroll-y="true" style="margin-top:10px;height:66%;background-color: #e9e9e9;padding-bottom: 10px;">
+    <view style="padding-top: 10px;" wx:for="{{xiaoshou_list}}" wx:for-index="i" wx:key="item" >
+      <van-cell-group wx:if="{{item.isselect == 1}}" inset data-index="{{i}}" bindtap="xiaoshou_select">
+        <van-cell title="{{item.bianhao}}" use-label-slot>
+          <view slot="label">
+            <text>店铺：{{item.dianpu}} \n</text>
+            <text>客户：{{item.kehu}} \n</text>
+            <text>日期：{{item.riqi}} \n</text>
+            <text decode="{{true}}">价税合计：{{item.jiashui_xiaoji}} &nbsp;&nbsp;已收款：{{item.yifu}} &nbsp;&nbsp;未收款：{{item.weifu}}</text>
+          </view>
+        </van-cell>
+      </van-cell-group>
+    </view>
+  </scroll-view>
+  <view class="bottom_view_sel" style="margin-top: 10px;">
+    <button class="bt_bottom" bindtap="sel_xiaoshou">查询</button>
+  </view>
+</van-popup>
+
 
 <!--  查询dateTime拉选-->
 <van-popup bind:click-overlay="qxShow22" show="{{ rqxzShow2 }}" position="bottom" custom-style="height: 70%;">

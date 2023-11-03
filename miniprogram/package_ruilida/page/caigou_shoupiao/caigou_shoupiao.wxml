@@ -64,7 +64,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
   <view class="lables">起始日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form"  value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
@@ -75,6 +75,8 @@
     </picker>
     <view class="lables">开票单位</view>
     <input bindinput="onInput" data-column="kaipiao_danwei" class="input_text_form"  value="{{kaipiao_danwei}}" type="text" name="kaipiao_danwei" disabled="disabled" bindtap="xiala_show"></input>
+    <view class="lables">收票单位</view>
+    <input bindinput="onInput" data-column="shoupiao_danwei" class="input_text_form"  value="{{shoupiao_danwei}}" type="text" name="shoupiao_danwei" disabled="disabled" bindtap="xiala_show"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

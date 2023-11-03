@@ -143,7 +143,6 @@
     >
       <view slot="label">
         <text>规格：{{item.guige}} \n</text>
-        <text>库存：{{0}} \n</text>
         <text>单价：{{item.caigou_price}} \n</text>
       </view>
     </van-cell>

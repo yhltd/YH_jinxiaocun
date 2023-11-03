@@ -111,7 +111,7 @@ Page({
 
   caigou_click:function(){
     var _this = this
-    var sql = "select id,riqi,bianhao,gongyingshang,jiashui_heji,shoupiao_jine,jiashui_heji-shoupiao_jine as weikai,1 as isselect from (select id,riqi,bianhao,gongyingshang,jiashui_heji from caigou_dingdan as caigou left join (select caigou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_heji from caigou_dingdan_item group by caigou_id) as money on caigou.id = money.caigou_id) as caigoudan left join (select caigou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as shoupiao_jine from caigou_shoupiao GROUP BY caigou_bianhao) as shoupiao on caigoudan.bianhao = shoupiao.caigou_bianhao where jiashui_heji-shoupiao_jine > 0"
+    var sql = "select id,riqi,bianhao,gongyingshang,jiashui_heji,isnull(shoupiao_jine,0) as shoupiao_jine,isnull(jiashui_heji,0)-isnull(shoupiao_jine,0) as weikai,1 as isselect from (select id,riqi,bianhao,gongyingshang,jiashui_heji from caigou_dingdan as caigou left join (select caigou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_heji from caigou_dingdan_item group by caigou_id) as money on caigou.id = money.caigou_id) as caigoudan left join (select caigou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as shoupiao_jine from caigou_shoupiao GROUP BY caigou_bianhao) as shoupiao on caigoudan.bianhao = shoupiao.caigou_bianhao where isnull(jiashui_heji,0)-isnull(shoupiao_jine,0) > 0"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -312,9 +312,7 @@ Page({
         title:'保存中'
       })
 
-      "insert into caigou_shoupiao(caigou_bianhao,shoupiao_danwei,kaipiao_danwei,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,xinxi_tuisong,shoupiao_zhuangtai) output inserted.id values('"
-
-      var sql = "update caigou_ruku set caigou_bianhao='" + shoupiao_body.caigou_bianhao + "',shoupiao_danwei='" + shoupiao_body.shoupiao_danwei + "',kaipiao_danwei='" + shoupiao_body.kaipiao_danwei + "',kaipiao_riqi='" + shoupiao_body.kaipiao_riqi + "',kaipiao_jine='" + shoupiao_body.kaipiao_jine + "',kaipiao_shuie='" + shoupiao_body.kaipiao_shuie + "',jiashui_heji='" + shoupiao_body.jiashui_heji + "',beizhu='" + shoupiao_body.beizhu + "',xinxi_tuisong='" + shoupiao_body.xinxi_tuisong + "',shoupiao_zhuangtai='" + shoupiao_body.shoupiao_zhuangtai + "' where id=" + shoupiao_body.id
+      var sql = "update caigou_shoupiao set caigou_bianhao='" + shoupiao_body.caigou_bianhao + "',shoupiao_danwei='" + shoupiao_body.shoupiao_danwei + "',kaipiao_danwei='" + shoupiao_body.kaipiao_danwei + "',kaipiao_riqi='" + shoupiao_body.kaipiao_riqi + "',kaipiao_jine='" + shoupiao_body.kaipiao_jine + "',kaipiao_shuie='" + shoupiao_body.kaipiao_shuie + "',jiashui_heji='" + shoupiao_body.jiashui_heji + "',beizhu='" + shoupiao_body.beizhu + "',xinxi_tuisong='" + shoupiao_body.xinxi_tuisong + "',shoupiao_zhuangtai='" + shoupiao_body.shoupiao_zhuangtai + "' where id=" + shoupiao_body.id
       console.log(shoupiao_body)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',

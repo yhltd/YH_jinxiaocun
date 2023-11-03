@@ -1,0 +1,84 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-index="i" wx:key="item">
+    <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
+      <van-cell title="收票单位：{{item.shoupiao_danwei}}" value="价税合计：{{item.jiashui_heji}}" use-label-slot>
+        <view slot="label">
+          <text>开票单位：{{item.kaipiao_danwei}} \n</text>
+          <text>销售单号：{{item.xiaoshou_bianhao}} \n</text>
+          <text>{{item.kaipiao_riqi}} \n</text>
+        </view>
+      </van-cell>
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <view class="bt_text">合计：{{num}}个</view>
+  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
+</view>
+
+<button class="tianjia" bindtap='tianjia'>
+  <image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao1.png'> </image>
+</button>
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+<!--选择导出excel列-->
+<van-popup
+  show="{{ dayin_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 80%"
+  bind:close="qxShow"
+>
+<van-checkbox-group value="{{ result }}" bind:change="onChange">
+    <van-cell-group>
+      <van-cell
+        wx:for="{{ list_check }}"
+        wx:key="index"
+        title="{{ item.name }}"
+        value-class="value-class"
+        clickable
+        data-index="{{ index }}"
+        bind:click="toggle"
+      >
+        <van-checkbox
+          catch:tap="noop"
+          class="checkboxes-{{ index }}"
+          name="{{ item.name }}"
+        />
+      </van-cell>
+    </van-cell-group>
+  </van-checkbox-group>
+  <view class="bottom_view" style="margin-top: 10px;">
+    <view class="bt_text">
+      <van-checkbox
+      bind:change="quanxuan"
+      value="{{quanxuan_value}}">全选</van-checkbox>
+    </view>
+    <button class="bt_bottom" bindtap="toExcel">确定</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+  <view class="lables">起始日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="start_date" class="input_text_form"  value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">结束日期</view>
+    <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="stop_date" class="input_text_form"  value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
+    </picker>
+    <view class="lables">收票单位</view>
+    <input bindinput="onInput" data-column="shoupiao_danwei" class="input_text_form"  value="{{shoupiao_danwei}}" type="text" name="shoupiao_danwei" disabled="disabled" bindtap="xiala_show"></input>
+    <view class="lables">开票单位</view>
+    <input bindinput="onInput" data-column="kaipiao_danwei" class="input_text_form"  value="{{kaipiao_danwei}}" type="text" name="kaipiao_danwei" disabled="disabled" bindtap="xiala_show"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

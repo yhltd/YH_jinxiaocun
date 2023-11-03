@@ -12,79 +12,59 @@ Page({
     enable: '',
     list_check: [
       {
-        name:'订单编号',
-        columnName: "bianhao",
+        name:'采购订单编号',
+        columnName: "caigou_bianhao",
         type: "text",
         width: "250rpx",
       },{
-        name:'日期',
-        columnName: 'riqi',
+        name:'收票单位',
+        columnName: 'shoupiao_danwei',
         type: "text",
         width: "250rpx",
       },{
-        name:'交货日期',
-        columnName: 'jiaohuo_riqi',
+        name:'开票单位',
+        columnName: 'kaipiao_danwei',
         type: "text",
         width: "250rpx",
       },{
-        name:'供应商',
-        columnName: 'gongyingshang',
+        name:'开票日期',
+        columnName: 'kaipiao_riqi',
         type: "text",
         width: "250rpx",
       },{
-        name:'店铺',
-        columnName: 'dianpu',
+        name:'开票金额',
+        columnName: 'kaipiao_jine',
         type: "text",
         width: "250rpx",
       },{
-        name:'商品编号',
-        columnName: 'shangpin_bianhao',
+        name:'开票税额',
+        columnName: 'kaipiao_shuie',
         type: "text",
         width: "250rpx",
       },{
-        name:'商品名称',
-        columnName: 'name',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'规格',
-        columnName: 'guige',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'单位',
-        columnName: 'danwei',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'数量',
-        columnName: 'shuliang',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'单价',
-        columnName: 'caigou_danjia',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'金额',
-        columnName: 'jiashui_xiaoji',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'行备注',
-        columnName: 'beizhu',
+        name:'价税合计',
+        columnName: 'jiashui_heji',
         type: "text",
         width: "250rpx",
       },{
         name:'备注',
-        columnName: 'beizhu2',
+        columnName: 'beizhu',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'信息推送',
+        columnName: 'xinxi_tuisong',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'收票状态',
+        columnName: 'shoupiao_zhuangtai',
         type: "text",
         width: "250rpx",
       }
     ],
-    all_result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
-    result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
+    all_result: ['采购订单编号', '收票单位', '开票单位' ,'开票日期','开票金额','开票税额','价税合计','备注','信息推送','收票状态'],
+    result: ['采购订单编号', '收票单位', '开票单位' ,'开票日期','开票金额','开票税额','价税合计','备注','信息推送','收票状态'],
     gongneng_list:[
       {
         name:'查询'
@@ -98,6 +78,7 @@ Page({
     start_date: '',
     stop_date: '',
     kaipiao_danwei: '',
+    shoupiao_danwei: '',
   },
 
   /**
@@ -129,14 +110,22 @@ Page({
     if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [start_date,stop_date,_this.data.kaipiao_danwei]
+    var e = [start_date,stop_date,_this.data.kaipiao_danwei,_this.data.shoupiao_danwei]
     _this.qxShow()
     _this.tableShow(e)
   },
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select * from caigou_shoupiao where kaipiao_riqi >= '" + e[0] + "' and kaipiao_riqi <= '" + e[1] + "' and kaipiao_danwei like '%" + e[2] + "%';select * from gongyingshang"
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_shoupiao_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    var sql = "select * from caigou_shoupiao where kaipiao_riqi >= '" + e[0] + "' and kaipiao_riqi <= '" + e[1] + "' and kaipiao_danwei like '%" + e[2] + "%' and shoupiao_danwei like '%" + e[3] + "%';select * from gongyingshang;select * from peizhi where type = '核算单位'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -147,11 +136,13 @@ Page({
         console.log(res)
         var list = res.result.recordsets[0]
         var kaipiao_danwei_list = res.result.recordsets[1]
+        var shoupiao_danwei_list = res.result.recordsets[2]
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
-          kaipiao_danwei_list
+          kaipiao_danwei_list,
+          shoupiao_danwei_list
         })
       },
       err: res => {
@@ -170,6 +161,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_shoupiao_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../caigou_shoupiaoAdd/caigou_shoupiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
     })
@@ -180,6 +179,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_shoupiao_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../caigou_shoupiaoAdd/caigou_shoupiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
     })
@@ -190,6 +197,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_shoupiao_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',
@@ -275,6 +290,7 @@ Page({
           start_date:'',
           stop_date:'',
           kaipiao_danwei:'',
+          shoupiao_danwei:'',
         })
         _this.sel1()
       }else{
@@ -382,7 +398,7 @@ Page({
     var title_put = this_column
     console.log(title_put)
     var cloudList = {
-      name : '商品资料',
+      name : '采购收票',
       items : [],
       header : []
     }
@@ -396,24 +412,19 @@ Page({
     }
     var item = []
     for(var i=0; i<list.length; i++){
-      for(var j=0; j<list[i].item.length; j++){
-        item.push({
-          bianhao: list[i].bianhao,
-          riqi: list[i].riqi,
-          jiaohuo_riqi: list[i].item[j].jiaohuo_riqi,
-          gongyingshang: list[i].gongyingshang,
-          dianpu: list[i].dianpu,
-          shangpin_bianhao: list[i].item[j].shangpin_bianma,
-          name: list[i].item[j].name,
-          guige: list[i].item[j].guige,
-          danwei: list[i].item[j].danwei,
-          shuliang: list[i].item[j].shuliang,
-          caigou_danjia: list[i].item[j].caigou_danjia,
-          jiashui_xiaoji: list[i].item[j].jiashui_xiaoji,
-          beizhu: list[i].item[j].beizhu,
-          beizhu2: list[i].beizhu,
-        })
-      }
+      item.push({
+        caigou_bianhao: list[i].caigou_bianhao,
+        shoupiao_danwei: list[i].shoupiao_danwei,
+        kaipiao_danwei: list[i].kaipiao_danwei,
+        kaipiao_riqi: list[i].kaipiao_riqi,
+        kaipiao_jine: list[i].kaipiao_jine,
+        kaipiao_shuie: list[i].kaipiao_shuie,
+        jiashui_heji: list[i].jiashui_heji,
+        beizhu: list[i].beizhu,
+        xinxi_tuisong: list[i].xinxi_tuisong,
+        shoupiao_zhuangtai: list[i].shoupiao_zhuangtai,
+      })
+      
     }
     console.log("导出列表：" + item)
     cloudList.items = item
@@ -470,6 +481,7 @@ Page({
       start_date:'',
       stop_date:'',
       kaipiao_danwei:'',
+      shoupiao_danwei:'',
     })
     _this.sel1()
   },

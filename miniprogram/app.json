@@ -322,9 +322,11 @@
         "page/shows/shows",
         "page/shows1/shows1",
         "page/shows2/shows2",
+        "page/shows3/shows3",
         "page/userInfo/userInfo",
         "page/userInfoAdd/userInfoAdd",
         "page/userPower/userPower",
+        "page/userPowerAdd/userPowerAdd",
         "page/peizhi/peizhi",
         "page/peizhiAdd/peizhiAdd",
         "page/customer/customer",
@@ -347,7 +349,17 @@
         "page/xiaoshou_dingdan/xiaoshou_dingdan",
         "page/xiaoshou_dingdanAdd/xiaoshou_dingdanAdd",
         "page/xiaoshou_chuku/xiaoshou_chuku",
-        "page/xiaoshou_chukuAdd/xiaoshou_chukuAdd"
+        "page/xiaoshou_chukuAdd/xiaoshou_chukuAdd",
+        "page/xiaoshou_kaipiao/xiaoshou_kaipiao",
+        "page/xiaoshou_kaipiaoAdd/xiaoshou_kaipiaoAdd",
+        "page/zhuanzhang/zhuanzhang",
+        "page/zhuanzhangAdd/zhuanzhangAdd",
+        "page/kucun/kucun",
+        "page/zhanghu_yue/zhanghu_yue",
+        "page/shouru_fenlei/shouru_fenlei",
+        "page/zhichu_fenlei/zhichu_fenlei",
+        "page/yuedu_shouzhi/yuedu_shouzhi",
+        "page/peizhi_shuilv/peizhi_shuilv"
       ]
     },
     {

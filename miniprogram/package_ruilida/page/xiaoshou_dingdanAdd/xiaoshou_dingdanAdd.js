@@ -64,7 +64,7 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from customer;select * from userInfo;select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from peizhi where type = '店铺';"
+    var sql = "select * from customer;select * from userInfo;select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from peizhi where type = '店铺';select * from peizhi_shuilv;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -77,6 +77,23 @@ Page({
         var shenhe_list = res.result.recordsets[1]
         var product_list = res.result.recordsets[2]
         var dianpu_list = res.result.recordsets[3]
+        var peizhi_shuilv = res.result.recordsets[4][0]
+        var fujia_shuilv = 1
+        if(peizhi_shuilv.zhuangtai == '是'){
+          fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
+        }
+        console.log(fujia_shuilv)
+        for(var i=0; i<product_list.length; i++){
+          var jinxiang = product_list[i].jinxiang / 100
+          var xiaoxiang = product_list[i].xiaoxiang / 100
+          var pifa_bili = product_list[i].pifa_bili / 100
+          var lingshou_bili = product_list[i].lingshou_bili / 100
+          var dakehu_bili = product_list[i].dakehu_bili / 100
+          var caigou_price = product_list[i].caigou_price * 1
+          product_list[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
+          product_list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
+          product_list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
+        }
         _this.setData({
           kehu_list,
           yewuyuan_list,
@@ -613,6 +630,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
+      
       var sql = "update xiaoshou_dingdan set bianhao='" + xiaoshou_body.bianhao + "',riqi='" + xiaoshou_body.riqi + "',kehu='" + xiaoshou_body.kehu + "',jiage_dengji='" + xiaoshou_body.jiage_dengji + "',yewuyuan='" + xiaoshou_body.yewuyuan + "',shoujianren='" + xiaoshou_body.shoujianren + "',shoujian_phone='" + xiaoshou_body.shoujian_phone + "',shoujian_dizhi='" + xiaoshou_body.shoujian_dizhi + "',dianpu='" + xiaoshou_body.dianpu + "',xiaoxiang_shuilv='" + xiaoshou_body.xiaoxiang_shuilv + "',shenhe='" + xiaoshou_body.shenhe + "',jiashui_heji='" + xiaoshou_body.jiashui_heji + "',beizhu='" + xiaoshou_body.beizhu + "',shenhe_zhuangtai='" + xiaoshou_body.shenhe_zhuangtai + "' where id=" + xiaoshou_body.id
       console.log(xiaoshou_body)
       wx.cloud.callFunction({

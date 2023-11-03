@@ -27,6 +27,10 @@ Page({
         url: '../product/product',
       },
       {
+        text:'附加税设置',
+        url: '../peizhi_shuilv/peizhi_shuilv',
+      },
+      {
         text:'商品分类',
         url: '../peizhi/peizhi',
       },
@@ -100,7 +104,7 @@ Page({
     var index = e.target.dataset.index
     console.log(index)
     var url = _this.data.title[index].url
-    if(index >= 5){
+    if(index >= 6){
       wx.navigateTo({
         url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo) + '&type=' + _this.data.title[index].text,
       })
@@ -126,7 +130,7 @@ Page({
     var _this = this
     var id = _this.data.userInfo.id
     console.log(id)
-    var sql = "select * from userInfo where id=" + id
+    var sql = "select * from userInfo where id=" + id + ";select * from userPower;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -134,7 +138,14 @@ Page({
       },
       success: res => {
         console.log(res)
-        var userInfo = res.result.recordset[0]
+        var userInfo = res.result.recordsets[0][0]
+        var userPower = res.result.recordsets[1]
+        for(var i=0; i<userPower.length; i++){
+          if(userInfo.power == userPower[i].name){
+            userInfo.power_mingxi = userPower[i]
+            break;
+          }
+        }
         console.log(userInfo)
         _this.setData({
           userInfo
@@ -161,6 +172,10 @@ Page({
     if (event.detail == 4) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 3) {
+      wx.redirectTo({
+        url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
     } else if (event.detail == 2) {
       wx.redirectTo({

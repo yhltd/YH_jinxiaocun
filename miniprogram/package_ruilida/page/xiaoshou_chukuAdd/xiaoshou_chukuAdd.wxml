@@ -248,8 +248,7 @@
     >
       <view slot="label">
         <text>规格：{{item.guige}} \n</text>
-        <text>库存：{{0}} \n</text>
-        <text>单价：{{item.caigou_price}} \n</text>
+        <text decode="{{true}}">零售价格：{{item.lingshou_price}} &nbsp;&nbsp; 批发价格：{{item.pifa_price}} &nbsp;&nbsp; 大客户价格：{{item.dakehu_price}} \n</text>
       </view>
     </van-cell>
   </van-cell-group>

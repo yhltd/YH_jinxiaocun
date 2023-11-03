@@ -10,6 +10,7 @@ Page({
     maxDate: new Date(2099, 12, 31).getTime(),
     currentDate: new Date().getTime(),
     caigou_show: false,
+    xiaoshou_show: false,
     product_show: false,
     ssqShow: false,
     xlShow2: false,
@@ -40,6 +41,8 @@ Page({
       {name: '采购订单'},
       {name: '采购入库'},
       {name: '日常开支'},
+      {name: '销售订单'},
+      {name: '销售出库'},
     ],
     type:'',
     name:'',
@@ -52,12 +55,35 @@ Page({
     var _this = this
     console.log(areaList.list)
     var userInfo = JSON.parse(options.userInfo)
+    var shouzhi_type = options.shouzhi_type
+    var danju_leixing_list = [
+      {name: '采购订单'},
+      {name: '采购入库'},
+      {name: '日常开支'},
+      {name: '销售订单'},
+      {name: '销售出库'},
+    ]
+    if(shouzhi_type == '支出记录'){
+      danju_leixing_list = [
+        {name: '采购订单'},
+        {name: '采购入库'},
+        {name: '日常开支'},
+      ]
+    }else if(shouzhi_type == '收入记录'){
+      danju_leixing_list = [
+        {name: '销售订单'},
+        {name: '销售出库'},
+        {name: '日常开支'},
+      ]
+    }
     _this.setData({
       userInfo,
-      areaList: areaList.list
+      areaList: areaList.list,
+      shouzhi_type,
+      danju_leixing_list
     })
     var id = options.id
-    var sql = "select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi where type = '记账分类';select * from peizhi where type = '收款账户';select * from peizhi where type = '记账明细类型';select * from gongyingshang"
+    var sql = "select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi where type = '记账分类';select * from peizhi where type = '收款账户';select * from peizhi where type = '记账明细类型';select * from gongyingshang;select * from customer;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -71,13 +97,15 @@ Page({
         var jizhang_zhanghu_list = res.result.recordsets[3]
         var mingxi_type_list = res.result.recordsets[4]
         var gongyingshang_list = res.result.recordsets[5]
+        var kehu_list = res.result.recordsets[6]
         _this.setData({
           dianpu_list,
           jizhangren_list,
           jizhang_type_list,
           jizhang_zhanghu_list,
           mingxi_type_list,
-          gongyingshang_list
+          gongyingshang_list,
+          kehu_list
         })
       },
       err: res => {
@@ -141,6 +169,7 @@ Page({
           console.log(this_bianhao)
           var shouzhi_body = _this.data.shouzhi_body
           shouzhi_body.shouzhi_bianhao = this_bianhao
+          shouzhi_body.shouzhi_riqi = getNowDate()
           _this.setData({
             shouzhi_body
           })
@@ -175,12 +204,21 @@ Page({
       _this.caigou_click()
     }else if(danju_leixing == '采购入库'){
       _this.ruku_click()
+    }else if(danju_leixing == '销售订单'){
+      _this.xiaoshou_click()
+    }else if(danju_leixing == '销售出库'){
+      _this.chuku_click()
+    }else if(danju_leixing == '日常开支'){
+      wx.showToast({
+        title: '日常开支无需选择单据',
+        icon: 'none'
+      })
     }
   },
 
   caigou_click:function(){
     var _this = this
-    var sql = "select id,bianhao,riqi,gongyingshang,dianpu,jiashui_xiaoji,isnull(yifu,0) as yifu,round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) as weifu,1 as isselect from (select id,bianhao,riqi,gongyingshang,dianpu,jiashui_xiaoji from caigou_dingdan as caigou left join(select caigou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from caigou_dingdan_item group by caigou_id) as caigou_money on caigou.id = caigou_money.caigou_id) as caigou_dingdan left join (select danju_leixing,danju_bianhao,sum(convert(float,isnull(jizhang_jine,0))) + sum(convert(float,isnull(kedi_shuie,0))) as yifu from shouzhi_mingxi group by danju_leixing,danju_bianhao) as fukuan on caigou_dingdan.bianhao = fukuan.danju_bianhao where round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) > 0"
+    var sql = "select id,bianhao,riqi,gongyingshang,dianpu,isnull(jiashui_xiaoji,0) as jiashui_xiaoji,isnull(yifu,0) as yifu,round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) as weifu,1 as isselect from (select id,bianhao,riqi,gongyingshang,dianpu,jiashui_xiaoji from caigou_dingdan as caigou left join(select caigou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from caigou_dingdan_item group by caigou_id) as caigou_money on caigou.id = caigou_money.caigou_id) as caigou_dingdan left join (select danju_leixing,danju_bianhao,sum(convert(float,isnull(jizhang_jine,0))) + sum(convert(float,isnull(kedi_shuie,0))) as yifu from shouzhi_mingxi group by danju_leixing,danju_bianhao) as fukuan on caigou_dingdan.bianhao = fukuan.danju_bianhao where round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) > 0"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -215,8 +253,44 @@ Page({
         console.log("请求失败！")
       }
     })
-    _this.setData({
-      caigou_show: true
+  },
+
+  xiaoshou_click:function(){
+    var _this = this
+    var sql = "select id,bianhao,riqi,kehu,dianpu,isnull(jiashui_xiaoji,0) as jiashui_xiaoji,isnull(yifu,0) as yifu,round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) as weifu,1 as isselect from(select id,bianhao,riqi,kehu,dianpu,jiashui_xiaoji from xiaoshou_dingdan as xiaoshou left join (select xiaoshou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from xiaoshou_dingdan_item group by xiaoshou_id) as xiaoshou_money on xiaoshou.id = xiaoshou_money.xiaoshou_id) as xiaoshou_dingdan left join (select danju_leixing,danju_bianhao,sum(convert(float,isnull(jizhang_jine,0))) + sum(convert(float,isnull(kedi_shuie,0))) as yifu from shouzhi_mingxi group by danju_leixing,danju_bianhao) as fukuan on xiaoshou_dingdan.bianhao = fukuan.danju_bianhao where round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) > 0"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          xiaoshou_list: list,
+          xiaoshou_show: true,
+          start_date: '',
+          stop_date: '',
+          kehu: '',
+        })
+      },
+      err: res => {
+        wx.showToast({
+          title: '错误！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -257,8 +331,44 @@ Page({
         console.log("请求失败！")
       }
     })
-    _this.setData({
-      caigou_show: true
+  },
+
+  chuku_click:function(){
+    var _this = this
+    var sql = "select id,bianhao,riqi,kehu,dianpu,jiashui_xiaoji,isnull(yifu,0) as yifu,round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) as weifu,1 as isselect from (select id,bianhao,riqi,kehu,dianpu,jiashui_xiaoji from xiaoshou_chuku as chuku left join(select chuku_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from xiaoshou_chuku_item group by chuku_id) as chuku_money on chuku.id = chuku_money.chuku_id ) as chuku_dingdan left join(select danju_leixing,danju_bianhao,sum(convert(float,isnull(jizhang_jine,0))) + sum(convert(float,isnull(kedi_shuie,0))) as yifu from shouzhi_mingxi group by danju_leixing,danju_bianhao) as fukuan on chuku_dingdan.bianhao = fukuan.danju_bianhao where round(isnull(jiashui_xiaoji,0)-isnull(yifu,0),2) > 0"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          xiaoshou_list: list,
+          xiaoshou_show: true,
+          start_date: '',
+          stop_date: '',
+          kehu: '',
+        })
+      },
+      err: res => {
+        wx.showToast({
+          title: '错误！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -295,6 +405,39 @@ Page({
     })
   },
 
+  sel_xiaoshou:function(){
+    var _this = this
+    var start_date = _this.data.start_date
+    var stop_date = _this.data.stop_date
+    var kehu = _this.data.kehu
+    var xiaoshou_list = _this.data.xiaoshou_list
+    if(start_date == ''){
+      start_date = "1900-01-01"
+    }
+    if(stop_date == ''){
+      stop_date = "2100-12-31"
+    }
+    for(var i=0; i<xiaoshou_list.length; i++){
+      var panduan = true
+      if(!(xiaoshou_list[i].riqi >= start_date && xiaoshou_list[i].riqi <= stop_date)){
+        panduan = false
+      }
+      if(gongyingshang != ''){
+        if(xiaoshou_list[i].kehu.indexOf(kehu) == -1){
+          panduan = false
+        }
+      }
+      if(panduan){
+        xiaoshou_list[i].isselect = 1
+      }else{
+        xiaoshou_list[i].isselect = 0
+      }
+    }
+    _this.setData({
+      xiaoshou_list
+    })
+  },
+
   caigou_select:function(e){
     var _this = this
     console.log(e)
@@ -308,13 +451,27 @@ Page({
     _this.qxShow()
   },
 
+  xiaoshou_select:function(e){
+    var _this = this
+    console.log(e)
+    var this_index = e.currentTarget.dataset.index
+    var xiaoshou_list = _this.data.xiaoshou_list[this_index]
+    var shouzhi_body = _this.data.shouzhi_body
+    shouzhi_body.danju_bianhao = xiaoshou_list.bianhao
+    _this.setData({
+      shouzhi_body,
+    })
+    _this.qxShow()
+  },
+
   qxShow:function(){
     var _this = this
     _this.setData({
       xlShow2:false,
       ssqShow:false,
       product_show:false,
-      caigou_show:false
+      caigou_show:false,
+      xiaoshou_show:false,
     })
   },
 
@@ -446,7 +603,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into shouzhi_mingxi(dianpu,danju_leixing,danju_bianhao,shouzhi_bianhao,shouzhi_riqi,jizhangren,jizhang_type,jizhang_zhanghu,jizhang_jine,kedi_shuie,zhaiyao) output inserted.id values('" + shouzhi_body.dianpu + "','" + shouzhi_body.danju_leixing + "','" + shouzhi_body.danju_bianhao + "','" + shouzhi_body.shouzhi_bianhao + "','" + shouzhi_body.shouzhi_riqi + "','" + shouzhi_body.jizhangren + "','" + shouzhi_body.jizhang_type + "','" + shouzhi_body.jizhang_zhanghu + "','" + shouzhi_body.jizhang_jine + "','" + shouzhi_body.kedi_shuie + "','" + shouzhi_body.zhaiyao + "')"
+      var sql = "insert into shouzhi_mingxi(dianpu,danju_leixing,danju_bianhao,shouzhi_bianhao,shouzhi_riqi,jizhangren,jizhang_type,jizhang_zhanghu,jizhang_jine,kedi_shuie,zhaiyao,shouzhi_type) output inserted.id values('" + shouzhi_body.dianpu + "','" + shouzhi_body.danju_leixing + "','" + shouzhi_body.danju_bianhao + "','" + shouzhi_body.shouzhi_bianhao + "','" + shouzhi_body.shouzhi_riqi + "','" + shouzhi_body.jizhangren + "','" + shouzhi_body.jizhang_type + "','" + shouzhi_body.jizhang_zhanghu + "','" + shouzhi_body.jizhang_jine + "','" + shouzhi_body.kedi_shuie + "','" + shouzhi_body.zhaiyao + "','" + _this.data.shouzhi_type.replace("记录",'') + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -530,7 +687,6 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      "insert into shouzhi_mingxi(dianpu,danju_leixing,danju_bianhao,shouzhi_bianhao,shouzhi_riqi,jizhangren,jizhang_type,jizhang_zhanghu,jizhang_jine,kedi_shuie,zhaiyao) output inserted.id values('"
       var sql = "update shouzhi_mingxi set dianpu='" + shouzhi_body.dianpu + "',danju_leixing='" + shouzhi_body.danju_leixing + "',danju_bianhao='" + shouzhi_body.danju_bianhao + "',shouzhi_bianhao='" + shouzhi_body.shouzhi_bianhao + "',shouzhi_riqi='" + shouzhi_body.shouzhi_riqi + "',jizhangren='" + shouzhi_body.jizhangren + "',jizhang_type='" + shouzhi_body.jizhang_type + "',jizhang_zhanghu='" + shouzhi_body.jizhang_zhanghu + "',jizhang_jine='" + shouzhi_body.jizhang_jine + "',kedi_shuie='" + shouzhi_body.kedi_shuie + "',zhaiyao='" + shouzhi_body.zhaiyao + "' where id=" + shouzhi_body.id
       console.log(shouzhi_body)
       wx.cloud.callFunction({
@@ -788,7 +944,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    console.log(_this.data.shouzhi_type)
+    wx.setNavigationBarTitle({title: _this.data.shouzhi_type});
   },
 
   /**
@@ -830,3 +988,36 @@ Page({
 function PrefixInteger(num, n) {
   return (Array(n).join(0) + num).slice(-n);
 }
+
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }

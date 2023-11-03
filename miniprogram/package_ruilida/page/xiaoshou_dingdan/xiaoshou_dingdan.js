@@ -22,18 +22,58 @@ Page({
         type: "text",
         width: "250rpx",
       },{
-        name:'交货日期',
-        columnName: 'jiaohuo_riqi',
+        name:'客户',
+        columnName: 'kehu',
         type: "text",
         width: "250rpx",
       },{
-        name:'供应商',
-        columnName: 'gongyingshang',
+        name:'客户价格等级',
+        columnName: 'jiage_dengji',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'业务员',
+        columnName: 'yewuyuan',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'收件人姓名',
+        columnName: 'shoujianren',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'收件人手机',
+        columnName: 'shoujian_phone',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'收件人地址',
+        columnName: 'shoujian_dizhi',
         type: "text",
         width: "250rpx",
       },{
         name:'店铺',
         columnName: 'dianpu',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'销项税率',
+        columnName: 'xiaoxiang_shuilv',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'备注',
+        columnName: 'beizhu',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'审核人',
+        columnName: 'shenhe',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'审核状态',
+        columnName: 'shenhe_zhuangtai',
         type: "text",
         width: "250rpx",
       },{
@@ -43,12 +83,27 @@ Page({
         width: "250rpx",
       },{
         name:'商品名称',
-        columnName: 'name',
+        columnName: 'shangpin_mingcheng',
         type: "text",
         width: "250rpx",
       },{
         name:'规格',
         columnName: 'guige',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'材质',
+        columnName: 'caizhi',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'技术标准',
+        columnName: 'jishu_biaozhun',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'质保等级',
+        columnName: 'zhibao_dengji',
         type: "text",
         width: "250rpx",
       },{
@@ -63,28 +118,38 @@ Page({
         width: "250rpx",
       },{
         name:'单价',
-        columnName: 'caigou_danjia',
+        columnName: 'baojia_danjia',
         type: "text",
         width: "250rpx",
       },{
-        name:'金额',
+        name:'价税小计',
         columnName: 'jiashui_xiaoji',
         type: "text",
         width: "250rpx",
       },{
-        name:'行备注',
-        columnName: 'beizhu',
+        name:'建议报价',
+        columnName: 'jianyi_baojia',
         type: "text",
         width: "250rpx",
       },{
-        name:'备注',
+        name:'需用日期',
+        columnName: 'xuyong_riqi',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'报价浮动',
+        columnName: 'baojia_fudong',
+        type: "text",
+        width: "250rpx",
+      },{
+        name:'行备注',
         columnName: 'beizhu2',
         type: "text",
         width: "250rpx",
       }
     ],
-    all_result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
-    result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
+    all_result: ['订单编号', '日期', '客户' ,'客户价格等级','业务员','收件人姓名','收件人手机','收件人地址','店铺','销项税率','备注','审核人','审核状态','商品编号','商品名称','规格','材质','技术标准','质保等级','单位','数量','单价','价税小计','建议报价','需用日期','报价浮动','行备注'],
+    result: ['订单编号', '日期', '客户' ,'客户价格等级','业务员','收件人姓名','收件人手机','收件人地址','店铺','销项税率','备注','审核人','审核状态','商品编号','商品名称','规格','材质','技术标准','质保等级','单位','数量','单价','价税小计','建议报价','需用日期','报价浮动','行备注'],
     gongneng_list:[
       {
         name:'查询'
@@ -92,12 +157,25 @@ Page({
         name:'刷新'
       },{
         name:'导出Excel'
+      },{
+        name:'查看需要我审核'
       }
+    ],
+    shenhe_zhuangtai_list:[
+      {name:'审核中'},
+      {name:'审核通过'},
+      {name:'审核未通过'},
+    ],
+    shenhe_click_list:[
+      {name:'审核通过'},
+      {name:'审核未通过'},
     ],
     quanxuan_value: true,
     start_date: '',
     stop_date: '',
     customer: '',
+    shenhe_zhuangtai:'',
+    sel_type:'',
   },
 
   /**
@@ -129,14 +207,27 @@ Page({
     if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [start_date,stop_date,_this.data.customer]
+    var e = [start_date,stop_date,_this.data.customer,_this.data.shenhe_zhuangtai]
     _this.qxShow()
     _this.tableShow(e)
   },
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select * from xiaoshou_dingdan where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and kehu like '%" + e[2] + "%';select * from xiaoshou_dingdan_item;select * from customer"
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.xiaoshou_dingdan_sel != '查看个人' && userInfo.power_mingxi.xiaoshou_dingdan_sel != '查看全部'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    var sql = ""
+    if(userInfo.power_mingxi.xiaoshou_dingdan_sel == '查看个人'){
+      sql = "select * from xiaoshou_dingdan where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and kehu like '%" + e[2] + "%' and yewuyuan='" + userInfo.name + "' and shenhe_zhuangtai like '%" + e[3] + "%';select * from xiaoshou_dingdan_item;select * from customer"
+    }else if(userInfo.power_mingxi.xiaoshou_dingdan_sel == '查看全部'){
+      sql = "select * from xiaoshou_dingdan where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and kehu like '%" + e[2] + "%' and shenhe_zhuangtai like '%" + e[3] + "%';select * from xiaoshou_dingdan_item;select * from customer"
+    }
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -171,7 +262,63 @@ Page({
           list: list,
           list_item: list_item,
           num: list.length,
-          customer_list
+          customer_list,
+          sel_type:''
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  shenheShow: function () {
+    var _this = this
+    var sql = "select * from xiaoshou_dingdan where shenhe = '" + _this.data.userInfo.name + "' and shenhe_zhuangtai = '审核中';select * from xiaoshou_dingdan_item;select * from customer"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets[0]
+        var list_item = res.result.recordsets[1]
+        var customer_list = res.result.recordsets[2]
+        for(var i=list.length-1; i >=0; i--){
+          for(var j=list_item.length-1; j>=0; j--){
+            if(list[i].id == list_item[j].xiaoshou_id){
+              if(list[i].item == undefined){
+                var this_item = []
+                this_item.push(list_item[j])
+                list_item.splice(j,1)
+                list[i].item = this_item
+              }else{
+                var this_item = list[i].item
+                this_item.push(list_item[j])
+                list_item.splice(j,1)
+                list[i].item = this_item
+              }
+            }
+          }
+        }
+        console.log(list)
+        console.log(list_item)
+        _this.setData({
+          list: list,
+          list_item: list_item,
+          num: list.length,
+          customer_list,
+          sel_type:'待审核'
         })
       },
       err: res => {
@@ -190,6 +337,14 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.xiaoshou_dingdan_add != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
       url: '../xiaoshou_dingdanAdd/xiaoshou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
     })
@@ -200,9 +355,24 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
-    wx.navigateTo({
-      url: '../xiaoshou_dingdanAdd/xiaoshou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
-    })
+    if(_this.data.sel_type == '待审核'){
+      _this.setData({
+        shenhe_id:id,
+        xlShow3:true
+      })
+    }else{
+      var userInfo = _this.data.userInfo
+      if(userInfo.power_mingxi.xiaoshou_dingdan_upd != '是'){
+        wx.showToast({
+          title: '当前账号无权限',
+          icon: 'none'
+        })
+        return;
+      }
+      wx.navigateTo({
+        url: '../xiaoshou_dingdanAdd/xiaoshou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+      })
+    }
   },
 
   del1:function(e){
@@ -210,6 +380,14 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.xiaoshou_dingdan_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',
@@ -295,8 +473,18 @@ Page({
           start_date:'',
           stop_date:'',
           customer:'',
+          shenhe_zhuangtai:'',
         })
         _this.sel1()
+      }else if(click_column == 'gongneng' && new_val == '查看需要我审核'){
+        _this.setData({
+          xlShow2: false,
+          start_date:'',
+          stop_date:'',
+          customer:'',
+          shenhe_zhuangtai:'',
+        })
+        _this.shenheShow()
       }else{
         _this.setData({
           [click_column]: new_val,
@@ -309,6 +497,45 @@ Page({
       })
     }
   },
+
+  select3: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var id = _this.data.shenhe_id
+      var sql = "update xiaoshou_dingdan set shenhe_zhuangtai = '" + e.detail.name + "' where id=" + id
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          wx.showToast({
+            title: '审核成功',
+            icon: 'none'
+          })
+          _this.shenheShow()
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow3:false,
+      })
+    }
+  },
+
   qxShow:function(){
     var _this = this
     _this.setData({
@@ -420,18 +647,31 @@ Page({
         item.push({
           bianhao: list[i].bianhao,
           riqi: list[i].riqi,
-          jiaohuo_riqi: list[i].item[j].jiaohuo_riqi,
-          gongyingshang: list[i].gongyingshang,
+          kehu: list[i].kehu,
+          jiage_dengji: list[i].jiage_dengji,
+          yewuyuan: list[i].yewuyuan,
+          shoujianren: list[i].shoujianren,
+          shoujian_phone: list[i].shoujian_phone,
+          shoujian_dizhi: list[i].shoujian_dizhi,
           dianpu: list[i].dianpu,
-          shangpin_bianhao: list[i].item[j].shangpin_bianma,
-          name: list[i].item[j].name,
+          xiaoxiang_shuilv: list[i].xiaoxiang_shuilv,
+          beizhu: list[i].beizhu,
+          shenhe: list[i].shenhe,
+          shenhe_zhuangtai: list[i].shenhe_zhuangtai,
+          shangpin_bianhao: list[i].item[j].shangpin_bianhao,
+          shangpin_mingcheng: list[i].item[j].shangpin_mingcheng,
           guige: list[i].item[j].guige,
+          caizhi: list[i].item[j].caizhi,
+          jishu_biaozhun: list[i].item[j].jishu_biaozhun,
+          zhibao_dengji: list[i].item[j].zhibao_dengji,
           danwei: list[i].item[j].danwei,
           shuliang: list[i].item[j].shuliang,
-          caigou_danjia: list[i].item[j].caigou_danjia,
+          baojia_danjia: list[i].item[j].baojia_danjia,
           jiashui_xiaoji: list[i].item[j].jiashui_xiaoji,
-          beizhu: list[i].item[j].beizhu,
-          beizhu2: list[i].beizhu,
+          jianyi_baojia: list[i].item[j].jianyi_baojia,
+          xuyong_riqi: list[i].item[j].xuyong_riqi,
+          baojia_fudong: list[i].item[j].baojia_fudong,
+          beizhu2: list[i].item[j].beizhu,
         })
       }
     }
@@ -490,6 +730,7 @@ Page({
       start_date:'',
       stop_date:'',
       customer:'',
+      shenhe_zhuangtai:'',
     })
     _this.sel1()
   },

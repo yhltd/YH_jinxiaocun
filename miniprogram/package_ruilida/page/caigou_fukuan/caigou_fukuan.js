@@ -12,79 +12,64 @@ Page({
     enable: '',
     list_check: [
       {
-        name:'订单编号',
-        columnName: "bianhao",
+        name:'对应店铺',
+        columnName: "dianpu",
         type: "text",
         width: "250rpx",
       },{
-        name:'日期',
-        columnName: 'riqi',
+        name:'单据类型',
+        columnName: 'danju_leixing',
         type: "text",
         width: "250rpx",
       },{
-        name:'交货日期',
-        columnName: 'jiaohuo_riqi',
+        name:'单据编号',
+        columnName: 'danju_bianhao',
         type: "text",
         width: "250rpx",
       },{
-        name:'供应商',
-        columnName: 'gongyingshang',
+        name:'记账单号',
+        columnName: 'shouzhi_bianhao',
         type: "text",
         width: "250rpx",
       },{
-        name:'店铺',
-        columnName: 'dianpu',
+        name:'记账日期',
+        columnName: 'shouzhi_riqi',
         type: "text",
         width: "250rpx",
       },{
-        name:'商品编号',
-        columnName: 'shangpin_bianhao',
+        name:'记账人',
+        columnName: 'jizhangren',
         type: "text",
         width: "250rpx",
       },{
-        name:'商品名称',
-        columnName: 'name',
+        name:'记账分类',
+        columnName: 'jizhang_type',
         type: "text",
         width: "250rpx",
       },{
-        name:'规格',
-        columnName: 'guige',
+        name:'记账账户',
+        columnName: 'jizhang_zhanghu',
         type: "text",
         width: "250rpx",
       },{
-        name:'单位',
-        columnName: 'danwei',
+        name:'记账金额',
+        columnName: 'jizhang_jine',
         type: "text",
         width: "250rpx",
       },{
-        name:'数量',
-        columnName: 'shuliang',
+        name:'可抵税额',
+        columnName: 'kedi_shuie',
         type: "text",
         width: "250rpx",
       },{
-        name:'单价',
-        columnName: 'caigou_danjia',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'金额',
-        columnName: 'jiashui_xiaoji',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'行备注',
-        columnName: 'beizhu',
-        type: "text",
-        width: "250rpx",
-      },{
-        name:'备注',
-        columnName: 'beizhu2',
+        name:'摘要',
+        columnName: 'zhaiyao',
         type: "text",
         width: "250rpx",
       }
     ],
-    all_result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
-    result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
+    all_result: ['对应店铺', '单据类型', '单据编号' ,'记账单号','记账日期','记账人','记账分类','记账账户','记账金额','可抵税额','摘要'],
+    result: ['对应店铺', '单据类型', '单据编号' ,'记账单号','记账日期','记账人','记账分类','记账账户','记账金额','可抵税额','摘要'],
     gongneng_list:[
       {
         name:'查询'
@@ -108,8 +93,10 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var shouzhi_type = options.shouzhi_type
     _this.setData({
       userInfo,
+      shouzhi_type
     })
     var sql = "select * from peizhi where type ='店铺';select * from userInfo;select * from peizhi where type ='收款账户';"
     wx.cloud.callFunction({
@@ -167,7 +154,35 @@ Page({
 
   tableShow: function (e) { 
     var _this = this
-    var sql = "select * from shouzhi_mingxi where shouzhi_riqi >= '" + e[0] + "' and shouzhi_riqi <= '" + e[1] + "' and dianpu like '%" + e[2] + "%' and jizhangren like '%" + e[3] + "%' and jizhang_zhanghu like '%" + e[4] + "%'"
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shouru_sel != '查看个人' && userInfo.power_mingxi.shouru_sel != '查看全部' && _this.data.shouzhi_type == '收入记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    if(userInfo.power_mingxi.zhichu_sel != '查看个人' && userInfo.power_mingxi.zhichu_sel != '查看全部' && _this.data.shouzhi_type == '支出记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    var sql = ""
+    if(userInfo.power_mingxi.shouru_sel == '查看个人' && _this.data.shouzhi_type == '收入记录'){
+      sql = "select * from shouzhi_mingxi where shouzhi_riqi >= '" + e[0] + "' and shouzhi_riqi <= '" + e[1] + "' and dianpu like '%" + e[2] + "%' and jizhangren like '%" + e[3] + "%' and jizhang_zhanghu like '%" + e[4] + "%' and shouzhi_type ='" + _this.data.shouzhi_type.replace("记录","") + "' and jizhangren ='" + userInfo.name + "'"
+    }
+    if(userInfo.power_mingxi.shouru_sel == '查看全部' && _this.data.shouzhi_type == '收入记录'){
+      sql = "select * from shouzhi_mingxi where shouzhi_riqi >= '" + e[0] + "' and shouzhi_riqi <= '" + e[1] + "' and dianpu like '%" + e[2] + "%' and jizhangren like '%" + e[3] + "%' and jizhang_zhanghu like '%" + e[4] + "%' and shouzhi_type ='" + _this.data.shouzhi_type.replace("记录","") + "'"
+    }
+    if(userInfo.power_mingxi.zhichu_sel == '查看个人' && _this.data.shouzhi_type == '支出记录'){
+      sql = "select * from shouzhi_mingxi where shouzhi_riqi >= '" + e[0] + "' and shouzhi_riqi <= '" + e[1] + "' and dianpu like '%" + e[2] + "%' and jizhangren like '%" + e[3] + "%' and jizhang_zhanghu like '%" + e[4] + "%' and shouzhi_type ='" + _this.data.shouzhi_type.replace("记录","") + "' and jizhangren ='" + userInfo.name + "'"
+    }
+    if(userInfo.power_mingxi.zhichu_sel == '查看全部' && _this.data.shouzhi_type == '支出记录'){
+      sql = "select * from shouzhi_mingxi where shouzhi_riqi >= '" + e[0] + "' and shouzhi_riqi <= '" + e[1] + "' and dianpu like '%" + e[2] + "%' and jizhangren like '%" + e[3] + "%' and jizhang_zhanghu like '%" + e[4] + "%' and shouzhi_type ='" + _this.data.shouzhi_type.replace("记录","") + "'"
+    }
+    
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -199,8 +214,23 @@ Page({
 
   tianjia: function(){
     var _this = this
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shouru_add != '是' && _this.data.shouzhi_type == '收入记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    if(userInfo.power_mingxi.zhichu_add != '是' && _this.data.shouzhi_type == '支出记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
-      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo),
+      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&shouzhi_type=" + _this.data.shouzhi_type,
     })
   },
 
@@ -209,8 +239,23 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shouru_upd != '是' && _this.data.shouzhi_type == '收入记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    if(userInfo.power_mingxi.zhichu_upd != '是' && _this.data.shouzhi_type == '支出记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.navigateTo({
-      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type,
     })
   },
 
@@ -219,6 +264,21 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.shouru_del != '是' && _this.data.shouzhi_type == '收入记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    if(userInfo.power_mingxi.zhichu_del != '是' && _this.data.shouzhi_type == '支出记录'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
     wx.showModal({
       title: '提示',
       content: '确认删除此条信息？',
@@ -413,7 +473,7 @@ Page({
     var title_put = this_column
     console.log(title_put)
     var cloudList = {
-      name : '商品资料',
+      name : '收支记录',
       items : [],
       header : []
     }
@@ -427,24 +487,19 @@ Page({
     }
     var item = []
     for(var i=0; i<list.length; i++){
-      for(var j=0; j<list[i].item.length; j++){
-        item.push({
-          bianhao: list[i].bianhao,
-          riqi: list[i].riqi,
-          jiaohuo_riqi: list[i].item[j].jiaohuo_riqi,
-          gongyingshang: list[i].gongyingshang,
-          dianpu: list[i].dianpu,
-          shangpin_bianhao: list[i].item[j].shangpin_bianma,
-          name: list[i].item[j].name,
-          guige: list[i].item[j].guige,
-          danwei: list[i].item[j].danwei,
-          shuliang: list[i].item[j].shuliang,
-          caigou_danjia: list[i].item[j].caigou_danjia,
-          jiashui_xiaoji: list[i].item[j].jiashui_xiaoji,
-          beizhu: list[i].item[j].beizhu,
-          beizhu2: list[i].beizhu,
-        })
-      }
+      item.push({
+        dianpu: list[i].dianpu,
+        danju_leixing: list[i].danju_leixing,
+        danju_bianhao: list[i].danju_bianhao,
+        shouzhi_bianhao: list[i].shouzhi_bianhao,
+        shouzhi_riqi: list[i].shouzhi_riqi,
+        jizhangren: list[i].jizhangren,
+        jizhang_type: list[i].jizhang_type,
+        jizhang_zhanghu: list[i].jizhang_zhanghu,
+        jizhang_jine: list[i].jizhang_jine,
+        kedi_shuie: list[i].kedi_shuie,
+        zhaiyao: list[i].zhaiyao,
+      })
     }
     console.log("导出列表：" + item)
     cloudList.items = item
@@ -497,6 +552,8 @@ Page({
    */
   onShow() {
     var _this = this
+    console.log(_this.data.shouzhi_type)
+    wx.setNavigationBarTitle({title: _this.data.shouzhi_type});
     _this.setData({
       start_date:'',
       stop_date:'',
