@@ -1,14 +1,49 @@
-<view style="margin-top: 10px;">
+<view style="padding-top: 10px;">
   <van-cell-group inset>
-    <van-cell title="欢迎您：{{userInfo.name}}" value="日期：{{this_date}}"/>
+    <van-cell title="欢迎您：{{userInfo.name}}" value="日期：{{this_date}}" use-label-slot>
+      <view slot="label">
+          <text>权限：{{userInfo.power}} \n</text>
+          <text>审批人：{{userInfo.shenpi}} \n</text>
+        </view>
+    </van-cell>
   </van-cell-group>
 </view>
 
-<scroll-view class="main" scroll-x="true" scroll-y="true">
-  <view style="margin-top: 10px;">
+<view style="padding-top: 10px;">
+  <van-tabs color="#1296db" type="card" active="{{ active }}" bind:change="onChange">
+  <van-tab title="销售报价">
     <van-cell-group inset>
-      <van-grid square column-num="3">
-        <van-grid-item wx:for="{{title}}" wx:key="text" bindtap="go" data-index="{{index}}" icon="photo-o" text="{{item.text}}" />
+      <van-cell title="需要我审批：{{shenhe_list[0].num}}个" value="审核未通过：{{pass_list[0].num}}个" />
+    </van-cell-group>
+  </van-tab>
+  <van-tab title="销售订单">
+    <van-cell-group inset>
+      <van-cell title="需要我审批：{{shenhe_list[1].num}}个" value="审核未通过：{{pass_list[1].num}}个" />
+    </van-cell-group>
+  </van-tab>
+  <van-tab title="采购订单">
+    <van-cell-group inset>
+      <van-cell title="需要我审批：{{shenhe_list[2].num}}个" value="审核未通过：{{pass_list[2].num}}个" />
+    </van-cell-group>
+  </van-tab>
+  <van-tab title="销售开票">
+    <van-cell-group inset>
+      <van-cell title="需要我开票：{{shenhe_list[3].num}}个" />
+    </van-cell-group>
+  </van-tab>
+  <van-tab title="采购收票">
+    <van-cell-group inset>
+      <van-cell title="需要我收票：{{shenhe_list[4].num}}个" />
+    </van-cell-group>
+  </van-tab>
+</van-tabs>
+</view>
+
+<scroll-view style="padding-top: 10px;" class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-bottom: 10px;">
+    <van-cell-group inset>
+      <van-grid square column-num="4">
+        <van-grid-item wx:for="{{title}}" wx:key="text" bindtap="go" data-index="{{index}}" icon="{{item.icon}}" text="{{item.text}}" />
       </van-grid>
     </van-cell-group>
   </view>

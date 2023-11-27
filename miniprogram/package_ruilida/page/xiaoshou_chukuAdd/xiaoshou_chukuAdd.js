@@ -148,7 +148,7 @@ Page({
         }
       })
     }else{
-      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CK000000'),3,6)) + 1 as bianhao from xiaoshou_chuku"
+      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CK000000'),3,6)) + 1 as bianhao from xiaoshou_chuku;select * from peizhi where type = '店铺';;select * from peizhi where type = '仓库';"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -156,7 +156,7 @@ Page({
         },
         success: res => {
           console.log(res)
-          var max_bianhao = res.result.recordset[0].bianhao
+          var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,6)
           console.log(this_bianhao)
           this_bianhao = "CK" + this_bianhao
@@ -164,6 +164,24 @@ Page({
           var chuku_body = _this.data.chuku_body
           chuku_body.bianhao = this_bianhao
           chuku_body.riqi = getNowDate()
+          var dianpu_list = res.result.recordsets[1]
+          if(_this.data.userInfo.dianpu != ''){
+            for(var i=0; i<dianpu_list.length; i++){
+              if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                chuku_body.dianpu = dianpu_list[i].name
+                break;
+              }
+            }
+          }
+          var cangku_list = res.result.recordsets[2]
+          if(_this.data.userInfo.cangku != ''){
+            for(var i=0; i<cangku_list.length; i++){
+              if(cangku_list[i].id == _this.data.userInfo.cangku){
+                chuku_body.cangku = cangku_list[i].name
+                break;
+              }
+            }
+          }
           _this.setData({
             chuku_body
           })

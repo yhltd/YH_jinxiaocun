@@ -1,0 +1,18 @@
+{
+  "usingComponents": {
+    "van-tabbar": "../../components/tabbar/index",
+    "van-tabbar-item": "../../components/tabbar-item/index",
+    "van-grid": "../../components/grid/index",
+    "van-grid-item": "../../components/grid-item/index",
+    "van-cell": "../../components/cell/index",
+    "van-cell-group": "../../components/cell-group/index",
+    "van-nav-bar": "../../components/nav-bar/index",
+    "van-action-sheet": "../../components/action-sheet/index",
+    "van-empty": "../../components/empty/index",
+    "van-tab": "../../components/tab/index",
+    "van-tabs": "../../components/tabs/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#393D49"
+}

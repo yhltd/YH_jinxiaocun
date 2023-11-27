@@ -30,6 +30,9 @@
 <!--表单下拉选择-->
 <van-action-sheet z-index='100' show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
 
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow4}}" actions="{{caozuo_click_list}}" close-on-click-overlay bind:close="select4" bind:select="select4" />
+
 <!--选择导出excel列-->
 <van-popup
   show="{{ dayin_show }}"

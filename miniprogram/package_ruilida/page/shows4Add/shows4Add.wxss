@@ -1,0 +1,28 @@
+page{
+  background-color: #e9e9e9;
+  height: 100%;
+}
+
+.main{
+  height: 45%;
+}
+
+.bottom_view{
+  height: 10%;
+  align-items: center;
+  display: flex;
+  bottom: 2%;
+}
+
+.bt_bottom{
+  width: 30%;
+  background-color: #1296db;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+}
+
+button{
+  font-size: 30rpx;
+  border-radius: 20px;
+}

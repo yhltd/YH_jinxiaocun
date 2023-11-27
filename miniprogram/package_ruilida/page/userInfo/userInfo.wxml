@@ -1,7 +1,7 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
     <van-cell-group inset>
-      <van-cell data-index="{{i}}" title="{{list_item.name}}" label="{{list_item.username}}" bindtap="click_view" bindlongpress="del1"/>
+      <van-cell data-index="{{i}}" title="{{list_item.name}}" label="{{list_item.username}}" value="权限：{{list_item.power}}" bindtap="click_view" bindlongpress="del1"/>
     </van-cell-group>
   </view>
 </scroll-view>

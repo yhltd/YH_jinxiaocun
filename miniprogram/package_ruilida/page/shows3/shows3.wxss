@@ -4,5 +4,5 @@ page{
 }
 
 .main{
-  height: 80%;
+  height: 63%;
 }

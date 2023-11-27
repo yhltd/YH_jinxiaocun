@@ -358,7 +358,7 @@ Page({
         },
         success: res => {
           console.log(res)
-         if(res.result.recordset == ""){
+         if(res.result.recordset == "" || list[0].songhuo_danhao == ''){
            console.log('成功')
           wx.showLoading({
             title: '保存文字',

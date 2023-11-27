@@ -35,6 +35,8 @@ Page({
     ],
     all_result: ['商品编号', '商品名称', '分类' ,'单位'],
     result: ['商品编号', '商品名称', '分类' ,'单位'],
+    print_all_result: [],
+    print_result: [],
     gongneng_list:[
       {
         name:'查询'
@@ -43,6 +45,9 @@ Page({
       },{
         name:'导出Excel'
       }
+      // ,{
+      //   name:'打印条码'
+      // }
     ],
     quanxuan_value: true,
   },
@@ -241,6 +246,27 @@ Page({
           xlShow2: false,
           dayin_show: true,
         })
+      }else if(click_column == 'gongneng' && new_val == '打印条码'){
+        var list = _this.data.list
+        if(list.length == 0){
+          wx.showToast({
+            title: '未读取到商品信息',
+            icon: 'none'
+          })
+          return;
+        }
+        var print_all_result = []
+        var print_result = []
+        for(var i=0; i<list.length; i++){
+          print_all_result.push(list[i].bianhao)
+          print_result.push(list[i].bianhao)
+        }
+        _this.setData({
+          print_all_result,
+          print_result,
+          xlShow2: false,
+          print_show: true,
+        })
       }else if(click_column == 'gongneng' && new_val == '查询'){
         _this.setData({
           xlShow2: false,
@@ -270,6 +296,7 @@ Page({
     _this.setData({
       xlShow2: false,
       dayin_show: false,
+      print_show: false,
       cxShow: false
     })
   },
@@ -292,11 +319,37 @@ Page({
     });
   },
 
+  onChange2(event) {
+    var _this = this
+    console.log('onChange')
+    console.log(event)
+    if(event.detail.length == _this.data.list.length){
+      _this.setData({
+        quanxuan_value: true,
+      });
+    }else{
+      _this.setData({
+        quanxuan_value: false,
+      });
+    }
+    _this.setData({
+      print_result: event.detail,
+    });
+  },
+
   toggle(event) {
     console.log('toggle')
     console.log(event)
     const { index } = event.currentTarget.dataset;
     const checkbox = this.selectComponent(`.checkboxes-${index}`);
+    checkbox.toggle();
+  },
+
+  toggle2(event) {
+    console.log('toggle')
+    console.log(event)
+    const { index } = event.currentTarget.dataset;
+    const checkbox = this.selectComponent(`.checkboxes2-${index}`);
     checkbox.toggle();
   },
 
@@ -311,12 +364,14 @@ Page({
     if(this_val == false){
       _this.setData({
         quanxuan_value: false,
-        result:[]
+        result:[],
+        print_result:[]
       })
     }else{
       _this.setData({
         quanxuan_value: true,
-        result:_this.data.all_result
+        result:_this.data.all_result,
+        print_result:_this.data.print_all_result,
       })
     }
   },
@@ -407,6 +462,34 @@ Page({
       }
     })
 
+  },
+
+  toPrint:function(){
+    var _this = this
+    if(_this.data.print_result.length == 0){
+      wx.showToast({
+        title: '请选择商品信息',
+        icon: 'none'
+      })
+      return;
+    }
+    var this_product = []
+    var result = _this.data.print_result
+    for(var j=0; j<_this.data.list.length; j++){
+      for(var i=0; i<result.length; i++){
+        if(_this.data.list[j].bianhao == result[i]){
+          this_product.push(_this.data.list[j])
+          continue;
+        }
+      }
+    }
+    console.log(this_product)
+    wx.navigateTo({
+      url: '../print_tiaoma/print_tiaoma' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(this_product),
+    })
+    _this.setData({
+      print_show: false,
+    })
   },
 
   /**

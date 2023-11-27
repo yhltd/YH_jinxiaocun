@@ -145,7 +145,7 @@ Page({
         }
       })
     }else{
-      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'BJ000000'),3,6)) + 1 as bianhao from xiaoshou_baojia"
+      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'BJ000000'),3,6)) + 1 as bianhao from xiaoshou_baojia;select * from peizhi where type = '店铺';"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -153,7 +153,7 @@ Page({
         },
         success: res => {
           console.log(res)
-          var max_bianhao = res.result.recordset[0].bianhao
+          var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,6)
           console.log(this_bianhao)
           this_bianhao = "BJ" + this_bianhao
@@ -163,6 +163,15 @@ Page({
           baojia_body.riqi = getNowDate()
           baojia_body.yewuyuan = _this.data.userInfo.name
           baojia_body.shenhe = _this.data.userInfo.shenpi
+          var dianpu_list = res.result.recordsets[1]
+          if(_this.data.userInfo.dianpu != ''){
+            for(var i=0; i<dianpu_list.length; i++){
+              if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                baojia_body.dianpu = dianpu_list[i].name
+                break;
+              }
+            }
+          }
           _this.setData({
             baojia_body
           })
@@ -716,6 +725,17 @@ Page({
         xlShow2:false,
       })
     }
+  },
+
+  file_goto:function(){
+    var _this = this
+    var type = "销售报价单"
+    var id = _this.data.baojia_body.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
   },
 
   /**

@@ -9,7 +9,6 @@
         label="商品名称"
         placeholder="请输入商品名称"
         border="false"
-        readonly="true"
       />
 
       <van-field
@@ -46,7 +45,7 @@
       <van-field
         bind:input="onInput"
         model:value="{{ product_body.jishu_biaozhun }}"
-        data-column="dizhi"
+        data-column="jishu_biaozhun"
         label="技术标准"
         placeholder="请输入技术标准"
         border="false"
@@ -98,6 +97,7 @@
         label="编号"
         placeholder="请输入编号"
         border="false"
+        readonly="true"
       />
 
       <van-field

@@ -25,6 +25,7 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    console.log(userInfo)
     var type = options.type
     _this.setData({
       list_check: [
@@ -61,6 +62,7 @@ Page({
     var _this = this
     var id = _this.data.userInfo.id
     var userInfo = _this.data.userInfo
+    var power_mingxi = userInfo.power_mingxi
     if(userInfo.power_mingxi.peizhi_sel != '是'){
       wx.showToast({
         title: '当前账号无权限',
@@ -77,6 +79,7 @@ Page({
       success: res => {
         console.log(res)
         var userInfo = res.result.recordset[0]
+        userInfo.power_mingxi = power_mingxi
         console.log(userInfo)
         _this.setData({
           userInfo
@@ -146,6 +149,7 @@ Page({
     var index = e.target.dataset.index
     var id = _this.data.list[index].id
     var userInfo = _this.data.userInfo
+    console.log(userInfo)
     if(userInfo.power_mingxi.peizhi_upd != '是'){
       wx.showToast({
         title: '当前账号无权限',

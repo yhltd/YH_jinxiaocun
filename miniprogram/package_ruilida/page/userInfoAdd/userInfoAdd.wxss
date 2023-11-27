@@ -9,6 +9,7 @@ page{
 
 button{
   font-size: 30rpx;
+  border-radius: 20px;
 }
 
 .bottom_view{

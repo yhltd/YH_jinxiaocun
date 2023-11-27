@@ -92,12 +92,29 @@ Page({
         name:'刷新'
       },{
         name:'导出Excel'
+      },{
+        name:'查看需要我审核'
       }
+    ],
+    shenhe_zhuangtai_list:[
+      {name:'审核中'},
+      {name:'审核通过'},
+      {name:'审核未通过'},
+    ],
+    shenhe_click_list:[
+      {name:'审核通过'},
+      {name:'审核未通过'},
+    ],
+    caozuo_click_list:[
+      {name:'修改'},
+      {name:'打印'},
     ],
     quanxuan_value: true,
     start_date: '',
     stop_date: '',
     gongyingshang: '',
+    shenhe_zhuangtai:'',
+    sel_type:'',
   },
 
   /**
@@ -129,7 +146,7 @@ Page({
     if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [start_date,stop_date,_this.data.gongyingshang]
+    var e = [start_date,stop_date,_this.data.gongyingshang,_this.data.shenhe_zhuangtai]
     _this.qxShow()
     _this.tableShow(e)
   },
@@ -144,7 +161,7 @@ Page({
       })
       return;
     }
-    var sql = "select * from caigou_dingdan where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and gongyingshang like '%" + e[2] + "%';select * from caigou_dingdan_item;select * from gongyingshang"
+    var sql = "select * from (select id,caigou3.bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,ruku_zhuangtai,shoupiao_zhuangtai,fukuan_zhuangtai from (select id,caigou2.bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,ruku_zhuangtai,shoupiao_zhuangtai from (select id,caigou.bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,ruku_zhuangtai from caigou_dingdan as caigou left join (select bianhao,case when sum(panduan) = 0 then '未入库' when sum(panduan) < count(bianhao) then '部分入库' when count(bianhao) <= sum(panduan) then '全部入库' end as ruku_zhuangtai from (select bianhao,caigou.shangpin_bianma,isnull(caigou.shuliang,0) as caigou_shuliang,isnull(ruku.shuliang,0) as ruku_shuliang,case when convert(float,isnull(caigou.shuliang,0)) > convert(float,isnull(ruku.shuliang,0)) then 0 else 1 end as panduan from(select bianhao,shangpin_bianma,shuliang from caigou_dingdan_item as item left join caigou_dingdan as dingdan on item.caigou_id = dingdan.id) as caigou left join (select shangpin_bianma,shuliang,ruku_id,caigou_id from caigou_ruku_item as ruku left join (select * from caigou_ruku where isnull(caigou_id,'') != '') as ruku_dan on ruku.ruku_id = ruku_dan.id where isnull(caigou_id,'') != '') as ruku on caigou.bianhao = ruku.caigou_id and caigou.shangpin_bianma = ruku.shangpin_bianma) as ruku group by bianhao) as ruku on caigou.bianhao = ruku.bianhao) as caigou2 left join (select bianhao,case when isnull(shoupiao_money,0) = 0 then '未收票' when isnull(shoupiao_money,0) < isnull(caigou_money,0) then '部分收票' when isnull(shoupiao_money,0) >= isnull(caigou_money,0) then '全部收票' end as shoupiao_zhuangtai from(select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as caigou_money from caigou_dingdan_item as item left join caigou_dingdan as caigou on caigou.id = item.caigou_id group by bianhao) as caigou left join(select caigou_bianhao,sum(convert(float,isnull(kaipiao_jine,0)) + convert(float,isnull(kaipiao_shuie,0))) as shoupiao_money from caigou_shoupiao group by caigou_bianhao) as shoupiao on caigou.bianhao = shoupiao.caigou_bianhao) as shoupiao on caigou2.bianhao = shoupiao.bianhao) as caigou3 left join (select bianhao,isnull(caigou_money,0) as caigou_money,isnull(money,0) as shoufu_money,case when isnull(money,0)  = 0 then '未付款' when isnull(caigou_money,0) > isnull(money,0)  then '部分付款' when isnull(caigou_money,0) <= isnull(money,0) then '全部付款' end as fukuan_zhuangtai from (select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as caigou_money from caigou_dingdan_item as item left join caigou_dingdan as caigou on caigou.id = item.caigou_id group by bianhao) as caigou left join (select danju_bianhao,sum(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0))) as money from shouzhi_mingxi group by danju_bianhao) as shoufukuan on caigou.bianhao = shoufukuan.danju_bianhao) as fukuan on caigou3.bianhao = fukuan.bianhao) as caigou where riqi >= '" + e[0] + "' and riqi <= '" + e[1] + "' and gongyingshang like '%" + e[2] + "%' and shenhe_zhuangtai like '%" + e[3] + "%';select * from caigou_dingdan_item;select * from gongyingshang"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -179,7 +196,64 @@ Page({
           list: list,
           list_item: list_item,
           num: list.length,
-          gongyingshang_list
+          gongyingshang_list,
+          sel_type:''
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  shenheShow: function (e) {
+    var _this = this
+    var userInfo = _this.data.userInfo
+    var sql = "select * from (select id,caigou3.bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,ruku_zhuangtai,shoupiao_zhuangtai,fukuan_zhuangtai from (select id,caigou2.bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,ruku_zhuangtai,shoupiao_zhuangtai from (select id,caigou.bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,ruku_zhuangtai from caigou_dingdan as caigou left join (select bianhao,case when sum(panduan) = 0 then '未入库' when sum(panduan) < count(bianhao) then '部分入库' when count(bianhao) <= sum(panduan) then '全部入库' end as ruku_zhuangtai from (select bianhao,caigou.shangpin_bianma,isnull(caigou.shuliang,0) as caigou_shuliang,isnull(ruku.shuliang,0) as ruku_shuliang,case when convert(float,isnull(caigou.shuliang,0)) > convert(float,isnull(ruku.shuliang,0)) then 0 else 1 end as panduan from(select bianhao,shangpin_bianma,shuliang from caigou_dingdan_item as item left join caigou_dingdan as dingdan on item.caigou_id = dingdan.id) as caigou left join (select shangpin_bianma,shuliang,ruku_id,caigou_id from caigou_ruku_item as ruku left join (select * from caigou_ruku where isnull(caigou_id,'') != '') as ruku_dan on ruku.ruku_id = ruku_dan.id where isnull(caigou_id,'') != '') as ruku on caigou.bianhao = ruku.caigou_id and caigou.shangpin_bianma = ruku.shangpin_bianma) as ruku group by bianhao) as ruku on caigou.bianhao = ruku.bianhao) as caigou2 left join (select bianhao,case when isnull(shoupiao_money,0) = 0 then '未收票' when isnull(shoupiao_money,0) < isnull(caigou_money,0) then '部分收票' when isnull(shoupiao_money,0) >= isnull(caigou_money,0) then '全部收票' end as shoupiao_zhuangtai from(select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as caigou_money from caigou_dingdan_item as item left join caigou_dingdan as caigou on caigou.id = item.caigou_id group by bianhao) as caigou left join(select caigou_bianhao,sum(convert(float,isnull(kaipiao_jine,0)) + convert(float,isnull(kaipiao_shuie,0))) as shoupiao_money from caigou_shoupiao group by caigou_bianhao) as shoupiao on caigou.bianhao = shoupiao.caigou_bianhao) as shoupiao on caigou2.bianhao = shoupiao.bianhao) as caigou3 left join (select bianhao,isnull(caigou_money,0) as caigou_money,isnull(money,0) as shoufu_money,case when isnull(money,0)  = 0 then '未付款' when isnull(caigou_money,0) > isnull(money,0)  then '部分付款' when isnull(caigou_money,0) <= isnull(money,0) then '全部付款' end as fukuan_zhuangtai from (select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as caigou_money from caigou_dingdan_item as item left join caigou_dingdan as caigou on caigou.id = item.caigou_id group by bianhao) as caigou left join (select danju_bianhao,sum(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0))) as money from shouzhi_mingxi group by danju_bianhao) as shoufukuan on caigou.bianhao = shoufukuan.danju_bianhao) as fukuan on caigou3.bianhao = fukuan.bianhao) as caigou where shenhe='" + _this.data.userInfo.name + "' and shenhe_zhuangtai='审核中';select * from caigou_dingdan_item;select * from gongyingshang"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets[0]
+        var list_item = res.result.recordsets[1]
+        var gongyingshang_list = res.result.recordsets[2]
+        for(var i=list.length-1; i >=0; i--){
+          for(var j=list_item.length-1; j>=0; j--){
+            if(list[i].id == list_item[j].caigou_id){
+              if(list[i].item == undefined){
+                var this_item = []
+                this_item.push(list_item[j])
+                list_item.splice(j,1)
+                list[i].item = this_item
+              }else{
+                var this_item = list[i].item
+                this_item.push(list_item[j])
+                list_item.splice(j,1)
+                list[i].item = this_item
+              }
+            }
+          }
+        }
+        console.log(list)
+        console.log(list_item)
+        _this.setData({
+          list: list,
+          list_item: list_item,
+          num: list.length,
+          gongyingshang_list,
+          sel_type:'待审核'
         })
       },
       err: res => {
@@ -217,16 +291,94 @@ Page({
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
     var userInfo = _this.data.userInfo
-    if(userInfo.power_mingxi.caigou_dingdan_upd != '是'){
-      wx.showToast({
-        title: '当前账号无权限',
-        icon: 'none'
+    if(_this.data.sel_type == '待审核'){
+      _this.setData({
+        shenhe_id:id,
+        xlShow3:true
       })
-      return;
+    }else{
+      _this.setData({
+        caozuo_index:index,
+        caozuo_id:id,
+        xlShow4:true
+      })
     }
-    wx.navigateTo({
-      url: '../caigou_dingdanAdd/caigou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+  },
+
+  choiceDate: function (e) {
+    var _this = this
+    //e.preventDefault(); 
+    var column_name = e.target.dataset.column_name
+    console.log(e.detail.value)
+    _this.setData({
+      [column_name]: e.detail.value
     })
+  },
+
+  select4: function (e) {
+    var _this = this
+    var userInfo = _this.data.userInfo
+    if (e.type == "select") {
+        var new_val = e.detail.name
+        var id = _this.data.caozuo_id
+        if(new_val == '修改'){
+          _this.setData({
+            xlShow4:false,
+          })
+          if(userInfo.power_mingxi.caigou_dingdan_upd != '是'){
+          wx.showToast({
+            title: '当前账号无权限',
+            icon: 'none'
+          })
+          return;
+        }
+        wx.navigateTo({
+          url: '../caigou_dingdanAdd/caigou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+        })
+      }else if(new_val == '打印'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var index = _this.data.caozuo_index
+        var list = _this.data.list[index]
+        var product_list = _this.data.list[index].item
+        console.log(list)
+        console.log(product_list)
+        console.log()
+        var print_list = {
+          title:'采购订单',
+          bianhao: list.bianhao,
+          riqi: list.riqi,
+          kegong: '供应商',
+          kegong_val: list.gongyingshang
+        }
+        var product = []
+        var num_sum = 0
+        var money_sum = 0
+        for(var i=0; i<product_list.length; i++){
+          var product_item = {
+            name:product_list[i].name,
+            num:product_list[i].shuliang,
+            price:product_list[i].caigou_danjia,
+            money:product_list[i].jiashui_xiaoji,
+          }
+          num_sum = Math.round(((num_sum * 1) + (product_list[i].shuliang * 1)) * 100) / 100
+          money_sum = Math.round(((money_sum * 1) + (product_list[i].jiashui_xiaoji * 1)) * 100) / 100
+          product.push(product_item)
+        }
+        print_list.num_sum = num_sum
+        print_list.money_sum = money_sum
+        print_list.product = product
+        console.log(print_list)
+        wx.navigateTo({
+          url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow4:false,
+      })
+    }
   },
 
   del1:function(e){
@@ -317,8 +469,18 @@ Page({
           start_date:'',
           stop_date:'',
           gongyingshang:'',
+          shenhe_zhuangtai:'',
         })
         _this.sel1()
+      }else if(click_column == 'gongneng' && new_val == '查看需要我审核'){
+        _this.setData({
+          xlShow2: false,
+          start_date:'',
+          stop_date:'',
+          gongyingshang:'',
+          shenhe_zhuangtai:'',
+        })
+        _this.shenheShow()
       }else{
         _this.setData({
           [click_column]: new_val,
@@ -338,6 +500,44 @@ Page({
       dayin_show: false,
       cxShow: false
     })
+  },
+
+  select3: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var id = _this.data.shenhe_id
+      var sql = "update caigou_dingdan set shenhe_zhuangtai = '" + e.detail.name + "' where id=" + id
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          wx.showToast({
+            title: '审核成功',
+            icon: 'none'
+          })
+          _this.shenheShow()
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow3:false,
+      })
+    }
   },
 
   onChange(event) {
@@ -512,6 +712,7 @@ Page({
       start_date:'',
       stop_date:'',
       gongyingshang:'',
+      shenhe_zhuangtai:'',
     })
     _this.sel1()
   },

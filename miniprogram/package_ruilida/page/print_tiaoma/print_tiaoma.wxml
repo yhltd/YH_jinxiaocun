@@ -1,0 +1,30 @@
+
+<view class="blueListView">
+  <button class="{{!isConn?'blueListView_title_false':'blueListView_title_true'}}" bindtap="{{!isConn?'openBluetoothAdapter':''}}">{{!isConn?'未连接，开始搜索':'已连接，可以打印了'}}</button>
+  <scroll-view class="blueListView_scroll" scroll-y="true">
+    <view class="blueListView_scroll_item" bindtap="choiceBlue" wx:for="{{blueList}}" wx:key="deviceId" data-deviceId="{{item.deviceId}}" data-serviceid="{{item.advertisServiceUUIDs[0]}}">
+      <view style="font-weight: bold;">设备名称：{{item.name}}</view>
+      <view style="font-size: 27rpx;">信号强度：{{(item.RSSI+100)}}%</view>
+    </view>
+  </scroll-view>
+</view>
+
+
+
+<canvas class="canvas" canvas-id="outCanvas" hidden="{{!mask_hid}}" style="width:{{width_user}}px;height:{{height_user}}px;"></canvas>
+
+<view class="bottom_view">
+	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button>
+</view>
+
+<view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
+
+<view class="updComment_view" hidden="{{updComment_hid}}">
+  <form bindsubmit="updComment">
+    <textarea fixed class="textarea" placeholder="在此输入..." name="comment_order"></textarea>
+    <view class="bottom_view" style="height: 20%;">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="hid_view">返回</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" form-type="submit">确定</button>
+    </view>
+  </form>
+</view>

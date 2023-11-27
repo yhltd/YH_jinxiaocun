@@ -327,9 +327,9 @@ Page({
 
   upd1:function(){
     var _this = this
-    if(_this.data.userInfo.power != '管理员'){
+    if(_this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '操作员'){
       wx.showToast({
-        title: '非管理员不允许修改！',
+        title: '非操作员不允许修改！',
         icon: 'none'
       })
       return;

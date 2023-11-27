@@ -72,13 +72,24 @@ Page({
         name:'刷新'
       },{
         name:'导出Excel'
+      },{
+        name:'查看需要我收票'
       }
     ],
     quanxuan_value: true,
+    shoupiao_zhuangtai_list:[
+      {name:'待收票'},
+      {name:'已收票'},
+    ],
+    shenhe_click_list:[
+      {name:'已收票'},
+    ],
     start_date: '',
     stop_date: '',
     kaipiao_danwei: '',
     shoupiao_danwei: '',
+    shoupiao_zhuangtai: '',
+    sel_type:'',
   },
 
   /**
@@ -110,7 +121,7 @@ Page({
     if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [start_date,stop_date,_this.data.kaipiao_danwei,_this.data.shoupiao_danwei]
+    var e = [start_date,stop_date,_this.data.kaipiao_danwei,_this.data.shoupiao_danwei,_this.data.shoupiao_zhuangtai]
     _this.qxShow()
     _this.tableShow(e)
   },
@@ -125,7 +136,7 @@ Page({
       })
       return;
     }
-    var sql = "select * from caigou_shoupiao where kaipiao_riqi >= '" + e[0] + "' and kaipiao_riqi <= '" + e[1] + "' and kaipiao_danwei like '%" + e[2] + "%' and shoupiao_danwei like '%" + e[3] + "%';select * from gongyingshang;select * from peizhi where type = '核算单位'"
+    var sql = "select * from caigou_shoupiao where kaipiao_riqi >= '" + e[0] + "' and kaipiao_riqi <= '" + e[1] + "' and kaipiao_danwei like '%" + e[2] + "%' and shoupiao_danwei like '%" + e[3] + "%' and shoupiao_zhuangtai like '%" + e[4] + "%';select * from gongyingshang;select * from peizhi where type = '核算单位'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -142,7 +153,46 @@ Page({
           list: list,
           num: list.length,
           kaipiao_danwei_list,
-          shoupiao_danwei_list
+          shoupiao_danwei_list,
+          sel_type:''
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  shenheShow: function () {
+    var _this = this
+    var userInfo = _this.data.userInfo
+    var sql = "select * from caigou_shoupiao where xinxi_tuisong='" + _this.data.userInfo.name + "' and shoupiao_zhuangtai = '待收票';select * from gongyingshang;select * from peizhi where type = '核算单位'"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets[0]
+        var kaipiao_danwei_list = res.result.recordsets[1]
+        var shoupiao_danwei_list = res.result.recordsets[2]
+        console.log(list)
+        _this.setData({
+          list: list,
+          num: list.length,
+          kaipiao_danwei_list,
+          shoupiao_danwei_list,
+          sel_type:'待审核'
         })
       },
       err: res => {
@@ -179,17 +229,24 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
-    var userInfo = _this.data.userInfo
-    if(userInfo.power_mingxi.caigou_shoupiao_upd != '是'){
-      wx.showToast({
-        title: '当前账号无权限',
-        icon: 'none'
+    if(_this.data.sel_type == '待审核'){
+      _this.setData({
+        shenhe_id:id,
+        xlShow3:true
       })
-      return;
+    }else{
+      var userInfo = _this.data.userInfo
+      if(userInfo.power_mingxi.caigou_shoupiao_upd != '是'){
+        wx.showToast({
+          title: '当前账号无权限',
+          icon: 'none'
+        })
+        return;
+      }
+      wx.navigateTo({
+        url: '../caigou_shoupiaoAdd/caigou_shoupiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+      })
     }
-    wx.navigateTo({
-      url: '../caigou_shoupiaoAdd/caigou_shoupiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
-    })
   },
 
   del1:function(e){
@@ -291,8 +348,19 @@ Page({
           stop_date:'',
           kaipiao_danwei:'',
           shoupiao_danwei:'',
+          shoupiao_zhuangtai:'',
         })
         _this.sel1()
+      }else if(click_column == 'gongneng' && new_val == '查看需要我收票'){
+        _this.setData({
+          xlShow2: false,
+          start_date:'',
+          stop_date:'',
+          kaipiao_danwei:'',
+          shoupiao_danwei:'',
+          shoupiao_zhuangtai:'',
+        })
+        _this.shenheShow()
       }else{
         _this.setData({
           [click_column]: new_val,
@@ -305,6 +373,45 @@ Page({
       })
     }
   },
+
+  select3: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var id = _this.data.shenhe_id
+      var sql = "update caigou_shoupiao set shoupiao_zhuangtai = '" + e.detail.name + "' where id=" + id
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          wx.showToast({
+            title: '成功',
+            icon: 'none'
+          })
+          _this.shenheShow()
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow3:false,
+      })
+    }
+  },
+
   qxShow:function(){
     var _this = this
     _this.setData({
@@ -482,6 +589,7 @@ Page({
       stop_date:'',
       kaipiao_danwei:'',
       shoupiao_danwei:'',
+      shoupiao_zhuangtai:'',
     })
     _this.sel1()
   },

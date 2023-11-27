@@ -9,81 +9,112 @@ Page({
       {
         text:'账号管理',
         url: '../userInfo/userInfo',
+        icon: "../../image/zhanghaoguanli.png"
       },
       {
         text:'权限管理',
         url: '../userPower/userPower',
+        icon: "../../image/quanxianguanli.png"
       },
       {
         text:'客户资料',
         url: '../customer/customer',
+        icon: "../../image/kehuziliao.png"
       },
       {
         text:'供应商资料',
         url: '../gongyingshang/gongyingshang',
+        icon: "../../image/gongyingshangziliao.png"
       },
       {
         text:'商品资料',
         url: '../product/product',
+        icon: "../../image/shangpinziliao.png"
       },
       {
         text:'附加税设置',
         url: '../peizhi_shuilv/peizhi_shuilv',
+        icon: "../../image/fujiashuishezhi.png"
       },
       {
         text:'商品分类',
         url: '../peizhi/peizhi',
+        icon: "../../image/shangpinfenlei.png"
       },
       {
         text:'仓库',
         url: '../peizhi/peizhi',
+        icon: "../../image/cangku.png"
       },
       {
         text:'收款账户',
         url: '../peizhi/peizhi',
+        icon: "../../image/shoukuanzhanghu.png"
       },
       {
         text:'店铺',
         url: '../peizhi/peizhi',
+        icon: "../../image/dianpu.png"
       },
       {
         text:'核算单位',
         url: '../peizhi/peizhi',
+        icon: "../../image/hesuandanwei.png"
       },
       {
         text:'客户等级',
         url: '../peizhi/peizhi',
+        icon: "../../image/kehudengji.png"
       },
       {
         text:'供应商等级',
         url: '../peizhi/peizhi',
+        icon: "../../image/gongyingshangdengji.png"
       },
       {
         text:'价格等级',
         url: '../peizhi/peizhi',
+        icon: "../../image/jiagedengji.png"
       },
       {
         text:'客户分类',
         url: '../peizhi/peizhi',
+        icon: "../../image/kehufenlei.png"
       },
       {
         text:'质保等级',
         url: '../peizhi/peizhi',
+        icon: "../../image/zhibaodengji.png"
       },
       {
         text:'价格上浮率',
         url: '../peizhi/peizhi',
+        icon: "../../image/jiageshangfulv.png"
       },
       {
         text:'记账分类',
         url: '../peizhi/peizhi',
+        icon: "../../image/jizhangfenlei.png"
       },
       {
         text:'记账明细类型',
         url: '../peizhi/peizhi',
+        icon: "../../image/jizhangmingxileixing.png"
       },
     ],
-    this_date:''
+    this_date:'',
+    shenhe_list:[
+      {num:0},
+      {num:0},
+      {num:0},
+      {num:0},
+      {num:0},
+    ],
+    pass_list:[
+      {num:0},
+      {num:0},
+      {num:0},
+    ],
   },
 
   /**
@@ -106,7 +137,7 @@ Page({
     var url = _this.data.title[index].url
     if(index >= 6){
       wx.navigateTo({
-        url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo) + '&type=' + _this.data.title[index].text,
+        url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo) + '&type=' + _this.data.title[index].text + "&shouzhi_type=" + _this.data.title[index].text,
       })
     }else{
       wx.navigateTo({
@@ -127,6 +158,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    wx.showLoading({
+      title:'请稍候'
+    })
     var _this = this
     var id = _this.data.userInfo.id
     console.log(id)
@@ -146,15 +180,50 @@ Page({
             break;
           }
         }
+
+        var sql = "select '销售报价' as title,count(*) as num from xiaoshou_baojia where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '销售订单' as title,count(*) as num from xiaoshou_dingdan where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '采购订单' as title,count(*) as num from caigou_dingdan where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '销售开票' as title,count(*) as num from xiaoshou_kaipiao where xinxi_tuisong = '"+ userInfo.name +"' and kaipiao_zhuangtai = '待开票' union select '采购收票' as title,count(*) as num from caigou_shoupiao where xinxi_tuisong = '"+ userInfo.name +"' and shoupiao_zhuangtai = '待收票';"
+        sql = sql + "select '销售报价' as title,count(*) as num from xiaoshou_baojia where yewuyuan = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过' union select '销售订单' as title,count(*) as num from xiaoshou_dingdan where yewuyuan = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过' union select '采购订单' as title,count(*) as num from caigou_dingdan where gongyingshang = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过'"
+        wx.cloud.callFunction({
+          name: 'sqlserver_ruilida',
+          data: {
+            query: sql
+          },
+          success: res => {
+            console.log(res)
+            var shenhe_list = res.result.recordsets[0]
+            var pass_list = res.result.recordsets[1]
+            _this.setData({
+              shenhe_list,
+              pass_list
+            })
+            wx.hideLoading()
+          },
+          err: res => {
+            wx.hideLoading()
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
         console.log(userInfo)
         _this.setData({
           userInfo
         })
+        wx.hideLoading()
       },
       err: res => {
+        wx.hideLoading()
         console.log("错误!")
       },
       fail: res => {
+        wx.hideLoading()
         wx.showToast({
           title: '请求失败！',
           icon: 'none',
@@ -185,9 +254,12 @@ Page({
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
       })
+    }else if (event.detail == 0) {
+      wx.redirectTo({
+        url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
     }
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

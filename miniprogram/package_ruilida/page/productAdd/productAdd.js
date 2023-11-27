@@ -357,13 +357,13 @@ Page({
           _this.setData({
             product_body
           })
-          var sql = "insert into product_item(product_id,image,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable) values "
+          var sql = "insert into product_item(product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable) values "
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + new_id + "','" + lianxi_list[i].image + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
+              sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
             }else{
-              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].image + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
+              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
             }
           }
           sql = sql + sql2
@@ -436,13 +436,13 @@ Page({
         success: res => {
           console.log(res)
           var new_id = product_body.id
-          var sql = "delete from product_item where product_id='" + new_id + "';insert into product_item(product_id,image,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable) values "
+          var sql = "delete from product_item where product_id='" + new_id + "';insert into product_item(product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable) values "
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + new_id + "','" + lianxi_list[i].image + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
+              sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
             }else{
-              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].image + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
+              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].lingshou_price + "','" + lianxi_list[i].lingshou_bili + "','" + lianxi_list[i].pifa_price + "','" + lianxi_list[i].pifa_bili + "','" + lianxi_list[i].dakehu_price + "','" + lianxi_list[i].dakehu_bili + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].xiaoxiang + "','" + lianxi_list[i].enable + "')"
             }
           }
           sql = sql + sql2

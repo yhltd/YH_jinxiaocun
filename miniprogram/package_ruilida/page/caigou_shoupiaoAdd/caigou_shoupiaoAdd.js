@@ -103,9 +103,42 @@ Page({
     }else{
       var shoupiao_body = _this.data.shoupiao_body
       shoupiao_body.xinxi_tuisong = _this.data.userInfo.shenpi
-      _this.setData({
-        shoupiao_body
+      shoupiao_body.kaipiao_riqi = getNowDate()
+      var sql = "select * from peizhi where type='核算单位'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          var hesuan_list = res.result.recordset
+          console.log(hesuan_list)
+          if(_this.data.userInfo.hesuan_danwei != ''){
+            for(var i=0; i<hesuan_list.length; i++){
+              if(hesuan_list[i].id == _this.data.userInfo.hesuan_danwei){
+                shoupiao_body.shoupiao_danwei = hesuan_list[i].name
+                break;
+              }
+            }
+          }
+          _this.setData({
+            shoupiao_body
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
       })
+     
     }
   },
 
@@ -487,6 +520,17 @@ Page({
     _this.qxShow22()
   },
 
+  file_goto:function(){
+    var _this = this
+    var type = "采购收票"
+    var id = _this.data.shoupiao_body.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -540,3 +584,36 @@ Page({
 function PrefixInteger(num, n) {
   return (Array(n).join(0) + num).slice(-n);
 }
+
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }

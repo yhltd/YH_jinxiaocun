@@ -3,6 +3,7 @@
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
       <van-cell title="{{list_item.name}}" use-label-slot>
         <view slot="label">
+          <text>编号：{{list_item.bianhao}} \n</text>
           <text>规格：{{list_item.guige}} \n</text>
           <text>分类：{{list_item.type}} \n</text>
           <text decode="{{true}}">零售价格：{{list_item.lingshou_price}} &nbsp;&nbsp; 采购价格：{{list_item.caigou_price}} \n</text>
@@ -59,6 +60,49 @@
       value="{{quanxuan_value}}">全选</van-checkbox>
     </view>
     <button class="bt_bottom" bindtap="toExcel">确定</button>
+  </view>
+</van-popup>
+
+<!--选择打印条码商品-->
+<van-popup
+  show="{{ print_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 80%"
+  bind:close="qxShow"
+>
+<van-checkbox-group value="{{ print_result }}" bind:change="onChange2">
+    <van-cell-group>
+      <van-cell
+        wx:for="{{ list }}"
+        wx:key="index"
+        title="{{ item.name }}"
+        value-class="value-class"
+        clickable
+        data-index="{{ index }}"
+        bind:click="toggle2"
+        use-label-slot
+      >
+        <van-checkbox
+          catch:tap="noop"
+          class="checkboxes2-{{ index }}"
+          name="{{ item.bianhao }}"
+        />
+        <view slot="label">
+          <text>编号：{{item.bianhao}} \n</text>
+          <text>规格：{{item.guige}} \n</text>
+          <text>分类：{{item.type}} \n</text>
+        </view>
+      </van-cell>
+    </van-cell-group>
+  </van-checkbox-group>
+  <view class="bottom_view" style="margin-top: 10px;">
+    <view class="bt_text">
+      <van-checkbox
+      bind:change="quanxuan"
+      value="{{quanxuan_value}}">全选</van-checkbox>
+    </view>
+    <button class="bt_bottom" bindtap="toPrint">确定</button>
   </view>
 </van-popup>
 

@@ -109,9 +109,41 @@ Page({
       var kaipiao_body = _this.data.kaipiao_body
       kaipiao_body.xinxi_tuisong = _this.data.userInfo.shenpi
       kaipiao_body.kaipiao_riqi = getNowDate()
-      _this.setData({
-        kaipiao_body
+      var sql = "select * from peizhi where type='核算单位'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          var hesuan_list = res.result.recordset
+          console.log(hesuan_list)
+          if(_this.data.userInfo.hesuan_danwei != ''){
+            for(var i=0; i<hesuan_list.length; i++){
+              if(hesuan_list[i].id == _this.data.userInfo.hesuan_danwei){
+                kaipiao_body.kaipiao_danwei = hesuan_list[i].name
+                break;
+              }
+            }
+          }
+          _this.setData({
+            kaipiao_body
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
       })
+      
     }
   },
 
@@ -512,6 +544,17 @@ Page({
       [this_column]: riqi
     });
     _this.qxShow22()
+  },
+
+  file_goto:function(){
+    var _this = this
+    var type = "销售开票"
+    var id = _this.data.kaipiao_body.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
   },
 
   /**

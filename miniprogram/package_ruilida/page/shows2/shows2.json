@@ -7,7 +7,9 @@
     "van-cell": "../../components/cell/index",
     "van-cell-group": "../../components/cell-group/index",
     "van-nav-bar": "../../components/nav-bar/index",
-    "van-action-sheet": "../../components/action-sheet/index"
+    "van-action-sheet": "../../components/action-sheet/index",
+    "van-tab": "../../components/tab/index",
+    "van-tabs": "../../components/tabs/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

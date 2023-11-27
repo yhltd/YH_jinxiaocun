@@ -111,6 +111,8 @@ Page({
       success: res => {
         var type_list = res.result.recordsets[1]
         var money_list = res.result.recordsets[0]
+        console.log(type_list)
+        console.log(money_list)
         var title = []
         if(e[0] == '按月'){
           title = [

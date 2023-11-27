@@ -127,7 +127,7 @@ Page({
         }
       })
     }else{
-      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'RK000000'),3,6)) + 1 as bianhao from caigou_ruku"
+      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'RK000000'),3,6)) + 1 as bianhao from caigou_ruku;select * from peizhi where type = '店铺';select * from peizhi where type = '仓库';"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -135,13 +135,32 @@ Page({
         },
         success: res => {
           console.log(res)
-          var max_bianhao = res.result.recordset[0].bianhao
+          var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,6)
           console.log(this_bianhao)
           this_bianhao = "RK" + this_bianhao
           console.log(this_bianhao)
           var ruku_body = _this.data.ruku_body
           ruku_body.bianhao = this_bianhao
+          ruku_body.riqi = getNowDate()
+          var dianpu_list = res.result.recordsets[1]
+          if(_this.data.userInfo.dianpu != ''){
+            for(var i=0; i<dianpu_list.length; i++){
+              if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                ruku_body.dianpu = dianpu_list[i].name
+                break;
+              }
+            }
+          }
+          var cangku_list = res.result.recordsets[2]
+          if(_this.data.userInfo.dianpu != ''){
+            for(var i=0; i<cangku_list.length; i++){
+              if(cangku_list[i].id == _this.data.userInfo.cangku){
+                ruku_body.cangku = cangku_list[i].name
+                break;
+              }
+            }
+          }
           _this.setData({
             ruku_body
           })
@@ -836,3 +855,36 @@ Page({
 function PrefixInteger(num, n) {
   return (Array(n).join(0) + num).slice(-n);
 }
+
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }

@@ -179,6 +179,7 @@
 </scroll-view>
 
 <view class="bottom_view"> 
+  <button class="bt_bottom" style="{{shouzhi_body.id==''?'display:none;':''}}" bindtap="file_goto">文件上传</button>
   <button class="bt_bottom" bindtap="save">保存</button>
   <button class="bt_bottom" bindtap="back">取消</button>
 </view>

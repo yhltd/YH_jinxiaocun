@@ -1,0 +1,138 @@
+page{
+  height: 100%;
+}
+view{
+  font-size: 32rpx;
+}
+button{
+  font-size: 32rpx;
+  border-radius: 20px;
+}
+.canvas{
+  margin:auto;
+  border: 1rpx solid #F2F2F2;
+  margin-top: 20rpx;
+}
+.blueListView{
+  margin-bottom: 80rpx;
+  border: 1rpx solid #e6e6e6;
+  width: 98%;
+  margin: auto;
+}
+
+.blueListView_title_false{
+  background-color: #282B33;
+  border: none;
+  border-radius: 0;
+  color: white;
+}
+.blueListView_title_true{
+  background-color: #00B26A;
+  border: none;
+  border-radius: 0;
+  color: white;
+}
+.blueListView_scroll{
+  max-height: 200rpx;
+  height: auto;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(155, 153, 153, 0.589);
+}
+.blueListView_scroll_item{
+  height: 115rpx;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  justify-content: center;
+  border: 1rpx solid #e6e6e6;
+  margin: auto;
+  margin-top: 20rpx;
+  padding-left: 30rpx;
+}
+
+/*
+  bottom_view
+*/
+.bottom_view{
+  height: 10%;
+  align-items: center;
+  display: flex;
+  bottom: 2%;
+}
+.bt_bottom{
+  width: 39%;
+  background-color: #282B33;
+  color: #E6E6E6;
+  height: 80rpx;
+  margin: auto;
+  line-height: 80rpx;
+}
+.bt_bottom_hover{
+  width: 39%;
+  background-color: #2D2D2D;
+  color: #E6E6E6;
+  height: 80rpx;
+  margin: auto;
+  line-height: 80rpx;
+}
+
+
+
+.choiceList{
+  position: fixed;
+  height: 70%;
+  width:100%;
+  top:30%;
+  background-color: white;
+  z-index: 20;
+}
+
+/*
+  updComment_view
+*/
+.updComment_view{
+  position: fixed;
+  height: 40%;
+  width: 100%;
+  bottom: 0;
+  background-color: white;
+  z-index: 20;
+}
+.textarea{
+  height: 68%;
+  width: 90%;
+  margin: auto;
+  margin-top: 3%;
+  border: 2rpx solid #f2f2f2;
+  padding: 2%;
+  border-radius: 10rpx;
+}
+
+
+/*
+  mask
+*/
+.mask{
+  visibility: visible;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 19;
+  transition: all 0.3s ease-in-out;
+} 
+
+.bt_choice_system{
+  width: 100%;
+  font-size: 32rpx;
+  background-color: #333333;
+  border-radius: 0px;
+  color: white;
+  padding: 0;
+}

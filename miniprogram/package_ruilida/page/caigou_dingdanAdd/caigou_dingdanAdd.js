@@ -18,7 +18,7 @@ Page({
       jinxiang_shuilv:'',
       beizhu:'',
       shenhe:'',
-      shenhe_zhuangtai:'',
+      shenhe_zhuangtai:'审核中',
     },
     lianxi_list:[
       {
@@ -141,7 +141,7 @@ Page({
         }
       })
     }else{
-      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CG000000'),2,6)) + 1 as bianhao from caigou_dingdan"
+      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CG000000'),3,6)) + 1 as bianhao from caigou_dingdan;select * from peizhi where type = '店铺';"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -149,13 +149,24 @@ Page({
         },
         success: res => {
           console.log(res)
-          var max_bianhao = res.result.recordset[0].bianhao
+          var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,6)
           console.log(this_bianhao)
           this_bianhao = "CG" + this_bianhao
           console.log(this_bianhao)
           var caigou_body = _this.data.caigou_body
           caigou_body.bianhao = this_bianhao
+          caigou_body.riqi = getNowDate()
+          caigou_body.shenhe = _this.data.userInfo.shenpi
+          var dianpu_list = res.result.recordsets[1]
+          if(_this.data.userInfo.dianpu != ''){
+            for(var i=0; i<dianpu_list.length; i++){
+              if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                caigou_body.dianpu = dianpu_list[i].name
+                break;
+              }
+            }
+          }
           _this.setData({
             caigou_body
           })
@@ -414,7 +425,7 @@ Page({
             if(sql2 == ""){
               sql2 = "('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].lishi_zuidi + "','" + lianxi_list[i].caigou_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jiaohuo_riqi +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
             }else{
-              sql2 = ",('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].lishi_zuidi + "','" + lianxi_list[i].caigou_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jiaohuo_riqi +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
+              sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].lishi_zuidi + "','" + lianxi_list[i].caigou_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jiaohuo_riqi +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
             }
           }
           sql = sql + sql2
@@ -654,6 +665,17 @@ Page({
     }
   },
 
+  file_goto:function(){
+    var _this = this
+    var type = "采购订单"
+    var id = _this.data.caigou_body.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -707,3 +729,36 @@ Page({
 function PrefixInteger(num, n) {
   return (Array(n).join(0) + num).slice(-n);
 }
+
+function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }

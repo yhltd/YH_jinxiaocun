@@ -155,6 +155,11 @@ Page({
       {name:'审核通过'},
       {name:'审核未通过'},
     ],
+    caozuo_click_list:[
+      {name:'修改'},
+      {name:'生成销售订单'},
+      {name:'打印'},
+    ],
     quanxuan_value: true,
     start_date: '',
     stop_date: '',
@@ -171,6 +176,16 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       userInfo,
+    })
+  },
+
+  choiceDate: function (e) {
+    var _this = this
+    //e.preventDefault(); 
+    var column_name = e.target.dataset.column_name
+    console.log(e.detail.value)
+    _this.setData({
+      [column_name]: e.detail.value
     })
   },
 
@@ -342,22 +357,16 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
-    var userInfo = _this.data.userInfo
     if(_this.data.sel_type == '待审核'){
       _this.setData({
         shenhe_id:id,
         xlShow3:true
       })
     }else{
-      if(userInfo.power_mingxi.xiaoshou_baojia_upd != '是'){
-        wx.showToast({
-          title: '当前账号无权限',
-          icon: 'none'
-        })
-        return;
-      }
-      wx.navigateTo({
-        url: '../xiaoshou_baojiaAdd/xiaoshou_baojiaAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+      _this.setData({
+        caozuo_index:index,
+        caozuo_id:id,
+        xlShow4:true
       })
     }
   },
@@ -509,6 +518,88 @@ Page({
     } else if (e.type == "close") {
       _this.setData({
         xlShow3:false,
+      })
+    }
+  },
+
+  select4: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var id = _this.data.caozuo_id
+      if(new_val == '修改'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var userInfo = _this.data.userInfo
+        if(userInfo.power_mingxi.xiaoshou_baojia_upd != '是'){
+          wx.showToast({
+            title: '当前账号无权限',
+            icon: 'none'
+          })
+          return;
+        }
+        wx.navigateTo({
+          url: '../xiaoshou_baojiaAdd/xiaoshou_baojiaAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+        })
+      }else if(new_val == '生成销售订单'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var userInfo = _this.data.userInfo
+        if(userInfo.power_mingxi.xiaoshou_dingdan_add != '是'){
+          wx.showToast({
+            title: '当前账号无权限',
+            icon: 'none'
+          })
+          return;
+        }
+        var index = _this.data.caozuo_index
+        wx.navigateTo({
+          url: '../xiaoshou_dingdanAdd/xiaoshou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&type=" + JSON.stringify(_this.data.list[index]),
+        })
+      }else if(new_val == '打印'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var index = _this.data.caozuo_index
+        var list = _this.data.list[index]
+        var product_list = _this.data.list[index].item
+        console.log(list)
+        console.log(product_list)
+        console.log()
+        var print_list = {
+          title:'销售报价单',
+          bianhao: list.bianhao,
+          riqi: list.riqi,
+          kegong: '客户',
+          kegong_val: list.kehu
+        }
+        var product = []
+        var num_sum = 0
+        var money_sum = 0
+        for(var i=0; i<product_list.length; i++){
+          var product_item = {
+            name:product_list[i].shangpin_mingcheng,
+            num:product_list[i].shuliang,
+            price:product_list[i].baojia_danjia,
+            money:product_list[i].jiashui_xiaoji,
+          }
+          num_sum = Math.round(((num_sum * 1) + (product_list[i].shuliang * 1)) * 100) / 100
+          money_sum = Math.round(((money_sum * 1) + (product_list[i].jiashui_xiaoji * 1)) * 100) / 100
+          product.push(product_item)
+        }
+        print_list.num_sum = num_sum
+        print_list.money_sum = money_sum
+        print_list.product = product
+        console.log(print_list)
+        wx.navigateTo({
+          url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow4:false,
       })
     }
   },

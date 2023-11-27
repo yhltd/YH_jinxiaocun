@@ -5,6 +5,8 @@
         <view slot="label">
           <text>开票单位：{{item.kaipiao_danwei}} \n</text>
           <text>销售单号：{{item.xiaoshou_bianhao}} \n</text>
+          <text>信息推送：{{item.xinxi_tuisong}} \n</text>
+          <text>开票状态：{{item.kaipiao_zhuangtai}} \n</text>
           <text>{{item.kaipiao_riqi}} \n</text>
         </view>
       </van-cell>
@@ -23,6 +25,9 @@
 
 <!--表单下拉选择-->
 <van-action-sheet z-index='100' show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow3}}" actions="{{shenhe_click_list}}" close-on-click-overlay bind:close="select3" bind:select="select3" />
 
 <!--选择导出excel列-->
 <van-popup
@@ -64,7 +69,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 80%;" >
   <view class="lables">起始日期</view>
     <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form"  value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
@@ -77,6 +82,8 @@
     <input bindinput="onInput" data-column="shoupiao_danwei" class="input_text_form"  value="{{shoupiao_danwei}}" type="text" name="shoupiao_danwei" disabled="disabled" bindtap="xiala_show"></input>
     <view class="lables">开票单位</view>
     <input bindinput="onInput" data-column="kaipiao_danwei" class="input_text_form"  value="{{kaipiao_danwei}}" type="text" name="kaipiao_danwei" disabled="disabled" bindtap="xiala_show"></input>
+    <view class="lables">开票状态</view>
+    <input bindinput="onInput" data-column="kaipiao_zhuangtai" class="input_text_form"  value="{{kaipiao_zhuangtai}}" type="text" name="kaipiao_zhuangtai" disabled="disabled" bindtap="xiala_show"></input>  
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

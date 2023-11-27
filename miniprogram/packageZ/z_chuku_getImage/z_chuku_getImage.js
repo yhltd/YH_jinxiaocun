@@ -181,7 +181,6 @@ Page({
       encoding: 'binary',
       success: () => { 
         ctx.drawImage(filePath,width/2+width_all-width,y,150,150)
-    
         ctx.stroke()
         ctx.draw()
         

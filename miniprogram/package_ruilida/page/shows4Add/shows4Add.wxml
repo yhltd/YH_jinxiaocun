@@ -1,0 +1,63 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-grid square column-num="4">
+        <van-grid-item wx:for="{{title}}" wx:key="text" bindtap="del" data-index="{{index}}" icon="{{item.icon}}" text="{{item.text}}" />
+      </van-grid>
+    </van-cell-group>
+    <van-empty wx:if="{{title.length == 0 || title == ''}}" description="暂无信息" />
+  </view>
+</scroll-view>
+
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <van-tabs sticky active="{{ active }}" bind:change="onChange">
+    <van-tab title="销售">
+      <scroll-view class="main" scroll-x="true" scroll-y="true">
+        <view style="padding-top: 10px;">
+          <van-cell-group inset>
+            <van-grid square column-num="4">
+              <van-grid-item wx:for="{{title_1}}" wx:key="text" bindtap="add" data-column="title_1" data-index="{{index}}" icon="{{item.icon}}" text="{{item.text}}" />
+            </van-grid>
+          </van-cell-group>
+        </view>
+      </scroll-view>
+    </van-tab>
+    <van-tab title="采购">
+      <scroll-view class="main" scroll-x="true" scroll-y="true">
+        <view style="padding-top: 10px;">
+          <van-cell-group inset>
+            <van-grid square column-num="4">
+              <van-grid-item wx:for="{{title_2}}" wx:key="text" bindtap="add" data-column="title_2" data-index="{{index}}" icon="{{item.icon}}" text="{{item.text}}" />
+            </van-grid>
+          </van-cell-group>
+        </view>
+      </scroll-view>
+    </van-tab>
+    <van-tab title="统计">
+      <scroll-view class="main" scroll-x="true" scroll-y="true">
+        <view style="padding-top: 10px;">
+          <van-cell-group inset>
+            <van-grid square column-num="4">
+              <van-grid-item wx:for="{{title_3}}" wx:key="text" bindtap="add" data-column="title_3" data-index="{{index}}" icon="{{item.icon}}" text="{{item.text}}" />
+            </van-grid>
+          </van-cell-group>
+        </view>
+      </scroll-view>
+    </van-tab>
+    <van-tab title="基础资料">
+      <scroll-view class="main" scroll-x="true" scroll-y="true">
+        <view style="padding-top: 10px;">
+          <van-cell-group inset>
+            <van-grid square column-num="4">
+              <van-grid-item wx:for="{{title_4}}" wx:key="text" bindtap="add" data-column="title_4" data-index="{{index}}" icon="{{item.icon}}" text="{{item.text}}" />
+            </van-grid>
+          </van-cell-group>
+        </view>
+      </scroll-view>
+    </van-tab>
+  </van-tabs>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" data-column="gongneng" bindtap="save">保存</button>
+</view>

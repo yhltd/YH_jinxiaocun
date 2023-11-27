@@ -9,25 +9,42 @@ Page({
       {
         text:'销售报价',
         url: '../xiaoshou_baojia/xiaoshou_baojia',
+        icon: "../../image/xiaoshoubaojia.png"
       },
       {
         text:'销售订单',
         url: '../xiaoshou_dingdan/xiaoshou_dingdan',
+        icon: "../../image/xiaoshoudingdan.png"
       },
       {
         text:'销售出库',
         url: '../xiaoshou_chuku/xiaoshou_chuku',
+        icon: "../../image/xiaoshouchuku.png"
       },
       {
         text:'销售开票',
         url: '../xiaoshou_kaipiao/xiaoshou_kaipiao',
+        icon: "../../image/xiaoshoukaipiao.png"
       },
       {
         text:'收入记录',
         url: '../caigou_fukuan/caigou_fukuan',
+        icon: "../../image/shourujilu.png"
       },
     ],
-    this_date:''
+    this_date:'',
+    shenhe_list:[
+      {num:0},
+      {num:0},
+      {num:0},
+      {num:0},
+      {num:0},
+    ],
+    pass_list:[
+      {num:0},
+      {num:0},
+      {num:0},
+    ],
   },
 
   /**
@@ -70,6 +87,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    wx.showLoading({
+      title:'请稍候'
+    })
     var _this = this
     var id = _this.data.userInfo.id
     console.log(id)
@@ -89,15 +109,50 @@ Page({
             break;
           }
         }
+
+        var sql = "select '销售报价' as title,count(*) as num from xiaoshou_baojia where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '销售订单' as title,count(*) as num from xiaoshou_dingdan where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '采购订单' as title,count(*) as num from caigou_dingdan where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '销售开票' as title,count(*) as num from xiaoshou_kaipiao where xinxi_tuisong = '"+ userInfo.name +"' and kaipiao_zhuangtai = '待开票' union select '采购收票' as title,count(*) as num from caigou_shoupiao where xinxi_tuisong = '"+ userInfo.name +"' and shoupiao_zhuangtai = '待收票';"
+        sql = sql + "select '销售报价' as title,count(*) as num from xiaoshou_baojia where yewuyuan = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过' union select '销售订单' as title,count(*) as num from xiaoshou_dingdan where yewuyuan = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过' union select '采购订单' as title,count(*) as num from caigou_dingdan where gongyingshang = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过'"
+        wx.cloud.callFunction({
+          name: 'sqlserver_ruilida',
+          data: {
+            query: sql
+          },
+          success: res => {
+            console.log(res)
+            var shenhe_list = res.result.recordsets[0]
+            var pass_list = res.result.recordsets[1]
+            _this.setData({
+              shenhe_list,
+              pass_list
+            })
+            wx.hideLoading()
+          },
+          err: res => {
+            wx.hideLoading()
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
         console.log(userInfo)
         _this.setData({
           userInfo
         })
+        wx.hideLoading()
       },
       err: res => {
+        wx.hideLoading()
         console.log("错误!")
       },
       fail: res => {
+        wx.hideLoading()
         wx.showToast({
           title: '请求失败！',
           icon: 'none',
@@ -127,6 +182,10 @@ Page({
     } else if (event.detail == 1) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    }else if (event.detail == 0) {
+      wx.redirectTo({
+        url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
       })
     }
   },

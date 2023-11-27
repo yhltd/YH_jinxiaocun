@@ -1,7 +1,8 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
+<view style="height:86%;padding-top:2%">
+  <scroll-view class="sv_list" scroll-x="true" scroll-y="true">
   <view class="table">
     <view class='table_header'>
-      <block class="title" wx:for="{{title}}">
+      <block class="title" wx:for="{{title}}" wx:for-index="i">
         <view class="title_text" style="width:{{item.width}};{{item.text=='月份'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
@@ -24,6 +25,7 @@
     </block>
   </view>
 </scroll-view>
+</view>
 
 <!------------------------->
 <!---------下方按钮--------->

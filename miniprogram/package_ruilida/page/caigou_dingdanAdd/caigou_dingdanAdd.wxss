@@ -9,6 +9,7 @@ page{
 
 button{
   font-size: 30rpx;
+  border-radius: 20px;
 }
 
 .bottom_view{
@@ -40,7 +41,7 @@ button{
 }
 
 .title_text{
-  width: 100%;
+  /* width: 100%; */
   height: 60rpx; 
   margin-left: 5%; 
   font-weight: bold;

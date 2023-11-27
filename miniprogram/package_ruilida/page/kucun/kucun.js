@@ -8,7 +8,6 @@ Page({
     xlShow2: false,
     cxShow: false,
     name:'',
-    type: '',
     enable: '',
     list_check: [
       {
@@ -64,6 +63,7 @@ Page({
     ],
     quanxuan_value: true,
     cangku: '',
+    type:'',
   },
 
   /**
@@ -87,7 +87,7 @@ Page({
 
   sel1:function(){
     var _this = this
-    var e = [_this.data.cangku]
+    var e = [_this.data.cangku,_this.data.type]
     _this.qxShow()
     _this.tableShow(e)
   },
@@ -104,9 +104,9 @@ Page({
       return;
     }
     if(e[0] == ''){
-      sql = "select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(shuliang) as shuliang from (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang from caigou_ruku_item group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei union select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) * -1 as shuliang from xiaoshou_chuku_item group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei) as kucun group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei;select * from peizhi where type ='仓库'"
+      sql = "select isnull(type,'') as type,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang from(select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(shuliang) as shuliang from (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang from caigou_ruku_item group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei union select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) * -1 as shuliang from xiaoshou_chuku_item group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei) as kucun group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei ) as kucun  left join (select type,bianhao from product_item left join product on product_item.product_id = product.id) as pro on kucun.shangpin_bianma = pro.bianhao where isnull(type,'') like '%" + e[1] + "%';select * from peizhi where type ='仓库';select * from peizhi where type ='商品分类'"
     }else{
-      sql = "select cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(shuliang) as shuliang from (select cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang from caigou_ruku_item as item left join caigou_ruku as caigou on item.ruku_id = caigou.id group by cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei union select cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) * -1 as shuliang from xiaoshou_chuku_item as item left join xiaoshou_chuku xiaoshou on item.chuku_id = xiaoshou.id group by cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei) as kucun  where cangku = '" + e[0] + "' group by cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei;select * from peizhi where type ='仓库'"
+      sql = "select isnull(type,'') as type,cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang from (select cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(shuliang) as shuliang from (select cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang from caigou_ruku_item as item left join caigou_ruku as caigou on item.ruku_id = caigou.id group by cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei union select cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) * -1 as shuliang from xiaoshou_chuku_item as item left join xiaoshou_chuku xiaoshou on item.chuku_id = xiaoshou.id group by cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei) as kucun  where cangku = '" + e[0] + "' group by cangku,shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei) as end_kucun left join (select type,bianhao from product_item left join product on product_item.product_id = product.id) as pro on end_kucun.shangpin_bianma = pro.bianhao where isnull(type,'') like '%" + e[1] + "%';select * from peizhi where type ='仓库';select * from peizhi where type ='商品分类'"
     }
     
     console.log(sql)
@@ -119,11 +119,13 @@ Page({
         console.log(res)
         var list = res.result.recordsets[0]
         var cangku_list = res.result.recordsets[1]
+        var type_list = res.result.recordsets[2]
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
-          cangku_list
+          cangku_list,
+          type_list
         })
       },
       err: res => {

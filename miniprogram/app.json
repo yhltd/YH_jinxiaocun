@@ -323,6 +323,8 @@
         "page/shows1/shows1",
         "page/shows2/shows2",
         "page/shows3/shows3",
+        "page/shows4/shows4",
+        "page/shows4Add/shows4Add",
         "page/userInfo/userInfo",
         "page/userInfoAdd/userInfoAdd",
         "page/userPower/userPower",
@@ -359,7 +361,9 @@
         "page/shouru_fenlei/shouru_fenlei",
         "page/zhichu_fenlei/zhichu_fenlei",
         "page/yuedu_shouzhi/yuedu_shouzhi",
-        "page/peizhi_shuilv/peizhi_shuilv"
+        "page/peizhi_shuilv/peizhi_shuilv",
+        "page/print_danju/print_danju",
+        "page/print_tiaoma/print_tiaoma"
       ]
     },
     {

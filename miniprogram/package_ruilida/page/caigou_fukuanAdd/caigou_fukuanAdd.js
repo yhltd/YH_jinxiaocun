@@ -154,7 +154,7 @@ Page({
         }
       })
     }else{
-      var sql = "select convert(float,SUBSTRING(isnull(max(shouzhi_bianhao),'SZ000000'),3,6)) + 1 as bianhao from shouzhi_mingxi"
+      var sql = "select convert(float,SUBSTRING(isnull(max(shouzhi_bianhao),'SZ000000'),3,6)) + 1 as bianhao from shouzhi_mingxi;select * from peizhi where type = '店铺'"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -162,7 +162,7 @@ Page({
         },
         success: res => {
           console.log(res)
-          var max_bianhao = res.result.recordset[0].bianhao
+          var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,6)
           console.log(this_bianhao)
           this_bianhao = "SZ" + this_bianhao
@@ -170,6 +170,16 @@ Page({
           var shouzhi_body = _this.data.shouzhi_body
           shouzhi_body.shouzhi_bianhao = this_bianhao
           shouzhi_body.shouzhi_riqi = getNowDate()
+          var dianpu_list = res.result.recordsets[1]
+          if(_this.data.userInfo.dianpu != ''){
+            for(var i=0; i<dianpu_list.length; i++){
+              if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                shouzhi_body.dianpu = dianpu_list[i].name
+                break;
+              }
+            }
+          }
+          shouzhi_body.jizhangren = _this.data.userInfo.name
           _this.setData({
             shouzhi_body
           })
@@ -931,6 +941,17 @@ Page({
       [this_column]: riqi
     });
     _this.qxShow22()
+  },
+
+  file_goto:function(){
+    var _this = this
+    var type = "收支记录"
+    var id = _this.data.shouzhi_body.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
   },
 
   /**
