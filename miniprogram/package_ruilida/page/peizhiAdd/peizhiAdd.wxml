@@ -14,7 +14,7 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <button class="bt_bottom" hidden="{{id == '' || !(type == '仓库' || type == '店铺' || type == '核算单位')}}" bindtap="moren">设为默认</button>
+  <button class="bt_bottom" hidden="{{id == '' || !(type == '仓库' || type == '店铺' || type == '核算单位' || type == '收款账户' || type == '质保等级')}}" bindtap="moren">设为默认</button>
   <button class="bt_bottom" bindtap="save">确定</button>
   <button class="bt_bottom" bindtap="back">取消</button>
 </view>

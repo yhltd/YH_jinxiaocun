@@ -32,12 +32,27 @@ Page({
         icon: "../../image/shangpinziliao.png"
       },
       {
-        text:'附加税设置',
+        text:'附加税与价格等级',
         url: '../peizhi_shuilv/peizhi_shuilv',
         icon: "../../image/fujiashuishezhi.png"
       },
       {
+        text:'商品规格',
+        url: '../peizhi_guige/peizhi_guige',
+        icon: "../../image/shangpinguige.png"
+      },
+      {
         text:'商品分类',
+        url: '../peizhi/peizhi',
+        icon: "../../image/shangpinfenlei.png"
+      },
+      {
+        text:'商品单位',
+        url: '../peizhi/peizhi',
+        icon: "../../image/shangpinfenlei.png"
+      },
+      {
+        text:'进项税率',
         url: '../peizhi/peizhi',
         icon: "../../image/shangpinfenlei.png"
       },
@@ -71,11 +86,11 @@ Page({
         url: '../peizhi/peizhi',
         icon: "../../image/gongyingshangdengji.png"
       },
-      {
-        text:'价格等级',
-        url: '../peizhi/peizhi',
-        icon: "../../image/jiagedengji.png"
-      },
+      // {
+      //   text:'价格等级',
+      //   url: '../peizhi/peizhi',
+      //   icon: "../../image/jiagedengji.png"
+      // },
       {
         text:'客户分类',
         url: '../peizhi/peizhi',
@@ -86,11 +101,11 @@ Page({
         url: '../peizhi/peizhi',
         icon: "../../image/zhibaodengji.png"
       },
-      {
-        text:'价格上浮率',
-        url: '../peizhi/peizhi',
-        icon: "../../image/jiageshangfulv.png"
-      },
+      // {
+      //   text:'价格上浮率',
+      //   url: '../peizhi/peizhi',
+      //   icon: "../../image/jiageshangfulv.png"
+      // },
       {
         text:'记账分类',
         url: '../peizhi/peizhi',
@@ -135,7 +150,7 @@ Page({
     var index = e.target.dataset.index
     console.log(index)
     var url = _this.data.title[index].url
-    if(index >= 6){
+    if(index >= 7){
       wx.navigateTo({
         url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo) + '&type=' + _this.data.title[index].text + "&shouzhi_type=" + _this.data.title[index].text,
       })

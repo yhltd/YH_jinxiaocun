@@ -6,8 +6,7 @@
           <text>编号：{{list_item.bianhao}} \n</text>
           <text>规格：{{list_item.guige}} \n</text>
           <text>分类：{{list_item.type}} \n</text>
-          <text decode="{{true}}">零售价格：{{list_item.lingshou_price}} &nbsp;&nbsp; 采购价格：{{list_item.caigou_price}} \n</text>
-          <text decode="{{true}}">批发价格：{{list_item.pifa_price}} &nbsp;&nbsp; 大客户价格：{{list_item.dakehu_price}} \n</text>
+          <text decode="{{true}}">采购价格：{{list_item.caigou_price}}</text>
         </view>
       </van-cell>
     </van-cell-group>
@@ -54,11 +53,6 @@
     </van-cell-group>
   </van-checkbox-group>
   <view class="bottom_view" style="margin-top: 10px;">
-    <view class="bt_text">
-      <van-checkbox
-      bind:change="quanxuan"
-      value="{{quanxuan_value}}">全选</van-checkbox>
-    </view>
     <button class="bt_bottom" bindtap="toExcel">确定</button>
   </view>
 </van-popup>

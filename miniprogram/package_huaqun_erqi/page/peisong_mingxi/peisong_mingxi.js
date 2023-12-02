@@ -28,6 +28,13 @@ Page({
         isupd: true
       },
       {
+        text: "送货员",
+        width: "250rpx",
+        columnName: "songhuoyuan",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "配送情况",
         width: "250rpx",
         columnName: "wancheng",
@@ -92,9 +99,12 @@ Page({
         isupd: true
       },
     ],
-    wancheng_list :['优先处理','配货作业中','配货完成','完成','未完成-缺货','未完成-配错货'],
+    wancheng_list :['优先处理','配货作业中','配货完成','正在配送','完成','未完成-缺货','未完成-配错货'],
     kucun_list: ['安排处理','处理当中','处理完成'],
     quyu:'',
+    songhuoyuan:'',
+    all_quyu_list:[],
+    all_quyu_index:0,
   },
 
   /**
@@ -123,8 +133,15 @@ Page({
       success: res => {
         var list = res.result.recordset
         console.log(list)
+        var list2 = [
+          {name:'全部'}
+        ]
+        for(var i=0; i<list.length; i++){
+          list2.push(list[i])
+        }
         _this.setData({
-          quyu_list: list
+          quyu_list: list,
+          all_quyu_list: list2
         })
       },
       err: res => {
@@ -139,6 +156,38 @@ Page({
         console.log("请求失败！")
       }
     })
+    var sql = "select name from userInfo where power = '管理员' or power = '操作员'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var list = res.result.recordset
+        var list2 = [
+          {name:''}
+        ]
+        for(var i=0; i<list.length; i++){
+          list2.push(list[i])
+        }
+        console.log(list2)
+        _this.setData({
+          songhuoyuan_list: list2
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
     var e = ['1900-01-01','2100-12-31','','','','','','','']
     _this.tableShow(e)
   },
@@ -150,22 +199,34 @@ Page({
     var list = _this.data[column + "_list"]
     var list2 = []
     console.log(list)
-    for(var i=0; i< list.length; i++){
-      var name = list[i].name
-      console.log(name.indexOf(_this.data.quyu))
-      if(name.indexOf(_this.data.quyu) > -1){
-        list2.push({name:name})
+    if(column == 'quyu'){
+      for(var i=0; i< list.length; i++){
+        var name = list[i].name
+        console.log(name.indexOf(_this.data.quyu))
+        if(name.indexOf(_this.data.quyu) > -1){
+          list2.push({name:name})
+        }
       }
+      console.log(list2)
+      _this.setData({
+        list_xiala: list2,
+        click_column:column,
+      })
+      console.log(list)
+      _this.setData({
+        xlShow2: true
+      })
+    }else{
+      _this.setData({
+        list_xiala: list,
+        click_column:column,
+      })
+      console.log(list)
+      _this.setData({
+        xlShow2: true
+      })
     }
-    console.log(list2)
-    _this.setData({
-      list_xiala: list2,
-      click_column:column,
-    })
-    console.log(list)
-    _this.setData({
-      xlShow2: true
-    })
+    
   },
 
   select2: function (e) {
@@ -206,7 +267,7 @@ Page({
 
   tableShow: function (e) {
     var _this = this
-    var sql = "select id,money,shoukuan,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu,case when kucun != '' then kucun when kucun_text != '' then '安排处理' else '' end as kucun,customer_need_text from erqi_peisongdan where insert_date >= '" + e[0] + "' and insert_date <= '" + e[1] + "' and customer_name like '%" + e[2] + "%' and anzhuang_address like '%" + e[3] + "%' and customer_order like '%" + e[4] + "%' and songhuo_danhao like '%" + e[5] + "%' and order_number like '%" + e[6] + "%' "
+    var sql = "select id,songhuoyuan,money,shoukuan,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu,case when kucun != '' then kucun when kucun_text != '' then '安排处理' else '' end as kucun,customer_need_text from erqi_peisongdan where insert_date >= '" + e[0] + "' and insert_date <= '" + e[1] + "' and customer_name like '%" + e[2] + "%' and anzhuang_address like '%" + e[3] + "%' and customer_order like '%" + e[4] + "%' and songhuo_danhao like '%" + e[5] + "%' and order_number like '%" + e[6] + "%' "
     // var sql = "select id,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu "
     
     if(e[7] != ''){
@@ -230,7 +291,57 @@ Page({
         var list = res.result.recordset
         console.log(list)
         _this.setData({
-          list: list
+          list: list,
+          all_quyu_index:0
+        })
+        console.log(list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  sel_quyu:function(){
+    var _this = this
+    var this_index = _this.data.all_quyu_index + 1
+    if(this_index >= _this.data.all_quyu_list.length){
+      this_index = 0
+    }
+    var sql = ""
+    if(_this.data.all_quyu_list[this_index].name != '全部'){
+      sql = "select id,songhuoyuan,money,shoukuan,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu,case when kucun != '' then kucun when kucun_text != '' then '安排处理' else '' end as kucun,customer_need_text from erqi_peisongdan where quyu = '" + _this.data.all_quyu_list[this_index].name + "'"
+      if(_this.data.userInfo.power == '客户'){
+        sql = sql + " and customer_name ='" + _this.data.userInfo.company + "'"
+      }
+    }else{
+      sql = "select id,songhuoyuan,money,shoukuan,insert_date,customer_name,wancheng,quyu,anzhuang_address,customer_order,songhuo_danhao,order_number,case isnull(wancheng,'') when '优先处理' then 1 when '' then 2 when '配货作业中' then 3 when '配货完成' then 4 when '未完成-配错货' then 5 when '未完成-缺货' then 6 when '完成' then 7  end as shunxu,case when kucun != '' then kucun when kucun_text != '' then '安排处理' else '' end as kucun,customer_need_text from erqi_peisongdan"
+      if(_this.data.userInfo.power == '客户'){
+        sql = sql + " where customer_name ='" + _this.data.userInfo.company + "'"
+      }
+    }
+    sql = sql + " order by shunxu,id " 
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        console.log(list)
+        _this.setData({
+          list: list,
+          all_quyu_index:this_index
         })
         console.log(list)
       },
@@ -266,6 +377,7 @@ Page({
       wancheng: _this.data.list[e.currentTarget.dataset.index].wancheng, 
       quyu: _this.data.list[e.currentTarget.dataset.index].quyu,
       kucun: _this.data.list[e.currentTarget.dataset.index].kucun,
+      songhuoyuan: _this.data.list[e.currentTarget.dataset.index].songhuoyuan,
       xgShow:true,
     })
   },
@@ -303,19 +415,6 @@ Page({
     })
   },
 
-  inquire: function () {
-    var _this = this
-    _this.setData({
-      tjShow: true,
-      id:'',
-      username: '', 
-      password: '',
-      name: '',
-      power: '',
-      company: '',
-    })
-  },
-
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
@@ -337,14 +436,16 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
-        query: "update erqi_peisongdan set wancheng='" + _this.data.wancheng + "',quyu='" + _this.data.quyu + "',kucun='" + _this.data.kucun + "' where id=" + _this.data.id  
+        query: "update erqi_peisongdan set wancheng='" + _this.data.wancheng + "',quyu='" + _this.data.quyu + "',kucun='" + _this.data.kucun + "',songhuoyuan='" + _this.data.songhuoyuan + "' where id=" + _this.data.id  
       },
       success: res => {
+        console.log(res)
         _this.setData({
             id:'',
             wancheng: '', 
             quyu: '',
             kucun: '',
+            songhuoyuan:'',
             order_number: '',
         })
         _this.qxShow()

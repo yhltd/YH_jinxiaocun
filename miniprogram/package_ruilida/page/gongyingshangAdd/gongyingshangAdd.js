@@ -277,6 +277,71 @@ Page({
       })
       return;
     }
+    if(gongying_body.gongyingshang_dengji == ''){
+      wx.showToast({
+        title: '请输入供应商等级',
+        icon: 'none'
+      })
+      return;
+    }
+    if(gongying_body.caigouyuan == ''){
+      wx.showToast({
+        title: '请输入采购员',
+        icon: 'none'
+      })
+      return;
+    }
+    if(gongying_body.kaipiao_danwei == ''){
+      wx.showToast({
+        title: '请输入开票单位名称',
+        icon: 'none'
+      })
+      return;
+    }
+    if(gongying_body.shibiehao == ''){
+      wx.showToast({
+        title: '请输入纳税人识别号',
+        icon: 'none'
+      })
+      return;
+    }
+    if(gongying_body.kaipiao_yinhang == ''){
+      wx.showToast({
+        title: '请输入开票开户银行',
+        icon: 'none'
+      })
+      return;
+    }
+    if(gongying_body.kaipiao_zhanghao == ''){
+      wx.showToast({
+        title: '请输入开票银行账号',
+        icon: 'none'
+      })
+      return;
+    }
+    for(var i=0; i<lianxi_list.length; i++){
+      if(lianxi_list[i].name == ''){
+        wx.showToast({
+          title: '第' + (i+1) + "个联系人信息未填写姓名",
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].phone == ''){
+        wx.showToast({
+          title: '第' + (i+1) + "个联系人信息未填写电话",
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].type == ''){
+        wx.showToast({
+          title: '第' + (i+1) + "个联系人信息未选择联系人类型",
+          icon: 'none'
+        })
+        return;
+      }
+    }
     if(gongying_body.id == ''){
       wx.showLoading({
         title:'保存中'

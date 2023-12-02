@@ -7,7 +7,7 @@
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
       <view class="table_main">
-        <view class="{{list_item.wancheng=='优先处理'?'list_view2':list_item.wancheng==''?'list_view3':list_item.wancheng=='配货作业中'?'list_view4':list_item.wancheng=='未完成-配错货'?'list_view5':list_item.wancheng=='未完成-缺货'?'list_view6':list_item.wancheng=='配货完成'?'list_view7':list_item.wancheng=='完成'?'list_view8':'list_view'}}" wx:for="{{title}}" wx:for-item="item" wx:key="item"  style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
+        <view class="{{list_item.wancheng=='优先处理'?'list_view2':list_item.wancheng==''?'list_view3':list_item.wancheng=='配货作业中'?'list_view4':list_item.wancheng=='未完成-配错货'?'list_view5':list_item.wancheng=='未完成-缺货'?'list_view6':list_item.wancheng=='配货完成'?'list_view7':list_item.wancheng=='完成'?'list_view8':list_item.wancheng=='正在配送'?'list_view9':'list_view'}}" wx:for="{{title}}" wx:for-item="item" wx:key="item"  style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
           <view class="{{list_item.kucun=='处理当中'?'list_text2':list_item.kucun=='处理完成'?'list_text3':list_text}}">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -17,25 +17,32 @@
 
 <!------------------------->
 <!---------下方按钮--------->
-<!------------------------->
+<!-------------------------> 
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="entering">查询</button>
+  <button style="width: 50%;" class="bt_bottom" bindtap="sel_quyu">{{all_quyu_list[all_quyu_index].name}}</button>
 </view>
 
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 52%;">
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 67%;">
   <view class="lables">配送情况</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="wancheng" range="{{wancheng_list}}">
     <input bindinput="onInput" data-column="wancheng" class="input_text_form" value="{{wancheng}}" type="text" name="wancheng" disabled="disabled"></input>
   </picker>
   <view class="lables">配送区域</view>
   <input bindinput="onInput" bindlongpress="header_xiala" data-column="quyu" class="input_text_form" value="{{quyu}}" type="text" name="quyu"></input>
+
+  <view class="lables">送货员</view>
+  <input bindinput="onInput" bindtap="header_xiala" data-column="songhuoyuan" class="input_text_form" value="{{songhuoyuan}}" type="text" name="songhuoyuan" disabled="disabled"></input>
+
   <view class="lables" style="{{userInfo.power=='客户'?'display:none':''}}">商品库存信息</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="kucun" range="{{kucun_list}}">
     <input bindinput="onInput" data-column="kucun" class="input_text_form" value="{{kucun}}" type="text" name="kucun" disabled="disabled" style="{{userInfo.power=='客户'?'display:none':''}}"></input>
   </picker>
+
+
   <view class="bottom_view" style="height:10%">
     <button style="width: 23%;" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button style="width: 23%;" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>

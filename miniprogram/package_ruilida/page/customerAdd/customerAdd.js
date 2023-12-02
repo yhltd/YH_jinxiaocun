@@ -39,9 +39,13 @@ Page({
         zhiwu:'',
         phone:'',
         address:'',
-        type:'主联系人',
+        type2:'主联系人',
       }
     ],
+    type2_list:[
+      {name:'主联系人'},
+      {name:'联系人'}
+    ]
   },
 
   /**
@@ -90,7 +94,7 @@ Page({
       }
     })
     if(id != null && id != undefined){
-      var sql = "select * from customer where id=" + id + ";select * from customer_item where customer_id = '" + id + "'"
+      var sql = "select * from customer where id=" + id + ";select *,type as type2 from customer_item where customer_id = '" + id + "'"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -183,7 +187,7 @@ Page({
             zhiwu:'',
             phone:'',
             address:'',
-            type:'联系人',
+            type2:'联系人',
           })
           console.log(list)
           _this.setData({
@@ -231,7 +235,7 @@ Page({
           var customer_body = _this.data.customer_body
           var panduan = false
           for(var i=0; i<lianxi_list.length; i++){
-            if(lianxi_list[i].type == '主联系人'){
+            if(lianxi_list[i].type2 == '主联系人'){
               customer_body.shoujian_name = lianxi_list[i].name
               customer_body.shoujian_phone = lianxi_list[i].phone
               customer_body.shoujian_dizhi = lianxi_list[i].address
@@ -273,6 +277,71 @@ Page({
       })
       return;
     }
+    if(customer_body.type == ''){
+      wx.showToast({
+        title: '请输入客户分类',
+        icon: 'none'
+      })
+      return;
+    }
+    if(customer_body.type == ''){
+      wx.showToast({
+        title: '请输入客户分类',
+        icon: 'none'
+      })
+      return;
+    }
+    if(customer_body.jiage_dengji == ''){
+      wx.showToast({
+        title: '请输入价格等级',
+        icon: 'none'
+      })
+      return;
+    }
+    if(customer_body.yewuyuan == ''){
+      wx.showToast({
+        title: '请输入业务员',
+        icon: 'none'
+      })
+      return;
+    }
+    if(customer_body.kaipiao_danwei == ''){
+      wx.showToast({
+        title: '请输入开票单位名称',
+        icon: 'none'
+      })
+      return;
+    }
+    if(customer_body.shibiehao == ''){
+      wx.showToast({
+        title: '请输入纳税人识别号',
+        icon: 'none'
+      })
+      return;
+    }
+    for(var i=0; i<lianxi_list.length; i++){
+      if(lianxi_list[i].name == ''){
+        wx.showToast({
+          title: '第' + (i+1) + "个联系人信息未填写姓名",
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].phone == ''){
+        wx.showToast({
+          title: '第' + (i+1) + "个联系人信息未填写电话",
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].type2 == ''){
+        wx.showToast({
+          title: '第' + (i+1) + "个联系人信息未选择联系人类型",
+          icon: 'none'
+        })
+        return;
+      }
+    }
     if(customer_body.id == ''){
       wx.showLoading({
         title:'保存中'
@@ -294,9 +363,9 @@ Page({
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+              sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type2 + "','" + new_id + "')"
             }else{
-              sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+              sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type2 + "','" + new_id + "')"
             }
           }
           sql = sql + sql2
@@ -369,13 +438,13 @@ Page({
         success: res => {
           console.log(res)
           var new_id = customer_body.id
-          var sql = "delete from customer_item where customer_id='" + new_id + "';insert into customer_item(name,department,zhiwu,phone,address,type,customer_id) values "
+          var sql = "delete from customer_item where customer_id='" + new_id + "';insert into customer_item(name,department,zhiwu,phone,address,type2,customer_id) values "
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+              sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type2 + "','" + new_id + "')"
             }else{
-              sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+              sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type2 + "','" + new_id + "')"
             }
           }
           sql = sql + sql2
@@ -527,10 +596,31 @@ Page({
           xlShow2: false,
           customer_body,
         })
+        if(click_column == 'shangji_danwei'){
+          wx.showModal({
+            title: '提示',
+            content: '是否复制上级单位开票信息？',
+            success: function (res) {
+              if (res.confirm) {
+                customer_body.kaipiao_danwei = e.detail.kaipiao_danwei
+                customer_body.shibiehao = e.detail.shibiehao
+                customer_body.kaipiao_dizhi = e.detail.kaipiao_dizhi
+                customer_body.kaipiao_dianhua = e.detail.kaipiao_dianhua
+                customer_body.kaipiao_yinhang = e.detail.kaipiao_yinhang
+                customer_body.kaipiao_zhanghao = e.detail.kaipiao_zhanghao
+                _this.setData({
+                  customer_body
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
       }else{
         if(new_val == '主联系人'){
           for(var i=0; i<lianxi_list.length; i++){
-            lianxi_list[i].type = '联系人'
+            lianxi_list[i].type2 = '联系人'
           }
         }
         lianxi_list[click_index][click_column] = new_val

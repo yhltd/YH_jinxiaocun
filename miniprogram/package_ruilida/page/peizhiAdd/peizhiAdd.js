@@ -120,6 +120,10 @@ Page({
       sql = "update userInfo set dianpu = '" + new_value + "' where id=" + id
     }else if(_this.data.type == '核算单位'){
       sql = "update userInfo set hesuan_danwei = '" + new_value + "' where id=" + id
+    }else if(_this.data.type == '收款账户'){
+      sql = "update userInfo set shoukuan_zhanghu = '" + new_value + "' where id=" + id
+    }else if(_this.data.type == '质保等级'){
+      sql = "update userInfo set zhibao_dengji = '" + new_value + "' where id=" + id
     }
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',

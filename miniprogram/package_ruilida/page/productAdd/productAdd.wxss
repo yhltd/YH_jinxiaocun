@@ -47,4 +47,10 @@ button{
   font-weight: bold;
 }
 
+.cell_title .van-cell__title {  
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+
 

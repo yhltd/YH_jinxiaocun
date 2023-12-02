@@ -158,7 +158,8 @@ Page({
       })
       return;
     }
-    var sql = "select zhongdian_jihua,dingwei,dingwei_shijian,zhongdian,zhongdian_name,isnull(jihua_mingxi,'') as jihua_mingxi from userInfo as us left join peisong_jihua as ps on us.zhongdian_jihua = ps.id where us.id =" + id
+    var songhuoyuan = _this.data.songhuoyuan
+    var sql = "select zhongdian_jihua,dingwei,dingwei_shijian,zhongdian,zhongdian_name,isnull(jihua_mingxi,'') as jihua_mingxi from userInfo as us left join peisong_jihua as ps on us.zhongdian_jihua = ps.id where us.id =" + id + ";select order_number + ' ' + customer_name as content,erqi_peisongdan.quyu,songhuoyuan,wancheng,isnull(address,'') as address,isnull(address_name,'') as address_name from erqi_peisongdan left join (select address,address_name,company from userInfo where address != '') as userinfo on erqi_peisongdan.customer_name = userinfo.company where songhuoyuan = '" + songhuoyuan + "' and wancheng = '正在配送'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
       data: {
@@ -166,12 +167,39 @@ Page({
       },
       success: res => {
         console.log(res)
-        var songhuoyuan_list = res.result.recordset
+        var songhuoyuan_list = res.result.recordsets[0]
         console.log(songhuoyuan_list)
         var this_weizhi = songhuoyuan_list[0].dingwei
         console.log(this_weizhi)
         var this_zhongdian = songhuoyuan_list[0].zhongdian
-        var this_mingxi = songhuoyuan_list[0].jihua_mingxi
+        var jihua_list = res.result.recordsets[1]
+        var this_mingxi = ""
+        var this_mingxi2 = []
+        var this_index = 0
+        for (var i = 0; i < jihua_list.length; i++) {
+          if (jihua_list[i].address != '') {
+            var this_la = jihua_list[i].address.split(',')[0] * 1
+            var this_lo = jihua_list[i].address.split(',')[1] * 1
+            this_mingxi2.push({
+              id: this_index,
+              latitude: this_la,
+              longitude: this_lo,
+              label: {
+                content: jihua_list[i].content,
+                bgColor: "#FFFFFF",
+                borderWidth: 1,
+                borderColor: "#000000",
+                borderRadius: 3,
+                padding: 3,
+                textAlign: "center"
+              }
+            })
+            this_index = this_index + 1
+          }
+        }
+        if(this_mingxi2.length > 0){
+          this_mingxi = this_mingxi2
+        }
         if(this_weizhi == ''){
           wx.showToast({
             title: '未读取到此用户定位信息',
@@ -180,14 +208,12 @@ Page({
           return;
         }else{
           if(this_mingxi != ''){
-            this_mingxi = JSON.parse(this_mingxi)
             var markers = this_mingxi
-            var id = (markers[markers.length-1].id * 1) + 1
             var e = [this_weizhi,this_zhongdian]
             _this.formSubmit(e)
             this_weizhi = this_weizhi.split(',')
             markers.push({
-              id: id,
+              id: this_index,
               iconPath: '../../images/start.png',
               latitude: this_weizhi[0],
               longitude: this_weizhi[1],

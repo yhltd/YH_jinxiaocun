@@ -84,7 +84,7 @@ Page({
         _this.setData({
           userInfo
         })
-        var sql = "select *,case when id='" + _this.data.userInfo.cangku + "' then '默认' when id='" + _this.data.userInfo.dianpu + "' then '默认' when id='" + _this.data.userInfo.hesuan_danwei + "' then '默认' else '' end as moren from peizhi where name like '%" + e[0] + "%' and type ='" + _this.data.type + "'"
+        var sql = "select *,case when id='" + _this.data.userInfo.cangku + "' then '默认' when id='" + _this.data.userInfo.dianpu + "' then '默认' when id='" + _this.data.userInfo.hesuan_danwei + "' then '默认' when id='" + _this.data.userInfo.shoukuan_zhanghu + "' then '默认' when id='" + _this.data.userInfo.zhibao_dengji + "' then '默认' else '' end as moren from peizhi where name like '%" + e[0] + "%' and type ='" + _this.data.type + "'"
         console.log(sql)
         wx.cloud.callFunction({
           name: 'sqlserver_ruilida',

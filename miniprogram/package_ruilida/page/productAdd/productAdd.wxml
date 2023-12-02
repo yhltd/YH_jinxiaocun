@@ -20,7 +20,10 @@
         placeholder="请输入商品分类"
         border="false"
         readonly="true"
-      />
+      >
+          <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="type">添加</van-tag>
+        
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -31,7 +34,11 @@
         placeholder="请输入单位"
         border="false"
         readonly="true"
-      />
+      >
+
+        <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="danwei">添加</van-tag>
+      
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -49,7 +56,9 @@
         label="技术标准"
         placeholder="请输入技术标准"
         border="false"
-      />
+        >
+        
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -60,7 +69,10 @@
         placeholder="请输入质保等级"
         border="false"
         readonly="true"
-      />
+        >
+          <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="zhibao_dengji">添加</van-tag>
+        
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -79,6 +91,10 @@
       <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display: {{i==0?'none':'flex'}};" data-index="{{i}}"/>
     </view> 
     <van-cell-group inset>
+      <van-cell center title='图片' title-width='6.2em'>
+        <image data-index="{{i}}" src="{{ list_item.image }}" mode='aspectFit' style="width: 100px;height:50px;border: 1px solid #A6A6A6" slot="right-icon" bindtap="imgClick" />
+      </van-cell>
+
       <van-field
         bind:input="onInput"
         model:value="{{ list_item.guige }}"
@@ -97,68 +113,9 @@
         label="编号"
         placeholder="请输入编号"
         border="false"
-        readonly="true"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.lingshou_price }}"
-        data-column="lingshou_price"
-        data-index="{{i}}"
-        label="零售价格"
-        placeholder="请输入零售价格"
-        border="false"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.lingshou_bili }}"
-        data-column="lingshou_bili"
-        data-index="{{i}}"
-        label="零售上浮比例"
-        placeholder="请输入零售上浮比例"
-        border="false"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.pifa_price }}"
-        data-column="pifa_price"
-        data-index="{{i}}"
-        label="批发价格"
-        placeholder="请输入批发价格"
-        border="false"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.pifa_bili }}"
-        data-column="pifa_bili"
-        data-index="{{i}}"
-        label="批发上浮比例"
-        placeholder="请输入批发上浮比例"
-        border="false"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.dakehu_price }}"
-        data-column="dakehu_price"
-        data-index="{{i}}"
-        label="大客户价格"
-        placeholder="请输入大客户价格"
-        border="false"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.dakehu_bili }}"
-        data-column="dakehu_bili"
-        data-index="{{i}}"
-        label="大客户上浮比例"
-        placeholder="请输入大客户上浮比例"
-        border="false"
-      />
+        >
+          <van-tag type="primary" size="medium" slot="button" bindtap="bianhao_get" data-index="{{i}}">扫码</van-tag>
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -174,20 +131,13 @@
         bind:input="onInput"
         model:value="{{ list_item.jinxiang }}"
         data-column="jinxiang"
-        data-index="{{i}}"
+        data-index="{{i}}" 
+        bind:click-input="xiala_show"
         label="进项税率"
         placeholder="请输入进项税率"
+        right-icon="../../image/baifenbi.png"
         border="false"
-      />
-
-      <van-field
-        bind:input="onInput"
-        model:value="{{ list_item.xiaoxiang }}"
-        data-column="xiaoxiang"
-        data-index="{{i}}"
-        label="销项税率"
-        placeholder="请输入销项税率"
-        border="false"
+        readonly="true"
       />
 
       <van-field
@@ -205,6 +155,7 @@
   </view>
   <view class="bottom_view" style="padding-bottom: 10px;">
     <button class="bt_bottom" bindtap="add_lianxiren">添加商品</button>
+    <button class="bt_bottom" bindtap="add_more_lianxiren">批量添加</button>
   </view>
 </scroll-view>
 
@@ -213,5 +164,62 @@
   <button class="bt_bottom" bindtap="back">取消</button>
 </view>
 
+<!------------------------->
+<!---------图片弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 15%;">
+  <view class="bottom_view" style="height:10%;margin-top: calc(50vmin / 7.5);">
+    <button class="bt_bottom" bindtap="imgload">上传</button>
+    <button class="bt_bottom" bindtap="imgdown">下载</button>
+  </view>
+</van-popup>
+
 <!--表单下拉选择-->
-<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2">
+</van-action-sheet>
+
+<van-popup
+  show="{{ moreShow }}"
+  closeable
+  position="bottom"
+  custom-style="height: 90%"
+  bind:close="onClose"
+>
+<view class="title_text" style="height:7%;margin-top: 4%;margin-left: 3%;font-size: 40rpx;">批量选择规格</view>
+<scroll-view style="height: 82%;" scroll-x="true" scroll-y="true">
+  <block class="title" wx:for="{{all_peizhi_guige}}" wx:for-index="i" >
+  <van-checkbox-group value="{{ all_peizhi_guige[i].click_guige }}" data-index="{{i}}" bind:change="onChange2">
+    <van-cell class="cell_title" title="{{all_peizhi_guige[i].type}}" size="large">
+      <van-tag wx:if="{{all_peizhi_guige[i].click_guige.length == all_peizhi_guige[i].guige.length}}" data-index="{{i}}" bindtap="quanxuan_clean" size="medium" type="primary" slot="right-icon">全选</van-tag> 
+      <van-tag wx:if="{{all_peizhi_guige[i].click_guige.length != all_peizhi_guige[i].guige.length}}" plain data-index="{{i}}" bindtap="quanxuan_add" size="medium" type="primary" slot="right-icon">全选</van-tag> 
+    </van-cell>
+    <van-cell-group border="false">
+      <van-cell
+        wx:for="{{ item.guige }}"
+        wx:key="index"
+        title="{{ all_peizhi_guige[i].guige[index] }}"
+        value-class="value-class"
+        clickable
+        data-first_index="{{ i }}"
+        data-index="{{ index }}"
+        bind:click="toggle2"
+        title-width="90%"
+        use-label-slot
+      >
+        <van-checkbox
+          catch:tap="noop"
+          class="checkboxes-{{ i }}-{{ index }}"
+          name="{{ all_peizhi_guige[i].guige[index] }}"
+        />
+      </van-cell>
+    </van-cell-group>
+  </van-checkbox-group>
+</block>
+</scroll-view>
+
+<view class="bottom_view" style="height:6%;padding-top:2%">
+  <button class="bt_bottom" bindtap="guige_goto">编辑规格</button>
+  <button class="bt_bottom" bindtap="guige_add">确定</button>
+</view>
+
+</van-popup>

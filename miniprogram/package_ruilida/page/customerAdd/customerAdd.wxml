@@ -43,7 +43,7 @@
         readonly="true"
       />
 
-      <van-field
+      <!-- <van-field
         bind:input="onInput"
         model:value="{{ customer_body.kehu_dengji }}"
         data-column="kehu_dengji"
@@ -52,7 +52,7 @@
         placeholder="请输入客户等级"
         border="false"
         readonly="true"
-      />
+      /> -->
 
       <van-field
         bind:input="onInput"
@@ -200,7 +200,7 @@
         placeholder="请输入银行账号"
         border="false"
       />
-    </van-cell-group>
+    </van-cell-group> 
   </view>
 
   <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
@@ -261,8 +261,8 @@
 
       <van-field
         bind:input="onInput"
-        model:value="{{ list_item.type }}"
-        data-column="type"
+        model:value="{{ list_item.type2 }}"
+        data-column="type2"
         data-index="{{i}}"
         bind:click-input="xiala_show"
         label="类型"

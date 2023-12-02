@@ -44,10 +44,10 @@ Page({
     text: "实时定位",
     url: "../../../package_huaqun_erqi/page/dingwei/dingwei"
   },
-  {
-    text: "配送计划",
-    url: "../../../package_huaqun_erqi/page/peisong_jihua/peisong_jihua"
-  },
+  // {
+  //   text: "配送计划",
+  //   url: "../../../package_huaqun_erqi/page/peisong_jihua/peisong_jihua"
+  // },
  ]
  },
  

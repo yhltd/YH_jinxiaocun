@@ -15,7 +15,10 @@
     "van-icon": "../../components/icon/index",
     "van-area": "../../components/area/index",
     "van-popup": "../../components/popup/index",
-    "van-image": "../../components/image/index"
+    "van-image": "../../components/image/index",
+    "van-checkbox": "../../components/checkbox/index",
+    "van-checkbox-group": "../../components/checkbox-group/index",
+    "van-tag": "../../components/tag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

@@ -261,6 +261,7 @@ Page({
             console.log("错误!")
           },
           fail: res => {
+            console.log(res)
             wx.showToast({
               title: '请求失败！',
               icon: 'none'

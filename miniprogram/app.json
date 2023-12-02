@@ -331,6 +331,8 @@
         "page/userPowerAdd/userPowerAdd",
         "page/peizhi/peizhi",
         "page/peizhiAdd/peizhiAdd",
+        "page/peizhi_guige/peizhi_guige",
+        "page/peizhi_guigeAdd/peizhi_guigeAdd",
         "page/customer/customer",
         "page/customerAdd/customerAdd",
         "page/gongyingshang/gongyingshang",

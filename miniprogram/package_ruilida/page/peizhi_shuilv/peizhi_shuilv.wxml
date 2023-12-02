@@ -6,11 +6,14 @@
         bind:input="onInput"
         model:value="{{ shuilv_body.shuilv }}"
         data-column="shuilv"
-        label="税率%"
+        label="税率"
         placeholder="请填写税率"
         border="false"
         type="number"
-      />
+        right-icon="../../image/baifenbi.png"
+        title-width="7.2em"
+      >
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -20,6 +23,7 @@
         placeholder="点击选择"
         border="false"
         bind:click-input="xiala_show"
+        title-width="7.2em"
         readonly="true"
       />
 
@@ -27,26 +31,66 @@
   </view>
 
   <view style="padding-top: 10px;">
-    <view class="title_text">上浮比例设置：</view>
+    <view class="title_text">价格等级与上浮比例：</view>
     <van-cell-group inset>
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shuilv_body.lingshou_zhuangtai }}"
+        data-column="lingshou_zhuangtai"
+        label="启用零售价格"
+        placeholder="点击选择"
+        border="false"
+        bind:click-input="xiala_show"
+        title-width="7.2em"
+        readonly="true"
+      />
+
       <van-field
         bind:input="onInput"
         model:value="{{ shuilv_body.lingshou }}"
         data-column="lingshou"
-        label="零售上浮比例%"
+        label="零售上浮比例"
         placeholder="请填写零售上浮比例"
         border="false"
         type="number"
+        right-icon="../../image/baifenbi.png"
+        title-width="7.2em"
+      />
+      
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shuilv_body.pifa_zhuangtai }}"
+        data-column="pifa_zhuangtai"
+        label="启用批发价格"
+        placeholder="点击选择"
+        border="false"
+        bind:click-input="xiala_show"
+        title-width="7.2em"
+        readonly="true"
       />
 
       <van-field
         bind:input="onInput"
         model:value="{{ shuilv_body.pifa }}"
         data-column="pifa"
-        label="批发上浮比例%"
+        label="批发上浮比例"
         placeholder="请填写批发上浮比例"
         border="false"
+        type="number"
+        right-icon="../../image/baifenbi.png"
+        title-width="7.2em"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shuilv_body.dakehu_zhuangtai }}"
+        data-column="dakehu_zhuangtai"
+        label="启用大客户价格"
+        placeholder="点击选择"
+        border="false"
         bind:click-input="xiala_show"
+        title-width="7.2em"
         readonly="true"
       />
 
@@ -54,11 +98,12 @@
         bind:input="onInput"
         model:value="{{ shuilv_body.dakehu }}"
         data-column="dakehu"
-        label="大客户上浮比例%"
+        label="大客户上浮比例"
         placeholder="请填写大客户上浮比例"
         border="false"
-        bind:click-input="xiala_show"
-        readonly="true"
+        type="number"
+        right-icon="../../image/baifenbi.png"
+        title-width="7.2em"
       />
 
     </van-cell-group>

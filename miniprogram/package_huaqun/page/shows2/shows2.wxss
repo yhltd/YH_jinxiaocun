@@ -21,7 +21,7 @@ page{
 }
 .item{
   width: 73%;
-  height: 7.3%; 
+  height: 8.3%; 
   display: flex;
   align-items: center;
   background-color:rgba(213,226,220,0.7);
@@ -36,7 +36,7 @@ page{
 }
 .item_hover{
   width: 73%;
-  height: 7.3%; 
+  height: 8.3%; 
   display: flex;
   align-items: center;
   background-color:rgba(213,226,220,0.7);

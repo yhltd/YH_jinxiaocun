@@ -35,6 +35,13 @@ Page({
         customer_need_text_renyuan: '',
         customer_need_text_riqi: '',
         customer_need_img1: '',
+        customer_need_img2: '',
+        customer_need_img3: '',
+        customer_need_img4: '',
+        customer_need_img5: '',
+        customer_need_img6: '',
+        customer_need_img7: '',
+        customer_need_img8: '',
         customer_need_img1_renyuan: '',
         customer_need_img1_riqi: '',
         customer_need_text1: '',
@@ -73,6 +80,9 @@ Page({
         peihuo_img5: '',
         peihuo_img5_renyuan: '',
         peihuo_img5_riqi: '',
+        peihuo_img6: '',
+        peihuo_img7: '',
+        peihuo_img8: '',
         peisong_img1: '',
         peisong_img1_renyuan: '',
         peisong_img1_riqi: '',
@@ -82,6 +92,11 @@ Page({
         peisong_img3: '',
         peisong_img3_renyuan: '',
         peisong_img3_riqi: '',
+        peisong_img4: '',
+        peisong_img5: '',
+        peisong_img6: '',
+        peisong_img7: '',
+        peisong_img8: '',
         money: '',
         money_renyuan: '',
         money_riqi: '',
@@ -106,6 +121,11 @@ Page({
         kucun_img3: '',
         kucun_img3_renyuan: '',
         kucun_img3_riqi: '',
+        kucun_img4: '',
+        kucun_img5: '',
+        kucun_img6: '',
+        kucun_img7: '',
+        kucun_img8: '',
       }
     ],
     baocun:'保存',
@@ -115,6 +135,7 @@ Page({
       {name: '优先处理'},
       {name: '配货作业中'},
       {name: '配货完成'},
+      {name: '正在配送'},
       {name: '完成'},
       {name: '未完成-缺货'},
       {name: '未完成-配错货'},
@@ -123,7 +144,43 @@ Page({
       {name: ''},
       {name: '已收款'},
       {name: '送货收款'},
-    ]
+    ],
+
+    customer_need_img_height:2800,
+    customer_need_img2_display:true,
+    customer_need_img3_display:true,
+    customer_need_img4_display:true,
+    customer_need_img5_display:true,
+    customer_need_img6_display:true,
+    customer_need_img7_display:true,
+    customer_need_img8_display:true,
+
+    peihuo_img_height:2800,
+    peihuo_img2_display:true,
+    peihuo_img3_display:true,
+    peihuo_img4_display:true,
+    peihuo_img5_display:true,
+    peihuo_img6_display:true,
+    peihuo_img7_display:true,
+    peihuo_img8_display:true,
+
+    peisong_img_height:2800,
+    peisong_img2_display:true,
+    peisong_img3_display:true,
+    peisong_img4_display:true,
+    peisong_img5_display:true,
+    peisong_img6_display:true,
+    peisong_img7_display:true,
+    peisong_img8_display:true,
+
+    kucun_img_height:2800,
+    kucun_img2_display:true,
+    kucun_img3_display:true,
+    kucun_img4_display:true,
+    kucun_img5_display:true,
+    kucun_img6_display:true,
+    kucun_img7_display:true,
+    kucun_img8_display:true,
   },
 
   /**
@@ -217,7 +274,42 @@ Page({
           list[0].insert_date = getNowDate()
           console.log(list)
           _this.setData({
-            list
+            list,
+            customer_need_img_height:350,
+            customer_need_img2_display:false,
+            customer_need_img3_display:false,
+            customer_need_img4_display:false,
+            customer_need_img5_display:false,
+            customer_need_img6_display:false,
+            customer_need_img7_display:false,
+            customer_need_img8_display:false,
+
+            peihuo_img_height:350,
+            peihuo_img2_display:false,
+            peihuo_img3_display:false,
+            peihuo_img4_display:false,
+            peihuo_img5_display:false,
+            peihuo_img6_display:false,
+            peihuo_img7_display:false,
+            peihuo_img8_display:false,
+
+            peisong_img_height:350,
+            peisong_img2_display:false,
+            peisong_img3_display:false,
+            peisong_img4_display:false,
+            peisong_img5_display:false,
+            peisong_img6_display:false,
+            peisong_img7_display:false,
+            peisong_img8_display:false,
+
+            kucun_img_height:350,
+            kucun_img2_display:false,
+            kucun_img3_display:false,
+            kucun_img4_display:false,
+            kucun_img5_display:false,
+            kucun_img6_display:false,
+            kucun_img7_display:false,
+            kucun_img8_display:false,
           })
         },
         err: res => {
@@ -266,6 +358,54 @@ Page({
         }
       })
     }
+  },
+
+  customer_need_img_error:function(e){
+    console.log('触发')
+    console.log(e.currentTarget.dataset.display)
+    var display = e.currentTarget.dataset.display
+    var _this = this
+    _this.setData({
+      customer_need_img_height:_this.data.customer_need_img_height - 350,
+      [display]:false
+    })
+    console.log(_this.data.customer_need_img_height)
+  },
+
+  peihuo_img_error:function(e){
+    console.log('触发')
+    console.log(e.currentTarget.dataset.display)
+    var display = e.currentTarget.dataset.display
+    var _this = this
+    _this.setData({
+      peihuo_img_height:_this.data.peihuo_img_height - 350,
+      [display]:false
+    })
+    console.log(_this.data.peihuo_img_height)
+  },
+
+  peisong_img_error:function(e){
+    console.log('触发')
+    console.log(e.currentTarget.dataset.display)
+    var display = e.currentTarget.dataset.display
+    var _this = this
+    _this.setData({
+      peisong_img_height:_this.data.peisong_img_height - 350,
+      [display]:false
+    })
+    console.log(_this.data.peisong_img_height)
+  },
+
+  kucun_img_error:function(e){
+    console.log('触发')
+    console.log(e.currentTarget.dataset.display)
+    var display = e.currentTarget.dataset.display
+    var _this = this
+    _this.setData({
+      kucun_img_height:_this.data.kucun_img_height - 350,
+      [display]:false
+    })
+    console.log(_this.data.kucun_img_height)
   },
 
   sel_xiala: function (e) {
@@ -378,9 +518,10 @@ Page({
                   title: '保存图片',
                 })
                 list[0].id = res.result.recordset[0].id
-                var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+                // var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+
+                var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',customer_need_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-02.jpg',customer_need_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-03.jpg',customer_need_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',customer_need_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',customer_need_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',customer_need_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',customer_need_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',peihuo_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg',peihuo_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-15.jpg',peihuo_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-16.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-17.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-18.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-19.jpg',peisong_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-20.jpg',peisong_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-21.jpg',peisong_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-22.jpg',peisong_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-23.jpg',peisong_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-24.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-25.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-26.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-27.jpg',kucun_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-28.jpg',kucun_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-29.jpg',kucun_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-30.jpg',kucun_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-31.jpg',kucun_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-32.jpg' where id = " + list[0].id
                 console.log(sql)
-                
                 if(list[0].customer_need_img1.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
                   var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img1.split(',')[1]);
@@ -394,6 +535,202 @@ Page({
                     name: 'file',
                     formData:{
                     name: list[0].order_number +'-01.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img2.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-02.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img3.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-03.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img4.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img4.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-04.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-04.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img5.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img5.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-05.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-05.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img6.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img6.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-06.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-06.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-07.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-07.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-08.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-08.jpg',
                     path: '/huaqun_erqi/',
                     kongjian: _this.data.kongjian,
                     },
@@ -468,146 +805,6 @@ Page({
                 if(list[0].peihuo_img1.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
                   var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img1.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-04.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-04.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img2.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img2.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-05.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-05.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img3.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img3.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-06.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-06.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img4.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img4.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-07.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-07.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img5.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img5.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-08.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-08.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peisong_img1.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img1.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-09.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
@@ -633,9 +830,9 @@ Page({
                   })
                 }
       
-                if(list[0].peisong_img2.indexOf("base64") != -1){
+                if(list[0].peihuo_img2.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img2.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img2.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-10.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
@@ -661,9 +858,9 @@ Page({
                   })
                 }
       
-                if(list[0].peisong_img3.indexOf("base64") != -1){
+                if(list[0].peihuo_img3.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img3.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img3.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-11.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
@@ -689,9 +886,9 @@ Page({
                   })
                 }
       
-                if(list[0].kucun_img1.indexOf("base64") != -1){
+                if(list[0].peihuo_img4.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img1.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img4.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-12.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
@@ -717,9 +914,9 @@ Page({
                   })
                 }
       
-                if(list[0].kucun_img2.indexOf("base64") != -1){
+                if(list[0].peihuo_img5.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img2.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img5.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-13.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
@@ -744,10 +941,10 @@ Page({
                     }
                   })
                 }
-      
-                if(list[0].kucun_img3.indexOf("base64") != -1){
+
+                if(list[0].peihuo_img6.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img3.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img6.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-14.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
@@ -772,6 +969,511 @@ Page({
                     }
                   })
                 }
+
+                if(list[0].peihuo_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-15.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-15.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peihuo_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-16.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-16.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].peisong_img1.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img1.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-17.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-17.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].peisong_img2.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img2.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-18.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-18.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].peisong_img3.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img3.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-19.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-19.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img4.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img4.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-20.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-20.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img5.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img5.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-21.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-21.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img6.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img6.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-22.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-22.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-23.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-23.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-24.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-24.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].kucun_img1.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img1.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-25.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-25.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].kucun_img2.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img2.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-26.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-26.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].kucun_img3.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img3.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-27.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-27.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img4.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img4.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-28.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-28.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img5.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img5.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-29.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-29.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img6.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img6.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-30.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-30.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-31.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-31.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-32.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-32.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
                 wx.cloud.callFunction({
                   name: 'sqlserver_huaqun',
                   data: {
@@ -838,22 +1540,217 @@ Page({
                 wx.showLoading({
                   title: '保存图片',
                 })
-                var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg' where id=" + list[0].id
+                var sql = "update erqi_peisongdan set customer_need_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-01.jpg',customer_need_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-02.jpg',customer_need_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-03.jpg',customer_need_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-04.jpg',customer_need_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-05.jpg',customer_need_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-06.jpg',customer_need_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-07.jpg',customer_need_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-08.jpg',peihuo_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-09.jpg',peihuo_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-10.jpg',peihuo_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-11.jpg',peihuo_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-12.jpg',peihuo_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-13.jpg',peihuo_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-14.jpg',peihuo_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-15.jpg',peihuo_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-16.jpg',peisong_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-17.jpg',peisong_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-18.jpg',peisong_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-19.jpg',peisong_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-20.jpg',peisong_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-21.jpg',peisong_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-22.jpg',peisong_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-23.jpg',peisong_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-24.jpg',kucun_img1='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-25.jpg',kucun_img2='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-26.jpg',kucun_img3='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-27.jpg',kucun_img4='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-28.jpg',kucun_img5='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-29.jpg',kucun_img6='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-30.jpg',kucun_img7='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-31.jpg',kucun_img8='http://yhocn.cn:9088/huaqun_erqi/" + list[0].order_number + "-32.jpg' where id = " + list[0].id
                 console.log(sql)
-      
                 if(list[0].customer_need_img1.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
                   var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img1.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-01.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
                     name: 'file',
                     formData:{
                     name: list[0].order_number +'-01.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img2.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img2.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-02.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img3.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img3.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-03.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img4.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img4.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-04.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-04.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img5.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img5.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-05.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-05.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img6.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img6.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-06.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-06.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-07.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-07.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].customer_need_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].customer_need_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-08.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-08.jpg',
                     path: '/huaqun_erqi/',
                     kongjian: _this.data.kongjian,
                     },
@@ -875,7 +1772,7 @@ Page({
                 //   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-02.jpg';
                 //   fsm.writeFileSync(fileName, buffer, 'binary');
                 //   console.log(fileName);
-                //   wx.uploadFile({
+                //    wx.uploadFile({
                 //     url: 'http://yhocn.cn:9087/file/upload',
                 //     header: { "Content-Type": "multipart/form-data" },
                 //     filePath: fileName,
@@ -903,7 +1800,7 @@ Page({
                 //   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-03.jpg';
                 //   fsm.writeFileSync(fileName, buffer, 'binary');
                 //   console.log(fileName);
-                //   wx.uploadFile({
+                //    wx.uploadFile({
                 //     url: 'http://yhocn.cn:9087/file/upload',
                 //     header: { "Content-Type": "multipart/form-data" },
                 //     filePath: fileName,
@@ -928,150 +1825,10 @@ Page({
                 if(list[0].peihuo_img1.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
                   var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img1.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-04.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                  wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-04.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img2.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img2.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-05.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                  wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-05.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img3.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img3.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-06.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                  wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-06.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img4.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img4.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-07.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                  wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-07.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peihuo_img5.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img5.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-08.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                  wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: list[0].order_number +'-08.jpg',
-                    path: '/huaqun_erqi/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-      
-                if(list[0].peisong_img1.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img1.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-09.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
@@ -1093,13 +1850,13 @@ Page({
                   })
                 }
       
-                if(list[0].peisong_img2.indexOf("base64") != -1){
+                if(list[0].peihuo_img2.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img2.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img2.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-10.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
@@ -1121,13 +1878,13 @@ Page({
                   })
                 }
       
-                if(list[0].peisong_img3.indexOf("base64") != -1){
+                if(list[0].peihuo_img3.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img3.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img3.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-11.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
@@ -1149,13 +1906,13 @@ Page({
                   })
                 }
       
-                if(list[0].kucun_img1.indexOf("base64") != -1){
+                if(list[0].peihuo_img4.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img1.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img4.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-12.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
@@ -1177,13 +1934,13 @@ Page({
                   })
                 }
       
-                if(list[0].kucun_img2.indexOf("base64") != -1){
+                if(list[0].peihuo_img5.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img2.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img5.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-13.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
@@ -1204,14 +1961,14 @@ Page({
                     }
                   })
                 }
-      
-                if(list[0].kucun_img3.indexOf("base64") != -1){
+
+                if(list[0].peihuo_img6.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img3.split(',')[1]);
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img6.split(',')[1]);
                   const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-14.jpg';
                   fsm.writeFileSync(fileName, buffer, 'binary');
                   console.log(fileName);
-                  wx.uploadFile({
+                   wx.uploadFile({
                     url: 'http://yhocn.cn:9087/file/upload',
                     header: { "Content-Type": "multipart/form-data" },
                     filePath: fileName,
@@ -1232,6 +1989,511 @@ Page({
                     }
                   })
                 }
+
+                if(list[0].peihuo_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-15.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-15.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peihuo_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peihuo_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-16.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-16.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].peisong_img1.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img1.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-17.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-17.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].peisong_img2.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img2.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-18.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-18.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].peisong_img3.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img3.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-19.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-19.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img4.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img4.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-20.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-20.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img5.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img5.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-21.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-21.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img6.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img6.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-22.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-22.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-23.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-23.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].peisong_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].peisong_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-24.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-24.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].kucun_img1.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img1.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-25.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-25.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].kucun_img2.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img2.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-26.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-26.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+      
+                if(list[0].kucun_img3.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img3.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-27.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-27.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img4.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img4.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-28.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-28.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img5.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img5.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-29.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-29.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img6.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img6.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-30.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-30.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img7.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img7.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-31.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-31.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+
+                if(list[0].kucun_img8.indexOf("base64") != -1){
+                  var fsm = wx.getFileSystemManager();
+                  var buffer = wx.base64ToArrayBuffer(list[0].kucun_img8.split(',')[1]);
+                  const fileName = wx.env.USER_DATA_PATH + '/'+ list[0].order_number +'-32.jpg';
+                  fsm.writeFileSync(fileName, buffer, 'binary');
+                  console.log(fileName);
+                   wx.uploadFile({
+                    url: 'http://yhocn.cn:9087/file/upload',
+                    header: { "Content-Type": "multipart/form-data" },
+                    filePath: fileName,
+                    name: 'file',
+                    formData:{
+                    name: list[0].order_number +'-32.jpg',
+                    path: '/huaqun_erqi/',
+                    kongjian: _this.data.kongjian,
+                    },
+                    success(res){
+                      console.log(res.data);
+                      if(res.data.indexOf("存储空间不足") != -1){
+                        wx.showToast({
+                          title: '存储空间不足！',
+                          icon: 'none'
+                        })
+                      }
+                    }
+                  })
+                }
+                
                 wx.cloud.callFunction({
                   name: 'sqlserver_huaqun',
                   data: {
@@ -1418,6 +2680,180 @@ Page({
     })
   },
 
+  imgadd: function(e){
+    var _this = this
+    var column = _this.data.this_column.substring(0,_this.data.this_column.length-1)
+    console.log(column)
+    var index = 1
+    if(column == 'customer_need_img'){
+      if(_this.data.customer_need_img2_display == false){
+        index = 2
+      }
+      else if(_this.data.customer_need_img3_display == false){
+        index = 3
+      }
+      else if(_this.data.customer_need_img4_display == false){
+        index = 4
+      }
+      else if(_this.data.customer_need_img5_display == false){
+        index = 5
+      }
+      else if(_this.data.customer_need_img6_display == false){
+        index = 6
+      }
+      else if(_this.data.customer_need_img7_display == false){
+        index = 7
+      }
+      else if(_this.data.customer_need_img8_display == false){
+        index = 8
+      }
+      else{
+        wx.showToast({
+          title: '已上传8张，不允许继续添加',
+          icon: 'none'
+        })
+        return;
+      }
+    }else if(column == 'peihuo_img'){
+      if(_this.data.peihuo_img2_display == false){
+        index = 2
+      }
+      else if(_this.data.peihuo_img3_display == false){
+        index = 3
+      }
+      else if(_this.data.peihuo_img4_display == false){
+        index = 4
+      }
+      else if(_this.data.peihuo_img5_display == false){
+        index = 5
+      }
+      else if(_this.data.peihuo_img6_display == false){
+        index = 6
+      }
+      else if(_this.data.peihuo_img7_display == false){
+        index = 7
+      }
+      else if(_this.data.peihuo_img8_display == false){
+        index = 8
+      }
+      else{
+        wx.showToast({
+          title: '已上传8张，不允许继续添加',
+          icon: 'none'
+        })
+        return;
+      }
+    }else if(column == 'peisong_img'){
+      if(_this.data.peisong_img2_display == false){
+        index = 2
+      }
+      else if(_this.data.peisong_img3_display == false){
+        index = 3
+      }
+      else if(_this.data.peisong_img4_display == false){
+        index = 4
+      }
+      else if(_this.data.peisong_img5_display == false){
+        index = 5
+      }
+      else if(_this.data.peisong_img6_display == false){
+        index = 6
+      }
+      else if(_this.data.peisong_img7_display == false){
+        index = 7
+      }
+      else if(_this.data.peisong_img8_display == false){
+        index = 8
+      }
+      else{
+        wx.showToast({
+          title: '已上传8张，不允许继续添加',
+          icon: 'none'
+        })
+        return;
+      }
+    }else if(column == 'kucun_img'){
+      if(_this.data.kucun_img2_display == false){
+        index = 2
+      }
+      else if(_this.data.kucun_img3_display == false){
+        index = 3
+      }
+      else if(_this.data.kucun_img4_display == false){
+        index = 4
+      }
+      else if(_this.data.kucun_img5_display == false){
+        index = 5
+      }
+      else if(_this.data.kucun_img6_display == false){
+        index = 6
+      }
+      else if(_this.data.kucun_img7_display == false){
+        index = 7
+      }
+      else if(_this.data.kucun_img8_display == false){
+        index = 8
+      }
+      else{
+        wx.showToast({
+          title: '已上传8张，不允许继续添加',
+          icon: 'none'
+        })
+        return;
+      }
+    }
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      maxDuration: 30,
+      camera: 'back',
+      success(res) {
+        console.log(res)
+        console.log(res.tempFiles)
+        wx.compressImage({
+          src: res.tempFiles[0].tempFilePath, // 图片路径
+          quality: 50, // 压缩质量
+          success: function(res) {
+            console.log(res.tempFilePath)
+            wx.getFileSystemManager().readFile({
+              filePath: res.tempFilePath, //选择图片返回的相对路径
+              encoding: 'base64', //编码格式
+              success: res => { //成功的回调
+                console.log('data:image/png;base64,' + res.data)
+                var size = res.data.length / 1048576
+                console.log(size)
+                if(size > 3){
+                  wx.showToast({
+                    title: '图片转化后超过3M，不允许上传！',
+                    icon: 'none'
+                  })
+                  return;
+                }
+                var list = _this.data.list
+                var column_name = column + index
+                console.log(column_name)
+                list[0][column_name] = 'data:image/png;base64,' + res.data
+                list[0][column_name + "_renyuan"] = _this.data.userInfo.name
+                list[0][column_name + "_riqi"] = getNowDate1()
+                _this.setData({
+                  list,
+                  [column + index + "_display"]:true,
+                  [column + '_height']:_this.data.customer_need_img_height + 350
+                })
+                _this.qxShow()
+                console.log(list)
+              }
+            })
+          },
+          fail: function(res) {
+            console.log(res)
+          },
+        })
+      }
+    })
+  },
+
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
@@ -1442,7 +2878,7 @@ Page({
         return;
       }
     }
-    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_text1' || column == 'customer_need_text2' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'songhuo_danhao' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 != ''){
+    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_text1' || column == 'customer_need_text2' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 != ''){
       if(_this.data.userInfo.power != '管理员'){
         wx.showToast({
           title: '工作进行到配货时不允许编辑此处！',
@@ -1530,6 +2966,13 @@ Page({
           customer_need_text_renyuan: '',
           customer_need_text_riqi: '',
           customer_need_img1: '',
+          customer_need_img2: '',
+          customer_need_img3: '',
+          customer_need_img4: '',
+          customer_need_img5: '',
+          customer_need_img6: '',
+          customer_need_img7: '',
+          customer_need_img8: '',
           customer_need_img1_renyuan: '',
           customer_need_img1_riqi: '',
           customer_need_text1: '',
@@ -1568,6 +3011,9 @@ Page({
           peihuo_img5: '',
           peihuo_img5_renyuan: '',
           peihuo_img5_riqi: '',
+          peihuo_img6: '',
+          peihuo_img7: '',
+          peihuo_img8: '',
           peisong_img1: '',
           peisong_img1_renyuan: '',
           peisong_img1_riqi: '',
@@ -1577,6 +3023,11 @@ Page({
           peisong_img3: '',
           peisong_img3_renyuan: '',
           peisong_img3_riqi: '',
+          peisong_img4: '',
+          peisong_img5: '',
+          peisong_img6: '',
+          peisong_img7: '',
+          peisong_img8: '',
           money: '',
           money_renyuan: '',
           money_riqi: '',
@@ -1601,8 +3052,48 @@ Page({
           kucun_img3: '',
           kucun_img3_renyuan: '',
           kucun_img3_riqi: '',
+          kucun_img4: '',
+          kucun_img5: '',
+          kucun_img6: '',
+          kucun_img7: '',
+          kucun_img8: '',
         }
       ],
+      customer_need_img_height:2800,
+      customer_need_img2_display:true,
+      customer_need_img3_display:true,
+      customer_need_img4_display:true,
+      customer_need_img5_display:true,
+      customer_need_img6_display:true,
+      customer_need_img7_display:true,
+      customer_need_img8_display:true,
+
+      peihuo_img_height:2800,
+      peihuo_img2_display:true,
+      peihuo_img3_display:true,
+      peihuo_img4_display:true,
+      peihuo_img5_display:true,
+      peihuo_img6_display:true,
+      peihuo_img7_display:true,
+      peihuo_img8_display:true,
+
+      peisong_img_height:2800,
+      peisong_img2_display:true,
+      peisong_img3_display:true,
+      peisong_img4_display:true,
+      peisong_img5_display:true,
+      peisong_img6_display:true,
+      peisong_img7_display:true,
+      peisong_img8_display:true,
+
+      kucun_img_height:2800,
+      kucun_img2_display:true,
+      kucun_img3_display:true,
+      kucun_img4_display:true,
+      kucun_img5_display:true,
+      kucun_img6_display:true,
+      kucun_img7_display:true,
+      kucun_img8_display:true,
     })
     var bianhao_left = getBianHao()
     var list = _this.data.list

@@ -1,0 +1,29 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-field
+        size="large"
+        model:value="{{ type }}"
+        data-column="type"
+        label="类型"
+        placeholder="请输入类型"
+        border="false"
+      />
+
+      <van-field
+        size="large"
+        model:value="{{ guige }}"
+        data-column="guige"
+        label="规格"
+        placeholder="请输入规格"
+        border="false"
+      />
+
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="save">确定</button>
+  <button class="bt_bottom" bindtap="back">取消</button>
+</view>
