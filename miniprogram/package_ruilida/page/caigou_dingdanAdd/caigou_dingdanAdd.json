@@ -15,7 +15,8 @@
     "van-icon": "../../components/icon/index",
     "van-area": "../../components/area/index",
     "van-popup": "../../components/popup/index",
-    "van-image": "../../components/image/index"
+    "van-image": "../../components/image/index",
+    "van-tag": "../../components/tag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

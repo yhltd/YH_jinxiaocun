@@ -1,0 +1,72 @@
+<view style="height:7%;padding-top: 10px;">
+  <van-cell-group inset>
+  <van-field
+    value="{{ value }}"
+    placeholder="请输入商品名称"
+    border="{{ false }}"
+    bind:change="inputChange"
+  />
+</van-cell-group>
+</view>
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <block class="title" wx:for="{{type_list}}" wx:for-index="i">
+    <van-tab title="{{type_list[i].name}}">
+      <scroll-view scroll-x="true" scroll-y="true" style="padding-top:10px;padding-bottom: 10px;height:{{scoll_height}}px"> 
+        <van-cell-group inset data-index="{{i}}">
+          <block class="title" wx:for="{{pro_list}}" wx:for-index="j">
+            <van-cell center title="{{pro_list[j].name}}" use-label-slot wx:if="{{this_type=='全部'?true:this_type==pro_list[j].type}}">
+              <view slot="label">
+                <text>编号：{{pro_list[j].bianhao}} \n</text>
+                <text>规格：{{pro_list[j].guige}} \n</text>
+                <text>分类：{{pro_list[j].type}} \n</text>
+                <text decode="{{true}}">采购价格：{{pro_list[j].caigou_price}}</text>
+              </view>
+              <view solt="value">
+                <van-stepper data-index="{{j}}" min="0" value="{{ pro_list[j].num }}" bind:change="changeStepper" />
+              </view>
+            </van-cell>
+          </block>
+        </van-cell-group>
+      </scroll-view>
+    </van-tab>
+  </block>
+</van-tabs>
+
+<!--选择商品-->
+<van-popup
+  show="{{ product_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 80%"
+  bind:close="qxShow"
+>
+  <scroll-view style="height:100%" scroll-x="true" scroll-y="true" style="padding-top: 10px;padding-bottom: 10px;">
+    <van-cell-group>
+    <van-cell center
+      wx:for="{{ pro_list }}"
+      wx:key="index"
+      title="{{ item.name }}"
+      value-class="value-class"
+      clickable
+      data-index="{{ index }}"
+      wx:if="{{item.num > 0}}"
+      use-label-slot
+    >
+      <view slot="label">
+        <text>编号：{{item.bianhao}} \n</text>
+        <text>规格：{{item.guige}} \n</text>
+        <text>分类：{{item.type}} \n</text>
+        <text decode="{{true}}">采购价格：{{item.caigou_price}} &nbsp;&nbsp; 数量：{{item.num}}</text>
+      </view>
+      <view solt="value"> 
+        <button class="bt_bottom_del" data-index="{{ index }}" bindtap="del_pro">删除</button>
+      </view>
+    </van-cell>
+  </van-cell-group>
+  </scroll-view>
+</van-popup>
+
+<view class="bottom_view" style="padding-top:2%">
+  <button class="bt_bottom" bindtap="list_select">已选列表</button>
+  <button class="bt_bottom" bindtap="save">确定</button>
+</view>

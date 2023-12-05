@@ -37,7 +37,11 @@
         placeholder="请输入权限"
         border="false"
         readonly="true"
-      />
+      >
+
+        <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="power">添加</van-tag>
+
+      </van-field>
 
       <van-field
         size="large"

@@ -1,5 +1,6 @@
 // package_ruilida/page/userInfoAdd/userInfoAdd.js
 var areaList = require("../../components/data_area.js")
+const app = getApp();
 Page({
 
   /**
@@ -16,6 +17,7 @@ Page({
       kehu:'',
       yewuyuan:'',
       dianpu:'',
+      xiaoshou_danwei:'',
       xiaoxiang_shuilv:'',
       beizhu:'',
       shenhe:'',
@@ -35,6 +37,7 @@ Page({
         baojia_danjia:'',
         jiashui_xiaoji:'',
         jianyi_baojia:'',
+        zuigaojia:'',
         xuyong_riqi:'',
         baojia_fudong:'',
         beizhu:'',
@@ -56,7 +59,7 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from customer;select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi_shuilv;"
+    var sql = "select * from customer;select id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable,isselect,isnull(shangpin_bianhao,'') as shangpin_bianhao,isnull(zuigaojia,'') as zuigaojia from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianhao,max(convert(float,baojia_danjia)) as zuigaojia from xiaoshou_dingdan_item group by shangpin_bianhao) as price on pro.bianhao = price.shangpin_bianhao;select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi_shuilv;select * from peizhi where type = '核算单位';select * from peizhi where type = '销项税率';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -70,33 +73,40 @@ Page({
         var shenhe_list = res.result.recordsets[3]
         var yewuyuan_list = res.result.recordsets[3]
         var peizhi_shuilv = res.result.recordsets[4][0]
+        var xiaoshou_danwei_list = res.result.recordsets[5]
+        var xiaoxiang_shuilv_list = res.result.recordsets[6]
         var fujia_shuilv = 1
         if(peizhi_shuilv.zhuangtai == '是'){
           fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
         }
+        var jiage_dengji_list=[
+          {name:'零售价格'},
+          {name:'批发价格'},
+          {name:'大客户价格'},
+        ]
+        if(peizhi_shuilv.dakehu_zhuangtai != '是'){
+          jiage_dengji_list.splice(2,1)
+        }
+        if(peizhi_shuilv.pifa_zhuangtai != '是'){
+          jiage_dengji_list.splice(1,1)
+        }
+        if(peizhi_shuilv.lingshou_zhuangtai != '是'){
+          jiage_dengji_list.splice(0,1)
+        } 
+        console.log(peizhi_shuilv)
         console.log(fujia_shuilv)
-        for(var i=0; i<product_list.length; i++){
-          var jinxiang = product_list[i].jinxiang / 100
-          var xiaoxiang = product_list[i].xiaoxiang / 100
-          var pifa_bili = product_list[i].pifa_bili / 100
-          var lingshou_bili = product_list[i].lingshou_bili / 100
-          var dakehu_bili = product_list[i].dakehu_bili / 100
-          var caigou_price = product_list[i].caigou_price * 1
-          product_list[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
-          product_list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
-          product_list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
-        }
-        for(var i=0; i<product_list.length; i++){
-          if(product_list[i].zuidijia != null){
-            product_list[i].caigou_danjia = product_list[i].zuidijia
-          }
-        }
+
         _this.setData({
+          peizhi_shuilv,
           kehu_list,
           product_list,
           dianpu_list,
           shenhe_list,
-          yewuyuan_list
+          yewuyuan_list,
+          xiaoshou_danwei_list,
+          xiaoxiang_shuilv_list,
+          fujia_shuilv,
+          jiage_dengji_list,
         })
       },
       err: res => {
@@ -193,27 +203,90 @@ Page({
 
   product_select:function(e){
     var _this = this
-    var jiage_dengji = _this.data.baojia_body.jiage_dengji
-    if(jiage_dengji == '' || jiage_dengji == null || jiage_dengji == undefined){
-      wx.showToast({
-        title: '未读取到客户价格等级，请选择客户后再试',
-        icon: 'none'
-      })
-      return;
-    }
     console.log(e)
     var index = e.currentTarget.dataset.index
     console.log(index)
     var product_list = _this.data.product_list
+    var peizhi_shuilv = _this.data.peizhi_shuilv
+    var fujia_shuilv = 1
+    var baojia_body = _this.data.baojia_body
+    if(baojia_body.jiage_dengji == ''){
+      wx.showToast({
+        title: '请选择客户价格等级',
+        icon:'none'
+      })
+      return;
+    }
+
+    if(peizhi_shuilv.zhuangtai == '是'){
+      fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
+    }
+    for(var i=0; i<product_list.length; i++){
+      var jinxiang = product_list[i].jinxiang / 100
+      var xiaoxiang = _this.data.baojia_body.xiaoxiang_shuilv
+      if(xiaoxiang == ''){
+        xiaoxiang = 0
+      }
+      var pifa_bili = peizhi_shuilv.pifa / 100
+      var lingshou_bili = peizhi_shuilv.lingshou / 100
+      var dakehu_bili = peizhi_shuilv.dakehu / 100
+      var caigou_price = product_list[i].caigou_price * 1
+      product_list[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
+      product_list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
+      product_list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
+    }
+
     for(var i=0; i< product_list.length; i++){
       product_list[i].isselect = 1
     }
+    console.log(product_list)
     _this.setData({
       product_index: index,
       product_show: true,
       product_list,
       type:'',
       name:'',
+    })
+  },
+
+  product_refresh:function(){
+    var _this = this
+    var product_list = _this.data.product_list
+    var peizhi_shuilv = _this.data.peizhi_shuilv
+    var fujia_shuilv = 1
+    var baojia_body = _this.data.baojia_body
+    if(baojia_body.jiage_dengji == ''){
+      wx.showToast({
+        title: '请选择客户价格等级',
+        icon:'none'
+      })
+      return;
+    }
+
+    if(peizhi_shuilv.zhuangtai == '是'){
+      fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
+    }
+    for(var i=0; i<product_list.length; i++){
+      var jinxiang = product_list[i].jinxiang / 100
+      var xiaoxiang = _this.data.baojia_body.xiaoxiang_shuilv
+      if(xiaoxiang == ''){
+        xiaoxiang = 0
+      }
+      var pifa_bili = peizhi_shuilv.pifa / 100
+      var lingshou_bili = peizhi_shuilv.lingshou / 100
+      var dakehu_bili = peizhi_shuilv.dakehu / 100
+      var caigou_price = product_list[i].caigou_price * 1
+      product_list[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
+      product_list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
+      product_list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
+    }
+
+    for(var i=0; i< product_list.length; i++){
+      product_list[i].isselect = 1
+    }
+    console.log(product_list)
+    _this.setData({
+      product_list,
     })
   },
 
@@ -264,6 +337,7 @@ Page({
     lianxi_list[product_index].jishu_biaozhun = product_list[index].jishu_biaozhun
     lianxi_list[product_index].zhibao_dengji = product_list[index].zhibao_dengji
     lianxi_list[product_index].danwei = product_list[index].danwei
+    lianxi_list[product_index].zuigaojia = product_list[index].zuigaojia
 
     if(baojia_body.jiage_dengji == '零售价格'){
       lianxi_list[product_index].jianyi_baojia = product_list[index].lingshou_price
@@ -354,6 +428,7 @@ Page({
             baojia_danjia:'',
             jiashui_xiaoji:'',
             jianyi_baojia:'',
+            zuigaojia:'',
             xuyong_riqi:'',
             baojia_fudong:'',
             beizhu:'',
@@ -366,6 +441,223 @@ Page({
         }
       }
     })
+  },
+
+  bianhao_get:function(e){
+    var _this = this
+    var index = e.target.dataset.index
+    console.log(e)
+    var baojia_body = _this.data.baojia_body
+    if(baojia_body.jiage_dengji == ''){
+      wx.showToast({
+        title: '请选择客户价格等级',
+        icon:'none'
+      })
+      return;
+    }
+    _this.product_refresh()
+    wx.scanCode({
+      success (res) {
+        console.log(res)
+        console.log(res.result)
+        var lianxi_list = _this.data.lianxi_list
+        var this_bianhao = res.result
+        var product_list = _this.data.product_list
+        console.log(product_list)
+        var panduan = false
+        for(var i=0; i<product_list.length; i++){
+          if(product_list[i].bianhao == res.result){
+            lianxi_list[index].shangpin_bianhao = product_list[i].bianhao
+            lianxi_list[index].shangpin_mingcheng = product_list[i].name
+            lianxi_list[index].guige = product_list[i].guige
+            lianxi_list[index].caizhi = product_list[i].caizhi
+            lianxi_list[index].jishu_biaozhun = product_list[i].jishu_biaozhun
+            lianxi_list[index].zhibao_dengji = product_list[i].zhibao_dengji
+            lianxi_list[index].danwei = product_list[i].danwei
+            lianxi_list[index].zuigaojia = product_list[i].zuigaojia
+
+            if(baojia_body.jiage_dengji == '零售价格'){
+              lianxi_list[index].jianyi_baojia = product_list[i].lingshou_price
+              if(lianxi_list[index].baojia_fudong == ''){
+                lianxi_list[index].baojia_fudong = 100
+                lianxi_list[index].baojia_danjia = product_list[i].lingshou_price
+              }else{
+                lianxi_list[index].baojia_danjia = Math.round((product_list[i].lingshou_price * lianxi_list[index].baojia_fudong / 100) * 100) / 100
+              }
+            }else if(baojia_body.jiage_dengji == '批发价格'){
+              lianxi_list[index].jianyi_baojia = product_list[i].pifa_price
+              if(lianxi_list[index].baojia_fudong == ''){
+                lianxi_list[index].baojia_fudong = 100
+                lianxi_list[index].baojia_danjia = product_list[i].pifa_price
+              }else{
+                lianxi_list[index].baojia_danjia = Math.round((product_list[i].pifa_price * lianxi_list[index].baojia_fudong / 100) * 100) / 100
+              }
+            }else if(baojia_body.jiage_dengji == '大客户价格'){
+              lianxi_list[index].jianyi_baojia = product_list[i].dakehu_price
+              if(lianxi_list[index].baojia_fudong == ''){
+                lianxi_list[index].baojia_fudong = 100
+                lianxi_list[index].baojia_danjia = product_list[i].dakehu_price
+              }else{
+                lianxi_list[index].baojia_danjia = Math.round((product_list[i].dakehu_price * lianxi_list[index].baojia_fudong / 100) * 100) / 100
+              }
+            }
+            
+            if(lianxi_list[index].baojia_danjia != '' && lianxi_list[index].shuliang != ''){
+              lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].baojia_danjia * lianxi_list[index].shuliang * 100) / 100
+            }
+            panduan = true
+            break;
+          }
+        }
+        if(panduan){
+          _this.setData({
+            lianxi_list
+          })
+        }else{
+          wx.showToast({
+            title: '未读取到此编号信息',
+            icon:'none'
+          })
+        }
+      }
+    })
+  },
+
+  goto_add:function(){
+    var _this = this
+    var yixuan_list = {}
+    var lianxi_list = _this.data.lianxi_list
+    for(var i=0; i<lianxi_list.length; i++){
+      if(lianxi_list[i].shangpin_bianhao != ''){
+        yixuan_list[lianxi_list[i].shangpin_bianhao] = 1
+      }
+    }
+    var baojia_body = _this.data.baojia_body
+    if(baojia_body.jiage_dengji == ''){
+      wx.showToast({
+        title: '请选择客户价格等级',
+        icon:'none'
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: '../productSelect/productSelect?userInfo=' + JSON.stringify(_this.data.userInfo) + "&yixuan=" + JSON.stringify(yixuan_list)
+    })
+  },
+
+  add_back:function(){
+    var _this = this
+    var pro_sel = app.globalData.ruili_pro
+    console.log(pro_sel)
+    var peizhi_shuilv = _this.data.peizhi_shuilv
+    var fujia_shuilv = 1
+    if(peizhi_shuilv != undefined){
+      wx.showLoading({
+        title:'加载中'
+      })
+      if(peizhi_shuilv.zhuangtai == '是'){
+        fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
+      }
+      if(pro_sel.length > 0){
+        var list = _this.data.lianxi_list
+        for(var i=0; i<pro_sel.length; i++){
+          var jinxiang = pro_sel[i].jinxiang / 100
+          var xiaoxiang = _this.data.baojia_body.xiaoxiang_shuilv
+          if(xiaoxiang == ''){
+            xiaoxiang = 0
+          }
+          var pifa_bili = peizhi_shuilv.pifa / 100
+          var lingshou_bili = peizhi_shuilv.lingshou / 100
+          var dakehu_bili = peizhi_shuilv.dakehu / 100
+          var caigou_price = pro_sel[i].caigou_price * 1
+          pro_sel[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
+          pro_sel[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
+          pro_sel[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
+          
+          var baojia_body = _this.data.baojia_body
+          var jianyi_baojia = ""
+          var baojia_fudong = ""
+          var baojia_danjia = ""
+          var jiashui_xiaoji = ""
+          if(baojia_body.jiage_dengji == '零售价格'){
+            jianyi_baojia = pro_sel[i].lingshou_price
+            if(baojia_fudong == ''){
+              baojia_fudong = 100
+              baojia_danjia = pro_sel[i].lingshou_price
+            }else{
+              baojia_danjia = Math.round((pro_sel[i].lingshou_price * baojia_fudong / 100) * 100) / 100
+            }
+          }else if(baojia_body.jiage_dengji == '批发价格'){
+            jianyi_baojia = pro_sel[i].pifa_price
+            if(baojia_fudong == ''){
+              baojia_fudong = 100
+              baojia_danjia = pro_sel[i].pifa_price
+            }else{
+              baojia_danjia = Math.round((pro_sel[i].pifa_price * baojia_fudong / 100) * 100) / 100
+            }
+          }else if(baojia_body.jiage_dengji == '大客户价格'){
+            jianyi_baojia = pro_sel[i].dakehu_price
+            if(baojia_fudong == ''){
+              baojia_fudong = 100
+              baojia_danjia = pro_sel[i].dakehu_price
+            }else{
+              baojia_danjia = Math.round((pro_sel[i].dakehu_price * baojia_fudong / 100) * 100) / 100
+            }
+          }
+          
+          if(baojia_danjia != '' && pro_sel[i].num != ''){
+            jiashui_xiaoji = Math.round(baojia_danjia * pro_sel[i].num * 100) / 100
+          }
+
+          if(list[0].shangpin_bianhao == ""){
+            list[0] = {
+              id:'',
+              shangpin_bianhao:pro_sel[i].bianhao,
+              shangpin_mingcheng:pro_sel[i].name,
+              guige:pro_sel[i].guige,
+              caizhi:pro_sel[i].caizhi,
+              jishu_biaozhun:pro_sel[i].jishu_biaozhun,
+              zhibao_dengji:pro_sel[i].zhibao_dengji,
+              danwei:pro_sel[i].danwei,
+              shuliang:pro_sel[i].num,
+              baojia_danjia:baojia_danjia,
+              jiashui_xiaoji:jiashui_xiaoji,
+              jianyi_baojia:jianyi_baojia,
+              zuigaojia:pro_sel[i].zuigaojia,
+              xuyong_riqi:'',
+              baojia_fudong:baojia_fudong,
+              beizhu:'',
+            }
+          }else{
+            list.push(
+              {
+                id:'',
+                shangpin_bianhao:pro_sel[i].bianhao,
+                shangpin_mingcheng:pro_sel[i].name,
+                guige:pro_sel[i].guige,
+                caizhi:pro_sel[i].caizhi,
+                jishu_biaozhun:pro_sel[i].jishu_biaozhun,
+                zhibao_dengji:pro_sel[i].zhibao_dengji,
+                danwei:pro_sel[i].danwei,
+                shuliang:pro_sel[i].num,
+                baojia_danjia:baojia_danjia,
+                jiashui_xiaoji:jiashui_xiaoji,
+                jianyi_baojia:jianyi_baojia,
+                zuigaojia:pro_sel[i].zuigaojia,
+                xuyong_riqi:'',
+                baojia_fudong:baojia_fudong,
+                beizhu:'',
+              }
+            )
+          }
+        }
+        console.log(list)
+        _this.setData({
+          lianxi_list:list
+        })
+      }
+      wx.hideLoading()
+    }
   },
 
   del_lianxiren:function(e){
@@ -412,6 +704,13 @@ Page({
       })
       return;
     }
+    if(baojia_body.jiage_dengji == ''){
+      wx.showToast({
+        title: '请选择客户价格等级',
+        icon: 'none'
+      })
+      return;
+    }
     if(baojia_body.yewuyuan == ''){
       wx.showToast({
         title: '请选择业务员',
@@ -422,6 +721,13 @@ Page({
     if(baojia_body.dianpu == ''){
       wx.showToast({
         title: '请选择店铺',
+        icon: 'none'
+      })
+      return;
+    }
+    if(baojia_body.xiaoxiang_shuilv == ''){
+      wx.showToast({
+        title: '请选择销项税率',
         icon: 'none'
       })
       return;
@@ -448,9 +754,9 @@ Page({
         })
         return;
       }
-      if(lianxi_list[i].caigou_danjia == ''){
+      if(lianxi_list[i].baojia_danjia == ''){
         wx.showToast({
-          title: '第' + (i * 1+1) + '条商品未填写采购单价',
+          title: '第' + (i * 1+1) + '条商品未填写报价单价',
           icon: 'none'
         })
         return;
@@ -460,7 +766,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into xiaoshou_baojia(bianhao,riqi,kehu,yewuyuan,dianpu,xiaoxiang_shuilv,beizhu,shenhe,jiage_dengji,shenhe_zhuangtai) output inserted.id values('" + baojia_body.bianhao + "','" + baojia_body.riqi + "','" + baojia_body.kehu + "','" + baojia_body.yewuyuan + "','" + baojia_body.dianpu + "','" + baojia_body.xiaoxiang_shuilv + "','" + baojia_body.beizhu + "','" + baojia_body.shenhe + "','" + baojia_body.jiage_dengji + "','审核中')"
+      var sql = "insert into xiaoshou_baojia(bianhao,riqi,kehu,yewuyuan,dianpu,xiaoxiang_shuilv,beizhu,shenhe,jiage_dengji,shenhe_zhuangtai,xiaoshou_danwei) output inserted.id values('" + baojia_body.bianhao + "','" + baojia_body.riqi + "','" + baojia_body.kehu + "','" + baojia_body.yewuyuan + "','" + baojia_body.dianpu + "','" + baojia_body.xiaoxiang_shuilv + "','" + baojia_body.beizhu + "','" + baojia_body.shenhe + "','" + baojia_body.jiage_dengji + "','审核中','" + baojia_body.xiaoshou_danwei + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -548,7 +854,7 @@ Page({
       if(baojia_body.shenhe_zhuangtai == '审核未通过'){
         baojia_body.shenhe_zhuangtai = "审核中"
       }
-      var sql = "update xiaoshou_baojia set bianhao='" + baojia_body.bianhao + "',riqi='" + baojia_body.riqi + "',kehu='" + baojia_body.kehu + "',yewuyuan='" + baojia_body.yewuyuan + "',dianpu='" + baojia_body.dianpu + "',xiaoxiang_shuilv='" + baojia_body.xiaoxiang_shuilv + "',beizhu='" + baojia_body.beizhu + "',shenhe='" + baojia_body.shenhe + "',jiage_dengji='" + baojia_body.jiage_dengji + "',shenhe_zhuangtai='" + baojia_body.shenhe_zhuangtai + "' where id=" + baojia_body.id
+      var sql = "update xiaoshou_baojia set bianhao='" + baojia_body.bianhao + "',riqi='" + baojia_body.riqi + "',kehu='" + baojia_body.kehu + "',yewuyuan='" + baojia_body.yewuyuan + "',dianpu='" + baojia_body.dianpu + "',xiaoxiang_shuilv='" + baojia_body.xiaoxiang_shuilv + "',beizhu='" + baojia_body.beizhu + "',shenhe='" + baojia_body.shenhe + "',jiage_dengji='" + baojia_body.jiage_dengji + "',shenhe_zhuangtai='" + baojia_body.shenhe_zhuangtai + "',shenhe_zhuangtai='" + baojia_body.shenhe_zhuangtai + "',xiaoshou_danwei='" + baojia_body.xiaoshou_danwei + "' where id=" + baojia_body.id
       console.log(baojia_body)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -558,13 +864,13 @@ Page({
         success: res => {
           console.log(res)
           var new_id = baojia_body.id
-          var sql = "delete from xiaoshou_baojia_item where baojia_id='" + new_id + "';insert into xiaoshou_baojia_item(shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,jianyi_baojia,xuyong_riqi,baojia_fudong,beizhu,baojia_id) values "
+          var sql = "delete from xiaoshou_baojia_item where baojia_id='" + new_id + "';insert into xiaoshou_baojia_item(shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,jianyi_baojia,xuyong_riqi,baojia_fudong,beizhu,baojia_id,zuigaojia) values "
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
+              sql2 = "('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id +  "','"  + lianxi_list[i].zuigaojia + "')"
             }else{
-              sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
+              sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id +  "','"  + lianxi_list[i].zuigaojia + "')"
             }
           }
           sql = sql + sql2
@@ -745,11 +1051,14 @@ Page({
 
   },
 
+
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    _this.add_back()
   },
 
   /**

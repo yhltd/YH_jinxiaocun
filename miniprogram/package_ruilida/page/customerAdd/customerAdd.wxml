@@ -30,7 +30,11 @@
         placeholder="请输入客户分类"
         border="false"
         readonly="true"
-      />
+      >
+
+        <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="type">添加</van-tag>
+
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -63,7 +67,11 @@
         placeholder="请输入价格等级"
         border="false"
         readonly="true"
-      />
+      >
+
+      <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="jiage_dengji">配置</van-tag>
+
+      </van-field>
 
       <van-field
         bind:input="onInput"

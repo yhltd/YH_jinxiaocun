@@ -22,6 +22,8 @@ Page({
       dianpu:'',
       cangku:'',
       beizhu:'',
+      chuku_danwei:'',
+      yewuyuan:'',
     },
     lianxi_list:[
       {
@@ -55,7 +57,8 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from customer;select * from peizhi where type = '店铺';select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from userInfo;select * from peizhi where type = '仓库';select * from peizhi_shuilv;"
+    var xiaoshou_id = options.xiaoshou_id
+    var sql = "select * from customer;select * from peizhi where type = '店铺';select id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable,isselect,isnull(shangpin_bianhao,'') as shangpin_bianhao,isnull(zuigaojia,'') as zuigaojia from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianhao,max(convert(float,baojia_danjia)) as zuigaojia from xiaoshou_dingdan_item group by shangpin_bianhao) as price on pro.bianhao = price.shangpin_bianhao;select * from userInfo;select * from peizhi where type = '仓库';select * from peizhi_shuilv;select * from peizhi where type = '核算单位';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -67,8 +70,10 @@ Page({
         var dianpu_list = res.result.recordsets[1]
         var product_list = res.result.recordsets[2]
         var shenhe_list = res.result.recordsets[3]
+        var yewuyuan_list = res.result.recordsets[3]
         var cangku_list = res.result.recordsets[4]
         var peizhi_shuilv = res.result.recordsets[5][0]
+        var chuku_danwei_list = res.result.recordsets[6]
         var fujia_shuilv = 1
         if(peizhi_shuilv.zhuangtai == '是'){
           fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
@@ -85,21 +90,39 @@ Page({
           product_list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
           product_list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
         }
+
+        var jiage_dengji_list=[
+          {name:'零售价格'},
+          {name:'批发价格'},
+          {name:'大客户价格'},
+        ]
+        if(peizhi_shuilv.dakehu_zhuangtai != '是'){
+          jiage_dengji_list.splice(2,1)
+        }
+        if(peizhi_shuilv.pifa_zhuangtai != '是'){
+          jiage_dengji_list.splice(1,1)
+        }
+        if(peizhi_shuilv.lingshou_zhuangtai != '是'){
+          jiage_dengji_list.splice(0,1)
+        } 
+        console.log(peizhi_shuilv)
+        console.log(fujia_shuilv)
+
         var kehu_jiage = {}
         for(var i=0; i<kehu_list.length; i++){
           kehu_jiage[kehu_list[i].name] = kehu_list[i].jiage_dengji
         }
-        for(var i=0; i<product_list.length; i++){
-          if(product_list[i].zuidijia != null){
-            product_list[i].caigou_danjia = product_list[i].zuidijia
-          }
-        }
         _this.setData({
+          peizhi_shuilv,
           kehu_list,
           dianpu_list,
           product_list,
           shenhe_list,
-          cangku_list
+          cangku_list,
+          chuku_danwei_list,
+          yewuyuan_list,
+          fujia_shuilv,
+          jiage_dengji_list,
         })
       },
       err: res => {
@@ -147,7 +170,7 @@ Page({
           console.log("请求失败！")
         }
       })
-    }else{
+    }else if(id == undefined && xiaoshou_id == undefined){
       var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CK000000'),3,6)) + 1 as bianhao from xiaoshou_chuku;select * from peizhi where type = '店铺';;select * from peizhi where type = '仓库';"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -198,12 +221,114 @@ Page({
           console.log("请求失败！")
         }
       })
+    }else if(xiaoshou_id != undefined){
+      console.log(xiaoshou_id)
+      var sql = "select *,1 as isselect from xiaoshou_dingdan where id=" + xiaoshou_id + ";select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id where xiaoshou_id = " + xiaoshou_id + ") as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,xiaoshou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_danjia,chuku_id,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0;"
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var list = res.result.recordsets[0]
+          var list_item = res.result.recordsets[1]
+          var chuku_body = _this.data.chuku_body
+          chuku_body.xiaoshou_id = list[0].bianhao
+          chuku_body.kehu = list[0].kehu
+          chuku_body.dianpu = list[0].dianpu
+          var lianxi_list = list_item
+          console.log(lianxi_list)
+          for(var i=0; i<lianxi_list.length; i++){
+            lianxi_list[i].shangpin_bianma = lianxi_list[i].shangpin_bianhao
+            lianxi_list[i].name = lianxi_list[i].shangpin_mingcheng
+            lianxi_list[i].xiaoshou_danjia = lianxi_list[i].baojia_danjia
+            lianxi_list[i].shuliang = lianxi_list[i].weichu_shuliang
+            lianxi_list[i].jiashui_xiaoji = lianxi_list[i].xiaoshou_danjia * lianxi_list[i].weichu_shuliang
+          }
+          console.log(lianxi_list)
+          _this.setData({
+            chuku_body,
+            lianxi_list,
+          })
+          console.log(lianxi_list)
+          console.log(chuku_body)
+
+          var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CK000000'),3,6)) + 1 as bianhao from xiaoshou_chuku;select * from peizhi where type = '店铺';;select * from peizhi where type = '仓库';"
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var max_bianhao = res.result.recordsets[0][0].bianhao
+              var this_bianhao = PrefixInteger(max_bianhao,6)
+              console.log(this_bianhao)
+              this_bianhao = "CK" + this_bianhao
+              console.log(this_bianhao)
+              var chuku_body = _this.data.chuku_body
+              chuku_body.bianhao = this_bianhao
+              chuku_body.riqi = getNowDate()
+              var dianpu_list = res.result.recordsets[1]
+              if(_this.data.userInfo.dianpu != ''){
+                for(var i=0; i<dianpu_list.length; i++){
+                  if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                    chuku_body.dianpu = dianpu_list[i].name
+                    break;
+                  }
+                }
+              }
+              var cangku_list = res.result.recordsets[2]
+              if(_this.data.userInfo.cangku != ''){
+                for(var i=0; i<cangku_list.length; i++){
+                  if(cangku_list[i].id == _this.data.userInfo.cangku){
+                    chuku_body.cangku = cangku_list[i].name
+                    break;
+                  }
+                }
+              }
+              _this.setData({
+                chuku_body
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+
+        },
+        err: res => {
+          wx.showToast({
+            title: '错误！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
     }
   },
 
   caigou_click:function(){
     var _this = this
-    var sql = "select *,1 as isselect from xiaoshou_dingdan;select * from xiaoshou_dingdan_item;"
+    var sql = "select *,1 as isselect from xiaoshou_dingdan;select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,xiaoshou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_danjia,chuku_id,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -214,7 +339,7 @@ Page({
         var list_item = res.result.recordsets[1]
         for(var i=list.length-1; i >=0; i--){
           for(var j=list_item.length-1; j>=0; j--){
-            if(list[i].id == list_item[j].xiaoshou_id){
+            if(list[i].bianhao == list_item[j].bianhao){
               if(list[i].item == undefined){
                 var this_item = []
                 this_item.push(list_item[j])
@@ -227,6 +352,11 @@ Page({
                 list[i].item = this_item
               }
             }
+          }
+        }
+        for(var i=list.length-1; i>=0; i--){
+          if(list[i].item == undefined){
+            list.splice(i,1)
           }
         }
         console.log(list)
@@ -310,7 +440,10 @@ Page({
       lianxi_list[i].shangpin_bianma = lianxi_list[i].shangpin_bianhao
       lianxi_list[i].name = lianxi_list[i].shangpin_mingcheng
       lianxi_list[i].xiaoshou_danjia = lianxi_list[i].baojia_danjia
+      lianxi_list[i].shuliang = lianxi_list[i].weichu_shuliang
+      lianxi_list[i].jiashui_xiaoji = lianxi_list[i].xiaoshou_danjia * lianxi_list[i].weichu_shuliang
     }
+    console.log(lianxi_list)
     _this.setData({
       chuku_body,
       lianxi_list,
@@ -515,6 +648,13 @@ Page({
       })
       return;
     }
+    if(chuku_body.yewuyuan == ''){
+      wx.showToast({
+        title: '请选择业务员',
+        icon: 'none'
+      })
+      return;
+    }
     for(var i=0; i<lianxi_list.length; i++){
       if(lianxi_list[i].shangpin_bianma == ''){
         wx.showToast({
@@ -542,7 +682,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into xiaoshou_chuku(bianhao,riqi,xiaoshou_id,kehu,dianpu,cangku,beizhu) output inserted.id values('" + chuku_body.bianhao + "','" + chuku_body.riqi + "','" + chuku_body.xiaoshou_id + "','" + chuku_body.kehu + "','" + chuku_body.dianpu + "','" + chuku_body.cangku + "','" + chuku_body.beizhu + "')"
+      var sql = "insert into xiaoshou_chuku(bianhao,riqi,xiaoshou_id,kehu,dianpu,cangku,beizhu,chuku_danwei,yewuyuan) output inserted.id values('" + chuku_body.bianhao + "','" + chuku_body.riqi + "','" + chuku_body.xiaoshou_id + "','" + chuku_body.kehu + "','" + chuku_body.dianpu + "','" + chuku_body.cangku + "','" + chuku_body.beizhu + "','" + chuku_body.chuku_danwei + "','" + chuku_body.yewuyuan + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {

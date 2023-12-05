@@ -27,6 +27,7 @@ Page({
       jizhang_jine:'',
       kedi_shuie:'',
       zhaiyao:'',
+      jizhang_danwei:'',
     },
     lianxi_list:[
       {
@@ -80,10 +81,12 @@ Page({
       userInfo,
       areaList: areaList.list,
       shouzhi_type,
-      danju_leixing_list
+      danju_leixing_list,
     })
     var id = options.id
-    var sql = "select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi where type = '记账分类';select * from peizhi where type = '收款账户';select * from peizhi where type = '记账明细类型';select * from gongyingshang;select * from customer;"
+    var xiaoshou_id = options.xiaoshou_id
+    var shoufu_type = options.shoufu_type
+    var sql = "select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi where type = '记账分类';select * from peizhi where type = '收款账户';select * from peizhi where type = '记账明细类型';select * from gongyingshang;select * from customer;select * from peizhi where type = '核算单位';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -98,6 +101,7 @@ Page({
         var mingxi_type_list = res.result.recordsets[4]
         var gongyingshang_list = res.result.recordsets[5]
         var kehu_list = res.result.recordsets[6]
+        var jizhang_danwei_list = res.result.recordsets[7]
         _this.setData({
           dianpu_list,
           jizhangren_list,
@@ -105,7 +109,8 @@ Page({
           jizhang_zhanghu_list,
           mingxi_type_list,
           gongyingshang_list,
-          kehu_list
+          kehu_list,
+          jizhang_danwei_list
         })
       },
       err: res => {
@@ -183,6 +188,44 @@ Page({
           _this.setData({
             shouzhi_body
           })
+
+          var xiaoshou_id = options.xiaoshou_id
+          var shoufu_type = options.shoufu_type
+          var yukuan = options.yukuan
+          shouzhi_body.shoufu_type = shoufu_type
+
+          //销售id不为空，说明从销售订单详情跳转，收订金
+          if(xiaoshou_id != undefined){
+            shouzhi_body.danju_leixing = '采购订单'
+            var sql = "select * from xiaoshou_dingdan where id=" + xiaoshou_id
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql
+              },
+              success: res => {
+                console.log(res)
+                var bianhao = res.result.recordsets[0][0].bianhao
+                shouzhi_body.danju_bianhao = bianhao
+                _this.setData({
+                  shouzhi_body,
+                  xiaoshou_id,
+                  yukuan
+                })
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("请求失败！")
+              }
+            })
+          }
         },
         err: res => {
           console.log("错误!")
@@ -593,10 +636,25 @@ Page({
       return;
     }
 
+    if(shouzhi_body.zhaiyao == ''){
+      wx.showToast({
+        title: '请填写摘要',
+        icon: 'none'
+      })
+      return;
+    }
+    var money_sum = 0
     for(var i=0; i<lianxi_list.length; i++){
       if(lianxi_list[i].mingxi_type == ''){
         wx.showToast({
           title: '第' + (i * 1+1) + '条明细未选择明细类型',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].yongtu == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条明细未填写用途',
           icon: 'none'
         })
         return;
@@ -608,12 +666,27 @@ Page({
         })
         return;
       }
+      money_sum = money_sum + Math.round((lianxi_list[i].jizhang_jine * 1) * 100) / 100
+      if(lianxi_list[i].kedi_shuie != ''){
+        money_sum = money_sum + Math.round((lianxi_list[i].kedi_shuie * 1) * 100) / 100
+      }
     }
+
     if(shouzhi_body.id == ''){
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into shouzhi_mingxi(dianpu,danju_leixing,danju_bianhao,shouzhi_bianhao,shouzhi_riqi,jizhangren,jizhang_type,jizhang_zhanghu,jizhang_jine,kedi_shuie,zhaiyao,shouzhi_type) output inserted.id values('" + shouzhi_body.dianpu + "','" + shouzhi_body.danju_leixing + "','" + shouzhi_body.danju_bianhao + "','" + shouzhi_body.shouzhi_bianhao + "','" + shouzhi_body.shouzhi_riqi + "','" + shouzhi_body.jizhangren + "','" + shouzhi_body.jizhang_type + "','" + shouzhi_body.jizhang_zhanghu + "','" + shouzhi_body.jizhang_jine + "','" + shouzhi_body.kedi_shuie + "','" + shouzhi_body.zhaiyao + "','" + _this.data.shouzhi_type.replace("记录",'') + "')"
+
+      if(_this.data.yukuan != undefined){
+        if(money_sum > _this.data.yukuan){
+          wx.showToast({
+            title: '收订金金额不能超过订单总额',
+          })
+          return;
+        }
+      }
+
+      var sql = "insert into shouzhi_mingxi(dianpu,danju_leixing,danju_bianhao,shouzhi_bianhao,shouzhi_riqi,jizhangren,jizhang_type,jizhang_zhanghu,jizhang_jine,kedi_shuie,zhaiyao,shouzhi_type,jizhang_danwei,shoufu_type) output inserted.id values('" + shouzhi_body.dianpu + "','" + shouzhi_body.danju_leixing + "','" + shouzhi_body.danju_bianhao + "','" + shouzhi_body.shouzhi_bianhao + "','" + shouzhi_body.shouzhi_riqi + "','" + shouzhi_body.jizhangren + "','" + shouzhi_body.jizhang_type + "','" + shouzhi_body.jizhang_zhanghu + "','" + shouzhi_body.jizhang_jine + "','" + shouzhi_body.kedi_shuie + "','" + shouzhi_body.zhaiyao + "','" + _this.data.shouzhi_type.replace("记录",'') + "','" + shouzhi_body.jizhang_danwei + "','" + shouzhi_body.shoufu_type  + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -697,7 +770,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "update shouzhi_mingxi set dianpu='" + shouzhi_body.dianpu + "',danju_leixing='" + shouzhi_body.danju_leixing + "',danju_bianhao='" + shouzhi_body.danju_bianhao + "',shouzhi_bianhao='" + shouzhi_body.shouzhi_bianhao + "',shouzhi_riqi='" + shouzhi_body.shouzhi_riqi + "',jizhangren='" + shouzhi_body.jizhangren + "',jizhang_type='" + shouzhi_body.jizhang_type + "',jizhang_zhanghu='" + shouzhi_body.jizhang_zhanghu + "',jizhang_jine='" + shouzhi_body.jizhang_jine + "',kedi_shuie='" + shouzhi_body.kedi_shuie + "',zhaiyao='" + shouzhi_body.zhaiyao + "' where id=" + shouzhi_body.id
+      var sql = "update shouzhi_mingxi set dianpu='" + shouzhi_body.dianpu + "',danju_leixing='" + shouzhi_body.danju_leixing + "',danju_bianhao='" + shouzhi_body.danju_bianhao + "',shouzhi_bianhao='" + shouzhi_body.shouzhi_bianhao + "',shouzhi_riqi='" + shouzhi_body.shouzhi_riqi + "',jizhangren='" + shouzhi_body.jizhangren + "',jizhang_type='" + shouzhi_body.jizhang_type + "',jizhang_zhanghu='" + shouzhi_body.jizhang_zhanghu + "',jizhang_jine='" + shouzhi_body.jizhang_jine + "',kedi_shuie='" + shouzhi_body.kedi_shuie + "',zhaiyao='" + shouzhi_body.zhaiyao + "',jizhang_danwei='" + shouzhi_body.jizhang_danwei + "' where id=" + shouzhi_body.id
       console.log(shouzhi_body)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -853,6 +926,13 @@ Page({
     var column = e.currentTarget.dataset.column
     var list = _this.data[column + "_list"]
     var index = e.currentTarget.dataset.index
+
+    if(column == 'danju_leixing' || column == 'danju_bianhao'){
+      if(_this.data.xiaoshou_id != undefined){
+        return;
+      }
+    }
+
     _this.setData({
       list_xiala: list,
       click_column:column,

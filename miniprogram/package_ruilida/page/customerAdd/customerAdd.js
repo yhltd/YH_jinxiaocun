@@ -60,39 +60,6 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from peizhi where type = '客户分类';select * from customer;select * from peizhi where type = '客户等级';select * from peizhi where type = '价格等级';select * from userInfo"
-    wx.cloud.callFunction({
-      name: 'sqlserver_ruilida',
-      data: {
-        query: sql
-      },
-      success: res => {
-        console.log(res)
-        var type_list = res.result.recordsets[0]
-        var shangji_danwei_list = res.result.recordsets[1]
-        var kehu_dengji_list = res.result.recordsets[2]
-        var jiage_dengji_list = res.result.recordsets[3]
-        var yewuyuan_list = res.result.recordsets[4]
-        _this.setData({
-          type_list,
-          shangji_danwei_list,
-          kehu_dengji_list,
-          jiage_dengji_list,
-          yewuyuan_list,
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
     if(id != null && id != undefined){
       var sql = "select * from customer where id=" + id + ";select *,type as type2 from customer_item where customer_id = '" + id + "'"
       wx.cloud.callFunction({
@@ -167,6 +134,65 @@ Page({
     _this.setData({
       xlShow2:false,
       ssqShow:false
+    })
+  },
+
+  get_peizhi:function(){
+    var _this = this
+    wx.showLoading({
+      title:'加载中'
+    })
+    var sql = "select * from peizhi where type = '客户分类';select * from customer;select * from peizhi where type = '客户等级';select * from peizhi where type = '价格等级';select * from userInfo;select * from peizhi_shuilv;"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var type_list = res.result.recordsets[0]
+        var shangji_danwei_list = res.result.recordsets[1]
+        var kehu_dengji_list = res.result.recordsets[2]
+        var yewuyuan_list = res.result.recordsets[4]
+        var peizhi_shuilv = res.result.recordsets[5][0]
+        var jiage_dengji_list=[
+          {name:'零售价格'},
+          {name:'批发价格'},
+          {name:'大客户价格'},
+        ]
+        if(peizhi_shuilv.dakehu_zhuangtai != '是'){
+          jiage_dengji_list.splice(2,1)
+        }
+        if(peizhi_shuilv.pifa_zhuangtai != '是'){
+          jiage_dengji_list.splice(1,1)
+        }
+        if(peizhi_shuilv.lingshou_zhuangtai != '是'){
+          jiage_dengji_list.splice(0,1)
+        } 
+        console.log(peizhi_shuilv)
+        console.log(jiage_dengji_list)
+        _this.setData({
+          type_list,
+          shangji_danwei_list,
+          kehu_dengji_list,
+          jiage_dengji_list,
+          yewuyuan_list,
+        })
+        wx.hideLoading()
+      },
+      err: res => {
+        console.log("错误!")
+        wx.hideLoading()
+      },
+      fail: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -636,6 +662,34 @@ Page({
     }
   },
 
+  peizhi_goto:function(e){
+    var _this = this
+    var this_column = e.target.dataset.column
+    console.log(e)
+    console.log(this_column)
+
+    wx.showModal({
+      title: '提示',
+      content: '即将跳转到配置页',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          if(this_column == 'type'){
+            wx.navigateTo({
+              url: '../peizhi/peizhi' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=客户分类"
+            })
+          }else if(this_column == 'jiage_dengji'){
+            wx.navigateTo({
+              url: '../peizhi_shuilv/peizhi_shuilv' + '?userInfo=' + JSON.stringify(_this.data.userInfo)
+            })
+          }
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
 
   file_goto:function(){
     var _this = this
@@ -659,7 +713,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    _this.get_peizhi()
   },
 
   /**

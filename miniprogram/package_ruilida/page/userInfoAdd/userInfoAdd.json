@@ -11,7 +11,8 @@
     "van-col": "../../components/col/index",
     "van-button": "../../components/button/index",
     "van-field": "../../components/field/index",
-    "van-action-sheet": "../../components/action-sheet/index"
+    "van-action-sheet": "../../components/action-sheet/index",
+    "van-tag": "../../components/tag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

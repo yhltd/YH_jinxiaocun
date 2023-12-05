@@ -30,7 +30,11 @@
         placeholder="请输入等级"
         border="false"
         readonly="true"
-      />
+      >
+
+      <van-tag type="primary" size="medium" slot="button" bindtap="peizhi_goto" data-column="gongyingshang_dengji">添加</van-tag>
+
+      </van-field>
 
       <van-field
         bind:input="onInput"

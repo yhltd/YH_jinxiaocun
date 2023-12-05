@@ -33,7 +33,9 @@
         border="false"
         bind:click-input="danju_click"
         readonly="true"
-      />
+      >
+      <van-tag slot='button' style="margin-right: 5px;" type="primary">{{'可收订金:' + yukuan}}</van-tag>
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -43,7 +45,8 @@
         placeholder="请填写记账单号"
         border="false"
         readonly="true"
-      />
+      >
+      </van-field>
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="shouzhi_riqi" bindchange="choiceDate">
         <van-field
@@ -64,6 +67,17 @@
         data-column="jizhangren"
         label="记账人"
         placeholder="点击选择记账人"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ shouzhi_body.jizhang_danwei }}"
+        data-column="jizhang_danwei"
+        label="记账单位"
+        placeholder="点击选择记账单位"
         border="false"
         bind:click-input="xiala_show"
         readonly="true"

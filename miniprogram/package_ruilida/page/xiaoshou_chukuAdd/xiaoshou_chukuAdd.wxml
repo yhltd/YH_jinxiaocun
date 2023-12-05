@@ -57,6 +57,17 @@
         bind:click-input="xiala_show"
         readonly="true"
       />
+      
+      <van-field
+        bind:input="onInput"
+        model:value="{{ chuku_body.chuku_danwei }}"
+        data-column="chuku_danwei"
+        label="出库单位"
+        placeholder="请选择出库单位"
+        border="false" 
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
 
       <van-field
         bind:input="onInput"
@@ -64,6 +75,17 @@
         data-column="cangku"
         label="仓库"
         placeholder="请输入仓库"
+        border="false"
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
+        model:value="{{ chuku_body.yewuyuan }}"
+        data-column="yewuyuan"
+        label="业务员"
+        placeholder="请选择业务员"
         border="false"
         bind:click-input="xiala_show"
         readonly="true"
@@ -296,7 +318,8 @@
         <van-cell title="{{product_item.shangpin_mingcheng}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
           <view slot="label">
             <text>规格：{{product_item.guige}} \n</text>
-            <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;单价：{{product_item.baojia_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}}</text>
+            <text decode="{{true}}">销售数量：{{product_item.shuliang}} &nbsp;&nbsp;单价：{{product_item.baojia_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}} \n</text>
+            <text decode="{{true}}">出库数量：{{product_item.chuku_shuliang}} &nbsp;&nbsp;未出数量：{{product_item.weichu_shuliang}} \n</text>
           </view>
         </van-cell>
       </van-cell-group>

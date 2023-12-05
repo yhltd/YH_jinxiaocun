@@ -24,35 +24,6 @@ Page({
       userInfo
     })
     var id = options.id
-    var sql = "select * from userPower;select * from userInfo"
-    wx.cloud.callFunction({
-      name: 'sqlserver_ruilida',
-      data: {
-        query: sql
-      },
-      success: res => {
-        console.log(res)
-        var power_list = res.result.recordsets[0]
-        var shenpi_list = res.result.recordsets[1]
-        console.log(power_list)
-        console.log(shenpi_list)
-        _this.setData({
-          power_list,
-          shenpi_list
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
     if(id != null && id != undefined){
       var sql = "select * from userInfo where id=" + id
       wx.cloud.callFunction({
@@ -86,6 +57,69 @@ Page({
         }
       })
     }
+  },
+
+  get_peizhi:function(){
+    var _this = this
+    wx.showLoading({
+      title:'加载中'
+    })
+    var sql = "select * from userPower;select * from userInfo"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var power_list = res.result.recordsets[0]
+        var shenpi_list = res.result.recordsets[1]
+        console.log(power_list)
+        console.log(shenpi_list)
+        _this.setData({
+          power_list,
+          shenpi_list
+        })
+        wx.hideLoading()
+      },
+      err: res => {
+        wx.hideLoading()
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  peizhi_goto:function(e){
+    var _this = this
+    var this_column = e.target.dataset.column
+    console.log(e)
+    console.log(this_column)
+
+    wx.showModal({
+      title: '提示',
+      content: '即将跳转到配置页',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          if(this_column == 'power'){
+            wx.navigateTo({
+              url: '../userPower/userPower' + '?userInfo=' + JSON.stringify(_this.data.userInfo)
+            })
+          }
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
 
   save:function(){
@@ -193,7 +227,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    _this.get_peizhi()
   },
 
   /**

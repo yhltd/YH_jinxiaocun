@@ -16,11 +16,16 @@
     "van-area": "../../components/area/index",
     "van-popup": "../../components/popup/index",
     "van-image": "../../components/image/index",
-    "van-datetime-picker": "../../components/datetime-picker/index",
-    "van-tag": "../../components/tag/index"
+    "van-checkbox": "../../components/checkbox/index",
+    "van-checkbox-group": "../../components/checkbox-group/index",
+    "van-tag": "../../components/tag/index",
+    "van-tree-select": "../../components/tree-select/index",
+    "van-tab": "../../components/tab/index",
+    "van-tabs": "../../components/tabs/index",
+    "van-stepper": "../../components/stepper/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "销售订单"
+  "navigationBarTitleText": "商品"
 }

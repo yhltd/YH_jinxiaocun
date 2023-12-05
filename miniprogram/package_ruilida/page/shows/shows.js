@@ -57,6 +57,11 @@ Page({
         icon: "../../image/shangpinfenlei.png"
       },
       {
+        text:'销项税率',
+        url: '../peizhi/peizhi',
+        icon: "../../image/shangpinfenlei.png"
+      },
+      {
         text:'仓库',
         url: '../peizhi/peizhi',
         icon: "../../image/cangku.png"

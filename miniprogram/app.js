@@ -7,6 +7,8 @@ var cpsum =0
 var dateUtil = require('./utils/date.js');
 App({
   globalData: {
+    //瑞利达小程序，批量选择商品存储变量
+    ruili_pro:[],
     userNum:'',
     gongsi:"",
     finduser: "",

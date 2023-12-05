@@ -38,6 +38,17 @@
 
       <van-field
         bind:input="onInput"
+        model:value="{{ caigou_body.caigou_danwei }}"
+        data-column="caigou_danwei"
+        bind:click-input="xiala_show"
+        label="采购单位"
+        placeholder="请选择采购单位"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
         model:value="{{ caigou_body.dianpu }}"
         data-column="dianpu"
         bind:click-input="xiala_show"
@@ -49,12 +60,25 @@
 
       <van-field
         bind:input="onInput"
+        model:value="{{ caigou_body.yewuyuan }}"
+        data-column="yewuyuan"
+        bind:click-input="xiala_show"
+        label="业务员"
+        placeholder="请选择业务员"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
         model:value="{{ caigou_body.jinxiang_shuilv }}"
         data-column="jinxiang_shuilv"
+        bind:click-input="xiala_show"
         label="进项税率%"
         placeholder="请输入进项税率%"
         border="false"
         type="number"
+        readonly="true"
       />
 
       <van-field
@@ -95,7 +119,11 @@
         placeholder="请输入编码"
         border="false"
         readonly="true"
-      />
+      >
+
+        <van-tag type="primary" size="medium" slot="button" bindtap="bianhao_get" data-index="{{i}}">扫码</van-tag>
+
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -227,6 +255,7 @@
   </view>
   <view class="bottom_view" style="padding-bottom: 10px;">
     <button class="bt_bottom" bindtap="add_lianxiren">添加商品</button>
+    <button class="bt_bottom" bindtap="goto_add">批量添加</button>
   </view>
 </scroll-view>
 

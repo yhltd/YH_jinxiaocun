@@ -64,35 +64,6 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from peizhi where type = '供应商等级';select * from userInfo"
-    wx.cloud.callFunction({
-      name: 'sqlserver_ruilida',
-      data: {
-        query: sql
-      },
-      success: res => {
-        console.log(res)
-        var gongyingshang_dengji_list = res.result.recordsets[0]
-        var caigouyuan_list = res.result.recordsets[1]
-        console.log(gongyingshang_dengji_list)
-        console.log(caigouyuan_list)
-        _this.setData({
-          gongyingshang_dengji_list,
-          caigouyuan_list
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
     if(id != null && id != undefined){
       var sql = "select * from gongyingshang where id=" + id + ";select * from gongyingshang_item where gongyingshang_id = '" + id + "'"
       wx.cloud.callFunction({
@@ -160,6 +131,62 @@ Page({
         }
       })
     }
+  },
+
+  get_peizhi:function(){
+    var _this = this
+    var sql = "select * from peizhi where type = '供应商等级';select * from userInfo"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var gongyingshang_dengji_list = res.result.recordsets[0]
+        var caigouyuan_list = res.result.recordsets[1]
+        console.log(gongyingshang_dengji_list)
+        console.log(caigouyuan_list)
+        _this.setData({
+          gongyingshang_dengji_list,
+          caigouyuan_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+  peizhi_goto:function(e){
+    var _this = this
+    var this_column = e.target.dataset.column
+    console.log(e)
+    console.log(this_column)
+    wx.showModal({
+      title: '提示',
+      content: '即将跳转到配置页',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          if(this_column == 'gongyingshang_dengji'){
+            wx.navigateTo({
+              url: '../peizhi/peizhi' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=供应商等级"
+            })
+          }
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
 
   qxShow:function(){
@@ -637,7 +664,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    _this.get_peizhi()
   },
 
   /**

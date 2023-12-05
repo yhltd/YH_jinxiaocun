@@ -22,6 +22,8 @@ Page({
       dianpu:'',
       cangku:'',
       beizhu:'',
+      ruku_danwei:'',
+      yewuyuan:'',
     },
     lianxi_list:[
       {
@@ -55,7 +57,7 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
-    var sql = "select * from gongyingshang;select * from peizhi where type = '店铺';select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from userInfo;select * from peizhi where type = '仓库';"
+    var sql = "select * from gongyingshang;select * from peizhi where type = '店铺';select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from userInfo;select * from peizhi where type = '仓库';select * from peizhi where type = '核算单位';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -67,7 +69,9 @@ Page({
         var dianpu_list = res.result.recordsets[1]
         var product_list = res.result.recordsets[2]
         var shenhe_list = res.result.recordsets[3]
+        var yewuyuan_list = res.result.recordsets[3]
         var cangku_list = res.result.recordsets[4]
+        var ruku_danwei_list = res.result.recordsets[4]
         for(var i=0; i<product_list.length; i++){
           if(product_list[i].zuidijia != null){
             product_list[i].caigou_danjia = product_list[i].zuidijia
@@ -78,7 +82,9 @@ Page({
           dianpu_list,
           product_list,
           shenhe_list,
-          cangku_list
+          cangku_list,
+          yewuyuan_list,
+          ruku_danwei_list
         })
       },
       err: res => {
@@ -182,7 +188,7 @@ Page({
 
   caigou_click:function(){
     var _this = this
-    var sql = "select *,1 as isselect from caigou_dingdan;select * from caigou_dingdan_item;"
+    var sql = "select *,1 as isselect from caigou_dingdan;select dingdan.shangpin_bianma,dingdan.name,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.caigou_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(ruku.shuliang,0) as ruku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(ruku.shuliang,0)) as weiru_shuliang,'' as beizhu from (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,caigou_danjia,jiashui_xiaoji,bianhao from caigou_dingdan_item as item left join caigou_dingdan as caigou on item.caigou_id = caigou.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,caigou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,caigou_id from caigou_ruku_item as item left join caigou_ruku as caigou on item.ruku_id = caigou.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,caigou_danjia,caigou_id) as ruku on dingdan.bianhao = ruku.caigou_id and dingdan.shangpin_bianma = ruku.shangpin_bianma and dingdan.name = ruku.name and dingdan.guige = ruku.guige and dingdan.caizhi = ruku.caizhi and dingdan.jishu_biaozhun = ruku.jishu_biaozhun and dingdan.zhibao_dengji = ruku.zhibao_dengji and dingdan.danwei = ruku.danwei  and dingdan.caigou_danjia = ruku.caigou_danjia;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -193,7 +199,7 @@ Page({
         var list_item = res.result.recordsets[1]
         for(var i=list.length-1; i >=0; i--){
           for(var j=list_item.length-1; j>=0; j--){
-            if(list[i].id == list_item[j].caigou_id){
+            if(list[i].bianhao == list_item[j].bianhao){
               if(list[i].item == undefined){
                 var this_item = []
                 this_item.push(list_item[j])
@@ -206,6 +212,11 @@ Page({
                 list[i].item = this_item
               }
             }
+          }
+        }
+        for(var i=list.length-1; i>=0; i--){
+          if(list[i].item == undefined){
+            list.splice(i,1)
           }
         }
         console.log(list)
@@ -284,6 +295,10 @@ Page({
     ruku_body.gongyingshang = caigou_list.gongyingshang
     ruku_body.dianpu = caigou_list.dianpu
     var lianxi_list = caigou_list.item
+    for(var i=0; i<lianxi_list.length; i++){
+      lianxi_list[i].shuliang = lianxi_list[i].weiru_shuliang
+      lianxi_list[i].jiashui_xiaoji = lianxi_list[i].caigou_danjia * lianxi_list[i].weiru_shuliang
+    }
     _this.setData({
       ruku_body,
       lianxi_list,
@@ -475,10 +490,24 @@ Page({
       })
       return;
     }
+    if(ruku_body.yewuyuan == ''){
+      wx.showToast({
+        title: '请选择业务员',
+        icon: 'none'
+      })
+      return;
+    }
     for(var i=0; i<lianxi_list.length; i++){
       if(lianxi_list[i].shangpin_bianma == ''){
         wx.showToast({
           title: '第' + (i * 1+1) + '条商品未选择商品',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].danwei == ''){
+        wx.showToast({
+          title: '第' + (i * 1+1) + '条商品未填写单位',
           icon: 'none'
         })
         return;
@@ -502,7 +531,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into caigou_ruku(bianhao,riqi,caigou_id,gongyingshang,dianpu,cangku,beizhu) output inserted.id values('" + ruku_body.bianhao + "','" + ruku_body.riqi + "','" + ruku_body.caigou_id + "','" + ruku_body.gongyingshang + "','" + ruku_body.dianpu + "','" + ruku_body.cangku + "','" + ruku_body.beizhu + "')"
+      var sql = "insert into caigou_ruku(bianhao,riqi,caigou_id,gongyingshang,dianpu,cangku,beizhu,yewuyuan,ruku_danwei) output inserted.id values('" + ruku_body.bianhao + "','" + ruku_body.riqi + "','" + ruku_body.caigou_id + "','" + ruku_body.gongyingshang + "','" + ruku_body.dianpu + "','" + ruku_body.cangku + "','" + ruku_body.beizhu + "','" + ruku_body.yewuyuan + "','" + ruku_body.ruku_danwei + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -586,7 +615,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "update caigou_ruku set bianhao='" + ruku_body.bianhao + "',riqi='" + ruku_body.riqi + "',caigou_id='" + ruku_body.caigou_id + "',gongyingshang='" + ruku_body.gongyingshang + "',dianpu='" + ruku_body.dianpu + "',cangku='" + ruku_body.cangku + "',beizhu='" + ruku_body.beizhu + "' where id=" + ruku_body.id
+      var sql = "update caigou_ruku set bianhao='" + ruku_body.bianhao + "',riqi='" + ruku_body.riqi + "',caigou_id='" + ruku_body.caigou_id + "',gongyingshang='" + ruku_body.gongyingshang + "',dianpu='" + ruku_body.dianpu + "',cangku='" + ruku_body.cangku + "',beizhu='" + ruku_body.beizhu + "',yewuyuan='" + ruku_body.yewuyuan + "',ruku_danwei='" + ruku_body.ruku_danwei + "' where id=" + ruku_body.id
       console.log(ruku_body)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',

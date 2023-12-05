@@ -36,13 +36,14 @@
         readonly="true"
       />
 
-      <van-field
+      <van-field 
         bind:input="onInput"
         model:value="{{ baojia_body.jiage_dengji }}"
         data-column="jiage_dengji"
         label="客户价格等级"
         placeholder="选择客户后自动带出"
         border="false"
+        bind:click-input="xiala_show"
         readonly="true"
       />
 
@@ -70,12 +71,25 @@
 
       <van-field
         bind:input="onInput"
+        model:value="{{ baojia_body.xiaoshou_danwei }}"
+        data-column="xiaoshou_danwei"
+        label="销售单位"
+        placeholder="请选择销售单位"
+        border="false" 
+        bind:click-input="xiala_show"
+        readonly="true"
+      />
+
+      <van-field
+        bind:input="onInput"
         model:value="{{ baojia_body.xiaoxiang_shuilv }}"
         data-column="xiaoxiang_shuilv"
         label="销项税率%"
         placeholder="请输入销项税率%"
         border="false"
         type="number"
+        bind:click-input="xiala_show"
+        readonly="true"
       />
 
       <van-field
@@ -116,7 +130,11 @@
         placeholder="请输入商品编码"
         border="false"
         readonly="true"
-      />
+      >
+
+        <van-tag type="primary" size="medium" slot="button" bindtap="bianhao_get" data-index="{{i}}">扫码</van-tag>
+
+      </van-field>
 
       <van-field
         bind:input="onInput"
@@ -223,6 +241,18 @@
         readonly="true"
       />
 
+      <van-field
+        bind:input="onInput"
+        model:value="{{ list_item.zuigaojia }}"
+        data-column="zuigaojia"
+        data-index="{{i}}"
+        label="历史最高价"
+        placeholder="请输入历史最高价"
+        border="false"
+        type="digit"
+        readonly="true"
+      />
+
       <picker class="pick" mode="date" value="{{date}}" data-index="{{i}}" data-column_name="xuyong_riqi" bindchange="choiceDate">
         <van-field
           bind:input="onInput"
@@ -260,7 +290,8 @@
   </view>
   <view class="bottom_view" style="padding-bottom: 10px;">
     <button class="bt_bottom" bindtap="add_lianxiren">添加商品</button>
-  </view>
+    <button class="bt_bottom" bindtap="goto_add">批量添加</button>
+  </view> 
 </scroll-view>
 
 <view class="bottom_view"> 
@@ -305,7 +336,8 @@
     >
       <view slot="label">
         <text>规格：{{item.guige}} \n</text>
-        <text decode="{{true}}">零售价格：{{item.lingshou_price}} &nbsp;&nbsp; 批发价格：{{item.pifa_price}} &nbsp;&nbsp; 大客户价格：{{item.dakehu_price}} \n</text>
+        <text decode="{{true}}">零售价格：{{item.lingshou_price}} &nbsp;&nbsp; 批发价格：{{item.pifa_price}} \n</text>
+        <text decode="{{true}}">大客户价格：{{item.dakehu_price}} &nbsp;&nbsp; 历史最高价：{{item.zuigaojia}} \n</text>
       </view>
     </van-cell>
   </van-cell-group>

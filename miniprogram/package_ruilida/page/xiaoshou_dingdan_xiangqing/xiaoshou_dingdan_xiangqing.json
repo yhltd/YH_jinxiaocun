@@ -10,17 +10,15 @@
     "van-row": "../../components/row/index",
     "van-col": "../../components/col/index",
     "van-button": "../../components/button/index",
-    "van-field": "../../components/field/index",
     "van-action-sheet": "../../components/action-sheet/index",
-    "van-icon": "../../components/icon/index",
-    "van-area": "../../components/area/index",
+    "van-checkbox": "../../components/checkbox/index",
+    "van-checkbox-group": "../../components/checkbox-group/index",
     "van-popup": "../../components/popup/index",
-    "van-image": "../../components/image/index",
-    "van-datetime-picker": "../../components/datetime-picker/index",
-    "van-tag": "../../components/tag/index"
+    "van-tag": "../../components/tag/index",
+    "van-icon": "../../components/icon/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "销售订单"
+  "navigationBarTitleText": "销售订单详情"
 }
