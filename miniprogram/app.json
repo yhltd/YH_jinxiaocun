@@ -343,8 +343,10 @@
         "page/fileUpload/fileUpload",
         "page/caigou_dingdan/caigou_dingdan",
         "page/caigou_dingdanAdd/caigou_dingdanAdd",
+        "page/caigou_dingdan_xiangqing/caigou_dingdan_xiangqing",
         "page/caigou_ruku/caigou_ruku",
         "page/caigou_rukuAdd/caigou_rukuAdd",
+        "page/caigou_ruku_xiangqing/caigou_ruku_xiangqing",
         "page/caigou_shoupiao/caigou_shoupiao",
         "page/caigou_shoupiaoAdd/caigou_shoupiaoAdd",
         "page/caigou_fukuan/caigou_fukuan",
@@ -356,6 +358,7 @@
         "page/xiaoshou_dingdanAdd/xiaoshou_dingdanAdd",
         "page/xiaoshou_chuku/xiaoshou_chuku",
         "page/xiaoshou_chukuAdd/xiaoshou_chukuAdd",
+        "page/xiaoshou_chuku_xiangqing/xiaoshou_chuku_xiangqing",
         "page/xiaoshou_kaipiao/xiaoshou_kaipiao",
         "page/xiaoshou_kaipiaoAdd/xiaoshou_kaipiaoAdd",
         "page/zhuanzhang/zhuanzhang",
@@ -367,7 +370,8 @@
         "page/yuedu_shouzhi/yuedu_shouzhi",
         "page/peizhi_shuilv/peizhi_shuilv",
         "page/print_danju/print_danju",
-        "page/print_tiaoma/print_tiaoma"
+        "page/print_tiaoma/print_tiaoma",
+        "page/yibiaopan/yibiaopan"
       ]
     },
     {

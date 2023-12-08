@@ -22,5 +22,5 @@
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "销售订单详情"
+  "navigationBarTitleText": "采购订单详情"
 }

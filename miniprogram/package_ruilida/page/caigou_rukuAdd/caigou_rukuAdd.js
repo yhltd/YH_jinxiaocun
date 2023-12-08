@@ -57,6 +57,7 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
+    var caigou_id = options.caigou_id
     var sql = "select * from gongyingshang;select * from peizhi where type = '店铺';select * from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from userInfo;select * from peizhi where type = '仓库';select * from peizhi where type = '核算单位';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -132,7 +133,7 @@ Page({
           console.log("请求失败！")
         }
       })
-    }else{
+    }else if(id == undefined && caigou_id == undefined){
       var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'RK000000'),3,6)) + 1 as bianhao from caigou_ruku;select * from peizhi where type = '店铺';select * from peizhi where type = '仓库';"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -175,6 +176,108 @@ Page({
           console.log("错误!")
         },
         fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    }else if(caigou_id != undefined){
+      console.log(caigou_id)
+      var sql = "select *,1 as isselect from caigou_dingdan where id=" + caigou_id + ";select dingdan.shangpin_bianma,dingdan.name,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.caigou_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(ruku.shuliang,0) as ruku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(ruku.shuliang,0)) as weiru_shuliang,'' as beizhu from (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,caigou_danjia,jiashui_xiaoji,bianhao from caigou_dingdan_item as item left join caigou_dingdan as caigou on item.caigou_id = caigou.id where caigou_id = " + caigou_id + ") as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,caigou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,caigou_id from caigou_ruku_item as item left join caigou_ruku as caigou on item.ruku_id = caigou.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,caigou_danjia,caigou_id) as ruku on dingdan.bianhao = ruku.caigou_id and dingdan.shangpin_bianma = ruku.shangpin_bianma and dingdan.name = ruku.name and dingdan.guige = ruku.guige and dingdan.caizhi = ruku.caizhi and dingdan.jishu_biaozhun = ruku.jishu_biaozhun and dingdan.zhibao_dengji = ruku.zhibao_dengji and dingdan.danwei = ruku.danwei  and dingdan.caigou_danjia = ruku.caigou_danjia;"
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var list = res.result.recordsets[0]
+          var list_item = res.result.recordsets[1]
+          var ruku_body = _this.data.ruku_body
+          ruku_body.caigou_id = list[0].bianhao
+          ruku_body.gongyingshang = list[0].gongyingshang
+          ruku_body.dianpu = list[0].dianpu
+          var lianxi_list = list_item
+          console.log(lianxi_list)
+          for(var i=0; i<lianxi_list.length; i++){
+            lianxi_list[i].shangpin_bianma = lianxi_list[i].shangpin_bianma
+            lianxi_list[i].name = lianxi_list[i].name
+            lianxi_list[i].caigou_danjia = lianxi_list[i].caigou_danjia
+            lianxi_list[i].shuliang = lianxi_list[i].weiru_shuliang
+            lianxi_list[i].jiashui_xiaoji = lianxi_list[i].caigou_danjia * lianxi_list[i].weiru_shuliang
+          }
+          console.log(lianxi_list)
+          _this.setData({
+            ruku_body,
+            lianxi_list,
+          })
+          console.log(lianxi_list)
+          console.log(ruku_body)
+
+          var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'RK000000'),3,6)) + 1 as bianhao from caigou_ruku;select * from peizhi where type = '店铺';select * from peizhi where type = '仓库';"
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var max_bianhao = res.result.recordsets[0][0].bianhao
+              var this_bianhao = PrefixInteger(max_bianhao,6)
+              console.log(this_bianhao)
+              this_bianhao = "RK" + this_bianhao
+              console.log(this_bianhao)
+              var ruku_body = _this.data.ruku_body
+              ruku_body.bianhao = this_bianhao
+              ruku_body.riqi = getNowDate()
+              var dianpu_list = res.result.recordsets[1]
+              if(_this.data.userInfo.dianpu != ''){
+                for(var i=0; i<dianpu_list.length; i++){
+                  if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                    ruku_body.dianpu = dianpu_list[i].name
+                    break;
+                  }
+                }
+              }
+              var cangku_list = res.result.recordsets[2]
+              if(_this.data.userInfo.cangku != ''){
+                for(var i=0; i<cangku_list.length; i++){
+                  if(cangku_list[i].id == _this.data.userInfo.cangku){
+                    ruku_body.cangku = cangku_list[i].name
+                    break;
+                  }
+                }
+              }
+              _this.setData({
+                ruku_body
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+
+        },
+        err: res => {
+          wx.showToast({
+            title: '错误！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.hideLoading()
           wx.showToast({
             title: '请求失败！',
             icon: 'none',

@@ -98,8 +98,10 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var type = options.type
     _this.setData({
       userInfo,
+      type
     })
   },
 
@@ -584,14 +586,28 @@ Page({
    */
   onShow() {
     var _this = this
-    _this.setData({
-      start_date:'',
-      stop_date:'',
-      kaipiao_danwei:'',
-      shoupiao_danwei:'',
-      shoupiao_zhuangtai:'',
-    })
-    _this.sel1()
+    var type = _this.data.type
+    if(type == undefined){
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        kaipiao_danwei:'',
+        shoupiao_danwei:'',
+        shoupiao_zhuangtai:'',
+      })
+      _this.sel1()
+    }else if(type == '需要我收票'){
+      _this.setData({
+        xlShow2: false,
+        start_date:'',
+        stop_date:'',
+        kaipiao_danwei:'',
+        shoupiao_danwei:'',
+        shoupiao_zhuangtai:'',
+        type:'',
+      })
+      _this.shenheShow()
+    }
   },
 
   /**

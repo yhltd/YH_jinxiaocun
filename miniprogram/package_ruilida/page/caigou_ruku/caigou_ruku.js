@@ -111,6 +111,7 @@ Page({
     ],
     caozuo_click_list:[
       {name:'修改'},
+      {name:'详情'},
       {name:'打印'},
     ],
     quanxuan_value: true,
@@ -299,6 +300,21 @@ Page({
         console.log(print_list)
         wx.navigateTo({
           url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }else if(new_val == '详情'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var userInfo = _this.data.userInfo
+        if(userInfo.power_mingxi.caigou_ruku_sel != '是'){
+          wx.showToast({
+            title: '当前账号无权限',
+            icon: 'none'
+          })
+          return;
+        }
+        wx.navigateTo({
+          url: '../caigou_ruku_xiangqing/caigou_ruku_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
         })
       }
     } else if (e.type == "close") {

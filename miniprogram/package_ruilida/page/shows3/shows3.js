@@ -36,6 +36,11 @@ Page({
         url: '../yuedu_shouzhi/yuedu_shouzhi',
         icon: "../../image/yuedushouzhitongji.png"
       },
+      {
+        text:'仪表盘',
+        url: '../yibiaopan/yibiaopan',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
     ],
     this_date:'',
     shenhe_list:[

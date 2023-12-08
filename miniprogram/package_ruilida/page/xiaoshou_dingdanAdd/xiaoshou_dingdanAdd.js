@@ -409,7 +409,7 @@ Page({
     }
     for(var i=0; i<product_list.length; i++){
       var jinxiang = product_list[i].jinxiang / 100
-      var xiaoxiang = _this.data.xiaoshou_body.xiaoxiang_shuilv
+      var xiaoxiang = _this.data.xiaoshou_body.xiaoxiang_shuilv / 100
       if(xiaoxiang == ''){
         xiaoxiang = 0
       }

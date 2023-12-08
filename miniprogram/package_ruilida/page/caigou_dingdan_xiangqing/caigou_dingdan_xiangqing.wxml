@@ -3,21 +3,21 @@
     <van-cell-group inset data-index="{{i}}">
       <van-cell title="{{item.bianhao}}" use-label-slot>
         <view slot="label">
-          <text>客户：{{item.kehu}} \n</text>
+          <text>供应商：{{item.gongyingshang}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
           <text>审核人：{{item.shenhe}} \n</text>
           <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
-          <van-tag style="margin-right: 5px;" type="{{item.chuku_zhuangtai=='未出库'?'warning':item.chuku_zhuangtai=='部分出库'?'primary':'success'}}">{{item.chuku_zhuangtai}}</van-tag>
-          <van-tag style="margin-right: 5px;" type="{{item.kaipiao_zhuangtai=='未开票'?'warning':item.kaipiao_zhuangtai=='部分开票'?'primary':'success'}}">{{item.kaipiao_zhuangtai}}</van-tag>
-          <van-tag type="{{item.shoukuan_zhuangtai=='未收款'?'warning':item.shoukuan_zhuangtai=='部分收款'?'primary':'success'}}">{{item.shoukuan_zhuangtai}}</van-tag>
+          <van-tag style="margin-right: 5px;" type="{{item.ruku_zhuangtai=='未入库'?'warning':item.ruku_zhuangtai=='部分入库'?'primary':'success'}}">{{item.ruku_zhuangtai}}</van-tag>
+          <van-tag style="margin-right: 5px;" type="{{item.shoupiao_zhuangtai=='未收票'?'warning':item.shoupiao_zhuangtai=='部分收票'?'primary':'success'}}">{{item.shoupiao_zhuangtai}}</van-tag>
+          <van-tag type="{{item.fukuan_zhuangtai=='未付款'?'warning':item.fukuan_zhuangtai=='部分付款'?'primary':'success'}}">{{item.fukuan_zhuangtai}}</van-tag>
         </view>
       </van-cell>
 
       <van-cell title="{{product_item.shangpin_mingcheng}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
         <view slot="label">
           <text>规格：{{product_item.guige}} \n</text>
-          <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;单价：{{product_item.baojia_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}} \n</text>
-          <text>未出数量：{{product_item.weichu_shuliang}} \n</text>
+          <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;单价：{{product_item.caigou_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}} \n</text>
+          <text>未入数量：{{product_item.weichu_shuliang}} \n</text>
         </view>
       </van-cell>
       <van-cell>
@@ -30,7 +30,7 @@
   <view style="padding-top: 10px;">
     <van-cell-group inset>
       <van-cell>
-        <text slot="title" style="font-size: 40rpx;">出库</text>
+        <text slot="title" style="font-size: 40rpx;">入库</text>
         <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="chuku_add" />
       </van-cell>
 
@@ -43,7 +43,7 @@
   <view style="padding-top: 10px;">
     <van-cell-group inset data-index="{{i}}">
       <van-cell>
-        <text slot="title" style="font-size: 40rpx;">收款</text>
+        <text slot="title" style="font-size: 40rpx;">付款</text>
         <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="shoukuan_add" />
       </van-cell>
 
@@ -53,27 +53,14 @@
     </van-cell-group>
   </view>
 
-  <view style="padding-top: 10px;">
+  <view style="padding-top: 10px;padding-bottom: 50px;">
     <van-cell-group inset data-index="{{i}}">
       <van-cell>
-        <text slot="title" style="font-size: 40rpx;">开票</text>
+        <text slot="title" style="font-size: 40rpx;">收票</text>
         <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="kaipiao_add" />
       </van-cell>
       <van-cell is-link title="{{kaipiao_item.kaipiao_riqi}}" use-label-slot wx:for="{{kaipiao_list}}" wx:for-item="kaipiao_item" wx:key="{{kaipiao_item}}">
         <text style="color: black;">{{kaipiao_item.jiashui_heji}}</text>
-      </van-cell>
-    </van-cell-group>
-  </view>
-
-  <view style="padding-top: 10px;padding-bottom: 50px;">
-    <van-cell-group inset data-index="{{i}}">
-      <van-cell>
-        <text slot="title" style="font-size: 40rpx;">采购订单</text>
-        <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="caigou_add" />
-      </van-cell>
-
-      <van-cell is-link title="{{caigou_item.riqi}}" use-label-slot wx:for="{{caigou_list}}" wx:for-item="caigou_item" wx:key="{{caigou_item}}">
-        <text style="color: black;">{{caigou_item.jiashui_xiaoji}}</text>
       </van-cell>
     </van-cell-group>
   </view>
@@ -92,16 +79,16 @@
         <van-cell center title="{{xukai_list[j].bianhao}}" use-label-slot>
           <view slot="label">
             <text>日期：{{xukai_list[j].riqi}} \n</text>
-            <text>客户：{{xukai_list[j].kehu}} \n</text>
+            <text>供应商：{{xukai_list[j].gongyingshang}} \n</text>
             <text>总额：{{xukai_list[j].jiashui_xiaoji}} \n</text>
-            <text decode="{{true}}">未开票：{{xukai_list[j].weikai}} \n</text>
+            <text decode="{{true}}">未收票：{{xukai_list[j].weikai}} \n</text>
           </view>
           <view solt="value"> 
             <van-field
               title-width="3.2em"
               value="{{ xukai_list[j].this_kai }}"
-              label="开票:"
-              placeholder="本次开票"
+              label="收票:"
+              placeholder="本次收票"
               border="{{ false }}"
               data-index="{{j}}"
               bind:change="change_kaipiao"

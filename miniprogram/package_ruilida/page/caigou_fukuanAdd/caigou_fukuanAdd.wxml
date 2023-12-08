@@ -34,7 +34,10 @@
         bind:click-input="danju_click"
         readonly="true"
       >
-      <van-tag slot='button' style="margin-right: 5px;" type="primary">{{'可收订金:' + yukuan}}</van-tag>
+      <van-tag wx:if="{{xiaoshou_id != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可收订金:' + yukuan}}</van-tag>
+      <van-tag wx:if="{{chuku_id != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可收欠款:' + yukuan}}</van-tag> 
+      <van-tag wx:if="{{caigou_id != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可付订金:' + yukuan}}</van-tag>
+      <van-tag wx:if="{{ruku_id != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可付欠款:' + yukuan}}</van-tag> 
       </van-field>
 
       <van-field

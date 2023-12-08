@@ -123,8 +123,10 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var type = options.type
     _this.setData({
       userInfo,
+      type
     })
   },
 
@@ -612,14 +614,28 @@ Page({
    */
   onShow() {
     var _this = this
-    _this.setData({
-      start_date:'',
-      stop_date:'',
-      shoupiao_danwei:'',
-      kaipiao_danwei:'',
-      kaipiao_zhuangtai:'',
-    })
-    _this.sel1()
+    var type = _this.data.type
+    if(type == undefined){
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        shoupiao_danwei:'',
+        kaipiao_danwei:'',
+        kaipiao_zhuangtai:'',
+      })
+      _this.sel1()
+    }else if(type == '需要我开票'){
+      _this.setData({
+        xlShow2: false,
+        start_date:'',
+        stop_date:'',
+        customer:'',
+        kaipiao_zhuangtai:'',
+        type:'',
+      })
+      _this.shenheShow()
+    }
+    
   },
 
   /**

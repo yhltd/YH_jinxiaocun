@@ -107,6 +107,7 @@ Page({
     ],
     caozuo_click_list:[
       {name:'修改'},
+      {name:'详情'},
       {name:'打印'},
     ],
     quanxuan_value: true,
@@ -123,8 +124,10 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var type = options.type
     _this.setData({
       userInfo,
+      type
     })
   },
 
@@ -372,6 +375,21 @@ Page({
         console.log(print_list)
         wx.navigateTo({
           url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }else if(new_val = '详情'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var userInfo = _this.data.userInfo
+        if(userInfo.power_mingxi.caigou_dingdan_sel != '是'){
+          wx.showToast({
+            title: '当前账号无权限',
+            icon: 'none'
+          })
+          return;
+        }
+        wx.navigateTo({
+          url: '../caigou_dingdan_xiangqing/caigou_dingdan_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
         })
       }
     } else if (e.type == "close") {
@@ -708,13 +726,26 @@ Page({
    */
   onShow() {
     var _this = this
-    _this.setData({
-      start_date:'',
-      stop_date:'',
-      gongyingshang:'',
-      shenhe_zhuangtai:'',
-    })
-    _this.sel1()
+    var type = _this.data.type
+    if(type == undefined){
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        gongyingshang:'',
+        shenhe_zhuangtai:'',
+      })
+      _this.sel1()
+    }else if(type == '需要我审核'){
+      _this.setData({
+        xlShow2: false,
+        start_date:'',
+        stop_date:'',
+        gongyingshang:'',
+        shenhe_zhuangtai:'',
+        type:'',
+      })
+      _this.shenheShow()
+    }
   },
 
   /**

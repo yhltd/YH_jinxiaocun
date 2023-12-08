@@ -3,6 +3,7 @@
     <view class="title_text">收票信息：</view>
     <van-cell-group inset>
       <van-field
+        wx:if="{{gongyingshang_name == undefined}}"
         bind:input="onInput"
         model:value="{{ shoupiao_body.caigou_bianhao }}"
         data-column="caigou_bianhao"
@@ -49,6 +50,7 @@
       </picker>
 
       <van-field
+        wx:if="{{gongyingshang_name == undefined}}"
         bind:input="onInput"
         model:value="{{ shoupiao_body.kaipiao_jine }}"
         data-column="kaipiao_jine"
@@ -59,6 +61,7 @@
       />
 
       <van-field
+        wx:if="{{gongyingshang_name == undefined}}"
         bind:input="onInput"
         model:value="{{ shoupiao_body.kaipiao_shuie }}"
         data-column="kaipiao_shuie"
@@ -69,6 +72,7 @@
       />
 
       <van-field
+        wx:if="{{gongyingshang_name == undefined}}"
         bind:input="onInput"
         model:value="{{ shoupiao_body.jiashui_heji }}"
         data-column="jiashui_heji"

@@ -42,6 +42,15 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
+    var shoupiao_list = options.shoupiao_list
+    if(shoupiao_list != undefined){
+      shoupiao_list = JSON.parse(shoupiao_list)
+    }
+    var gongyingshang_name = options.gongyingshang_name
+    _this.setData({
+      shoupiao_list,
+      gongyingshang_name
+    })
     var sql = "select * from gongyingshang;select * from peizhi where type = '核算单位';select * from userInfo;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -51,6 +60,20 @@ Page({
       success: res => {
         console.log(res)
         var gongyingshang_list = res.result.recordsets[0]
+        console.log(gongyingshang_list)
+        if(gongyingshang_name != undefined){
+          for(var i=0; i<gongyingshang_list.length; i++){
+            if(gongyingshang_name == gongyingshang_list[i].name){ 
+              shoupiao_body = _this.data.shoupiao_body
+              shoupiao_body.kaipiao_danwei = gongyingshang_list[i].name
+              _this.setData({
+                shoupiao_body
+              })
+              console.log('成功')
+              break;
+            }
+          }
+        }
         var kaipiao_danwei_list = res.result.recordsets[0]
         var shoupiao_danwei_list = res.result.recordsets[1]
         var xinxi_tuisong_list = res.result.recordsets[2]
@@ -60,6 +83,75 @@ Page({
           shoupiao_danwei_list,
           xinxi_tuisong_list
         })
+
+        if(id != null && id != undefined && id != ''){
+          var sql = "select * from caigou_shoupiao where id=" + id
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var shoupiao_body = res.result.recordset[0]
+              _this.setData({
+                id,
+                shoupiao_body,
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        }else{
+          var shoupiao_body = _this.data.shoupiao_body
+          shoupiao_body.xinxi_tuisong = _this.data.userInfo.shenpi
+          shoupiao_body.kaipiao_riqi = getNowDate()
+          var sql = "select * from peizhi where type='核算单位'"
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var hesuan_list = res.result.recordset
+              console.log(hesuan_list)
+              if(_this.data.userInfo.hesuan_danwei != ''){
+                for(var i=0; i<hesuan_list.length; i++){
+                  if(hesuan_list[i].id == _this.data.userInfo.hesuan_danwei){
+                    shoupiao_body.shoupiao_danwei = hesuan_list[i].name
+                    break;
+                  }
+                }
+              }
+              _this.setData({
+                shoupiao_body
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+         
+        }
+
       },
       err: res => {
         console.log("错误!")
@@ -73,73 +165,6 @@ Page({
         console.log("请求失败！")
       }
     })
-    if(id != null && id != undefined && id != ''){
-      var sql = "select * from caigou_shoupiao where id=" + id
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var shoupiao_body = res.result.recordset[0]
-          _this.setData({
-            id,
-            shoupiao_body,
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-    }else{
-      var shoupiao_body = _this.data.shoupiao_body
-      shoupiao_body.xinxi_tuisong = _this.data.userInfo.shenpi
-      shoupiao_body.kaipiao_riqi = getNowDate()
-      var sql = "select * from peizhi where type='核算单位'"
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var hesuan_list = res.result.recordset
-          console.log(hesuan_list)
-          if(_this.data.userInfo.hesuan_danwei != ''){
-            for(var i=0; i<hesuan_list.length; i++){
-              if(hesuan_list[i].id == _this.data.userInfo.hesuan_danwei){
-                shoupiao_body.shoupiao_danwei = hesuan_list[i].name
-                break;
-              }
-            }
-          }
-          _this.setData({
-            shoupiao_body
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-     
-    }
   },
 
   caigou_click:function(){
@@ -280,7 +305,7 @@ Page({
       })
       return;
     }
-    if(shoupiao_body.kaipiao_jine == ''){
+    if(shoupiao_body.kaipiao_jine == '' && _this.data.gongyingshang_name == undefined){
       wx.showToast({
         title: '请填写开票金额',
         icon: 'none'
@@ -294,7 +319,7 @@ Page({
       })
       return;
     }
-    if(shoupiao_body.id == ''){
+    if(shoupiao_body.id == '' && _this.data.gongyingshang_name == undefined){
       wx.showLoading({
         title:'保存中'
       })
@@ -311,6 +336,56 @@ Page({
           _this.setData({
             shoupiao_body
           })
+          wx.hideLoading()
+          wx.showToast({
+            title: '保存成功',
+            icon: 'none'
+          })
+          setTimeout(function () {
+            _this.back()
+          }, 2000)
+        },
+        err: res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '错误!',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    }else if(shoupiao_body.id == '' && _this.data.gongyingshang_name != undefined){
+      wx.showLoading({
+        title:'保存中'
+      })
+      var sql = "insert into caigou_shoupiao(caigou_bianhao,shoupiao_danwei,kaipiao_danwei,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,xinxi_tuisong,shoupiao_zhuangtai) output inserted.id values "
+      var sql2 = ""
+      var this_list = _this.data.shoupiao_list
+      console.log(this_list)
+      for(var i=0; i<this_list.length; i++){
+        if(sql2 == ""){
+          sql2 = "('" + this_list[i].bianhao + "','" + shoupiao_body.shoupiao_danwei + "','" + shoupiao_body.kaipiao_danwei + "','" + shoupiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + shoupiao_body.beizhu + "','" + shoupiao_body.xinxi_tuisong + "','" + shoupiao_body.shoupiao_zhuangtai + "')"
+        }else{
+          sql2 = ",('" + this_list[i].bianhao + "','" + shoupiao_body.shoupiao_danwei + "','" + shoupiao_body.kaipiao_danwei + "','" + shoupiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + shoupiao_body.beizhu + "','" + shoupiao_body.xinxi_tuisong + "','" + shoupiao_body.shoupiao_zhuangtai + "')"
+        }
+      }
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql + sql2
+        },
+        success: res => {
+          console.log(res)
           wx.hideLoading()
           wx.showToast({
             title: '保存成功',

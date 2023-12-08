@@ -301,7 +301,7 @@
     >
       <view slot="label">
         <text>规格：{{item.guige}} \n</text>
-        <text>单价：{{item.caigou_price}} \n</text>
+        <text decode="{{true}}">单价：{{item.caigou_price}} &nbsp;&nbsp; 最低价：{{item.zuidijia}} \n</text>
       </view>
     </van-cell>
   </van-cell-group>

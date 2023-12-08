@@ -135,6 +135,10 @@ Page({
       {num:0},
       {num:0},
     ],
+    xiala_list:[
+      {name:'需要我审核'},
+      {name:'审核未通过'},
+    ]
   },
 
   /**
@@ -147,6 +151,49 @@ Page({
     _this.setData({
       userInfo,
       this_date
+    })
+  },
+
+  xiala_show:function(e){
+    var _this = this
+    console.log(e)
+    console.log(e.target.dataset.type)
+    _this.setData({
+      type:e.target.dataset.type,
+      xlShow4:true,
+    })
+  },
+  shenpi_show:function(e){
+    var _this = this
+    console.log(e)
+    console.log(e.target.dataset.type)
+    var type = e.target.dataset.type
+    if(type == '销售报价'){
+      wx.navigateTo({
+        url: '../xiaoshou_baojia/xiaoshou_baojia?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我审核",
+      })
+    }else if(type == '销售订单'){
+      wx.navigateTo({
+        url: '../xiaoshou_dingdan/xiaoshou_dingdan?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我审核",
+      })
+    }else if(type == '采购订单'){
+      wx.navigateTo({
+        url: '../caigou_dingdan/caigou_dingdan?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我审核",
+      })
+    }
+  },
+
+  kaipiao_goto:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../xiaoshou_kaipiao/xiaoshou_kaipiao?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我开票",
+    })
+  },
+
+  shoupiao_goto:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../caigou_shoupiao/caigou_shoupiao?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我收票",
     })
   },
 

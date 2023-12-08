@@ -1,0 +1,42 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view class="card" style="height: {{kehu_qiankuan_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">客户欠款排行</view> 
+      <view style="color: #666666;">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="kehu_qiankuan" canvas-id="mychart-bar" ec="{{ecage}}"></ec-canvas>
+  </view>
+
+
+  <view class="card" style="height: {{gongyingshang_qiankuan_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">供应商欠款排行</view> 
+      <view style="color: #666666;">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="gongyingshang_qiankuan" canvas-id="mychart-bar2" ec="{{ecage2}}"></ec-canvas>
+  </view>
+
+  <view class="card" style="height: {{xiaoshou_dingdan_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">销售订单排行</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_tiaojian">{{xiaoshou_tiaojian}}</view>
+      <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_riqi">{{xiaoshou_riqi}}</view>
+      <view style="color: #666666;">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="xiaoshou_dingdan" canvas-id="mychart-bar3" ec="{{ecage3}}"></ec-canvas>
+  </view>
+
+  <view class="card" style="height: {{xiaoshou_shoukuan_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">销售收款排行</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_shoukuan_tiaojian">{{xiaoshou_shoukuan_tiaojian}}</view>
+      <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_shoukuan_riqi">{{xiaoshou_shoukuan_riqi}}</view>
+      <view style="color: #666666;">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="xiaoshou_shoukuan" canvas-id="mychart-bar4" ec="{{ecage4}}"></ec-canvas>
+  </view>
+
+</scroll-view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

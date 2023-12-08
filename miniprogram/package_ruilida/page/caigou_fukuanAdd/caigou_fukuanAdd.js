@@ -85,6 +85,7 @@ Page({
     })
     var id = options.id
     var xiaoshou_id = options.xiaoshou_id
+    var chuku_id = options.xiaoshou_id
     var shoufu_type = options.shoufu_type
     var sql = "select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi where type = '记账分类';select * from peizhi where type = '收款账户';select * from peizhi where type = '记账明细类型';select * from gongyingshang;select * from customer;select * from peizhi where type = '核算单位';"
     wx.cloud.callFunction({
@@ -190,13 +191,16 @@ Page({
           })
 
           var xiaoshou_id = options.xiaoshou_id
+          var chuku_id = options.chuku_id
+          var caigou_id = options.caigou_id
+          var ruku_id = options.ruku_id
           var shoufu_type = options.shoufu_type
           var yukuan = options.yukuan
           shouzhi_body.shoufu_type = shoufu_type
-
+          
           //销售id不为空，说明从销售订单详情跳转，收订金
-          if(xiaoshou_id != undefined){
-            shouzhi_body.danju_leixing = '采购订单'
+          if(xiaoshou_id != undefined){ 
+            shouzhi_body.danju_leixing = '销售订单'
             var sql = "select * from xiaoshou_dingdan where id=" + xiaoshou_id
             wx.cloud.callFunction({
               name: 'sqlserver_ruilida',
@@ -210,6 +214,98 @@ Page({
                 _this.setData({
                   shouzhi_body,
                   xiaoshou_id,
+                  yukuan
+                })
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000 
+                })
+                console.log("请求失败！")
+              }
+            })
+          }else if(chuku_id != undefined){
+            shouzhi_body.danju_leixing = '销售出库'
+            console.log(chuku_id)
+            var sql = "select * from xiaoshou_chuku where id=" + chuku_id
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql
+              },
+              success: res => {
+                console.log(res)
+                var bianhao = res.result.recordsets[0][0].bianhao
+                shouzhi_body.danju_bianhao = bianhao
+                _this.setData({
+                  shouzhi_body,
+                  chuku_id,
+                  yukuan
+                })
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("请求失败！")
+              }
+            })
+          }else if(caigou_id != undefined){ 
+            shouzhi_body.danju_leixing = '采购订单'
+            var sql = "select * from caigou_dingdan where id=" + caigou_id
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql
+              },
+              success: res => {
+                console.log(res)
+                var bianhao = res.result.recordsets[0][0].bianhao
+                shouzhi_body.danju_bianhao = bianhao
+                _this.setData({
+                  shouzhi_body,
+                  caigou_id,
+                  yukuan
+                })
+              },
+              err: res => {
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000 
+                })
+                console.log("请求失败！")
+              }
+            })
+          }else if(ruku_id != undefined){
+            shouzhi_body.danju_leixing = '采购入库'
+            console.log(ruku_id)
+            var sql = "select * from caigou_ruku where id=" + ruku_id
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql
+              },
+              success: res => {
+                console.log(res)
+                var bianhao = res.result.recordsets[0][0].bianhao
+                shouzhi_body.danju_bianhao = bianhao
+                _this.setData({
+                  shouzhi_body,
+                  ruku_id,
                   yukuan
                 })
               },
@@ -251,6 +347,9 @@ Page({
         title: '请先选择单据类型',
         icon: 'none'
       })
+      return;
+    }
+    if(_this.data.xiaoshou_id == undefined){
       return;
     }
     if(danju_leixing == '采购订单'){
@@ -680,7 +779,7 @@ Page({
       if(_this.data.yukuan != undefined){
         if(money_sum > _this.data.yukuan){
           wx.showToast({
-            title: '收订金金额不能超过订单总额',
+            title: '收付金额不能超过订单总额',
           })
           return;
         }
@@ -928,7 +1027,7 @@ Page({
     var index = e.currentTarget.dataset.index
 
     if(column == 'danju_leixing' || column == 'danju_bianhao'){
-      if(_this.data.xiaoshou_id != undefined){
+      if(_this.data.xiaoshou_id != undefined || _this.data.chuku_id != undefined || _this.data.caigou_id != undefined || _this.data.ruku_id != undefined){
         return;
       }
     }

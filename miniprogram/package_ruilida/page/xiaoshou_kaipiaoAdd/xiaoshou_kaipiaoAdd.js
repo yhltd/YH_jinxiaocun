@@ -47,6 +47,15 @@ Page({
       areaList: areaList.list
     })
     var id = options.id
+    var kaipiao_list = options.kaipiao_list
+    if(kaipiao_list != undefined){
+      kaipiao_list = JSON.parse(kaipiao_list)
+    }
+    var kehu_name = options.kehu_name
+    _this.setData({
+      kaipiao_list,
+      kehu_name
+    })
     var sql = "select * from customer;select * from peizhi where type = '核算单位';select * from userInfo;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -56,6 +65,25 @@ Page({
       success: res => {
         console.log(res)
         var kehu_list = res.result.recordsets[0]
+        console.log(kehu_list)
+        if(kehu_name != undefined){
+          for(var i=0; i<kehu_list.length; i++){
+            if(kehu_name == kehu_list[i].name){ 
+              kaipiao_body = _this.data.kaipiao_body
+              kaipiao_body.shoupiao_danwei = kehu_list[i].name
+              kaipiao_body.shibiehao = kehu_list[i].shibiehao
+              kaipiao_body.kaipiao_dizhi = kehu_list[i].kaipiao_dizhi
+              kaipiao_body.kaipiao_dianhua = kehu_list[i].kaipiao_dianhua
+              kaipiao_body.kaipiao_yinhang = kehu_list[i].kaipiao_yinhang
+              kaipiao_body.kaipiao_zhanghao = kehu_list[i].kaipiao_zhanghao
+              _this.setData({
+                kaipiao_body
+              })
+              console.log('成功')
+              break;
+            }
+          }
+        }
         var shoupiao_danwei_list = res.result.recordsets[0]
         var kaipiao_danwei_list = res.result.recordsets[1]
         var xinxi_tuisong_list = res.result.recordsets[2]
@@ -63,8 +91,77 @@ Page({
           kehu_list,
           kaipiao_danwei_list,
           shoupiao_danwei_list,
-          xinxi_tuisong_list
+          xinxi_tuisong_list 
         })
+
+        if(id != null && id != undefined && id != ''){
+          var sql = "select * from xiaoshou_kaipiao where id=" + id
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var kaipiao_body = res.result.recordset[0]
+              _this.setData({
+                id,
+                kaipiao_body,
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        }else{
+          var kaipiao_body = _this.data.kaipiao_body
+          kaipiao_body.xinxi_tuisong = _this.data.userInfo.shenpi
+          kaipiao_body.kaipiao_riqi = getNowDate()
+          var sql = "select * from peizhi where type='核算单位'"
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var hesuan_list = res.result.recordset
+              console.log(hesuan_list)
+              if(_this.data.userInfo.hesuan_danwei != ''){
+                for(var i=0; i<hesuan_list.length; i++){
+                  if(hesuan_list[i].id == _this.data.userInfo.hesuan_danwei){
+                    kaipiao_body.kaipiao_danwei = hesuan_list[i].name
+                    break;
+                  }
+                }
+              }
+              _this.setData({
+                kaipiao_body
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+          
+        }
+
       },
       err: res => {
         console.log("错误!")
@@ -78,73 +175,6 @@ Page({
         console.log("请求失败！")
       }
     })
-    if(id != null && id != undefined && id != ''){
-      var sql = "select * from xiaoshou_kaipiao where id=" + id
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var kaipiao_body = res.result.recordset[0]
-          _this.setData({
-            id,
-            kaipiao_body,
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-    }else{
-      var kaipiao_body = _this.data.kaipiao_body
-      kaipiao_body.xinxi_tuisong = _this.data.userInfo.shenpi
-      kaipiao_body.kaipiao_riqi = getNowDate()
-      var sql = "select * from peizhi where type='核算单位'"
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var hesuan_list = res.result.recordset
-          console.log(hesuan_list)
-          if(_this.data.userInfo.hesuan_danwei != ''){
-            for(var i=0; i<hesuan_list.length; i++){
-              if(hesuan_list[i].id == _this.data.userInfo.hesuan_danwei){
-                kaipiao_body.kaipiao_danwei = hesuan_list[i].name
-                break;
-              }
-            }
-          }
-          _this.setData({
-            kaipiao_body
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-      
-    }
   },
 
   caigou_click:function(){
@@ -296,7 +326,7 @@ Page({
       })
       return;
     }
-    if(kaipiao_body.kaipiao_jine == ''){
+    if(kaipiao_body.kaipiao_jine == '' && _this.data.kehu_name == undefined){
       wx.showToast({
         title: '请填写开票金额',
         icon: 'none'
@@ -310,11 +340,10 @@ Page({
       })
       return;
     }
-    if(kaipiao_body.id == ''){
+    if(kaipiao_body.id == '' && _this.data.kehu_name == undefined){
       wx.showLoading({
         title:'保存中'
       })
-
       var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values('" + kaipiao_body.xiaoshou_bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + kaipiao_body.kaipiao_jine + "','" + kaipiao_body.kaipiao_shuie + "','" + kaipiao_body.jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -356,14 +385,61 @@ Page({
           console.log("请求失败！")
         }
       })
+    }else if(kaipiao_body.id == '' && _this.data.kehu_name != undefined){
+      wx.showLoading({
+        title:'保存中'
+      })
+      var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values "
+      var sql2 = ""
+      var this_list = _this.data.kaipiao_list
+      console.log(this_list)
+      for(var i=0; i<this_list.length; i++){
+        if(sql2 == ""){
+          sql2 = "('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+        }else{
+          sql2 = slq2 + ",('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+        }
+        wx.cloud.callFunction({
+          name: 'sqlserver_ruilida',
+          data: {
+            query: sql + sql2
+          },
+          success: res => {
+            console.log(res)
+            wx.hideLoading()
+            wx.showToast({
+              title: '保存成功',
+              icon: 'none'
+            })
+            setTimeout(function () {
+              _this.back()
+            }, 2000)
+          },
+          err: res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '错误!',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
+      }
     }else{
       console.log(kaipiao_body)
       wx.showLoading({
         title:'保存中'
       })
-
-      "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values('"
-
       var sql = "update xiaoshou_kaipiao set xiaoshou_bianhao='" + kaipiao_body.xiaoshou_bianhao + "',shoupiao_danwei='" + kaipiao_body.shoupiao_danwei + "',shibiehao='" + kaipiao_body.shibiehao + "',kaipiao_dizhi='" + kaipiao_body.kaipiao_dizhi + "',kaipiao_dianhua='" + kaipiao_body.kaipiao_dianhua + "',kaipiao_yinhang='" + kaipiao_body.kaipiao_yinhang + "',kaipiao_zhanghao='" + kaipiao_body.kaipiao_zhanghao + "',kaipiao_riqi='" + kaipiao_body.kaipiao_riqi + "',kaipiao_jine='" + kaipiao_body.kaipiao_jine + "',kaipiao_shuie='" + kaipiao_body.kaipiao_shuie + "',jiashui_heji='" + kaipiao_body.jiashui_heji  + "',beizhu='" + kaipiao_body.beizhu + "',kaipiao_danwei='" + kaipiao_body.kaipiao_danwei + "',xinxi_tuisong='" + kaipiao_body.xinxi_tuisong + "',kaipiao_zhuangtai='" + kaipiao_body.kaipiao_zhuangtai + "' where id=" + kaipiao_body.id
       console.log(kaipiao_body)
       wx.cloud.callFunction({

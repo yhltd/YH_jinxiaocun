@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "ec-canvas" : "../ec-canvas/ec-canvas",
     "van-tabbar": "../../components/tabbar/index",
     "van-tabbar-item": "../../components/tabbar-item/index",
     "van-grid": "../../components/grid/index",
@@ -13,14 +14,10 @@
     "van-action-sheet": "../../components/action-sheet/index",
     "van-checkbox": "../../components/checkbox/index",
     "van-checkbox-group": "../../components/checkbox-group/index",
-    "van-popup": "../../components/popup/index",
-    "van-tag": "../../components/tag/index",
-    "van-icon": "../../components/icon/index",
-    "van-stepper": "../../components/stepper/index",
-    "van-field": "../../components/field/index"
+    "van-popup": "../../components/popup/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "销售订单详情"
+  "navigationBarTitleText": "仪表盘"
 }
