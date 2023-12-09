@@ -284,9 +284,13 @@ Page({
   },
 
   shenheShow: function () {
+    wx.showLoading({
+      title: '请稍候',
+      mask : 'true'
+    })
     var _this = this
     var userInfo = _this.data.userInfo
-    var sql = "select * from xiaoshou_baojia where shenhe = '" + _this.data.userInfo.name + "' and shenhe_zhuangtai = '审核中';select * from xiaoshou_baojia_item;select * from customer"
+    var sql = "select * from xiaoshou_baojia where shenhe like '%" + _this.data.userInfo.name + "%' and shenhe_zhuangtai = '审核中';select * from xiaoshou_baojia_item;select * from customer"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -299,20 +303,33 @@ Page({
         var list_item = res.result.recordsets[1]
         var customer_list = res.result.recordsets[2]
         for(var i=list.length-1; i >=0; i--){
-          for(var j=list_item.length-1; j>=0; j--){
-            if(list[i].id == list_item[j].baojia_id){
-              if(list[i].item == undefined){
-                var this_item = []
-                this_item.push(list_item[j])
-                list_item.splice(j,1)
-                list[i].item = this_item
-              }else{
-                var this_item = list[i].item
-                this_item.push(list_item[j])
-                list_item.splice(j,1)
-                list[i].item = this_item
+          var shenhe_list = list[i].shenhe_list.split(",")
+          var shenhe = list[i].shenhe.split(",")
+          var panduan = false
+          for(var j=0; j<shenhe.length; j++){
+            if(shenhe[j] == userInfo.name && shenhe_list[j] != '审核通过'){
+              panduan = true
+              break;
+            }
+          }
+          if(panduan){
+            for(var j=list_item.length-1; j>=0; j--){
+              if(list[i].id == list_item[j].baojia_id){
+                if(list[i].item == undefined){
+                  var this_item = []
+                  this_item.push(list_item[j])
+                  list_item.splice(j,1)
+                  list[i].item = this_item
+                }else{
+                  var this_item = list[i].item
+                  this_item.push(list_item[j])
+                  list_item.splice(j,1)
+                  list[i].item = this_item
+                }
               }
             }
+          }else{
+            list.splice(i,1)
           }
         }
         console.log(list)
@@ -324,11 +341,14 @@ Page({
           customer_list,
           sel_type:'待审核'
         })
+        wx.hideLoading()
       },
       err: res => {
+        wx.hideLoading()
         console.log("错误!")
       },
       fail: res => {
+        wx.hideLoading()
         wx.showToast({
           title: '请求失败！',
           icon: 'none',
@@ -359,9 +379,15 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var shenhe = _this.data.list[index].shenhe
+    var shenhe_zhuangtai = _this.data.list[index].shenhe_zhuangtai
+    var shenhe_list = _this.data.list[index].shenhe_list
     if(_this.data.sel_type == '待审核'){
       _this.setData({
         shenhe_id:id,
+        shenhe:shenhe,
+        shenhe_zhuangtai:shenhe_zhuangtai,
+        shenhe_list:shenhe_list,
         xlShow3:true
       })
     }else{
@@ -488,10 +514,35 @@ Page({
 
   select3: function (e) {
     var _this = this
-    if (e.type == "select") {
+    if (e.type == "select") { 
       var new_val = e.detail.name
+      var name = _this.data.userInfo.name
+      var shenhe = _this.data.shenhe.split(",")
+      var shenhe_list = _this.data.shenhe_list.split(",")
+      var shenhe_zhuangtai = _this.data.shenhe_zhuangtai
       var id = _this.data.shenhe_id
-      var sql = "update xiaoshou_baojia set shenhe_zhuangtai = '" + e.detail.name + "' where id=" + id
+      var panduan = true
+      for(var i=0; i<shenhe.length; i++){
+        if(shenhe[i] == name){
+          shenhe_list[i] = new_val
+        }
+        if(shenhe_list[i] != '审核通过'){
+          panduan = false
+        }
+      }
+      var shenhe_list_new = ""
+      var shenhe_zhuangtai_new = shenhe_zhuangtai
+      if(panduan){
+        shenhe_zhuangtai_new = "审核通过"
+      }
+      for(var i=0; i<shenhe_list.length; i++){
+        if(shenhe_list_new == ""){
+          shenhe_list_new = shenhe_list[i]
+        }else{
+          shenhe_list_new = shenhe_list_new + "," + shenhe_list[i]
+        }
+      }
+      var sql = "update xiaoshou_baojia set shenhe_zhuangtai = '" + shenhe_zhuangtai_new + "',shenhe_list = '" + shenhe_list_new + "' where id=" + id
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {

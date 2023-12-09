@@ -6,7 +6,7 @@
           <text>客户：{{item.kehu}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
           <text>审核人：{{item.shenhe}} \n</text>
-          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
+          <text>审核状态：{{item.shenhe_zhuangtai == '未提交审核'?item.shenhe_zhuangtai:item.shenhe_zhuangtai == '审核通过'?item.shenhe_zhuangtai:item.shenhe_list}} \n</text>
         </view>
       </van-cell>
 

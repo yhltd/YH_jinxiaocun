@@ -88,3 +88,13 @@ button{
   height: 60rpx; 
   font-weight: bold;
 }
+
+.title_text2{
+  /* width: 100%; */
+  height: 45rpx; 
+}
+
+.title_text3{
+  /* width: 100%; */
+  height: 60rpx; 
+}

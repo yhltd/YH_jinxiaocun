@@ -94,9 +94,14 @@ Page({
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var shouzhi_type = options.shouzhi_type
+    var tiaojian = options.tiaojian
+    if(tiaojian != 'undefined'){
+      tiaojian = JSON.parse(tiaojian)
+    }
     _this.setData({
       userInfo,
-      shouzhi_type
+      shouzhi_type,
+      tiaojian
     })
     var sql = "select * from peizhi where type ='店铺';select * from userInfo;select * from peizhi where type ='收款账户';"
     wx.cloud.callFunction({
@@ -554,13 +559,21 @@ Page({
     var _this = this
     console.log(_this.data.shouzhi_type)
     wx.setNavigationBarTitle({title: _this.data.shouzhi_type});
-    _this.setData({
-      start_date:'',
-      stop_date:'',
-      dianpu:'',
-      jizhangren:'',
-      jizhang_zhanghu:'',
-    })
+    var tiaojian = _this.data.tiaojian
+    if(tiaojian != undefined){
+      _this.setData(tiaojian)
+      _this.setData({
+        tiaojian:undefined
+      })
+    }else{
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        dianpu:'',
+        jizhangren:'',
+        jizhang_zhanghu:'',
+      })
+    }
     _this.sel1()
   },
 

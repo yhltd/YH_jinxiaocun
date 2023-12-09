@@ -140,7 +140,7 @@ Page({
     wx.showLoading({
       title:'保存中'
     })
-    var sql = "update peizhi_shuilv set shuilv='" + shuilv_body.shuilv + "',zhuangtai='" + shuilv_body.zhuangtai + "',lingshou='" + shuilv_body.lingshou + "',pifa='" + shuilv_body.pifa + "',dakehu='" + shuilv_body.dakehu + "',lingshou_zhuangtai='" + shuilv_body.lingshou_zhuangtai + "',pifa_zhuangtai='" + shuilv_body.pifa_zhuangtai + "',dakehu_zhuangtai='" + shuilv_body.dakehu_zhuangtai + "' where id=" + shuilv_body.id
+    var sql = "update peizhi_shuilv set shuilv='" + shuilv_body.shuilv + "',zhuangtai='" + shuilv_body.zhuangtai + "',lingshou='" + shuilv_body.lingshou + "',pifa='" + shuilv_body.pifa + "',dakehu='" + shuilv_body.dakehu + "',lingshou_zhuangtai='" + shuilv_body.lingshou_zhuangtai + "',pifa_zhuangtai='" + shuilv_body.pifa_zhuangtai + "',dakehu_zhuangtai='" + shuilv_body.dakehu_zhuangtai + "',kaipiao_edu='" + shuilv_body.kaipiao_edu + "' where id=" + shuilv_body.id
     console.log(shuilv_body)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',

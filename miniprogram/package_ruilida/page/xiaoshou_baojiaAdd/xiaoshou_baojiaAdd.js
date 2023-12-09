@@ -21,6 +21,8 @@ Page({
       xiaoxiang_shuilv:'',
       beizhu:'',
       shenhe:'',
+      shenhe_list:'',
+      shenhe_zhuangtai:'未提交审核',
       jiage_dengji:'',
     },
     lianxi_list:[
@@ -45,6 +47,7 @@ Page({
     ],
     type:'',
     name:'',
+    quanxuan_value: false,
   },
 
   /**
@@ -68,9 +71,19 @@ Page({
       success: res => {
         console.log(res)
         var kehu_list = res.result.recordsets[0]
+        
         var product_list = res.result.recordsets[1]
         var dianpu_list = res.result.recordsets[2]
         var shenhe_list = res.result.recordsets[3]
+        var list_check = res.result.recordsets[3]
+        var all_result = []
+        var result = []
+        for(var i=0; i<list_check.length; i++){
+          all_result.push(list_check[i].name)
+        }
+        console.log(list_check)
+        console.log(all_result)
+        console.log(result)
         var yewuyuan_list = res.result.recordsets[3]
         var peizhi_shuilv = res.result.recordsets[4][0]
         var xiaoshou_danwei_list = res.result.recordsets[5]
@@ -107,6 +120,9 @@ Page({
           xiaoxiang_shuilv_list,
           fujia_shuilv,
           jiage_dengji_list,
+          list_check,
+          all_result,
+          result
         })
       },
       err: res => {
@@ -199,6 +215,85 @@ Page({
         }
       })
     }
+  },
+
+  quanxuan:function(e){
+    var _this = this
+    console.log(e)
+    var this_val = e.detail
+    if(this_val == false){
+      _this.setData({
+        quanxuan_value: false,
+        result:[]
+      })
+    }else{
+      _this.setData({
+        quanxuan_value: true,
+        result:_this.data.all_result
+      })
+    }
+  },
+
+  onChange(event) {
+    var _this = this
+    console.log('onChange')
+    console.log(event)
+    if(event.detail.length == _this.data.list_check.length){
+      _this.setData({
+        quanxuan_value: true,
+      });
+    }else{
+      _this.setData({
+        quanxuan_value: false,
+      });
+    }
+    _this.setData({
+      result: event.detail,
+    });
+  },
+
+  toggle(event) {
+    console.log('toggle')
+    console.log(event)
+    const { index } = event.currentTarget.dataset;
+    const checkbox = this.selectComponent(`.checkboxes-${index}`);
+    checkbox.toggle();
+  },
+
+  noop() {
+    console.log('noop')
+  },
+
+  shenhe_sure:function(){
+    var _this = this
+    var result = _this.data.result
+    console.log(result)
+    if(result.length == 0){
+      wx.showToast({
+        title: '请选择审核人',
+        icon:'none',
+      })
+      return;
+    }
+    var shenhe_str = ""
+    var zhuangtai_str = ""
+    var baojia_body = _this.data.baojia_body
+    for(var i=0; i<result.length; i++){
+      if(shenhe_str == ""){
+        shenhe_str = result[i]
+        zhuangtai_str = "审核中"
+      }else{
+        shenhe_str = shenhe_str + "," + result[i]
+        zhuangtai_str = zhuangtai_str + "," + "审核中"
+      }
+    }
+    baojia_body.shenhe = shenhe_str
+    baojia_body.zhuangtai_str = zhuangtai_str
+    console.log(baojia_body)
+    _this.setData({
+      baojia_body
+    })
+    _this.qxShow()
   },
 
   product_select:function(e){
@@ -380,7 +475,8 @@ Page({
     _this.setData({
       xlShow2:false,
       ssqShow:false,
-      product_show:false
+      product_show:false,
+      dayin_show: false,
     })
   },
 
@@ -684,6 +780,16 @@ Page({
     })
   },
 
+  save_shenhe:function(){
+    var _this = this
+    var baojia_body = _this.data.baojia_body
+    baojia_body.shenhe_zhuangtai = '审核中'
+    _this.setData({
+      baojia_body
+    })
+    _this.save()
+  },
+
   save:function(){
     var _this = this
     var baojia_body = _this.data.baojia_body
@@ -766,7 +872,7 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into xiaoshou_baojia(bianhao,riqi,kehu,yewuyuan,dianpu,xiaoxiang_shuilv,beizhu,shenhe,jiage_dengji,shenhe_zhuangtai,xiaoshou_danwei) output inserted.id values('" + baojia_body.bianhao + "','" + baojia_body.riqi + "','" + baojia_body.kehu + "','" + baojia_body.yewuyuan + "','" + baojia_body.dianpu + "','" + baojia_body.xiaoxiang_shuilv + "','" + baojia_body.beizhu + "','" + baojia_body.shenhe + "','" + baojia_body.jiage_dengji + "','审核中','" + baojia_body.xiaoshou_danwei + "')"
+      var sql = "insert into xiaoshou_baojia(bianhao,riqi,kehu,yewuyuan,dianpu,xiaoxiang_shuilv,beizhu,shenhe,jiage_dengji,shenhe_zhuangtai,xiaoshou_danwei,shenhe_list) output inserted.id values('" + baojia_body.bianhao + "','" + baojia_body.riqi + "','" + baojia_body.kehu + "','" + baojia_body.yewuyuan + "','" + baojia_body.dianpu + "','" + baojia_body.xiaoxiang_shuilv + "','" + baojia_body.beizhu + "','" + baojia_body.shenhe + "','" + baojia_body.jiage_dengji + "','" + baojia_body.shenhe_zhuangtai + "','" + baojia_body.xiaoshou_danwei + "','" + baojia_body.shenhe_list + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -780,13 +886,13 @@ Page({
             baojia_body
           })
 
-          var sql = "insert into xiaoshou_baojia_item(shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,jianyi_baojia,xuyong_riqi,baojia_fudong,beizhu,baojia_id) values "
+          var sql = "insert into xiaoshou_baojia_item(shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,jianyi_baojia,xuyong_riqi,baojia_fudong,beizhu,baojia_id,zuigaojia) values "
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
+              sql2 = "('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id +  "','" + lianxi_list[i].zuigaojia + "')"
             }else{
-              sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id + "')"
+              sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianhao + "','" + lianxi_list[i].shangpin_mingcheng + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].baojia_danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].jianyi_baojia + "','" + lianxi_list[i].xuyong_riqi +  "','"  + lianxi_list[i].baojia_fudong +  "','"  + lianxi_list[i].beizhu + "','" + new_id +  "','" + lianxi_list[i].zuigaojia + "')"
             }
           }
           sql = sql + sql2
@@ -851,11 +957,8 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      if(baojia_body.shenhe_zhuangtai == '审核未通过'){
-        baojia_body.shenhe_zhuangtai = "审核中"
-      }
-      var sql = "update xiaoshou_baojia set bianhao='" + baojia_body.bianhao + "',riqi='" + baojia_body.riqi + "',kehu='" + baojia_body.kehu + "',yewuyuan='" + baojia_body.yewuyuan + "',dianpu='" + baojia_body.dianpu + "',xiaoxiang_shuilv='" + baojia_body.xiaoxiang_shuilv + "',beizhu='" + baojia_body.beizhu + "',shenhe='" + baojia_body.shenhe + "',jiage_dengji='" + baojia_body.jiage_dengji + "',shenhe_zhuangtai='" + baojia_body.shenhe_zhuangtai + "',shenhe_zhuangtai='" + baojia_body.shenhe_zhuangtai + "',xiaoshou_danwei='" + baojia_body.xiaoshou_danwei + "' where id=" + baojia_body.id
-      console.log(baojia_body)
+      var sql = "update xiaoshou_baojia set bianhao='" + baojia_body.bianhao + "',riqi='" + baojia_body.riqi + "',kehu='" + baojia_body.kehu + "',yewuyuan='" + baojia_body.yewuyuan + "',dianpu='" + baojia_body.dianpu + "',xiaoxiang_shuilv='" + baojia_body.xiaoxiang_shuilv + "',beizhu='" + baojia_body.beizhu + "',shenhe='" + baojia_body.shenhe + "',jiage_dengji='" + baojia_body.jiage_dengji + "',shenhe_zhuangtai='" + baojia_body.shenhe_zhuangtai + "',shenhe_list='" + baojia_body.shenhe_list + "',xiaoshou_danwei='" + baojia_body.xiaoshou_danwei + "' where id=" + baojia_body.id
+      console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -991,15 +1094,18 @@ Page({
     var column = e.currentTarget.dataset.column
     var list = _this.data[column + "_list"]
     var index = e.currentTarget.dataset.index
-    _this.setData({
-      list_xiala: list,
-      click_column:column,
-      click_index: index
-    })
-    console.log(list)
-    _this.setData({
-      xlShow2: true
-    })
+    if(column == 'shenhe'){
+      _this.setData({
+        dayin_show: true,
+      })
+    }else{
+      _this.setData({
+        list_xiala: list,
+        click_column:column,
+        click_index: index,
+        xlShow2: true
+      })
+    }
   },
 
   select2: function (e) {

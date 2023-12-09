@@ -72,7 +72,7 @@ Page({
 
   tableShow: function () {
     var _this = this
-    var sql = "select id,file_name from file_upload where type = '" + _this.data.type + "' and file_id = '" + _this.data.mingxi_id + "'"    
+    var sql = "select id,[file],file_name from file_upload where type = '" + _this.data.type + "' and file_id = '" + _this.data.mingxi_id + "'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -111,69 +111,106 @@ Page({
     var _this = this
     console.log(e.target.dataset.index)
     var index = e.target.dataset.index
-    var id = _this.data.list[index].id
-    var sql = "select [file] from file_upload where id=" + id
+    var file = _this.data.list[index].file
     wx.showModal({
       title: '提示',
       content: '确认查看此文件？',
       success: function (res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          wx.cloud.callFunction({
-            name: 'sqlserver_ruilida',
-            data: {
-              query: sql
-            },
-            success: res => {
-              console.log(res.result.recordset[0].file)
-              var imgSrc =  res.result.recordset[0].file;//二进制流转为base64编码
-              var name = _this.data.list[index].file_name
-              var houzhui = _this.data.list[index].file_name.split('.')[_this.data.list[index].file_name.split('.').length - 1]
-              console.log(houzhui)
-              houzhui = getBase64Type(houzhui)
-              console.log(houzhui)
-              imgSrc = imgSrc.replace(houzhui + ',','')
-              console.log(imgSrc)
-              var save = wx.getFileSystemManager();
-              save.writeFile({
-                  filePath: wx.env.USER_DATA_PATH + '/' + name,
-                  data: imgSrc,
-                  encoding: 'base64',
-                  success: res => {
-                    wx.openDocument({
-                      filePath: wx.env.USER_DATA_PATH + '/' + name,   // 装载对应文件的路径
-                      // fileType: type,   // 指定打开的文件类型 我写的固定类型 也可根据文件的后缀动态设置
-                      showMenu: true,       // 右上角的菜单转发分享操作
-                      success: function (res) {
-                          console.log('打开成功');
-                      },
-                      fail: function (err) {
-                          console.log('打开失败：', err);
-                      }
-                  })
-                  },
-                  fail: function (error) {
-                      console.log(error);
-                  }
-                })
-            },
-            err: res => {
-              console.log("错误!")
-            },
-            fail: res => {
-              wx.showToast({
-                title: '请求失败！',
-                icon: 'none',
-                duration: 3000
-              })
-              console.log("请求失败！")
-            }
-          })
+          wx.downloadFile({  
+            url: file, // 文件下载地址  
+            success: function (res) {  
+              console.log('下载成功', res);  
+              // 可以根据需要进行后续处理，如保存到本地、显示下载文件等  
+              var this_path = res.tempFilePath
+              wx.openDocument({
+                filePath: this_path,   // 装载对应文件的路径
+                // fileType: type,   // 指定打开的文件类型 我写的固定类型 也可根据文件的后缀动态设置
+                showMenu: true,       // 右上角的菜单转发分享操作
+                success: function (res) {
+                    console.log('打开成功');
+                },
+                fail: function (err) {
+                    console.log('打开失败：', err);
+                }
+            })
+            },  
+            fail: function (res) {  
+              console.log('下载失败', res);  
+            }  
+          });  
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
+
+
+
+
+    // var sql = "select [file] from file_upload where id=" + id
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '确认查看此文件？',
+    //   success: function (res) {
+    //     if (res.confirm) {
+    //       console.log('用户点击确定')
+    //       wx.cloud.callFunction({
+    //         name: 'sqlserver_ruilida',
+    //         data: {
+    //           query: sql
+    //         },
+    //         success: res => {
+    //           console.log(res.result.recordset[0].file)
+    //           var imgSrc =  res.result.recordset[0].file;//二进制流转为base64编码
+    //           var name = _this.data.list[index].file_name
+    //           var houzhui = _this.data.list[index].file_name.split('.')[_this.data.list[index].file_name.split('.').length - 1]
+    //           console.log(houzhui)
+    //           houzhui = getBase64Type(houzhui)
+    //           console.log(houzhui)
+    //           imgSrc = imgSrc.replace(houzhui + ',','')
+    //           console.log(imgSrc)
+    //           var save = wx.getFileSystemManager();
+    //           save.writeFile({
+    //               filePath: wx.env.USER_DATA_PATH + '/' + name,
+    //               data: imgSrc,
+    //               encoding: 'base64',
+    //               success: res => {
+    //                 wx.openDocument({
+    //                   filePath: wx.env.USER_DATA_PATH + '/' + name,   // 装载对应文件的路径
+    //                   // fileType: type,   // 指定打开的文件类型 我写的固定类型 也可根据文件的后缀动态设置
+    //                   showMenu: true,       // 右上角的菜单转发分享操作
+    //                   success: function (res) {
+    //                       console.log('打开成功');
+    //                   },
+    //                   fail: function (err) {
+    //                       console.log('打开失败：', err);
+    //                   }
+    //               })
+    //               },
+    //               fail: function (error) {
+    //                   console.log(error);
+    //               }
+    //             })
+    //         },
+    //         err: res => {
+    //           console.log("错误!")
+    //         },
+    //         fail: res => {
+    //           wx.showToast({
+    //             title: '请求失败！',
+    //             icon: 'none',
+    //             duration: 3000
+    //           })
+    //           console.log("请求失败！")
+    //         }
+    //       })
+    //     } else if (res.cancel) {
+    //       console.log('用户点击取消')
+    //     }
+    //   }
+    // })
 
     
   },
@@ -269,6 +306,107 @@ Page({
             console.log("请求失败！")
           }
         })
+      }
+    })
+  },
+
+  file_upload: function () { 
+    var _this = this
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'all',
+      success (res) {
+        wx.showLoading({
+          title: '保存图片',
+        })
+        // tempFilePath可以作为img标签的src属性显示图片
+        const tempFilePaths = res.tempFiles
+        console.log(tempFilePaths)
+        var name = tempFilePaths[0].name
+        var type = _this.data.type
+        var mingxi_id = _this.data.mingxi_id
+        var new_id = 7
+        var name_arr = name.split(".")
+        var houzhui = name_arr[name_arr.length - 1]
+        console.log(new_id + "." + houzhui)
+        var sql = "insert into file_upload(file_name,type,file_id) output inserted.id values('" + name + "','" + type + "','" + mingxi_id + "')" 
+        console.log(sql)
+        wx.cloud.callFunction({
+          name: 'sqlserver_ruilida',
+          data: {
+            query: sql
+          },
+          success: res => {
+            console.log(res)
+            var new_id = res.result.recordset[0].id
+            var sql = "update file_upload set [file] = 'http://yhocn.cn:9088/ruilida/销售报价单/" + new_id + "." + houzhui + "' where id = " + new_id
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql
+              },
+              success: res => {
+                console.log(res)
+                wx.getFileSystemManager().readFile({
+                  filePath: tempFilePaths[0].path, //选择图片返回的相对路径
+                  encoding: 'base64', //编码格式
+                  success: res => { //成功的回调
+                    console.log('data:image/png;base64,' + res.data)
+                    var base64 = res.data
+                    var fsm = wx.getFileSystemManager();
+                    var buffer = wx.base64ToArrayBuffer(base64);
+                    const fileName = wx.env.USER_DATA_PATH + '/' + new_id + "." + houzhui;
+                    fsm.writeFileSync(fileName, buffer, 'binary');
+                    console.log(fileName);
+                    wx.uploadFile({
+                      url: 'http://yhocn.cn:9087/file/upload',
+                      header: { "Content-Type": "multipart/form-data" },
+                      filePath: fileName,
+                      name: 'file',
+                      formData:{
+                      name: new_id + "." + houzhui,
+                      path: '/ruilida/' + type + "/",
+                      kongjian: 999,
+                      },
+                      success(res){
+                        wx.hideLoading()
+                        console.log(res.data);
+                        _this.tableShow()
+                      }
+                    })
+                  }
+                })
+              },
+              err: res => {
+                wx.hideLoading()
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.hideLoading()
+                console.log(res)
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none'
+                })
+                console.log("请求失败！")
+              }
+            })
+          },
+          err: res => {
+            wx.hideLoading()
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.hideLoading()
+            console.log(res)
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
       }
     })
   },

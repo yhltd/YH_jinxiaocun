@@ -131,8 +131,13 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var tiaojian = options.tiaojian
+    if(tiaojian != undefined){
+      tiaojian = JSON.parse(tiaojian)
+    }
     _this.setData({
       userInfo,
+      tiaojian
     })
   },
 
@@ -622,11 +627,19 @@ Page({
    */
   onShow() {
     var _this = this
-    _this.setData({
-      start_date:'',
-      stop_date:'',
-      customer:'',
-    })
+    var tiaojian = _this.data.tiaojian
+    if(tiaojian != undefined){
+      _this.setData(tiaojian)
+      _this.setData({
+        tiaojian:undefined
+      })
+    }else{
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        customer:'',
+      })
+    }
     _this.sel1()
   },
 

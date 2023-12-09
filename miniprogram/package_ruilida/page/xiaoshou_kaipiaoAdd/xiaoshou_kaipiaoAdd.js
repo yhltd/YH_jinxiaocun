@@ -56,7 +56,7 @@ Page({
       kaipiao_list,
       kehu_name
     })
-    var sql = "select * from customer;select * from peizhi where type = '核算单位';select * from userInfo;"
+    var sql = "select * from customer;select * from peizhi where type = '核算单位';select * from userInfo;select * from peizhi_shuilv"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -87,11 +87,13 @@ Page({
         var shoupiao_danwei_list = res.result.recordsets[0]
         var kaipiao_danwei_list = res.result.recordsets[1]
         var xinxi_tuisong_list = res.result.recordsets[2]
+        var shuilv_list = res.result.recordsets[3][0]
         _this.setData({
           kehu_list,
           kaipiao_danwei_list,
           shoupiao_danwei_list,
-          xinxi_tuisong_list 
+          xinxi_tuisong_list,
+          shuilv_list
         })
 
         if(id != null && id != undefined && id != ''){
@@ -312,7 +314,7 @@ Page({
       })
       return;
     }
-    if(kaipiao_body.dianpu == ''){
+    if(kaipiao_body.kaipiao_danwei == ''){
       wx.showToast({
         title: '请选择开票单位',
         icon: 'none'
@@ -341,10 +343,15 @@ Page({
       return;
     }
     if(kaipiao_body.id == '' && _this.data.kehu_name == undefined){
-      wx.showLoading({
-        title:'保存中'
-      })
-      var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values('" + kaipiao_body.xiaoshou_bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + kaipiao_body.kaipiao_jine + "','" + kaipiao_body.kaipiao_shuie + "','" + kaipiao_body.jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+      var this_date = kaipiao_body.kaipiao_riqi
+      var start_year = (kaipiao_body.kaipiao_riqi.split("-")[0] * 1) - 1
+      var start_month = (kaipiao_body.kaipiao_riqi.split("-")[1] * 1)
+      if(start_month < 10){
+        start_month = "0" + start_month
+      }
+      var start_date = start_year + "-" + start_month + "-01"
+      var stop_date = this_date
+      var sql = "select isnull(sum(convert(float,isnull(jiashui_heji,0))),0) as yikai from xiaoshou_kaipiao where kaipiao_danwei = '" + kaipiao_body.kaipiao_danwei + "' and kaipiao_riqi >= '" + start_date + "' and kaipiao_riqi <= '" + stop_date + "'"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -352,22 +359,112 @@ Page({
         },
         success: res => {
           console.log(res)
-          var new_id = res.result.recordset[0].id
-          kaipiao_body.id = new_id
-          _this.setData({
-            kaipiao_body
-          })
-          wx.hideLoading()
-          wx.showToast({
-            title: '保存成功',
-            icon: 'none'
-          })
-          setTimeout(function () {
-            _this.back()
-          }, 2000)
+          var yikai = res.result.recordset[0].yikai
+          var xiane = _this.data.shuilv_list.kaipiao_edu * 1
+          if(yikai + (kaipiao_body.jiashui_heji * 1) > xiane){
+            wx.showModal({
+              title: '提示',
+              content: '当前单位已超出开票限额，是否继续？',
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  wx.showLoading({
+                    title:'保存中'
+                  })
+                  var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values('" + kaipiao_body.xiaoshou_bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + kaipiao_body.kaipiao_jine + "','" + kaipiao_body.kaipiao_shuie + "','" + kaipiao_body.jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+                  wx.cloud.callFunction({
+                    name: 'sqlserver_ruilida',
+                    data: {
+                      query: sql
+                    },
+                    success: res => {
+                      console.log(res)
+                      var new_id = res.result.recordset[0].id
+                      kaipiao_body.id = new_id
+                      _this.setData({
+                        kaipiao_body
+                      })
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '保存成功',
+                        icon: 'none'
+                      })
+                      setTimeout(function () {
+                        _this.back()
+                      }, 2000)
+                    },
+                    err: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '错误!',
+                        icon: 'none',
+                        duration: 3000
+                      })
+                      console.log("错误!")
+                    },
+                    fail: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '请求失败！',
+                        icon: 'none',
+                        duration: 3000
+                      })
+                      console.log("请求失败！")
+                    }
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }else{
+            wx.showLoading({
+              title:'保存中'
+            })
+            var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values('" + kaipiao_body.xiaoshou_bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + kaipiao_body.kaipiao_jine + "','" + kaipiao_body.kaipiao_shuie + "','" + kaipiao_body.jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql
+              },
+              success: res => {
+                console.log(res)
+                var new_id = res.result.recordset[0].id
+                kaipiao_body.id = new_id
+                _this.setData({
+                  kaipiao_body
+                })
+                wx.hideLoading()
+                wx.showToast({
+                  title: '保存成功',
+                  icon: 'none'
+                })
+                setTimeout(function () {
+                  _this.back()
+                }, 2000)
+              },
+              err: res => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '错误!',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("请求失败！")
+              }
+            })
+          }
         },
         err: res => {
-          wx.hideLoading()
           wx.showToast({
             title: '错误!',
             icon: 'none',
@@ -376,7 +473,6 @@ Page({
           console.log("错误!")
         },
         fail: res => {
-          wx.hideLoading()
           wx.showToast({
             title: '请求失败！',
             icon: 'none',
@@ -386,55 +482,158 @@ Page({
         }
       })
     }else if(kaipiao_body.id == '' && _this.data.kehu_name != undefined){
-      wx.showLoading({
-        title:'保存中'
-      })
-      var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values "
-      var sql2 = ""
-      var this_list = _this.data.kaipiao_list
-      console.log(this_list)
+      var benci = 0
       for(var i=0; i<this_list.length; i++){
-        if(sql2 == ""){
-          sql2 = "('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
-        }else{
-          sql2 = slq2 + ",('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
-        }
-        wx.cloud.callFunction({
-          name: 'sqlserver_ruilida',
-          data: {
-            query: sql + sql2
-          },
-          success: res => {
-            console.log(res)
-            wx.hideLoading()
-            wx.showToast({
-              title: '保存成功',
-              icon: 'none'
-            })
-            setTimeout(function () {
-              _this.back()
-            }, 2000)
-          },
-          err: res => {
-            wx.hideLoading()
-            wx.showToast({
-              title: '错误!',
-              icon: 'none',
-              duration: 3000
-            })
-            console.log("错误!")
-          },
-          fail: res => {
-            wx.hideLoading()
-            wx.showToast({
-              title: '请求失败！',
-              icon: 'none',
-              duration: 3000
-            })
-            console.log("请求失败！")
-          }
-        })
+        benci = benci + (this_list[i].this_kai * 1)
       }
+      var this_date = kaipiao_body.kaipiao_riqi
+      var start_year = (kaipiao_body.kaipiao_riqi.split("-")[0] * 1) - 1
+      var start_month = (kaipiao_body.kaipiao_riqi.split("-")[1] * 1)
+      if(start_month < 10){
+        start_month = "0" + start_month
+      }
+      var start_date = start_year + "-" + start_month + "-01"
+      var stop_date = this_date
+      var sql = "select isnull(sum(convert(float,isnull(jiashui_heji,0))),0) as yikai from xiaoshou_kaipiao where kaipiao_danwei = '" + kaipiao_body.kaipiao_danwei + "' and kaipiao_riqi >= '" + start_date + "' and kaipiao_riqi <= '" + stop_date + "'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_ruilida',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          var yikai = res.result.recordset[0].yikai
+          var xiane = _this.data.shuilv_list.kaipiao_edu * 1
+          if(yikai + (benci * 1) > xiane){
+            wx.showModal({
+              title: '提示',
+              content: '当前单位已超出开票限额，是否继续？',
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  wx.showLoading({
+                    title:'保存中'
+                  })
+                  var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values "
+                  var sql2 = ""
+                  var this_list = _this.data.kaipiao_list
+                  console.log(this_list)
+                  for(var i=0; i<this_list.length; i++){
+                    if(sql2 == ""){
+                      sql2 = "('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+                    }else{
+                      sql2 = slq2 + ",('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+                    }
+                  }
+                  wx.cloud.callFunction({
+                    name: 'sqlserver_ruilida',
+                    data: {
+                      query: sql + sql2
+                    },
+                    success: res => {
+                      console.log(res)
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '保存成功',
+                        icon: 'none'
+                      })
+                      setTimeout(function () {
+                        _this.back()
+                      }, 2000)
+                    },
+                    err: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '错误!',
+                        icon: 'none',
+                        duration: 3000
+                      })
+                      console.log("错误!")
+                    },
+                    fail: res => {
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '请求失败！',
+                        icon: 'none',
+                        duration: 3000
+                      })
+                      console.log("请求失败！")
+                    }
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }else{
+            wx.showLoading({
+              title:'保存中'
+            })
+            var sql = "insert into xiaoshou_kaipiao(xiaoshou_bianhao,shoupiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao,kaipiao_riqi,kaipiao_jine,kaipiao_shuie,jiashui_heji,beizhu,kaipiao_danwei,xinxi_tuisong,kaipiao_zhuangtai) output inserted.id values "
+            var sql2 = ""
+            var this_list = _this.data.kaipiao_list
+            console.log(this_list)
+            for(var i=0; i<this_list.length; i++){
+              if(sql2 == ""){
+                sql2 = "('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+              }else{
+                sql2 = slq2 + ",('" + this_list[i].bianhao + "','" + kaipiao_body.shoupiao_danwei + "','" + kaipiao_body.shibiehao + "','" + kaipiao_body.kaipiao_dizhi + "','" + kaipiao_body.kaipiao_dianhua + "','" + kaipiao_body.kaipiao_yinhang + "','" + kaipiao_body.kaipiao_zhanghao + "','" + kaipiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].jiashui_heji + "','" + kaipiao_body.beizhu + "','" + kaipiao_body.kaipiao_danwei + "','" + kaipiao_body.xinxi_tuisong + "','" + kaipiao_body.kaipiao_zhuangtai + "')"
+              }
+            }
+            wx.cloud.callFunction({
+              name: 'sqlserver_ruilida',
+              data: {
+                query: sql + sql2
+              },
+              success: res => {
+                console.log(res)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '保存成功',
+                  icon: 'none'
+                })
+                setTimeout(function () {
+                  _this.back()
+                }, 2000)
+              },
+              err: res => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '错误!',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("错误!")
+              },
+              fail: res => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '请求失败！',
+                  icon: 'none',
+                  duration: 3000
+                })
+                console.log("请求失败！")
+              }
+            })
+          }
+        },
+        err: res => {
+          wx.showToast({
+            title: '错误!',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
     }else{
       console.log(kaipiao_body)
       wx.showLoading({

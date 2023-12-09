@@ -1,8 +1,28 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
+
+  <view class="card" style="height: 170rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">新增销售数据</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="huizong_riqi">{{huizong_riqi}}</view>
+    </view>
+    <view style="display: flex; justify-content: space-between;margin-top: 10rpx;">
+      <view style="width: 25%;text-align: center;" bindtap="dingdan_goto" class="title_text2">订单</view> 
+      <view style="width: 25%;text-align: center;" bindtap="chuku_goto" class="title_text2">出库</view> 
+      <view style="width: 25%;text-align: center;" bindtap="shoukuan_goto" class="title_text2">收款</view> 
+      <view style="width: 25%;text-align: center;" bindtap="maoli_goto" class="title_text2">毛利</view> 
+    </view>
+    <view style="display: flex; justify-content: space-between;margin-top: 10rpx;">
+      <view style="width: 25%;text-align: center;" bindtap="dingdan_goto" class="title_text3">{{dingdan}}</view>  
+      <view style="width: 25%;text-align: center;" bindtap="chuku_goto" class="title_text3">{{chuku}}</view> 
+      <view style="width: 25%;text-align: center;" bindtap="shoukuan_goto" class="title_text3">{{shoukuan}}</view> 
+      <view style="width: 25%;text-align: center;" bindtap="maoli_goto" class="title_text3">{{maoli}}</view> 
+    </view>
+  </view>
+
   <view class="card" style="height: {{kehu_qiankuan_height}}rpx;">
     <view style="display: flex; justify-content: space-between;">
       <view class="title_text">客户欠款排行</view> 
-      <view style="color: #666666;">更多</view>
+      <view style="color: #666666;" bindtap="kehu_qiankuan_goto">更多</view>
     </view>
     <ec-canvas force-use-old-canvas="true" id="kehu_qiankuan" canvas-id="mychart-bar" ec="{{ecage}}"></ec-canvas>
   </view>
@@ -11,7 +31,7 @@
   <view class="card" style="height: {{gongyingshang_qiankuan_height}}rpx;">
     <view style="display: flex; justify-content: space-between;">
       <view class="title_text">供应商欠款排行</view> 
-      <view style="color: #666666;">更多</view>
+      <view style="color: #666666;" bindtap="gongyingshang_qiankuan_goto">更多</view>
     </view>
     <ec-canvas force-use-old-canvas="true" id="gongyingshang_qiankuan" canvas-id="mychart-bar2" ec="{{ecage2}}"></ec-canvas>
   </view>
@@ -21,7 +41,7 @@
       <view class="title_text">销售订单排行</view> 
       <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_tiaojian">{{xiaoshou_tiaojian}}</view>
       <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_riqi">{{xiaoshou_riqi}}</view>
-      <view style="color: #666666;">更多</view>
+      <view style="color: #666666;" bindtap="xiaoshou_dingdan_goto">更多</view>
     </view>
     <ec-canvas force-use-old-canvas="true" id="xiaoshou_dingdan" canvas-id="mychart-bar3" ec="{{ecage3}}"></ec-canvas>
   </view>
@@ -31,9 +51,46 @@
       <view class="title_text">销售收款排行</view> 
       <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_shoukuan_tiaojian">{{xiaoshou_shoukuan_tiaojian}}</view>
       <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_shoukuan_riqi">{{xiaoshou_shoukuan_riqi}}</view>
-      <view style="color: #666666;">更多</view>
+      <view style="color: #666666;" bindtap="xiaoshou_shoukuan_goto">更多</view>
     </view>
     <ec-canvas force-use-old-canvas="true" id="xiaoshou_shoukuan" canvas-id="mychart-bar4" ec="{{ecage4}}"></ec-canvas>
+  </view>
+
+  <view class="card" style="height: {{xiaoshou_maoli_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">销售毛利排行</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_maoli_tiaojian">{{xiaoshou_maoli_tiaojian}}</view>
+      <view style="color: #666666;" bindtap="xiala_show" data-column="xiaoshou_maoli_riqi">{{xiaoshou_maoli_riqi}}</view>
+      <view style="color: #666666;" bindtap="maoli_goto2">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="xiaoshou_maoli" canvas-id="mychart-bar5" ec="{{ecage5}}"></ec-canvas>
+  </view>
+
+  <view class="card" style="height: {{dingdan_zoushi_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">销售订单走势</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="dingdan_zoushi_riqi">{{dingdan_zoushi_riqi}}</view>
+      <view style="color: #666666;" bindtap="dingdan_zoushi_goto">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="dingdan_zoushi" canvas-id="mychart-bar6" ec="{{ecage6}}"></ec-canvas>
+  </view>
+
+  <view class="card" style="height: {{shoukuan_zoushi_height}}rpx;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">销售收款走势</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="shoukuan_zoushi_riqi">{{shoukuan_zoushi_riqi}}</view>
+      <view style="color: #666666;" bindtap="shoukuan_zoushi_goto">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="shoukuan_zoushi" canvas-id="mychart-bar7" ec="{{ecage7}}"></ec-canvas>
+  </view>
+
+  <view class="card" style="height: {{fukuan_zoushi_height}}rpx;margin-bottom: 100px;">
+    <view style="display: flex; justify-content: space-between;">
+      <view class="title_text">采购付款走势</view> 
+      <view style="color: #666666;" bindtap="xiala_show" data-column="fukuan_zoushi_riqi">{{fukuan_zoushi_riqi}}</view>
+      <view style="color: #666666;" bindtap="fukuan_zoushi_goto">更多</view>
+    </view>
+    <ec-canvas force-use-old-canvas="true" id="fukuan_zoushi" canvas-id="mychart-bar7" ec="{{ecage7}}"></ec-canvas>
   </view>
 
 </scroll-view>

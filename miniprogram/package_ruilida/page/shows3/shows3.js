@@ -41,6 +41,46 @@ Page({
         url: '../yibiaopan/yibiaopan',
         icon: "../../image/yuedushouzhitongji.png"
       },
+      {
+        text:'销售毛利统计',
+        url: '../maoli_tongji/maoli_tongji',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'销售订单统计',
+        url: '../xiaoshou_dingdan_tongji/xiaoshou_dingdan_tongji',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'销售收款统计',
+        url: '../xiaoshou_shoukuan_tongji/xiaoshou_shoukuan_tongji',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'销售订单走势',
+        url: '../xiaoshou_dingdan_zoushi/xiaoshou_dingdan_zoushi',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'销售收款走势',
+        url: '../xiaoshou_shoukuan_zoushi/xiaoshou_shoukuan_zoushi',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'采购付款走势',
+        url: '../caigou_fukuan_zoushi/caigou_fukuan_zoushi',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'客户往来',
+        url: '../kehu_qiankuan_tongji/kehu_qiankuan_tongji',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
+      {
+        text:'供应商往来',
+        url: '../gongyingshang_qiankuan_tongji/gongyingshang_qiankuan_tongji',
+        icon: "../../image/yuedushouzhitongji.png"
+      },
     ],
     this_date:'',
     shenhe_list:[
