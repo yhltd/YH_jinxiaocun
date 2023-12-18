@@ -28,7 +28,8 @@ Page({
       xiaoshou_danwei:'',
       xiaoxiang_shuilv:'',
       shenhe:'',
-      shenhe_zhuangtai:'审核中',
+      shenhe_list:'',
+      shenhe_zhuangtai:'未提交审核',
       jiashui_heji:'0', 
       beizhu:'',
     },
@@ -54,6 +55,86 @@ Page({
     ],
     type:'',
     name:'',
+    quanxuan_value: false,
+  },
+
+  quanxuan:function(e){
+    var _this = this
+    console.log(e)
+    var this_val = e.detail
+    if(this_val == false){
+      _this.setData({
+        quanxuan_value: false,
+        result:[]
+      })
+    }else{
+      _this.setData({
+        quanxuan_value: true,
+        result:_this.data.all_result
+      })
+    }
+  },
+
+  onChange(event) {
+    var _this = this
+    console.log('onChange')
+    console.log(event)
+    if(event.detail.length == _this.data.list_check.length){
+      _this.setData({
+        quanxuan_value: true,
+      });
+    }else{
+      _this.setData({
+        quanxuan_value: false,
+      });
+    }
+    _this.setData({
+      result: event.detail,
+    });
+  },
+
+  toggle(event) {
+    console.log('toggle')
+    console.log(event)
+    const { index } = event.currentTarget.dataset;
+    const checkbox = this.selectComponent(`.checkboxes-${index}`);
+    checkbox.toggle();
+  },
+
+  noop() {
+    console.log('noop')
+  },
+
+  shenhe_sure:function(){
+    var _this = this
+    var result = _this.data.result
+    console.log(result)
+    if(result.length == 0){
+      wx.showToast({
+        title: '请选择审核人',
+        icon:'none',
+      })
+      return;
+    }
+    var shenhe_str = ""
+    var zhuangtai_str = ""
+    var xiaoshou_body = _this.data.xiaoshou_body
+    for(var i=0; i<result.length; i++){
+      if(shenhe_str == ""){
+        shenhe_str = result[i]
+        zhuangtai_str = "审核中"
+      }else{
+        shenhe_str = shenhe_str + "," + result[i]
+        zhuangtai_str = zhuangtai_str + "," + "审核中"
+      }
+    }
+    xiaoshou_body.shenhe = shenhe_str
+    xiaoshou_body.zhuangtai_str = zhuangtai_str
+    console.log(xiaoshou_body)
+    _this.setData({
+      xiaoshou_body
+    })
+    _this.qxShow()
   },
 
   /**
@@ -80,6 +161,15 @@ Page({
         var kehu_list = res.result.recordsets[0]
         var yewuyuan_list = res.result.recordsets[1]
         var shenhe_list = res.result.recordsets[1]
+        var list_check = res.result.recordsets[1]
+        var all_result = []
+        var result = []
+        for(var i=0; i<list_check.length; i++){
+          all_result.push(list_check[i].name)
+        }
+        console.log(list_check)
+        console.log(all_result)
+        console.log(result)
         var product_list = res.result.recordsets[2]
         var dianpu_list = res.result.recordsets[3]
         var peizhi_shuilv = res.result.recordsets[4][0]
@@ -127,7 +217,10 @@ Page({
           xiaoxiang_shuilv_list,
           fujia_shuilv,
           jiage_dengji_list,
-          xiaoshou_danwei_list
+          xiaoshou_danwei_list,
+          list_check,
+          all_result,
+          result
         })
       },
       err: res => {
@@ -558,7 +651,8 @@ Page({
       xlShow2:false,
       ssqShow:false,
       product_show:false,
-      caigou_show:false
+      caigou_show:false,
+      dayin_show: false,
     })
   },
 
@@ -862,6 +956,16 @@ Page({
     })
   },
 
+  save_shenhe:function(){
+    var _this = this
+    var xiaoshou_body = _this.data.xiaoshou_body
+    xiaoshou_body.shenhe_zhuangtai = '审核中'
+    _this.setData({
+      xiaoshou_body
+    })
+    _this.save()
+  },
+
   save:function(){
     var _this = this
     var xiaoshou_body = _this.data.xiaoshou_body
@@ -931,7 +1035,7 @@ Page({
         title:'保存中'
       })
 
-      var sql = "insert into xiaoshou_dingdan(bianhao,riqi,kehu,jiage_dengji,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,shenhe,jiashui_heji,beizhu,shenhe_zhuangtai,xiaoshou_danwei) output inserted.id values('" + xiaoshou_body.bianhao + "','" + xiaoshou_body.riqi + "','" + xiaoshou_body.kehu + "','" + xiaoshou_body.jiage_dengji + "','" + xiaoshou_body.yewuyuan + "','" + xiaoshou_body.shoujianren + "','" + xiaoshou_body.shoujian_phone + "','" + xiaoshou_body.shoujian_dizhi + "','" + xiaoshou_body.dianpu + "','" + xiaoshou_body.xiaoxiang_shuilv + "','" + xiaoshou_body.shenhe + "','" + xiaoshou_body.jiashui_heji + "','" + xiaoshou_body.beizhu + "','审核中','" + xiaoshou_body.xiaoshou_danwei + "')"
+      var sql = "insert into xiaoshou_dingdan(bianhao,riqi,kehu,jiage_dengji,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,shenhe,jiashui_heji,beizhu,shenhe_zhuangtai,xiaoshou_danwei,shenhe_list) output inserted.id values('" + xiaoshou_body.bianhao + "','" + xiaoshou_body.riqi + "','" + xiaoshou_body.kehu + "','" + xiaoshou_body.jiage_dengji + "','" + xiaoshou_body.yewuyuan + "','" + xiaoshou_body.shoujianren + "','" + xiaoshou_body.shoujian_phone + "','" + xiaoshou_body.shoujian_dizhi + "','" + xiaoshou_body.dianpu + "','" + xiaoshou_body.xiaoxiang_shuilv + "','" + xiaoshou_body.shenhe + "','" + xiaoshou_body.jiashui_heji + "','" + xiaoshou_body.beizhu + "','审核中','" + xiaoshou_body.xiaoshou_danwei + "','" + xiaoshou_body.shenhe_list + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -1019,7 +1123,7 @@ Page({
       if(xiaoshou_body.shenhe_zhuangtai == '审核未通过'){
         xiaoshou_body.shenhe_zhuangtai = "审核中"
       }
-      var sql = "update xiaoshou_dingdan set bianhao='" + xiaoshou_body.bianhao + "',riqi='" + xiaoshou_body.riqi + "',kehu='" + xiaoshou_body.kehu + "',jiage_dengji='" + xiaoshou_body.jiage_dengji + "',yewuyuan='" + xiaoshou_body.yewuyuan + "',shoujianren='" + xiaoshou_body.shoujianren + "',shoujian_phone='" + xiaoshou_body.shoujian_phone + "',shoujian_dizhi='" + xiaoshou_body.shoujian_dizhi + "',dianpu='" + xiaoshou_body.dianpu + "',xiaoxiang_shuilv='" + xiaoshou_body.xiaoxiang_shuilv + "',shenhe='" + xiaoshou_body.shenhe + "',jiashui_heji='" + xiaoshou_body.jiashui_heji + "',beizhu='" + xiaoshou_body.beizhu + "',shenhe_zhuangtai='" + xiaoshou_body.shenhe_zhuangtai + "',xiaoshou_danwei='" + xiaoshou_body.xiaoshou_danwei + "' where id=" + xiaoshou_body.id
+      var sql = "update xiaoshou_dingdan set bianhao='" + xiaoshou_body.bianhao + "',riqi='" + xiaoshou_body.riqi + "',kehu='" + xiaoshou_body.kehu + "',jiage_dengji='" + xiaoshou_body.jiage_dengji + "',yewuyuan='" + xiaoshou_body.yewuyuan + "',shoujianren='" + xiaoshou_body.shoujianren + "',shoujian_phone='" + xiaoshou_body.shoujian_phone + "',shoujian_dizhi='" + xiaoshou_body.shoujian_dizhi + "',dianpu='" + xiaoshou_body.dianpu + "',xiaoxiang_shuilv='" + xiaoshou_body.xiaoxiang_shuilv + "',shenhe='" + xiaoshou_body.shenhe + "',jiashui_heji='" + xiaoshou_body.jiashui_heji + "',beizhu='" + xiaoshou_body.beizhu + "',shenhe_zhuangtai='" + xiaoshou_body.shenhe_zhuangtai + "',xiaoshou_danwei='" + xiaoshou_body.xiaoshou_danwei + "',shenhe_list='" + xiaoshou_body.shenhe_list + "' where id=" + xiaoshou_body.id
       console.log(xiaoshou_body)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -1162,15 +1266,19 @@ Page({
     var column = e.currentTarget.dataset.column
     var list = _this.data[column + "_list"]
     var index = e.currentTarget.dataset.index
-    _this.setData({
-      list_xiala: list,
-      click_column:column,
-      click_index: index
-    })
+    if(column == 'shenhe'){
+      _this.setData({
+        dayin_show: true,
+      })
+    }else{
+      _this.setData({
+        list_xiala: list,
+        click_column:column,
+        click_index: index,
+        xlShow2: true
+      })
+    }
     console.log(list)
-    _this.setData({
-      xlShow2: true
-    })
   },
 
   select2: function (e) {

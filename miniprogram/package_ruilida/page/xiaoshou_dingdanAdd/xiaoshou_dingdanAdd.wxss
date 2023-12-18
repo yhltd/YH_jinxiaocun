@@ -74,4 +74,14 @@ button{
   margin-bottom:1.5% ;
 }
 
+.value-class {
+  flex: none !important;
+}
+
+.bt_text{
+  text-align: center;
+  width: 30%;
+  margin: auto;
+}
+
 

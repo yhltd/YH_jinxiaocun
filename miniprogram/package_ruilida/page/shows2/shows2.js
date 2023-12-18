@@ -167,27 +167,62 @@ Page({
   onChange: function (event) {
     var _this = this;
     console.log(_this.data.userInfo.power)
-    if (event.detail == 4) {
+    if (event.detail == 3) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 3) {
+    } else if (event.detail == 2) {
       wx.redirectTo({
         url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 2) {
+    } else if (event.detail == 1) {
       wx.redirectTo({
         url: '../shows1/shows1?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 1) {
+    } else if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    }else if (event.detail == 0) {
-      wx.redirectTo({
-        url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
+    }
+    // else if (event.detail == 0) {
+    //   wx.redirectTo({
+    //     url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
+    //   })
+    // }
+  },
+
+  shenpi_show:function(e){
+    var _this = this
+    console.log(e)
+    console.log(e.target.dataset.type)
+    var type = e.target.dataset.type
+    if(type == '销售报价'){
+      wx.navigateTo({
+        url: '../xiaoshou_baojia/xiaoshou_baojia?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我审核",
+      })
+    }else if(type == '销售订单'){
+      wx.navigateTo({
+        url: '../xiaoshou_dingdan/xiaoshou_dingdan?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我审核",
+      })
+    }else if(type == '采购订单'){
+      wx.navigateTo({
+        url: '../caigou_dingdan/caigou_dingdan?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我审核",
       })
     }
+  },
+
+  kaipiao_goto:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../xiaoshou_kaipiao/xiaoshou_kaipiao?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我开票",
+    })
+  },
+
+  shoupiao_goto:function(){
+    var _this = this
+    wx.navigateTo({
+      url: '../caigou_shoupiao/caigou_shoupiao?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=需要我收票",
+    })
   },
 
   /**

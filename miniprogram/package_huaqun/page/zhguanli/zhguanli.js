@@ -300,7 +300,7 @@ Page({
   clickView:function(e){
     var _this = this
     console.log(e)
-    var column = e.target.dataset.column
+    var column = e.currentTarget.dataset.column
     if(column == 'address_name'){
       wx.showModal({
         title: '提示',

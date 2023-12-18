@@ -6,7 +6,8 @@
           <text>客户：{{item.kehu}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
           <text>审核人：{{item.shenhe}} \n</text>
-          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
+          <!-- <text>审核状态：{{item.shenhe_zhuangtai}} \n</text> -->
+          <text>审核状态：{{item.shenhe_zhuangtai == '未提交审核'?item.shenhe_zhuangtai:item.shenhe_zhuangtai == '审核通过'?item.shenhe_zhuangtai:item.shenhe_list}} \n</text>
           <van-tag style="margin-right: 5px;" type="{{item.chuku_zhuangtai=='未出库'?'warning':item.chuku_zhuangtai=='部分出库'?'primary':'success'}}">{{item.chuku_zhuangtai}}</van-tag>
           <van-tag style="margin-right: 5px;" type="{{item.kaipiao_zhuangtai=='未开票'?'warning':item.kaipiao_zhuangtai=='部分开票'?'primary':'success'}}">{{item.kaipiao_zhuangtai}}</van-tag>
           <van-tag type="{{item.shoukuan_zhuangtai=='未收款'?'warning':item.shoukuan_zhuangtai=='部分收款'?'primary':'success'}}">{{item.shoukuan_zhuangtai}}</van-tag>

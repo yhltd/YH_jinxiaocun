@@ -49,7 +49,7 @@ Page({
       {
         text:'商品单位',
         url: '../peizhi/peizhi',
-        icon: "../../image/shangpinfenlei.png"
+        icon: "../../image/shangpindanwei.png"
       },
       {
         text:'进项税率',
@@ -163,6 +163,7 @@ Page({
       xlShow4:true,
     })
   },
+  
   shenpi_show:function(e){
     var _this = this
     console.log(e)
@@ -305,27 +306,28 @@ Page({
   onChange: function (event) {
     var _this = this;
     console.log(_this.data.userInfo.power)
-    if (event.detail == 4) {
+    if (event.detail == 3) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 3) {
+    } else if (event.detail == 2) {
       wx.redirectTo({
         url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 2) {
+    } else if (event.detail == 1) {
       wx.redirectTo({
         url: '../shows1/shows1?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 1) {
+    } else if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    }else if (event.detail == 0) {
-      wx.redirectTo({
-        url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
-      })
     }
+    // else if (event.detail == 0) {
+    //   wx.redirectTo({
+    //     url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
+    //   })
+    // }
   },
   /**
    * 生命周期函数--监听页面隐藏

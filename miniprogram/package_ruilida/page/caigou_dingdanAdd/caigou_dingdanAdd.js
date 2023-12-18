@@ -21,7 +21,8 @@ Page({
       jinxiang_shuilv:'',
       beizhu:'',
       shenhe:'',
-      shenhe_zhuangtai:'审核中',
+      shenhe_list:'',
+      shenhe_zhuangtai:'未提交审核',
     },
     lianxi_list:[
       {
@@ -43,6 +44,86 @@ Page({
     ],
     type:'',
     name:'',
+    quanxuan_value: false,
+  },
+
+  quanxuan:function(e){
+    var _this = this
+    console.log(e)
+    var this_val = e.detail
+    if(this_val == false){
+      _this.setData({
+        quanxuan_value: false,
+        result:[]
+      })
+    }else{
+      _this.setData({
+        quanxuan_value: true,
+        result:_this.data.all_result
+      })
+    }
+  },
+
+  onChange(event) {
+    var _this = this
+    console.log('onChange')
+    console.log(event)
+    if(event.detail.length == _this.data.list_check.length){
+      _this.setData({
+        quanxuan_value: true,
+      });
+    }else{
+      _this.setData({
+        quanxuan_value: false,
+      });
+    }
+    _this.setData({
+      result: event.detail,
+    });
+  },
+
+  toggle(event) {
+    console.log('toggle')
+    console.log(event)
+    const { index } = event.currentTarget.dataset;
+    const checkbox = this.selectComponent(`.checkboxes-${index}`);
+    checkbox.toggle();
+  },
+
+  noop() {
+    console.log('noop')
+  },
+
+  shenhe_sure:function(){
+    var _this = this
+    var result = _this.data.result
+    console.log(result)
+    if(result.length == 0){
+      wx.showToast({
+        title: '请选择审核人',
+        icon:'none',
+      })
+      return;
+    }
+    var shenhe_str = ""
+    var zhuangtai_str = ""
+    var xiaoshou_body = _this.data.xiaoshou_body
+    for(var i=0; i<result.length; i++){
+      if(shenhe_str == ""){
+        shenhe_str = result[i]
+        zhuangtai_str = "审核中"
+      }else{
+        shenhe_str = shenhe_str + "," + result[i]
+        zhuangtai_str = zhuangtai_str + "," + "审核中"
+      }
+    }
+    xiaoshou_body.shenhe = shenhe_str
+    xiaoshou_body.zhuangtai_str = zhuangtai_str
+    console.log(xiaoshou_body)
+    _this.setData({
+      xiaoshou_body
+    })
+    _this.qxShow()
   },
 
   /**
@@ -74,6 +155,15 @@ Page({
         var dianpu_list = res.result.recordsets[1]
         var product_list = res.result.recordsets[2]
         var shenhe_list = res.result.recordsets[3]
+        var list_check = res.result.recordsets[3]
+        var all_result = []
+        var result = []
+        for(var i=0; i<list_check.length; i++){
+          all_result.push(list_check[i].name)
+        }
+        console.log(list_check)
+        console.log(all_result)
+        console.log(result)
         var yewuyuan_list = res.result.recordsets[3]
         var peizhi_shuilv = res.result.recordsets[4][0]
         var caigou_danwei_list = res.result.recordsets[5]
@@ -86,7 +176,10 @@ Page({
           yewuyuan_list,
           caigou_danwei_list,
           jinxiang_shuilv_list,
-          xiaoshou_id
+          xiaoshou_id,
+          list_check,
+          all_result,
+          result
         })
 
         if(id != null && id != undefined){
@@ -363,7 +456,8 @@ Page({
     _this.setData({
       xlShow2:false,
       ssqShow:false,
-      product_show:false
+      product_show:false,
+      dayin_show: false,
     })
   },
 
@@ -519,6 +613,16 @@ Page({
     })
   },
 
+  save_shenhe:function(){
+    var _this = this
+    var xiaoshou_body = _this.data.xiaoshou_body
+    xiaoshou_body.shenhe_zhuangtai = '审核中'
+    _this.setData({
+      xiaoshou_body
+    })
+    _this.save()
+  },
+
   save:function(){
     var _this = this
     var caigou_body = _this.data.caigou_body
@@ -584,7 +688,7 @@ Page({
       if(xiaoshou_id == undefined){
         xiaoshou_id = ''
       }
-      var sql = "insert into caigou_dingdan(bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,caigou_danwei,yewuyuan,xiaoshou_id) output inserted.id values('" + caigou_body.bianhao + "','" + caigou_body.riqi + "','" + caigou_body.gongyingshang + "','" + caigou_body.dianpu + "','" + caigou_body.jinxiang_shuilv + "','" + caigou_body.beizhu + "','" + caigou_body.shenhe + "','审核中','" + caigou_body.caigou_danwei + "','" + caigou_body.yewuyuan + "','" + xiaoshou_id + "')"
+      var sql = "insert into caigou_dingdan(bianhao,riqi,gongyingshang,dianpu,jinxiang_shuilv,beizhu,shenhe,shenhe_zhuangtai,caigou_danwei,yewuyuan,xiaoshou_id,shenhe_list) output inserted.id values('" + caigou_body.bianhao + "','" + caigou_body.riqi + "','" + caigou_body.gongyingshang + "','" + caigou_body.dianpu + "','" + caigou_body.jinxiang_shuilv + "','" + caigou_body.beizhu + "','" + caigou_body.shenhe + "','审核中','" + caigou_body.caigou_danwei + "','" + caigou_body.yewuyuan + "','" + xiaoshou_id + "','" + caigou_body.shenhe_list + "')"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -671,7 +775,7 @@ Page({
       if(caigou_body.shenhe_zhuangtai == '审核未通过'){
         caigou_body.shenhe_zhuangtai = "审核中"
       }
-      var sql = "update caigou_dingdan set bianhao='" + caigou_body.bianhao + "',riqi='" + caigou_body.riqi + "',gongyingshang='" + caigou_body.gongyingshang + "',dianpu='" + caigou_body.dianpu + "',jinxiang_shuilv='" + caigou_body.jinxiang_shuilv + "',beizhu='" + caigou_body.beizhu + "',shenhe='" + caigou_body.shenhe + "',shenhe_zhuangtai='" + caigou_body.shenhe_zhuangtai + "',caigou_danwei='" + caigou_body.caigou_danwei + "',yewuyuan='" + caigou_body.yewuyuan + "' where id=" + caigou_body.id
+      var sql = "update caigou_dingdan set bianhao='" + caigou_body.bianhao + "',riqi='" + caigou_body.riqi + "',gongyingshang='" + caigou_body.gongyingshang + "',dianpu='" + caigou_body.dianpu + "',jinxiang_shuilv='" + caigou_body.jinxiang_shuilv + "',beizhu='" + caigou_body.beizhu + "',shenhe='" + caigou_body.shenhe + "',shenhe_zhuangtai='" + caigou_body.shenhe_zhuangtai + "',caigou_danwei='" + caigou_body.caigou_danwei + "',yewuyuan='" + caigou_body.yewuyuan + "',shenhe_list='" + caigou_body.shenhe_list + "' where id=" + caigou_body.id
       console.log(caigou_body)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -804,15 +908,19 @@ Page({
     var column = e.currentTarget.dataset.column
     var list = _this.data[column + "_list"]
     var index = e.currentTarget.dataset.index
-    _this.setData({
-      list_xiala: list,
-      click_column:column,
-      click_index: index
-    })
+    if(column == 'shenhe'){
+      _this.setData({
+        dayin_show: true,
+      })
+    }else{
+      _this.setData({
+        list_xiala: list,
+        click_column:column,
+        click_index: index,
+        xlShow2: true
+      })
+    }
     console.log(list)
-    _this.setData({
-      xlShow2: true
-    })
   },
 
   select2: function (e) {

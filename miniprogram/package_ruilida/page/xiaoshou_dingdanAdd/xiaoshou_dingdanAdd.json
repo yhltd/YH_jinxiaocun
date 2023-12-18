@@ -17,7 +17,9 @@
     "van-popup": "../../components/popup/index",
     "van-image": "../../components/image/index",
     "van-datetime-picker": "../../components/datetime-picker/index",
-    "van-tag": "../../components/tag/index"
+    "van-tag": "../../components/tag/index",
+    "van-checkbox": "../../components/checkbox/index",
+    "van-checkbox-group": "../../components/checkbox-group/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

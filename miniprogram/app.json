@@ -357,9 +357,6 @@
         "page/xiaoshou_dingdan_xiangqing/xiaoshou_dingdan_xiangqing",
         "page/xiaoshou_dingdanAdd/xiaoshou_dingdanAdd",
         "page/xiaoshou_dingdan_tongji/xiaoshou_dingdan_tongji",
-        "page/xiaoshou_dingdan_zoushi/xiaoshou_dingdan_zoushi",
-        "page/xiaoshou_shoukuan_zoushi/xiaoshou_shoukuan_zoushi",
-        "page/caigou_fukuan_zoushi/caigou_fukuan_zoushi",
         "page/xiaoshou_shoukuan_tongji/xiaoshou_shoukuan_tongji",
         "page/kehu_qiankuan_tongji/kehu_qiankuan_tongji",
         "page/gongyingshang_qiankuan_tongji/gongyingshang_qiankuan_tongji",
@@ -377,9 +374,19 @@
         "page/yuedu_shouzhi/yuedu_shouzhi",
         "page/peizhi_shuilv/peizhi_shuilv",
         "page/print_danju/print_danju",
+        "page/print_danju_peizhi/print_danju_peizhi",
         "page/print_tiaoma/print_tiaoma",
-        "page/yibiaopan/yibiaopan",
         "page/maoli_tongji/maoli_tongji"
+      ]
+    },
+    {
+      "root": "package_ruilida2",
+      "name": "RuiLiDaWuZiMaoYi2",
+      "pages": [
+        "page/yibiaopan/yibiaopan",
+        "page/xiaoshou_dingdan_zoushi/xiaoshou_dingdan_zoushi",
+        "page/xiaoshou_shoukuan_zoushi/xiaoshou_shoukuan_zoushi",
+        "page/caigou_fukuan_zoushi/caigou_fukuan_zoushi"
       ]
     },
     {

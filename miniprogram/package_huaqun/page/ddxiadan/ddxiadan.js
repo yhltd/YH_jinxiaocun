@@ -212,6 +212,7 @@ Page({
           var azdz = ""
           var ddh = ""
           var sum_money = ""
+          var luruyuan = ""
           var list_load = []
           for(var i=0; i<list.length; i++){
             khmc = list[i].khmc

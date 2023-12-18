@@ -2575,6 +2575,25 @@ Page({
     console.log(e.currentTarget.dataset.column)
     console.log(e.currentTarget.dataset.value)
     var column = e.currentTarget.dataset.column
+    var list = _this.data.list
+    if(list[0].wancheng == '完成'){
+      wx.showToast({
+        title: '已完成订单不允许编辑！',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if(column == 'customer_need_img1' || column == 'customer_need_img2' || column == 'customer_need_img3' || column == 'customer_need_img4' || column == 'customer_need_img5' ||column == 'customer_need_img6' || column == 'customer_need_img7' || column == 'customer_need_img8'){
+      if(_this.data.list[0].wancheng == '完成' && _this.data.userInfo.power == '管理员'){
+        wx.showToast({
+          title: '已完成订单不允许编辑！',
+          icon: 'none'
+        })
+        return;
+      }
+    }
+
     if(column == 'songhuo_danhao' || column == 'peihuo_img1' || column == 'peihuo_img2' || column == 'peihuo_img3' || column == 'peihuo_img4' || column == 'peihuo_img5' || column == 'peisong_img1' || column == 'peisong_img2' || column == 'peisong_img3' || column == 'wancheng' || column == 'beizhu'){
       if(_this.data.userInfo.power == '客户'){
         wx.showToast({
@@ -2869,6 +2888,7 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var column = e.currentTarget.dataset.column
+
     if(column == 'customer_name' || column == 'songhuo_danhao' || column == 'peihuo_img1' || column == 'peihuo_img2' || column == 'peihuo_img3' || column == 'peihuo_img4' || column == 'peihuo_img5' || column == 'peisong_img1' || column == 'peisong_img2' || column == 'peisong_img3' || column == 'wancheng' || column == 'beizhu' || column == 'money' || column == 'shoukuan'){
       if(_this.data.userInfo.power == '客户'){
         wx.showToast({
@@ -2878,10 +2898,10 @@ Page({
         return;
       }
     }
-    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_text1' || column == 'customer_need_text2' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 != ''){
+    if((column == 'customer_need_text' || column == 'customer_need_img1' || column == 'customer_need_text1' || column == 'customer_need_text2' || column == 'songhuo_address' || column == 'anzhuang_address' || column == 'phone' || column == 'customer_order' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1' || column == 'customer_need_img1') && _this.data.list[0].peihuo_img1 == '完成'){
       if(_this.data.userInfo.power != '管理员'){
         wx.showToast({
-          title: '工作进行到配货时不允许编辑此处！',
+          title: '已完成订单不允许修改！',
           icon: 'none'
         })
         return;

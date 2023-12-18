@@ -158,6 +158,7 @@ Page({
     caozuo_click_list:[
       {name:'修改'},
       {name:'生成销售订单'},
+      {name:'打印设置'},
       {name:'打印'},
     ],
     quanxuan_value: true,
@@ -648,6 +649,13 @@ Page({
         console.log(print_list)
         wx.navigateTo({
           url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }else if(new_val == '打印设置'){
+        _this.setData({
+          xlShow4:false,
+        })
+        wx.navigateTo({
+          url: '../print_danju_peizhi/print_danju_peizhi' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=1",
         })
       }
     } else if (e.type == "close") {

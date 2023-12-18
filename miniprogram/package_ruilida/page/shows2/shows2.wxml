@@ -13,27 +13,27 @@
   <van-tabs color="#1296db" type="card" active="{{ active }}" bind:change="onChange">
   <van-tab title="销售报价">
     <van-cell-group inset>
-      <van-cell title="需要我审批：{{shenhe_list[0].num}}个" value="审核未通过：{{pass_list[0].num}}个" />
+      <van-cell title="需要我审批：{{shenhe_list[0].num}}个" value="审核未通过：{{pass_list[0].num}}个" bindtap="shenpi_show" data-type="销售报价"/>
     </van-cell-group>
   </van-tab>
   <van-tab title="销售订单">
     <van-cell-group inset>
-      <van-cell title="需要我审批：{{shenhe_list[1].num}}个" value="审核未通过：{{pass_list[1].num}}个" />
+      <van-cell title="需要我审批：{{shenhe_list[1].num}}个" value="审核未通过：{{pass_list[1].num}}个" bindtap="shenpi_show" data-type="销售订单"/>
     </van-cell-group>
   </van-tab>
   <van-tab title="采购订单">
     <van-cell-group inset>
-      <van-cell title="需要我审批：{{shenhe_list[2].num}}个" value="审核未通过：{{pass_list[2].num}}个" />
+      <van-cell title="需要我审批：{{shenhe_list[2].num}}个" value="审核未通过：{{pass_list[2].num}}个" bindtap="shenpi_show" data-type="采购订单"/>
     </van-cell-group>
   </van-tab>
   <van-tab title="销售开票">
     <van-cell-group inset>
-      <van-cell title="需要我开票：{{shenhe_list[3].num}}个" />
+      <van-cell title="需要我开票：{{shenhe_list[3].num}}个" bindtap="kaipiao_goto" />
     </van-cell-group>
   </van-tab>
   <van-tab title="采购收票">
     <van-cell-group inset>
-      <van-cell title="需要我收票：{{shenhe_list[4].num}}个" />
+      <van-cell title="需要我收票：{{shenhe_list[4].num}}个" bindtap="shoupiao_goto"/>
     </van-cell-group>
   </van-tab>
 </van-tabs>
@@ -51,7 +51,7 @@
 
 
 <van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
-  <van-tabbar-item icon="../../image/changyong_close.png">常用</van-tabbar-item>
+  <!-- <van-tabbar-item icon="../../image/changyong_close.png">常用</van-tabbar-item> -->
   <van-tabbar-item icon="../../image/xiaoshou_open.png">销售</van-tabbar-item>
   <van-tabbar-item icon="../../image/caigou_close.png">采购</van-tabbar-item>
   <van-tabbar-item icon="../../image/kucun_close.png">统计</van-tabbar-item>
