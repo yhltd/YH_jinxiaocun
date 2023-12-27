@@ -5,7 +5,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    kaipiao_show:false
+    kaipiao_show:false,
+    caozuo_click_list:[
+      {name:'打印设置'},
+      {name:'打印'},
+    ],
   },
 
   /**
@@ -39,7 +43,7 @@ Page({
     var index = e.currentTarget.dataset.index
     var xukai_list = _this.data.xukai_list
     var max_val = _this.data.xukai_list[index].weikai * 1
-    if(this_val > max_val){
+    if(this_val >= max_val){
       xukai_list[index].this_kai = max_val
     }else{
       xukai_list[index].this_kai = e.detail
@@ -49,11 +53,179 @@ Page({
     })
   },
 
+  change_kaipiao2:function(e){
+    var _this = this
+    console.log(e)
+    var this_val = e.detail * 1
+    var index = e.currentTarget.dataset.index
+    var xukai_list = _this.data.xukai_list
+    var max_val = _this.data.xukai_list[index].weikai * 1
+    if(this_val >= max_val){
+      xukai_list[index].this_kai = 0
+    }else{
+      xukai_list[index].this_kai = max_val - this_val
+    }
+    _this.setData({
+      xukai_list
+    })
+  },
+
+  del1:function(e){
+    var _this = this
+    console.log(e.currentTarget.dataset.index)
+    var id = _this.data.id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.xiaoshou_dingdan_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此条信息？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          var sql = "delete from xiaoshou_dingdan where id=" + id + ";delete from xiaoshou_dingdan_item where xiaoshou_id ='" + id + "'"
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              wx.showToast({
+                title: '删除成功',
+                icon: 'none'
+              })
+              setTimeout(function () {
+                _this.back()
+              }, 2000)
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  goto_upd:function(){
+    var _this = this
+    var userInfo = _this.data.userInfo
+    var id = _this.data.id
+    if(userInfo.power_mingxi.xiaoshou_dingdan_upd != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: '../xiaoshou_dingdanAdd/xiaoshou_dingdanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
+  xiala_show:function(){
+    var _this = this
+    _this.setData({
+      xlShow4:true
+    })
+  },
+
+
+  select4: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var id = _this.data.id
+      if(new_val == '打印'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var index = _this.data.caozuo_index
+        var list = _this.data.list[0]
+        var product_list = _this.data.list[0].item
+        console.log(list)
+        console.log(product_list)
+        console.log()
+        var print_list = {
+          title:'销售订单',
+          bianhao: list.bianhao,
+          riqi: list.riqi,
+          kegong: '客户',
+          kegong_val: list.kehu
+        }
+        var product = []
+        var num_sum = 0
+        var money_sum = 0
+        for(var i=0; i<product_list.length; i++){
+          var product_item = {
+            name:product_list[i].shangpin_mingcheng,
+            num:product_list[i].shuliang,
+            price:product_list[i].baojia_danjia,
+            money:product_list[i].jiashui_xiaoji,
+          }
+          num_sum = Math.round(((num_sum * 1) + (product_list[i].shuliang * 1)) * 100) / 100
+          money_sum = Math.round(((money_sum * 1) + (product_list[i].jiashui_xiaoji * 1)) * 100) / 100
+          product.push(product_item)
+        }
+        print_list.num_sum = num_sum
+        print_list.money_sum = money_sum
+        print_list.product = product
+        console.log(print_list)
+        wx.navigateTo({
+          url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }else if(new_val == '打印设置'){
+        _this.setData({
+          xlShow4:false,
+        })
+        wx.navigateTo({
+          url: '../print_danju_peizhi/print_danju_peizhi' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=2",
+        })
+      }
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow4:false,
+      })
+    }
+  },
+
+
+  onChange:function(e){
+    var _this = this
+    console.log(e)
+    var list = _this.data.xukai_list
+    console.log(list)
+    if(list[0].checked == false){
+      list[0].checked = true
+    }else{
+      list[0].checked = false
+    }
+    _this.setData({
+      xukai_list:list
+    })
+  },
+
   kaipiao_next:function(){
     var _this = this
     var benci_list = []
     for(var i=0; i<_this.data.xukai_list.length; i++){
-      if(_this.data.xukai_list[i].this_kai * 1 > 0){
+      if(_this.data.xukai_list[i].this_kai * 1 > 0 && _this.data.xukai_list[i].checked){
         benci_list.push(_this.data.xukai_list[i])
       }
     }
@@ -65,7 +237,7 @@ Page({
       })
     }else{
       wx.showToast({
-        title: '未读取到填写金额的开票信息',
+        title: '未读取到已选中的填写金额的开票信息',
         icon:'none'
       })
     }
@@ -112,7 +284,7 @@ Page({
 
         sql = sql + "select id,shouzhi_riqi,convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)) as money from shouzhi_mingxi where danju_leixing = '销售订单' and danju_bianhao = '" + list[0].bianhao + "' union select shouzhi_mingxi.id,shouzhi_riqi,convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)) as money from shouzhi_mingxi left join xiaoshou_chuku on shouzhi_mingxi.danju_bianhao = xiaoshou_chuku.bianhao where danju_leixing = '销售出库' and xiaoshou_id = '" + list[0].bianhao + "' order by shouzhi_riqi;"
 
-        sql = sql + "select xiaoshou_kaipiao.id,kaipiao_riqi,jiashui_heji from xiaoshou_chuku left join xiaoshou_kaipiao on xiaoshou_chuku.bianhao = xiaoshou_kaipiao.xiaoshou_bianhao where isnull(xiaoshou_kaipiao.id,'') != null and xiaoshou_id = '" + list[0].bianhao + "';"
+        sql = sql + "select xiaoshou_kaipiao.id,kaipiao_riqi,jiashui_heji from xiaoshou_chuku left join xiaoshou_kaipiao on xiaoshou_chuku.bianhao = xiaoshou_kaipiao.xiaoshou_bianhao where isnull(xiaoshou_kaipiao.id,'') != '' and xiaoshou_id = '" + list[0].bianhao + "';"
 
         sql = sql + "select id,riqi,isnull(jiashui_xiaoji,0) as jiashui_xiaoji from caigou_dingdan as dingdan left join (select caigou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from caigou_dingdan_item group by caigou_id) as item on dingdan.id = item.caigou_id where xiaoshou_id = '" + list[0].bianhao + "'"
         wx.cloud.callFunction({
@@ -202,6 +374,49 @@ Page({
     }
   },
 
+  goto_chuku_xiangqing(e){
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    var id = _this.data.chuku_list[index].id
+    wx.navigateTo({
+      url: '../xiaoshou_chuku_xiangqing/xiaoshou_chuku_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
+  goto_shoukuan_xiangqing(e){
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.shoukuan_list)
+    var id = _this.data.shoukuan_list[index].id
+    wx.navigateTo({ 
+      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=收入记录",
+    })
+  },
+
+  goto_kaipiao_xiangqing(e){
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.kaipiao_list)
+    var id = _this.data.kaipiao_list[index].id
+    wx.navigateTo({ 
+      url: '../xiaoshou_kaipiaoAdd/xiaoshou_kaipiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
+  goto_caigou_xiangqing(e){
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.caigou_list)
+    var id = _this.data.caigou_list[index].id
+    wx.navigateTo({
+      url: '../caigou_dingdan_xiangqing/caigou_dingdan_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
   shoukuan_add:function(){
     var _this = this
     var id = _this.data.id
@@ -246,7 +461,7 @@ Page({
     var _this = this
     var id = _this.data.id
     var bianhao = _this.data.list[0].bianhao
-    var sql = "select id,bianhao,riqi,kehu,dianpu,cangku,beizhu,xiaoshou_id,chuku_danwei,yewuyuan,jiashui_xiaoji,chuku_id,isnull(xiaoshou_bianhao,'') as xiaoshou_bianhao,isnull(jiashui_heji,0) as jiashui_heji,jiashui_xiaoji-isnull(jiashui_heji,0) as weikai,jiashui_xiaoji-isnull(jiashui_heji,0) as this_kai from (select * from xiaoshou_chuku as chuku left join (select sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id from xiaoshou_chuku_item group by chuku_id) as item on chuku.id = item.chuku_id) as chuku left join (select xiaoshou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as jiashui_heji from xiaoshou_kaipiao group by xiaoshou_bianhao) as kaipiao on chuku.bianhao = kaipiao.xiaoshou_bianhao where jiashui_xiaoji-isnull(jiashui_heji,0) > 0 and xiaoshou_id = '" + bianhao + "'"
+    var sql = "select id,bianhao,riqi,kehu,dianpu,cangku,beizhu,xiaoshou_id,chuku_danwei,yewuyuan,jiashui_xiaoji,chuku_id,isnull(xiaoshou_bianhao,'') as xiaoshou_bianhao,isnull(jiashui_heji,0) as jiashui_heji,jiashui_xiaoji-isnull(jiashui_heji,0) as weikai,jiashui_xiaoji-isnull(jiashui_heji,0) as this_kai,'false' as checked from (select * from xiaoshou_chuku as chuku left join (select sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id from xiaoshou_chuku_item group by chuku_id) as item on chuku.id = item.chuku_id) as chuku left join (select xiaoshou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as jiashui_heji from xiaoshou_kaipiao group by xiaoshou_bianhao) as kaipiao on chuku.bianhao = kaipiao.xiaoshou_bianhao where jiashui_xiaoji-isnull(jiashui_heji,0) > 0 and xiaoshou_id = '" + bianhao + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -258,6 +473,7 @@ Page({
           xukai_list[i].jiashui_xiaoji = Math.round(xukai_list[i].jiashui_xiaoji * 100) / 100
           xukai_list[i].weikai = Math.round(xukai_list[i].weikai * 100) / 100
           xukai_list[i].this_kai = Math.round(xukai_list[i].this_kai * 100) / 100
+          xukai_list[i].checked = false
         } 
         console.log(xukai_list)
         if(xukai_list.length > 0){

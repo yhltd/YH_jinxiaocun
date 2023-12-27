@@ -81,6 +81,11 @@ Page({
         url: '../gongyingshang_qiankuan_tongji/gongyingshang_qiankuan_tongji',
         icon: "../../image/wanglai.png"
       },
+      {
+        text:'销售开票统计',
+        url: '../kehu_kaipiao/kehu_kaipiao',
+        icon: "../../image/wanglai.png"
+      },
     ],
     this_date:'',
     shenhe_list:[

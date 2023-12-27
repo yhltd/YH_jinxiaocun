@@ -2,7 +2,8 @@
   <view style="padding-top: 10px;">
     <view class="title_text">销售单信息：</view>
     <van-cell-group inset>
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.bianhao }}"
         data-column="bianhao"
@@ -13,7 +14,8 @@
       />
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
-        <van-field
+              <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ xiaoshou_body.riqi }}"
           data-column="riqi"
@@ -24,7 +26,8 @@
         />
       </picker>
 
-      <!-- <van-field
+      <!--       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.kehu }}"
         data-column="kehu"
@@ -35,18 +38,20 @@
         readonly="true"
       /> -->
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.kehu }}"
         data-column="kehu"
         label="客户"
         placeholder="点击选择客户"
         border="false"
-        bind:click-input="xiala_show"
+        bind:click-input="kehu_select"
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.jiage_dengji }}"
         data-column="jiage_dengji"
@@ -57,7 +62,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.yewuyuan }}"
         data-column="yewuyuan"
@@ -68,7 +74,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shoujianren }}"
         data-column="shoujianren"
@@ -78,7 +85,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shoujian_phone }}"
         data-column="shoujian_phone"
@@ -88,7 +96,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shoujian_dizhi }}"
         data-column="shoujian_dizhi"
@@ -98,7 +107,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.dianpu }}"
         data-column="dianpu"
@@ -109,9 +119,10 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
-        model:value="{{ baojia_body.xiaoshou_danwei }}"
+        model:value="{{ xiaoshou_body.xiaoshou_danwei }}"
         data-column="xiaoshou_danwei"
         label="销售单位"
         placeholder="请选择销售单位"
@@ -120,7 +131,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.xiaoxiang_shuilv }}"
         data-column="xiaoxiang_shuilv"
@@ -132,7 +144,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shenhe }}"
         data-column="shenhe"
@@ -143,7 +156,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.jiashui_heji }}"
         data-column="jiashui_heji"
@@ -153,7 +167,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.beizhu }}"
         data-column="beizhu"
@@ -167,10 +182,11 @@
   <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
     <view class="title1">
       <view class="title_item">商品信息{{i+1}}：</view>
-      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display: {{i==0?'none':'flex'}};" data-index="{{i}}"/>
+      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display:{{lianxi_list.length-1==0?'none':'flex'}}" data-index="{{i}}"/>
     </view> 
     <van-cell-group inset>
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.shangpin_bianhao }}"
         data-column="shangpin_bianhao"
@@ -186,7 +202,8 @@
 
       </van-field>
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.shangpin_mingcheng }}"
         data-column="shangpin_mingcheng"
@@ -196,7 +213,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.guige }}"
         data-column="guige"
@@ -206,7 +224,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.caizhi }}"
         data-column="caizhi"
@@ -216,7 +235,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.jishu_biaozhun }}"
         data-column="jishu_biaozhun"
@@ -226,7 +246,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.zhibao_dengji }}"
         data-column="zhibao_dengji"
@@ -236,7 +257,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.danwei }}"
         data-column="danwei"
@@ -246,7 +268,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.shuliang }}"
         data-column="shuliang"
@@ -257,7 +280,8 @@
         type="number"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.baojia_danjia }}"
         data-column="baojia_danjia"
@@ -268,7 +292,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.jiashui_xiaoji }}"
         data-column="jiashui_xiaoji"
@@ -279,7 +304,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.jianyi_baojia }}"
         data-column="jianyi_baojia"
@@ -290,7 +316,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.zuigaojia }}"
         data-column="zuigaojia"
@@ -303,7 +330,8 @@
       />
 
       <picker class="pick" mode="date" value="{{date}}" data-index="{{i}}" data-column_name="xuyong_riqi" bindchange="choiceDate">
-        <van-field
+              <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ list_item.xuyong_riqi }}"
           data-column="xuyong_riqi"
@@ -315,7 +343,8 @@
         />
       </picker>
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.baojia_fudong }}"
         data-column="baojia_fudong"
@@ -326,7 +355,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.beizhu }}"
         data-column="beizhu"
@@ -382,21 +412,58 @@
       bind:click="product_click"
       wx:if="{{item.isselect == 1}}"
       use-label-slot
+      center
     >
       <view slot="label">
         <text>规格：{{item.guige}} \n</text>
         <text decode="{{true}}">零售价格：{{item.lingshou_price}} &nbsp;&nbsp; 批发价格：{{item.pifa_price}} \n</text>
         <text decode="{{true}}">大客户价格：{{item.dakehu_price}} &nbsp;&nbsp; 历史最高价：{{item.zuigaojia}} \n</text>
       </view>
+      <van-checkbox slot="right-icon" value="{{item.checked}}" data-index="{{index}}" catchtap="danxuan_zengpin">赠品</van-checkbox>
     </van-cell>
   </van-cell-group>
   </scroll-view>
   <view class="bottom_view" style="margin-top: 10px;">
+    <button class="bt_bottom" bindtap="goto_product">添加商品</button>
     <button class="bt_bottom" bindtap="sel_product">查询</button>
   </view>
 </van-popup>
 
-
+<!--选择客户-->
+<van-popup
+  show="{{ kehu_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 80%"
+  bind:close="qxShow"
+>
+  <view style="height: 9%;">
+    <view style="display: flex;">
+      <view class="lables">客户名称：</view>
+      <input bindinput="onInput_text" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
+    </view>
+  </view>
+  <scroll-view style="height:78%" scroll-x="true" scroll-y="true">
+    <van-cell-group style="height: 78%;">
+    <van-cell
+      wx:for="{{ kehu_list }}"
+      wx:key="index"
+      title="{{ item.name }}"
+      value-class="value-class"
+      clickable
+      data-index="{{ index }}"
+      bind:click="kehu_click"
+      wx:if="{{item.isselect == 1}}"
+      use-label-slot
+    >
+    </van-cell>
+  </van-cell-group>
+  </scroll-view>
+  <view class="bottom_view" style="margin-top: 10px;">
+    <button class="bt_bottom" bindtap="goto_kehu">添加客户</button>
+    <button class="bt_bottom" bindtap="sel_kehu">查询</button>
+  </view>
+</van-popup>
 
 <!--选择采购单-->
 <van-popup

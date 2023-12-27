@@ -10,7 +10,7 @@ Page({
       {
         name: "",
         text: "",
-        width: "250rpx",
+        width: "350rpx",
         columnName: "name",
         type: "text",
         isupd: true
@@ -47,6 +47,8 @@ Page({
     type: '按出货单',
     type_list : [
       {name:'按出货单'},
+      {name:'按店铺'},
+      {name:'按核算单位'},
       {name:'按产品'},
       {name:'按客户'},
       {name:'按业务员'},
@@ -117,6 +119,8 @@ Page({
     var sql = ""
     var type_list = [
       {name:'按出货单'},
+      {name:'按店铺'},
+      {name:'按核算单位'},
       {name:'按产品'},
       {name:'按客户'},
       {name:'按业务员'},
@@ -138,6 +142,14 @@ Page({
       title[0].name = "业务员"
       title[0].text = "业务员"
       sql = "select yewuyuan as name,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou,sum(convert(float,isnull(chengben,0))) as chengben,sum(convert(float,isnull(jiashui_xiaoji,0))) - sum(convert(float,isnull(chengben,0))) as maoli from (select riqi,chuku.bianhao,name,kehu,yewuyuan,jiashui_xiaoji,shangpin_bianma,convert(float,isnull(shuliang,0)) * convert(float,isnull(caigou_price,0)) as chengben from (select riqi,bianhao,name,kehu,yewuyuan,jiashui_xiaoji,shangpin_bianma,shuliang from xiaoshou_chuku as chuku left join xiaoshou_chuku_item as item on chuku.id = item.chuku_id) as chuku left join product_item as item on chuku.shangpin_bianma = item.bianhao) as maoli where riqi >= '" + start_date + "' and riqi <= '" + stop_date + "' group by yewuyuan "
+    }else if(type == '按店铺'){
+      title[0].name = "店铺"
+      title[0].text = "店铺"
+      sql = "select dianpu as name,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou,sum(convert(float,isnull(chengben,0))) as chengben,sum(convert(float,isnull(jiashui_xiaoji,0))) - sum(convert(float,isnull(chengben,0))) as maoli from (select riqi,chuku.bianhao,name,kehu,dianpu,jiashui_xiaoji,shangpin_bianma,convert(float,isnull(shuliang,0)) * convert(float,isnull(caigou_price,0)) as chengben from (select riqi,bianhao,name,kehu,dianpu,jiashui_xiaoji,shangpin_bianma,shuliang from xiaoshou_chuku as chuku left join xiaoshou_chuku_item as item on chuku.id = item.chuku_id) as chuku left join product_item as item on chuku.shangpin_bianma = item.bianhao) as maoli where riqi >= '" + start_date + "' and riqi <= '" + stop_date + "' group by dianpu "
+    }else if(type == '按核算单位'){
+      title[0].name = "核算单位"
+      title[0].text = "核算单位"
+      sql = "select chuku_danwei as name,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou,sum(convert(float,isnull(chengben,0))) as chengben,sum(convert(float,isnull(jiashui_xiaoji,0))) - sum(convert(float,isnull(chengben,0))) as maoli from (select riqi,chuku.bianhao,name,kehu,chuku_danwei,jiashui_xiaoji,shangpin_bianma,convert(float,isnull(shuliang,0)) * convert(float,isnull(caigou_price,0)) as chengben from (select riqi,bianhao,name,kehu,chuku_danwei,jiashui_xiaoji,shangpin_bianma,shuliang from xiaoshou_chuku as chuku left join xiaoshou_chuku_item as item on chuku.id = item.chuku_id) as chuku left join product_item as item on chuku.shangpin_bianma = item.bianhao) as maoli where riqi >= '" + start_date + "' and riqi <= '" + stop_date + "' group by chuku_danwei "
     }
     console.log(sql)
     wx.cloud.callFunction({

@@ -47,4 +47,7 @@ button{
   font-weight: bold;
 }
 
+.bianju{
+  padding: 7px 16px !important;
+}
 

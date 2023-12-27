@@ -2,21 +2,25 @@
   <view style="padding-top: 10px;">
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ type }}"
         data-column="type"
-        label="类型"
-        placeholder="请输入类型"
+        label="规格组"
+        placeholder="请输入规格组"
         border="false"
       />
 
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ guige }}"
         data-column="guige"
-        label="规格"
-        placeholder="请输入规格"
+        label="规格值"
+        placeholder="请输入规格值"
         border="false"
+        type="textarea"
+        autosize="true"
       />
 
     </van-cell-group>

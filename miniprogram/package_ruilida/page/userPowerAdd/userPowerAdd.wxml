@@ -3,6 +3,7 @@
     <view class="title_text">权限信息：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.name }}"
         data-column="name"
@@ -17,6 +18,7 @@
     <view class="title_text">账号管理：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhanghaoguanli_add }}"
         data-column="zhanghaoguanli_add"
@@ -28,6 +30,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhanghaoguanli_del }}"
         data-column="zhanghaoguanli_del"
@@ -39,6 +42,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhanghaoguanli_upd }}"
         data-column="zhanghaoguanli_upd"
@@ -50,6 +54,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhanghaoguanli_sel }}"
         data-column="zhanghaoguanli_sel"
@@ -67,6 +72,7 @@
     <view class="title_text">权限管理：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.quanxian_add }}"
         data-column="quanxian_add"
@@ -78,6 +84,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.quanxian_del }}"
         data-column="quanxian_del"
@@ -89,6 +96,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.quanxian_upd }}"
         data-column="quanxian_upd"
@@ -100,6 +108,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.quanxian_sel }}"
         data-column="quanxian_sel"
@@ -117,6 +126,7 @@
     <view class="title_text">客户资料：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.kehu_add }}"
         data-column="kehu_add"
@@ -128,6 +138,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.kehu_del }}"
         data-column="kehu_del"
@@ -139,6 +150,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.kehu_upd }}"
         data-column="kehu_upd"
@@ -150,6 +162,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.kehu_sel }}"
         data-column="kehu_sel"
@@ -167,6 +180,7 @@
     <view class="title_text">供应商资料：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.gongyingshang_add }}"
         data-column="gongyingshang_add"
@@ -178,6 +192,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.gongyingshang_del }}"
         data-column="gongyingshang_del"
@@ -189,6 +204,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.gongyingshang_upd }}"
         data-column="gongyingshang_upd"
@@ -200,6 +216,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.gongyingshang_sel }}"
         data-column="gongyingshang_sel"
@@ -217,6 +234,7 @@
     <view class="title_text">商品资料：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shangpin_add }}"
         data-column="shangpin_add"
@@ -228,6 +246,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shangpin_del }}"
         data-column="shangpin_del"
@@ -239,6 +258,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shangpin_upd }}"
         data-column="shangpin_upd"
@@ -250,6 +270,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shangpin_sel }}"
         data-column="shangpin_sel"
@@ -267,6 +288,7 @@
     <view class="title_text">附加税设置：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.fujiashui_upd }}"
         data-column="fujiashui_upd"
@@ -278,6 +300,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.fujiashui_sel }}"
         data-column="fujiashui_sel"
@@ -295,6 +318,7 @@
     <view class="title_text">配置信息：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.peizhi_add }}"
         data-column="peizhi_add"
@@ -306,6 +330,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.peizhi_del }}"
         data-column="peizhi_del"
@@ -317,6 +342,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.peizhi_upd }}"
         data-column="peizhi_upd"
@@ -328,6 +354,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.peizhi_sel }}"
         data-column="peizhi_sel"
@@ -345,6 +372,7 @@
     <view class="title_text">销售报价：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_baojia_add }}"
         data-column="xiaoshou_baojia_add"
@@ -356,6 +384,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_baojia_del }}"
         data-column="xiaoshou_baojia_del"
@@ -367,6 +396,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_baojia_upd }}"
         data-column="xiaoshou_baojia_upd"
@@ -378,6 +408,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_baojia_sel }}"
         data-column="xiaoshou_baojia_sel"
@@ -395,6 +426,7 @@
     <view class="title_text">销售订单：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_dingdan_add }}"
         data-column="xiaoshou_dingdan_add"
@@ -406,6 +438,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_dingdan_del }}"
         data-column="xiaoshou_dingdan_del"
@@ -417,6 +450,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_dingdan_upd }}"
         data-column="xiaoshou_dingdan_upd"
@@ -428,6 +462,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_dingdan_sel }}"
         data-column="xiaoshou_dingdan_sel"
@@ -445,6 +480,7 @@
     <view class="title_text">销售出库：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_chuku_add }}"
         data-column="xiaoshou_chuku_add"
@@ -456,6 +492,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_chuku_del }}"
         data-column="xiaoshou_chuku_del"
@@ -467,6 +504,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_chuku_upd }}"
         data-column="xiaoshou_chuku_upd"
@@ -478,6 +516,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_chuku_sel }}"
         data-column="xiaoshou_chuku_sel"
@@ -495,6 +534,7 @@
     <view class="title_text">销售开票：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_kaipiao_add }}"
         data-column="xiaoshou_kaipiao_add"
@@ -506,6 +546,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_kaipiao_del }}"
         data-column="xiaoshou_kaipiao_del"
@@ -517,6 +558,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_kaipiao_upd }}"
         data-column="xiaoshou_kaipiao_upd"
@@ -528,6 +570,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.xiaoshou_kaipiao_sel }}"
         data-column="xiaoshou_kaipiao_sel"
@@ -545,6 +588,7 @@
     <view class="title_text">收入记录：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shouru_add }}"
         data-column="shouru_add"
@@ -556,6 +600,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shouru_del }}"
         data-column="shouru_del"
@@ -567,6 +612,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shouru_upd }}"
         data-column="shouru_upd"
@@ -578,6 +624,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shouru_sel }}"
         data-column="shouru_sel"
@@ -595,6 +642,7 @@
     <view class="title_text">采购订单：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_dingdan_add }}"
         data-column="caigou_dingdan_add"
@@ -606,6 +654,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_dingdan_del }}"
         data-column="caigou_dingdan_del"
@@ -617,6 +666,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_dingdan_upd }}"
         data-column="caigou_dingdan_upd"
@@ -628,6 +678,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_dingdan_sel }}"
         data-column="caigou_dingdan_sel"
@@ -645,6 +696,7 @@
     <view class="title_text">采购入库：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_ruku_add }}"
         data-column="caigou_ruku_add"
@@ -656,6 +708,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_ruku_del }}"
         data-column="caigou_ruku_del"
@@ -667,6 +720,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_ruku_upd }}"
         data-column="caigou_ruku_upd"
@@ -678,6 +732,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_ruku_sel }}"
         data-column="caigou_ruku_sel"
@@ -695,6 +750,7 @@
     <view class="title_text">采购收票：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_shoupiao_add }}"
         data-column="caigou_shoupiao_add"
@@ -706,6 +762,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_shoupiao_del }}"
         data-column="caigou_shoupiao_del"
@@ -717,6 +774,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_shoupiao_upd }}"
         data-column="caigou_shoupiao_upd"
@@ -728,6 +786,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.caigou_shoupiao_sel }}"
         data-column="caigou_shoupiao_sel"
@@ -745,6 +804,7 @@
     <view class="title_text">支出记录：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhichu_add }}"
         data-column="zhichu_add"
@@ -756,6 +816,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhichu_del }}"
         data-column="zhichu_del"
@@ -767,6 +828,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhichu_upd }}"
         data-column="zhichu_upd"
@@ -778,6 +840,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhichu_sel }}"
         data-column="zhichu_sel"
@@ -795,6 +858,7 @@
     <view class="title_text">转账：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhuanzhang_add }}"
         data-column="zhuanzhang_add"
@@ -806,6 +870,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhuanzhang_del }}"
         data-column="zhuanzhang_del"
@@ -817,6 +882,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhuanzhang_upd }}"
         data-column="zhuanzhang_upd"
@@ -828,6 +894,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhuanzhang_sel }}"
         data-column="zhuanzhang_sel"
@@ -845,6 +912,7 @@
     <view class="title_text">库存：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.kucun_sel }}"
         data-column="kucun_sel"
@@ -862,6 +930,7 @@
     <view class="title_text">账户余额：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhanghu_yue_sel }}"
         data-column="zhanghu_yue_sel"
@@ -879,6 +948,7 @@
     <view class="title_text">收入分类统计：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.shouru_tongji_sel }}"
         data-column="shouru_tongji_sel"
@@ -896,6 +966,7 @@
     <view class="title_text">支出分类统计：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.zhichu_tongji_sel }}"
         data-column="zhichu_tongji_sel"
@@ -913,6 +984,7 @@
     <view class="title_text">月度收支统计：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ quanxian_body.yuedu_tongji_sel }}"
         data-column="yuedu_tongji_sel"

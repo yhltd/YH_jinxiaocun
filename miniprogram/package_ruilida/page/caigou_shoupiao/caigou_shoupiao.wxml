@@ -7,6 +7,7 @@
           <text>采购单号：{{item.caigou_bianhao}} \n</text>
           <text>信息推送：{{item.xinxi_tuisong}} \n</text>
           <text>收票状态：{{item.shoupiao_zhuangtai}} \n</text>
+          <text>价税合计：{{item.jiashui_heji}} \n</text>
           <text>{{item.kaipiao_riqi}} \n</text>
         </view>
       </van-cell>

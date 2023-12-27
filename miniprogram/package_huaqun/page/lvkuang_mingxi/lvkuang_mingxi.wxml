@@ -78,9 +78,12 @@
 <!---------修改弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 35%;">
-  <input bindinput="onInput" style="margin:auto;margin-top:5%;width: 50%;" data-index="this_index" data-column="this_value" class="input_text_form" value="{{this_value}}" type="{{this_type}}" name="this_value"></input>
+  <input bindinput="onInput" style="margin:auto;margin-top:5%;width: 50%;" data-index="this_index" data-column="this_value" class="input_text_form" value="{{this_value}}" type="{{this_type}}" bindtap="xiala_open" name="this_value"></input>
   <view class="bottom_view" style="height:10%;margin-top: calc(50vmin / 7.5);">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">确定</button>
   </view>
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow}}" actions="{{yewuyuan_list}}" close-on-click-overlay bind:close="select1" bind:select="select1" />

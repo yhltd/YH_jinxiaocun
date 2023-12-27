@@ -67,6 +67,10 @@ Page({
         var kehu_list = res.result.recordsets[0]
         console.log(kehu_list)
         if(kehu_name != undefined){
+          var this_money = 0
+          for(var i=0; i<kaipiao_list.length; i++){
+            this_money = this_money + Math.round((kaipiao_list[i].this_kai * 1) * 100) / 100
+          }
           for(var i=0; i<kehu_list.length; i++){
             if(kehu_name == kehu_list[i].name){ 
               kaipiao_body = _this.data.kaipiao_body
@@ -76,7 +80,8 @@ Page({
               kaipiao_body.kaipiao_dianhua = kehu_list[i].kaipiao_dianhua
               kaipiao_body.kaipiao_yinhang = kehu_list[i].kaipiao_yinhang
               kaipiao_body.kaipiao_zhanghao = kehu_list[i].kaipiao_zhanghao
-              _this.setData({
+              kaipiao_body.kaipiao_jine = this_money
+              _this.setData({ 
                 kaipiao_body
               })
               console.log('成功')
@@ -483,6 +488,7 @@ Page({
       })
     }else if(kaipiao_body.id == '' && _this.data.kehu_name != undefined){
       var benci = 0
+      var this_list = _this.data.kaipiao_list
       for(var i=0; i<this_list.length; i++){
         benci = benci + (this_list[i].this_kai * 1)
       }

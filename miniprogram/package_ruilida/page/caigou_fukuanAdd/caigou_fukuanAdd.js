@@ -349,7 +349,7 @@ Page({
       })
       return;
     }
-    if(_this.data.xiaoshou_id == undefined){
+    if(_this.data.xiaoshou_id != undefined || _this.data.chuku_id != undefined || _this.data.caigou_id != undefined || _this.data.ruku_id != undefined){
       return;
     }
     if(danju_leixing == '采购订单'){

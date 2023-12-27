@@ -2,6 +2,7 @@
   <view style="padding-top: 10px;">
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ name }}"
         data-column="name"
@@ -11,6 +12,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ username }}"
         data-column="username"
@@ -20,6 +22,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ password }}"
         data-column="password"
@@ -29,6 +32,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ power }}"
         data-column="power"
@@ -44,6 +48,7 @@
       </van-field>
 
       <van-field
+        custom-class="bianju"
         size="large"
         model:value="{{ shenpi }}"
         data-column="shenpi"

@@ -3,6 +3,7 @@
     <view class="title_text">入库单信息：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.bianhao }}"
         data-column="bianhao"
@@ -14,6 +15,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
         <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ ruku_body.riqi }}"
           data-column="riqi"
@@ -26,6 +28,7 @@
 
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.caigou_id }}"
         data-column="caigou_id"
@@ -37,6 +40,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.gongyingshang }}"
         data-column="gongyingshang"
@@ -48,6 +52,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.ruku_danwei }}"
         data-column="ruku_danwei"
@@ -59,6 +64,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.dianpu }}"
         data-column="dianpu"
@@ -70,6 +76,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.cangku }}"
         data-column="cangku"
@@ -81,6 +88,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.yewuyuan }}"
         data-column="yewuyuan"
@@ -92,6 +100,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ ruku_body.beizhu }}"
         data-column="beizhu"
@@ -105,10 +114,11 @@
   <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
     <view class="title1">
       <view class="title_item">商品信息{{i+1}}：</view>
-      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display: {{i==0?'none':'flex'}};" data-index="{{i}}"/>
+      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display:{{lianxi_list.length-1==0?'none':'flex'}}" data-index="{{i}}"/>
     </view> 
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.shangpin_bianma }}"
         data-column="shangpin_bianma"
@@ -121,6 +131,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.name }}"
         data-column="name"
@@ -131,6 +142,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.guige }}"
         data-column="guige"
@@ -141,6 +153,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.caizhi }}"
         data-column="caizhi"
@@ -151,6 +164,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.jishu_biaozhun }}"
         data-column="jishu_biaozhun"
@@ -161,6 +175,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.zhibao_dengji }}"
         data-column="zhibao_dengji"
@@ -171,6 +186,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.danwei }}"
         data-column="danwei"
@@ -181,6 +197,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.shuliang }}"
         data-column="shuliang"
@@ -192,6 +209,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.caigou_danjia }}"
         data-column="caigou_danjia"
@@ -203,6 +221,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.jiashui_xiaoji }}"
         data-column="jiashui_xiaoji"
@@ -214,6 +233,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.beizhu }}"
         data-column="beizhu"

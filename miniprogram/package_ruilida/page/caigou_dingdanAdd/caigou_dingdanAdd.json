@@ -16,7 +16,9 @@
     "van-area": "../../components/area/index",
     "van-popup": "../../components/popup/index",
     "van-image": "../../components/image/index",
-    "van-tag": "../../components/tag/index"
+    "van-tag": "../../components/tag/index",
+    "van-checkbox": "../../components/checkbox/index",
+    "van-checkbox-group": "../../components/checkbox-group/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

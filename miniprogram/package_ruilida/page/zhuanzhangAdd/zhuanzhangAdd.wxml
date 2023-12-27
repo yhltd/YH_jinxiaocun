@@ -2,7 +2,8 @@
   <view style="padding-top: 10px;">
     <view class="title_text">开票信息：</view>
     <van-cell-group inset>
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ zhuanzhang_body.money }}"
         data-column="money"
@@ -13,7 +14,8 @@
       />
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
-        <van-field
+              <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ zhuanzhang_body.riqi }}"
           data-column="riqi"
@@ -24,7 +26,8 @@
         />
       </picker>
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ zhuanzhang_body.zhuanru }}"
         data-column="zhuanru"
@@ -35,7 +38,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ zhuanzhang_body.zhuanchu }}"
         data-column="zhuanchu"
@@ -46,7 +50,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ zhuanzhang_body.zhaiyao }}"
         data-column="zhaiyao"

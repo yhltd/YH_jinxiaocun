@@ -45,7 +45,18 @@ Page({
     var shoupiao_list = options.shoupiao_list
     if(shoupiao_list != undefined){
       shoupiao_list = JSON.parse(shoupiao_list)
+      var shoupiao_body = _this.data.shoupiao_body
+      var jiashui_heji = 0
+      for(var i=0; i<shoupiao_list.length; i++){
+        jiashui_heji = jiashui_heji + shoupiao_list[i].this_kai
+      }
+      shoupiao_body.jiashui_heji = jiashui_heji
+      _this.setData({
+        shoupiao_body
+      })
     }
+    console.log('shoupiao_list')
+    console.log(shoupiao_list)
     var gongyingshang_name = options.gongyingshang_name
     _this.setData({
       shoupiao_list,
@@ -482,17 +493,30 @@ Page({
     console.log(_this.data.lianxi_list)
     var shoupiao_body = _this.data.shoupiao_body
     shoupiao_body[column] = new_value
-    if(shoupiao_body.kaipiao_jine != '' || shoupiao_body.kaipiao_shuie != ''){
-      var kaipiao_jine = shoupiao_body.kaipiao_jine
-      var kaipiao_shuie = shoupiao_body.kaipiao_shuie
-      if(kaipiao_jine == ''){
-        kaipiao_jine = 0
+    if(_this.data.gongyingshang_name != undefined){
+      if(column = 'kaipiao_jine'){
+        var kaipiao_jine = shoupiao_body.kaipiao_jine
+        var kaipiao_shuie = shoupiao_body.kaipiao_shuie
+        shoupiao_body.kaipiao_shuie = (shoupiao_body.jiashui_heji*1) - (kaipiao_jine * 1)
+      }else if(column == 'kaipiao_shuie'){
+        var kaipiao_jine = shoupiao_body.kaipiao_jine
+        var kaipiao_shuie = shoupiao_body.kaipiao_shuie
+        shoupiao_body.kaipiao_jine = (shoupiao_body.jiashui_heji*1) - (kaipiao_shuie * 1)
       }
-      if(kaipiao_shuie == ''){
-        kaipiao_shuie = 0
+    }else{
+      if(shoupiao_body.kaipiao_jine != '' || shoupiao_body.kaipiao_shuie != ''){
+        var kaipiao_jine = shoupiao_body.kaipiao_jine
+        var kaipiao_shuie = shoupiao_body.kaipiao_shuie
+        if(kaipiao_jine == ''){
+          kaipiao_jine = 0
+        }
+        if(kaipiao_shuie == ''){
+          kaipiao_shuie = 0
+        }
+        shoupiao_body.jiashui_heji = (kaipiao_jine*1) + (kaipiao_shuie * 1)
       }
-      shoupiao_body.jiashui_heji = (kaipiao_jine*1) + (kaipiao_shuie * 1)
     }
+
     _this.setData({
       shoupiao_body
     })

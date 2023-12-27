@@ -17,9 +17,24 @@ Page({
         icon: "../../image/quanxianguanli.png"
       },
       {
+        text:'附加税与价格等级',
+        url: '../peizhi_shuilv/peizhi_shuilv',
+        icon: "../../image/fujiashuishezhi.png"
+      },
+      {
+        text:'质保等级',
+        url: '../peizhi/peizhi',
+        icon: "../../image/zhibaodengji.png"
+      },
+      {
         text:'客户资料',
         url: '../customer/customer',
         icon: "../../image/kehuziliao.png"
+      },
+      {
+        text:'客户分类',
+        url: '../peizhi/peizhi',
+        icon: "../../image/kehufenlei.png"
       },
       {
         text:'供应商资料',
@@ -27,19 +42,14 @@ Page({
         icon: "../../image/gongyingshangziliao.png"
       },
       {
+        text:'供应商等级',
+        url: '../peizhi/peizhi',
+        icon: "../../image/gongyingshangdengji.png"
+      },
+      {
         text:'商品资料',
         url: '../product/product',
         icon: "../../image/shangpinziliao.png"
-      },
-      {
-        text:'附加税与价格等级',
-        url: '../peizhi_shuilv/peizhi_shuilv',
-        icon: "../../image/fujiashuishezhi.png"
-      },
-      {
-        text:'商品规格',
-        url: '../peizhi_guige/peizhi_guige',
-        icon: "../../image/shangpinguige.png"
       },
       {
         text:'商品分类',
@@ -52,19 +62,14 @@ Page({
         icon: "../../image/shangpindanwei.png"
       },
       {
-        text:'进项税率',
-        url: '../peizhi/peizhi',
-        icon: "../../image/shangpinfenlei.png"
+        text:'商品规格',
+        url: '../peizhi_guige/peizhi_guige',
+        icon: "../../image/shangpinguige.png"
       },
       {
-        text:'销项税率',
+        text:'核算单位',
         url: '../peizhi/peizhi',
-        icon: "../../image/shangpinfenlei.png"
-      },
-      {
-        text:'仓库',
-        url: '../peizhi/peizhi',
-        icon: "../../image/cangku.png"
+        icon: "../../image/hesuandanwei.png"
       },
       {
         text:'收款账户',
@@ -77,50 +82,50 @@ Page({
         icon: "../../image/dianpu.png"
       },
       {
-        text:'核算单位',
+        text:'仓库',
         url: '../peizhi/peizhi',
-        icon: "../../image/hesuandanwei.png"
+        icon: "../../image/cangku.png"
       },
       {
-        text:'客户等级',
+        text:'增值税率',
         url: '../peizhi/peizhi',
-        icon: "../../image/kehudengji.png"
+        icon: "../../image/shangpinfenlei.png"
       },
       {
-        text:'供应商等级',
-        url: '../peizhi/peizhi',
-        icon: "../../image/gongyingshangdengji.png"
+        text:'记账明细',
+        url: '../jizhang_mingxi/jizhang_mingxi',
+        icon: "../../image/shangpinguige.png"
       },
+
+
+      // {
+      //   text:'客户等级',
+      //   url: '../peizhi/peizhi',
+      //   icon: "../../image/kehudengji.png"
+      // },
+
       // {
       //   text:'价格等级',
       //   url: '../peizhi/peizhi',
       //   icon: "../../image/jiagedengji.png"
       // },
-      {
-        text:'客户分类',
-        url: '../peizhi/peizhi',
-        icon: "../../image/kehufenlei.png"
-      },
-      {
-        text:'质保等级',
-        url: '../peizhi/peizhi',
-        icon: "../../image/zhibaodengji.png"
-      },
+
+
       // {
       //   text:'价格上浮率',
       //   url: '../peizhi/peizhi',
       //   icon: "../../image/jiageshangfulv.png"
       // },
-      {
-        text:'记账分类',
-        url: '../peizhi/peizhi',
-        icon: "../../image/jizhangfenlei.png"
-      },
-      {
-        text:'记账明细类型',
-        url: '../peizhi/peizhi',
-        icon: "../../image/jizhangmingxileixing.png"
-      },
+      // {
+      //   text:'记账分类',
+      //   url: '../peizhi/peizhi',
+      //   icon: "../../image/jizhangfenlei.png"
+      // },
+      // {
+      //   text:'记账明细类型',
+      //   url: '../peizhi/peizhi',
+      //   icon: "../../image/jizhangmingxileixing.png"
+      // },
     ],
     this_date:'',
     shenhe_list:[
@@ -203,7 +208,7 @@ Page({
     var index = e.target.dataset.index
     console.log(index)
     var url = _this.data.title[index].url
-    if(index >= 7){
+    if(_this.data.title[index].text == '质保等级' || _this.data.title[index].text == '客户分类' || _this.data.title[index].text == '供应商等级' || _this.data.title[index].text == '商品分类' || _this.data.title[index].text == '商品单位' || _this.data.title[index].text == '核算单位' || _this.data.title[index].text == '收款账户' || _this.data.title[index].text == '店铺' || _this.data.title[index].text == '仓库' || _this.data.title[index].text == '增值税率'){
       wx.navigateTo({
         url: url + '?userInfo=' + JSON.stringify(_this.data.userInfo) + '&type=' + _this.data.title[index].text + "&shouzhi_type=" + _this.data.title[index].text,
       })

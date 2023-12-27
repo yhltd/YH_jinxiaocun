@@ -5,7 +5,10 @@
         <view slot="label">
           <text>供应商：{{item.gongyingshang}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
-          <text>审核人：{{item.shenhe}} \n</text>
+          <text>采购单位：{{item.caigou_danwei}} \n</text>
+          <text>店铺：{{item.dianpu}} \n</text> 
+          <text>业务员：{{item.yewuyuan}} \n</text>
+          <!-- <text>审核人：{{item.shenhe}} \n</text> -->
           <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
           <van-tag style="margin-right: 5px;" type="{{item.ruku_zhuangtai=='未入库'?'warning':item.ruku_zhuangtai=='部分入库'?'primary':'success'}}">{{item.ruku_zhuangtai}}</van-tag>
           <van-tag style="margin-right: 5px;" type="{{item.shoupiao_zhuangtai=='未收票'?'warning':item.shoupiao_zhuangtai=='部分收票'?'primary':'success'}}">{{item.shoupiao_zhuangtai}}</van-tag>

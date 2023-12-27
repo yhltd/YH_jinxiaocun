@@ -21,7 +21,8 @@
                 <text>分类：{{pro_list[j].type}} \n</text>
                 <text decode="{{true}}">采购价格：{{pro_list[j].caigou_price}}</text>
               </view>
-              <view solt="value">
+              <view solt="value" style="display: flex;justify-content: center;align-items: center;">
+                <van-checkbox slot="right-icon" value="{{pro_list[j].checked}}" data-index="{{j}}" catchtap="danxuan_zengpin" style="margin-right:5px">赠品</van-checkbox>
                 <van-stepper data-index="{{j}}" min="0" value="{{ pro_list[j].num }}" bind:change="changeStepper" />
               </view>
             </van-cell>

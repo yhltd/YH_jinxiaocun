@@ -3,6 +3,7 @@
     <view class="title_text">收支信息：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.dianpu }}"
         data-column="dianpu"
@@ -14,6 +15,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.danju_leixing }}"
         data-column="danju_leixing"
@@ -25,6 +27,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.danju_bianhao }}"
         data-column="danju_bianhao"
@@ -41,6 +44,7 @@
       </van-field>
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.shouzhi_bianhao }}"
         data-column="shouzhi_bianhao"
@@ -53,6 +57,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="shouzhi_riqi" bindchange="choiceDate">
         <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ shouzhi_body.shouzhi_riqi }}"
           data-column="shouzhi_riqi"
@@ -65,6 +70,7 @@
 
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.jizhangren }}"
         data-column="jizhangren"
@@ -76,6 +82,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.jizhang_danwei }}"
         data-column="jizhang_danwei"
@@ -87,6 +94,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.jizhang_type }}"
         data-column="jizhang_type"
@@ -98,6 +106,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.jizhang_zhanghu }}"
         data-column="jizhang_zhanghu"
@@ -109,6 +118,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.jizhang_jine }}"
         data-column="jizhang_jine"
@@ -119,6 +129,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.kedi_shuie }}"
         data-column="kedi_shuie"
@@ -129,6 +140,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shouzhi_body.zhaiyao }}"
         data-column="zhaiyao"
@@ -142,10 +154,11 @@
   <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
     <view class="title1">
       <view class="title_item">记账明细{{i+1}}：</view>
-      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display: {{i==0?'none':'flex'}};" data-index="{{i}}"/>
+      <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display:{{lianxi_list.length-1==0?'none':'flex'}}" data-index="{{i}}"/>
     </view> 
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.mingxi_type }}"
         data-column="mingxi_type"
@@ -158,6 +171,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.yongtu }}"
         data-column="yongtu"
@@ -168,6 +182,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.jizhang_jine }}"
         data-column="jizhang_jine"
@@ -179,6 +194,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ list_item.kedi_shuie }}"
         data-column="kedi_shuie"

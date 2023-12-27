@@ -74,4 +74,6 @@ button{
   margin-bottom:1.5% ;
 }
 
-
+.bianju{
+  padding: 7px 16px !important;
+}

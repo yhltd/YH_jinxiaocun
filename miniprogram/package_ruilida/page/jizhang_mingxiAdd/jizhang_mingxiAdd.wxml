@@ -1,0 +1,34 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-field
+        custom-class="bianju"
+        size="large"
+        model:value="{{ jizhang_fenlei }}"
+        data-column="jizhang_fenlei"
+        label="记账分类"
+        placeholder="请输入记账分类"
+        border="false"
+        readonly="true"
+      />
+
+      <van-field
+        custom-class="bianju"
+        size="large"
+        model:value="{{ jizhang_mingxi }}"
+        data-column="jizhang_mingxi"
+        label="记账明细"
+        placeholder="记账明细"
+        border="false"
+        type="textarea"
+        autosize="true"
+      />
+
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="save">确定</button>
+  <button class="bt_bottom" bindtap="back">取消</button>
+</view>

@@ -331,6 +331,8 @@
         "page/userPowerAdd/userPowerAdd",
         "page/peizhi/peizhi",
         "page/peizhiAdd/peizhiAdd",
+        "page/jizhang_mingxi/jizhang_mingxi",
+        "page/jizhang_mingxiAdd/jizhang_mingxiAdd",
         "page/peizhi_guige/peizhi_guige",
         "page/peizhi_guigeAdd/peizhi_guigeAdd",
         "page/customer/customer",
@@ -376,7 +378,10 @@
         "page/print_danju/print_danju",
         "page/print_danju_peizhi/print_danju_peizhi",
         "page/print_tiaoma/print_tiaoma",
-        "page/maoli_tongji/maoli_tongji"
+        "page/maoli_tongji/maoli_tongji",
+        "page/kehu_wanglai/kehu_wanglai",
+        "page/gongyingshang_wanglai/gongyingshang_wanglai",
+        "page/kehu_kaipiao/kehu_kaipiao"
       ]
     },
     {

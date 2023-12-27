@@ -2,7 +2,8 @@
   <view style="padding-top: 10px;">
     <view class="title_text">开票信息：</view>
     <van-cell-group inset>
-      <van-field
+            <van-field
+        custom-class="bianju"
         wx:if="{{kehu_name == undefined}}"
         bind:input="onInput"
         model:value="{{ kaipiao_body.xiaoshou_bianhao }}"
@@ -14,7 +15,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.shoupiao_danwei }}"
         data-column="shoupiao_danwei"
@@ -25,7 +27,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.shibiehao }}"
         data-column="shibiehao"
@@ -34,7 +37,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_dizhi }}"
         data-column="kaipiao_dizhi"
@@ -43,7 +47,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_dianhua }}"
         data-column="kaipiao_dianhua"
@@ -52,7 +57,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_yinhang }}"
         data-column="kaipiao_yinhang"
@@ -61,7 +67,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_zhanghao }}"
         data-column="kaipiao_zhanghao"
@@ -71,7 +78,8 @@
       />
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="kaipiao_riqi" bindchange="choiceDate">
-        <van-field
+              <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ kaipiao_body.kaipiao_riqi }}"
           data-column="kaipiao_riqi"
@@ -82,8 +90,8 @@
         />
       </picker>
 
-      <van-field
-        wx:if="{{kehu_name == undefined}}"
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_jine }}"
         data-column="kaipiao_jine"
@@ -93,7 +101,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         wx:if="{{kehu_name == undefined}}"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_shuie }}"
@@ -104,7 +113,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         wx:if="{{kehu_name == undefined}}"
         bind:input="onInput"
         model:value="{{ kaipiao_body.jiashui_heji }}"
@@ -115,7 +125,8 @@
         type="digit"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.beizhu }}"
         data-column="beizhu"
@@ -124,7 +135,8 @@
         border="false"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_danwei }}"
         data-column="kaipiao_danwei"
@@ -135,7 +147,8 @@
         readonly="true"
       />
 
-      <van-field
+            <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ kaipiao_body.xinxi_tuisong }}"
         data-column="xinxi_tuisong"

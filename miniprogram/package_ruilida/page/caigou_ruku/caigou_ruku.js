@@ -127,8 +127,10 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var chaxun_gongyingshang = options.gongyingshang
     _this.setData({
       userInfo,
+      chaxun_gongyingshang
     })
   },
 
@@ -626,11 +628,22 @@ Page({
    */
   onShow() {
     var _this = this
-    _this.setData({
-      start_date:'',
-      stop_date:'',
-      gongyingshang:'',
-    })
+    if(_this.data.chaxun_gongyingshang != '' && _this.data.chaxun_gongyingshang != undefined){
+      var gongyingshang = _this.data.chaxun_gongyingshang
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        gongyingshang:gongyingshang,
+        chaxun_gongyingshang:'',
+      })
+    }else{
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        gongyingshang:'',
+      })
+    }
+
     _this.sel1()
   },
 

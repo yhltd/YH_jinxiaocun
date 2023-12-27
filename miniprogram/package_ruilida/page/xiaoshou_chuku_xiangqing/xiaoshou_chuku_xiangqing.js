@@ -283,6 +283,28 @@ Page({
     }
   },
 
+  goto_shoukuan_xiangqing(e){ 
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.shoukuan_list)
+    var id = _this.data.shoukuan_list[index].id
+    wx.navigateTo({ 
+      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=收入记录",
+    })
+  },
+
+  goto_kaipiao_xiangqing(e){ 
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.kaipiao_list)
+    var id = _this.data.kaipiao_list[index].id
+    wx.navigateTo({
+      url: '../xiaoshou_kaipiaoAdd/xiaoshou_kaipiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
   kaipiao_add:function(){
     var _this = this
     var id = _this.data.id

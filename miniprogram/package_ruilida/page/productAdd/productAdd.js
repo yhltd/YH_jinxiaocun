@@ -59,7 +59,7 @@ Page({
     })
     var id = options.id
     if(id != null && id != undefined){
-      var sql = "select * from product where id=" + id + ";select id,product_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable from product_item where product_id = '" + id + "'"
+      var sql = "select * from product where id=" + id + ";select id,product_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,caigou_price,jinxiang,xiaoxiang,enable,image from product_item where product_id = '" + id + "'"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -144,7 +144,7 @@ Page({
       title:'加载中'
     })
     var _this = this
-    var sql = "select * from peizhi where type = '商品分类';select * from peizhi where type = '质保等级';select * from peizhi_shuilv;select type,STUFF((SELECT ',' + guige FROM peizhi_guige u WHERE u.type=s.type FOR XML PATH('')), 1, 1, '') as guige from peizhi_guige s group by s.type;select * from peizhi where type = '商品单位';select * from peizhi where type = '进项税率';"
+    var sql = "select * from peizhi where type = '商品分类';select * from peizhi where type = '质保等级';select * from peizhi_shuilv;select type,guige from peizhi_guige;select * from peizhi where type = '商品单位';select * from peizhi where type = '增值税率';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -159,7 +159,7 @@ Page({
         var danwei_list = res.result.recordsets[4]
         var jinxiang_list = res.result.recordsets[5]
         for(var i=0; i<peizhi_guige.length; i++){
-          peizhi_guige[i].guige = peizhi_guige[i].guige.split(',')
+          peizhi_guige[i].guige = peizhi_guige[i].guige.split('\n')
           peizhi_guige[i].click_guige = []
         }
         console.log(peizhi_guige)
@@ -458,29 +458,39 @@ Page({
     console.log('用户点击确定')
     var list = _this.data.lianxi_list
     var all_peizhi_guige = _this.data.all_peizhi_guige
+    console.log(all_peizhi_guige)
     for(var i=0; i<all_peizhi_guige.length; i++){
       if(all_peizhi_guige[i].click_guige.length > 0){
         for(var j=0; j<all_peizhi_guige[i].click_guige.length; j++){
           var this_bianhao = _this.data.this_bianhao
           var this_num = list.length
           this_bianhao = this_bianhao + "-" + PrefixInteger(this_num,2)
-          list.push({
-            id:'',
-            product_id:'',
-            image:'',
-            guige:'',
-            bianhao:this_bianhao,
-            lingshou_price:'',
-            lingshou_bili: _this.data.peizhi_shuilv.lingshou,
-            pifa_price:'',
-            pifa_bili: _this.data.peizhi_shuilv.pifa,
-            dakehu_price:'',
-            dakehu_bili: _this.data.peizhi_shuilv.dakehu,
-            caigou_price:'',
-            jinxiang:'',
-            xiaoxiang:'',
-            enable:'是',
-          })
+          var panduan = true
+          for(var k=0; k<list.length; k++){
+            if(list[k].guige == ''){
+              list[k].guige = all_peizhi_guige[i].click_guige[j]
+              panduan = false
+            }
+          }
+          if(panduan){
+            list.push({
+              id:'',
+              product_id:'',
+              image:'',
+              guige:all_peizhi_guige[i].click_guige[j],
+              bianhao:this_bianhao,
+              lingshou_price:'',
+              lingshou_bili: _this.data.peizhi_shuilv.lingshou,
+              pifa_price:'',
+              pifa_bili: _this.data.peizhi_shuilv.pifa,
+              dakehu_price:'',
+              dakehu_bili: _this.data.peizhi_shuilv.dakehu,
+              caigou_price:'',
+              jinxiang:'',
+              xiaoxiang:'',
+              enable:'是',
+            })
+          }
         }
       }
     }
@@ -598,6 +608,7 @@ Page({
               query: sql
             },
             success: res => {
+              console.log(lianxi_list)
               for(var i=0; i<lianxi_list.length; i++){
                 if(lianxi_list[i].image.indexOf("base64") != -1){
                   var fsm = wx.getFileSystemManager();
@@ -692,9 +703,9 @@ Page({
           var sql2 = ""
           for(var i=0; i<lianxi_list.length; i++){
             if(sql2 == ""){
-              sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
+              sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
             }else{
-              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
+              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
             }
           }
           sql = sql + sql2

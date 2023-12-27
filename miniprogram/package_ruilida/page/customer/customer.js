@@ -38,6 +38,15 @@ Page({
         name:'导出Excel'
       }
     ],
+    tiaozhuan_list:[
+      {
+        name:'查看销售订单'
+      },{
+        name:'查看销售出库'
+      },{
+        name:'查看往来明细'
+      }
+    ],
     quanxuan_value: true,
   },
 
@@ -77,7 +86,7 @@ Page({
       })
       return;
     }
-    var sql = "select * from customer where bianhao like '%" + e[0] + "%' and name like '%" + e[1] + "%'"    
+    var sql = "select * from customer left join(select name as lianxi_name,phone as lianxi_phone,customer_id from customer_item where type = '主联系人') as lianxi on customer.id = lianxi.customer_id where bianhao like '%" + e[0] + "%' and name like '%" + e[1] + "%'"    
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -126,7 +135,7 @@ Page({
   click_view:function(e){
     var _this = this
     console.log(e.target.dataset.index)
-    var index = e.target.dataset.index
+    var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
     var userInfo = _this.data.userInfo
     if(userInfo.power_mingxi.kehu_upd != '是'){
@@ -197,10 +206,12 @@ Page({
     var _this = this
     console.log('列名：', e.currentTarget.dataset.column)
     var column = e.currentTarget.dataset.column
+    var index = e.currentTarget.dataset.index
     var list = _this.data[column + "_list"]
     _this.setData({
       list_xiala: list,
       click_column:column,
+      click_index:index,
     })
     console.log(list)
     _this.setData({
@@ -230,7 +241,38 @@ Page({
           bianhao:'',
         })
         _this.sel1()
-      }else{
+      }else if(click_column == 'tiaozhuan' && new_val == '查看销售订单'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var index = _this.data.click_index
+        var name = _this.data.list[index].name
+        console.log(name)
+        wx.navigateTo({
+          url: '../xiaoshou_dingdan/xiaoshou_dingdan?userInfo=' + JSON.stringify(_this.data.userInfo) + "&customer_name=" + name,
+        })
+      }else if(click_column == 'tiaozhuan' && new_val == '查看销售出库'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var index = _this.data.click_index
+        var name = _this.data.list[index].name
+        console.log(name)
+        wx.navigateTo({
+          url: '../xiaoshou_chuku/xiaoshou_chuku?userInfo=' + JSON.stringify(_this.data.userInfo) + "&customer_name=" + name,
+        })
+      }else if(click_column == 'tiaozhuan' && new_val == '查看往来明细'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var index = _this.data.click_index
+        var name = _this.data.list[index].name
+        console.log(name)
+        wx.navigateTo({
+          url: '../kehu_wanglai/kehu_wanglai?userInfo=' + JSON.stringify(_this.data.userInfo) + "&customer_name=" + name,
+        })
+      }
+      else{
         _this.setData({
           [click_column]: new_val,
           xlShow2: false,

@@ -1,7 +1,17 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
     <van-cell-group inset>
-      <van-cell data-index="{{i}}" title="{{list_item.name}}" value="{{list_item.gongyingshang_dengji}}" label="{{list_item.bianhao}}" bindtap="click_view" bindlongpress="del1"/>
+      <van-cell title-width="80%" data-index="{{i}}" title="{{list_item.name}}" bindtap="click_view" bindlongpress="del1" use-label-slot> 
+        <view slot="label"> 
+          <text>编号：{{list_item.bianhao}} \n</text>
+          <text>主联系人：{{list_item.lianxi_name}} \n</text>
+          <text>电话：{{list_item.lianxi_phone}} \n</text>
+          <text>兼做客户：{{list_item.jianzuo_kehu}} \n</text>
+          <text>业务员：{{list_item.caigouyuan}} \n</text>
+          <text>供应商等级：{{list_item.gongyingshang_dengji}} \n</text>
+        </view>
+        <van-tag slot="right-icon" plain type="primary" size="medium" data-index="{{i}}" data-column="tiaozhuan" catchtap="xiala_show">更多</van-tag>
+      </van-cell>
     </van-cell-group>
   </view>
 </scroll-view>

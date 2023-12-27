@@ -95,7 +95,7 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
     var shouzhi_type = options.shouzhi_type
     var tiaojian = options.tiaojian
-    if(tiaojian != 'undefined'){
+    if(tiaojian != undefined){
       tiaojian = JSON.parse(tiaojian)
     }
     _this.setData({
@@ -187,17 +187,36 @@ Page({
     if(userInfo.power_mingxi.zhichu_sel == '查看全部' && _this.data.shouzhi_type == '支出记录'){
       sql = "select * from shouzhi_mingxi where shouzhi_riqi >= '" + e[0] + "' and shouzhi_riqi <= '" + e[1] + "' and dianpu like '%" + e[2] + "%' and jizhangren like '%" + e[3] + "%' and jizhang_zhanghu like '%" + e[4] + "%' and shouzhi_type ='" + _this.data.shouzhi_type.replace("记录","") + "'"
     }
-    
+    sql = sql + ";select * from shouzhi_mingxi_item"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
         query: sql
-      },
+      }, 
       success: res => {
         console.log(res)
-        var list = res.result.recordset
+        var list = res.result.recordsets[0]
+        var list_item = res.result.recordsets[1]
+        for(var i=0; i< list.length; i++){
+          for(var j=list_item.length-1; j>=0; j--){
+            if(list[i].id == list_item[j].shouzhi_id){
+              if(list[i].item == undefined){
+                var this_item = []
+                this_item.push(list_item[j])
+                list_item.splice(j,1)
+                list[i].item = this_item
+              }else{
+                var this_item = list[i].item
+                this_item.push(list_item[j])
+                list_item.splice(j,1)
+                list[i].item = this_item
+              }
+            }
+          }
+        }
         console.log(list)
+        console.log(list_item)
         _this.setData({
           list: list,
           num: list.length,

@@ -1,12 +1,15 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-index="i" wx:key="item">
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
-      <van-cell title="{{item.bianhao}}" use-label-slot>
+      <van-cell title="{{item.bianhao}}" value="{{'合计：' + item.heji}}" use-label-slot>
         <view slot="label">
           <text>客户：{{item.kehu}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
-          <text>审核人：{{item.shenhe}} \n</text>
-          <text>审核状态：{{item.shenhe_zhuangtai == '未提交审核'?item.shenhe_zhuangtai:item.shenhe_zhuangtai == '审核通过'?item.shenhe_zhuangtai:item.shenhe_list}} \n</text>
+          <text>销售单位：{{item.xiaoshou_danwei}} \n</text>
+          <text>店铺：{{item.dianpu}} \n</text>
+          <text>业务员：{{item.yewuyuan}} \n</text>
+          <!-- <text>审核人：{{item.shenhe}} \n</text> -->
+          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
         </view>
       </van-cell>
 

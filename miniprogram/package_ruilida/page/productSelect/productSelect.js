@@ -35,6 +35,10 @@ Page({
       success: res => {
         console.log(res)
         var pro_list = res.result.recordsets[0]
+        for(var i=0; i<pro_list.length; i++){
+          pro_list[i].checked = false
+        }
+        console.log(pro_list)
         var type_list_result = res.result.recordsets[1]
         var type_list = [
           {
@@ -69,6 +73,20 @@ Page({
       scoll_height
     })
     console.log(systemInfo) 
+  },
+
+  danxuan_zengpin(e){
+    var _this = this
+    var pro_list = _this.data.pro_list
+    var index = e.currentTarget.dataset.index
+    if(pro_list[index].checked == false){
+      pro_list[index].checked = true
+    }else{
+      pro_list[index].checked = false
+    }
+    _this.setData({
+      pro_list
+    })
   },
 
   save:function(){

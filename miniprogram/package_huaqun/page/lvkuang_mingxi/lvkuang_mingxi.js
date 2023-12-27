@@ -4,6 +4,7 @@ Page({
   /**
    * 页面的初始数据
    */
+  xlShow:false,
   tableShow: true,
   delWindow1: false,
   tjShow: false,
@@ -252,7 +253,31 @@ Page({
     })
     var e = ['','', '1900-01-01', '2100-12-31', '', '']
     _this.tableShow(e)
-
+    var sql = "select * from userInfo where power = '管理员' or power = '操作员'"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets[0]
+        _this.setData({
+          yewuyuan_list: list,
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   out_put4:function(){
@@ -488,6 +513,28 @@ Page({
         console.log("请求失败！")
       }
     })
+  },
+
+  xiala_open:function(){
+    var _this = this
+    _this.setData({
+      xlShow: true
+    })
+  },
+
+  select1: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      _this.setData({
+        xlShow: false,
+        this_value:new_val
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow: false,
+      })
+    }
   },
 
   clickView: function (e) {

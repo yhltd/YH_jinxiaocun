@@ -1,7 +1,7 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
     <van-cell-group inset>
-      <van-cell data-index="{{i}}" title="{{list_item.name}}" value="{{list_item.moren}}" bindtap="click_view" bindlongpress="del1"/>
+      <van-cell title-width="80%" data-index="{{i}}" title="{{list_item.name}}{{type == '增值税率'?'%':''}}" value="{{list_item.moren}}" bindtap="click_view" bindlongpress="del1"/>
     </van-cell-group>
   </view>
 </scroll-view>

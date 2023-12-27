@@ -1,0 +1,66 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+    <van-cell-group inset>
+      <van-cell data-index="{{i}}" title="{{list_item.jizhang_mingxi}}" value="记账分类：{{list_item.jizhang_fenlei}}" bindtap="click_view" bindlongpress="del1"/>
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <view class="bt_text">合计：{{num}}个</view>
+  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+<!--选择导出excel列-->
+<van-popup
+  show="{{ dayin_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 39%"
+  bind:close="qxShow"
+>
+<van-checkbox-group value="{{ result }}" bind:change="onChange">
+    <van-cell-group>
+      <van-cell
+        wx:for="{{ list_check }}"
+        wx:key="index"
+        title="{{ item.name }}"
+        value-class="value-class"
+        clickable
+        data-index="{{ index }}"
+        bind:click="toggle"
+      >
+        <van-checkbox
+          catch:tap="noop"
+          class="checkboxes-{{ index }}"
+          name="{{ item.name }}"
+        />
+      </van-cell>
+    </van-cell-group>
+  </van-checkbox-group>
+  <view class="bottom_view" style="margin-top: 10px;">
+    <view class="bt_text">
+      <van-checkbox
+      bind:change="quanxuan"
+      value="{{quanxuan_value}}">全选</van-checkbox>
+    </view>
+    <button class="bt_bottom" bindtap="toExcel">确定</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+  <view class="lables">类型</view>
+    <input bindinput="onInput" data-column="type" class="input_text_form"  value="{{type}}" type="text" name="type" bindtap="xiala_show" disabled="disabled"></input>
+    <view class="lables">规格名称</view>
+    <input bindinput="onInput" data-column="guige" class="input_text_form"  value="{{guige}}" type="text" name="guige"></input>  
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

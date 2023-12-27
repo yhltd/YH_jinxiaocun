@@ -5,6 +5,9 @@
         <view slot="label">
           <text>客户：{{item.kehu}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
+          <text>出库单位：{{item.chuku_danwei}} \n</text>
+          <text>店铺：{{item.dianpu}} \n</text>
+          <text>业务员：{{item.yewuyuan}} \n</text>
         </view>
       </van-cell>
 

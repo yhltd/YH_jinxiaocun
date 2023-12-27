@@ -3,6 +3,7 @@
     <view class="title_text">收票信息：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         wx:if="{{gongyingshang_name == undefined}}"
         bind:input="onInput"
         model:value="{{ shoupiao_body.caigou_bianhao }}"
@@ -15,6 +16,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.shoupiao_danwei }}"
         data-column="shoupiao_danwei"
@@ -27,6 +29,7 @@
 
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.kaipiao_danwei }}"
         data-column="kaipiao_danwei"
@@ -39,6 +42,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="kaipiao_riqi" bindchange="choiceDate">
         <van-field
+        custom-class="bianju"
           bind:input="onInput"
           model:value="{{ shoupiao_body.kaipiao_riqi }}"
           data-column="kaipiao_riqi"
@@ -50,7 +54,7 @@
       </picker>
 
       <van-field
-        wx:if="{{gongyingshang_name == undefined}}"
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.kaipiao_jine }}"
         data-column="kaipiao_jine"
@@ -61,7 +65,7 @@
       />
 
       <van-field
-        wx:if="{{gongyingshang_name == undefined}}"
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.kaipiao_shuie }}"
         data-column="kaipiao_shuie"
@@ -72,7 +76,7 @@
       />
 
       <van-field
-        wx:if="{{gongyingshang_name == undefined}}"
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.jiashui_heji }}"
         data-column="jiashui_heji"
@@ -83,6 +87,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.beizhu }}"
         data-column="beizhu"
@@ -92,6 +97,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shoupiao_body.xinxi_tuisong }}"
         data-column="xinxi_tuisong"

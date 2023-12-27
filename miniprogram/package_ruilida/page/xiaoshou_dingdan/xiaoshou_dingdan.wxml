@@ -1,13 +1,16 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-index="i" wx:key="item">
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
-      <van-cell title="{{item.bianhao}}" use-label-slot>
+      <van-cell title="{{item.bianhao}}" value="{{'合计：' + item.heji}}" use-label-slot>
         <view slot="label">
           <text>客户：{{item.kehu}} \n</text>
           <text>日期：{{item.riqi}} \n</text>
-          <text>审核人：{{item.shenhe}} \n</text>
+          <text>销售单位：{{item.xiaoshou_danwei}} \n</text>
+          <text>店铺：{{item.dianpu}} \n</text>
+          <text>业务员：{{item.yewuyuan}} \n</text>
+          <!-- <text>审核人：{{item.shenhe}} \n</text> -->
           <!-- <text>审核状态：{{item.shenhe_zhuangtai}} \n</text> -->
-          <text>审核状态：{{item.shenhe_zhuangtai == '未提交审核'?item.shenhe_zhuangtai:item.shenhe_zhuangtai == '审核通过'?item.shenhe_zhuangtai:item.shenhe_list}} \n</text>
+          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
           <van-tag style="margin-right: 5px;" type="{{item.chuku_zhuangtai=='未出库'?'warning':item.chuku_zhuangtai=='部分出库'?'primary':'success'}}">{{item.chuku_zhuangtai}}</van-tag>
           <van-tag style="margin-right: 5px;" type="{{item.kaipiao_zhuangtai=='未开票'?'warning':item.kaipiao_zhuangtai=='部分开票'?'primary':'success'}}">{{item.kaipiao_zhuangtai}}</van-tag>
           <van-tag type="{{item.shoukuan_zhuangtai=='未收款'?'warning':item.shoukuan_zhuangtai=='部分收款'?'primary':'success'}}">{{item.shoukuan_zhuangtai}}</van-tag>
@@ -26,6 +29,7 @@
 
 <view class="bottom_view">
   <view class="bt_text">合计：{{num}}个</view>
+  <button class="bt_bottom" data-column="gongneng" bindtap="chaxun_show">查询</button>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

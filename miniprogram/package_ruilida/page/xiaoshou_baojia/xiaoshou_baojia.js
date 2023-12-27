@@ -243,22 +243,28 @@ Page({
         var list = res.result.recordsets[0]
         var list_item = res.result.recordsets[1]
         var customer_list = res.result.recordsets[2]
-        for(var i=list.length-1; i >=0; i--){
+        for(var i=list.length-1; i >=0; i--){ 
+          var heji = 0
           for(var j=list_item.length-1; j>=0; j--){
             if(list[i].id == list_item[j].baojia_id){
               if(list[i].item == undefined){
                 var this_item = []
+                list_item[j].jiashui_xiaoji = list_item[j].shuliang * list_item[j].baojia_danjia
+                heji = heji + list_item[j].jiashui_xiaoji
                 this_item.push(list_item[j])
                 list_item.splice(j,1)
                 list[i].item = this_item
               }else{
                 var this_item = list[i].item
+                list_item[j].jiashui_xiaoji = list_item[j].shuliang * list_item[j].baojia_danjia
+                heji = heji + list_item[j].jiashui_xiaoji
                 this_item.push(list_item[j])
                 list_item.splice(j,1)
                 list[i].item = this_item
               }
             }
           }
+          list[i].heji = heji
         }
         console.log(list)
         console.log(list_item)

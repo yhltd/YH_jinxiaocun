@@ -39,7 +39,7 @@ Page({
     var index = e.currentTarget.dataset.index
     var xukai_list = _this.data.xukai_list
     var max_val = _this.data.xukai_list[index].weikai * 1
-    if(this_val > max_val){
+    if(this_val >= max_val){
       xukai_list[index].this_kai = max_val
     }else{
       xukai_list[index].this_kai = e.detail
@@ -49,11 +49,43 @@ Page({
     })
   },
 
+  change_kaipiao2:function(e){
+    var _this = this
+    console.log(e)
+    var this_val = e.detail * 1
+    var index = e.currentTarget.dataset.index
+    var xukai_list = _this.data.xukai_list
+    var max_val = _this.data.xukai_list[index].weikai * 1
+    if(this_val >= max_val){
+      xukai_list[index].this_kai = 0
+    }else{
+      xukai_list[index].this_kai = max_val - this_val
+    }
+    _this.setData({
+      xukai_list
+    })
+  },
+
+  onChange:function(e){
+    var _this = this
+    console.log(e)
+    var list = _this.data.xukai_list
+    console.log(list)
+    if(list[0].checked == false){
+      list[0].checked = true
+    }else{
+      list[0].checked = false
+    }
+    _this.setData({
+      xukai_list:list
+    })
+  },
+
   kaipiao_next:function(){
     var _this = this
     var benci_list = []
     for(var i=0; i<_this.data.xukai_list.length; i++){
-      if(_this.data.xukai_list[i].this_kai * 1 > 0){
+      if(_this.data.xukai_list[i].this_kai * 1 > 0 && _this.data.xukai_list[i].checked){
         benci_list.push(_this.data.xukai_list[i])
       }
     }
@@ -65,7 +97,7 @@ Page({
       })
     }else{
       wx.showToast({
-        title: '未读取到填写金额的收票信息',
+        title: '未读取到已选中的填写金额的开票信息',
         icon:'none'
       })
     }
@@ -112,7 +144,7 @@ Page({
 
         sql = sql + "select id,shouzhi_riqi,convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)) as money from shouzhi_mingxi where danju_leixing = '采购订单' and danju_bianhao = '" + list[0].bianhao + "' union select shouzhi_mingxi.id,shouzhi_riqi,convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)) as money from shouzhi_mingxi left join xiaoshou_chuku on shouzhi_mingxi.danju_bianhao = xiaoshou_chuku.bianhao where danju_leixing = '采购入库' and xiaoshou_id = '" + list[0].bianhao + "' order by shouzhi_riqi;"
 
-        sql = sql + "select * from caigou_ruku left join caigou_shoupiao on caigou_ruku.bianhao = caigou_shoupiao.caigou_bianhao where isnull(caigou_shoupiao.id,'') != '' and caigou_id = '" + list[0].bianhao + "';"
+        sql = sql + "select caigou_shoupiao.id,kaipiao_riqi,jiashui_heji from caigou_ruku left join caigou_shoupiao on caigou_ruku.bianhao = caigou_shoupiao.caigou_bianhao where isnull(caigou_shoupiao.id,'') != '' and caigou_id = '" + list[0].bianhao + "';"
         
         wx.cloud.callFunction({
           name: 'sqlserver_ruilida',
@@ -198,6 +230,39 @@ Page({
     }
   },
 
+  goto_ruku_xiangqing(e){
+    var _this = this
+    console.log(e) 
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.chuku_list)
+    var id = _this.data.chuku_list[index].id
+    wx.navigateTo({
+      url: '../caigou_ruku_xiangqing/caigou_ruku_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
+  goto_fukuan_xiangqing(e){
+    var _this = this
+    console.log(e) 
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.shoukuan_list)
+    var id = _this.data.shoukuan_list[index].id
+    wx.navigateTo({ 
+      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=支出记录", 
+    })
+  },
+
+  goto_shoupiao_xiangqing(e){
+    var _this = this
+    console.log(e) 
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.kaipiao_list)
+    var id = _this.data.kaipiao_list[index].id
+    wx.navigateTo({
+      url: '../caigou_shoupiaoAdd/caigou_shoupiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
   shoukuan_add:function(){
     var _this = this
     var id = _this.data.id
@@ -242,7 +307,7 @@ Page({
     var _this = this
     var id = _this.data.id
     var bianhao = _this.data.list[0].bianhao
-    var sql = "select id,bianhao,riqi,gongyingshang,dianpu,cangku,beizhu,caigou_id,ruku_danwei,yewuyuan,jiashui_xiaoji,ruku_id,isnull(caigou_bianhao,'') as xiaoshou_bianhao,isnull(jiashui_heji,0) as jiashui_heji,jiashui_xiaoji-isnull(jiashui_heji,0) as weikai,jiashui_xiaoji-isnull(jiashui_heji,0) as this_kai from (select * from caigou_ruku as ruku left join (select sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,ruku_id from caigou_ruku_item group by ruku_id) as item on ruku.id = item.ruku_id) as ruku left join (select caigou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as jiashui_heji from caigou_shoupiao group by caigou_bianhao) as shoupiao on ruku.bianhao = shoupiao.caigou_bianhao where jiashui_xiaoji-isnull(jiashui_heji,0) > 0 and caigou_id = '" + bianhao + "'"
+    var sql = "select id,bianhao,riqi,gongyingshang,dianpu,cangku,beizhu,caigou_id,ruku_danwei,yewuyuan,jiashui_xiaoji,ruku_id,isnull(caigou_bianhao,'') as xiaoshou_bianhao,isnull(jiashui_heji,0) as jiashui_heji,jiashui_xiaoji-isnull(jiashui_heji,0) as weikai,jiashui_xiaoji-isnull(jiashui_heji,0) as this_kai,'false' as checked from (select * from caigou_ruku as ruku left join (select sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,ruku_id from caigou_ruku_item group by ruku_id) as item on ruku.id = item.ruku_id) as ruku left join (select caigou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as jiashui_heji from caigou_shoupiao group by caigou_bianhao) as shoupiao on ruku.bianhao = shoupiao.caigou_bianhao where jiashui_xiaoji-isnull(jiashui_heji,0) > 0 and caigou_id = '" + bianhao + "'"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -254,6 +319,7 @@ Page({
           xukai_list[i].jiashui_xiaoji = Math.round(xukai_list[i].jiashui_xiaoji * 100) / 100
           xukai_list[i].weikai = Math.round(xukai_list[i].weikai * 100) / 100
           xukai_list[i].this_kai = Math.round(xukai_list[i].this_kai * 100) / 100
+          xukai_list[i].checked = false
         } 
         console.log(xukai_list)
         if(xukai_list.length > 0){

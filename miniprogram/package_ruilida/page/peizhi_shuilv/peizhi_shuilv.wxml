@@ -3,6 +3,7 @@
     <view class="title_text">附加税设置：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.shuilv }}"
         data-column="shuilv"
@@ -16,6 +17,7 @@
       </van-field>
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.zhuangtai }}"
         data-column="zhuangtai"
@@ -35,6 +37,7 @@
     <van-cell-group inset>
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.lingshou_zhuangtai }}"
         data-column="lingshou_zhuangtai"
@@ -47,6 +50,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.lingshou }}"
         data-column="lingshou"
@@ -59,6 +63,7 @@
       />
       
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.pifa_zhuangtai }}"
         data-column="pifa_zhuangtai"
@@ -71,6 +76,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.pifa }}"
         data-column="pifa"
@@ -83,6 +89,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.dakehu_zhuangtai }}"
         data-column="dakehu_zhuangtai"
@@ -95,6 +102,7 @@
       />
 
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.dakehu }}"
         data-column="dakehu"
@@ -113,6 +121,7 @@
     <view class="title_text">开票设置：</view>
     <van-cell-group inset>
       <van-field
+        custom-class="bianju"
         bind:input="onInput"
         model:value="{{ shuilv_body.kaipiao_edu }}"
         data-column="kaipiao_edu"

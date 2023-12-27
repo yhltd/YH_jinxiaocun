@@ -35,14 +35,14 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc({{customer_need_img_height}}vmin / 7.5);position:sticky;left:0">客户需求(照片)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc({{customer_need_img_height}}vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img1" data-value="{{list[0].customer_need_img1}}" src="{{list[0].customer_need_img1}}"></image>
-            <image wx:if="{{customer_need_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img2" data-value="{{list[0].customer_need_img2}}" src="{{list[0].customer_need_img2}}" binderror="customer_need_img_error" data-display="customer_need_img2_display"></image>
-            <image wx:if="{{customer_need_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img3" data-value="{{list[0].customer_need_img3}}" src="{{list[0].customer_need_img3}}" binderror="customer_need_img_error" data-display="customer_need_img3_display"></image>
-            <image wx:if="{{customer_need_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img4" data-value="{{list[0].customer_need_img4}}" src="{{list[0].customer_need_img4}}" binderror="customer_need_img_error" data-display="customer_need_img4_display"></image>
-            <image wx:if="{{customer_need_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img5" data-value="{{list[0].customer_need_img5}}" src="{{list[0].customer_need_img5}}" binderror="customer_need_img_error" data-display="customer_need_img5_display"></image>
-            <image wx:if="{{customer_need_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img6" data-value="{{list[0].customer_need_img6}}" src="{{list[0].customer_need_img6}}" binderror="customer_need_img_error" data-display="customer_need_img6_display"></image>
-            <image wx:if="{{customer_need_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img7" data-value="{{list[0].customer_need_img7}}" src="{{list[0].customer_need_img7}}" binderror="customer_need_img_error" data-display="customer_need_img7_display"></image>
-            <image wx:if="{{customer_need_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img8" data-value="{{list[0].customer_need_img8}}" src="{{list[0].customer_need_img8}}" binderror="customer_need_img_error" data-display="customer_need_img8_display"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img1" data-value="{{list[0].customer_need_img1}}" src="{{list[0].customer_need_img1}}"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img2" data-value="{{list[0].customer_need_img2}}" src="{{list[0].customer_need_img2}}" binderror="customer_need_img_error" data-display="customer_need_img2_display"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img3" data-value="{{list[0].customer_need_img3}}" src="{{list[0].customer_need_img3}}" binderror="customer_need_img_error" data-display="customer_need_img3_display"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img4" data-value="{{list[0].customer_need_img4}}" src="{{list[0].customer_need_img4}}" binderror="customer_need_img_error" data-display="customer_need_img4_display"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img5" data-value="{{list[0].customer_need_img5}}" src="{{list[0].customer_need_img5}}" binderror="customer_need_img_error" data-display="customer_need_img5_display"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img6" data-value="{{list[0].customer_need_img6}}" src="{{list[0].customer_need_img6}}" binderror="customer_need_img_error" data-display="customer_need_img6_display"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img7" data-value="{{list[0].customer_need_img7}}" src="{{list[0].customer_need_img7}}" binderror="customer_need_img_error" data-display="customer_need_img7_display"></image>
+            <image style="margin:5px" wx:if="{{customer_need_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img8" data-value="{{list[0].customer_need_img8}}" src="{{list[0].customer_need_img8}}" binderror="customer_need_img_error" data-display="customer_need_img8_display"></image>
           </view>
           <view class="list_view" data-index="0" data-column="customer_need_img1_renyuan" data-value="{{list[0].customer_need_img1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc({{customer_need_img_height}}vmin / 7.5);">{{list[0].customer_need_img1_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="customer_need_img1_riqi" data-value="{{list[0].customer_need_img1_riqi}}" style="width:calc(250vmin / 7.5);height: calc({{customer_need_img_height}}vmin / 7.5);">{{list[0].customer_need_img1_riqi}}</view>
@@ -53,29 +53,28 @@
           <view class="list_view" data-index="0" data-column="customer_need_text1_renyuan" data-value="{{list[0].customer_need_text1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text1_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="customer_need_text1_riqi" data-value="{{list[0].customer_need_text1_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text1_riqi}}</view>
         </view>
-        <view class="table_main_neirong">
+        <!-- <view class="table_main_neirong">
           <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送文字2</view>
           <view class="list_view" bindtap="clickView" data-index="0" data-column="customer_need_text2" data-value="{{list[0].customer_need_text2}}" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2}}</view>
           <view class="list_view" data-index="0" data-column="customer_need_text2_renyuan" data-value="{{list[0].customer_need_text2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="customer_need_text2_riqi" data-value="{{list[0].customer_need_text2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_text2_riqi}}</view>
-        </view>
-        <!-- <view class="table_main_neirong">
-          <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">客户需求(照片2)</view>
-          <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img2" data-value="{{list[0].customer_need_img2}}" src="{{list[0].customer_need_img2}}"></image>
-          </view>
-          <view class="list_view"  data-index="0" data-column="customer_need_img2_renyuan" data-value="{{list[0].customer_need_img2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img2_renyuan}}</view>
-          <view class="list_view"  data-index="0" data-column="customer_need_img2_riqi" data-value="{{list[0].customer_need_img2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img2_riqi}}</view>
-        </view>
-
-        <view class="table_main_neirong">
-          <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">客户需求(照片3)</view>
-          <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="customer_need_img3" data-value="{{list[0].customer_need_img3}}" src="{{list[0].customer_need_img3}}"></image>
-          </view>
-          <view class="list_view"  data-index="0" data-column="customer_need_img3_renyuan" data-value="{{list[0].customer_need_img3_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img3_renyuan}}</view>
-          <view class="list_view"  data-index="0" data-column="customer_need_img3_riqi" data-value="{{list[0].customer_need_img3_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].customer_need_img3_riqi}}</view>
         </view> -->
+        
+        <view class="table_main_neirong" wx:if="{{userInfo.power == '管理员' || userInfo.power == '客户'}}">
+          <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc({{wenjian_img_height}}vmin / 7.5);position:sticky;left:0">文件(照片)</view>
+          <view class="list_view" style="width:calc(500vmin / 7.5);height: calc({{wenjian_img_height}}vmin / 7.5);">
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img1" data-value="{{list[0].wenjian_img1}}" src="{{list[0].wenjian_img1}}"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img2" data-value="{{list[0].wenjian_img2}}" src="{{list[0].wenjian_img2}}" binderror="wenjian_img_error" data-display="wenjian_img2_display"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img3" data-value="{{list[0].wenjian_img3}}" src="{{list[0].wenjian_img3}}" binderror="wenjian_img_error" data-display="wenjian_img3_display"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img4" data-value="{{list[0].wenjian_img4}}" src="{{list[0].wenjian_img4}}" binderror="wenjian_img_error" data-display="wenjian_img4_display"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img5" data-value="{{list[0].wenjian_img5}}" src="{{list[0].wenjian_img5}}" binderror="wenjian_img_error" data-display="wenjian_img5_display"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img6" data-value="{{list[0].wenjian_img6}}" src="{{list[0].wenjian_img6}}" binderror="wenjian_img_error" data-display="wenjian_img6_display"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img7" data-value="{{list[0].wenjian_img7}}" src="{{list[0].wenjian_img7}}" binderror="wenjian_img_error" data-display="wenjian_img7_display"></image>
+            <image style="margin:5px" wx:if="{{wenjian_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="wenjian_img8" data-value="{{list[0].wenjian_img8}}" src="{{list[0].wenjian_img8}}" binderror="wenjian_img_error" data-display="wenjian_img8_display"></image>
+          </view>
+          <view class="list_view" data-index="0" data-column="wenjian_img1_renyuan" data-value="{{list[0].wenjian_img1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc({{wenjian_img_height}}vmin / 7.5);">{{list[0].wenjian_img1_renyuan}}</view>
+          <view class="list_view" data-index="0" data-column="wenjian_img1_riqi" data-value="{{list[0].wenjian_img1_riqi}}" style="width:calc(250vmin / 7.5);height: calc({{wenjian_img_height}}vmin / 7.5);">{{list[0].wenjian_img1_riqi}}</view>
+        </view>
 
         <view class="table_main">
           <view class="title_text" style="width:calc(220vmin / 7.5);height:calc(140vmin / 7.5);position:sticky;left:0">送货地址</view>
@@ -115,21 +114,21 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc({{peihuo_img_height}}vmin / 7.5);position:sticky;left:0">配货照片(照片)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc({{peihuo_img_height}}vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img1" data-value="{{list[0].peihuo_img1}}" src="{{list[0].peihuo_img1}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img1" data-value="{{list[0].peihuo_img1}}" src="{{list[0].peihuo_img1}}"></image>
             
-            <image wx:if="{{peihuo_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img2" data-value="{{list[0].peihuo_img2}}" src="{{list[0].peihuo_img2}}" binderror="peihuo_img_error" data-display="peihuo_img2_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img2" data-value="{{list[0].peihuo_img2}}" src="{{list[0].peihuo_img2}}" binderror="peihuo_img_error" data-display="peihuo_img2_display"></image>
 
-            <image wx:if="{{peihuo_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img3" data-value="{{list[0].peihuo_img3}}" src="{{list[0].peihuo_img3}}" binderror="peihuo_img_error" data-display="peihuo_img3_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img3" data-value="{{list[0].peihuo_img3}}" src="{{list[0].peihuo_img3}}" binderror="peihuo_img_error" data-display="peihuo_img3_display"></image>
 
-            <image wx:if="{{peihuo_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img4" data-value="{{list[0].peihuo_img4}}" src="{{list[0].peihuo_img4}}" binderror="peihuo_img_error" data-display="peihuo_img4_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img4" data-value="{{list[0].peihuo_img4}}" src="{{list[0].peihuo_img4}}" binderror="peihuo_img_error" data-display="peihuo_img4_display"></image>
 
-            <image wx:if="{{peihuo_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img5" data-value="{{list[0].peihuo_img5}}" src="{{list[0].peihuo_img5}}" binderror="peihuo_img_error" data-display="peihuo_img5_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img5" data-value="{{list[0].peihuo_img5}}" src="{{list[0].peihuo_img5}}" binderror="peihuo_img_error" data-display="peihuo_img5_display"></image>
 
-            <image wx:if="{{peihuo_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img6" data-value="{{list[0].peihuo_img6}}" src="{{list[0].peihuo_img6}}" binderror="peihuo_img_error" data-display="peihuo_img6_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img6" data-value="{{list[0].peihuo_img6}}" src="{{list[0].peihuo_img6}}" binderror="peihuo_img_error" data-display="peihuo_img6_display"></image>
 
-            <image wx:if="{{peihuo_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img7" data-value="{{list[0].peihuo_img7}}" src="{{list[0].peihuo_img7}}" binderror="peihuo_img_error" data-display="peihuo_img7_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img7" data-value="{{list[0].peihuo_img7}}" src="{{list[0].peihuo_img7}}" binderror="peihuo_img_error" data-display="peihuo_img7_display"></image>
 
-            <image wx:if="{{peihuo_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img8" data-value="{{list[0].peihuo_img8}}" src="{{list[0].peihuo_img8}}" binderror="peihuo_img_error" data-display="peihuo_img8_display"></image>
+            <image style="margin:5px" wx:if="{{peihuo_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img8" data-value="{{list[0].peihuo_img8}}" src="{{list[0].peihuo_img8}}" binderror="peihuo_img_error" data-display="peihuo_img8_display"></image>
           </view>
           <view class="list_view" data-index="0" data-column="peihuo_img1_renyuan" data-value="{{list[0].peihuo_img1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc({{peihuo_img_height}}vmin / 7.5);">{{list[0].peihuo_img1_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="peihuo_img1_riqi" data-value="{{list[0].peihuo_img1_riqi}}" style="width:calc(250vmin / 7.5);height: calc({{peihuo_img_height}}vmin / 7.5);">{{list[0].peihuo_img1_riqi}}</view>
@@ -138,7 +137,7 @@
         <!-- <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配货照片(照片2)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img2" data-value="{{list[0].peihuo_img2}}" src="{{list[0].peihuo_img2}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img2" data-value="{{list[0].peihuo_img2}}" src="{{list[0].peihuo_img2}}"></image>
           </view>
           <view class="list_view"  data-index="0" data-column="peihuo_img2_renyuan" data-value="{{list[0].peihuo_img2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img2_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="peihuo_img2_riqi" data-value="{{list[0].peihuo_img2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img2_riqi}}</view>
@@ -147,7 +146,7 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配货照片(照片3)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img3" data-value="{{list[0].peihuo_img3}}" src="{{list[0].peihuo_img3}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img3" data-value="{{list[0].peihuo_img3}}" src="{{list[0].peihuo_img3}}"></image>
           </view>
           <view class="list_view"  data-index="0" data-column="peihuo_img3_renyuan" data-value="{{list[0].peihuo_img3_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img3_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="peihuo_img3_riqi" data-value="{{list[0].peihuo_img3_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img3_riqi}}</view>
@@ -156,7 +155,7 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配货照片(照片4)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img4" data-value="{{list[0].peihuo_img4}}" src="{{list[0].peihuo_img4}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img4" data-value="{{list[0].peihuo_img4}}" src="{{list[0].peihuo_img4}}"></image>
           </view>
           <view class="list_view"  data-index="0" data-column="peihuo_img4_renyuan" data-value="{{list[0].peihuo_img4_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img4_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="peihuo_img4_riqi" data-value="{{list[0].peihuo_img4_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img4_riqi}}</view>
@@ -165,7 +164,7 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配货照片(照片5)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img5" data-value="{{list[0].peihuo_img5}}" src="{{list[0].peihuo_img5}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peihuo_img5" data-value="{{list[0].peihuo_img5}}" src="{{list[0].peihuo_img5}}"></image>
           </view>
           <view class="list_view"  data-index="0" data-column="peihuo_img5_renyuan" data-value="{{list[0].peihuo_img5_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img5_renyuan}}</view>
           <view class="list_view"  data-index="0" data-column="peihuo_img5_riqi" data-value="{{list[0].peihuo_img5_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peihuo_img5_riqi}}</view>
@@ -174,21 +173,21 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc({{peisong_img_height}}vmin / 7.5);position:sticky;left:0">配送照片(照片)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc({{peisong_img_height}}vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img1" data-value="{{list[0].peisong_img1}}" src="{{list[0].peisong_img1}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img1" data-value="{{list[0].peisong_img1}}" src="{{list[0].peisong_img1}}"></image>
 
-            <image wx:if="{{peisong_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img2" data-value="{{list[0].peisong_img2}}" src="{{list[0].peisong_img2}}" binderror="peisong_img_error" data-display="peisong_img2_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img2" data-value="{{list[0].peisong_img2}}" src="{{list[0].peisong_img2}}" binderror="peisong_img_error" data-display="peisong_img2_display"></image>
 
-            <image wx:if="{{peisong_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img3" data-value="{{list[0].peisong_img3}}" src="{{list[0].peisong_img3}}" binderror="peisong_img_error" data-display="peisong_img3_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img3" data-value="{{list[0].peisong_img3}}" src="{{list[0].peisong_img3}}" binderror="peisong_img_error" data-display="peisong_img3_display"></image>
 
-            <image wx:if="{{peisong_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img4" data-value="{{list[0].peisong_img4}}" src="{{list[0].peisong_img4}}" binderror="peisong_img_error" data-display="peisong_img4_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img4" data-value="{{list[0].peisong_img4}}" src="{{list[0].peisong_img4}}" binderror="peisong_img_error" data-display="peisong_img4_display"></image>
 
-            <image wx:if="{{peisong_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img5" data-value="{{list[0].peisong_img5}}" src="{{list[0].peisong_img5}}" binderror="peisong_img_error" data-display="peisong_img5_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img5" data-value="{{list[0].peisong_img5}}" src="{{list[0].peisong_img5}}" binderror="peisong_img_error" data-display="peisong_img5_display"></image>
 
-            <image wx:if="{{peisong_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img6" data-value="{{list[0].peisong_img6}}" src="{{list[0].peisong_img6}}" binderror="peisong_img_error" data-display="peisong_img6_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img6" data-value="{{list[0].peisong_img6}}" src="{{list[0].peisong_img6}}" binderror="peisong_img_error" data-display="peisong_img6_display"></image>
 
-            <image wx:if="{{peisong_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img7" data-value="{{list[0].peisong_img7}}" src="{{list[0].peisong_img7}}" binderror="peisong_img_error" data-display="peisong_img7_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img7" data-value="{{list[0].peisong_img7}}" src="{{list[0].peisong_img7}}" binderror="peisong_img_error" data-display="peisong_img7_display"></image>
 
-            <image wx:if="{{peisong_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img8" data-value="{{list[0].peisong_img8}}" src="{{list[0].peisong_img8}}" binderror="peisong_img_error" data-display="peisong_img8_display"></image>
+            <image style="margin:5px" wx:if="{{peisong_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img8" data-value="{{list[0].peisong_img8}}" src="{{list[0].peisong_img8}}" binderror="peisong_img_error" data-display="peisong_img8_display"></image>
           </view>
           <view class="list_view" data-index="0" data-column="peisong_img1_renyuan" data-value="{{list[0].peisong_img1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc({{peisong_img_height}}vmin / 7.5);">{{list[0].peisong_img1_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="peisong_img1_riqi" data-value="{{list[0].peisong_img1_riqi}}" style="width:calc(250vmin / 7.5);height: calc({{peisong_img_height}}vmin / 7.5);">{{list[0].peisong_img1_riqi}}</view>
@@ -197,7 +196,7 @@
         <!-- <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送照片(照片2)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img2" data-value="{{list[0].peisong_img2}}" src="{{list[0].peisong_img2}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img2" data-value="{{list[0].peisong_img2}}" src="{{list[0].peisong_img2}}"></image>
           </view>
           <view class="list_view" data-index="0" data-column="peisong_img2_renyuan" data-value="{{list[0].peisong_img2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peisong_img2_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="peisong_img2_riqi" data-value="{{list[0].peisong_img2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peisong_img2_riqi}}</view>
@@ -206,7 +205,7 @@
         <view class="table_main_neirong">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">配送照片(照片3)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img3" data-value="{{list[0].peisong_img3}}" src="{{list[0].peisong_img3}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="peisong_img3" data-value="{{list[0].peisong_img3}}" src="{{list[0].peisong_img3}}"></image>
           </view>
           <view class="list_view" data-index="0" data-column="peisong_img3_renyuan" data-value="{{list[0].peisong_img3_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peisong_img3_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="peisong_img3_riqi" data-value="{{list[0].peisong_img3_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].peisong_img3_riqi}}</view>
@@ -257,21 +256,21 @@
         <view class="table_main_neirong" style="{{userInfo.power=='客户'?'display:none;':''}}">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc({{kucun_img_height}}vmin / 7.5);position:sticky;left:0">商品库存(照片)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc({{kucun_img_height}}vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img1" data-value="{{list[0].kucun_img1}}" src="{{list[0].kucun_img1}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img1" data-value="{{list[0].kucun_img1}}" src="{{list[0].kucun_img1}}"></image>
 
-            <image wx:if="{{kucun_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img2" data-value="{{list[0].kucun_img2}}" src="{{list[0].kucun_img2}}" binderror="kucun_img_error" data-display="kucun_img2_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img2_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img2" data-value="{{list[0].kucun_img2}}" src="{{list[0].kucun_img2}}" binderror="kucun_img_error" data-display="kucun_img2_display"></image>
 
-            <image wx:if="{{kucun_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img3" data-value="{{list[0].kucun_img3}}" src="{{list[0].kucun_img3}}" binderror="kucun_img_error" data-display="kucun_img3_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img3_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img3" data-value="{{list[0].kucun_img3}}" src="{{list[0].kucun_img3}}" binderror="kucun_img_error" data-display="kucun_img3_display"></image>
 
-            <image wx:if="{{kucun_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img4" data-value="{{list[0].kucun_img4}}" src="{{list[0].kucun_img4}}" binderror="kucun_img_error" data-display="kucun_img4_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img4_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img4" data-value="{{list[0].kucun_img4}}" src="{{list[0].kucun_img4}}" binderror="kucun_img_error" data-display="kucun_img4_display"></image>
 
-            <image wx:if="{{kucun_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img5" data-value="{{list[0].kucun_img5}}" src="{{list[0].kucun_img5}}" binderror="kucun_img_error" data-display="kucun_img5_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img5_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img5" data-value="{{list[0].kucun_img5}}" src="{{list[0].kucun_img5}}" binderror="kucun_img_error" data-display="kucun_img5_display"></image>
 
-            <image wx:if="{{kucun_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img6" data-value="{{list[0].kucun_img6}}" src="{{list[0].kucun_img6}}" binderror="kucun_img_error" data-display="kucun_img6_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img6_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img6" data-value="{{list[0].kucun_img6}}" src="{{list[0].kucun_img6}}" binderror="kucun_img_error" data-display="kucun_img6_display"></image>
 
-            <image wx:if="{{kucun_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img7" data-value="{{list[0].kucun_img7}}" src="{{list[0].kucun_img7}}" binderror="kucun_img_error" data-display="kucun_img7_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img7_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img7" data-value="{{list[0].kucun_img7}}" src="{{list[0].kucun_img7}}" binderror="kucun_img_error" data-display="kucun_img7_display"></image>
 
-            <image wx:if="{{kucun_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img8" data-value="{{list[0].kucun_img8}}" src="{{list[0].kucun_img8}}" binderror="kucun_img_error" data-display="kucun_img8_display"></image>
+            <image style="margin:5px" wx:if="{{kucun_img8_display}}" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img8" data-value="{{list[0].kucun_img8}}" src="{{list[0].kucun_img8}}" binderror="kucun_img_error" data-display="kucun_img8_display"></image>
           </view>
           <view class="list_view" data-index="0" data-column="kucun_img1_renyuan" data-value="{{list[0].kucun_img1_renyuan}}" style="width:calc(250vmin / 7.5);height: calc({{kucun_img_height}}vmin / 7.5);">{{list[0].kucun_img1_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="kucun_img1_riqi" data-value="{{list[0].kucun_img1_riqi}}" style="width:calc(250vmin / 7.5);height: calc({{kucun_img_height}}vmin / 7.5);">{{list[0].kucun_img1_riqi}}</view>
@@ -280,7 +279,7 @@
         <!-- <view class="table_main_neirong" style="{{userInfo.power=='客户'?'display:none;':''}}">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">商品库存(照片2)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img2" data-value="{{list[0].kucun_img2}}" src="{{list[0].kucun_img2}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img2" data-value="{{list[0].kucun_img2}}" src="{{list[0].kucun_img2}}"></image>
           </view>
           <view class="list_view" data-index="0" data-column="kucun_img2_renyuan" data-value="{{list[0].kucun_img2_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].kucun_img2_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="kucun_img2_riqi" data-value="{{list[0].kucun_img2_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].kucun_img2_riqi}}</view>
@@ -289,7 +288,7 @@
         <view class="table_main_neirong" style="{{userInfo.power=='客户'?'display:none;':''}}">
           <view class="title_text2" style="width:calc(220vmin / 7.5);height:calc(350vmin / 7.5);position:sticky;left:0">商品库存(照片3)</view>
           <view class="list_view" style="width:calc(500vmin / 7.5);height: calc(350vmin / 7.5);">
-            <image mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img3" data-value="{{list[0].kucun_img3}}" src="{{list[0].kucun_img3}}"></image>
+            <image style="margin:5px" mode='aspectFit' bindtap="imgClick" data-index="0" data-column="kucun_img3" data-value="{{list[0].kucun_img3}}" src="{{list[0].kucun_img3}}"></image>
           </view>
           <view class="list_view" data-index="0" data-column="kucun_img3_renyuan" data-value="{{list[0].kucun_img3_renyuan}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].kucun_img3_renyuan}}</view>
           <view class="list_view" data-index="0" data-column="kucun_img3_riqi" data-value="{{list[0].kucun_img3_riqi}}" style="width:calc(250vmin / 7.5);height: calc(350vmin / 7.5);">{{list[0].kucun_img3_riqi}}</view>

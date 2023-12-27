@@ -283,6 +283,28 @@ Page({
     }
   },
 
+  goto_fukuan_xiangqing(e){
+    var _this = this
+    console.log(e) 
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.shoukuan_list)
+    var id = _this.data.shoukuan_list[index].id
+    wx.navigateTo({ 
+      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=支出记录", 
+    })
+  },
+
+  goto_shoupiao_xiangqing(e){
+    var _this = this
+    console.log(e)
+    var index = e.currentTarget.dataset.index
+    console.log(_this.data.kaipiao_list)
+    var id = _this.data.kaipiao_list[index].id
+    wx.navigateTo({
+      url: '../caigou_shoupiaoAdd/caigou_shoupiaoAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    })
+  },
+
   kaipiao_add:function(){
     var _this = this
     var id = _this.data.id

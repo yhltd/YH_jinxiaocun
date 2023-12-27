@@ -133,12 +133,14 @@ Page({
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var tiaojian = options.tiaojian
+    var customer_name = options.customer_name
     if(tiaojian != undefined){
       tiaojian = JSON.parse(tiaojian)
     }
     _this.setData({
       userInfo,
-      tiaojian
+      tiaojian,
+      customer_name
     })
   },
 
@@ -637,10 +639,17 @@ Page({
   onShow() {
     var _this = this
     var tiaojian = _this.data.tiaojian
+    var customer_name = _this.data.customer_name
     if(tiaojian != undefined){
       _this.setData(tiaojian)
       _this.setData({
         tiaojian:undefined
+      })
+    }else if(customer_name != '' && customer_name != undefined){
+      _this.setData({
+        start_date:'',
+        stop_date:'',
+        customer:customer_name,
       })
     }else{
       _this.setData({
