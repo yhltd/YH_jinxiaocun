@@ -35,6 +35,11 @@ var login = function(that,info) {
       success: res => {
         console.log("小程序连接数据库成功,返回res为: ", res.result.recordset)
         if (res.result.recordset.length > 0) {
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../home/home?id='+res.result.recordset[0].id,
           })
@@ -73,6 +78,11 @@ var login = function(that,info) {
       success: res => {
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../c_home/c_home?userInfo='+ JSON.stringify(userInfo)
           })
@@ -136,6 +146,11 @@ var login = function(that,info) {
             key: "IsLogin",
             data: true
           })
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.switchTab({
             url: '../shouye/shouye'
           })
@@ -173,6 +188,11 @@ var login = function(that,info) {
         if (res.result.length > 0) {
           var userInfo = res.result[0]
           console.log(userInfo)
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../../package_jiaowu/pages/shows/shows?userInfo='+JSON.stringify(userInfo)
           })
@@ -217,6 +237,11 @@ var login = function(that,info) {
         })
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../z_home/z_home?userInfo='+ JSON.stringify(userInfo)
           })
@@ -261,6 +286,11 @@ var login = function(that,info) {
             })
             return;
           }
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../../100lie_page/pages/shows/shows?userInfo='+JSON.stringify(user)
           })
@@ -298,6 +328,11 @@ var login = function(that,info) {
       success: res => {
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../z_home/z_home?userInfo='+ JSON.stringify(userInfo)
           })
@@ -336,6 +371,11 @@ var login = function(that,info) {
       success(res) {
         if (res.result.length > 0) {
           if (info.inputName == "bbb") {
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
             wx.navigateTo({
               url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id
             })
@@ -343,6 +383,11 @@ var login = function(that,info) {
               title: '登录成功',
             })
           } else {
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
             wx.navigateTo({
               url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id
             })
@@ -397,6 +442,11 @@ var login = function(that,info) {
             })
             return;
           }
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../../packageP/page/PeiZhiBiao/PeiZhiBiao'
           })
@@ -447,6 +497,11 @@ var login = function(that,info) {
           })
         }else{
           if (res.result.recordset.length > 0) {
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
             wx.navigateTo({
               url: '../../package_tb3999803/pages/index/index?user=' + JSON.stringify(res.result.recordset[0])
             })
@@ -484,6 +539,11 @@ var login = function(that,info) {
       success: res => {
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url: '../../packageH/page/index/index?userInfo='+ JSON.stringify(userInfo)
           })
@@ -544,6 +604,11 @@ var login = function(that,info) {
               var list = res.result.recordset
               console.log(user_list)
               console.log(list)
+              if(that.data.jizhu_panduan){
+                that.remember_user(info.inputName,info.inputPwd)
+              }else{
+                that.remove_user()
+              }
               wx.navigateTo({
                 url:'../../miniprogram/pages/peizhi/peizhi?userInfo='+JSON.stringify(user_list) + "&userPower=" + JSON.stringify(list)
               })
@@ -607,6 +672,11 @@ var login = function(that,info) {
               icon:'none',
             })
           }else{
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
             wx.navigateTo({
               url:'../../package_bazhou/pages/index/index?userInfo='+JSON.stringify(user_list)
             })
@@ -651,6 +721,11 @@ var login = function(that,info) {
           })
         }else{
           var user_list = list[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url:'../../package_huaqun/page/shows/shows?userInfo='+JSON.stringify(user_list)
           })
@@ -694,6 +769,11 @@ var login = function(that,info) {
           })
         }else{
           var user_list = list[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url:'../../package_ruilida/page/shows/shows?userInfo='+JSON.stringify(user_list)
           })
@@ -737,6 +817,11 @@ var login = function(that,info) {
           })
         }else{
           var user_list = list[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url:'../../package_huaqun_erqi/page/shows/shows?userInfo='+JSON.stringify(user_list)
           })
@@ -780,6 +865,11 @@ var login = function(that,info) {
           })
         }else{
           var user_list = list[0]
+          if(that.data.jizhu_panduan){
+            that.remember_user(info.inputName,info.inputPwd)
+          }else{
+            that.remove_user()
+          }
           wx.navigateTo({
             url:'../../package_huanchenmeng/pages/shows/shows?userInfo='+JSON.stringify(user_list)
           })
@@ -824,10 +914,20 @@ var login = function(that,info) {
         }else{
           var user_list = list[0]
           if(user_list.power == '客户'){
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
             wx.navigateTo({
               url:'../../package_yiwa/pages/shows_kehu/shows_kehu?userInfo='+JSON.stringify(user_list)
             })
           }else{
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
             wx.navigateTo({
               url:'../../package_yiwa/pages/shows/shows?userInfo='+JSON.stringify(user_list)
             })
@@ -930,7 +1030,8 @@ Page({
     input_text: "",
     name: '',
     pwd: '',
-    gongsi: "选择公司"
+    gongsi: "选择公司",
+    jizhu_panduan:false,
   },
 
   getCompanyName : function(arr){
@@ -961,6 +1062,61 @@ Page({
       err: res => {
         console.log("错误!", res)
       },
+    })
+  },
+
+  checkboxChange(e){
+    var _this = this
+    _this.setData({
+      jizhu_panduan: !_this.data.jizhu_panduan
+    })
+    console.log(_this.data.jizhu_panduan)
+  },
+
+  remember_user(username,password){
+    var _this = this
+    wx.setStorage({
+      key:"user",
+      data:username
+    })
+    wx.setStorage({
+      key:"pass",
+      data:password
+    })
+    wx.setStorage({
+      key:"system",
+      data:_this.data.system
+    })
+    wx.setStorage({
+      key:"gongsi",
+      data:_this.data.gongsi
+    })
+  },
+
+  remove_user(){
+    wx.removeStorage({
+      key: 'user',
+      success (res) {
+          console.log(res.errMsg)
+      }
+    })
+    wx.removeStorage({
+      key: 'pass',
+      success (res) {
+          console.log(res.errMsg)
+      }
+    })
+    wx.removeStorage({
+      key: 'system',
+      success (res) {
+          console.log(res.errMsg)
+      }
+    })
+    wx.removeStorage({
+      key: 'gongsi',
+      success (res) {
+          console.log(res.errMsg)
+      }
     })
   },
 
@@ -1290,7 +1446,46 @@ Page({
     //     }
     //   }
     // })
-
+    wx.getStorage({
+      key: 'system',
+      success (res) {
+        console.log(res.data)
+        that.setData({
+          system:res.data,
+          jizhu_panduan:true
+        })
+      }
+    })
+    wx.getStorage({
+      key: 'gongsi',
+      success (res) {
+        console.log(res.data)
+        that.setData({
+          gongsi:res.data,
+          jizhu_panduan:true
+        })
+      }
+    })
+    wx.getStorage({
+      key: 'user',
+      success (res) {
+        console.log(res.data)
+        that.setData({
+          name:res.data,
+          jizhu_panduan:true
+        })
+      }
+    })
+    wx.getStorage({
+      key: 'pass',
+      success (res) {
+        console.log(res.data)
+        that.setData({
+          pwd:res.data,
+          jizhu_panduan:true
+        })
+      }
+    })
   },
 
   /**

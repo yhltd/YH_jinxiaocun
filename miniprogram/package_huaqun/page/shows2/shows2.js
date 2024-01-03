@@ -90,9 +90,9 @@ Page({
     return;
    }
 
-   if(index == 7 && _this.data.userInfo.power != '管理员'){
+   if(index == 7 && _this.data.userInfo.power != '管理员' && _this.data.userInfo.power != '操作员'){
     wx.showToast({
-      title: '非管理员账号无权使用位置查看功能！',
+      title: '此账号无权使用位置查看功能！',
       icon: 'none'
     })
     return;

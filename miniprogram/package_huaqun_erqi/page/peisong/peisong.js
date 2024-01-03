@@ -539,7 +539,7 @@ Page({
         },
         success: res => {
           console.log(res)
-         if(res.result.recordset == "" || list[0].songhuo_danhao == ''){
+         if(res.result.recordset.length == 0  || list[0].songhuo_danhao == '' || res.result.recordset[0].id == list[0].id){
            console.log('成功')
           wx.showLoading({
             title: '保存文字',
@@ -3073,7 +3073,7 @@ Page({
       return;
     }
 
-    if(column == 'customer_need_img1' || column == 'customer_need_img2' || column == 'customer_need_img3' || column == 'customer_need_img4' || column == 'customer_need_img5' ||column == 'customer_need_img6' || column == 'customer_need_img7' || column == 'customer_need_img8' || column == 'wenjian_img1' || column == 'wenjian_img2' || column == 'wenjian_img3' || column == 'wenjian_img4' || column == 'wenjian_img5' ||column == 'wenjian_img6' || column == 'wenjian_img7' || column == 'wenjian_img8'){
+    if(column == 'customer_need_img1' || column == 'customer_need_img2' || column == 'customer_need_img3' || column == 'customer_need_img4' || column == 'customer_need_img5' ||column == 'customer_need_img6' || column == 'customer_need_img7' || column == 'customer_need_img8'){
       if(_this.data.list[0].wancheng == '完成' && _this.data.userInfo.power != '管理员'){
         wx.showToast({
           title: '已完成订单不允许编辑！',
@@ -3081,12 +3081,18 @@ Page({
         })
         return;
       }
-    }
-
-    if(column == 'songhuo_danhao' || column == 'peihuo_img1' || column == 'peihuo_img2' || column == 'peihuo_img3' || column == 'peihuo_img4' || column == 'peihuo_img5' || column == 'peisong_img1' || column == 'peisong_img2' || column == 'peisong_img3' || column == 'wancheng' || column == 'beizhu'){
+    }else if(column == 'songhuo_danhao' || column == 'peihuo_img1' || column == 'peihuo_img2' || column == 'peihuo_img3' || column == 'peihuo_img4' || column == 'peihuo_img5' || column == 'peisong_img1' || column == 'peisong_img2' || column == 'peisong_img3' || column == 'wancheng' || column == 'beizhu'){
       if(_this.data.userInfo.power == '客户'){
         wx.showToast({
           title: '客户不允许编辑此处！',
+          icon: 'none'
+        })
+        return;
+      }
+    }else if(column != 'wenjian_img1' || column != 'wenjian_img2' || column != 'wenjian_img3' || column != 'wenjian_img4' || column != 'wenjian_img5' ||column != 'wenjian_img6' || column != 'wenjian_img7' || column != 'wenjian_img8'){
+      if(list[0].wancheng == '完成'){
+        wx.showToast({
+          title: '已完成订单不允许编辑！',
           icon: 'none'
         })
         return;

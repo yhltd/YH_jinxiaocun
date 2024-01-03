@@ -13,7 +13,7 @@
   <van-tabs color="#1296db" type="card" active="{{ active }}" bind:change="onChange">
   <van-tab title="销售报价">
     <van-cell-group inset>
-      <van-cell title="需要我审批：{{shenhe_list[0].num}}个" value="审核未通过：{{pass_list[0].num}}个" bindtap="shenpi_show" data-type="销售报价"/>
+      <van-cell title="需要我审批：{{shenhe_list1_num}}个" value="审核未通过：{{pass_list[0].num}}个" bindtap="shenpi_show" data-type="销售报价"/>
     </van-cell-group>
   </van-tab>
   <van-tab title="销售订单">

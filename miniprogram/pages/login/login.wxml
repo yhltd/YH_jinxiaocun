@@ -25,11 +25,15 @@
     <view class="hs20"></view>
 
     <view>
-      <input name="inputName" bindinput="bindNameInput" class="input-login" placeholder="输入用户名"> </input>
+      <input name="inputName" value="{{name}}" bindinput="bindNameInput" class="input-login" placeholder="输入用户名"> </input>
     </view>
     <view class="hs20"></view>
     <view>
-      <input name="inputPwd" password="true" bindinput="bindPwdInput" class="input-login" placeholder="输入密码" />
+      <input name="inputPwd" value="{{pwd}}" password="true" bindinput="bindPwdInput" class="input-login" placeholder="输入密码" />
+    </view>
+    <view class="hs20"></view>
+    <view>
+      <checkbox bindtap="checkboxChange" checked="{{jizhu_panduan}}" >记住密码</checkbox>
     </view>
     <view class="hs20"></view>
     <view>

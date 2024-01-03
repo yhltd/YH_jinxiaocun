@@ -14,7 +14,8 @@
 <canvas class="canvas" canvas-id="outCanvas" hidden="{{!mask_hid}}" style="width:{{width_user}}px;height:{{height_user}}px;"></canvas>
 
 <view class="bottom_view">
-	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button>
+	<!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button> -->
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="labelTest" bindtouchstart='bindTouchStart' bindtouchend='bindTouchEnd'>打印</button>
 </view>
 
 <view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>

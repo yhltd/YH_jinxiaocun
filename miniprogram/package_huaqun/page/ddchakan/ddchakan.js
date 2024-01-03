@@ -388,9 +388,9 @@ Page({
     console.log(column)
     if(column == 'jgczy'){
       if (_this.data.userInfo.power == '管理员' || _this.data.userInfo.power == '操作员') {
-        if(_this.data.userInfo.power == '操作员' && _this.data.list[e.currentTarget.dataset.index].wancheng != '未审验'){
+        if( _this.data.list[e.currentTarget.dataset.index].wancheng == '完成'){
           wx.showToast({
-            title: '此单已审验，不允许修改！',
+            title: '此单已完成，不允许修改！',
             icon: 'none'
           })
           return;
