@@ -231,7 +231,7 @@ Page({
     var userInfo = JSON.parse(options.userInfo)
      _this.setData({
       djbh:djbh,
-      userInfo:userInfo
+      userInfo:userInfo,
     })
     console.log(userInfo.power)
     wx.cloud.callFunction({
@@ -244,6 +244,32 @@ Page({
         console.log(list)
         _this.setData({
           list: list
+        })
+        console.log(list)
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: "select * from dengdai_dayin"
+      },
+      success: res => {
+        var list = res.result.recordset[0]
+        console.log(list)
+        _this.setData({
+          dayin_peizhi: list
         })
         console.log(list)
       },
@@ -895,7 +921,7 @@ Page({
     var list = _this.list
     var list2 = _this.list2
         wx.navigateTo({
-          url: "../dddayin/dddayin?order1=" + JSON.stringify(_this.data.list[0]) +"&order2=" + JSON.stringify(_this.data.list2) 
+          url: "../../../package_huaqun_erqi/page/dddayin/dddayin?order1=" + JSON.stringify(_this.data.list[0]) +"&order2=" + JSON.stringify(_this.data.list2) +"&dayin_peizhi=" + JSON.stringify(_this.data.dayin_peizhi) 
         })
   },
   

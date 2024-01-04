@@ -17,7 +17,7 @@ Page({
         icon: "../../image/quanxianguanli.png"
       },
       {
-        text:'附加税与价格等级',
+        text:'价格管理',
         url: '../peizhi_shuilv/peizhi_shuilv',
         icon: "../../image/fujiashuishezhi.png"
       },
@@ -272,7 +272,7 @@ Page({
               var this_shenhe = shenhe_list1[i].shenhe.split(",")
               var this_shenhe_list = shenhe_list1[i].shenhe_list.split(",")
               var panduan = false
-              for(var j=0; i<this_shenhe.length; j++){
+              for(var j=0; j<this_shenhe.length; j++){
                 if(userInfo.name == this_shenhe[j]){
                   if(this_shenhe_list[j]=='审核中'){
                     panduan = true
@@ -290,7 +290,7 @@ Page({
               var this_shenhe = shenhe_list2[i].shenhe.split(",")
               var this_shenhe_list = shenhe_list2[i].shenhe_list.split(",")
               var panduan = false
-              for(var j=0; i<this_shenhe.length; j++){
+              for(var j=0; j<this_shenhe.length; j++){
                 if(userInfo.name == this_shenhe[j]){
                   if(this_shenhe_list[j]=='审核中'){
                     panduan = true
@@ -308,7 +308,7 @@ Page({
               var this_shenhe = shenhe_list3[i].shenhe.split(",")
               var this_shenhe_list = shenhe_list3[i].shenhe_list.split(",")
               var panduan = false
-              for(var j=0; i<this_shenhe.length; j++){
+              for(var j=0; j<this_shenhe.length; j++){
                 if(userInfo.name == this_shenhe[j]){
                   if(this_shenhe_list[j]=='审核中'){
                     panduan = true
@@ -324,16 +324,61 @@ Page({
             var shoupiao_list_num = res.result.recordsets[4][0].num
             var weishen_list1_num = 0
             var weishen_list1 = res.result.recordsets[0]
+            for(var i=0; i<weishen_list1.length; i++){
+              var this_shenhe = weishen_list1[i].shenhe.split(",")
+              var this_shenhe_list = weishen_list1[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe_list.length; j++){
+                if(this_shenhe_list[j]=='审核未通过'){
+                  panduan = true
+                  break;
+                }
+              }
+              if(panduan){
+                weishen_list1_num = weishen_list1_num + 1
+              }
+            }
             var weishen_list2_num = 0
             var weishen_list2 = res.result.recordsets[0]
+            for(var i=0; i<weishen_list2.length; i++){
+              var this_shenhe = weishen_list2[i].shenhe.split(",")
+              var this_shenhe_list = weishen_list2[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe_list.length; j++){
+                if(this_shenhe_list[j]=='审核未通过'){
+                  panduan = true
+                  break;
+                }
+              }
+              if(panduan){
+                weishen_list2_num = weishen_list2_num + 1
+              }
+            }
             var weishen_list3_num = 0
             var weishen_list3 = res.result.recordsets[0]
+            for(var i=0; i<weishen_list3.length; i++){
+              var this_shenhe = weishen_list3[i].shenhe.split(",")
+              var this_shenhe_list = weishen_list3[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe_list.length; j++){
+                if(this_shenhe_list[j]=='审核未通过'){
+                  panduan = true
+                  break;
+                }
+              }
+              if(panduan){
+                weishen_list3_num = weishen_list3_num + 1
+              }
+            }
             _this.setData({
               shenhe_list1_num,
               shenhe_list2_num,
               shenhe_list3_num,
               kaipiao_list_num,
               shoupiao_list_num,
+              weishen_list1_num,
+              weishen_list2_num,
+              weishen_list3_num
             })
             wx.hideLoading()
           },

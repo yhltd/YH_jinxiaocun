@@ -13,7 +13,8 @@
     "van-action-sheet": "../../components/action-sheet/index",
     "van-checkbox": "../../components/checkbox/index",
     "van-checkbox-group": "../../components/checkbox-group/index",
-    "van-popup": "../../components/popup/index"
+    "van-popup": "../../components/popup/index",
+    "van-tag": "../../components/tag/index"
   },
   "enablePullDownRefresh": true,
   "backgroundTextStyle": "dark",

@@ -83,30 +83,10 @@ Page({
             break;
           }
         }
-        var title = userInfo.changyong
-        if(title != ''){
-          title = JSON.parse(title)
-          title.push({
-            text:'设置常用',
-              url: '../shows4Add/shows4Add',
-              icon: "../../image/shezhichangyong.png"
-          })
-        }else{
-          title = [
-            {
-              text:'设置常用',
-              url: '../shows4Add/shows4Add',
-              icon: "../../image/shezhichangyong.png"
-            }
-          ]
-        }
-        console.log(userInfo)
-        _this.setData({
-          userInfo,
-          title
-        })
-        var sql = "select '销售报价' as title,count(*) as num from xiaoshou_baojia where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '销售订单' as title,count(*) as num from xiaoshou_dingdan where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '采购订单' as title,count(*) as num from caigou_dingdan where shenhe = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核中' union select '销售开票' as title,count(*) as num from xiaoshou_kaipiao where xinxi_tuisong = '"+ userInfo.name +"' and kaipiao_zhuangtai = '待开票' union select '采购收票' as title,count(*) as num from caigou_shoupiao where xinxi_tuisong = '"+ userInfo.name +"' and shoupiao_zhuangtai = '待收票';"
-        sql = sql + "select '销售报价' as title,count(*) as num from xiaoshou_baojia where yewuyuan = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过' union select '销售订单' as title,count(*) as num from xiaoshou_dingdan where yewuyuan = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过' union select '采购订单' as title,count(*) as num from caigou_dingdan where gongyingshang = '"+ userInfo.name +"' and shenhe_zhuangtai = '审核未通过'"
+        var sql = "select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_baojia where shenhe_zhuangtai != '审核通过' and shenhe like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_dingdan where shenhe_zhuangtai != '审核通过' and shenhe like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from caigou_dingdan where shenhe_zhuangtai != '审核通过' and shenhe like '%"+ userInfo.name +"%';select count(*) as num from xiaoshou_kaipiao where xinxi_tuisong = '管理员' and kaipiao_zhuangtai = '待开票';select count(*) as num from caigou_shoupiao where xinxi_tuisong = '管理员' and shoupiao_zhuangtai = '待收票';"
+
+        sql = sql + "select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_baojia where shenhe_zhuangtai like '审核未通过' and yewuyuan like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_dingdan where shenhe_zhuangtai like '审核未通过' and yewuyuan like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from caigou_dingdan where shenhe_zhuangtai like '审核未通过' and yewuyuan like '%"+ userInfo.name +"%'"
+
         wx.cloud.callFunction({
           name: 'sqlserver_ruilida',
           data: {
@@ -114,11 +94,121 @@ Page({
           },
           success: res => {
             console.log(res)
-            var shenhe_list = res.result.recordsets[0]
-            var pass_list = res.result.recordsets[1]
+            var shenhe_list1_num = 0
+            var shenhe_list1 = res.result.recordsets[0]
+            console.log(res.result.recordsets)
+            console.log(shenhe_list1)
+            for(var i=0; i<shenhe_list1.length; i++){
+              var this_shenhe = shenhe_list1[i].shenhe.split(",")
+              var this_shenhe_list = shenhe_list1[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe.length; j++){
+                if(userInfo.name == this_shenhe[j]){
+                  if(this_shenhe_list[j]=='审核中'){
+                    panduan = true
+                    break;
+                  }
+                }
+              }
+              if(panduan){
+                shenhe_list1_num = shenhe_list1_num + 1
+              }
+            }
+            var shenhe_list2_num = 0
+            var shenhe_list2 = res.result.recordsets[1]
+            for(var i=0; i<shenhe_list2.length; i++){
+              var this_shenhe = shenhe_list2[i].shenhe.split(",")
+              var this_shenhe_list = shenhe_list2[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe.length; j++){
+                if(userInfo.name == this_shenhe[j]){
+                  if(this_shenhe_list[j]=='审核中'){
+                    panduan = true
+                    break;
+                  }
+                }
+              }
+              if(panduan){
+                shenhe_list2_num = shenhe_list2_num + 1
+              }
+            }
+            var shenhe_list3_num = 0
+            var shenhe_list3 = res.result.recordsets[2]
+            for(var i=0; i<shenhe_list3.length; i++){
+              var this_shenhe = shenhe_list3[i].shenhe.split(",")
+              var this_shenhe_list = shenhe_list3[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe.length; j++){
+                if(userInfo.name == this_shenhe[j]){
+                  if(this_shenhe_list[j]=='审核中'){
+                    panduan = true
+                    break;
+                  }
+                }
+              }
+              if(panduan){
+                shenhe_list3_num = shenhe_list3_num + 1
+              }
+            }
+            var kaipiao_list_num = res.result.recordsets[3][0].num
+            var shoupiao_list_num = res.result.recordsets[4][0].num
+            var weishen_list1_num = 0
+            var weishen_list1 = res.result.recordsets[0]
+            for(var i=0; i<weishen_list1.length; i++){
+              var this_shenhe = weishen_list1[i].shenhe.split(",")
+              var this_shenhe_list = weishen_list1[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe_list.length; j++){
+                if(this_shenhe_list[j]=='审核未通过'){
+                  panduan = true
+                  break;
+                }
+              }
+              if(panduan){
+                weishen_list1_num = weishen_list1_num + 1
+              }
+            }
+            var weishen_list2_num = 0
+            var weishen_list2 = res.result.recordsets[0]
+            for(var i=0; i<weishen_list2.length; i++){
+              var this_shenhe = weishen_list2[i].shenhe.split(",")
+              var this_shenhe_list = weishen_list2[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe_list.length; j++){
+                if(this_shenhe_list[j]=='审核未通过'){
+                  panduan = true
+                  break;
+                }
+              }
+              if(panduan){
+                weishen_list2_num = weishen_list2_num + 1
+              }
+            }
+            var weishen_list3_num = 0
+            var weishen_list3 = res.result.recordsets[0]
+            for(var i=0; i<weishen_list3.length; i++){
+              var this_shenhe = weishen_list3[i].shenhe.split(",")
+              var this_shenhe_list = weishen_list3[i].shenhe_list.split(",")
+              var panduan = false
+              for(var j=0; j<this_shenhe_list.length; j++){
+                if(this_shenhe_list[j]=='审核未通过'){
+                  panduan = true
+                  break;
+                }
+              }
+              if(panduan){
+                weishen_list3_num = weishen_list3_num + 1
+              }
+            }
             _this.setData({
-              shenhe_list,
-              pass_list
+              shenhe_list1_num,
+              shenhe_list2_num,
+              shenhe_list3_num,
+              kaipiao_list_num,
+              shoupiao_list_num,
+              weishen_list1_num,
+              weishen_list2_num,
+              weishen_list3_num
             })
             wx.hideLoading()
           },
@@ -136,6 +226,11 @@ Page({
             console.log("请求失败！")
           }
         })
+        console.log(userInfo)
+        _this.setData({
+          userInfo
+        })
+        wx.hideLoading()
       },
       err: res => {
         wx.hideLoading()
@@ -152,6 +247,7 @@ Page({
       }
     })
   },
+
 
 
   onChange: function (event) {

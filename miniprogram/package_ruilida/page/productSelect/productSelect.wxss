@@ -32,7 +32,6 @@ button{
   background-color: #1296db;
   color: #E6E6E6;
   height: 75rpx;
-  margin: auto;
 }
 
 .bt_text{

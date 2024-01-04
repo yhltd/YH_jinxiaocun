@@ -31,6 +31,18 @@ Page({
       text: "账号管理",
       url: "../zhguanli/zhguanli"
     },
+    {
+      text: "灯带打印",
+      url: "../dddayin_peizhi/dddayin_peizhi"
+    },
+    {
+      text: "铝框打印1",
+      url: "../lkdayin_peizhi/lkdayin_peizhi"
+    },
+    {
+      text: "铝框打印2",
+      url: "../lkdayin_peizhi2/lkdayin_peizhi2"
+    },
   ]
   },
   

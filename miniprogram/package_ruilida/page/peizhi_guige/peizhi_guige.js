@@ -88,6 +88,9 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordsets[0]
+        for(var i=0; i<list.length; i++){
+          list[i].guige_list = list[i].guige.split("\n")
+        }
         var type_list = res.result.recordsets[1]
         console.log(type_list)
         var type_new = [

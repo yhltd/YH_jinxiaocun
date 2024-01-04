@@ -706,6 +706,34 @@ Page({
         onload_panduan:1
       })
     }
+
+    var sql = "select * from lvkuang_dayin;select * from lvkuang_dayin2"
+    wx.cloud.callFunction({
+      name: 'sqlserver_huaqun',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var dayin_peizhi1 = res.result.recordsets[0][0]
+        var dayin_peizhi2 = res.result.recordsets[1][0]
+        _this.setData({
+          dayin_peizhi1,
+          dayin_peizhi2
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
     _this.tableShow()
   },
 
@@ -1187,7 +1215,7 @@ Page({
     var list = _this.data.body_list
     console.log(list)
     wx.navigateTo({
-      url: "../lkdayin/lkdayin?order1=" + JSON.stringify(list)
+      url: "../../../package_huaqun_erqi/page/lkdayin/lkdayin?order1=" + JSON.stringify(list) + "&dayin_peizhi=" + JSON.stringify(_this.data.dayin_peizhi1)
     })
   },
 
@@ -1196,7 +1224,7 @@ Page({
     var list = _this.data.body_list
     console.log(list)
     wx.navigateTo({
-      url: "../lkdayin2/lkdayin2?order1=" + JSON.stringify(list)
+      url: "../../../package_huaqun_erqi/page/lkdayin2/lkdayin2?order1=" + JSON.stringify(list)+ "&dayin_peizhi=" + JSON.stringify(_this.data.dayin_peizhi2)
     })
   },
 

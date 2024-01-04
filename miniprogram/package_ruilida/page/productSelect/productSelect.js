@@ -188,6 +188,24 @@ Page({
   inputChange:function(e){
     var _this = this
     console.log(e)
+    var text = e.detail
+    console.log(_this.data.pro_list)
+    var list = _this.data.pro_list
+    for(var i=0; i<list.length; i++){
+      if(text!= ''){
+        if(list[i].name.indexOf(text) != -1){
+          list[i].isselect = 1
+        }else{
+          list[i].isselect = 0
+        }
+      }else{
+        list[i].isselect = 1
+      }
+    }
+    console.log(list)
+    _this.setData({
+      pro_list: list
+    })
   },
 
   /**

@@ -714,7 +714,10 @@ Page({
           if(pro_sel[i].checked){
             baojia_danjia = 0
           }
-          if(baojia_danjia != '' && pro_sel[i].num != ''){
+          var this_num = pro_sel[i].num
+          var panduan1 = baojia_danjia != ""
+          var panduan2 = this_num != ""
+          if(baojia_danjia !== "" && this_num != ""){
             jiashui_xiaoji = Math.round(baojia_danjia * pro_sel[i].num * 100) / 100
           }
 
@@ -873,7 +876,7 @@ Page({
         })
         return;
       }
-      if(lianxi_list[i].baojia_danjia == ''){
+      if(lianxi_list[i].baojia_danjia === ''){
         wx.showToast({
           title: '第' + (i * 1+1) + '条商品未填写报价单价',
           icon: 'none'
@@ -1082,11 +1085,20 @@ Page({
       lianxi_list[index][column] = new_value
       if(column == 'baojia_fudong'){
         lianxi_list[index].baojia_danjia = Math.round(lianxi_list[index].jianyi_baojia * lianxi_list[index].baojia_fudong / 100 * 100) / 100
+        lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].shuliang * lianxi_list[index].baojia_danjia * 100) / 100
       }
       if(column == 'baojia_danjia'){
         lianxi_list[index].baojia_fudong = Math.round(lianxi_list[index].baojia_danjia / lianxi_list[index].jianyi_baojia * 100 * 100) / 100
+        lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].shuliang * lianxi_list[index].baojia_danjia * 100) / 100
       }
-      lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].shuliang * lianxi_list[index].baojia_danjia * 100) / 100
+      if(column == 'shuliang'){
+        lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].shuliang * lianxi_list[index].baojia_danjia * 100) / 100
+      }
+      if(column == 'jiashui_xiaoji' && (lianxi_list[index].shuliang != "" && lianxi_list[index].shuliang != 0)){
+        lianxi_list[index].baojia_danjia = Math.round(lianxi_list[index].jiashui_xiaoji / lianxi_list[index].shuliang * 100) / 100
+        lianxi_list[index].baojia_fudong = Math.round(lianxi_list[index].baojia_danjia / lianxi_list[index].jianyi_baojia * 100 * 100) / 100
+      }
+
       _this.setData({
         lianxi_list
       })

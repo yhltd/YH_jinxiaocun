@@ -295,9 +295,9 @@
         "page/shows2/shows2",
         "page/dengdai_kailiao/dengdai_kailiao",
         "page/shoufei_biaozhun/shoufei_biaozhun",
-        "page/dddayin/dddayin",
-        "page/lkdayin/lkdayin",
-        "page/lkdayin2/lkdayin2"
+        "page/dddayin_peizhi/dddayin_peizhi",
+        "page/lkdayin_peizhi/lkdayin_peizhi",
+        "page/lkdayin_peizhi2/lkdayin_peizhi2"
       ]
     },
     {
@@ -312,7 +312,10 @@
         "page/map/map",
         "page/dingwei/dingwei",
         "page/peisong_jihua/peisong_jihua",
-        "page/peisong_jihua_xiangqing/peisong_jihua_xiangqing"
+        "page/peisong_jihua_xiangqing/peisong_jihua_xiangqing",
+        "page/dddayin/dddayin",
+        "page/lkdayin/lkdayin",
+        "page/lkdayin2/lkdayin2"
       ]
     },
     {

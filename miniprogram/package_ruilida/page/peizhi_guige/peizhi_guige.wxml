@@ -1,7 +1,13 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
     <van-cell-group inset>
-      <van-cell data-index="{{i}}" title="{{list_item.guige}}" value="规格组：{{list_item.type}}" bindtap="click_view" bindlongpress="del1"/>
+      <van-cell data-index="{{i}}" title="{{list_item.type}}" bindtap="click_view" bindlongpress="del1" use-label-slot>
+        <view slot="label" style="display: flex;flex-wrap: wrap;">
+          <block wx:for="{{list_item.guige_list}}" wx:for-item="item" wx:for-index="j" wx:key="id">
+            <van-tag style="margin-right:10px;margin-bottom: 5px;" type="danger" size="medium" type="primary">{{item}}</van-tag>
+          </block>
+        </view>
+      </van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
