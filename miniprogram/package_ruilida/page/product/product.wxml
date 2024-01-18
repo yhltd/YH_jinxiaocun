@@ -1,12 +1,15 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
-      <van-cell title="{{list_item.name}}" use-label-slot>
+      <van-cell title="{{list_item.name}}" center use-label-slot>
         <view slot="label">
           <text>编号：{{list_item.bianhao}} \n</text>
           <text>规格：{{list_item.guige}} \n</text>
           <text>分类：{{list_item.type}} \n</text>
           <text decode="{{true}}">采购价格：{{list_item.caigou_price}}</text>
+        </view>
+        <view slot="icon">
+          <image data-index="{{i}}" src="{{ list_item.image }}" mode='aspectFill' style="margin-right:10px;width: 30px;height:30px;border: 1px solid #A6A6A6"/>
         </view>
       </van-cell>
     </van-cell-group>

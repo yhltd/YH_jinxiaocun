@@ -3,22 +3,19 @@
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
       <van-cell title="{{item.shouzhi_bianhao}}" use-label-slot>
         <view slot="label">
-          <text decode="{{true}}" wx:if="{{item.danju_leixing != ''}}">关联单据：{{item.danju_leixing}} &nbsp;&nbsp; 单据编号：{{item.danju_bianhao}}  \n</text>
-          <text>日期：{{item.shouzhi_riqi}} \n</text>
-          <text>店铺：{{item.dianpu}} \n</text>
           <text>记账单位：{{item.jizhang_danwei}} \n</text>
-          <text decode="{{true}}">记账人：{{item.jizhangren}}&nbsp;&nbsp; 记账账户：{{item.jizhang_zhanghu}}\n</text>
-          <text decode="{{true}}">记账金额：{{item.jizhang_jine}} &nbsp;&nbsp;可抵税额：{{item.kedi_shuie}} &nbsp;&nbsp;</text>
+          <text decode="{{true}}">店铺：{{item.dianpu}} &nbsp;&nbsp; 记账人：{{item.jizhangren}} \n</text>
+          <text decode="{{true}}">日期：{{item.shouzhi_riqi}} &nbsp;&nbsp; 记账账户：{{item.jizhang_zhanghu}} \n</text>
         </view>
       </van-cell>
-      <van-cell title="{{product_item.mingxi_type}}" value="{{product_item.jizhang_jine}}" wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
+      <van-cell title="记账金额：{{item.jizhang_jine}}">
       </van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
+  <view class="bt_text">合计：{{zongji}}</view>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

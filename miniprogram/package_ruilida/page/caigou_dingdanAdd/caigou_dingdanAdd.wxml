@@ -24,7 +24,7 @@
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.yewuyuan }}" data-column="yewuyuan" bind:click-input="xiala_show" label="业务员" placeholder="请选择业务员" border="false" readonly="true" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.jinxiang_shuilv }}" data-column="jinxiang_shuilv" bind:click-input="xiala_show" label="进项税率%" placeholder="请输入进项税率%" border="false" type="number" readonly="true" />
+        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.jinxiang_shuilv }}" data-column="jinxiang_shuilv" bind:click-input="xiala_show" label="进项税率%" placeholder="请输入进项税率%" border="false" type="digit" readonly="true" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.beizhu }}" data-column="beizhu" label="备注" placeholder="请输入备注" border="false" />
@@ -66,10 +66,10 @@
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.danwei }}" data-column="danwei" data-index="{{i}}" label="单位" placeholder="请输入单位" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.shuliang }}" data-column="shuliang" data-index="{{i}}" label="数量" placeholder="请输入数量" border="false" type="number" />
+        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.shuliang }}" data-column="shuliang" data-index="{{i}}" label="数量" placeholder="请输入数量" border="false" type="digit" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.lishi_zuidi }}" data-column="lishi_zuidi" data-index="{{i}}" label="历史最低价" placeholder="请输入历史最低价" border="false" type="digit" />
+        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.lishi_zuidi }}" data-column="lishi_zuidi" data-index="{{i}}" label="历史最低价" placeholder="请输入历史最低价" border="false" type="digit" readonly="true" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.caigou_danjia }}" data-column="caigou_danjia" data-index="{{i}}" label="采购单价" placeholder="请输入采购单价" border="false" type="digit" />

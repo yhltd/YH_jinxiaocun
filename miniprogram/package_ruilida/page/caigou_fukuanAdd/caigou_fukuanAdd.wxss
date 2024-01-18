@@ -78,4 +78,8 @@ button{
   padding: 7px 16px !important;
 }
 
+.input_border{
+  border-radius: 4px 4px 4px 4px;
+  border:1rpx soli #000 !important;
+}
 

@@ -120,12 +120,19 @@ Page({
         var list = res.result.recordsets[0]
         var cangku_list = res.result.recordsets[1]
         var type_list = res.result.recordsets[2]
+        var zongji = 0
+        for(var i=0; i<list.length; i++){
+          list[i].shuliang = Math.round(list[i].shuliang * 100) / 100
+          zongji = zongji + (list[i].shuliang * 1)
+        }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
           cangku_list,
-          type_list
+          type_list,
+          zongji
         })
       },
       err: res => {

@@ -227,7 +227,7 @@ Page({
       })
     }else if(xiaoshou_id != undefined){
       console.log(xiaoshou_id)
-      var sql = "select *,1 as isselect from xiaoshou_dingdan where id=" + xiaoshou_id + ";select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id where xiaoshou_id = " + xiaoshou_id + ") as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,xiaoshou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_danjia,chuku_id,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0;"
+      var sql = "select *,1 as isselect from xiaoshou_dingdan where id=" + xiaoshou_id + ";select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id where xiaoshou_id = " + xiaoshou_id + ") as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0;"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
@@ -247,9 +247,9 @@ Page({
           for(var i=0; i<lianxi_list.length; i++){
             lianxi_list[i].shangpin_bianma = lianxi_list[i].shangpin_bianhao
             lianxi_list[i].name = lianxi_list[i].shangpin_mingcheng
-            lianxi_list[i].xiaoshou_danjia = lianxi_list[i].baojia_danjia
-            lianxi_list[i].shuliang = lianxi_list[i].weichu_shuliang
-            lianxi_list[i].jiashui_xiaoji = lianxi_list[i].xiaoshou_danjia * lianxi_list[i].weichu_shuliang
+            lianxi_list[i].xiaoshou_danjia = (lianxi_list[i].baojia_danjia * 1).toFixed(2)
+            lianxi_list[i].shuliang = (lianxi_list[i].weichu_shuliang * 1).toFixed(4)
+            lianxi_list[i].jiashui_xiaoji = (lianxi_list[i].xiaoshou_danjia * lianxi_list[i].weichu_shuliang).toFixed(2)
           }
           console.log(lianxi_list)
           _this.setData({
@@ -275,15 +275,15 @@ Page({
               var chuku_body = _this.data.chuku_body
               chuku_body.bianhao = this_bianhao
               chuku_body.riqi = getNowDate()
-              var dianpu_list = res.result.recordsets[1]
-              if(_this.data.userInfo.dianpu != ''){
-                for(var i=0; i<dianpu_list.length; i++){
-                  if(dianpu_list[i].id == _this.data.userInfo.dianpu){
-                    chuku_body.dianpu = dianpu_list[i].name
-                    break;
-                  }
-                }
-              }
+              // var dianpu_list = res.result.recordsets[1]
+              // if(_this.data.userInfo.dianpu != ''){
+              //   for(var i=0; i<dianpu_list.length; i++){
+              //     if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+              //       chuku_body.dianpu = dianpu_list[i].name
+              //       break;
+              //     }
+              //   }
+              // }
               var cangku_list = res.result.recordsets[2]
               if(_this.data.userInfo.cangku != ''){
                 for(var i=0; i<cangku_list.length; i++){
@@ -334,7 +334,7 @@ Page({
 
   caigou_click:function(){
     var _this = this
-    var sql = "select *,1 as isselect from xiaoshou_dingdan;select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,xiaoshou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_danjia,chuku_id,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0;"
+    var sql = "select *,1 as isselect from xiaoshou_dingdan;select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0;"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -412,10 +412,10 @@ Page({
     }
     for(var i=0; i<caigou_list.length; i++){
       var panduan = true
-      if(!(caigou_list[i].riqi >= start_date && caigou_list[i].riqi <= start_date)){
+      if(!(caigou_list[i].riqi >= start_date && caigou_list[i].riqi <= stop_date)){
         panduan = false
       }
-      if(gongyingshang != ''){
+      if(kehu != ''){
         if(caigou_list[i].kehu.indexOf(kehu) == -1){
           panduan = false
         }
@@ -440,14 +440,15 @@ Page({
     chuku_body.xiaoshou_id = caigou_list.bianhao
     chuku_body.kehu = caigou_list.kehu
     chuku_body.dianpu = caigou_list.dianpu
+    chuku_body.chuku_danwei = caigou_list.xiaoshou_danwei
     var lianxi_list = caigou_list.item
     console.log(caigou_list.item)
     for(var i=0; i<lianxi_list.length; i++){
       lianxi_list[i].shangpin_bianma = lianxi_list[i].shangpin_bianhao
       lianxi_list[i].name = lianxi_list[i].shangpin_mingcheng
-      lianxi_list[i].xiaoshou_danjia = lianxi_list[i].baojia_danjia
-      lianxi_list[i].shuliang = lianxi_list[i].weichu_shuliang
-      lianxi_list[i].jiashui_xiaoji = lianxi_list[i].xiaoshou_danjia * lianxi_list[i].weichu_shuliang
+      lianxi_list[i].xiaoshou_danjia = (lianxi_list[i].baojia_danjia * 1).toFixed(2)
+      lianxi_list[i].shuliang = (lianxi_list[i].weichu_shuliang * 1).toFixed(4)
+      lianxi_list[i].jiashui_xiaoji = (lianxi_list[i].xiaoshou_danjia * lianxi_list[i].weichu_shuliang).toFixed(2)
     }
     console.log(lianxi_list)
     _this.setData({
@@ -464,56 +465,69 @@ Page({
     console.log(index)
     var product_list = _this.data.product_list
     var peizhi_shuilv = _this.data.peizhi_shuilv
-    var fujia_shuilv = 1
-    if(peizhi_shuilv.zhuangtai == '是'){
-      fujia_shuilv = fujia_shuilv + (peizhi_shuilv.shuilv / 100)
+    var bianhao = _this.data.chuku_body.xiaoshou_id
+    if(bianhao == ''){
+      wx.showToast({
+        title: '请先选择销售单',
+        icon:'none'
+      })
+      return;
     }
-    for(var i=0; i<product_list.length; i++){
-      var jinxiang = product_list[i].jinxiang / 100
-      var xiaoxiang = 0
-      var pifa_bili = peizhi_shuilv.pifa / 100
-      var lingshou_bili = peizhi_shuilv.lingshou / 100
-      var dakehu_bili = peizhi_shuilv.dakehu / 100
-      var caigou_price = product_list[i].caigou_price * 1
-      product_list[i].lingshou_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * lingshou_bili)) * 100) / 100
-      product_list[i].pifa_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * pifa_bili)) * 100 ) / 100
-      product_list[i].dakehu_price = Math.round((caigou_price * (1 + xiaoxiang * fujia_shuilv)) / ((1+jinxiang) * (1-(1+xiaoxiang*fujia_shuilv) * dakehu_bili)) * 100) / 100
-    }
-
-    for(var i=0; i< product_list.length; i++){
-      product_list[i].isselect = 1
-    }
-    _this.setData({
-      product_index: index,
-      product_show: true,
-      product_list,
-      type:'',
-      name:'',
+    var sql = "select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0 and bianhao='" + bianhao + "';"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res.result.recordsets[0])
+        var product_list = res.result.recordsets[0]
+        if(product_list.length == 0){
+          wx.showToast({
+            title: '此销售订单已全部出库',
+            icon:'none'
+          })
+          return;
+        }
+        for(var i=0; i< product_list.length; i++){
+          product_list[i].isselect = 1
+        }
+        _this.setData({
+          product_index: index,
+          product_show: true,
+          product_list,
+          type:'',
+          name:'',
+        })
+      },
+      err: res => {
+        wx.showToast({
+          title: '错误！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
   sel_product:function(){
     var _this = this
     var product_list = _this.data.product_list
-    var type = _this.data.type
     var name = _this.data.name
     for(var i=0; i<product_list.length; i++){
-      if(type == '' && name == ''){
+      if(name == ''){
         product_list[i].isselect = 1
-      }else if(type != '' && name == ''){
-        if(product_list[i].type.indexOf(type) != -1){
-          product_list[i].isselect = 1
-        }else{
-          product_list[i].isselect = 0
-        }
-      }else if(type == '' && name != ''){
-        if(product_list[i].name.indexOf(name) != -1){
-          product_list[i].isselect = 1
-        }else{
-          product_list[i].isselect = 0
-        }
-      }else if(type != '' && name != ''){
-        if(product_list[i].type.indexOf(type) != -1 && product_list[i].name.indexOf(name) != -1){
+      }else if(name != ''){
+        if(product_list[i].shangpin_mingcheng.indexOf(name) != -1){
           product_list[i].isselect = 1
         }else{
           product_list[i].isselect = 0
@@ -534,10 +548,6 @@ Page({
     var chuku_body = _this.data.chuku_body
     var chuku_kehu = chuku_body.kehu
     var kehu_jiage = _this.data.kehu_jiage
-    var jiage_dengji = ""
-    if(chuku_kehu != ''){
-      jiage_dengji = kehu_jiage[chuku_kehu]
-    }
 
     for(var i=0; i<lianxi_list.length; i++){
       if(product_index != i){ 
@@ -558,15 +568,10 @@ Page({
     lianxi_list[product_index].jishu_biaozhun = product_list[index].jishu_biaozhun
     lianxi_list[product_index].zhibao_dengji = product_list[index].zhibao_dengji
     lianxi_list[product_index].danwei = product_list[index].danwei
-    if(jiage_dengji == '零售价格'){
-      lianxi_list[product_index].xiaoshou_danjia = product_list[index].baojia_danjia
-    }else if(jiage_dengji == '批发价格'){
-      lianxi_list[product_index].xiaoshou_danjia = product_list[index].pifa_price
-    }else if(jiage_dengji == '大客户价格'){
-      lianxi_list[product_index].xiaoshou_danjia = product_list[index].dakehu_price
-    }
+    lianxi_list[product_index].shuliang = (product_list[index].weichu_shuliang * 1).toFixed(4)
+    lianxi_list[product_index].xiaoshou_danjia = (product_list[index].baojia_danjia * 1).toFixed(2)
     if(lianxi_list[product_index].xiaoshou_danjia != '' && lianxi_list[product_index].shuliang != ''){
-      lianxi_list[product_index].jiashui_xiaoji = Math.round(lianxi_list[product_index].xiaoshou_danjia * lianxi_list[product_index].shuliang * 100) / 100
+      lianxi_list[product_index].jiashui_xiaoji = (Math.round(lianxi_list[product_index].xiaoshou_danjia * lianxi_list[product_index].shuliang * 100) / 100).toFixed(2)
     }
     _this.setData({
       lianxi_list
@@ -912,13 +917,41 @@ Page({
     }else{
       var lianxi_list = _this.data.lianxi_list
       lianxi_list[index][column] = new_value
-      if(lianxi_list[index].xiaoshou_danjia != '' && lianxi_list[index].shuliang != ''){
-        lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].xiaoshou_danjia * lianxi_list[index].shuliang * 100) / 100
+      if(lianxi_list[index].xiaoshou_danjia != '' && lianxi_list[index].shuliang != '' && column != 'jiashui_xiaoji'){
+        lianxi_list[index].jiashui_xiaoji = (Math.round(lianxi_list[index].xiaoshou_danjia * lianxi_list[index].shuliang * 100) / 100).toFixed(2)
+      }else if(lianxi_list[index].jiashui_xiaoji != '' && lianxi_list[index].shuliang != '' && column == 'jiashui_xiaoji'){
+        lianxi_list[index].xiaoshou_danjia = (Math.round(lianxi_list[index].jiashui_xiaoji / lianxi_list[index].shuliang * 100) / 100).toFixed(2)
       }
       _this.setData({
         lianxi_list
       })
     }
+  },
+
+  shuliang_refresh(e){
+    var _this = this
+    console.log(e)
+    var new_val = e.detail.value * 1
+    var list = _this.data.lianxi_list
+    var index = e.currentTarget.dataset.index
+    var column = e.currentTarget.dataset.column
+    list[index][column] = new_val.toFixed(4)
+    _this.setData({
+      lianxi_list:list
+    })
+  },
+
+  jiage_refresh(e){
+    var _this = this
+    console.log(e)
+    var new_val = e.detail.value * 1
+    var list = _this.data.lianxi_list
+    var index = e.currentTarget.dataset.index
+    var column = e.currentTarget.dataset.column
+    list[index][column] = new_val.toFixed(2)
+    _this.setData({
+      lianxi_list:list
+    })
   },
 
   back:function(){

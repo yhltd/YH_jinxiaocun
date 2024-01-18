@@ -1,5 +1,4 @@
 // package_ruilida/page/userInfoAdd/userInfoAdd.js
-var areaList = require("../../components/data_area.js")
 Page({
 
   /**
@@ -20,13 +19,11 @@ Page({
    */
   onLoad(options) {
     var _this = this
-    console.log(areaList.list)
     var userInfo = JSON.parse(options.userInfo)
     var id = options.id
     _this.setData({
       id:id,
       userInfo,
-      areaList: areaList.list
     })
     var userInfo = _this.data.userInfo
     var sql = "select * from dengdai_dayin"

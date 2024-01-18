@@ -98,6 +98,8 @@ Page({
     result: ['订单编号', '日期', '交货日期' ,'供应商','店铺','商品编号','商品名称','规格','单位','数量','单价','金额','行备注','备注'],
     gongneng_list:[
       {
+        name:'刷新'
+      },{
         name:'查询'
       },{
         name:'导出Excel'
@@ -107,6 +109,8 @@ Page({
 
     this_date:'',
     this_type:'',
+    jizhang_danwei:'',
+    jizhang_zhanghu:'',
     this_type_list:[
       {
         name:'按月'
@@ -142,8 +146,33 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-
-    var e = ['按日',getTimeMonth()]
+    var sql = "select * from peizhi where type = '核算单位';select * from peizhi where type = '收款账户';"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        var jizhang_danwei_list = res.result.recordsets[0]
+        var jizhang_zhanghu_list = res.result.recordsets[1]
+        _this.setData({
+          jizhang_danwei_list,
+          jizhang_zhanghu_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+    var e = ['按日',getTimeMonth(),'','']
     // var e = ['按月',getTimeYear()]
     _this.tableShow(e)
   },
@@ -169,10 +198,17 @@ Page({
       })
       return;
     }
+    var this_where = ''
+    if(e[2] != ''){
+      this_where = this_where + " and jizhang_danwei ='" + e[2] + "' " 
+    }
+    if(e[3] != ''){
+      this_where = this_where + " and jizhang_zhanghu ='" + e[3] + "' " 
+    }
     if(e[0] == '按日'){
-      sql = "select shouzhi_riqi,jizhang_type,sum(money) as money from (select shouzhi_riqi,jizhang_type,round(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)),2) as money from shouzhi_mingxi where shouzhi_type = '支出') as shouzhi where shouzhi_riqi >= '" + e[1] + "-01' and shouzhi_riqi <= '" + e[1] + "-31' group by shouzhi_riqi,jizhang_type;select jizhang_type from shouzhi_mingxi where shouzhi_riqi >= '" + e[1] + "-01' and shouzhi_riqi <= '" + e[1] + "-31' and shouzhi_type = '支出' group by jizhang_type"
+      sql = "select shouzhi_riqi,jizhang_type,sum(money) as money from (select shouzhi_riqi,jizhang_type,round(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)),2) as money from shouzhi_mingxi where shouzhi_type = '支出' " + this_where + ") as shouzhi where shouzhi_riqi >= '" + e[1] + "-01' and shouzhi_riqi <= '" + e[1] + "-31' group by shouzhi_riqi,jizhang_type;select jizhang_type from shouzhi_mingxi where shouzhi_riqi >= '" + e[1] + "-01' and shouzhi_riqi <= '" + e[1] + "-31' " + this_where + " and shouzhi_type = '支出' group by jizhang_type"
     }else if(e[0] == '按月'){
-      sql = "select shouzhi_riqi,jizhang_type,sum(money) as money from (select SUBSTRING(shouzhi_riqi,1,7) as shouzhi_riqi,jizhang_type,round(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)),2) as money from shouzhi_mingxi where shouzhi_type = '支出') as shouzhi where shouzhi_riqi >= '" + e[1] + "-01' and shouzhi_riqi <= '" + e[1] + "-12' group by shouzhi_riqi,jizhang_type;select jizhang_type from shouzhi_mingxi where SUBSTRING(shouzhi_riqi,1,7) >= '" + e[1] + "-01' and SUBSTRING(shouzhi_riqi,1,7) <= '" + e[1] + "-12' and shouzhi_type = '支出' group by jizhang_type"
+      sql = "select shouzhi_riqi,jizhang_type,sum(money) as money from (select SUBSTRING(shouzhi_riqi,1,7) as shouzhi_riqi,jizhang_type,round(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0)),2) as money from shouzhi_mingxi where shouzhi_type = '支出' " + this_where + ") as shouzhi where shouzhi_riqi >= '" + e[1] + "-01' and shouzhi_riqi <= '" + e[1] + "-12' group by shouzhi_riqi,jizhang_type;select jizhang_type from shouzhi_mingxi where SUBSTRING(shouzhi_riqi,1,7) >= '" + e[1] + "-01' and SUBSTRING(shouzhi_riqi,1,7) <= '" + e[1] + "-12' " + this_where + " and shouzhi_type = '支出' group by jizhang_type"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -280,6 +316,21 @@ Page({
             }
           }
         }
+        var heji_row = {jizhang_type:'合计'}
+        for(var i=0; i<title.length; i++){
+          if(title[i].columnName != 'jizhang_type'){
+            for(var j=0; j<type_list.length; j++){
+              if(type_list[j][title[i].columnName] != undefined){
+                if(heji_row[title[i].columnName] != undefined){
+                  heji_row[title[i].columnName] = Math.round((heji_row[title[i].columnName] * 1 + type_list[j][title[i].columnName] * 1) * 100) / 100
+                }else{
+                  heji_row[title[i].columnName] = Math.round(type_list[j][title[i].columnName] * 1 * 100) / 100
+                }
+              }
+            }
+          }
+        }
+        type_list.push(heji_row)
         console.log(title)
         console.log(type_list)
         _this.setData({
@@ -334,12 +385,9 @@ Page({
       }else if(click_column == 'gongneng' && new_val == '刷新'){
         _this.setData({
           xlShow2: false,
-          start_date:'',
-          stop_date:'',
-          zhuanru:'',
-          zhuanchu:'',
         })
-        _this.sel1()
+        var e = [_this.data.this_type,_this.data.this_date,'','']
+        _this.tableShow(e)
       }else{
         if(click_column == 'this_type'){
           _this.setData({
@@ -370,6 +418,8 @@ Page({
     var _this = this
     var this_date = _this.data.this_date
     var this_type = _this.data.this_type
+    var jizhang_danwei = _this.data.jizhang_danwei
+    var jizhang_zhanghu = _this.data.jizhang_zhanghu
     if(this_type == ''){
       wx.showToast({
         title: '请选择汇总类型',
@@ -384,7 +434,7 @@ Page({
       })
       return;
     }
-    var e = [this_type,this_date]
+    var e = [this_type,this_date,jizhang_danwei,jizhang_zhanghu]
     _this.qxShow()
     _this.tableShow(e)
   },

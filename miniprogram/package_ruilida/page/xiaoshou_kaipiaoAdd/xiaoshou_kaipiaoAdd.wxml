@@ -99,11 +99,11 @@
         placeholder="请输入开票金额"
         border="false"
         type="digit"
+        bind:blur="jiage_head_refresh"
       />
 
             <van-field
         custom-class="bianju"
-        wx:if="{{kehu_name == undefined}}"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_shuie }}"
         data-column="kaipiao_shuie"
@@ -111,11 +111,11 @@
         placeholder="请输入开票税额"
         border="false"
         type="digit"
+        bind:blur="jiage_head_refresh"
       />
 
-            <van-field
+      <van-field
         custom-class="bianju"
-        wx:if="{{kehu_name == undefined}}"
         bind:input="onInput"
         model:value="{{ kaipiao_body.jiashui_heji }}"
         data-column="jiashui_heji"
@@ -123,6 +123,8 @@
         placeholder="请输入价税合计"
         border="false"
         type="digit"
+        readonly="{{kehu_name != undefined}}"
+        bind:blur="jiage_head_refresh"
       />
 
             <van-field

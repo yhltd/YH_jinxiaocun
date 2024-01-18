@@ -66,10 +66,10 @@ Page({
       title:'保存中'
     })
     var sql = ""
-    if(_this.data.id != ''){
-      sql = "update peizhi set name='" + _this.data.name + "' where id=" + _this.data.id
+    if(_this.data.id == ''){
+      sql = "select * from peizhi where name='" + _this.data.name + "' and type='" + _this.data.type + "'"
     }else{
-      sql = "insert into peizhi(name,type) values('" + _this.data.name + "','" +  _this.data.type + "')"
+      sql = "select * from peizhi where name='" + _this.data.name + "' and type='" + _this.data.type + "' and id !=" + _this.data.id
     }
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -77,16 +77,59 @@ Page({
         query: sql
       },
       success: res => {
-        wx.hideLoading()
-        console.log(res)
-        wx.showToast({
-          title: '保存成功',
-          icon: 'none',
-          duration: 3000
+        console.log(res.result.recordset)
+        var list = res.result.recordset
+        if(list.length > 0){
+          wx.showToast({
+            title: '已有相同的配置项！',
+            icon: 'none',
+            duration: 3000
+          })
+          wx.hideLoading()
+          return;
+        }
+        var sql = ""
+        if(_this.data.id != ''){
+          sql = "update peizhi set name='" + _this.data.name + "' where id=" + _this.data.id
+        }else{
+          sql = "insert into peizhi(name,type) values('" + _this.data.name + "','" +  _this.data.type + "')"
+        }
+        wx.cloud.callFunction({
+          name: 'sqlserver_ruilida',
+          data: {
+            query: sql
+          },
+          success: res => {
+            wx.hideLoading()
+            console.log(res)
+            wx.showToast({
+              title: '保存成功',
+              icon: 'none',
+              duration: 3000
+            })
+            setTimeout(function () {
+              _this.back()
+            }, 2000)
+          },
+          err: res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '错误！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
         })
-        setTimeout(function () {
-          _this.back()
-        }, 2000)
       },
       err: res => {
         wx.hideLoading()

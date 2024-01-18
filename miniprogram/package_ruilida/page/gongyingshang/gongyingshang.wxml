@@ -3,12 +3,9 @@
     <van-cell-group inset>
       <van-cell title-width="80%" data-index="{{i}}" title="{{list_item.name}}" bindtap="click_view" bindlongpress="del1" use-label-slot> 
         <view slot="label"> 
-          <text>编号：{{list_item.bianhao}} \n</text>
-          <text>主联系人：{{list_item.lianxi_name}} \n</text>
-          <text>电话：{{list_item.lianxi_phone}} \n</text>
-          <text>兼做客户：{{list_item.jianzuo_kehu}} \n</text>
-          <text>业务员：{{list_item.caigouyuan}} \n</text>
-          <text>供应商等级：{{list_item.gongyingshang_dengji}} \n</text>
+          <text decode="{{true}}">编号：{{list_item.bianhao}} &nbsp;&nbsp; 兼做客户：{{list_item.jianzuo_kehu}} \n</text>
+          <text decode="{{true}}">主联系人：{{list_item.lianxi_name}} &nbsp;&nbsp; 电话：{{list_item.lianxi_phone}} \n</text>
+          <text decode="{{true}}">供应商等级：{{list_item.gongyingshang_dengji}} &nbsp;&nbsp; 业务员：{{list_item.caigouyuan}} \n</text>
         </view>
         <van-tag slot="right-icon" plain type="primary" size="medium" data-index="{{i}}" data-column="tiaozhuan" catchtap="xiala_show">更多</van-tag>
       </van-cell>

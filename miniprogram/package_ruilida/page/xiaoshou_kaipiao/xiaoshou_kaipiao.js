@@ -175,13 +175,19 @@ Page({
         var list = res.result.recordsets[0]
         var shoupiao_danwei_list = res.result.recordsets[1]
         var kaipiao_danwei_list = res.result.recordsets[2]
+        var zongji = 0
+        for(var i=0; i<list.length; i++){
+          zongji = zongji + (list[i].jiashui_heji * 1)
+        }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
           shoupiao_danwei_list,
           kaipiao_danwei_list,
-          sel_type:''
+          sel_type:'',
+          zongji
         })
       },
       err: res => {
@@ -213,13 +219,19 @@ Page({
         var list = res.result.recordsets[0]
         var shoupiao_danwei_list = res.result.recordsets[1]
         var kaipiao_danwei_list = res.result.recordsets[2]
+        var zongji = 0
+        for(var i=0; i<list.length; i++){
+          zongji = zongji + (list[i].jiashui_heji * 1)
+        }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
           shoupiao_danwei_list,
           kaipiao_danwei_list,
-          sel_type:'待审核'
+          sel_type:'待审核',
+          zongji
         })
       },
       err: res => {

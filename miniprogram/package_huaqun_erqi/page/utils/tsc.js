@@ -5,12 +5,18 @@ var jpPrinter = {　　　　
     var jpPrinter = {};
     var data = "";
     var command = []
+    var zhiling = ""
+
+    jpPrinter.getZhiLing = function() {
+      return zhiling;
+    };
 
     jpPrinter.name = "蓝牙打印机";
 
     jpPrinter.init = function() {};
 
     jpPrinter.addCommand = function(content) { //将指令转成数组装起
+      zhiling = zhiling + content
       var code = new encode.TextEncoder(
         'gb18030', {
           NONSTANDARD_allowLegacyEncoding: true

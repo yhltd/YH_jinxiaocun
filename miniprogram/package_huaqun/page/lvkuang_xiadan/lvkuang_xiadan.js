@@ -4030,6 +4030,12 @@ Page({
           }
         }
       }
+      if(click_column == 'lashou_xinghao'){
+        if(new_val == '无拉手' || new_val == '常规趟门' || new_val == '吊趟门' || new_val == '四角开螺丝孔'){
+          body_list[click_index].lashou_shuliang_right = ""
+          body_list[click_index].lashou_shuliang_left = ""
+        }
+      }
       _this.setData({
         xlShow: false,
         body_list
@@ -4259,7 +4265,9 @@ Page({
       })
       return;
     }
-
+    wx.showLoading({
+      title:'保存中'
+    })
     var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,num,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,zhuangsuoshuliang_insert_left1,zhuangsuoshuliang_insert_right1,zhuangsuofangwei_insert_left1,zhuangsuofangwei_insert_left2,zhuangsuofangwei_insert_right1,zhuangsuofangwei_insert_right2,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita,sum_shuliang1,danjia1,sum_jine1,fujian_select1,fujian_select2,fujian_select3,fujian_select4,pinpai_select1,pinpai_select2,pinpai_select3,pinpai_select4,fujian_shuliang1,fujian_shuliang2,fujian_shuliang3,fujian_shuliang4,sum_shuliang2,danjia2,sum_jine2,guanlian,customer_name_renyuan) values "
     var sql_foot = ""
     for(var i=0; i<body_list.length; i++){
@@ -4340,14 +4348,20 @@ Page({
             }
             if((body_list[i].lashou_xinghao == "明装96拉手孔" || body_list[i].lashou_xinghao == "明装128拉手孔" || body_list[i].lashou_xinghao == "特殊孔拉手") && (body_list[i].lvxingcai == "小圆边铝框" || body_list[i].lvxingcai == "前20后45铝框")){
               if(body_list[i].lashouwei_insert_left != ""){
-                shuoming1 = shuoming1 + body_list[i].lashouwei_insert_left * 1
-              }
-              if(body_list[i].lashouwei_insert_right != ""){
-                shuoming1 = shuoming1 + body_list[i].lashouwei_insert_right * 1
+                shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
+              }else if(body_list[i].lashouwei_insert_right != ""){
+                shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
               }
               if(shuoming1 < 13){
                 shuoming1 = 0
+              }else{
+                shuoming1 = 0
+                shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
+                shuoming1 = shuoming1 + body_list[i].lashou_shuliang_left * 1
               }
+            }else if(body_list[i].lashou_xinghao == "明装96拉手孔" || body_list[i].lashou_xinghao == "明装128拉手孔" || body_list[i].lashou_xinghao == "特殊孔拉手"){
+              shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
+              shuoming1 = shuoming1 + body_list[i].lashou_shuliang_left * 1
             }
             if(boli_insert_sql_foot == ""){
               boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "','" + shuoming1 + "','" + shuoming2 + "','正在加工','"  + header_list.order_number + i + "')"
@@ -4372,6 +4386,7 @@ Page({
               title: '下单成功！',
               icon: 'none'
             })
+            wx.hideLoading()
             var common_Interval = setInterval(()=>
             {
               wx.navigateBack({ 
@@ -4381,9 +4396,11 @@ Page({
             }, 2000)
           },
           err: res => {
+            wx.hideLoading()
             console.log("错误!")
           },
           fail: res => {
+            wx.hideLoading()
             wx.showToast({
               title: '请求失败！',
               icon: 'none'
@@ -4394,9 +4411,11 @@ Page({
         
       },
       err: res => {
+        wx.hideLoading()
         console.log("错误!")
       },
       fail: res => {
+        wx.hideLoading()
         wx.showToast({
           title: '请求失败！',
           icon: 'none'
@@ -4581,10 +4600,22 @@ Page({
       list[index * 1].jiaolian6_insert_right = this_value
     }
     if(this_column == 'jiaoliankong_fangxiang_left'){
+      list[index * 1].jiaoliankong_fangxiang_right = (list[index * 1].num * 1) - (this_value * 1)
       list[index * 1].lashou_shuliang_right = this_value
+      list[index * 1].lashou_shuliang_left = (list[index * 1].num * 1) - (this_value * 1)
+      if(list[index * 1].lashou_xinghao == '无拉手' || list[index * 1].lashou_xinghao == '常规趟门' || list[index * 1].lashou_xinghao == '吊趟门' || list[index * 1].lashou_xinghao == '四角开螺丝孔'){
+        list[index * 1].lashou_shuliang_right = ""
+        list[index * 1].lashou_shuliang_left = ""
+      }
     }
     if(this_column == 'jiaoliankong_fangxiang_right'){
+      list[index * 1].jiaoliankong_fangxiang_left = (list[index * 1].num * 1) - (this_value * 1)
       list[index * 1].lashou_shuliang_left = this_value
+      list[index * 1].lashou_shuliang_right = (list[index * 1].num * 1) - (this_value * 1)
+      if(list[index * 1].lashou_xinghao == '无拉手' || list[index * 1].lashou_xinghao == '常规趟门' || list[index * 1].lashou_xinghao == '吊趟门' || list[index * 1].lashou_xinghao == '四角开螺丝孔'){
+        list[index * 1].lashou_shuliang_right = ""
+        list[index * 1].lashou_shuliang_left = ""
+      }
     }
     if(this_column == 'lashouwei_select_left'){
       list[index * 1].lashouwei_select_right = this_value

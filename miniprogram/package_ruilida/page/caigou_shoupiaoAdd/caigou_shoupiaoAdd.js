@@ -48,8 +48,10 @@ Page({
       var shoupiao_body = _this.data.shoupiao_body
       var jiashui_heji = 0
       for(var i=0; i<shoupiao_list.length; i++){
-        jiashui_heji = jiashui_heji + shoupiao_list[i].this_kai
+        jiashui_heji = jiashui_heji + (shoupiao_list[i].this_kai * 1)
       }
+      shoupiao_body.kaipiao_jine = jiashui_heji
+      shoupiao_body.kaipiao_shuie = 0
       shoupiao_body.jiashui_heji = jiashui_heji
       _this.setData({
         shoupiao_body
@@ -387,9 +389,10 @@ Page({
         if(sql2 == ""){
           sql2 = "('" + this_list[i].bianhao + "','" + shoupiao_body.shoupiao_danwei + "','" + shoupiao_body.kaipiao_danwei + "','" + shoupiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + shoupiao_body.beizhu + "','" + shoupiao_body.xinxi_tuisong + "','" + shoupiao_body.shoupiao_zhuangtai + "')"
         }else{
-          sql2 = ",('" + this_list[i].bianhao + "','" + shoupiao_body.shoupiao_danwei + "','" + shoupiao_body.kaipiao_danwei + "','" + shoupiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + shoupiao_body.beizhu + "','" + shoupiao_body.xinxi_tuisong + "','" + shoupiao_body.shoupiao_zhuangtai + "')"
+          sql2 = sql2 + ",('" + this_list[i].bianhao + "','" + shoupiao_body.shoupiao_danwei + "','" + shoupiao_body.kaipiao_danwei + "','" + shoupiao_body.kaipiao_riqi + "','" + this_list[i].this_kai + "','" + "','" + this_list[i].this_kai + "','" + shoupiao_body.beizhu + "','" + shoupiao_body.xinxi_tuisong + "','" + shoupiao_body.shoupiao_zhuangtai + "')"
         }
       }
+      console.log(sql + sql2)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -494,14 +497,23 @@ Page({
     var shoupiao_body = _this.data.shoupiao_body
     shoupiao_body[column] = new_value
     if(_this.data.gongyingshang_name != undefined){
-      if(column = 'kaipiao_jine'){
-        var kaipiao_jine = shoupiao_body.kaipiao_jine
-        var kaipiao_shuie = shoupiao_body.kaipiao_shuie
-        shoupiao_body.kaipiao_shuie = (shoupiao_body.jiashui_heji*1) - (kaipiao_jine * 1)
+      var kaipiao_jine = shoupiao_body.kaipiao_jine
+      var kaipiao_shuie = shoupiao_body.kaipiao_shuie
+      var jiashui_heji = shoupiao_body.jiashui_heji
+      if(column == 'kaipiao_jine'){ 
+        if((kaipiao_jine * 1) <= jiashui_heji){
+          shoupiao_body.kaipiao_shuie = jiashui_heji - (kaipiao_jine * 1)
+        }else{
+          shoupiao_body.kaipiao_shuie = 0
+          shoupiao_body.kaipiao_jine = jiashui_heji
+        }
       }else if(column == 'kaipiao_shuie'){
-        var kaipiao_jine = shoupiao_body.kaipiao_jine
-        var kaipiao_shuie = shoupiao_body.kaipiao_shuie
-        shoupiao_body.kaipiao_jine = (shoupiao_body.jiashui_heji*1) - (kaipiao_shuie * 1)
+        if((kaipiao_shuie * 1) <= jiashui_heji){
+          shoupiao_body.kaipiao_jine = jiashui_heji - (kaipiao_shuie * 1)
+        }else{
+          shoupiao_body.kaipiao_shuie = jiashui_heji
+          shoupiao_body.kaipiao_jine = 0
+        }
       }
     }else{
       if(shoupiao_body.kaipiao_jine != '' || shoupiao_body.kaipiao_shuie != ''){

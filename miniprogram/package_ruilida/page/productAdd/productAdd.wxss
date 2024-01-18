@@ -56,4 +56,24 @@ button{
   padding: 7px 16px !important;
 }
 
+.lables{
+  font-size: 35rpx;
+  width: 25%;
+  margin-top: 20rpx;
+  padding-left: 20rpx;
+}
+
+.input_text_form{
+  /* border: 5rpx solid #E6E6E6; */
+  border: calc(5vmin / 7.5) solid #E6E6E6;
+  /* margin: auto; */
+  width: 52.5%;
+  height: 64rpx;
+  align-items: center;
+  margin-top: 10rpx;
+  border-radius: 19rpx;
+  padding-left: 1.5%;
+  margin-bottom:1.5% ;
+}
+
 

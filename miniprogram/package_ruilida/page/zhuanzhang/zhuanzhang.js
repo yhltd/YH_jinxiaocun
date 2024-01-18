@@ -112,12 +112,18 @@ Page({
         var list = res.result.recordsets[0]
         var zhuanru_list = res.result.recordsets[1]
         var zhuanchu_list = res.result.recordsets[1]
+        var zongji = 0
+        for(var i=0; i<list.length; i++){
+          zongji = zongji + (list[i].money * 1)
+        }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
           zhuanru_list,
-          zhuanchu_list
+          zhuanchu_list,
+          zongji
         })
       },
       err: res => {

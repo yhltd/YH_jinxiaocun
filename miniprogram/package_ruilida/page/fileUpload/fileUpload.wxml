@@ -1,12 +1,19 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
     <van-cell-group inset>
-      <van-cell data-index="{{i}}" title="{{list_item.file_name}}" bindtap="file_dowload" bindlongpress="del1"/>
+      <van-cell data-index="{{i}}" title="{{list_item.file_name}}" bindtap="file_dowload" bindlongpress="del1" center>
+        <view slot="icon">
+          <image data-index="{{i}}" src="{{ list_item.file }}" mode='aspectFill' style="margin-right:10px;width: 30px;height:30px;border: 1px solid #A6A6A6"/>
+        </view>
+      </van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
-  <button class="bt_bottom" bindtap="file_upload">上传文件</button>
+  <view class="bt_text">合计：{{num}}个</view> 
+  <button class="bt_bottom" data-column="file_type" bindtap="xiala_show">上传文件</button>
 </view>
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />

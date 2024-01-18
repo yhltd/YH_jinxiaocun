@@ -3,10 +3,10 @@
     <van-cell-group inset data-index="{{i}}">
       <van-cell title="{{item.bianhao}}" use-label-slot>
         <view slot="label">
-          <text>供应商：{{item.gongyingshang}} \n</text> 
-          <text>日期：{{item.riqi}} \n</text>
-          <text>店铺：{{item.dianpu}} \n</text>
-          <text>仓库：{{item.cangku}} \n</text> 
+          <text>供应商：{{item.gongyingshang}} \n</text>
+          <text>入库单位：{{item.ruku_danwei}} \n</text>
+          <text decode="{{true}}">店铺：{{item.dianpu}} &nbsp;&nbsp; 业务员：{{item.yewuyuan}} \n</text>
+          <text decode="{{true}}">日期：{{item.riqi}} &nbsp;&nbsp; 采购单号：{{item.caigou_id}} \n</text>
         </view>
       </van-cell>
 
@@ -75,8 +75,8 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text"></view>
-  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
+  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">修改</button>
+  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">打印</button>
 </view>
 
 <van-popup show="{{ kaipiao_show }}" position="bottom" custom-style="height: 80%;" bind:close="kaipiao_close">
@@ -88,21 +88,36 @@
           <view slot="label">
             <text>日期：{{xukai_list[j].riqi}} \n</text>
             <text>供应商：{{xukai_list[j].gongyingshang}} \n</text>
-            <text>总额：{{xukai_list[j].jiashui_xiaoji}} \n</text>
-            <text decode="{{true}}">未收票：{{xukai_list[j].weikai}} \n</text>
-          </view>
-          <view solt="value"> 
-            <van-field
-              title-width="3.2em"
-              value="{{ xukai_list[j].this_kai }}"
-              label="收票:"
-              placeholder="本次收票"
-              border="{{ false }}"
-              data-index="{{j}}"
-              bind:change="change_kaipiao"
-            />
+            <text>日期：{{xukai_list[j].riqi}} \n</text>
+            <text>客户：{{xukai_list[j].kehu}} \n</text>
+            <!-- <text>总额：{{xukai_list[j].jiashui_xiaoji}} \n</text> -->
+            <text decode="{{true}}">应收总额：{{xukai_list[j].jiashui_xiaoji}} &nbsp;&nbsp; 未收总额：{{xukai_list[j].weikai}} \n</text>
           </view>
         </van-cell>
+        <view style="display: flex;">
+          <van-field
+            border="true"
+            style="width:50%"
+            title-width="4.5em"
+            value="{{ xukai_list[j].this_kai }}"
+            label="本次收票:"
+            placeholder="本次收票"
+            border="{{ false }}"
+            data-index="{{j}}"
+            bind:change="change_kaipiao"
+          />
+          <van-field
+            border="true"
+            style="width:50%"
+            title-width="4.5em"
+            value="{{ xukai_list[j].weikai - xukai_list[j].this_kai}}"
+            label="本次未收:"
+            placeholder="本次未收"
+            border="{{ false }}"
+            data-index="{{j}}"
+            bind:change="change_kaipiao2"
+          />
+        </view>
       </block>
     </van-cell-group>
   </scroll-view>
@@ -119,7 +134,7 @@
 <!------------------------->
 <van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
     <view class="lables">抵减订金</view>
-    <input bindinput="onInput" data-column="dingjin_use" class="input_text_form"  value="{{dingjin_use}}" type="text" name="dingjin_use"></input>  
+    <input bindinput="onInput" data-column="dingjin_use_new" class="input_text_form"  value="{{dingjin_use_new}}" type="text" name="dingjin_use_new"></input>  
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save_use">确定</button>

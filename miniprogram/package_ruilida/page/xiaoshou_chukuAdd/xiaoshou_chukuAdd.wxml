@@ -27,7 +27,7 @@
       </picker>
 
 
-            <van-field
+      <van-field
         custom-class="bianju"
         bind:input="onInput"
         model:value="{{ chuku_body.xiaoshou_id }}"
@@ -39,7 +39,7 @@
         readonly="true"
       />
 
-            <van-field
+      <van-field
         custom-class="bianju"
         bind:input="onInput"
         model:value="{{ chuku_body.kehu }}"
@@ -51,7 +51,7 @@
         readonly="true"
       />
 
-            <van-field
+      <van-field
         custom-class="bianju"
         bind:input="onInput"
         model:value="{{ chuku_body.dianpu }}"
@@ -63,7 +63,7 @@
         readonly="true"
       />
       
-            <van-field
+      <van-field
         custom-class="bianju"
         bind:input="onInput"
         model:value="{{ chuku_body.chuku_danwei }}"
@@ -205,7 +205,8 @@
         label="数量"
         placeholder="请输入数量"
         border="false"
-        type="number"
+        type="digit"
+        bind:blur="shuliang_refresh"
       />
 
             <van-field
@@ -218,6 +219,7 @@
         placeholder="请输入销售单价"
         border="false"
         type="digit"
+        bind:blur="jiage_refresh"
       />
 
             <van-field
@@ -230,6 +232,7 @@
         placeholder="请输入价税小计"
         border="false"
         type="digit"
+        bind:blur="jiage_refresh"
       />
 
             <van-field
@@ -265,22 +268,18 @@
   custom-style="height: 80%"
   bind:close="qxShow"
 >
-  <view style="height: 18%;">
-    <view style="display: flex;">
-      <view class="lables">商品分类：</view>
-      <input bindinput="onInput_text" data-column="type" class="input_text_form" value="{{type}}" type="text" name="type"></input>
-    </view>
+  <view style="height: 9%;">
     <view style="display: flex;">
       <view class="lables">商品名称：</view>
       <input bindinput="onInput_text" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
     </view>
   </view>
-  <scroll-view style="height:70%" scroll-x="true" scroll-y="true">
+  <scroll-view style="height:79%" scroll-x="true" scroll-y="true">
     <van-cell-group style="height: 70%;">
     <van-cell
       wx:for="{{ product_list }}"
       wx:key="index"
-      title="{{ item.name }}"
+      title="{{ item.shangpin_mingcheng }}"
       value-class="value-class"
       clickable
       data-index="{{ index }}"
@@ -290,7 +289,8 @@
     >
       <view slot="label">
         <text>规格：{{item.guige}} \n</text>
-        <text decode="{{true}}">零售价格：{{item.lingshou_price}} &nbsp;&nbsp; 批发价格：{{item.pifa_price}} &nbsp;&nbsp; 大客户价格：{{item.dakehu_price}} \n</text>
+        <text decode="{{true}}">数量：{{item.shuliang}} &nbsp;&nbsp; 单价：{{item.baojia_danjia}} &nbsp;&nbsp; 价税小计：{{item.jiashui_xiaoji}} \n</text>
+        <text decode="{{true}}">未出数量：{{item.weichu_shuliang}}</text>
       </view>
     </van-cell>
   </van-cell-group>

@@ -52,6 +52,7 @@ Page({
       {name:'按产品'},
       {name:'按客户'},
       {name:'按业务员'},
+      {name:'按销售订单'},
     ],
     gongneng_list:[
       {
@@ -150,6 +151,10 @@ Page({
       title[0].name = "核算单位"
       title[0].text = "核算单位"
       sql = "select chuku_danwei as name,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou,sum(convert(float,isnull(chengben,0))) as chengben,sum(convert(float,isnull(jiashui_xiaoji,0))) - sum(convert(float,isnull(chengben,0))) as maoli from (select riqi,chuku.bianhao,name,kehu,chuku_danwei,jiashui_xiaoji,shangpin_bianma,convert(float,isnull(shuliang,0)) * convert(float,isnull(caigou_price,0)) as chengben from (select riqi,bianhao,name,kehu,chuku_danwei,jiashui_xiaoji,shangpin_bianma,shuliang from xiaoshou_chuku as chuku left join xiaoshou_chuku_item as item on chuku.id = item.chuku_id) as chuku left join product_item as item on chuku.shangpin_bianma = item.bianhao) as maoli where riqi >= '" + start_date + "' and riqi <= '" + stop_date + "' group by chuku_danwei "
+    }else if(type == '按销售订单'){
+      title[0].name = "销售订单"
+      title[0].text = "销售订单"
+      sql = "select xiaoshou_id as name,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou,sum(convert(float,isnull(chengben,0))) as chengben,sum(convert(float,isnull(jiashui_xiaoji,0))) - sum(convert(float,isnull(chengben,0))) as maoli from (select riqi,chuku.bianhao,xiaoshou_id,name,kehu,yewuyuan,jiashui_xiaoji,shangpin_bianma,convert(float,isnull(shuliang,0)) * convert(float,isnull(caigou_price,0)) as chengben from (select riqi,bianhao,name,kehu,yewuyuan,jiashui_xiaoji,shangpin_bianma,shuliang,xiaoshou_id from xiaoshou_chuku as chuku left join xiaoshou_chuku_item as item on chuku.id = item.chuku_id) as chuku left join product_item as item on chuku.shangpin_bianma = item.bianhao) as maoli where riqi >= '" + start_date + "' and riqi <= '" + stop_date + "' group by xiaoshou_id"
     }
     console.log(sql)
     wx.cloud.callFunction({

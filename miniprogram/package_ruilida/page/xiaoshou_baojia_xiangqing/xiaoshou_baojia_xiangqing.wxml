@@ -1,0 +1,52 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <view class="title_text">销售报价单详情：</view>
+    <van-cell-group inset>
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.bianhao }}" data-column="bianhao" label="报价单编号" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.riqi }}" data-column="riqi" label="日期" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.kehu }}" data-column="kehu" label="客户" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.jiage_dengji }}" data-column="jiage_dengji" label="客户价格等级" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.yewuyuan }}" data-column="yewuyuan" label="业务员" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.dianpu }}" data-column="dianpu" label="店铺" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.xiaoshou_danwei }}" data-column="xiaoshou_danwei" label="销售单位" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.heji }}" data-column="heji" label="合计" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.xiaoxiang_shuilv }}" data-column="xiaoxiang_shuilv" label="销项税率%" border="false" type="digit" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.beizhu }}" data-column="beizhu" label="备注" border="false" readonly="true" />
+
+      <van-field custom-class="bianju" bind:input="onInput" model:value="{{ baojia_body.shenhe }}" data-column="shenhe" label="审核人" border="false" readonly="true" />
+    </van-cell-group>
+  </view>
+
+  <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-cell center title="{{list_item.shangpin_mingcheng}}" value="{{list_item.jiashui_xiaoji}}" use-label-slot>
+        <view slot="label">
+          <text>编号：{{list_item.bianhao}} \n</text>
+          <text>规格：{{list_item.guige}} \n</text>
+          <text decode="{{true}}">数量：{{list_item.shuliang}} &nbsp;&nbsp;单价：{{list_item.baojia_danjia}}</text>
+        </view>
+      </van-cell>
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="more_show">更多</button>
+  <button class="bt_bottom" bindtap="goto_print">打印</button>
+  <button class="bt_bottom" bindtap="baojia_upd">编辑</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow4}}" actions="{{caozuo_click_list}}" close-on-click-overlay bind:close="select4" bind:select="select4" />

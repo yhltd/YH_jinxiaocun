@@ -1,0 +1,47 @@
+<van-tabs active="{{ active }}" bind:change="onChange">
+    <van-tab title="客户欠款">
+      <scroll-view scroll-x="true" scroll-y="true" style="padding-top:10px;padding-bottom: 10px;height:{{scoll_height}}px">  
+        <van-cell-group inset>
+          <block class="title" wx:for="{{customer_list}}" wx:for-index="j">
+            <van-cell data-index="{{j}}" bindlongpress="kehu_del" bindtap="kehu_upd" center title="{{customer_list[j].bianhao}}" use-label-slot title-width="65%" value="{{customer_list[j].qiankuan}}">
+              <view slot="label">
+                <text>{{customer_list[j].name}} \n</text>
+              </view>
+            </van-cell>
+          </block>
+        </van-cell-group>
+      </scroll-view>
+    </van-tab>
+    <van-tab title="供应商欠款">
+      <scroll-view scroll-x="true" scroll-y="true" style="padding-top:10px;padding-bottom: 10px;height:{{scoll_height}}px"> 
+        <van-cell-group inset>
+          <block class="title" wx:for="{{gongyingshang_list}}" wx:for-index="j">
+            <van-cell data-index="{{j}}" bindlongpress="gongyingshang_del" bindtap="gongyingshang_upd" center title="{{gongyingshang_list[j].bianhao}}" use-label-slot title-width="65%" value="{{gongyingshang_list[j].qiankuan}}">
+              <view slot="label">
+                <text>{{gongyingshang_list[j].name}} \n</text>
+              </view>
+            </van-cell>
+          </block>
+        </van-cell-group>
+      </scroll-view>
+    </van-tab>
+    <van-tab title="库存">
+      <scroll-view scroll-x="true" scroll-y="true" style="padding-top:10px;padding-bottom: 10px;height:{{scoll_height}}px"> 
+        <van-cell-group inset>
+          <block class="title" wx:for="{{kucun_list}}" wx:for-index="j">
+            <van-cell data-index="{{j}}" bindlongpress="kucun_del" bindtap="kucun_upd" title="{{kucun_list[j].name}}" use-label-slot>
+              <view slot="label">
+                <text>编号：{{kucun_list[j].shangpin_bianma}} \n</text>
+                <text>规格：{{kucun_list[j].guige}} \n</text>
+                <text decode="{{true}}">数量：{{kucun_list[j].shuliang}} &nbsp;&nbsp;单价：{{kucun_list[j].danjia}} &nbsp;&nbsp;价税小计：{{kucun_list[j].jiashui_xiaoji}}</text>
+              </view>
+            </van-cell>
+          </block>
+        </van-cell-group>
+      </scroll-view>
+    </van-tab>
+</van-tabs>
+
+<button class="tianjia" bindtap='tianjia'>
+  <image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao1.png'> </image>
+</button>

@@ -198,7 +198,9 @@ Page({
         console.log(res)
         var list = res.result.recordsets[0]
         var list_item = res.result.recordsets[1]
+        var zongji = 0
         for(var i=0; i< list.length; i++){
+          zongji = zongji + (list[i].jizhang_jine * 1)
           for(var j=list_item.length-1; j>=0; j--){
             if(list[i].id == list_item[j].shouzhi_id){
               if(list[i].item == undefined){
@@ -215,11 +217,13 @@ Page({
             }
           }
         }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         console.log(list_item)
         _this.setData({
           list: list,
           num: list.length,
+          zongji
         })
       },
       err: res => {

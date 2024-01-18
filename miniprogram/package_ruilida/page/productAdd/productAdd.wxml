@@ -32,7 +32,7 @@
         bind:input="onInput"
         model:value="{{ product_body.danwei }}"
         data-column="danwei"
-        bind:click-input="xiala_show"
+        bind:click-input="danwei_select"
         label="单位"
         placeholder="请输入单位"
         border="false"
@@ -98,8 +98,8 @@
       <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display:{{lianxi_list.length-1==0?'none':'flex'}}" data-index="{{i}}"/>
     </view> 
     <van-cell-group inset>
-      <van-cell center title='图片' title-width='6.2em'>
-        <image data-index="{{i}}" src="{{ list_item.image }}" mode='aspectFit' style="width: 100px;height:50px;border: 1px solid #A6A6A6" slot="right-icon" bindtap="imgClick" />
+      <van-cell center title='图片' title-width='6.2em'> 
+        <image data-index="{{i}}" src="{{ list_item.image }}" mode='aspectFill' style="width: 30px;height:30px;border: 1px solid #A6A6A6" slot="right-icon" bindtap="imgClick" />
       </van-cell>
 
       <van-field
@@ -182,7 +182,7 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 15%;">
   <view class="bottom_view" style="height:10%;margin-top: calc(50vmin / 7.5);">
     <button class="bt_bottom" bindtap="imgload">上传</button>
-    <button class="bt_bottom" bindtap="imgdown">下载</button>
+    <button class="bt_bottom" bindtap="imgdown">预览</button>
   </view>
 </van-popup>
 
@@ -234,4 +234,39 @@
   <button class="bt_bottom" bindtap="guige_add">确定</button>
 </view>
 
+</van-popup>
+
+<!--选择单位-->
+<van-popup
+  show="{{ danwei_show }}"
+  close-on-click-overlay
+  position="bottom"
+  custom-style="height: 80%"
+  bind:close="qxShow"
+>
+  <view style="height: 9%;">
+    <view style="display: flex;">
+      <view class="lables">单位名称：</view>
+      <input bindinput="onInput_text" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
+    </view>
+  </view>
+  <scroll-view style="height:78%" scroll-x="true" scroll-y="true">
+    <van-cell-group style="height: 78%;">
+    <van-cell
+      wx:for="{{ danwei_list }}"
+      wx:key="index"
+      title="{{ item.name }}"
+      value-class="value-class"
+      clickable
+      data-index="{{ index }}"
+      bind:click="danwei_click"
+      wx:if="{{item.isselect == 1}}"
+      use-label-slot
+    >
+    </van-cell>
+  </van-cell-group>
+  </scroll-view>
+  <view class="bottom_view" style="margin-top: 10px;">
+    <button class="bt_bottom" bindtap="sel_danwei">查询</button>
+  </view>
 </van-popup>

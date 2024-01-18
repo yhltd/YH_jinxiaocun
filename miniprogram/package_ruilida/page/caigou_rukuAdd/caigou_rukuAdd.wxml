@@ -205,7 +205,7 @@
         label="数量"
         placeholder="请输入数量"
         border="false"
-        type="number"
+        type="digit"
       />
 
       <van-field

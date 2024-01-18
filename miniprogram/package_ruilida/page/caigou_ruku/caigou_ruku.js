@@ -179,30 +179,39 @@ Page({
         var list = res.result.recordsets[0]
         var list_item = res.result.recordsets[1]
         var gongyingshang_list = res.result.recordsets[2]
+        var zongji = 0
         for(var i=list.length-1; i >=0; i--){
+          var heji = 0
           for(var j=list_item.length-1; j>=0; j--){
             if(list[i].id == list_item[j].ruku_id){
               if(list[i].item == undefined){
                 var this_item = []
+                heji = heji + (list_item[j].jiashui_xiaoji * 1)
+                zongji = zongji + (list_item[j].jiashui_xiaoji * 1)
                 this_item.push(list_item[j])
                 list_item.splice(j,1)
                 list[i].item = this_item
               }else{
                 var this_item = list[i].item
+                heji = heji + (list_item[j].jiashui_xiaoji * 1)
+                zongji = zongji + (list_item[j].jiashui_xiaoji * 1)
                 this_item.push(list_item[j])
                 list_item.splice(j,1)
                 list[i].item = this_item
               }
             }
           }
+          list[i].heji = heji
         }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         console.log(list_item)
         _this.setData({
           list: list,
           list_item: list_item,
           num: list.length,
-          gongyingshang_list
+          gongyingshang_list,
+          zongji
         })
       },
       err: res => {

@@ -4,10 +4,9 @@
       <van-cell title="{{item.bianhao}}" use-label-slot>
         <view slot="label">
           <text>供应商：{{item.gongyingshang}} \n</text>
-          <text>日期：{{item.riqi}} \n</text>
           <text>入库单位：{{item.ruku_danwei}} \n</text>
-          <text>店铺：{{item.dianpu}} \n</text>
-          <text>业务员：{{item.yewuyuan}} \n</text>
+          <text decode="{{true}}">店铺：{{item.dianpu}} &nbsp;&nbsp; 业务员：{{item.yewuyuan}} \n</text>
+          <text decode="{{true}}">日期：{{item.riqi}} &nbsp;&nbsp; 采购单号：{{item.caigou_id}} \n</text>
         </view>
       </van-cell>
 
@@ -17,12 +16,13 @@
           <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;采购单价：{{product_item.caigou_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}}</text>
         </view>
       </van-cell>
+      <van-cell title="{{'合计：' + item.heji}}"></van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
+  <view class="bt_text">合计：{{zongji}}</view>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

@@ -538,161 +538,420 @@ Page({
   labelTest: function () { //标签测试
     var that = this;
     var _this = this;
-    if (!_this.data.isConn) {
-      wx.showToast({
-        title: '蓝牙未连接',
-        icon: 'none'
-      })
-      return;
-    }
+    // if (!_this.data.isConn) {
+    //   wx.showToast({
+    //     title: '蓝牙未连接',
+    //     icon: 'none'
+    //   })
+    //   return;
+    // }
     var canvasWidth = that.data.canvasWidth
     var canvasHeight = that.data.canvasHeight    
     var list = _this.data.list
+    var command_arr = []
     var command = tsc.jpPrinter.createNew()
-    command.setCls()//清除缓冲区，防止下一个没生效
-    command.setSize(105, _this.data.danju_height / 10)//设置标签大小，单位mm.具体参数请用尺子量一下
-    command.setGap(0)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
     command.setCls()//清除缓冲区
-    var height = 20
+    command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+    command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+    command.setCls()//清除缓冲区
     for(var i=0; i<list.length; i++){
       if(list[i].lvxingcai != ""){
+        command = tsc.jpPrinter.createNew()
+        command.setCls()//清除缓冲区
+        command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+        command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+        command.setCls()//清除缓冲区
+        var panduan = false
+        var height = 0
+        height = height + 20
         command.setText(380, height, "TSS24.BF2", 0, 3, 3, "天龙五金铝框")//绘制文字
-        height = height + 100
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, '客户：' + list[i].customer_name)//绘制文字
-        command.setText(400, height, "TSS24.BF2", 0, 2, 2, '日期：' + list[i].insert_date)//绘制文字
-        command.setText(850, height, "TSS24.BF2", 0, 2, 2, list[i].customer_number)//绘制文字
-        height = height + 60
-        command.setText(10,height, "TSS24.BF2", 0, 2, 2, '安装地址：' + list[i].install_address)//绘制文字
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].order_number)
-        command.setText(850, height, "TSS24.BF2", 0, 2, 2, (i*1+1*1))
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].lvxingcai)
-        command.setText(450, height, "TSS24.BF2", 0, 2, 2, list[i].lvcai_yanse)
-        command.setText(850, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_xinghao)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].boli_shenjiagong)
-        command.setText(450, height, "TSS24.BF2", 0, 2, 2, list[i].boli_yanse)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].height)
-        command.setText(220, height, "TSS24.BF2", 0, 2, 2, '*')
-        command.setText(450, height, "TSS24.BF2", 0, 2, 2, list[i].width)
-        command.setText(850, height, "TSS24.BF2", 0, 2, 2, list[i].num)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔方向")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, '左开门')
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, "右开门")
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "开门方向数量")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaoliankong_fangxiang_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaoliankong_fangxiang_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "有拉手数量(个)")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_shuliang_right)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_shuliang_left)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "拉手位方向")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, '从下向上')
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "从右向左")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, "从下向上")
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "从左向右")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "拉手位")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_insert_right)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "装锁数量")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuoshuliang_insert_left1)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuoshuliang_insert_right1)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "锁孔位方向")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, '从下向上')
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "从右向左")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, "从下向上")
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "从左向右")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "锁孔位")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_left1)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_left2)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_right1)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_right2)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "开铰链孔")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].kaijiaolian)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, "")
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, "")
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, "")
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔位1")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_insert_right)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔位2")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_insert_right)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔位3")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_insert_right)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔位4")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_insert_right)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔位5")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_insert_right)
-
-        height = height + 60
-        command.setText(10, height, "TSS24.BF2", 0, 2, 2, "铰链孔位6")
-        command.setText(350, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_select_left)
-        command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_insert_left)
-        command.setText(1030, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_select_right)
-        command.setText(1370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_insert_right)
         
-        height = height + 120
+        height = height + 100
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, '客户：' + list[i].customer_name)//绘制文字
+        command.setText(420, height, "TSS24.BF2", 0, 2, 2, '日期：' + list[i].insert_date)//绘制文字
+        command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].customer_number)//绘制文字
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30,height, "TSS24.BF2", 0, 2, 2, '安装地址：' + list[i].install_address)//绘制文字
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].order_number)
+        command.setText(870, height, "TSS24.BF2", 0, 2, 2, (i*1+1*1))
+        
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].lvxingcai)
+        command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].lvcai_yanse)
+        command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_xinghao)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].boli_shenjiagong)
+        command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].boli_yanse)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].height)
+        command.setText(240, height, "TSS24.BF2", 0, 2, 2, '*')
+        command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].width)
+        command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].num)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔方向")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, '左开门')
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, "右开门")
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "开门方向数量")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaoliankong_fangxiang_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaoliankong_fangxiang_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "有拉手数量(个)")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_shuliang_right)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_shuliang_left)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "拉手位方向")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, '从下向上')
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "从右向左")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, "从下向上")
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "从左向右")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "拉手位")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].lashouwei_insert_right)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "装锁数量")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuoshuliang_insert_left1)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuoshuliang_insert_right1)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "锁孔位方向")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, '从下向上')
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "从右向左")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, "从下向上")
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "从左向右")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "锁孔位")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_left1)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_left2)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_right1)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].zhuangsuofangwei_insert_right2)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "开铰链孔")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].kaijiaolian)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, "")
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, "")
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, "")
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔位1")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian1_insert_right)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔位2")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian2_insert_right)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔位3")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian3_insert_right)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔位4")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian4_insert_right)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔位5")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian5_insert_right)
+
+        height = height + 60
+        panduan = false
+        if(height % 960 == 0 || height % 980 == 0){
+          height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()//清除缓冲区
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()//清除缓冲区
+          panduan = true
+        }
+        command.setText(30, height, "TSS24.BF2", 0, 2, 2, "铰链孔位6")
+        command.setText(370, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_select_left)
+        command.setText(710, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_insert_left)
+        command.setText(950, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_select_right)
+        command.setText(1190, height, "TSS24.BF2", 0, 2, 2, list[i].jiaolian6_insert_right)
+        
+        if(panduan == false){
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+        }
       }
     }
-    
-    command.setPagePrint()//执行打印指令
+    var str = ""
+    for(var i=0; i<command_arr.length; i++){
+      str = str + command_arr[i].getZhiLing()
+    }
+    console.log(str)
+    command = tsc.jpPrinter.createNew()
+    command.addCommand(str)
     that.setData({
       isLabelSend: true
     })
@@ -713,6 +972,83 @@ Page({
     })
     that.Send(buff)
   },
+//     var that = this
+//     var _this = this
+//     var printNum = that.data.printerNum
+//     var currentPrint = that.data.currentPrint
+//     var print_buff = []
+//     for(var i=0; i<buff.length; i++){
+//       var this_data = buff[i].getData()
+//       console.log(this_data)
+//       var time = that.data.oneTimeData
+//       var looptime = parseInt(this_data.length / time);
+//       var lastData = parseInt(this_data.length % time);
+//       var loopTime = looptime + 1
+//       var currentTime = 1
+//       var onTimeData = that.data.oneTimeData
+//       var buf
+//       var dataView
+//       var last = 0
+//       for(var j=0; j<loopTime-1; j++){
+//         buf = new ArrayBuffer(onTimeData)
+//         dataView = new DataView(buf)
+//         for (var k = 0; k < onTimeData; ++k) {
+//           dataView.setUint8(k, this_data[(currentTime - 1) * onTimeData + k])
+//         }
+//         print_buff.push(buf)
+//         currentTime = currentTime + 1
+//       }
+//       if(lastData > 0){
+//         buf = new ArrayBuffer(lastData)
+//         dataView = new DataView(buf)
+//         for (var k = 0; k < lastData; ++k) {
+//           dataView.setUint8(k, this_data[(currentTime - 1) * onTimeData + k])
+//         }
+//         print_buff.push(buf)
+//       }
+//     }
+//     console.log(print_buff)
+//     console.log(_this.data.option.deviceId)
+//     console.log(_this.data.option.serviceId)
+//     console.log(_this.data.option.characteristicId)
+//     console.log(print_buff)
+//     _this.setData({
+//       xiabiao:0,
+//       print_buff
+//     })
+//     _this.chuandi()
+
+// },
+
+// chuandi(){
+//   var _this = this
+//   if(_this.data.xiabiao < _this.data.print_buff.length){
+//     wx.writeBLECharacteristicValue({
+//       deviceId: _this.data.option.deviceId,
+//       serviceId: _this.data.option.serviceId,
+//       characteristicId: _this.data.option.characteristicId,
+//       value: _this.data.print_buff[_this.data.xiabiao],
+//       success: function (res) {
+//         wx.showToast({
+//           title: '第'+ (_this.data.xiabiao+1) +'成功',
+//         })
+//         _this.setData({
+//           xiabiao: (_this.data.xiabiao * 1) + 1
+//         })
+//         _this.chuandi()
+//         console.log(res)
+//       },
+//       fail: function (e) {
+//         wx.showToast({
+//           title: '第'+ (_this.data.xiabiao+1) +'失败',
+//           icon: 'none',
+//         })
+//         console.log(_this.data.xiabiao+1)
+//         console.log(e)
+//       },
+//     })
+//   }
+// },
 
   Send: function (buff) { //分包发送
     var that = this
@@ -743,57 +1079,59 @@ Page({
     console.log(_this.data.option.serviceId)
     console.log(_this.data.option.characteristicId)
     console.log(buf)
-    wx.writeBLECharacteristicValue({
-      deviceId: _this.data.option.deviceId,
-      serviceId: _this.data.option.serviceId,
-      characteristicId: _this.data.option.characteristicId,
-      value: buf,
-      success: function (res) {
-        if (currentPrint == printNum) {
-          wx.showToast({
-            title: '已打印第' + currentPrint + '张成功',
-          })
-        }
-        //console.log(res)
-      },
-      fail: function (e) {
-        wx.showToast({
-          title: '打印第' + currentPrint + '张失败',
-          icon: 'none',
-        })
-
-        //console.log(e)
-      },
-      complete: function () {
-        currentTime++
-        if (currentTime <= loopTime) {
-          that.setData({
-            currentTime: currentTime
-          })
-          that.Send(buff)
-        } else {
-          // wx.showToast({
-          //   title: '已打印第' + currentPrint + '张',
-          // })`
+    setTimeout(function(){ 
+      wx.writeBLECharacteristicValue({
+        deviceId: _this.data.option.deviceId,
+        serviceId: _this.data.option.serviceId,
+        characteristicId: _this.data.option.characteristicId,
+        value: buf,
+        success: function (res) {
           if (currentPrint == printNum) {
-            that.setData({
-              looptime: 0,
-              lastData: 0,
-              currentTime: 1,
-              isLabelSend: false,
-              currentPrint: 1
+            wx.showToast({
+              title: '已打印第' + currentPrint + '张成功',
             })
-          } else {
-            currentPrint++
+          }
+          //console.log(res)
+        },
+        fail: function (e) {
+          wx.showToast({
+            title: '打印第' + currentPrint + '张失败',
+            icon: 'none',
+          })
+  
+          //console.log(e)
+        },
+        complete: function () {
+          currentTime++
+          if (currentTime <= loopTime) {
             that.setData({
-              currentPrint: currentPrint,
-              currentTime: 1,
+              currentTime: currentTime
             })
             that.Send(buff)
+          } else {
+            // wx.showToast({
+            //   title: '已打印第' + currentPrint + '张',
+            // })`
+            if (currentPrint == printNum) {
+              that.setData({
+                looptime: 0,
+                lastData: 0,
+                currentTime: 1,
+                isLabelSend: false,
+                currentPrint: 1
+              })
+            } else {
+              currentPrint++
+              that.setData({
+                currentPrint: currentPrint,
+                currentTime: 1,
+              })
+              that.Send(buff)
+            }
           }
         }
-      }
-    })
+      })
+    }, 100); 
   },
 
   printTo : function(){
@@ -1196,7 +1534,7 @@ Page({
     }
     this.setData({
       buffSize: list,
-      oneTimeData: list[0],
+      oneTimeData: 190,
       printNum: numList,
       printerNum: numList[0]
     })

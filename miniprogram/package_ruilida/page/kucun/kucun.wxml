@@ -1,7 +1,7 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-index="i" wx:key="item">
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
-      <van-cell title="商品编码：{{item.shangpin_bianma}}" value="库存结余：{{item.shuliang}}" use-label-slot>
+      <van-cell title="商品编码：{{item.shangpin_bianma}}" use-label-slot>
         <view slot="label">
           <text>商品名称：{{item.name}} \n</text>
           <text>商品分类：{{item.type}} \n</text>
@@ -12,12 +12,13 @@
           <text>单位：{{item.danwei}} \n</text>
         </view>
       </van-cell>
+      <van-cell title="库存结余：{{item.shuliang}}"></van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
+  <view class="bt_text">合计：{{zongji}}</view>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

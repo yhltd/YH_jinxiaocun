@@ -4,10 +4,8 @@
       <van-cell title-width="80%" data-index="{{i}}" title="{{list_item.name}}" value="{{list_item.gongyingshang_dengji}}" bindtap="click_view" bindlongpress="del1" use-label-slot>
         <view slot="label">
           <text>编号：{{list_item.bianhao}} \n</text>
-          <text>主联系人：{{list_item.lianxi_name}} \n</text>
-          <text>电话：{{list_item.lianxi_phone}} \n</text>
-          <text>客户分类：{{list_item.type}} \n</text>
-          <text>业务员：{{list_item.yewuyuan}} \n</text>
+          <text decode="{{true}}">主联系人：{{list_item.lianxi_name}} &nbsp;&nbsp; 电话：{{list_item.lianxi_phone}} \n</text>
+          <text decode="{{true}}">客户分类：{{list_item.type}} 业务员：{{list_item.yewuyuan}} &nbsp;&nbsp; \n</text>
         </view>
         <van-tag slot="right-icon" plain type="primary" size="medium" data-index="{{i}}" data-column="tiaozhuan" catchtap="xiala_show">更多</van-tag>
       </van-cell>

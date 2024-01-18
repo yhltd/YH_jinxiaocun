@@ -87,10 +87,16 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordset
+        var zongji = 0
+        for(var i=0; i<list.length; i++){
+          zongji = zongji + (list[i].money * 1)
+        }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         _this.setData({
           list: list,
           num: list.length,
+          zongji
         })
       },
       err: res => {

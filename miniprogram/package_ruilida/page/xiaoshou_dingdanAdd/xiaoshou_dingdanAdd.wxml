@@ -82,7 +82,6 @@
         label="收件人姓名"
         placeholder="请输入收件人姓名"
         border="false"
-        readonly="true"
       />
 
             <van-field
@@ -93,7 +92,6 @@
         label="收件人手机"
         placeholder="请输入收件人手机"
         border="false"
-        readonly="true"
       />
 
             <van-field
@@ -104,7 +102,6 @@
         label="收件人地址"
         placeholder="请输入收件人地址"
         border="false"
-        readonly="true"
       />
 
             <van-field
@@ -136,12 +133,14 @@
         bind:input="onInput"
         model:value="{{ xiaoshou_body.xiaoxiang_shuilv }}"
         data-column="xiaoxiang_shuilv"
-        label="销项税率%"
-        placeholder="请输入销项税率%"
+        label="销项税率"
+        placeholder="请输入销项税率"
         border="false"
-        type="number"
+        type="digit"
         bind:click-input="xiala_show"
         readonly="true"
+        right-icon="../../image/baifenbi.png"
+        bind:blur="jiage_head_refresh"
       />
 
             <van-field
@@ -165,6 +164,7 @@
         placeholder="填写商品信息后自动计算"
         border="false"
         readonly="true"
+        bind:blur="jiage_head_refresh"
       />
 
             <van-field
@@ -277,7 +277,8 @@
         label="数量"
         placeholder="请输入数量"
         border="false"
-        type="number"
+        type="digit"
+        bind:blur="shuliang_refresh"
       />
 
             <van-field
@@ -290,6 +291,7 @@
         placeholder="请输入单价"
         border="false"
         type="digit"
+        bind:blur="jiage_refresh"
       />
 
             <van-field
@@ -302,6 +304,7 @@
         placeholder="请输入价税小计"
         border="false"
         type="digit"
+        bind:blur="jiage_refresh"
       />
 
             <van-field
@@ -314,6 +317,8 @@
         placeholder="请输入建议售价"
         border="false"
         type="digit"
+        readonly="true"
+        bind:blur="jiage_refresh"
       />
 
             <van-field
@@ -327,6 +332,7 @@
         border="false"
         type="digit"
         readonly="true"
+        bind:blur="jiage_refresh"
       />
 
       <picker class="pick" mode="date" value="{{date}}" data-index="{{i}}" data-column_name="xuyong_riqi" bindchange="choiceDate">
@@ -353,6 +359,8 @@
         placeholder="请输入价格浮动"
         border="false"
         type="digit"
+        right-icon="../../image/baifenbi.png"
+        bind:blur="jiage_refresh"
       />
 
             <van-field

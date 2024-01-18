@@ -152,6 +152,8 @@ Page({
     result: ['订单编号', '日期', '客户' ,'客户价格等级','业务员','收件人姓名','收件人手机','收件人地址','店铺','销项税率','备注','审核人','审核状态','商品编号','商品名称','规格','材质','技术标准','质保等级','单位','数量','单价','价税小计','建议报价','需用日期','报价浮动','行备注'],
     gongneng_list:[
       {
+        name:'查询'
+      },{
         name:'刷新'
       },{
         name:'导出Excel'
@@ -180,6 +182,12 @@ Page({
     customer: '',
     shenhe_zhuangtai:'',
     sel_type:'',
+    tiaozhuan_list:[
+      {name:'生成出库单'},
+      {name:'生成收款单'},
+      {name:'生成开票'},
+      {name:'生成采购单'},
+    ]
   },
 
   /**
@@ -252,6 +260,7 @@ Page({
         var list = res.result.recordsets[0]
         var list_item = res.result.recordsets[1]
         var customer_list = res.result.recordsets[2]
+        var zongji = 0
         for(var i=list.length-1; i >=0; i--){
           var heji = 0
           for(var j=list_item.length-1; j>=0; j--){
@@ -260,6 +269,7 @@ Page({
                 var this_item = []
                 list_item[j].jiashui_xiaoji = list_item[j].shuliang * list_item[j].baojia_danjia
                 heji = heji + list_item[j].jiashui_xiaoji
+                zongji = zongji + list_item[j].jiashui_xiaoji
                 this_item.push(list_item[j])
                 list_item.splice(j,1)
                 list[i].item = this_item
@@ -267,6 +277,7 @@ Page({
                 var this_item = list[i].item
                 list_item[j].jiashui_xiaoji = list_item[j].shuliang * list_item[j].baojia_danjia
                 heji = heji + list_item[j].jiashui_xiaoji
+                zongji = zongji + list_item[j].jiashui_xiaoji
                 this_item.push(list_item[j])
                 list_item.splice(j,1)
                 list[i].item = this_item
@@ -275,6 +286,7 @@ Page({
           }
           list[i].heji = heji
         }
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         console.log(list_item)
         _this.setData({
@@ -282,7 +294,8 @@ Page({
           list_item: list_item,
           num: list.length,
           customer_list,
-          sel_type:''
+          sel_type:'',
+          zongji
         })
       },
       err: res => {
@@ -314,24 +327,24 @@ Page({
         var list = res.result.recordsets[0]
         var list_item = res.result.recordsets[1]
         var customer_list = res.result.recordsets[2]
-        for(var i=list.length-1; i >=0; i--){
-          for(var j=list_item.length-1; j>=0; j--){
-            if(list[i].id == list_item[j].xiaoshou_id){
-              if(list[i].item == undefined){
-                var this_item = []
-                this_item.push(list_item[j])
-                list_item.splice(j,1)
-                list[i].item = this_item
-              }else{
-                var this_item = list[i].item
-                this_item.push(list_item[j])
-                list_item.splice(j,1)
-                list[i].item = this_item
-              }
-            }
-          }
-        }
-
+        // for(var i=list.length-1; i >=0; i--){
+        //   for(var j=list_item.length-1; j>=0; j--){
+        //     if(list[i].id == list_item[j].xiaoshou_id){
+        //       if(list[i].item == undefined){
+        //         var this_item = []
+        //         this_item.push(list_item[j])
+        //         list_item.splice(j,1)
+        //         list[i].item = this_item
+        //       }else{
+        //         var this_item = list[i].item
+        //         this_item.push(list_item[j])
+        //         list_item.splice(j,1)
+        //         list[i].item = this_item
+        //       }
+        //     }
+        //   }
+        // }
+        var zongji = 0
         for(var i=list.length-1; i >=0; i--){
           var shenhe_list = list[i].shenhe_list.split(",")
           var shenhe = list[i].shenhe.split(",")
@@ -343,26 +356,32 @@ Page({
             }
           }
           if(panduan){
+            var heji = 0
             for(var j=list_item.length-1; j>=0; j--){
-              if(list[i].id == list_item[j].baojia_id){
+              if(list[i].id == list_item[j].xiaoshou_id){
                 if(list[i].item == undefined){
                   var this_item = []
+                  heji = heji + (list_item[j].jiashui_xiaoji * 1)
+                  zongji = zongji + (list_item[j].jiashui_xiaoji * 1)
                   this_item.push(list_item[j])
                   list_item.splice(j,1)
                   list[i].item = this_item
                 }else{
                   var this_item = list[i].item
+                  heji = heji + (list_item[j].jiashui_xiaoji * 1)
+                  zongji = zongji + (list_item[j].jiashui_xiaoji * 1)
                   this_item.push(list_item[j])
                   list_item.splice(j,1)
                   list[i].item = this_item
                 }
               }
             }
+            list[i].heji = heji
           }else{
             list.splice(i,1)
           }
         }
-
+        zongji = Math.round(zongji * 100) / 100
         console.log(list)
         console.log(list_item)
         _this.setData({
@@ -370,7 +389,8 @@ Page({
           list_item: list_item,
           num: list.length,
           customer_list,
-          sel_type:'待审核'
+          sel_type:'待审核',
+          zongji
         })
       },
       err: res => {
@@ -594,9 +614,11 @@ Page({
     console.log('列名：', e.currentTarget.dataset.column)
     var column = e.currentTarget.dataset.column
     var list = _this.data[column + "_list"]
+    var index = e.currentTarget.dataset.index
     _this.setData({
       list_xiala: list,
       click_column:column,
+      click_index:index
     })
     console.log(list)
     _this.setData({
@@ -645,6 +667,38 @@ Page({
           shenhe_zhuangtai:'',
         })
         _this.shenheShow()
+      }else if(click_column == 'tiaozhuan' && new_val == '生成出库单'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var id = _this.data.list[_this.data.click_index].id
+        wx.navigateTo({
+          url: '../xiaoshou_dingdan_xiangqing/xiaoshou_dingdan_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + '&type=生成出库单',
+        })
+      }else if(click_column == 'tiaozhuan' && new_val == '生成收款单'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var id = _this.data.list[_this.data.click_index].id
+        wx.navigateTo({
+          url: '../xiaoshou_dingdan_xiangqing/xiaoshou_dingdan_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + '&type=生成收款单',
+        })
+      }else if(click_column == 'tiaozhuan' && new_val == '生成开票'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var id = _this.data.list[_this.data.click_index].id
+        wx.navigateTo({
+          url: '../xiaoshou_dingdan_xiangqing/xiaoshou_dingdan_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + '&type=生成开票',
+        })
+      }else if(click_column == 'tiaozhuan' && new_val == '生成采购单'){
+        _this.setData({
+          xlShow2: false,
+        })
+        var id = _this.data.list[_this.data.click_index].id
+        wx.navigateTo({
+          url: '../xiaoshou_dingdan_xiangqing/xiaoshou_dingdan_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + '&type=生成采购单',
+        })
       }else{
         _this.setData({
           [click_column]: new_val,

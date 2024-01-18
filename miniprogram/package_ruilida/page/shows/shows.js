@@ -96,7 +96,16 @@ Page({
         url: '../jizhang_mingxi/jizhang_mingxi',
         icon: "../../image/shangpinguige.png"
       },
-
+      {
+        text:'期初初始化',
+        url: '../qichu/qichu',
+        icon: "../../image/shangpinfenlei.png"
+      },
+      // {
+      //   text:'测试',
+      //   url: '../test/test',
+      //   icon: "../../image/shangpinfenlei.png"
+      // },
 
       // {
       //   text:'客户等级',
@@ -253,7 +262,7 @@ Page({
             break;
           }
         }
-        var sql = "select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_baojia where shenhe_zhuangtai != '审核通过' and shenhe like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_dingdan where shenhe_zhuangtai != '审核通过' and shenhe like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from caigou_dingdan where shenhe_zhuangtai != '审核通过' and shenhe like '%"+ userInfo.name +"%';select count(*) as num from xiaoshou_kaipiao where xinxi_tuisong = '管理员' and kaipiao_zhuangtai = '待开票';select count(*) as num from caigou_shoupiao where xinxi_tuisong = '管理员' and shoupiao_zhuangtai = '待收票';"
+        var sql = "select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_baojia where shenhe_zhuangtai = '审核中' and shenhe like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_dingdan where shenhe_zhuangtai = '审核中' and shenhe like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from caigou_dingdan where shenhe_zhuangtai = '审核中' and shenhe like '%"+ userInfo.name +"%';select count(*) as num from xiaoshou_kaipiao where xinxi_tuisong = '管理员' and kaipiao_zhuangtai = '待开票';select count(*) as num from caigou_shoupiao where xinxi_tuisong = '管理员' and shoupiao_zhuangtai = '待收票';"
 
         sql = sql + "select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_baojia where shenhe_zhuangtai like '审核未通过' and yewuyuan like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from xiaoshou_dingdan where shenhe_zhuangtai like '审核未通过' and yewuyuan like '%"+ userInfo.name +"%';select yewuyuan,shenhe,shenhe_list,shenhe_zhuangtai from caigou_dingdan where shenhe_zhuangtai like '审核未通过' and yewuyuan like '%"+ userInfo.name +"%'"
 
@@ -422,11 +431,11 @@ Page({
   onChange: function (event) {
     var _this = this;
     console.log(_this.data.userInfo.power)
-    if (event.detail == 3) {
+    if (event.detail == 4) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 2) {
+    } else if (event.detail == 3) {
       wx.redirectTo({
         url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
@@ -437,6 +446,10 @@ Page({
     } else if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    }else if (event.detail == 2) {
+      wx.navigateTo({
+        url: '../../../package_ruilida2/page/jizhang/jizhang?userInfo=' + JSON.stringify(_this.data.userInfo)
       })
     }
     // else if (event.detail == 0) {

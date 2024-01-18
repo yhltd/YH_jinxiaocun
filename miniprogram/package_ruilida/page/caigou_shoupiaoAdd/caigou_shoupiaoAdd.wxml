@@ -84,6 +84,7 @@
         placeholder="请输入价税合计"
         border="false"
         type="digit"
+        readonly="{{gongyingshang_name != undefined}}"
       />
 
       <van-field

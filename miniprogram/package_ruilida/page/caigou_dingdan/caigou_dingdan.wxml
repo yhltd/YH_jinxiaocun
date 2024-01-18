@@ -4,16 +4,15 @@
       <van-cell title="{{item.bianhao}}" use-label-slot>
         <view slot="label">
           <text>供应商：{{item.gongyingshang}} \n</text>
-          <text>日期：{{item.riqi}} \n</text>
           <text>采购单位：{{item.caigou_danwei}} \n</text>
-          <text>店铺：{{item.dianpu}} \n</text> 
-          <text>业务员：{{item.yewuyuan}} \n</text>
+          <text decode="{{true}}">店铺：{{item.dianpu}} &nbsp;&nbsp; 业务员：{{item.yewuyuan}} \n</text>
           <!-- <text>审核人：{{item.shenhe}} \n</text> -->
-          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
+          <text decode="{{true}}">日期：{{item.riqi}} &nbsp;&nbsp; 审核状态：{{item.shenhe_zhuangtai}} \n</text>
           <van-tag style="margin-right: 5px;" type="{{item.ruku_zhuangtai=='未入库'?'warning':item.ruku_zhuangtai=='部分入库'?'primary':'success'}}">{{item.ruku_zhuangtai}}</van-tag>
           <van-tag style="margin-right: 5px;" type="{{item.shoupiao_zhuangtai=='未收票'?'warning':item.shoupiao_zhuangtai=='部分收票'?'primary':'success'}}">{{item.shoupiao_zhuangtai}}</van-tag>
           <van-tag type="{{item.fukuan_zhuangtai=='未付款'?'warning':item.fukuan_zhuangtai=='部分付款'?'primary':'success'}}">{{item.fukuan_zhuangtai}}</van-tag>
         </view>
+        <van-tag slot="right-icon" plain type="primary" size="medium" data-index="{{i}}" data-column="tiaozhuan" catchtap="xiala_show">更多</van-tag>
       </van-cell>
 
       <van-cell title="{{product_item.name}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
@@ -22,12 +21,13 @@
           <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;采购单价：{{product_item.caigou_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}}</text>
         </view>
       </van-cell>
+      <van-cell title="{{'合计：' + item.heji}}"></van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
+  <view class="bt_text">合计：{{zongji}}</view>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

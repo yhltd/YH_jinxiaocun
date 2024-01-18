@@ -79,6 +79,10 @@
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+  <view class="lables">记账单位</view>
+    <input bindinput="onInput" data-column="jizhang_danwei" class="input_text_form"  value="{{jizhang_danwei}}" type="text" name="jizhang_danwei" disabled="disabled" bindtap="xiala_show"></input>
+  <view class="lables">记账账户</view>
+    <input bindinput="onInput" data-column="jizhang_zhanghu" class="input_text_form"  value="{{jizhang_zhanghu}}" type="text" name="jizhang_zhanghu" disabled="disabled" bindtap="xiala_show"></input>
   <view class="lables">汇总类型</view>
     <input bindinput="onInput" data-column="this_type" class="input_text_form"  value="{{this_type}}" type="text" name="this_type" disabled="disabled" bindtap="xiala_show"></input>
   <view class="lables">选择时间</view>

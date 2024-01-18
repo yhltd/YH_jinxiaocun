@@ -1,0 +1,45 @@
+<scroll-view class="main" scroll-x="true" scroll-y="true">
+  <view style="padding-top: 10px;">
+    <van-cell-group inset>
+      <van-field
+        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.bianhao }}" data-column="bianhao" label="编号" placeholder="选择供应商自动带出" border="false" readonly="true" />
+
+      <van-field
+        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.name }}" data-column="name" bind:click-input="gongyingshang_select" label="供应商" placeholder="请选择供应商" border="false" readonly="true" />
+
+      <van-field
+        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.qiankuan }}" data-column="qiankuan" label="欠款" placeholder="请输入欠款" border="false" type="digit"/>
+
+      <van-field
+        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.dingjin }}" data-column="dingjin" label="定金" placeholder="请输入定金" border="false" type="digit"/>
+    </van-cell-group>
+  </view>
+</scroll-view>
+
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="save">保存</button>
+  <button class="bt_bottom" bindtap="back">返回</button>
+</view>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
+
+<!--选择客户-->
+<van-popup show="{{ gongyingshang_show }}" close-on-click-overlay position="bottom" custom-style="height: 80%" bind:close="qxShow">
+  <view style="height: 9%;">
+    <view style="display: flex;">
+      <view class="lables">供应商：</view>
+      <input bindinput="onInput_text" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name"></input>
+    </view>
+  </view>
+  <scroll-view style="height:78%" scroll-x="true" scroll-y="true">
+    <van-cell-group style="height: 78%;">
+      <van-cell wx:for="{{ gongyingshang_list }}" wx:key="index" title="{{ item.name }}" value-class="value-class" clickable data-index="{{ index }}" bind:click="gongyingshang_click" wx:if="{{item.isselect == 1}}" use-label-slot>
+      </van-cell>
+    </van-cell-group>
+  </scroll-view>
+  <view class="bottom_view" style="margin-top: 10px;">
+    <button class="bt_bottom" bindtap="goto_gongyingshang">添加供应商</button>
+    <button class="bt_bottom" bindtap="sel_gongyingshang">查询</button>
+  </view>
+</van-popup>

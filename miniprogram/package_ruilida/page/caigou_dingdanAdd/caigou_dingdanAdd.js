@@ -149,6 +149,8 @@ Page({
     if(xiaoshou_list != undefined){
       xiaoshou_list = JSON.parse(xiaoshou_list)
     }
+
+    _this.get_peizhi()
     if(id != null && id != undefined){
       var sql = "select * from caigou_dingdan where id=" + id + ";select * from caigou_dingdan_item where caigou_id = '" + id + "'"
       wx.cloud.callFunction({
@@ -182,8 +184,8 @@ Page({
           console.log("请求失败！")
         }
       })
-    }else {
-      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CG000000'),3,6)) + 1 as bianhao from caigou_dingdan;select * from peizhi where type = '店铺';"
+    }else{
+      var sql = "select convert(float,SUBSTRING(isnull(max(bianhao),'CG000000'),3,6)) + 1 as bianhao from caigou_dingdan;select * from peizhi where type = '店铺';select id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable,isselect,isnull(shangpin_bianma,'') as shangpin_bianma,isnull(zuidijia,0) as zuidijia from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from xiaoshou_dingdan where bianhao='" + _this.data.xiaoshou_id + "'"
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -191,6 +193,11 @@ Page({
         },
         success: res => {
           console.log(res)
+          var product_list = res.result.recordsets[2]
+          var xiaoshou_dingdan_list = res.result.recordsets[3]
+          _this.setData({
+            product_list
+          })
           var max_bianhao = res.result.recordsets[0][0].bianhao
           var this_bianhao = PrefixInteger(max_bianhao,6)
           console.log(this_bianhao)
@@ -200,12 +207,17 @@ Page({
           caigou_body.bianhao = this_bianhao
           caigou_body.riqi = getNowDate()
           caigou_body.shenhe = _this.data.userInfo.shenpi
-          var dianpu_list = res.result.recordsets[1]
-          if(_this.data.userInfo.dianpu != ''){
-            for(var i=0; i<dianpu_list.length; i++){
-              if(dianpu_list[i].id == _this.data.userInfo.dianpu){
-                caigou_body.dianpu = dianpu_list[i].name
-                break;
+          if(xiaoshou_dingdan_list.length > 0){
+            caigou_body.caigou_danwei = xiaoshou_dingdan_list[0].xiaoshou_danwei
+            caigou_body.dianpu = xiaoshou_dingdan_list[0].dianpu
+          }else{
+            var dianpu_list = res.result.recordsets[1]
+            if(_this.data.userInfo.dianpu != ''){
+              for(var i=0; i<dianpu_list.length; i++){
+                if(dianpu_list[i].id == _this.data.userInfo.dianpu){
+                  caigou_body.dianpu = dianpu_list[i].name
+                  break;
+                }
               }
             }
           }
@@ -281,6 +293,7 @@ Page({
         }
       })
     }
+
   },
 
   danxuan_zengpin(e){
@@ -581,6 +594,7 @@ Page({
         var jiashui_xiaoji = caigou_danjia * num
         if(pro_sel[i].checked){
           caigou_danjia = 0
+          jiashui_xiaoji = 0
         }
         if(list[0].shangpin_bianma == ""){
           list[0] = {
@@ -594,7 +608,7 @@ Page({
             danwei:pro_sel[i].danwei,
             shuliang:pro_sel[i].num,
             lishi_zuidi:pro_sel[i].zuidijia,
-            caigou_danjia:caigou_price,
+            caigou_danjia:caigou_danjia,
             jiashui_xiaoji:jiashui_xiaoji,
             jiaohuo_riqi:'',
             beizhu:'',
@@ -612,7 +626,7 @@ Page({
               danwei:pro_sel[i].danwei,
               shuliang:pro_sel[i].num,
               lishi_zuidi:pro_sel[i].zuidijia,
-              caigou_danjia:caigou_price,
+              caigou_danjia:caigou_danjia,
               jiashui_xiaoji:jiashui_xiaoji,
               jiaohuo_riqi:'',
               beizhu:'',
@@ -625,6 +639,7 @@ Page({
         lianxi_list:list
       })
     }
+    app.globalData.ruili_pro = []
     wx.hideLoading()
     
   },
@@ -731,10 +746,10 @@ Page({
 
   save_shenhe:function(){
     var _this = this
-    var xiaoshou_body = _this.data.xiaoshou_body
-    xiaoshou_body.shenhe_zhuangtai = '审核中'
+    var caigou_body = _this.data.caigou_body
+    caigou_body.shenhe_zhuangtai = '审核中'
     _this.setData({
-      xiaoshou_body
+      caigou_body
     })
     _this.save()
   },
@@ -752,9 +767,23 @@ Page({
       })
       return;
     }
+    if(caigou_body.caigou_danwei == ''){
+      wx.showToast({
+        title: '请选择采购单位',
+        icon: 'none'
+      })
+      return;
+    }
     if(caigou_body.dianpu == ''){
       wx.showToast({
         title: '请选择店铺',
+        icon: 'none'
+      })
+      return;
+    }
+    if(caigou_body.yewuyuan == ''){
+      wx.showToast({
+        title: '请选择业务员',
         icon: 'none'
       })
       return;
@@ -788,7 +817,7 @@ Page({
         })
         return;
       }
-      if(lianxi_list[i].caigou_danjia == ''){
+      if(lianxi_list[i].caigou_danjia === ''){
         wx.showToast({
           title: '第' + (i * 1+1) + '条商品未填写采购单价',
           icon: 'none'
@@ -1001,8 +1030,10 @@ Page({
     }else{
       var lianxi_list = _this.data.lianxi_list
       lianxi_list[index][column] = new_value
-      if(lianxi_list[index].caigou_danjia != '' && lianxi_list[index].shuliang != ''){
+      if(lianxi_list[index].caigou_danjia != '' && lianxi_list[index].shuliang != '' && column != 'jiashui_xiaoji'){
         lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].caigou_danjia * lianxi_list[index].shuliang * 100) / 100
+      }else if(lianxi_list[index].jiashui_xiaoji != '' && lianxi_list[index].shuliang != '' && column == 'jiashui_xiaoji'){
+        lianxi_list[index].caigou_danjia = Math.round(lianxi_list[index].jiashui_xiaoji / lianxi_list[index].shuliang * 100) / 100
       }
       _this.setData({
         lianxi_list

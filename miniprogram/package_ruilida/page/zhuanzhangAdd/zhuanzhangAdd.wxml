@@ -1,6 +1,6 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;">
-    <view class="title_text">开票信息：</view>
+    <view class="title_text">转账信息：</view>
     <van-cell-group inset>
             <van-field
         custom-class="bianju"

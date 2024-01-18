@@ -157,7 +157,7 @@ Page({
 
   getUserInfo: function () {
     var _this = this;
-    var length = 300
+    var length = 600
     wx.getSystemInfo({
       success: res => {
         _this.setData({
@@ -380,80 +380,126 @@ Page({
     }
   },
 
-  labelTest: function () { //标签测试
+  labelTest() { //标签测试
     var that = this;
     var _this = this;
-    if (!_this.data.isConn) {
-      wx.showToast({
-        title: '蓝牙未连接',
-        icon: 'none'
-      })
-      return;
-    }
+    // if (!_this.data.isConn) {
+    //   wx.showToast({
+    //     title: '蓝牙未连接',
+    //     icon: 'none'
+    //   })
+    //   return;
+    // }
     var canvasWidth = that.data.canvasWidth
     var canvasHeight = that.data.canvasHeight    
     var order1 = _this.data.order1
     var order2 = _this.data.order2
     var dayin_peizhi = _this.data.dayin_peizhi
     var command = tsc.jpPrinter.createNew()
-    command.setCls()//清除缓冲区，防止下一个没生效
-    command.setSize(105, _this.data.danju_height / 10)//设置标签大小，单位mm.具体参数请用尺子量一下
-    command.setGap(0)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
-    command.setCls()//清除缓冲区
+    var command_arr = []
+    command.setCls()
+    command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+    command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+    command.setCls()
     command.setText(280, 20, "TSS24.BF2", 0, 3, 3, "天龙五金灯控系统")//绘制文字
     if(dayin_peizhi.P1 == '是'){
-      command.setText(10, 120, "TSS24.BF2", 0, 2, 2, '客户：' + order1.khmc)//绘制文字
+      command.setText(30, 120, "TSS24.BF2", 0, 2, 2, '客户：' + order1.khmc)//绘制文字
     }
 
     if(dayin_peizhi.P2 == '是'){
-      command.setText(400, 120, "TSS24.BF2", 0, 2, 2, '日期：' + order1.xdrq)//绘制文字
+      command.setText(420, 120, "TSS24.BF2", 0, 2, 2, '日期：' + order1.xdrq)//绘制文字
     }
 
     if(dayin_peizhi.P3 == '是'){
-      command.setText(850, 120, "TSS24.BF2", 0, 2, 2, order1.djbh)//绘制文字
+      command.setText(870, 120, "TSS24.BF2", 0, 2, 2, order1.djbh)//绘制文字
     }
 
     if(dayin_peizhi.P4 == '是'){
-      command.setText(10,180, "TSS24.BF2", 0, 2, 2, '安装地址：' + order1.azdz)//绘制文字
+      command.setText(30,180, "TSS24.BF2", 0, 2, 2, '安装地址：' + order1.azdz)//绘制文字
     }
 
     var this_height = 240
     var this_column = 1
     var lvxingcai =""
+    var panduan = false
     for(var i=0; i<order2.length; i++){
       if(order2[i].fj == '房间柜号' && dayin_peizhi.P5 == '是'){
         this_column = 1
-        command.setText(10,this_height, "TSS24.BF2", 0, 2, 2, order2[i].gh)//绘制文字
+        command.setText(30,this_height, "TSS24.BF2", 0, 2, 2, order2[i].gh)//绘制文字
         this_height = this_height + 60
+        panduan = false
+        if(this_height % 960 == 0 || this_height % 980 == 0){
+          this_height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()
+          panduan = true
+        }
       }else if(order2[i].fj == '铝型材'  && dayin_peizhi.P6 == '是'){
         this_column = 1
-        lvxingcai = order2[i].gh +"  "+ order2[i].lcys +"  "+ order2[i].gy +"  "+ order2[i].ddcd+"  "+ order2[i].sl 
+        lvxingcai = order2[i].gh +"-"+ order2[i].lcys +"-"+ order2[i].gy +"  "+ order2[i].ddcd+"  "+ order2[i].sl
         console.log(lvxingcai)
-        command.setText(10,this_height, "TSS24.BF2", 0, 2, 2, lvxingcai)//绘制文字
+        command.setText(30,this_height, "TSS24.BF2", 0, 2, 2, lvxingcai)//绘制文字
         this_height = this_height + 60
+        panduan = false
+        if(this_height % 960 == 0 || this_height % 980 == 0){
+          this_height = 20
+          command.setPagePrint()//执行打印指令
+          command_arr.push(command)
+          command = tsc.jpPrinter.createNew()
+          command.setCls()
+          command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+          command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+          command.setCls()
+          panduan = true
+        }
       }else if(dayin_peizhi.P7 == '是'){
         if(this_column == 1){
-          command.setText(10,this_height, "TSS24.BF2", 0, 2, 2, order2[i].gh)//绘制文字
-          command.setText(550,this_height, "TSS24.BF2", 0, 2, 2, order2[i].sl)//绘制文字
+          command.setText(30,this_height, "TSS24.BF2", 0, 2, 2, order2[i].gh)//绘制文字
+          command.setText(570,this_height, "TSS24.BF2", 0, 2, 2, order2[i].sl)//绘制文字
           this_column = this_column + 1
         }else{
-          command.setText(700,this_height, "TSS24.BF2", 0, 2, 2, order2[i].gh)//绘制文字
-          command.setText(1100,this_height, "TSS24.BF2", 0, 2, 2, order2[i].sl)//绘制文字
+          command.setText(720,this_height, "TSS24.BF2", 0, 2, 2, order2[i].gh)//绘制文字
+          command.setText(1120,this_height, "TSS24.BF2", 0, 2, 2, order2[i].sl)//绘制文字
           this_column = 1
           this_height = this_height + 60
+          panduan = false
+          if(this_height % 960 == 0 || this_height % 980 == 0){
+            this_height = 20
+            command.setPagePrint()//执行打印指令
+            command_arr.push(command)
+            command = tsc.jpPrinter.createNew()
+            command.setCls()
+            command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+            command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+            command.setCls()
+            panduan = true
+          }
         }
       }
     }
-    this_height = this_height + 60
-    
-    command.setPagePrint()//执行打印指令
+    if(panduan == false){
+      command.setPagePrint()//执行打印指令
+      command_arr.push(command)
+    }
+    var str = ""
+    for(var i=0; i<command_arr.length; i++){
+      str = str + command_arr[i].getZhiLing()
+    }
+    console.log(str)
+    command = tsc.jpPrinter.createNew()
+    command.addCommand(str)
     that.setData({
       isLabelSend: true
     })
     that.prepareSend(command.getData())
   },
 
-  prepareSend: function (buff) { //准备发送，根据每次发送字节数来处理分包数量
+  prepareSend(buff) { //准备发送，根据每次发送字节数来处理分包数量
     //console.log(buff)
     var that = this
     var time = that.data.oneTimeData
@@ -497,58 +543,139 @@ Page({
     console.log(_this.data.option.serviceId)
     console.log(_this.data.option.characteristicId)
     console.log(buf)
-    wx.writeBLECharacteristicValue({
-      deviceId: _this.data.option.deviceId,
-      serviceId: _this.data.option.serviceId,
-      characteristicId: _this.data.option.characteristicId,
-      value: buf,
-      success: function (res) {
-        if (currentPrint == printNum) {
-          wx.showToast({
-            title: '已打印第' + currentPrint + '张成功',
-          })
-        }
-        //console.log(res)
-      },
-      fail: function (e) {
-        wx.showToast({
-          title: '打印第' + currentPrint + '张失败',
-          icon: 'none',
-        })
-
-        //console.log(e)
-      },
-      complete: function () {
-        currentTime++
-        if (currentTime <= loopTime) {
-          that.setData({
-            currentTime: currentTime
-          })
-          that.Send(buff)
-        } else {
-          // wx.showToast({
-          //   title: '已打印第' + currentPrint + '张',
-          // })`
+    setTimeout(function(){ 
+      wx.writeBLECharacteristicValue({
+        deviceId: _this.data.option.deviceId,
+        serviceId: _this.data.option.serviceId,
+        characteristicId: _this.data.option.characteristicId,
+        value: buf,
+        success: function (res) {
           if (currentPrint == printNum) {
-            that.setData({
-              looptime: 0,
-              lastData: 0,
-              currentTime: 1,
-              isLabelSend: false,
-              currentPrint: 1
+            wx.showToast({
+              title: '已打印第' + currentPrint + '张成功',
             })
-          } else {
-            currentPrint++
+          }
+          //console.log(res)
+        },
+        fail: function (e) {
+          wx.showToast({
+            title: '打印第' + currentPrint + '张失败',
+            icon: 'none',
+          })
+  
+          //console.log(e)
+        },
+        complete: function () {
+          currentTime++
+          if (currentTime <= loopTime) {
             that.setData({
-              currentPrint: currentPrint,
-              currentTime: 1,
+              currentTime: currentTime
             })
             that.Send(buff)
+          } else {
+            // wx.showToast({
+            //   title: '已打印第' + currentPrint + '张',
+            // })`
+            if (currentPrint == printNum) {
+              that.setData({
+                looptime: 0,
+                lastData: 0,
+                currentTime: 1,
+                isLabelSend: false,
+                currentPrint: 1
+              })
+            } else {
+              currentPrint++
+              that.setData({
+                currentPrint: currentPrint,
+                currentTime: 1,
+              })
+              that.Send(buff)
+            }
           }
         }
-      }
-    })
+      })
+    }, 100);
   },
+
+  // Send(buff) { //分包发送
+  //     var that = this
+  //     var _this = this
+  //     var printNum = that.data.printerNum
+  //     var currentPrint = that.data.currentPrint
+  //     var print_buff = []
+  //     for(var i=0; i<buff.length; i++){
+  //       var this_data = buff[i].getData()
+  //       console.log(this_data)
+  //       var time = that.data.oneTimeData
+  //       var looptime = parseInt(this_data.length / time);
+  //       var lastData = parseInt(this_data.length % time);
+  //       var loopTime = looptime + 1
+  //       var currentTime = 1
+  //       var onTimeData = that.data.oneTimeData
+  //       var buf
+  //       var dataView
+  //       var last = 0
+  //       for(var j=0; j<loopTime-1; j++){
+  //         buf = new ArrayBuffer(onTimeData)
+  //         dataView = new DataView(buf)
+  //         for (var k = 0; k < onTimeData; ++k) {
+  //           dataView.setUint8(k, this_data[(currentTime - 1) * onTimeData + k])
+  //         }
+  //         print_buff.push(buf)
+  //         currentTime = currentTime + 1
+  //       }
+  //       if(lastData > 0){
+  //         buf = new ArrayBuffer(lastData)
+  //         dataView = new DataView(buf)
+  //         for (var k = 0; k < lastData; ++k) {
+  //           dataView.setUint8(k, this_data[(currentTime - 1) * onTimeData + k])
+  //         }
+  //         print_buff.push(buf)
+  //       }
+  //     }
+  //     console.log(print_buff)
+  //     console.log(_this.data.option.deviceId)
+  //     console.log(_this.data.option.serviceId)
+  //     console.log(_this.data.option.characteristicId)
+  //     console.log(print_buff)
+  //     _this.setData({
+  //       xiabiao:0,
+  //       print_buff
+  //     })
+  //     _this.chuandi()
+
+  // },
+
+  // chuandi(){
+  //   var _this = this
+  //   if(_this.data.xiabiao < _this.data.print_buff.length){
+  //     wx.writeBLECharacteristicValue({
+  //       deviceId: _this.data.option.deviceId,
+  //       serviceId: _this.data.option.serviceId,
+  //       characteristicId: _this.data.option.characteristicId,
+  //       value: _this.data.print_buff[_this.data.xiabiao],
+  //       success: function (res) {
+  //         wx.showToast({
+  //           title: '第'+ (_this.data.xiabiao+1) +'成功',
+  //         })
+  //         _this.setData({
+  //           xiabiao: (_this.data.xiabiao * 1) + 1
+  //         })
+  //         _this.chuandi()
+  //         console.log(res)
+  //       },
+  //       fail: function (e) {
+  //         wx.showToast({
+  //           title: '第'+ (_this.data.xiabiao+1) +'失败',
+  //           icon: 'none',
+  //         })
+  //         console.log(_this.data.xiabiao+1)
+  //         console.log(e)
+  //       },
+  //     })
+  //   }
+  // },
 
   printTo : function(){
     var _this = this;
@@ -720,9 +847,10 @@ Page({
     for (var i = 1; i < 10; i++) {
       numList[i - 1] = i
     }
+    console.log(list[0])
     this.setData({
       buffSize: list,
-      oneTimeData: list[0],
+      oneTimeData: 190,
       printNum: numList,
       printerNum: numList[0]
     })

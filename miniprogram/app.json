@@ -357,6 +357,7 @@
         "page/caigou_fukuan/caigou_fukuan",
         "page/caigou_fukuanAdd/caigou_fukuanAdd",
         "page/xiaoshou_baojia/xiaoshou_baojia",
+        "page/xiaoshou_baojia_xiangqing/xiaoshou_baojia_xiangqing",
         "page/xiaoshou_baojiaAdd/xiaoshou_baojiaAdd",
         "page/xiaoshou_dingdan/xiaoshou_dingdan",
         "page/xiaoshou_dingdan_xiangqing/xiaoshou_dingdan_xiangqing",
@@ -384,7 +385,13 @@
         "page/maoli_tongji/maoli_tongji",
         "page/kehu_wanglai/kehu_wanglai",
         "page/gongyingshang_wanglai/gongyingshang_wanglai",
-        "page/kehu_kaipiao/kehu_kaipiao"
+        "page/kehu_kaipiao/kehu_kaipiao",
+        "page/liushuizhang/liushuizhang",
+        "page/qichu/qichu",
+        "page/qichu_kehuAdd/qichu_kehuAdd",
+        "page/qichu_gongyingshangAdd/qichu_gongyingshangAdd",
+        "page/qichu_kucunAdd/qichu_kucunAdd",
+        "page/test/test"
       ]
     },
     {
@@ -394,7 +401,8 @@
         "page/yibiaopan/yibiaopan",
         "page/xiaoshou_dingdan_zoushi/xiaoshou_dingdan_zoushi",
         "page/xiaoshou_shoukuan_zoushi/xiaoshou_shoukuan_zoushi",
-        "page/caigou_fukuan_zoushi/caigou_fukuan_zoushi"
+        "page/caigou_fukuan_zoushi/caigou_fukuan_zoushi",
+        "page/jizhang/jizhang"
       ]
     },
     {

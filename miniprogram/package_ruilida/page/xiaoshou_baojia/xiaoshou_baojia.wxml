@@ -1,16 +1,15 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-index="i" wx:key="item">
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
-      <van-cell title="{{item.bianhao}}" value="{{'合计：' + item.heji}}" use-label-slot>
+      <van-cell title="{{item.bianhao}}" style="font-size: 20px;" use-label-slot>
         <view slot="label">
           <text>客户：{{item.kehu}} \n</text>
-          <text>日期：{{item.riqi}} \n</text>
           <text>销售单位：{{item.xiaoshou_danwei}} \n</text>
-          <text>店铺：{{item.dianpu}} \n</text>
-          <text>业务员：{{item.yewuyuan}} \n</text>
+          <text decode="{{true}}">店铺：{{item.dianpu}} &nbsp;&nbsp; 业务员：{{item.yewuyuan}} \n</text>
           <!-- <text>审核人：{{item.shenhe}} \n</text> -->
-          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
+          <text decode="{{true}}">日期：{{item.riqi}} &nbsp;&nbsp; 审核状态：{{item.shenhe_zhuangtai}} \n</text>
         </view>
+        <van-tag slot="right-icon" plain type="primary" size="medium" data-index="{{i}}" data-column="tiaozhuan" catchtap="xiala_show">更多</van-tag>
       </van-cell>
 
       <van-cell title="{{product_item.shangpin_mingcheng}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
@@ -19,12 +18,13 @@
           <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;报价：{{product_item.baojia_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}}</text>
         </view>
       </van-cell>
+      <van-cell title="{{'合计：' + item.heji}}"></van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
+  <view class="bt_text">合计：{{zongji}}</view>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

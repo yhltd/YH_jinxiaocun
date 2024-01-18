@@ -40,10 +40,27 @@ Page({
     var index = e.currentTarget.dataset.index
     var xukai_list = _this.data.xukai_list
     var max_val = _this.data.xukai_list[index].weikai * 1
-    if(this_val > max_val){
+    if(this_val >= max_val){
       xukai_list[index].this_kai = max_val
     }else{
       xukai_list[index].this_kai = e.detail
+    }
+    _this.setData({
+      xukai_list
+    })
+  },
+
+  change_kaipiao2:function(e){
+    var _this = this
+    console.log(e)
+    var this_val = e.detail * 1
+    var index = e.currentTarget.dataset.index
+    var xukai_list = _this.data.xukai_list
+    var max_val = _this.data.xukai_list[index].weikai * 1
+    if(this_val >= max_val){
+      xukai_list[index].this_kai = 0
+    }else{
+      xukai_list[index].this_kai = max_val - this_val
     }
     _this.setData({
       xukai_list
@@ -204,10 +221,10 @@ Page({
   save_use:function(){
     var _this = this
     var this_id = _this.data.id
-    var dingjin_use = _this.data.dingjin_use
+    var dingjin_use_new = _this.data.dingjin_use_new
     var p_heji = _this.data.p_heji
-    var qiankuan = _this.data.heji - dingjin_use - _this.data.shoukuan_money
-    var dingjin_yong = dingjin_use - _this.data.list[0].dingjin_use
+    var qiankuan = _this.data.heji - dingjin_use_new - _this.data.shoukuan_money
+    var dingjin_yong = dingjin_use_new - _this.data.list[0].dingjin_use
     var dingjin_yue = _this.data.dingjin_sum - _this.data.yiyong
     if(qiankuan < 0){
       wx.showToast({
@@ -220,7 +237,7 @@ Page({
         icon: 'none'
       })
     }else {
-      var sql = "update caigou_ruku set dingjin_use = '" + dingjin_use + "' where id=" + _this.data.id
+      var sql = "update caigou_ruku set dingjin_use = '" + dingjin_use_new + "' where id=" + _this.data.id
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -253,9 +270,21 @@ Page({
   use_dingjin:function(){
     var _this = this
     var this_qiankuan = _this.data.qiankuan
+    var dingjin_use = _this.data.dingjin_use
+    var dingjin_use_new = _this.data.dingjin_use
+    if(dingjin_use * 1 == 0){
+      var qiankuan = _this.data.qiankuan * 1
+      var dingjin_sum = _this.data.dingjin_sum * 1
+      if(qiankuan <= dingjin_sum){
+        dingjin_use_new = qiankuan
+      }else{
+        dingjin_use_new = dingjin_sum
+      }
+    }
     if(this_qiankuan > 0){
       _this.setData({
-        cxShow:true
+        cxShow:true,
+        dingjin_use_new
       })
     }else{
       wx.showToast({

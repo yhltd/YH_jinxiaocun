@@ -139,6 +139,55 @@ Page({
     }
   },
 
+  danwei_select:function(e){
+    var _this = this
+    console.log(e)
+    var danwei_list = _this.data.danwei_list
+    for(var i=0; i< danwei_list.length; i++){
+      danwei_list[i].isselect = 1
+    }
+    console.log(danwei_list)
+    _this.setData({
+      danwei_show: true,
+      danwei_list,
+      type:'',
+      name:'',
+    })
+  },
+
+  danwei_click:function(e){
+    var _this = this
+    var index = e.currentTarget.dataset.index
+    var danwei_list = _this.data.danwei_list
+    var product_body = _this.data.product_body
+    console.log(danwei_list[index])
+    product_body.danwei = danwei_list[index].name
+    _this.setData({
+      product_body
+    })
+    _this.qxShow()
+  },
+
+  sel_danwei:function(){
+    var _this = this
+    var danwei_list = _this.data.danwei_list
+    var name = _this.data.name
+    for(var i=0; i<danwei_list.length; i++){
+      if(name == ''){
+        danwei_list[i].isselect = 1
+      }else if(name != ''){
+        if(danwei_list[i].name.indexOf(name) != -1){
+          danwei_list[i].isselect = 1
+        }else{
+          danwei_list[i].isselect = 0
+        }
+      }
+    }
+    _this.setData({
+      danwei_list
+    })
+  },
+
   get_peizhi:function(){
     wx.showLoading({
       title:'加载中'
@@ -285,6 +334,7 @@ Page({
       xlShow2:false,
       ssqShow:false,
       xgShow2: false,
+      danwei_show:false,
     })
   },
 
@@ -299,36 +349,15 @@ Page({
 
   imgdown: function(e){
     var _this = this
-    var url = _this.data.lianxi_list[_this.data.this_index];   // base64
+    var url = _this.data.lianxi_list[_this.data.this_index].image;   // base64
     if(url.indexOf("http") != -1){
-      wx.downloadFile({
-        url: url, //仅为示例，并非真实的资源
-        success (res) {
-          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-          if (res.statusCode === 200) {
-            wx.saveImageToPhotosAlbum({
-              filePath:res.tempFilePath,
-              success(res) {
-                wx.showToast({
-                  title: '保存成功，请到手机相册查看',
-                  icon: 'none'
-                })
-                console.log(res)
-              },
-              fail: function(err) {
-                wx.showToast({
-                  title: '保存失败',
-                  icon: 'none'
-                })
-                console.log('保存失败', err);
-              }
-            })
-          }
-        }
+      wx.previewImage({
+        current: url, // 图片的地址url
+        urls: [url] // 预览的地址url
       })
     }else{
       wx.showToast({
-        title: '下载失败，请检查图片是否已保存',
+        title: '预览失败，请检查图片是否已保存',
         icon: 'none'
       })
     }
@@ -574,142 +603,61 @@ Page({
         return;
       }
     }
+
+    var sql = ""
     if(product_body.id == ''){
-      wx.showLoading({
-        title:'保存中'
-      })
-      var sql = "insert into product(name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu) output inserted.id values('" + product_body.name + "','" + product_body.type + "','" + product_body.danwei + "','" + product_body.caizhi + "','" + product_body.jishu_biaozhun + "','" + product_body.zhibao_dengji + "','" + product_body.beizhu + "')"
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var new_id = res.result.recordset[0].id
-          product_body.id = new_id
-          _this.setData({
-            product_body
-          })
-          var sql = "insert into product_item(product_id,guige,bianhao,caigou_price,jinxiang,enable,image) values "
-          var sql2 = ""
-          for(var i=0; i<lianxi_list.length; i++){
-            if(sql2 == ""){
-              sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable +  "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
-            }else{
-              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable +  "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
-            }
-          }
-          sql = sql + sql2
-          console.log(sql)
-          wx.cloud.callFunction({
-            name: 'sqlserver_ruilida',
-            data: {
-              query: sql
-            },
-            success: res => {
-              console.log(lianxi_list)
-              for(var i=0; i<lianxi_list.length; i++){
-                if(lianxi_list[i].image.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(lianxi_list[i].image.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ lianxi_list[i].bianhao +'.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: lianxi_list[i].bianhao +'.jpg',
-                    path: '/ruilida/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
-                }
-              }
-              wx.hideLoading()
-              wx.showToast({
-                title: '保存成功',
-                icon: 'none'
-              })
-              setTimeout(function () {
-                _this.back()
-              }, 2000)
-            },
-            err: res => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '错误！',
-                icon: 'none',
-                duration: 3000
-              })
-              console.log("错误!")
-            },
-            fail: res => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '请求失败！',
-                icon: 'none',
-                duration: 3000
-              })
-              console.log("请求失败！")
-            }
-          })
-        },
-        err: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '错误!',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
+      sql = "select product_item.id,product_id,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,beizhu from product left join product_item on product.id = product_item.product_id where name = '" + product_body.name + "' and caizhi = '" + product_body.caizhi + "' and jishu_biaozhun = '" + product_body.jishu_biaozhun + "' and zhibao_dengji = '" + product_body.zhibao_dengji + "' and beizhu = '" + product_body.beizhu + "'"
+      var sql2 = ""
+      for(var i=0; i<lianxi_list.length; i++){
+        if(sql2 == ""){
+          sql2 = " and(guige='" + lianxi_list[i].guige + "'"
+        }else{
+          sql2 = sql2 + " or guige='" + lianxi_list[i].guige + "'"
         }
-      })
+      }
+      if(sql2 != ''){
+        sql2 = sql2 + ")"
+      }
+      sql = sql + sql2
     }else{
-      wx.showLoading({
-        title:'保存中'
-      })
-      var sql = "update product set name='" + product_body.name + "',type='" + product_body.type + "',danwei='" + product_body.danwei + "',caizhi='" + product_body.caizhi + "',jishu_biaozhun='" + product_body.jishu_biaozhun + "',zhibao_dengji='" + product_body.zhibao_dengji + "',beizhu='" + product_body.beizhu + "' where id=" + product_body.id
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var new_id = product_body.id
-          var sql = "delete from product_item where product_id='" + new_id + "';insert into product_item(product_id,guige,bianhao,caigou_price,jinxiang,enable,image) values "
-          var sql2 = ""
-          for(var i=0; i<lianxi_list.length; i++){
-            if(sql2 == ""){
-              sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
-            }else{
-              sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
-            }
-          }
-          sql = sql + sql2
-          console.log(sql)
+      sql = "select product_item.id,product_id,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,beizhu from product left join product_item on product.id = product_item.product_id where name = '" + product_body.name + "' and caizhi = '" + product_body.caizhi + "' and jishu_biaozhun = '" + product_body.jishu_biaozhun + "' and zhibao_dengji = '" + product_body.zhibao_dengji + "' and beizhu = '" + product_body.beizhu + "' and product_id != '" + product_body.id + "'"
+      var sql2 = ""
+      for(var i=0; i<lianxi_list.length; i++){
+        if(sql2 == ""){
+          sql2 = " and(guige='" + lianxi_list[i].guige + "'"
+        }else{
+          sql2 = sql2 + " or guige='" + lianxi_list[i].guige + "'"
+        }
+      }
+      if(sql2 != ''){
+        sql2 = sql2 + ")"
+      }
+      sql = sql + sql2
+    }
+
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.hideLoading()
+        console.log(res.result.recordset)
+        var list = res.result.recordset
+        if(list.length > 0){
+          wx.showToast({
+            title: '已有 ' +  list[0].guige + ' 相同规格商品！',
+            icon: 'none',
+            duration: 3000
+          })
+          return;
+        }
+        
+        if(product_body.id == ''){
+          wx.showLoading({
+            title:'保存中'
+          })
+          var sql = "insert into product(name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu) output inserted.id values('" + product_body.name + "','" + product_body.type + "','" + product_body.danwei + "','" + product_body.caizhi + "','" + product_body.jishu_biaozhun + "','" + product_body.zhibao_dengji + "','" + product_body.beizhu + "')"
           wx.cloud.callFunction({
             name: 'sqlserver_ruilida',
             data: {
@@ -717,48 +665,91 @@ Page({
             },
             success: res => {
               console.log(res)
+              var new_id = res.result.recordset[0].id
+              product_body.id = new_id
+              _this.setData({
+                product_body
+              })
+              var sql = "insert into product_item(product_id,guige,bianhao,caigou_price,jinxiang,enable,image) values "
+              var sql2 = ""
               for(var i=0; i<lianxi_list.length; i++){
-                if(lianxi_list[i].image.indexOf("base64") != -1){
-                  var fsm = wx.getFileSystemManager();
-                  var buffer = wx.base64ToArrayBuffer(lianxi_list[i].image.split(',')[1]);
-                  const fileName = wx.env.USER_DATA_PATH + '/'+ lianxi_list[i].bianhao +'.jpg';
-                  fsm.writeFileSync(fileName, buffer, 'binary');
-                  console.log(fileName);
-                   wx.uploadFile({
-                    url: 'http://yhocn.cn:9087/file/upload',
-                    header: { "Content-Type": "multipart/form-data" },
-                    filePath: fileName,
-                    name: 'file',
-                    formData:{
-                    name: lianxi_list[i].bianhao +'.jpg',
-                    path: '/ruilida/',
-                    kongjian: _this.data.kongjian,
-                    },
-                    success(res){
-                      console.log(res.data);
-                      if(res.data.indexOf("存储空间不足") != -1){
-                        wx.showToast({
-                          title: '存储空间不足！',
-                          icon: 'none'
-                        })
-                      }
-                    }
-                  })
+                if(sql2 == ""){
+                  sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable +  "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
+                }else{
+                  sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable +  "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
                 }
               }
-              wx.hideLoading()
-              wx.showToast({
-                title: '保存成功',
-                icon: 'none'
+              sql = sql + sql2
+              console.log(sql)
+              wx.cloud.callFunction({
+                name: 'sqlserver_ruilida',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(lianxi_list)
+                  for(var i=0; i<lianxi_list.length; i++){
+                    if(lianxi_list[i].image.indexOf("base64") != -1){
+                      var fsm = wx.getFileSystemManager();
+                      var buffer = wx.base64ToArrayBuffer(lianxi_list[i].image.split(',')[1]);
+                      const fileName = wx.env.USER_DATA_PATH + '/'+ lianxi_list[i].bianhao +'.jpg';
+                      fsm.writeFileSync(fileName, buffer, 'binary');
+                      console.log(fileName);
+                       wx.uploadFile({
+                        url: 'http://yhocn.cn:9087/file/upload',
+                        header: { "Content-Type": "multipart/form-data" },
+                        filePath: fileName,
+                        name: 'file',
+                        formData:{
+                        name: lianxi_list[i].bianhao +'.jpg',
+                        path: '/ruilida/',
+                        kongjian: _this.data.kongjian,
+                        },
+                        success(res){
+                          console.log(res.data);
+                          if(res.data.indexOf("存储空间不足") != -1){
+                            wx.showToast({
+                              title: '存储空间不足！',
+                              icon: 'none'
+                            })
+                          }
+                        }
+                      })
+                    }
+                  }
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '保存成功',
+                    icon: 'none'
+                  })
+                  setTimeout(function () {
+                    _this.back()
+                  }, 2000)
+                },
+                err: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '错误！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("请求失败！")
+                }
               })
-              setTimeout(function () {
-                _this.back()
-              }, 2000)
             },
             err: res => {
               wx.hideLoading()
               wx.showToast({
-                title: '错误！',
+                title: '错误!',
                 icon: 'none',
                 duration: 3000
               })
@@ -774,27 +765,138 @@ Page({
               console.log("请求失败！")
             }
           })
-        },
-        err: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '错误!',
-            icon: 'none',
-            duration: 3000
+        }else{
+          wx.showLoading({
+            title:'保存中'
           })
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
+          var sql = "update product set name='" + product_body.name + "',type='" + product_body.type + "',danwei='" + product_body.danwei + "',caizhi='" + product_body.caizhi + "',jishu_biaozhun='" + product_body.jishu_biaozhun + "',zhibao_dengji='" + product_body.zhibao_dengji + "',beizhu='" + product_body.beizhu + "' where id=" + product_body.id
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var new_id = product_body.id
+              var sql = "delete from product_item where product_id='" + new_id + "';insert into product_item(product_id,guige,bianhao,caigou_price,jinxiang,enable,image) values "
+              var sql2 = ""
+              for(var i=0; i<lianxi_list.length; i++){
+                if(sql2 == ""){
+                  sql2 = "('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
+                }else{
+                  sql2 = sql2 + ",('" + new_id + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].bianhao + "','" + lianxi_list[i].caigou_price + "','" + lianxi_list[i].jinxiang + "','" + lianxi_list[i].enable + "','http://yhocn.cn:9088/ruilida/" + lianxi_list[i].bianhao + ".jpg" + "')"
+                }
+              }
+              sql = sql + sql2
+              console.log(sql)
+              wx.cloud.callFunction({
+                name: 'sqlserver_ruilida',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(res)
+                  for(var i=0; i<lianxi_list.length; i++){
+                    if(lianxi_list[i].image.indexOf("base64") != -1){
+                      var fsm = wx.getFileSystemManager();
+                      var buffer = wx.base64ToArrayBuffer(lianxi_list[i].image.split(',')[1]);
+                      const fileName = wx.env.USER_DATA_PATH + '/'+ lianxi_list[i].bianhao +'.jpg';
+                      fsm.writeFileSync(fileName, buffer, 'binary');
+                      console.log(fileName);
+                       wx.uploadFile({
+                        url: 'http://yhocn.cn:9087/file/upload',
+                        header: { "Content-Type": "multipart/form-data" },
+                        filePath: fileName,
+                        name: 'file',
+                        formData:{
+                        name: lianxi_list[i].bianhao +'.jpg',
+                        path: '/ruilida/',
+                        kongjian: _this.data.kongjian,
+                        },
+                        success(res){
+                          console.log(res.data);
+                          if(res.data.indexOf("存储空间不足") != -1){
+                            wx.showToast({
+                              title: '存储空间不足！',
+                              icon: 'none'
+                            })
+                          }
+                        }
+                      })
+                    }
+                  }
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '保存成功',
+                    icon: 'none'
+                  })
+                  setTimeout(function () {
+                    _this.back()
+                  }, 2000)
+                },
+                err: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '错误！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("请求失败！")
+                }
+              })
+            },
+            err: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '错误!',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
           })
-          console.log("请求失败！")
         }
-      })
-    }
+
+      },
+      err: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '错误！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+
     
 
   },

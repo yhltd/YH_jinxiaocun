@@ -4,9 +4,10 @@
       <van-cell title="{{item.bianhao}}" use-label-slot>
         <view slot="label">
           <text>供应商：{{item.gongyingshang}} \n</text>
-          <text>日期：{{item.riqi}} \n</text>
-          <text>审核人：{{item.shenhe}} \n</text>
-          <text>审核状态：{{item.shenhe_zhuangtai}} \n</text>
+          <text>采购单位：{{item.caigou_danwei}} \n</text>
+          <text decode="{{true}}">店铺：{{item.dianpu}} &nbsp;&nbsp; 业务员：{{item.yewuyuan}} \n</text>
+          <!-- <text>审核人：{{item.shenhe}} \n</text> -->
+          <text decode="{{true}}">日期：{{item.riqi}} &nbsp;&nbsp; 审核状态：{{item.shenhe_zhuangtai}} \n</text>
           <van-tag style="margin-right: 5px;" type="{{item.ruku_zhuangtai=='未入库'?'warning':item.ruku_zhuangtai=='部分入库'?'primary':'success'}}">{{item.ruku_zhuangtai}}</van-tag>
           <van-tag style="margin-right: 5px;" type="{{item.shoupiao_zhuangtai=='未收票'?'warning':item.shoupiao_zhuangtai=='部分收票'?'primary':'success'}}">{{item.shoupiao_zhuangtai}}</van-tag>
           <van-tag type="{{item.fukuan_zhuangtai=='未付款'?'warning':item.fukuan_zhuangtai=='部分付款'?'primary':'success'}}">{{item.fukuan_zhuangtai}}</van-tag>
@@ -32,6 +33,7 @@
       <van-cell>
         <text slot="title" style="font-size: 40rpx;">入库</text>
         <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="chuku_add" />
+        <text style="color: black;margin-right: 10px;">合计：{{chuku_heji}}</text>
       </van-cell>
 
       <van-cell is-link title="{{chuku_item.riqi}}" use-label-slot wx:for="{{chuku_list}}" wx:for-item="chuku_item" wx:key="{{chuku_item}}" wx:for-index="i" data-index="{{i}}" bindtap="goto_ruku_xiangqing">
@@ -45,6 +47,7 @@
       <van-cell>
         <text slot="title" style="font-size: 40rpx;">付款</text>
         <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="shoukuan_add" />
+        <text style="color: black;margin-right: 10px;">合计：{{shoukuan_heji}}</text>
       </van-cell>
 
       <van-cell is-link title="{{shoukuan_item.shouzhi_riqi}}" use-label-slot wx:for="{{shoukuan_list}}" wx:for-item="shoukuan_item" wx:key="{{shoukuan_item}}" wx:for-index="i" data-index="{{i}}" bindtap="goto_fukuan_xiangqing">
@@ -58,6 +61,7 @@
       <van-cell>
         <text slot="title" style="font-size: 40rpx;">收票</text>
         <van-icon slot="right-icon" name="plus" class="custom-icon" bindtap="kaipiao_add" />
+        <text style="color: black;margin-right: 10px;">合计：{{kaipiao_heji}}</text>
       </van-cell>
       <van-cell is-link title="{{kaipiao_item.kaipiao_riqi}}" use-label-slot wx:for="{{kaipiao_list}}" wx:for-item="kaipiao_item" wx:key="{{kaipiao_item}}" wx:for-index="i" data-index="{{i}}" bindtap="goto_shoupiao_xiangqing">
         <text style="color: black;">{{kaipiao_item.jiashui_heji}}</text>
@@ -67,9 +71,11 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text"></view>
+  <button class="bt_bottom" data-column="gongneng" bindtap="del1">删除</button>
+  <button class="bt_bottom" data-column="gongneng" bindtap="goto_upd">修改</button>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
+
 
 <van-popup show="{{ kaipiao_show }}" position="bottom" custom-style="height: 80%;" bind:close="kaipiao_close">
 
@@ -83,28 +89,32 @@
             <text>总额：{{xukai_list[j].jiashui_xiaoji}} \n</text>
             <text decode="{{true}}">未收票：{{xukai_list[j].weikai}} \n</text>
           </view>
-          <view solt="value"> 
-            <van-field
-              title-width="4.2em"
-              value="{{ xukai_list[j].this_kai }}"
-              label="收票:"
-              placeholder="本次收票"
-              border="{{ false }}"
-              data-index="{{j}}"
-              bind:change="change_kaipiao"
-            />
-            <van-field
-              title-width="4.2em"
-              value="{{ xukai_list[j].weikai - xukai_list[j].this_kai}}"
-              label="未开票:"
-              placeholder="未开票"
-              border="{{ false }}"
-              data-index="{{j}}"
-              bind:change="change_kaipiao2"
-            />
-          </view>
           <van-checkbox slot="icon" value="{{ xukai_list[j].checked }}" data-index="{{j}}" bind:change="onChange"></van-checkbox>
         </van-cell>
+        <view style="display: flex;">
+          <van-field
+            border="true"
+            style="width:50%"
+            title-width="4.5em"
+            value="{{ xukai_list[j].this_kai }}"
+            label="本次收票:"
+            placeholder="本次收票"
+            border="{{ false }}"
+            data-index="{{j}}"
+            bind:change="change_kaipiao"
+          />
+          <van-field
+            border="true"
+            style="width:50%"
+            title-width="4.5em"
+            value="{{ xukai_list[j].weikai - xukai_list[j].this_kai}}"
+            label="本次未收:"
+            placeholder="本次未收"
+            border="{{ false }}"
+            data-index="{{j}}"
+            bind:change="change_kaipiao2"
+          />
+        </view>
       </block>
     </van-cell-group>
   </scroll-view>
@@ -115,3 +125,6 @@
   </view>
 
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow4}}" actions="{{caozuo_click_list}}" close-on-click-overlay bind:close="select4" bind:select="select4" />

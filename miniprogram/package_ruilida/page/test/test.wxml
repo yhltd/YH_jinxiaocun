@@ -1,0 +1,28 @@
+<view class="main-body">
+  <form bindsubmit="searchBox">
+
+    <view class="hs20"></view>
+    <view>
+      <text>参数1</text>
+      <input name="inputPwd" bindinput="bindPwdInput" class="input-login" placeholder="输入参数" bindconfirm="bindInputLogin" value='{{listAll[0].canshu}}'> </input>
+
+    </view>
+    <view>
+      <text>参数2</text>
+      <input name="inputcnashuer" bindinput="bindPwdInput" class="input-login" placeholder="输入参数2" value='{{listAll[0].canshu2}}' />
+    </view>
+    <view class="hs20"></view>
+    <view>
+      <button class="btn-login" hover-class="btn-login-hover" form-type="submit">保存</button>
+    </view>
+    <view>
+    <text>\n</text>
+        <text>\n</text>
+    <!-- </br> -->
+      <text>选择导入文本</text>
+    <input name="inputfile" bindinput="bindfilepath" class="input-login" placeholder="请选择txt" value='{{filename}}' />
+<button type="primary" bindtap="wx_up">上传</button>
+    </view>
+
+  </form>
+</view>

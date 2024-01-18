@@ -45,9 +45,9 @@ Page({
       },{
         name:'导出Excel'
       }
-      // ,{
-      //   name:'打印条码'
-      // }
+      ,{
+        name:'打印条码'
+      }
     ],
     quanxuan_value: true,
   },
@@ -81,6 +81,9 @@ Page({
   tableShow: function (e) {
     var _this = this
     var userInfo = _this.data.userInfo
+    _this.setData({
+      list:[],
+    })
     if(userInfo.power_mingxi.shangpin_sel != '是'){
       wx.showToast({
         title: '当前账号无权限',
@@ -88,7 +91,7 @@ Page({
       })
       return;
     }
-    var sql = "select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable from product as p left join product_item as item on p.id = item.product_id where name like '%" + e[0] + "%' and type like '%" + e[1] + "%' and enable like '%" + e[2] + "%';select * from peizhi_shuilv;"
+    var sql = "select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable,image from product as p left join product_item as item on p.id = item.product_id where name like '%" + e[0] + "%' and type like '%" + e[1] + "%' and enable like '%" + e[2] + "%';select * from peizhi_shuilv;"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',

@@ -10,7 +10,7 @@
         label="税率"
         placeholder="请填写税率"
         border="false"
-        type="number"
+        type="digit"
         right-icon="../../image/baifenbi.png"
         title-width="7.2em"
       >
@@ -57,7 +57,7 @@
         label="零售上浮比例"
         placeholder="请填写零售上浮比例"
         border="false"
-        type="number"
+        type="digit"
         right-icon="../../image/baifenbi.png"
         title-width="7.2em"
       />
@@ -83,7 +83,7 @@
         label="批发上浮比例"
         placeholder="请填写批发上浮比例"
         border="false"
-        type="number"
+        type="digit"
         right-icon="../../image/baifenbi.png"
         title-width="7.2em"
       />
@@ -109,7 +109,7 @@
         label="大客户上浮比例"
         placeholder="请填写大客户上浮比例"
         border="false"
-        type="number"
+        type="digit"
         right-icon="../../image/baifenbi.png"
         title-width="7.2em"
       />
@@ -128,7 +128,7 @@
         label="开票额度"
         placeholder="请填写开票额度"
         border="false"
-        type="number"
+        type="digit"
         title-width="7.2em"
       >
       </van-field>

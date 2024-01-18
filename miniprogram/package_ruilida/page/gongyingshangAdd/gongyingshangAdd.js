@@ -369,113 +369,33 @@ Page({
         return;
       }
     }
+    var sql = ""
     if(gongying_body.id == ''){
-      wx.showLoading({
-        title:'保存中'
-      })
-      var sql = "insert into gongyingshang(bianhao,name,gongyingshang_dengji,suozai_diqu,dizhi,beizhu,caigouyuan,jianzuo_kehu,zhuyao_yewu,shoujian_name,shoujian_phone,shoujian_dizhi,kaipiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao) output inserted.id values('" + gongying_body.bianhao + "','" + gongying_body.name + "','" + gongying_body.gongyingshang_dengji + "','" + gongying_body.suozai_diqu + "','" + gongying_body.dizhi + "','" + gongying_body.beizhu + "','" + gongying_body.caigouyuan + "','" + gongying_body.jianzuo_kehu + "','" + gongying_body.zhuyao_yewu + "','" + gongying_body.shoujian_name + "','" + gongying_body.shoujian_phone + "','" + gongying_body.shoujian_dizhi + "','" + gongying_body.kaipiao_danwei + "','" + gongying_body.shibiehao + "','" + gongying_body.kaipiao_dizhi + "','" + gongying_body.kaipiao_dianhua + "','" + gongying_body.kaipiao_yinhang + "','" + gongying_body.kaipiao_zhanghao + "')"
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var new_id = res.result.recordset[0].id
-          gongying_body.id = new_id
-          _this.setData({
-            gongying_body
-          })
-          var sql = "insert into gongyingshang_item(name,department,zhiwu,phone,address,type,gongyingshang_id) values "
-          var sql2 = ""
-          for(var i=0; i<lianxi_list.length; i++){
-            if(sql2 == ""){
-              sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
-            }else{
-              sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
-            }
-          }
-          sql = sql + sql2
-          console.log(sql)
-          wx.cloud.callFunction({
-            name: 'sqlserver_ruilida',
-            data: {
-              query: sql
-            },
-            success: res => {
-              console.log(res)
-              wx.hideLoading()
-              wx.showToast({
-                title: '保存成功',
-                icon: 'none'
-              })
-              setTimeout(function () {
-                _this.back()
-              }, 2000)
-            },
-            err: res => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '错误！',
-                icon: 'none',
-                duration: 3000
-              })
-              console.log("错误!")
-            },
-            fail: res => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '请求失败！',
-                icon: 'none',
-                duration: 3000
-              })
-              console.log("请求失败！")
-            }
-          })
-        },
-        err: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '错误!',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
+      sql = "select * from gongyingshang where name = '" + gongying_body.name + "'"
     }else{
-      wx.showLoading({
-        title:'保存中'
-      })
-      var sql = "update gongyingshang set bianhao='" + gongying_body.bianhao + "',name='" + gongying_body.name + "',gongyingshang_dengji='" + gongying_body.gongyingshang_dengji + "',suozai_diqu='" + gongying_body.suozai_diqu + "',dizhi='" + gongying_body.dizhi + "',beizhu='" + gongying_body.beizhu + "',caigouyuan='" + gongying_body.caigouyuan + "',jianzuo_kehu='" + gongying_body.jianzuo_kehu + "',zhuyao_yewu='" + gongying_body.zhuyao_yewu + "',shoujian_name='" + gongying_body.shoujian_name + "',shoujian_phone='" + gongying_body.shoujian_phone + "',shoujian_dizhi='" + gongying_body.shoujian_dizhi + "',kaipiao_danwei='" + gongying_body.kaipiao_danwei + "',shibiehao='" + gongying_body.shibiehao + "',kaipiao_dizhi='" + gongying_body.kaipiao_dizhi + "',kaipiao_dianhua='" + gongying_body.kaipiao_dianhua + "',kaipiao_yinhang='" + gongying_body.kaipiao_yinhang + "',kaipiao_zhanghao='" + gongying_body.kaipiao_zhanghao + "' where id=" + gongying_body.id
-      wx.cloud.callFunction({
-        name: 'sqlserver_ruilida',
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log(res)
-          var new_id = gongying_body.id
-          var sql = "delete from gongyingshang_item where gongyingshang_id='" + new_id + "';insert into gongyingshang_item(name,department,zhiwu,phone,address,type,gongyingshang_id) values "
-          var sql2 = ""
-          for(var i=0; i<lianxi_list.length; i++){
-            if(sql2 == ""){
-              sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
-            }else{
-              sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
-            }
-          }
-          sql = sql + sql2
-          console.log(sql)
+      sql = "select * from gongyingshang where name = '" + gongying_body.name + "' and id !=" + gongying_body.id
+    }
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        if(list.length > 0){
+          wx.showToast({
+            title: '已有相同供应商名称！',
+            icon: 'none',
+            duration: 3000
+          })
+          return;
+        }
+        if(gongying_body.id == ''){
+          wx.showLoading({
+            title:'保存中'
+          })
+          var sql = "insert into gongyingshang(bianhao,name,gongyingshang_dengji,suozai_diqu,dizhi,beizhu,caigouyuan,jianzuo_kehu,zhuyao_yewu,shoujian_name,shoujian_phone,shoujian_dizhi,kaipiao_danwei,shibiehao,kaipiao_dizhi,kaipiao_dianhua,kaipiao_yinhang,kaipiao_zhanghao) output inserted.id values('" + gongying_body.bianhao + "','" + gongying_body.name + "','" + gongying_body.gongyingshang_dengji + "','" + gongying_body.suozai_diqu + "','" + gongying_body.dizhi + "','" + gongying_body.beizhu + "','" + gongying_body.caigouyuan + "','" + gongying_body.jianzuo_kehu + "','" + gongying_body.zhuyao_yewu + "','" + gongying_body.shoujian_name + "','" + gongying_body.shoujian_phone + "','" + gongying_body.shoujian_dizhi + "','" + gongying_body.kaipiao_danwei + "','" + gongying_body.shibiehao + "','" + gongying_body.kaipiao_dizhi + "','" + gongying_body.kaipiao_dianhua + "','" + gongying_body.kaipiao_yinhang + "','" + gongying_body.kaipiao_zhanghao + "')"
           wx.cloud.callFunction({
             name: 'sqlserver_ruilida',
             data: {
@@ -483,19 +403,62 @@ Page({
             },
             success: res => {
               console.log(res)
-              wx.hideLoading()
-              wx.showToast({
-                title: '保存成功',
-                icon: 'none'
+              var new_id = res.result.recordset[0].id
+              gongying_body.id = new_id
+              _this.setData({
+                gongying_body
               })
-              setTimeout(function () {
-                _this.back()
-              }, 2000)
+              var sql = "insert into gongyingshang_item(name,department,zhiwu,phone,address,type,gongyingshang_id) values "
+              var sql2 = ""
+              for(var i=0; i<lianxi_list.length; i++){
+                if(sql2 == ""){
+                  sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+                }else{
+                  sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+                }
+              }
+              sql = sql + sql2
+              console.log(sql)
+              wx.cloud.callFunction({
+                name: 'sqlserver_ruilida',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(res)
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '保存成功',
+                    icon: 'none'
+                  })
+                  setTimeout(function () {
+                    _this.back()
+                  }, 2000)
+                },
+                err: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '错误！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("请求失败！")
+                }
+              })
             },
             err: res => {
               wx.hideLoading()
               wx.showToast({
-                title: '错误！',
+                title: '错误!',
                 icon: 'none',
                 duration: 3000
               })
@@ -511,28 +474,106 @@ Page({
               console.log("请求失败！")
             }
           })
-        },
-        err: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '错误!',
-            icon: 'none',
-            duration: 3000
+        }else{
+          wx.showLoading({
+            title:'保存中'
           })
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.hideLoading()
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
+          var sql = "update gongyingshang set bianhao='" + gongying_body.bianhao + "',name='" + gongying_body.name + "',gongyingshang_dengji='" + gongying_body.gongyingshang_dengji + "',suozai_diqu='" + gongying_body.suozai_diqu + "',dizhi='" + gongying_body.dizhi + "',beizhu='" + gongying_body.beizhu + "',caigouyuan='" + gongying_body.caigouyuan + "',jianzuo_kehu='" + gongying_body.jianzuo_kehu + "',zhuyao_yewu='" + gongying_body.zhuyao_yewu + "',shoujian_name='" + gongying_body.shoujian_name + "',shoujian_phone='" + gongying_body.shoujian_phone + "',shoujian_dizhi='" + gongying_body.shoujian_dizhi + "',kaipiao_danwei='" + gongying_body.kaipiao_danwei + "',shibiehao='" + gongying_body.shibiehao + "',kaipiao_dizhi='" + gongying_body.kaipiao_dizhi + "',kaipiao_dianhua='" + gongying_body.kaipiao_dianhua + "',kaipiao_yinhang='" + gongying_body.kaipiao_yinhang + "',kaipiao_zhanghao='" + gongying_body.kaipiao_zhanghao + "' where id=" + gongying_body.id
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              var new_id = gongying_body.id
+              var sql = "delete from gongyingshang_item where gongyingshang_id='" + new_id + "';insert into gongyingshang_item(name,department,zhiwu,phone,address,type,gongyingshang_id) values "
+              var sql2 = ""
+              for(var i=0; i<lianxi_list.length; i++){
+                if(sql2 == ""){
+                  sql2 = "('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+                }else{
+                  sql2 = sql2 + ",('" + lianxi_list[i].name + "','" + lianxi_list[i].department + "','" + lianxi_list[i].zhiwu + "','" + lianxi_list[i].phone + "','" + lianxi_list[i].address + "','" + lianxi_list[i].type + "','" + new_id + "')"
+                }
+              }
+              sql = sql + sql2
+              console.log(sql)
+              wx.cloud.callFunction({
+                name: 'sqlserver_ruilida',
+                data: {
+                  query: sql
+                },
+                success: res => {
+                  console.log(res)
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '保存成功',
+                    icon: 'none'
+                  })
+                  setTimeout(function () {
+                    _this.back()
+                  }, 2000)
+                },
+                err: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '错误！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("错误!")
+                },
+                fail: res => {
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '请求失败！',
+                    icon: 'none',
+                    duration: 3000
+                  })
+                  console.log("请求失败！")
+                }
+              })
+            },
+            err: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '错误!',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
           })
-          console.log("请求失败！")
         }
-      })
-    }
-    
+      },
+      err: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '错误！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
 
   },
 

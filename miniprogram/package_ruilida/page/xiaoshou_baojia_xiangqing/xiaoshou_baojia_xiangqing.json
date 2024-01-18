@@ -1,0 +1,27 @@
+{
+  "usingComponents": {
+    "van-tabbar": "../../components/tabbar/index",
+    "van-tabbar-item": "../../components/tabbar-item/index",
+    "van-grid": "../../components/grid/index",
+    "van-grid-item": "../../components/grid-item/index",
+    "van-cell": "../../components/cell/index",
+    "van-cell-group": "../../components/cell-group/index",
+    "van-nav-bar": "../../components/nav-bar/index",
+    "van-row": "../../components/row/index",
+    "van-col": "../../components/col/index",
+    "van-button": "../../components/button/index",
+    "van-field": "../../components/field/index",
+    "van-action-sheet": "../../components/action-sheet/index",
+    "van-icon": "../../components/icon/index",
+    "van-area": "../../components/area/index",
+    "van-popup": "../../components/popup/index",
+    "van-image": "../../components/image/index",
+    "van-tag": "../../components/tag/index",
+    "van-checkbox": "../../components/checkbox/index",
+    "van-checkbox-group": "../../components/checkbox-group/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "销售报价单"
+}

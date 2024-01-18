@@ -387,114 +387,131 @@ Page({
     }
   },
 
-  labelTest: function () { //标签测试
+  labelTest() { //标签测试
     var that = this;
     var _this = this;
-    if (!_this.data.isConn) {
-      wx.showToast({
-        title: '蓝牙未连接',
-        icon: 'none'
-      })
-      return;
-    }
+    // if (!_this.data.isConn) {
+    //   wx.showToast({
+    //     title: '蓝牙未连接',
+    //     icon: 'none'
+    //   })
+    //   return;
+    // }
     var canvasWidth = that.data.canvasWidth
     var canvasHeight = that.data.canvasHeight    
     var list = _this.data.list
-    var dayin_peizhi = _this.data.dayin_peizhi
+    var this_page = 0
+    var command_arr = []
     var command = tsc.jpPrinter.createNew()
-    command.setCls()//清除缓冲区，防止下一个没生效
-    command.setSize(105, _this.data.danju_height / 10)//设置标签大小，单位mm.具体参数请用尺子量一下
-    command.setGap(0)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
-    command.setCls()//清除缓冲区
-    var height = 20
+    command.setSize(100,80)//设置标签大小，单位mm.具体参数请用尺子量一下
+    command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+    var dayin_peizhi = _this.data.dayin_peizhi
     for(var i=0; i<list.length; i++){
       if(list[i].lvxingcai != ""){
+        command = tsc.jpPrinter.createNew()
+        command.setCls()
+        command.setSize(100,80)//设置标签大小，单位mm.具体参数请用尺子量一下
+        command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+        command.setCls()
+        var height = 20
         command.setText(380, height, "TSS24.BF2", 0, 3, 3, "天龙五金铝框")//绘制文字
         height = height + 100
         if(dayin_peizhi.P1 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, '客户：' + list[i].customer_name)//绘制文字
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, '客户：' + list[i].customer_name)//绘制文字
         }
         if(dayin_peizhi.P2 == '是'){
-          command.setText(400, height, "TSS24.BF2", 0, 2, 2, '日期：' + list[i].insert_date)//绘制文字
+          command.setText(420, height, "TSS24.BF2", 0, 2, 2, '日期：' + list[i].insert_date)//绘制文字
         }
         
         if(dayin_peizhi.P3 == '是'){
-          command.setText(850, height, "TSS24.BF2", 0, 2, 2, list[i].customer_number)//绘制文字
+          command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].customer_number)//绘制文字
         }
         
         height = height + 60
         if(dayin_peizhi.P4 == '是'){
-          command.setText(10,height, "TSS24.BF2", 0, 2, 2, '安装地址：' + list[i].install_address)//绘制文字
-
+          command.setText(30,height, "TSS24.BF2", 0, 2, 2, '安装地址：' + list[i].install_address)//绘制文字
           height = height + 60
         }
 
         if(dayin_peizhi.P5 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].order_number)
-          command.setText(850, height, "TSS24.BF2", 0, 2, 2, (i*1+1*1))
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].order_number)
+          command.setText(870, height, "TSS24.BF2", 0, 2, 2, (i*1+1*1))
   
           height = height + 60
         }
 
 
         if(dayin_peizhi.P6 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].lvxingcai)
-          command.setText(450, height, "TSS24.BF2", 0, 2, 2, list[i].lvcai_yanse)
-          command.setText(850, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_xinghao)
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].lvxingcai)
+          command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].lvcai_yanse)
+          command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].lashou_xinghao)
   
           height = height + 60
         }
 
 
         if(dayin_peizhi.P7 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].boli_shenjiagong)
-          command.setText(450, height, "TSS24.BF2", 0, 2, 2, list[i].boli_yanse)
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].boli_shenjiagong)
+          command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].boli_yanse)
   
           height = height + 60
         }
 
 
         if(dayin_peizhi.P8 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].height)
-          command.setText(220, height, "TSS24.BF2", 0, 2, 2, '*')
-          command.setText(450, height, "TSS24.BF2", 0, 2, 2, list[i].width)
-          command.setText(850, height, "TSS24.BF2", 0, 2, 2, list[i].num)
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].height)
+          command.setText(250, height, "TSS24.BF2", 0, 2, 2, '*')
+          command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].width)
+          command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].num)
   
           height = height + 60
         }
 
 
         if(dayin_peizhi.P9 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select1)
-          command.setText(340, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select2)
-          command.setText(670, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select3)
-          command.setText(1000, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select4)
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select1)
+          command.setText(360, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select2)
+          command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select3)
+          command.setText(1020, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_select4)
   
           height = height + 60
         }
 
 
         if(dayin_peizhi.P10 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select1)
-          command.setText(340, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select2)
-          command.setText(670, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select3)
-          command.setText(1000, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select4)
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select1)
+          command.setText(360, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select2)
+          command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select3)
+          command.setText(1020, height, "TSS24.BF2", 0, 2, 2, list[i].pinpai_select4)
   
           height = height + 60
         }
 
 
         if(dayin_peizhi.P11 == '是'){
-          command.setText(10, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang1)
-          command.setText(340, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang2)
-          command.setText(670, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang3)
-          command.setText(1000, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang4)
+          command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang1)
+          command.setText(360, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang2)
+          command.setText(690, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang3)
+          command.setText(1020, height, "TSS24.BF2", 0, 2, 2, list[i].fujian_shuliang4)
         }
-        height = height + 120
+        
+        command.setPagePrint()//执行打印指令
+        command_arr.push(command)
+        command = tsc.jpPrinter.createNew()
+        command.setCls()
+        command.setSize(100, 80)//设置标签大小，单位mm.具体参数请用尺子量一下
+        command.setGap(2)//设置两个标签之间的间隙，单位mm.具体参数请用尺子量一下
+        command.setCls()
       }
     }
-    
-    command.setPagePrint()//执行打印指令
+    console.log(command_arr)
+    var str = ""
+    for(var i=0; i<command_arr.length; i++){
+      str = str + command_arr[i].getZhiLing()
+    }
+    console.log(str)
+    command = tsc.jpPrinter.createNew()
+    command.addCommand(str)
     that.setData({
       isLabelSend: true
     })
@@ -515,6 +532,85 @@ Page({
     })
     that.Send(buff)
   },
+
+//   Send(buff) { //分包发送
+//     var that = this
+//     var _this = this
+//     var printNum = that.data.printerNum
+//     var currentPrint = that.data.currentPrint
+//     var print_buff = []
+//     for(var i=0; i<buff.length; i++){
+//       var this_data = buff[i].getData()
+//       console.log(this_data)
+//       var time = that.data.oneTimeData
+//       var looptime = parseInt(this_data.length / time);
+//       var lastData = parseInt(this_data.length % time);
+//       var loopTime = looptime + 1
+//       var currentTime = 1
+//       var onTimeData = that.data.oneTimeData
+//       var buf
+//       var dataView
+//       var last = 0
+//       for(var j=0; j<loopTime-1; j++){
+//         buf = new ArrayBuffer(onTimeData)
+//         dataView = new DataView(buf)
+//         for (var k = 0; k < onTimeData; ++k) {
+//           dataView.setUint8(k, this_data[(currentTime - 1) * onTimeData + k])
+//         }
+//         print_buff.push(buf)
+//         currentTime = currentTime + 1
+//       }
+//       if(lastData > 0){
+//         buf = new ArrayBuffer(lastData)
+//         dataView = new DataView(buf)
+//         for (var k = 0; k < lastData; ++k) {
+//           dataView.setUint8(k, this_data[(currentTime - 1) * onTimeData + k])
+//         }
+//         print_buff.push(buf)
+//       }
+//     }
+//     console.log(print_buff)
+//     console.log(_this.data.option.deviceId)
+//     console.log(_this.data.option.serviceId)
+//     console.log(_this.data.option.characteristicId)
+//     console.log(print_buff)
+//     _this.setData({
+//       xiabiao:0,
+//       print_buff
+//     })
+//     _this.chuandi()
+
+// },
+
+// chuandi(){
+//   var _this = this
+//   if(_this.data.xiabiao < _this.data.print_buff.length){
+//     wx.writeBLECharacteristicValue({
+//       deviceId: _this.data.option.deviceId,
+//       serviceId: _this.data.option.serviceId,
+//       characteristicId: _this.data.option.characteristicId,
+//       value: _this.data.print_buff[_this.data.xiabiao],
+//       success: function (res) {
+//         wx.showToast({
+//           title: '第'+ (_this.data.xiabiao+1) +'成功',
+//         })
+//         _this.setData({
+//           xiabiao: (_this.data.xiabiao * 1) + 1
+//         })
+//         _this.chuandi()
+//         console.log(res)
+//       },
+//       fail: function (e) {
+//         wx.showToast({
+//           title: '第'+ (_this.data.xiabiao+1) +'失败',
+//           icon: 'none',
+//         })
+//         console.log(_this.data.xiabiao+1)
+//         console.log(e)
+//       },
+//     })
+//   }
+// },
 
   Send: function (buff) { //分包发送
     var that = this
@@ -545,57 +641,59 @@ Page({
     console.log(_this.data.option.serviceId)
     console.log(_this.data.option.characteristicId)
     console.log(buf)
-    wx.writeBLECharacteristicValue({
-      deviceId: _this.data.option.deviceId,
-      serviceId: _this.data.option.serviceId,
-      characteristicId: _this.data.option.characteristicId,
-      value: buf,
-      success: function (res) {
-        if (currentPrint == printNum) {
-          wx.showToast({
-            title: '已打印第' + currentPrint + '张成功',
-          })
-        }
-        //console.log(res)
-      },
-      fail: function (e) {
-        wx.showToast({
-          title: '打印第' + currentPrint + '张失败',
-          icon: 'none',
-        })
-
-        //console.log(e)
-      },
-      complete: function () {
-        currentTime++
-        if (currentTime <= loopTime) {
-          that.setData({
-            currentTime: currentTime
-          })
-          that.Send(buff)
-        } else {
-          // wx.showToast({
-          //   title: '已打印第' + currentPrint + '张',
-          // })`
+    setTimeout(function(){ 
+      wx.writeBLECharacteristicValue({
+        deviceId: _this.data.option.deviceId,
+        serviceId: _this.data.option.serviceId,
+        characteristicId: _this.data.option.characteristicId,
+        value: buf,
+        success: function (res) {
           if (currentPrint == printNum) {
-            that.setData({
-              looptime: 0,
-              lastData: 0,
-              currentTime: 1,
-              isLabelSend: false,
-              currentPrint: 1
+            wx.showToast({
+              title: '已打印第' + currentPrint + '张成功',
             })
-          } else {
-            currentPrint++
+          }
+          //console.log(res)
+        },
+        fail: function (e) {
+          wx.showToast({
+            title: '打印第' + currentPrint + '张失败',
+            icon: 'none',
+          })
+  
+          //console.log(e)
+        },
+        complete: function () {
+          currentTime++
+          if (currentTime <= loopTime) {
             that.setData({
-              currentPrint: currentPrint,
-              currentTime: 1,
+              currentTime: currentTime
             })
             that.Send(buff)
+          } else {
+            // wx.showToast({
+            //   title: '已打印第' + currentPrint + '张',
+            // })`
+            if (currentPrint == printNum) {
+              that.setData({
+                looptime: 0,
+                lastData: 0,
+                currentTime: 1,
+                isLabelSend: false,
+                currentPrint: 1
+              })
+            } else {
+              currentPrint++
+              that.setData({
+                currentPrint: currentPrint,
+                currentTime: 1,
+              })
+              that.Send(buff)
+            }
           }
         }
-      }
-    })
+      })
+    }, 100);
   },
 
   printTo : function(){
@@ -788,7 +886,7 @@ Page({
     }
     this.setData({
       buffSize: list,
-      oneTimeData: list[0],
+      oneTimeData: 190,
       printNum: numList,
       printerNum: numList[0]
     })

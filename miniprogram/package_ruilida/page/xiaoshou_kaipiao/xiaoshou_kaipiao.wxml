@@ -1,21 +1,22 @@
 <scroll-view class="main" scroll-x="true" scroll-y="true">
   <view style="padding-top: 10px;" wx:for="{{list}}" wx:for-index="i" wx:key="item">
     <van-cell-group inset data-index="{{i}}" bindtap="click_view" bindlongpress="del1">
-      <van-cell title="收票单位：{{item.shoupiao_danwei}}" value="价税合计：{{item.jiashui_heji}}" use-label-slot>
+      <van-cell title="收票单位：{{item.shoupiao_danwei}}" use-label-slot>
         <view slot="label">
           <text>开票单位：{{item.kaipiao_danwei}} \n</text>
-          <text>销售单号：{{item.xiaoshou_bianhao}} \n</text>
+          <text>出库单号：{{item.xiaoshou_bianhao}} \n</text>
+          <text decode="{{true}}">{{item.kaipiao_riqi}} &nbsp;&nbsp; 开票状态：{{item.kaipiao_zhuangtai}} \n</text>
           <text>信息推送：{{item.xinxi_tuisong}} \n</text>
-          <text>开票状态：{{item.kaipiao_zhuangtai}} \n</text>
-          <text>{{item.kaipiao_riqi}} \n</text>
         </view>
+      </van-cell>
+      <van-cell title="价税合计：{{item.jiashui_heji}}">
       </van-cell>
     </van-cell-group>
   </view>
 </scroll-view>
 
 <view class="bottom_view">
-  <view class="bt_text">合计：{{num}}个</view>
+  <view class="bt_text">合计：{{zongji}}</view>
   <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 

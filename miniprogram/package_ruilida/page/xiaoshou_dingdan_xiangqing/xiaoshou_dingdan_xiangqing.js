@@ -19,11 +19,13 @@ Page({
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     var id = options.id
+    var type = options.type
     const systemInfo = wx.getSystemInfoSync();
     var scoll_height = systemInfo.windowHeight * 0.63
     _this.setData({
       userInfo,
       id,
+      type,
       scoll_height
     })
   },
@@ -208,13 +210,14 @@ Page({
 
   onChange:function(e){
     var _this = this
-    console.log(e)
+    console.log(e.currentTarget.dataset.index)
+    var index = e.currentTarget.dataset.index
     var list = _this.data.xukai_list
     console.log(list)
-    if(list[0].checked == false){
-      list[0].checked = true
+    if(list[index].checked == false){
+      list[index].checked = true
     }else{
-      list[0].checked = false
+      list[index].checked = false
     }
     _this.setData({
       xukai_list:list
@@ -264,7 +267,7 @@ Page({
       return;
     }
     var id = _this.data.id
-    var sql = "select * from(select id,xiaoshou3.bianhao,riqi,kehu,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,beizhu,jiashui_heji,jiage_dengji,shenhe,shenhe_zhuangtai,chuku_zhuangtai,kaipiao_zhuangtai,shoukuan_zhuangtai from(select id,xiaoshou2.bianhao,riqi,kehu,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,beizhu,jiashui_heji,jiage_dengji,shenhe,shenhe_zhuangtai,chuku_zhuangtai,kaipiao_zhuangtai from (select id,xiaoshou.bianhao,riqi,kehu,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,beizhu,jiashui_heji,jiage_dengji,shenhe,shenhe_zhuangtai,chuku_zhuangtai from xiaoshou_dingdan as xiaoshou left join (select bianhao,case when sum(panduan) = 0 then '未出库' when sum(panduan) < count(bianhao) then '部分出库' when count(bianhao) <= sum(panduan) then '全部出库' end as chuku_zhuangtai from (select bianhao,xiaoshou.shangpin_bianhao,isnull(xiaoshou.shuliang,0) as xiaoshou_shuliang,isnull(chuku.shuliang,0) as chuku_shuliang,case when convert(float,isnull(xiaoshou.shuliang,0)) > convert(float,isnull(chuku.shuliang,0)) then 0 else 1 end as panduan from (select bianhao,shangpin_bianhao,shuliang from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id ) as xiaoshou left join (select shangpin_bianma,shuliang,chuku_id,xiaoshou_id from xiaoshou_chuku_item as chuku left join (select * from xiaoshou_chuku where isnull(xiaoshou_id,'') != '') as chuku_dan on chuku.chuku_id = chuku_dan.id where isnull(xiaoshou_id,'') != '') as chuku on xiaoshou.bianhao = chuku.xiaoshou_id and xiaoshou.shangpin_bianhao = chuku.shangpin_bianma) as chuku group by bianhao) as chuku on xiaoshou.bianhao = chuku.bianhao) as xiaoshou2 left join (select bianhao,case when isnull(kaipiao_money,0) = 0 then '未开票' when isnull(kaipiao_money,0) < isnull(xiaoshou_money,0) then '部分开票' when isnull(kaipiao_money,0) >= isnull(xiaoshou_money,0) then '全部开票' end as kaipiao_zhuangtai from (select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou_money from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as xiaoshou on xiaoshou.id = item.xiaoshou_id group by bianhao) as xiaoshou left join (select xiaoshou_bianhao,sum(convert(float,isnull(kaipiao_jine,0)) + convert(float,isnull(kaipiao_shuie,0))) as kaipiao_money from xiaoshou_kaipiao group by xiaoshou_bianhao) as kaipiao on xiaoshou.bianhao = kaipiao.xiaoshou_bianhao) as kaipiao on xiaoshou2.bianhao = kaipiao.bianhao) as xiaoshou3 left join(select bianhao,isnull(xiaoshou_money,0) as xiaoshou_money,isnull(money,0) as shoufu_money,case when isnull(money,0)  = 0 then '未收款' when isnull(xiaoshou_money,0) > isnull(money,0)  then '部分收款' when isnull(xiaoshou_money,0) <= isnull(money,0) then '全部收款' end as shoukuan_zhuangtai from(select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou_money from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as xiaoshou on xiaoshou.id = item.xiaoshou_id group by bianhao) as xiaoshou left join (select danju_bianhao,sum(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0))) as money from shouzhi_mingxi group by danju_bianhao) as shoufukuan on xiaoshou.bianhao = shoufukuan.danju_bianhao) as shoukuan on xiaoshou3.bianhao = shoukuan.bianhao) as xiaoshou where id = " + _this.data.id
+    var sql = "select * from(select id,xiaoshou3.bianhao,riqi,kehu,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,beizhu,jiashui_heji,jiage_dengji,shenhe,shenhe_zhuangtai,chuku_zhuangtai,kaipiao_zhuangtai,shoukuan_zhuangtai,xiaoshou_danwei from(select id,xiaoshou2.bianhao,riqi,kehu,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,beizhu,jiashui_heji,jiage_dengji,shenhe,shenhe_zhuangtai,chuku_zhuangtai,kaipiao_zhuangtai,xiaoshou_danwei from (select id,xiaoshou.bianhao,riqi,kehu,yewuyuan,shoujianren,shoujian_phone,shoujian_dizhi,dianpu,xiaoxiang_shuilv,beizhu,jiashui_heji,jiage_dengji,shenhe,shenhe_zhuangtai,chuku_zhuangtai,xiaoshou_danwei from xiaoshou_dingdan as xiaoshou left join (select bianhao,case when sum(panduan) = 0 then '未出库' when sum(panduan) < count(bianhao) then '部分出库' when count(bianhao) <= sum(panduan) then '全部出库' end as chuku_zhuangtai from (select bianhao,xiaoshou.shangpin_bianhao,isnull(xiaoshou.shuliang,0) as xiaoshou_shuliang,isnull(chuku.shuliang,0) as chuku_shuliang,case when convert(float,isnull(xiaoshou.shuliang,0)) > convert(float,isnull(chuku.shuliang,0)) then 0 else 1 end as panduan from (select bianhao,shangpin_bianhao,shuliang from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id ) as xiaoshou left join (select shangpin_bianma,shuliang,chuku_id,xiaoshou_id from xiaoshou_chuku_item as chuku left join (select * from xiaoshou_chuku where isnull(xiaoshou_id,'') != '') as chuku_dan on chuku.chuku_id = chuku_dan.id where isnull(xiaoshou_id,'') != '') as chuku on xiaoshou.bianhao = chuku.xiaoshou_id and xiaoshou.shangpin_bianhao = chuku.shangpin_bianma) as chuku group by bianhao) as chuku on xiaoshou.bianhao = chuku.bianhao) as xiaoshou2 left join (select bianhao,case when isnull(kaipiao_money,0) = 0 then '未开票' when isnull(kaipiao_money,0) < isnull(xiaoshou_money,0) then '部分开票' when isnull(kaipiao_money,0) >= isnull(xiaoshou_money,0) then '全部开票' end as kaipiao_zhuangtai from (select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou_money from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as xiaoshou on xiaoshou.id = item.xiaoshou_id group by bianhao) as xiaoshou left join (select xiaoshou_bianhao,sum(convert(float,isnull(kaipiao_jine,0)) + convert(float,isnull(kaipiao_shuie,0))) as kaipiao_money from xiaoshou_kaipiao group by xiaoshou_bianhao) as kaipiao on xiaoshou.bianhao = kaipiao.xiaoshou_bianhao) as kaipiao on xiaoshou2.bianhao = kaipiao.bianhao) as xiaoshou3 left join(select bianhao,isnull(xiaoshou_money,0) as xiaoshou_money,isnull(money,0) as shoufu_money,case when isnull(money,0)  = 0 then '未收款' when isnull(xiaoshou_money,0) > isnull(money,0)  then '部分收款' when isnull(xiaoshou_money,0) <= isnull(money,0) then '全部收款' end as shoukuan_zhuangtai from(select bianhao,sum(convert(float,isnull(jiashui_xiaoji,0))) as xiaoshou_money from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as xiaoshou on xiaoshou.id = item.xiaoshou_id group by bianhao) as xiaoshou left join (select danju_bianhao,sum(convert(float,isnull(jizhang_jine,0)) + convert(float,isnull(kedi_shuie,0))) as money from shouzhi_mingxi group by danju_bianhao) as shoufukuan on xiaoshou.bianhao = shoufukuan.danju_bianhao) as shoukuan on xiaoshou3.bianhao = shoukuan.bianhao) as xiaoshou where id = " + _this.data.id
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -278,7 +281,9 @@ Page({
         _this.setData({
           list: list,
         })
-        var sql = "select dingdan.id,dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,isnull(chuku.shuliang,0) as chuku_shuliang,isnull(dingdan.shuliang,0)-isnull(chuku.shuliang,0) as weichu_shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji from(select * from xiaoshou_dingdan_item where xiaoshou_id = "+ id +") as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,xiaoshou_danjia,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,xiaoshou_danjia,jiashui_xiaoji from xiaoshou_chuku left join xiaoshou_chuku_item on xiaoshou_chuku.id = xiaoshou_chuku_item.chuku_id where xiaoshou_id = '" + list[0].bianhao + "') as chuku group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_danjia) as chuku on dingdan.shangpin_bianhao = chuku.shangpin_bianma;"
+        var sql = "select dingdan.id,dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,isnull(chuku.shuliang,0) as chuku_shuliang,isnull(dingdan.shuliang,0)-isnull(chuku.shuliang,0) as weichu_shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji from(select * from xiaoshou_dingdan_item where xiaoshou_id = "+ id +") as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,xiaoshou_danjia,jiashui_xiaoji from xiaoshou_chuku left join xiaoshou_chuku_item on xiaoshou_chuku.id = xiaoshou_chuku_item.chuku_id where xiaoshou_id = '" + list[0].bianhao + "') as chuku group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei) as chuku on dingdan.shangpin_bianhao = chuku.shangpin_bianma;"
+
+        console.log(sql) 
 
         sql = sql + "select id,riqi,jiashui_xiaoji from xiaoshou_chuku as chuku left join (select chuku_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji from xiaoshou_chuku_item group by chuku_id) as item on chuku.id = item.chuku_id where xiaoshou_id = '" + list[0].bianhao + "';"
 
@@ -301,12 +306,33 @@ Page({
               heji = heji + (product_list[i].jiashui_xiaoji * 1)
             }
             heji = Math.round(heji * 100) / 100
+            var chuku_heji = 0
             for(var i=0; i<chuku_list.length; i++){
               chuku_list[i].jiashui_xiaoji = Math.round(chuku_list[i].jiashui_xiaoji * 100) / 100
+              chuku_heji = chuku_heji + chuku_list[i].jiashui_xiaoji
             }
+
             var shoukuan_list = res.result.recordsets[2]
+            var shoukuan_heji = 0
+            for(var i=0; i<shoukuan_list.length; i++){
+              shoukuan_list[i].money = Math.round(shoukuan_list[i].money * 100) / 100
+              shoukuan_heji = shoukuan_heji + shoukuan_list[i].money
+            }
+
             var kaipiao_list = res.result.recordsets[3]
+            var kaipiao_heji = 0
+            for(var i=0; i<kaipiao_list.length; i++){
+              kaipiao_list[i].jiashui_heji = Math.round(kaipiao_list[i].jiashui_heji * 100) / 100
+              kaipiao_heji = kaipiao_heji + kaipiao_list[i].jiashui_heji
+            }
+
             var caigou_list = res.result.recordsets[4]
+            var caigou_heji = 0
+            for(var i=0; i<caigou_list.length; i++){
+              caigou_list[i].jiashui_xiaoji = Math.round(caigou_list[i].jiashui_xiaoji * 100) / 100
+              caigou_heji = caigou_heji + caigou_list[i].jiashui_xiaoji
+            }
+
             console.log(product_list)
             console.log(chuku_list)
             console.log(shoukuan_list)
@@ -321,7 +347,33 @@ Page({
               kaipiao_list,
               caigou_list,
               p_heji:heji,
-            })
+              chuku_heji,
+              shoukuan_heji,
+              kaipiao_heji,
+              caigou_heji
+            }) 
+            var type = _this.data.type
+            if(type == '生成出库单'){
+              _this.setData({
+                type:''
+              })
+              _this.chuku_add()
+            }else if(type == '生成收款单'){
+              _this.setData({
+                type:''
+              })
+              _this.shoukuan_add()
+            }else if(type == '生成开票'){
+              _this.setData({
+                type:''
+              })
+              _this.kaipiao_add()
+            }else if(type == '生成采购单'){
+              _this.setData({
+                type:''
+              })
+              _this.caigou_add()
+            }
           },
           err: res => {
             console.log("错误!")
