@@ -44,6 +44,7 @@ Page({
       {name:'否'},
     ],
     kongjian: 10,
+    name:'',
   },
 
   /**
@@ -924,6 +925,16 @@ Page({
         lianxi_list
       })
     }
+  },
+
+  onInput_text(e){
+    console.log(e)
+    var _this = this
+    var new_value = e.detail.value
+    var column = e.currentTarget.dataset.column
+    _this.setData({
+      [column]:new_value
+    })
   },
 
   back:function(){

@@ -19,9 +19,9 @@ Page({
       shoupiao_danwei:'',
       kaipiao_danwei:'',
       kaipiao_riqi:'',
-      kaipiao_jine:'',
-      kaipiao_shuie:'',
-      jiashui_heji:'',
+      kaipiao_jine:'0.00',
+      kaipiao_shuie:'0.00',
+      jiashui_heji:'0.00',
       beizhu:'',
       xinxi_tuisong:'',
       shoupiao_zhuangtai:'待收票',
@@ -50,9 +50,9 @@ Page({
       for(var i=0; i<shoupiao_list.length; i++){
         jiashui_heji = jiashui_heji + (shoupiao_list[i].this_kai * 1)
       }
-      shoupiao_body.kaipiao_jine = jiashui_heji
-      shoupiao_body.kaipiao_shuie = 0
-      shoupiao_body.jiashui_heji = jiashui_heji
+      shoupiao_body.kaipiao_jine = (jiashui_heji * 1).toFixed(2)
+      shoupiao_body.kaipiao_shuie = 0.00
+      shoupiao_body.jiashui_heji = (jiashui_heji * 1).toFixed(2)
       _this.setData({
         shoupiao_body
       })
@@ -180,9 +180,21 @@ Page({
     })
   },
 
+  jiage_head_refresh(e){
+    var _this = this
+    console.log(e)
+    var new_val = e.detail.value * 1
+    var list = _this.data.shoupiao_body
+    var column = e.currentTarget.dataset.column
+    list[column] = new_val.toFixed(2)
+    _this.setData({
+      shoupiao_body:list
+    })
+  },
+
   caigou_click:function(){
     var _this = this
-    var sql = "select id,riqi,bianhao,gongyingshang,jiashui_heji,isnull(shoupiao_jine,0) as shoupiao_jine,isnull(jiashui_heji,0)-isnull(shoupiao_jine,0) as weikai,1 as isselect from (select id,riqi,bianhao,gongyingshang,jiashui_heji from caigou_dingdan as caigou left join (select caigou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_heji from caigou_dingdan_item group by caigou_id) as money on caigou.id = money.caigou_id) as caigoudan left join (select caigou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as shoupiao_jine from caigou_shoupiao GROUP BY caigou_bianhao) as shoupiao on caigoudan.bianhao = shoupiao.caigou_bianhao where isnull(jiashui_heji,0)-isnull(shoupiao_jine,0) > 0"
+    var sql = "select id,bianhao,riqi,gongyingshang,dianpu,cangku,beizhu,caigou_id,ruku_danwei,yewuyuan,jiashui_xiaoji as jiashui_heji,ruku_id,isnull(caigou_bianhao,'') as xiaoshou_bianhao,isnull(jiashui_heji,0) as shoupiao_jine,jiashui_xiaoji-isnull(jiashui_heji,0) as weikai,jiashui_xiaoji-isnull(jiashui_heji,0) as this_kai,1 as isselect from (select * from caigou_ruku as ruku left join (select sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,ruku_id from caigou_ruku_item group by ruku_id) as item on ruku.id = item.ruku_id) as ruku left join (select caigou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as jiashui_heji from caigou_shoupiao group by caigou_bianhao) as shoupiao on ruku.bianhao = shoupiao.caigou_bianhao where jiashui_xiaoji-isnull(jiashui_heji,0) > 0"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -502,17 +514,17 @@ Page({
       var jiashui_heji = shoupiao_body.jiashui_heji
       if(column == 'kaipiao_jine'){ 
         if((kaipiao_jine * 1) <= jiashui_heji){
-          shoupiao_body.kaipiao_shuie = jiashui_heji - (kaipiao_jine * 1)
+          shoupiao_body.kaipiao_shuie = (jiashui_heji - (kaipiao_jine * 1)).toFixed(2)
         }else{
-          shoupiao_body.kaipiao_shuie = 0
-          shoupiao_body.kaipiao_jine = jiashui_heji
+          shoupiao_body.kaipiao_shuie = 0.00
+          shoupiao_body.kaipiao_jine = (jiashui_heji * 1).toFixed(2)
         }
       }else if(column == 'kaipiao_shuie'){
         if((kaipiao_shuie * 1) <= jiashui_heji){
-          shoupiao_body.kaipiao_jine = jiashui_heji - (kaipiao_shuie * 1)
+          shoupiao_body.kaipiao_jine = (jiashui_heji - (kaipiao_shuie * 1)).toFixed(2)
         }else{
-          shoupiao_body.kaipiao_shuie = jiashui_heji
-          shoupiao_body.kaipiao_jine = 0
+          shoupiao_body.kaipiao_shuie = (jiashui_heji * 1).toFixed(2)
+          shoupiao_body.kaipiao_jine = 0.00
         }
       }
     }else{
@@ -525,7 +537,7 @@ Page({
         if(kaipiao_shuie == ''){
           kaipiao_shuie = 0
         }
-        shoupiao_body.jiashui_heji = (kaipiao_jine*1) + (kaipiao_shuie * 1)
+        shoupiao_body.jiashui_heji = ((kaipiao_jine*1) + (kaipiao_shuie * 1)).toFixed(2)
       }
     }
 

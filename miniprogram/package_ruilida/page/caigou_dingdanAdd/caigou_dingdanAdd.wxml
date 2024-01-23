@@ -7,7 +7,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
         <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.riqi }}" data-column="riqi" label="订单日期" placeholder="请输入订单日期" border="false" readonly="true" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ caigou_body.riqi }}" data-column="riqi" label="订单日期" placeholder="请输入订单日期" border="false" readonly="true" />
       </picker>
 
 
@@ -15,19 +15,19 @@
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.gongyingshang }}" data-column="gongyingshang" bind:click-input="gongyingshang_select" label="供应商" placeholder="请输入供应商" border="false" readonly="true" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.caigou_danwei }}" data-column="caigou_danwei" bind:click-input="xiala_show" label="采购单位" placeholder="请选择采购单位" border="false" readonly="true" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ caigou_body.caigou_danwei }}" data-column="caigou_danwei" bind:click-input="xiala_show" label="采购单位" placeholder="请选择采购单位" border="false" readonly="true" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.dianpu }}" data-column="dianpu" bind:click-input="xiala_show" label="店铺" placeholder="请输入店铺" border="false" readonly="true" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.yewuyuan }}" data-column="yewuyuan" bind:click-input="xiala_show" label="业务员" placeholder="请选择业务员" border="false" readonly="true" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ caigou_body.yewuyuan }}" data-column="yewuyuan" bind:click-input="xiala_show" label="业务员" placeholder="请选择业务员" border="false" readonly="true" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.jinxiang_shuilv }}" data-column="jinxiang_shuilv" bind:click-input="xiala_show" label="进项税率%" placeholder="请输入进项税率%" border="false" type="digit" readonly="true" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.beizhu }}" data-column="beizhu" label="备注" placeholder="请输入备注" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ caigou_body.beizhu }}" data-column="beizhu" label="备注" placeholder="请输入备注" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.shenhe }}" data-column="shenhe" bind:click-input="xiala_show" label="审核人" placeholder="请输入审核人" border="false" readonly="true" />
@@ -48,38 +48,38 @@
       </van-field>
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.name }}" data-column="name" data-index="{{i}}" label="名称" placeholder="请输入名称" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.name }}" data-column="name" data-index="{{i}}" label="名称" placeholder="请输入名称" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.guige }}" data-column="guige" data-index="{{i}}" label="规格" placeholder="请输入规格" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.caizhi }}" data-column="caizhi" data-index="{{i}}" label="材质" placeholder="请输入材质" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.caizhi }}" data-column="caizhi" data-index="{{i}}" label="材质" placeholder="请输入材质" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.jishu_biaozhun }}" data-column="jishu_biaozhun" data-index="{{i}}" label="技术标准" placeholder="请输入技术标准" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.zhibao_dengji }}" data-column="zhibao_dengji" data-index="{{i}}" label="质保等级" placeholder="请输入质保等级" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.zhibao_dengji }}" data-column="zhibao_dengji" data-index="{{i}}" label="质保等级" placeholder="请输入质保等级" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.danwei }}" data-column="danwei" data-index="{{i}}" label="单位" placeholder="请输入单位" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.shuliang }}" data-column="shuliang" data-index="{{i}}" label="数量" placeholder="请输入数量" border="false" type="digit" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.shuliang }}" data-column="shuliang" data-index="{{i}}" label="数量" placeholder="请输入数量" border="false" type="digit" bind:blur="shuliang_refresh"/>
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.lishi_zuidi }}" data-column="lishi_zuidi" data-index="{{i}}" label="历史最低价" placeholder="请输入历史最低价" border="false" type="digit" readonly="true" />
+        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.lishi_zuidi }}" data-column="lishi_zuidi" data-index="{{i}}" label="历史最低价" placeholder="请输入历史最低价" border="false" type="digit" readonly="true" bind:blur="jiage_refresh" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.caigou_danjia }}" data-column="caigou_danjia" data-index="{{i}}" label="采购单价" placeholder="请输入采购单价" border="false" type="digit" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.caigou_danjia }}" data-column="caigou_danjia" data-index="{{i}}" label="采购单价" placeholder="请输入采购单价" border="false" type="digit" bind:blur="jiage_refresh" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.jiashui_xiaoji }}" data-column="jiashui_xiaoji" data-index="{{i}}" label="价税小计" placeholder="请输入价税小计" border="false" type="digit" />
+        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.jiashui_xiaoji }}" data-column="jiashui_xiaoji" data-index="{{i}}" label="价税小计" placeholder="请输入价税小计" border="false" type="digit" bind:blur="jiage_refresh" />
 
       <picker class="pick" mode="date" value="{{date}}" data-index="{{i}}" data-column_name="jiaohuo_riqi" bindchange="choiceDate">
         <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.jiaohuo_riqi }}" data-column="jiaohuo_riqi" data-index="{{i}}" label="交货日期" placeholder="请输入交货日期" border="false" readonly="true" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.jiaohuo_riqi }}" data-column="jiaohuo_riqi" data-index="{{i}}" label="交货日期" placeholder="请输入交货日期" border="false" readonly="true" />
       </picker>
 
       <van-field

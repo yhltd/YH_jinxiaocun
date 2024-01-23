@@ -8,15 +8,15 @@
         bind:input="onInput"
         model:value="{{ shoupiao_body.caigou_bianhao }}"
         data-column="caigou_bianhao"
-        label="采购订单编号"
-        placeholder="点击选择采购订单编号"
+        label="入库单号"
+        placeholder="点击选择入库单"
         border="false"
         bind:click-input="caigou_click"
         readonly="true"
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shoupiao_body.shoupiao_danwei }}"
         data-column="shoupiao_danwei"
@@ -42,7 +42,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="kaipiao_riqi" bindchange="choiceDate">
         <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
           bind:input="onInput"
           model:value="{{ shoupiao_body.kaipiao_riqi }}"
           data-column="kaipiao_riqi"
@@ -62,10 +62,11 @@
         placeholder="请输入开票金额"
         border="false"
         type="digit"
+        bind:blur="jiage_head_refresh"
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shoupiao_body.kaipiao_shuie }}"
         data-column="kaipiao_shuie"
@@ -73,6 +74,7 @@
         placeholder="请输入开票税额"
         border="false"
         type="digit"
+        bind:blur="jiage_head_refresh"
       />
 
       <van-field
@@ -85,10 +87,11 @@
         border="false"
         type="digit"
         readonly="{{gongyingshang_name != undefined}}"
+        bind:blur="jiage_head_refresh"
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shoupiao_body.beizhu }}"
         data-column="beizhu"

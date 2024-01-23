@@ -279,11 +279,11 @@ Page({
   onChange: function (event) {
     var _this = this;
     console.log(_this.data.userInfo.power)
-    if (event.detail == 3) {
+    if (event.detail == 4) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 2) {
+    } else if (event.detail == 3) {
       wx.redirectTo({
         url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
@@ -294,6 +294,10 @@ Page({
     } else if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    }else if (event.detail == 2) {
+      wx.navigateTo({
+        url: '../../../package_ruilida2/page/jizhang/jizhang?userInfo=' + JSON.stringify(_this.data.userInfo)
       })
     }
     // else if (event.detail == 0) {

@@ -35,9 +35,9 @@ Page({
         jishu_biaozhun:'',
         zhibao_dengji:'',
         danwei:'',
-        shuliang:'',
-        caigou_danjia:'',
-        jiashui_xiaoji:'',
+        shuliang:'0.0000',
+        caigou_danjia:'0.00',
+        jiashui_xiaoji:'0.00',
         beizhu:'',
       }
     ],
@@ -79,7 +79,7 @@ Page({
         var ruku_danwei_list = res.result.recordsets[5]
         for(var i=0; i<product_list.length; i++){
           if(product_list[i].zuidijia != null){
-            product_list[i].caigou_danjia = product_list[i].zuidijia
+            product_list[i].caigou_danjia = (product_list[i].zuidijia * 1).toFixed(2)
           }
         }
         _this.setData({
@@ -210,9 +210,9 @@ Page({
           for(var i=0; i<lianxi_list.length; i++){
             lianxi_list[i].shangpin_bianma = lianxi_list[i].shangpin_bianma
             lianxi_list[i].name = lianxi_list[i].name
-            lianxi_list[i].caigou_danjia = lianxi_list[i].caigou_danjia
-            lianxi_list[i].shuliang = lianxi_list[i].weichu_shuliang
-            lianxi_list[i].jiashui_xiaoji = lianxi_list[i].caigou_danjia * lianxi_list[i].weichu_shuliang
+            lianxi_list[i].caigou_danjia = (lianxi_list[i].caigou_danjia * 1).toFixed(2)
+            lianxi_list[i].shuliang = (lianxi_list[i].weichu_shuliang * 1).toFixed(4)
+            lianxi_list[i].jiashui_xiaoji = (lianxi_list[i].caigou_danjia * lianxi_list[i].weichu_shuliang * 1).toFixed(2)
           }
           console.log(lianxi_list)
           _this.setData({
@@ -284,6 +284,32 @@ Page({
         }
       })
     }
+  },
+
+  shuliang_refresh(e){
+    var _this = this
+    console.log(e)
+    var new_val = e.detail.value * 1 
+    var list = _this.data.lianxi_list
+    var index = e.currentTarget.dataset.index
+    var column = e.currentTarget.dataset.column
+    list[index][column] = new_val.toFixed(4)
+    _this.setData({
+      lianxi_list:list
+    })
+  },
+
+  jiage_refresh(e){
+    var _this = this
+    console.log(e)
+    var new_val = e.detail.value * 1
+    var list = _this.data.lianxi_list
+    var index = e.currentTarget.dataset.index
+    var column = e.currentTarget.dataset.column
+    list[index][column] = new_val.toFixed(2)
+    _this.setData({
+      lianxi_list:list
+    })
   },
 
   caigou_click:function(){
@@ -397,8 +423,8 @@ Page({
     ruku_body.ruku_danwei = caigou_list.caigou_danwei
     var lianxi_list = caigou_list.item
     for(var i=0; i<lianxi_list.length; i++){
-      lianxi_list[i].shuliang = lianxi_list[i].weiru_shuliang
-      lianxi_list[i].jiashui_xiaoji = lianxi_list[i].caigou_danjia * lianxi_list[i].weiru_shuliang
+      lianxi_list[i].shuliang = (lianxi_list[i].weiru_shuliang * 1).toFixed(4)
+      lianxi_list[i].jiashui_xiaoji = (lianxi_list[i].caigou_danjia * lianxi_list[i].weiru_shuliang * 1).toFixed(2)
     }
     _this.setData({
       ruku_body,
@@ -472,9 +498,9 @@ Page({
     lianxi_list[product_index].jishu_biaozhun = product_list[index].jishu_biaozhun
     lianxi_list[product_index].zhibao_dengji = product_list[index].zhibao_dengji
     lianxi_list[product_index].danwei = product_list[index].danwei
-    lianxi_list[product_index].caigou_danjia = product_list[index].caigou_danjia
+    lianxi_list[product_index].caigou_danjia = (product_list[index].caigou_danjia * 1).toFixed(2)
     if(lianxi_list[product_index].caigou_danjia != '' && lianxi_list[product_index].shuliang != ''){
-      lianxi_list[product_index].jiashui_xiaoji = Math.round(lianxi_list[product_index].caigou_danjia * lianxi_list[product_index].shuliang * 100) / 100
+      lianxi_list[product_index].jiashui_xiaoji = (Math.round(lianxi_list[product_index].caigou_danjia * lianxi_list[product_index].shuliang * 100) / 100).toFixed(2)
     }
     _this.setData({
       lianxi_list
@@ -526,9 +552,9 @@ Page({
             jishu_biaozhun:'',
             zhibao_dengji:'',
             danwei:'',
-            shuliang:'',
-            caigou_danjia:'',
-            jiashui_xiaoji:'',
+            shuliang:'0.0000',
+            caigou_danjia:'0.00',
+            jiashui_xiaoji:'0.00',
             beizhu:'',
           })
           _this.setData({
@@ -828,9 +854,9 @@ Page({
       var lianxi_list = _this.data.lianxi_list
       lianxi_list[index][column] = new_value
       if(lianxi_list[index].caigou_danjia != '' && lianxi_list[index].shuliang != '' && column != 'jiashui_xiaoji'){
-        lianxi_list[index].jiashui_xiaoji = Math.round(lianxi_list[index].caigou_danjia * lianxi_list[index].shuliang * 100) / 100
+        lianxi_list[index].jiashui_xiaoji = (Math.round(lianxi_list[index].caigou_danjia * lianxi_list[index].shuliang * 100) / 100).toFixed(2)
       }else if(lianxi_list[index].jiashui_xiaoji != '' && lianxi_list[index].shuliang != '' && column == 'jiashui_xiaoji'){
-        lianxi_list[index].caigou_danjia = Math.round(lianxi_list[index].jiashui_xiaoji / lianxi_list[index].shuliang * 100) / 100
+        lianxi_list[index].caigou_danjia = (Math.round(lianxi_list[index].jiashui_xiaoji / lianxi_list[index].shuliang * 100) / 100).toFixed(2)
       }
       _this.setData({
         lianxi_list

@@ -12,9 +12,9 @@ Page({
     xlShow2: false,
     caigou_body: {
       id:'',
-      bianhao:'',
-      riqi:'',
-      gongyingshang:'',
+      dianpu:'',
+      cangku:'',
+      hesuan_danwei:'',
       caigou_danwei:'',
       dianpu:'',
       yewuyuan:'',
@@ -27,6 +27,9 @@ Page({
     lianxi_list:[
       {
         id:'',
+        dianpu:'',
+        cangku:'',
+        hesuan_danwei:'',
         shangpin_bianma:'',
         name:'',
         guige:'',
@@ -401,7 +404,7 @@ Page({
     wx.showLoading({
       title:'加载中'
     })
-    var sql = "select * from gongyingshang;select * from peizhi where type = '店铺';select id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable,isselect,isnull(shangpin_bianma,'') as shangpin_bianma,isnull(zuidijia,0) as zuidijia from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from userInfo;select * from peizhi_shuilv;select * from peizhi where type = '核算单位';select * from peizhi where type = '增值税率';"
+    var sql = "select * from peizhi where type = '仓库';select * from peizhi where type = '店铺';select id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item_id,product_id,guige,bianhao,caigou_price,jinxiang,enable,isselect,isnull(shangpin_bianma,'') as shangpin_bianma,isnull(zuidijia,0) as zuidijia from (select p.id,name,type,danwei,caizhi,jishu_biaozhun,zhibao_dengji,beizhu,item.id as item_id,product_id,guige,bianhao,lingshou_price,lingshou_bili,pifa_price,pifa_bili,dakehu_price,dakehu_bili,convert(float,caigou_price) as caigou_price,jinxiang,xiaoxiang,enable,1 as isselect from product as p left join product_item as item on p.id = item.product_id where enable = '是' ) as pro left join (select shangpin_bianma,min(convert(float,caigou_danjia)) as zuidijia from caigou_dingdan_item group by shangpin_bianma) as price on pro.bianhao = price.shangpin_bianma;select * from userInfo;select * from peizhi_shuilv;select * from peizhi where type = '核算单位';select * from peizhi where type = '增值税率';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -409,7 +412,7 @@ Page({
       },
       success: res => {
         console.log(res)
-        var gongyingshang_list = res.result.recordsets[0]
+        var cangku_list = res.result.recordsets[0]
         var dianpu_list = res.result.recordsets[1]
         var product_list = res.result.recordsets[2]
         var shenhe_list = res.result.recordsets[3]
@@ -424,15 +427,15 @@ Page({
         console.log(result)
         var yewuyuan_list = res.result.recordsets[3]
         var peizhi_shuilv = res.result.recordsets[4][0]
-        var caigou_danwei_list = res.result.recordsets[5]
+        var hesuan_danwei_list = res.result.recordsets[5]
         var jinxiang_shuilv_list = res.result.recordsets[6]
         _this.setData({
-          gongyingshang_list,
+          cangku_list,
           dianpu_list,
           product_list,
           shenhe_list,
           yewuyuan_list,
-          caigou_danwei_list,
+          hesuan_danwei_list,
           jinxiang_shuilv_list,
           list_check,
           all_result,
@@ -461,23 +464,44 @@ Page({
     var lianxi_list = _this.data.lianxi_list
     console.log(lianxi_list)
     for(var i=0; i<lianxi_list.length; i++){
+      if(lianxi_list[i].dianpu == ''){
+        wx.showToast({
+          title: '未选择店铺',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].cangku == ''){
+        wx.showToast({
+          title: '未选择仓库',
+          icon: 'none'
+        })
+        return;
+      }
+      if(lianxi_list[i].hesuan_danwei == ''){
+        wx.showToast({
+          title: '未选择核算单位',
+          icon: 'none'
+        })
+        return;
+      }
       if(lianxi_list[i].shangpin_bianma == ''){
         wx.showToast({
-          title: '第' + (i * 1+1) + '条商品未选择商品',
+          title: '未选择商品',
           icon: 'none'
         })
         return;
       }
       if(lianxi_list[i].shuliang == ''){
         wx.showToast({
-          title: '第' + (i * 1+1) + '条商品未填写数量',
+          title: '未填写数量',
           icon: 'none'
         })
         return;
       }
       if(lianxi_list[i].danjia == ''){
         wx.showToast({
-          title: '第' + (i * 1+1) + '条商品未填写采购单价',
+          title: '未填写单价',
           icon: 'none'
         })
         return;
@@ -487,13 +511,13 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "insert into product_qichu(shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,danjia,jiashui_xiaoji) values "
+      var sql = "insert into product_qichu(shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,danjia,jiashui_xiaoji,dianpu,cangku,hesuan_danwei) values "
       var sql2 = ""
       for(var i=0; i<lianxi_list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].danjia + "','" + lianxi_list[i].jiashui_xiaoji + "')"
+          sql2 = "('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].dianpu + "','" + lianxi_list[i].cangku + "','" + lianxi_list[i].hesuan_danwei + "')"
         }else{
-          sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].danjia + "','" + lianxi_list[i].jiashui_xiaoji + "')"
+          sql2 = sql2 + ",('" + lianxi_list[i].shangpin_bianma + "','" + lianxi_list[i].name + "','" + lianxi_list[i].guige + "','" + lianxi_list[i].caizhi + "','" + lianxi_list[i].jishu_biaozhun + "','" + lianxi_list[i].zhibao_dengji + "','" + lianxi_list[i].danwei + "','" + lianxi_list[i].shuliang + "','" + lianxi_list[i].danjia + "','" + lianxi_list[i].jiashui_xiaoji + "','" + lianxi_list[i].dianpu + "','" + lianxi_list[i].cangku + "','" + lianxi_list[i].hesuan_danwei + "')"
         }
       }
       sql = sql + sql2
@@ -537,7 +561,8 @@ Page({
       wx.showLoading({
         title:'保存中'
       })
-      var sql = "update caigou_dingdan set shangpin_bianma='" + lianxi_list[0].shangpin_bianma + "',name='" + lianxi_list[0].name + "',guige='" + lianxi_list[0].guige + "',caizhi='" + lianxi_list[0].caizhi + "',jishu_biaozhun='" + lianxi_list[0].jishu_biaozhun + "',zhibao_dengji='" + lianxi_list[0].zhibao_dengji + "',danwei='" + lianxi_list[0].danwei + "',shuliang='" + lianxi_list[0].shuliang + "',danjia='" + lianxi_list[0].danjia + "',jiashui_xiaoji='" + lianxi_list[0].jiashui_xiaoji + "' where id=" + lianxi_list[0].id
+      var sql = "update product_qichu set shangpin_bianma='" + lianxi_list[0].shangpin_bianma + "',name='" + lianxi_list[0].name + "',guige='" + lianxi_list[0].guige + "',caizhi='" + lianxi_list[0].caizhi + "',jishu_biaozhun='" + lianxi_list[0].jishu_biaozhun + "',zhibao_dengji='" + lianxi_list[0].zhibao_dengji + "',danwei='" + lianxi_list[0].danwei + "',shuliang='" + lianxi_list[0].shuliang + "',danjia='" + lianxi_list[0].danjia + "',jiashui_xiaoji='" + lianxi_list[0].jiashui_xiaoji + "',dianpu='" + lianxi_list[0].dianpu + "',cangku='" + lianxi_list[0].cangku + "',hesuan_danwei='" + lianxi_list[0].hesuan_danwei + "' where id=" + lianxi_list[0].id
+      console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {

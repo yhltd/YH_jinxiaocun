@@ -31,6 +31,8 @@
           <block class="title" wx:for="{{kucun_list}}" wx:for-index="j">
             <van-cell data-index="{{j}}" bindlongpress="kucun_del" bindtap="kucun_upd" title="{{kucun_list[j].name}}" use-label-slot>
               <view slot="label">
+                <text decode="{{true}}">店铺：{{kucun_list[j].dianpu}} &nbsp;&nbsp; 仓库：{{kucun_list[j].cangku}} \n</text>
+                <text>核算单位：{{kucun_list[j].hesuan_danwei}} \n</text>
                 <text>编号：{{kucun_list[j].shangpin_bianma}} \n</text>
                 <text>规格：{{kucun_list[j].guige}} \n</text>
                 <text decode="{{true}}">数量：{{kucun_list[j].shuliang}} &nbsp;&nbsp;单价：{{kucun_list[j].danjia}} &nbsp;&nbsp;价税小计：{{kucun_list[j].jiashui_xiaoji}}</text>

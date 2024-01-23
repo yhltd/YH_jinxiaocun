@@ -14,7 +14,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.name }}"
         data-column="name"
@@ -40,7 +40,7 @@
       </van-field>
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.shangji_danwei }}"
         data-column="shangji_danwei"
@@ -80,7 +80,7 @@
       </van-field>
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.suozai_diqu }}"
         data-column="suozai_diqu"
@@ -102,7 +102,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.beizhu }}"
         data-column="beizhu"
@@ -140,7 +140,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.shoujian_phone }}"
         data-column="shoujian_phone"
@@ -179,7 +179,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.shibiehao }}"
         data-column="shibiehao"
@@ -199,7 +199,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.kaipiao_dianhua }}"
         data-column="kaipiao_dianhua"
@@ -219,7 +219,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ customer_body.kaipiao_zhanghao }}"
         data-column="kaipiao_zhanghao"
@@ -248,7 +248,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.department }}"
         data-column="department"
@@ -270,7 +270,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.phone }}"
         data-column="phone"
@@ -292,7 +292,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.type2 }}"
         data-column="type2"

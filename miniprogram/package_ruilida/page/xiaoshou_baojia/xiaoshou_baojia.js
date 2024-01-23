@@ -179,6 +179,37 @@ Page({
       userInfo,
       type
     })
+    var sql = "select * from product_item"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        var pic_list = {}
+        for(var i=0; i<list.length; i++){
+          if(list[i].bianhao != ''){
+            pic_list[list[i].bianhao] = list[i].image
+          }
+        }
+        _this.setData({
+          pic_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   choiceDate: function (e) {

@@ -13,7 +13,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         size="large"
         model:value="{{ jizhang_mingxi }}"
         data-column="jizhang_mingxi"

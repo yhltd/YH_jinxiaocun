@@ -10,10 +10,13 @@
         </view>
       </van-cell>
 
-      <van-cell title="{{product_item.name}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
+      <van-cell title="{{product_item.name}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}" center>
         <view slot="label">
           <text>规格：{{product_item.guige}} \n</text>
           <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;单价：{{product_item.caigou_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}} \n</text>
+        </view>
+        <view slot="right-icon">
+          <image data-index="{{i}}" src="{{ pic_list[product_item.shangpin_bianma] }}" mode='aspectFill' style="margin-right:10px;width: 30px;height:30px;border: 1px solid #A6A6A6"/>
         </view>
       </van-cell>
       <van-cell>
@@ -75,8 +78,9 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">修改</button>
-  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">打印</button>
+  <button class="bt_bottom" data-column="gongneng" bindtap="del1">删除</button>
+  <button class="bt_bottom" data-column="gongneng" bindtap="goto_upd">修改</button>
+  <button class="bt_bottom" data-column="gongneng" bindtap="xiala_show">功能</button>
 </view>
 
 <van-popup show="{{ kaipiao_show }}" position="bottom" custom-style="height: 80%;" bind:close="kaipiao_close">
@@ -140,3 +144,6 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save_use">确定</button>
   </view>
 </van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet z-index='100' show="{{xlShow4}}" actions="{{caozuo_click_list}}" close-on-click-overlay bind:close="select4" bind:select="select4" />

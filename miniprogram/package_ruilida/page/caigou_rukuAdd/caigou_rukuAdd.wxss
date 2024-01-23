@@ -78,4 +78,9 @@ button{
   padding: 7px 16px !important;
 }
 
+.bianju2{
+  padding: 7px 16px !important;
+  background-color:#F0F8FF !important;
+}
+
 

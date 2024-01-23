@@ -106,7 +106,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
   <view class="lables">商品名称</view>
     <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
     <view class="lables">商品分类</view>

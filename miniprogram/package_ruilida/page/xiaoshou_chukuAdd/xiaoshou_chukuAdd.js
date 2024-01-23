@@ -35,9 +35,9 @@ Page({
         jishu_biaozhun:'',
         zhibao_dengji:'',
         danwei:'',
-        shuliang:'',
-        xiaoshou_danjia:'',
-        jiashui_xiaoji:'',
+        shuliang:'0.0000',
+        xiaoshou_danjia:'0.00',
+        jiashui_xiaoji:'0.00',
         beizhu:'',
       }
     ],
@@ -473,7 +473,7 @@ Page({
       })
       return;
     }
-    var sql = "select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) > 0 and bianhao='" + bianhao + "';"
+    var sql = "select dingdan.shangpin_bianhao,dingdan.shangpin_mingcheng,dingdan.guige,dingdan.caizhi,dingdan.jishu_biaozhun,dingdan.zhibao_dengji,dingdan.danwei,dingdan.shuliang,dingdan.baojia_danjia,dingdan.jiashui_xiaoji,dingdan.bianhao,isnull(chuku.shuliang,0) as chuku_shuliang,convert(float,isnull(dingdan.shuliang,0)) - convert(float,isnull(chuku.shuliang,0)) as weichu_shuliang,'' as beizhu from(select shangpin_bianhao,shangpin_mingcheng,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,shuliang,baojia_danjia,jiashui_xiaoji,bianhao from xiaoshou_dingdan_item as item left join xiaoshou_dingdan as dingdan on item.xiaoshou_id = dingdan.id) as dingdan left join (select shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,sum(convert(float,isnull(shuliang,0))) as shuliang,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,xiaoshou_id from xiaoshou_chuku_item as item left join xiaoshou_chuku as chuku on item.chuku_id = chuku.id group by shangpin_bianma,name,guige,caizhi,jishu_biaozhun,zhibao_dengji,danwei,xiaoshou_id) as chuku on dingdan.bianhao = chuku.xiaoshou_id and dingdan.shangpin_bianhao = chuku.shangpin_bianma and dingdan.shangpin_mingcheng = chuku.name and dingdan.guige = chuku.guige and dingdan.caizhi = chuku.caizhi and dingdan.jishu_biaozhun = chuku.jishu_biaozhun and dingdan.zhibao_dengji = chuku.zhibao_dengji and dingdan.danwei = chuku.danwei where bianhao='" + bianhao + "';"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {
@@ -549,18 +549,6 @@ Page({
     var chuku_kehu = chuku_body.kehu
     var kehu_jiage = _this.data.kehu_jiage
 
-    for(var i=0; i<lianxi_list.length; i++){
-      if(product_index != i){ 
-        if(lianxi_list[i].shangpin_bianma == product_list[index].shangpin_bianhao){
-          wx.showToast({
-            title: '已有此商品，不允许重复选择',
-            icon: 'none'
-          })
-          return;
-        }
-      }
-    }
-
     lianxi_list[product_index].shangpin_bianma = product_list[index].shangpin_bianhao
     lianxi_list[product_index].name = product_list[index].shangpin_mingcheng
     lianxi_list[product_index].guige = product_list[index].guige
@@ -623,9 +611,9 @@ Page({
             jishu_biaozhun:'',
             zhibao_dengji:'',
             danwei:'',
-            shuliang:'',
-            xiaoshou_danjia:'',
-            jiashui_xiaoji:'',
+            shuliang:'0.0000',
+            xiaoshou_danjia:'0.00',
+            jiashui_xiaoji:'0.00',
             beizhu:'',
           })
           _this.setData({

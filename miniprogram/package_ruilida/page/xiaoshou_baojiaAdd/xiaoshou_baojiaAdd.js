@@ -36,13 +36,13 @@ Page({
         jishu_biaozhun:'',
         zhibao_dengji:'',
         danwei:'',
-        shuliang:'',
-        baojia_danjia:'',
-        jiashui_xiaoji:'',
-        jianyi_baojia:'',
-        zuigaojia:'',
+        shuliang:'0.0000',
+        baojia_danjia:'0.00',
+        jiashui_xiaoji:'0.00',
+        jianyi_baojia:'0.00',
+        zuigaojia:'0.00',
         xuyong_riqi:'',
-        baojia_fudong:'',
+        baojia_fudong:'100.00',
         beizhu:'',
       }
     ],
@@ -484,7 +484,7 @@ Page({
     if(baojia_body.jiage_dengji == '零售价格'){
       lianxi_list[product_index].jianyi_baojia = (product_list[index].lingshou_price * 1).toFixed(2)
       if(lianxi_list[product_index].baojia_fudong == ''){
-        lianxi_list[product_index].baojia_fudong = 100.00
+        lianxi_list[product_index].baojia_fudong = '100.00'
         lianxi_list[product_index].baojia_danjia = (product_list[index].lingshou_price * 1).toFixed(2)
       }else{
         lianxi_list[product_index].baojia_danjia = (Math.round((product_list[index].lingshou_price * lianxi_list[product_index].baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -492,7 +492,7 @@ Page({
     }else if(baojia_body.jiage_dengji == '批发价格'){
       lianxi_list[product_index].jianyi_baojia = (product_list[index].pifa_price * 1).toFixed(2)
       if(lianxi_list[product_index].baojia_fudong == ''){
-        lianxi_list[product_index].baojia_fudong = 100.00
+        lianxi_list[product_index].baojia_fudong = '100.00'
         lianxi_list[product_index].baojia_danjia = (product_list[index].pifa_price * 1).toFixed(2)
       }else{
         lianxi_list[product_index].baojia_danjia = (Math.round((product_list[index].pifa_price * lianxi_list[product_index].baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -500,7 +500,7 @@ Page({
     }else if(baojia_body.jiage_dengji == '大客户价格'){
       lianxi_list[product_index].jianyi_baojia = (product_list[index].dakehu_price * 1).toFixed(2)
       if(lianxi_list[product_index].baojia_fudong == ''){
-        lianxi_list[product_index].baojia_fudong = 100.00
+        lianxi_list[product_index].baojia_fudong = '100.00'
         lianxi_list[product_index].baojia_danjia = (product_list[index].dakehu_price * 1).toFixed(2)
       }else{
         lianxi_list[product_index].baojia_danjia = (Math.round((product_list[index].dakehu_price * lianxi_list[product_index].baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -570,13 +570,13 @@ Page({
             jishu_biaozhun:'',
             zhibao_dengji:'',
             danwei:'',
-            shuliang:'',
-            baojia_danjia:'',
-            jiashui_xiaoji:'',
-            jianyi_baojia:'',
-            zuigaojia:'',
+            shuliang:'0.0000',
+            baojia_danjia:'0.00',
+            jiashui_xiaoji:'0.00',
+            jianyi_baojia:'0.00',
+            zuigaojia:'0.00',
             xuyong_riqi:'',
-            baojia_fudong:'',
+            baojia_fudong:'100.00',
             beizhu:'',
           })
           _this.setData({
@@ -625,7 +625,7 @@ Page({
             if(baojia_body.jiage_dengji == '零售价格'){
               lianxi_list[index].jianyi_baojia = (product_list[i].lingshou_price * 1).toFixed(2)
               if(lianxi_list[index].baojia_fudong == ''){
-                lianxi_list[index].baojia_fudong = 100.00
+                lianxi_list[index].baojia_fudong = '100.00'
                 lianxi_list[index].baojia_danjia = (product_list[i].lingshou_price * 1).toFixed(2)
               }else{
                 lianxi_list[index].baojia_danjia = (Math.round((product_list[i].lingshou_price * lianxi_list[index].baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -633,7 +633,7 @@ Page({
             }else if(baojia_body.jiage_dengji == '批发价格'){
               lianxi_list[index].jianyi_baojia = (product_list[i].pifa_price * 1).toFixed(2)
               if(lianxi_list[index].baojia_fudong == ''){
-                lianxi_list[index].baojia_fudong = 100.00
+                lianxi_list[index].baojia_fudong = '100.00'
                 lianxi_list[index].baojia_danjia = (product_list[i].pifa_price * 1).toFixed(2)
               }else{
                 lianxi_list[index].baojia_danjia = (Math.round((product_list[i].pifa_price * lianxi_list[index].baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -641,7 +641,7 @@ Page({
             }else if(baojia_body.jiage_dengji == '大客户价格'){
               lianxi_list[index].jianyi_baojia = (product_list[i].dakehu_price * 1).toFixed(2)
               if(lianxi_list[index].baojia_fudong == ''){
-                lianxi_list[index].baojia_fudong = 100.00
+                lianxi_list[index].baojia_fudong = '100.00'
                 lianxi_list[index].baojia_danjia = (product_list[i].dakehu_price * 1).toFixed(2)
               }else{
                 lianxi_list[index].baojia_danjia = (Math.round((product_list[i].dakehu_price * lianxi_list[index].baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -728,7 +728,7 @@ Page({
           if(baojia_body.jiage_dengji == '零售价格'){
             jianyi_baojia = (pro_sel[i].lingshou_price * 1).toFixed(2)
             if(baojia_fudong == ''){
-              baojia_fudong = 100.00
+              baojia_fudong = '100.00'
               baojia_danjia = (pro_sel[i].lingshou_price * 1).toFixed(2)
             }else{
               baojia_danjia = (Math.round((pro_sel[i].lingshou_price * baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -736,7 +736,7 @@ Page({
           }else if(baojia_body.jiage_dengji == '批发价格'){
             jianyi_baojia = (pro_sel[i].pifa_price * 1).toFixed(2)
             if(baojia_fudong == ''){
-              baojia_fudong = 100.00
+              baojia_fudong = '100.00'
               baojia_danjia = (pro_sel[i].pifa_price * 1).toFixed(2)
             }else{
               baojia_danjia = (Math.round((pro_sel[i].pifa_price * baojia_fudong / 100) * 100) / 100).toFixed(2)
@@ -744,7 +744,7 @@ Page({
           }else if(baojia_body.jiage_dengji == '大客户价格'){
             jianyi_baojia = (pro_sel[i].dakehu_price * 1).toFixed(2)
             if(baojia_fudong == ''){
-              baojia_fudong = 100.00
+              baojia_fudong = '100.00'
               baojia_danjia = (pro_sel[i].dakehu_price * 1).toFixed(2)
             }else{
               baojia_danjia = (Math.round((pro_sel[i].dakehu_price * baojia_fudong / 100) * 100) / 100).toFixed(2)

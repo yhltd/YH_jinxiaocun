@@ -188,7 +188,7 @@ Page({
 
   caigou_click:function(){
     var _this = this
-    var sql = "select id,riqi,bianhao,kehu,isnull(jiashui_heji,0) as jiashui_heji,isnull(kaipiao_jine,0) as kaipiao_jine,isnull(jiashui_heji,0) - isnull(kaipiao_jine,0) as weikai,1 as isselect from (select id,riqi,bianhao,kehu,money.jiashui_heji from xiaoshou_dingdan as xiaoshou left join (select xiaoshou_id,sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_heji from xiaoshou_dingdan_item group by xiaoshou_id) as money on xiaoshou.id = money.xiaoshou_id) as xiaoshoudan left join (select xiaoshou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as kaipiao_jine from xiaoshou_kaipiao GROUP BY xiaoshou_bianhao) as kaipiao on xiaoshoudan.bianhao = kaipiao.xiaoshou_bianhao where isnull(jiashui_heji,0) - isnull(kaipiao_jine,0) > 0"
+    var sql = "select id,bianhao,riqi,kehu,dianpu,cangku,beizhu,xiaoshou_id,chuku_danwei,yewuyuan,jiashui_xiaoji as jiashui_heji,chuku_id,isnull(xiaoshou_bianhao,'') as xiaoshou_bianhao,isnull(jiashui_heji,0) as kaipiao_jine,jiashui_xiaoji-isnull(jiashui_heji,0) as weikai,jiashui_xiaoji-isnull(jiashui_heji,0) as this_kai,1 as isselect from (select * from xiaoshou_chuku as chuku left join (select sum(convert(float,isnull(jiashui_xiaoji,0))) as jiashui_xiaoji,chuku_id from xiaoshou_chuku_item group by chuku_id) as item on chuku.id = item.chuku_id) as chuku left join (select xiaoshou_bianhao,sum(convert(float,isnull(jiashui_heji,0))) as jiashui_heji from xiaoshou_kaipiao group by xiaoshou_bianhao) as kaipiao on chuku.bianhao = kaipiao.xiaoshou_bianhao where jiashui_xiaoji-isnull(jiashui_heji,0) > 0"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
       data: {

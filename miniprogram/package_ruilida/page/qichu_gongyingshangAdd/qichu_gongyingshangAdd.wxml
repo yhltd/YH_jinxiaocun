@@ -5,13 +5,13 @@
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.bianhao }}" data-column="bianhao" label="编号" placeholder="选择供应商自动带出" border="false" readonly="true" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.name }}" data-column="name" bind:click-input="gongyingshang_select" label="供应商" placeholder="请选择供应商" border="false" readonly="true" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ caigou_body.name }}" data-column="name" bind:click-input="gongyingshang_select" label="供应商" placeholder="请选择供应商" border="false" readonly="true" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.qiankuan }}" data-column="qiankuan" label="欠款" placeholder="请输入欠款" border="false" type="digit"/>
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ caigou_body.dingjin }}" data-column="dingjin" label="定金" placeholder="请输入定金" border="false" type="digit"/>
+        custom-class="bianju2" bind:input="onInput" model:value="{{ caigou_body.dingjin }}" data-column="dingjin" label="定金" placeholder="请输入定金" border="false" type="digit"/>
     </van-cell-group>
   </view>
 </scroll-view>

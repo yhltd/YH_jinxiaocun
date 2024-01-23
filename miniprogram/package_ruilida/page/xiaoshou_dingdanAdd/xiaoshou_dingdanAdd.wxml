@@ -15,7 +15,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
               <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
           bind:input="onInput"
           model:value="{{ xiaoshou_body.riqi }}"
           data-column="riqi"
@@ -51,7 +51,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.jiage_dengji }}"
         data-column="jiage_dengji"
@@ -75,7 +75,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shoujianren }}"
         data-column="shoujianren"
@@ -95,7 +95,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shoujian_dizhi }}"
         data-column="shoujian_dizhi"
@@ -117,7 +117,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.xiaoshou_danwei }}"
         data-column="xiaoshou_danwei"
@@ -144,7 +144,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.shenhe }}"
         data-column="shenhe"
@@ -168,7 +168,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.beizhu }}"
         data-column="beizhu"
@@ -203,7 +203,7 @@
       </van-field>
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.shangpin_mingcheng }}"
         data-column="shangpin_mingcheng"
@@ -225,7 +225,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.caizhi }}"
         data-column="caizhi"
@@ -247,7 +247,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.zhibao_dengji }}"
         data-column="zhibao_dengji"
@@ -269,7 +269,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.shuliang }}"
         data-column="shuliang"
@@ -295,7 +295,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.jiashui_xiaoji }}"
         data-column="jiashui_xiaoji"
@@ -322,7 +322,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.zuigaojia }}"
         data-column="zuigaojia"
@@ -350,7 +350,7 @@
       </picker>
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.baojia_fudong }}"
         data-column="baojia_fudong"

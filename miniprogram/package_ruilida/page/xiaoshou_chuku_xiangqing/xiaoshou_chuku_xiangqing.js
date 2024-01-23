@@ -8,6 +8,7 @@ Page({
     kaipiao_show:false,
     cxShow:false,
     caozuo_click_list:[
+      {name:'文件上传'},
       {name:'打印设置'},
       {name:'打印'},
     ],
@@ -28,6 +29,37 @@ Page({
       id,
       scoll_height,
       type
+    })
+    var sql = "select * from product_item"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        var pic_list = {}
+        for(var i=0; i<list.length; i++){
+          if(list[i].bianhao != ''){
+            pic_list[list[i].bianhao] = list[i].image
+          }
+        }
+        _this.setData({
+          pic_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -290,7 +322,7 @@ Page({
     var dingjin_use_new = _this.data.dingjin_use
     if(dingjin_use * 1 == 0){
       var qiankuan = _this.data.qiankuan * 1
-      var dingjin_sum = _this.data.dingjin_sum * 1
+      var dingjin_sum = (_this.data.dingjin_sum * 1) - (_this.data.yiyong * 1)
       if(qiankuan <= dingjin_sum){
         dingjin_use_new = qiankuan
       }else{
@@ -519,6 +551,11 @@ Page({
         wx.navigateTo({
           url: '../print_danju_peizhi/print_danju_peizhi' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=3",
         })
+      }else if(new_val == '文件上传'){
+        _this.setData({
+          xlShow4:false,
+        })
+        _this.file_goto()
       }
     } else if (e.type == "close") {
       _this.setData({
@@ -527,10 +564,28 @@ Page({
     }
   },
 
+  file_goto:function(){
+    var _this = this
+    var type = "销售出库"
+    var id = _this.data.list.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
+  },
+
   kaipiao_close:function(){
     var _this = this
     _this.setData({ 
       kaipiao_show:false
+    })
+  },
+
+  back:function(){
+    var _this = this
+    wx.navigateBack({
+      delta: 1
     })
   },
 

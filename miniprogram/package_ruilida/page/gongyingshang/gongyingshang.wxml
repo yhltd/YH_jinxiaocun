@@ -65,7 +65,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
   <view class="lables">供应商编号</view>
     <input bindinput="onInput" data-column="bianhao" class="input_text_form"  value="{{bianhao}}" type="text" name="bianhao"></input>
     <view class="lables">供应商名称</view>

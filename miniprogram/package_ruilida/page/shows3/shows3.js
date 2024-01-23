@@ -7,19 +7,49 @@ Page({
   data: {
     title:[
       {
-        text:'转账',
-        url: '../zhuanzhang/zhuanzhang',
-        icon: "../../image/zhuanzhang.png"
+        text:'销售订单统计',
+        url: '../xiaoshou_dingdan_tongji/xiaoshou_dingdan_tongji',
+        icon: "../../image/xiaoshoudingdantongji.png"
       },
       {
-        text:'库存',
-        url: '../kucun/kucun',
-        icon: "../../image/kucun.png"
+        text:'销售订单走势',
+        url: '../../../package_ruilida2/page/xiaoshou_dingdan_zoushi/xiaoshou_dingdan_zoushi',
+        icon: "../../image/xiaoshoudingdanzoushi.png"
       },
       {
-        text:'账户余额',
-        url: '../zhanghu_yue/zhanghu_yue',
-        icon: "../../image/zhanghuyue.png"
+        text:'销售收款统计',
+        url: '../xiaoshou_shoukuan_tongji/xiaoshou_shoukuan_tongji',
+        icon: "../../image/xiaoshoushoukuantongji.png"
+      },
+      {
+        text:'销售收款走势',
+        url: '../../../package_ruilida2/page/xiaoshou_shoukuan_zoushi/xiaoshou_shoukuan_zoushi',
+        icon: "../../image/xiaoshoushoukuanzoushi.png"
+      },
+      {
+        text:'销售开票统计',
+        url: '../kehu_kaipiao/kehu_kaipiao',
+        icon: "../../image/wanglai.png"
+      },
+      {
+        text:'销售毛利统计',
+        url: '../maoli_tongji/maoli_tongji',
+        icon: "../../image/xiaoshoumaolitongji.png"
+      },
+      {
+        text:'客户往来',
+        url: '../kehu_qiankuan_tongji/kehu_qiankuan_tongji',
+        icon: "../../image/wanglai.png"
+      },
+      {
+        text:'供应商往来',
+        url: '../gongyingshang_qiankuan_tongji/gongyingshang_qiankuan_tongji',
+        icon: "../../image/wanglai.png"
+      },
+      {
+        text:'采购付款走势',
+        url: '../../../package_ruilida2/page/caigou_fukuan_zoushi/caigou_fukuan_zoushi',
+        icon: "../../image/xiaoshoushoukuanzoushi.png"
       },
       {
         text:'收入分类统计',
@@ -37,54 +67,24 @@ Page({
         icon: "../../image/yuedushouzhitongji.png"
       },
       {
+        text:'库存',
+        url: '../kucun/kucun',
+        icon: "../../image/kucun.png"
+      },
+      {
+        text:'账户余额',
+        url: '../zhanghu_yue/zhanghu_yue',
+        icon: "../../image/zhanghuyue.png"
+      },
+      {
         text:'仪表盘',
         url: '../../../package_ruilida2/page/yibiaopan/yibiaopan',
         icon: "../../image/yibiaopan.png"
       },
       {
-        text:'销售毛利统计',
-        url: '../maoli_tongji/maoli_tongji',
-        icon: "../../image/xiaoshoumaolitongji.png"
-      },
-      {
-        text:'销售订单统计',
-        url: '../xiaoshou_dingdan_tongji/xiaoshou_dingdan_tongji',
-        icon: "../../image/xiaoshoudingdantongji.png"
-      },
-      {
-        text:'销售收款统计',
-        url: '../xiaoshou_shoukuan_tongji/xiaoshou_shoukuan_tongji',
-        icon: "../../image/xiaoshoushoukuantongji.png"
-      },
-      {
-        text:'销售订单走势',
-        url: '../../../package_ruilida2/page/xiaoshou_dingdan_zoushi/xiaoshou_dingdan_zoushi',
-        icon: "../../image/xiaoshoudingdanzoushi.png"
-      },
-      {
-        text:'销售收款走势',
-        url: '../../../package_ruilida2/page/xiaoshou_shoukuan_zoushi/xiaoshou_shoukuan_zoushi',
-        icon: "../../image/xiaoshoushoukuanzoushi.png"
-      },
-      {
-        text:'采购付款走势',
-        url: '../../../package_ruilida2/page/caigou_fukuan_zoushi/caigou_fukuan_zoushi',
-        icon: "../../image/xiaoshoushoukuanzoushi.png"
-      },
-      {
-        text:'客户往来',
-        url: '../kehu_qiankuan_tongji/kehu_qiankuan_tongji',
-        icon: "../../image/wanglai.png"
-      },
-      {
-        text:'供应商往来',
-        url: '../gongyingshang_qiankuan_tongji/gongyingshang_qiankuan_tongji',
-        icon: "../../image/wanglai.png"
-      },
-      {
-        text:'销售开票统计',
-        url: '../kehu_kaipiao/kehu_kaipiao',
-        icon: "../../image/wanglai.png"
+        text:'转账',
+        url: '../zhuanzhang/zhuanzhang',
+        icon: "../../image/zhuanzhang.png"
       },
     ],
     this_date:'',
@@ -367,11 +367,11 @@ Page({
   onChange: function (event) {
     var _this = this;
     console.log(_this.data.userInfo.power)
-    if (event.detail == 3) {
+    if (event.detail == 4) {
       wx.redirectTo({
         url: '../shows/shows?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 2) {
+    } else if (event.detail == 3) {
       wx.redirectTo({
         url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
@@ -382,6 +382,10 @@ Page({
     } else if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    }else if (event.detail == 2) {
+      wx.navigateTo({
+        url: '../../../package_ruilida2/page/jizhang/jizhang?userInfo=' + JSON.stringify(_this.data.userInfo)
       })
     }
     // else if (event.detail == 0) {

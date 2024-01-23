@@ -44,15 +44,15 @@ Page({
     cxShow: false,
     start_date:'',
     stop_date: '',
-    type: '按出货单',
+    type: '按销售订单',
     type_list : [
-      {name:'按出货单'},
-      {name:'按店铺'},
-      {name:'按核算单位'},
-      {name:'按产品'},
-      {name:'按客户'},
-      {name:'按业务员'},
       {name:'按销售订单'},
+      {name:'按核算单位'},
+      {name:'按店铺'},
+      {name:'按客户'},
+      {name:'按产品'},
+      {name:'按出货单'},
+      {name:'按业务员'},
     ],
     gongneng_list:[
       {

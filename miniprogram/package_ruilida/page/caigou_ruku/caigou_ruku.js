@@ -132,6 +132,37 @@ Page({
       userInfo,
       chaxun_gongyingshang
     })
+    var sql = "select * from product_item"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        var pic_list = {}
+        for(var i=0; i<list.length; i++){
+          if(list[i].bianhao != ''){
+            pic_list[list[i].bianhao] = list[i].image
+          }
+        }
+        _this.setData({
+          pic_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
   },
 
   onInput: function (e) {
@@ -248,10 +279,16 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
-    _this.setData({
-      caozuo_index:index,
-      caozuo_id:id,
-      xlShow4:true
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_ruku_sel != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    } 
+    wx.navigateTo({
+      url: '../caigou_ruku_xiangqing/caigou_ruku_xiangqing' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
     })
   },
 

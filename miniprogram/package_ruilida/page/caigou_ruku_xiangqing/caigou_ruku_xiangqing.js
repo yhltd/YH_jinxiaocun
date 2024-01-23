@@ -6,7 +6,12 @@ Page({
    */
   data: {
     kaipiao_show:false,
-    cxShow:false
+    cxShow:false,
+    caozuo_click_list:[
+      {name:'文件上传'},
+      {name:'打印设置'},
+      {name:'打印'},
+    ],
   },
 
   /**
@@ -22,6 +27,37 @@ Page({
       userInfo,
       id,
       scoll_height
+    })
+    var sql = "select * from product_item"
+    wx.cloud.callFunction({
+      name: 'sqlserver_ruilida',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordset
+        var pic_list = {}
+        for(var i=0; i<list.length; i++){
+          if(list[i].bianhao != ''){
+            pic_list[list[i].bianhao] = list[i].image
+          }
+        }
+        _this.setData({
+          pic_list
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
     })
   },
 
@@ -274,7 +310,7 @@ Page({
     var dingjin_use_new = _this.data.dingjin_use
     if(dingjin_use * 1 == 0){
       var qiankuan = _this.data.qiankuan * 1
-      var dingjin_sum = _this.data.dingjin_sum * 1
+      var dingjin_sum = (_this.data.dingjin_sum * 1) - (_this.data.yiyong * 1)
       if(qiankuan <= dingjin_sum){
         dingjin_use_new = qiankuan
       }else{
@@ -292,6 +328,148 @@ Page({
         icon: 'none'
       })
     }
+  },
+
+  goto_upd:function(){
+    var _this = this
+    var id = _this.data.list[0].id
+    wx.navigateTo({
+      url: '../caigou_rukuAdd/caigou_rukuAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id,
+    }) 
+  },
+
+  xiala_show:function(){
+    var _this = this
+    _this.setData({
+      xlShow4:true
+    })
+  },
+
+  select4: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var new_val = e.detail.name
+      var id = _this.data.id
+      if(new_val == '打印'){
+        _this.setData({
+          xlShow4:false,
+        })
+        var index = 0
+        var list = _this.data.list[index]
+        var product_list = _this.data.list[index].item
+        console.log(list)
+        console.log(product_list)
+        console.log()
+        var print_list = {
+          title:'采购入库单',
+          bianhao: list.bianhao,
+          riqi: list.riqi,
+          kegong: '供应商',
+          kegong_val: list.gongyingshang
+        }
+        var product = []
+        var num_sum = 0
+        var money_sum = 0
+        for(var i=0; i<product_list.length; i++){
+          var product_item = {
+            name:product_list[i].name,
+            num:product_list[i].shuliang,
+            price:product_list[i].caigou_danjia,
+            money:product_list[i].jiashui_xiaoji,
+          }
+          num_sum = Math.round(((num_sum * 1) + (product_list[i].shuliang * 1)) * 100) / 100
+          money_sum = Math.round(((money_sum * 1) + (product_list[i].jiashui_xiaoji * 1)) * 100) / 100
+          product.push(product_item)
+        }
+        print_list.num_sum = num_sum
+        print_list.money_sum = money_sum
+        print_list.product = product
+        console.log(print_list)
+        wx.navigateTo({
+          url: '../print_danju/print_danju' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&list=" + JSON.stringify(print_list),
+        })
+      }else if(new_val == '打印设置'){
+        _this.setData({
+          xlShow4:false,
+        })
+        wx.navigateTo({
+          url: '../print_danju_peizhi/print_danju_peizhi' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=5",
+        })
+      }else if(new_val == '文件上传'){
+        _this.setData({
+          xlShow4:false,
+        })
+        _this.file_goto()
+      }
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow4:false,
+      })
+    }
+  },
+ 
+  file_goto:function(){
+    var _this = this
+    var type = "采购入库"
+    var id = _this.data.list.id
+    console.log(id)
+    console.log(type)
+    wx.navigateTo({
+      url: '../fileUpload/fileUpload?userInfo=' + JSON.stringify(_this.data.userInfo) + "&type=" + type + "&id=" + id,
+    })
+  },
+
+  del1:function(e){
+    var _this = this
+    console.log(e.currentTarget.dataset.index)
+    var id = _this.data.id
+    var userInfo = _this.data.userInfo
+    if(userInfo.power_mingxi.caigou_ruku_del != '是'){
+      wx.showToast({
+        title: '当前账号无权限',
+        icon: 'none'
+      })
+      return;
+    }
+    wx.showModal({
+      title: '提示',
+      content: '确认删除此条信息？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          var sql = "delete from caigou_ruku where id=" + id + ";delete from caigou_ruku_item where ruku_id ='" + id + "'"
+          wx.cloud.callFunction({
+            name: 'sqlserver_ruilida',
+            data: {
+              query: sql
+            },
+            success: res => {
+              console.log(res)
+              wx.showToast({
+                title: '删除成功',
+                icon: 'none'
+              })
+              setTimeout(function () {
+                _this.back()
+              }, 2000)
+            },
+            err: res => {
+              console.log("错误!")
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none',
+                duration: 3000
+              })
+              console.log("请求失败！")
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
 
   shoukuan_add:function(){
@@ -378,7 +556,12 @@ Page({
     })
   },
 
-
+  back:function(){
+    var _this = this
+    wx.navigateBack({
+      delta: 1
+    })
+  },
 
   kaipiao_close:function(){
     var _this = this

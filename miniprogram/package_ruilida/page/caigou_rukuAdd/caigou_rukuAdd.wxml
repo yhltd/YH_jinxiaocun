@@ -15,7 +15,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi" bindchange="choiceDate">
         <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
           bind:input="onInput"
           model:value="{{ ruku_body.riqi }}"
           data-column="riqi"
@@ -40,7 +40,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ ruku_body.gongyingshang }}"
         data-column="gongyingshang"
@@ -64,7 +64,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ ruku_body.dianpu }}"
         data-column="dianpu"
@@ -88,7 +88,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ ruku_body.yewuyuan }}"
         data-column="yewuyuan"
@@ -131,7 +131,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.name }}"
         data-column="name"
@@ -153,7 +153,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.caizhi }}"
         data-column="caizhi"
@@ -175,7 +175,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.zhibao_dengji }}"
         data-column="zhibao_dengji"
@@ -197,7 +197,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.shuliang }}"
         data-column="shuliang"
@@ -206,6 +206,7 @@
         placeholder="请输入数量"
         border="false"
         type="digit"
+        bind:blur="shuliang_refresh"
       />
 
       <van-field
@@ -218,10 +219,11 @@
         placeholder="请输入采购单价"
         border="false"
         type="digit"
+        bind:blur="jiage_refresh"
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.jiashui_xiaoji }}"
         data-column="jiashui_xiaoji"
@@ -230,6 +232,7 @@
         placeholder="请输入价税小计"
         border="false"
         type="digit"
+        bind:blur="jiage_refresh"
       />
 
       <van-field

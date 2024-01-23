@@ -63,8 +63,8 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 80%;" >
-  <view class="lables">起始日期</view>
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
+  <view class="lables">起始日期</view> 
     <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form"  value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
     </picker>

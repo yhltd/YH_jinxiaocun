@@ -2,7 +2,16 @@
   <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
     <van-cell-group inset>
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.shangpin_bianma }}" data-column="shangpin_bianma" bind:click-input="product_select" data-index="{{i}}" label="编码" placeholder="请输入编码" border="false" readonly="true">
+        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.dianpu }}" data-column="dianpu" data-index="{{i}}" label="店铺" placeholder="请输入店铺" border="false" readonly="true" bindtap="xiala_show" />
+
+      <van-field
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.cangku }}" data-column="cangku" data-index="{{i}}" label="仓库" placeholder="请输入仓库" border="false" readonly="true" bindtap="xiala_show" />
+
+      <van-field
+        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.hesuan_danwei }}" data-column="hesuan_danwei" data-index="{{i}}" label="核算单位" placeholder="请输入核算单位" border="false" readonly="true" bindtap="xiala_show" />
+
+      <van-field
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.shangpin_bianma }}" data-column="shangpin_bianma" bind:click-input="product_select" data-index="{{i}}" label="编码" placeholder="请输入编码" border="false" readonly="true">
         <van-tag type="primary" size="medium" slot="button" bindtap="bianhao_get" data-index="{{i}}">扫码</van-tag>
       </van-field>
 
@@ -10,25 +19,25 @@
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.name }}" data-column="name" data-index="{{i}}" label="名称" placeholder="请输入名称" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.guige }}" data-column="guige" data-index="{{i}}" label="规格" placeholder="请输入规格" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.guige }}" data-column="guige" data-index="{{i}}" label="规格" placeholder="请输入规格" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.caizhi }}" data-column="caizhi" data-index="{{i}}" label="材质" placeholder="请输入材质" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.jishu_biaozhun }}" data-column="jishu_biaozhun" data-index="{{i}}" label="技术标准" placeholder="请输入技术标准" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.jishu_biaozhun }}" data-column="jishu_biaozhun" data-index="{{i}}" label="技术标准" placeholder="请输入技术标准" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.zhibao_dengji }}" data-column="zhibao_dengji" data-index="{{i}}" label="质保等级" placeholder="请输入质保等级" border="false" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.danwei }}" data-column="danwei" data-index="{{i}}" label="单位" placeholder="请输入单位" border="false" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.danwei }}" data-column="danwei" data-index="{{i}}" label="单位" placeholder="请输入单位" border="false" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.shuliang }}" data-column="shuliang" data-index="{{i}}" label="数量" placeholder="请输入数量" border="false" type="digit" bind:blur="shuliang_refresh" />
 
       <van-field
-        custom-class="bianju" bind:input="onInput" model:value="{{ list_item.danjia }}" data-column="danjia" data-index="{{i}}" label="单价" placeholder="请输入单价" border="false" type="digit" bind:blur="jiage_refresh" />
+        custom-class="bianju2" bind:input="onInput" model:value="{{ list_item.danjia }}" data-column="danjia" data-index="{{i}}" label="单价" placeholder="请输入单价" border="false" type="digit" bind:blur="jiage_refresh" />
 
       <van-field
         custom-class="bianju" bind:input="onInput" model:value="{{ list_item.jiashui_xiaoji }}" data-column="jiashui_xiaoji" data-index="{{i}}" label="价税小计" placeholder="请输入价税小计" border="false" type="digit" bind:blur="jiage_refresh" />

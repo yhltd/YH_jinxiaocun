@@ -13,7 +13,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.name }}"
         data-column="name"
@@ -36,7 +36,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ xiaoshou_body.dingjin }}"
         data-column="dingjin"

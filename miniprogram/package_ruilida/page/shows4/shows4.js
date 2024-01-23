@@ -261,19 +261,24 @@ Page({
       wx.redirectTo({
         url: '../shows3/shows3?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 2) {
+    } else if (event.detail == 1) {
       wx.redirectTo({
         url: '../shows1/shows1?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 1) {
+    } else if (event.detail == 0) {
       wx.redirectTo({
         url: '../shows2/shows2?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    }else if (event.detail == 0) {
-      wx.redirectTo({
-        url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
+    }else if (event.detail == 2) {
+      wx.navigateTo({
+        url: '../../../package_ruilida2/page/jizhang/jizhang?userInfo=' + JSON.stringify(_this.data.userInfo)
       })
     }
+    // else if (event.detail == 0) {
+    //   wx.redirectTo({
+    //     url: '../shows4/shows4?userInfo='+JSON.stringify(_this.data.userInfo)
+    //   })
+    // }
   },
 
   /**

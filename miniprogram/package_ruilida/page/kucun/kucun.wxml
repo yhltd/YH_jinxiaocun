@@ -65,7 +65,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
     <view class="lables">仓库</view>
     <input bindinput="onInput" data-column="cangku" class="input_text_form"  value="{{cangku}}" type="text" name="cangku" disabled="disabled" bindtap="xiala_show"></input>
     <view class="lables">商品分类</view>

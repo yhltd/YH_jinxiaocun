@@ -28,11 +28,15 @@
 
   <view wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
     <van-cell-group inset>
-      <van-cell center title="{{list_item.shangpin_mingcheng}}" value="{{list_item.jiashui_xiaoji}}" use-label-slot>
+      <van-cell center title="{{list_item.shangpin_mingcheng}}" use-label-slot center>
         <view slot="label">
-          <text>编号：{{list_item.bianhao}} \n</text>
+          <text>编号：{{list_item.shangpin_bianhao}} \n</text>
           <text>规格：{{list_item.guige}} \n</text>
-          <text decode="{{true}}">数量：{{list_item.shuliang}} &nbsp;&nbsp;单价：{{list_item.baojia_danjia}}</text>
+          <text decode="{{true}}">数量：{{list_item.shuliang}} &nbsp;&nbsp;单价：{{list_item.baojia_danjia}} \n</text>
+          <text>价税小计：{{list_item.jiashui_xiaoji}} \n</text>
+        </view>
+        <view slot="right-icon">
+          <image data-index="{{i}}" src="{{ pic_list[list_item.shangpin_bianhao] }}" mode='aspectFill' style="margin-right:10px;width: 30px;height:30px;border: 1px solid #A6A6A6"/>
         </view>
       </van-cell>
     </van-cell-group>
@@ -41,7 +45,6 @@
 
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="more_show">更多</button>
-  <button class="bt_bottom" bindtap="goto_print">打印</button>
   <button class="bt_bottom" bindtap="baojia_upd">编辑</button>
 </view>
 

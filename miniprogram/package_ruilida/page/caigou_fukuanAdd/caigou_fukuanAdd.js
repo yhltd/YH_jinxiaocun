@@ -50,7 +50,9 @@ Page({
     hexiao_danju_list:[
       {name:'重选'},
       {name:'查看'}
-    ]
+    ],
+    kehu:'',
+    gongyingshang:'',
   },
 
   /**
@@ -89,8 +91,17 @@ Page({
     })
     var id = options.id
     var xiaoshou_id = options.xiaoshou_id
-    var chuku_id = options.xiaoshou_id
+    var chuku_id = options.chuku_id
+    var caigou_id = options.caigou_id
+    var ruku_id = options.ruku_id
     var shoufu_type = options.shoufu_type
+    _this.setData({
+      xiaoshou_id,
+      chuku_id,
+      caigou_id, 
+      ruku_id,
+      id
+    })
     var sql = "select * from peizhi where type = '店铺';select * from userInfo;select * from peizhi where type = '记账分类';select * from peizhi where type = '收款账户';select * from peizhi where type = '记账明细类型';select * from gongyingshang;select * from customer;select * from peizhi where type = '核算单位';select * from jizhang_mingxi where id=4"
     wx.cloud.callFunction({
       name: 'sqlserver_ruilida',
@@ -139,6 +150,7 @@ Page({
     })
     if(id != null && id != undefined){
       var sql = "select * from shouzhi_mingxi where id=" + id + ";select * from shouzhi_mingxi_item where shouzhi_id = '" + id + "'"
+      console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlserver_ruilida',
         data: {
@@ -152,11 +164,9 @@ Page({
             id,
             shouzhi_body,
           })
-          if(lianxi_list.length != 0){
-            _this.setData({
-              lianxi_list,
-            })
-          }
+          _this.setData({
+            lianxi_list,
+          })
         },
         err: res => {
           console.log("错误!")
@@ -893,6 +903,7 @@ Page({
       return;
     }
     var money_sum = 0
+    console.log(lianxi_list)
     for(var i=0; i<lianxi_list.length; i++){
       if(lianxi_list[i].mingxi_type == ''){
         wx.showToast({
@@ -1230,6 +1241,33 @@ Page({
       click_index: index
     })
     console.log(list)
+    _this.setData({
+      xlShow2: true
+    })
+  },
+
+  sousuo_xiala(e){
+    var _this = this
+    var column = e.currentTarget.dataset.column
+    var list = _this.data[column + "_list"]
+    var tiaojian = _this.data[column]
+    var new_list = []
+    for(var i=0; i<list.length; i++){
+      var panduan = true
+      if(tiaojian != ''){
+        if(list[i].name.indexOf(tiaojian) == -1){
+          panduan = false
+        }
+      }
+      if(panduan){
+        new_list.push(list[i])
+      }
+    }
+    _this.setData({
+      list_xiala: new_list,
+      click_column:column,
+      click_index: undefined
+    })
     _this.setData({
       xlShow2: true
     })

@@ -267,6 +267,7 @@ Page({
     console.log(e.currentTarget.dataset.index)
     var index = e.currentTarget.dataset.index
     var id = _this.data.list[index].id
+    var shoufu_type = _this.data.list[index].shoufu_type
     var userInfo = _this.data.userInfo
     if(userInfo.power_mingxi.shouru_upd != '是' && _this.data.shouzhi_type == '收入记录'){
       wx.showToast({
@@ -282,9 +283,28 @@ Page({
       })
       return;
     }
-    wx.navigateTo({
-      url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type,
-    })
+    if(shoufu_type == '收订金'){
+      wx.navigateTo({
+        url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type + "&xiaoshou_id=0",
+      })
+    }else if(shoufu_type == '收欠款'){
+      wx.navigateTo({
+        url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type + "&chuku_id=0",
+      })
+    }else if(shoufu_type == '付订金'){
+      wx.navigateTo({
+        url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type + "&caigou_id=0",
+      })
+    }else if(shoufu_type == '付欠款'){
+      wx.navigateTo({
+        url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type + "&ruku_id=0",
+      })
+    }else{
+      wx.navigateTo({
+        url: '../caigou_fukuanAdd/caigou_fukuanAdd' + '?userInfo=' + JSON.stringify(_this.data.userInfo) + "&id=" + id + "&shouzhi_type=" + _this.data.shouzhi_type,
+      })
+    }
+
   },
 
   del1:function(e){

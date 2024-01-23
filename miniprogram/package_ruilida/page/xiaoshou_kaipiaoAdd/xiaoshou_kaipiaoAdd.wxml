@@ -8,15 +8,15 @@
         bind:input="onInput"
         model:value="{{ kaipiao_body.xiaoshou_bianhao }}"
         data-column="xiaoshou_bianhao"
-        label="销售订单编号"
-        placeholder="点击选择销售订单编号"
+        label="出库单号"
+        placeholder="点击选择出库单号"
         border="false"
         bind:click-input="caigou_click"
         readonly="true"
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ kaipiao_body.shoupiao_danwei }}"
         data-column="shoupiao_danwei"
@@ -38,7 +38,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_dizhi }}"
         data-column="kaipiao_dizhi"
@@ -58,7 +58,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_yinhang }}"
         data-column="kaipiao_yinhang"
@@ -79,7 +79,7 @@
 
       <picker class="pick" mode="date" value="{{date}}" data-column_name="kaipiao_riqi" bindchange="choiceDate">
               <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
           bind:input="onInput"
           model:value="{{ kaipiao_body.kaipiao_riqi }}"
           data-column="kaipiao_riqi"
@@ -103,7 +103,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ kaipiao_body.kaipiao_shuie }}"
         data-column="kaipiao_shuie"
@@ -128,7 +128,7 @@
       />
 
             <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ kaipiao_body.beizhu }}"
         data-column="beizhu"

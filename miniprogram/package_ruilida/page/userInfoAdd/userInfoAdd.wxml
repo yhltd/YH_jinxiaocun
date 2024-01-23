@@ -12,7 +12,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         size="large"
         model:value="{{ username }}"
         data-column="username"
@@ -32,7 +32,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         size="large"
         model:value="{{ power }}"
         data-column="power"

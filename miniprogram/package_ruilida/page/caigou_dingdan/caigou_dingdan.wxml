@@ -15,10 +15,13 @@
         <van-tag slot="right-icon" plain type="primary" size="medium" data-index="{{i}}" data-column="tiaozhuan" catchtap="xiala_show">更多</van-tag>
       </van-cell>
 
-      <van-cell title="{{product_item.name}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}">
-        <view slot="label">
+      <van-cell title="{{product_item.name}}" use-label-slot wx:for="{{item.item}}" wx:for-item="product_item" wx:key="{{product_item}}" center>
+        <view slot="label" >
           <text>规格：{{product_item.guige}} \n</text>
           <text decode="{{true}}">数量：{{product_item.shuliang}} &nbsp;&nbsp;采购单价：{{product_item.caigou_danjia}} &nbsp;&nbsp;价税小计：{{product_item.jiashui_xiaoji}}</text>
+        </view>
+        <view slot="right-icon">
+          <image data-index="{{i}}" src="{{ pic_list[product_item.shangpin_bianma] }}" mode='aspectFill' style="margin-right:10px;width: 30px;height:30px;border: 1px solid #A6A6A6"/>
         </view>
       </van-cell>
       <van-cell title="{{'合计：' + item.heji}}"></van-cell>
@@ -84,8 +87,8 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
-  <view class="lables">起始日期</view>
+<van-popup z-index='90' bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;" >
+  <view class="lables">起始日期</view> 
     <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form"  value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
     </picker>

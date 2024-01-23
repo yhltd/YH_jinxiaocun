@@ -16,7 +16,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shouzhi_body.shouzhi_bianhao }}"
         data-column="shouzhi_bianhao"
@@ -41,7 +41,7 @@
       </picker>
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shouzhi_body.dianpu }}"
         data-column="dianpu"
@@ -66,7 +66,7 @@
 
       <van-field
         wx:if="{{!(chuku_id != undefined || ruku_id != undefined || shouzhi_body.danju_leixing == '日常开支')}}"
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shouzhi_body.danju_bianhao }}"
         data-column="danju_bianhao"
@@ -76,8 +76,8 @@
         bind:click-input="danju_click"
         readonly="true"
       >
-      <van-tag wx:if="{{xiaoshou_id != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可收订金:' + yukuan}}</van-tag>
-      <van-tag wx:if="{{caigou_id != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可付订金:' + yukuan}}</van-tag>
+      <van-tag wx:if="{{xiaoshou_id != undefined && yukuan != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可收订金:' + yukuan}}</van-tag>
+      <van-tag wx:if="{{caigou_id != undefined && yukuan != undefined}}" slot='button' style="margin-right: 5px;" type="primary">{{'可付订金:' + yukuan}}</van-tag>
       </van-field>
 
       <van-field
@@ -92,7 +92,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shouzhi_body.shoufu_type }}"
         data-column="shoufu_type"
@@ -116,14 +116,14 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shouzhi_body.jizhang_jine }}"
         data-column="jizhang_jine"
         label="记账金额"
         placeholder="请填写记账金额"
         border="false"
-        readonly="{{!(xiaoshou_id != undefined || caigou_id != undefined)}}"
+        readonly="{{!(xiaoshou_id != undefined || caigou_id != undefined || (id != undefined && (ruku_id != undefined || chuku_id != undefined)))}}"
         bind:blur="jiage_head_refresh"
       />
 
@@ -141,7 +141,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ shouzhi_body.zhaiyao }}"
         data-column="zhaiyao"
@@ -165,7 +165,7 @@
     </van-cell-group>
   </view>
 
-  <view style="padding-top: 10px;" wx:if="{{(chuku_id != undefined || ruku_id != undefined)}}">
+  <view style="padding-top: 10px;" wx:if="{{(chuku_id != undefined || ruku_id != undefined) && lianxi_list2 != undefined}}">
     <van-cell-group inset>
       <van-field
         custom-class="bianju"
@@ -181,7 +181,7 @@
     </van-cell-group>
   </view>
 
-  <view wx:if="{{!(xiaoshou_id != undefined || caigou_id != undefined)}}" wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
+  <view wx:if="{{!(xiaoshou_id != undefined || caigou_id != undefined || chuku_id != undefined || ruku_id != undefined)}}" wx:for="{{lianxi_list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id" style="padding-top: 10px;">
     <view class="title1">
       <view class="title_item">记账明细{{i+1}}：</view>
       <van-icon bind:click="del_lianxiren" name="close" size="20px" style="display:{{lianxi_list.length-1==0?'none':'flex'}}" data-index="{{i}}"/>
@@ -201,7 +201,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.yongtu }}"
         data-column="yongtu"
@@ -225,7 +225,7 @@
       />
 
       <van-field
-        custom-class="bianju"
+        custom-class="bianju2"
         bind:input="onInput"
         model:value="{{ list_item.kedi_shuie }}"
         data-column="kedi_shuie"
@@ -358,7 +358,7 @@
     </view>
     <view style="display: flex;">
       <view class="lables">客户：</view>
-      <input bindinput="onInput_text" bindtap="xiala_show" data-column="kehu" class="input_text_form" data-index="cx" value="{{kehu}}" type="text" name="kehu" disabled="disabled"></input>
+      <input bindinput="onInput_text" bindlongpress="sousuo_xiala" data-column="kehu" class="input_text_form" data-index="cx" value="{{kehu}}" type="text" name="kehu" placeholder="输入后长按模糊搜索" ></input>
     </view>
   </view>
   <scroll-view scroll-x="true" scroll-y="true" style="margin-top:10px;height:66%;background-color: #e9e9e9;padding-bottom: 10px;">
@@ -411,7 +411,7 @@
     </view>
     <view style="display: flex;">
       <view class="lables">供应商：</view>
-      <input bindinput="onInput_text" bindtap="xiala_show" data-column="gongyingshang" class="input_text_form" data-index="cx" value="{{gongyingshang}}" type="text" name="gongyingshang" disabled="disabled"></input>
+      <input bindinput="onInput_text" bindlongpress="sousuo_xiala" data-column="gongyingshang" class="input_text_form" data-index="cx" value="{{gongyingshang}}" placeholder="输入后长按模糊搜索" type="text" name="gongyingshang" ></input>
     </view>
   </view>
   <scroll-view scroll-x="true" scroll-y="true" style="margin-top:10px;height:66%;background-color: #e9e9e9;padding-bottom: 10px;">
@@ -421,7 +421,7 @@
           <view slot="label">
             <text decode="{{true}}">日期：{{item.riqi}} &nbsp;&nbsp; 店铺：{{item.dianpu}} \n</text>
             <text>供应商：{{item.gongyingshang}} \n</text>
-            <text decode="{{true}}">价税合计：{{item.jiashui_xiaoji}} &nbsp;&nbsp;已付款：{{item.yifu}} &nbsp;&nbsp;未付款：{{item.weifu}}</text>
+            <text decode="{{true}}">价税合计：{{item.jiashui_xiaoji}} &nbsp;&nbsp;已付款：{{item.yifu}} &nbsp;&nbsp;未付款：{{item.weifu}} \n</text>
             <text>订金余额：{{item.dingjin_yu}} \n</text>
           </view>
         </van-cell>
