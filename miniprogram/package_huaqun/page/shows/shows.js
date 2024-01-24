@@ -28,6 +28,10 @@ Page({
       url: "../xlpeizhi/xlpeizhi"
     },
     {
+      text: "拉手孔生成配置",
+      url: "../../../package_huaqun_erqi/page/lashou_peizhi/lashou_peizhi"
+    },
+    {
       text: "账号管理",
       url: "../zhguanli/zhguanli"
     },

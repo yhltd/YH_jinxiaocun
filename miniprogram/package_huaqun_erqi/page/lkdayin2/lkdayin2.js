@@ -573,7 +573,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -588,7 +588,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -605,7 +605,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -622,7 +622,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -638,7 +638,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -649,14 +649,14 @@ Page({
           command.setCls()//清除缓冲区
           panduan = true
         }
-        command.setText(30, height, "TSS24.BF2", 0, 2, 2, list[i].height)
-        command.setText(240, height, "TSS24.BF2", 0, 2, 2, '*')
-        command.setText(470, height, "TSS24.BF2", 0, 2, 2, list[i].width)
-        command.setText(870, height, "TSS24.BF2", 0, 2, 2, list[i].num)
+        command.setText(30, height, "TSS24.BF2", 0, 3, 3, list[i].height)
+        command.setText(240, height, "TSS24.BF2", 0, 3, 3, '*')
+        command.setText(470, height, "TSS24.BF2", 0, 3, 3, list[i].width)
+        command.setText(870, height, "TSS24.BF2", 0, 3, 3, list[i].num)
 
-        height = height + 60
+        height = height + 80
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -675,7 +675,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -694,7 +694,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -713,7 +713,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -732,7 +732,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -751,7 +751,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -770,7 +770,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -789,7 +789,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -808,7 +808,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -827,7 +827,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -846,7 +846,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -865,7 +865,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -884,7 +884,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -903,7 +903,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)
@@ -922,7 +922,7 @@ Page({
 
         height = height + 60
         panduan = false
-        if(height % 930 == 0 || height % 920 == 0){
+        if(height % 770 == 0 || height % 920 == 0){
           height = 20
           command.setPagePrint()//执行打印指令
           command_arr.push(command)

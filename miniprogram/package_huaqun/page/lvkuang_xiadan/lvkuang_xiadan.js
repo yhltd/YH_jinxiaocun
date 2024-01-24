@@ -4293,6 +4293,7 @@ Page({
       }
     }
     var select_sql = select_sql_head + select_sql_foot + ";"
+    select_sql = select_sql +  "select * from lashou_peizhi;"
     console.log(select_sql)
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
@@ -4302,9 +4303,21 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordsets
-        var xuhao = ""
 
         var canzhao_list = res.result.recordsets[0]
+        var lashou_peizhi_list = res.result.recordsets[1]
+        var lashou_xinghao_panduan = {}
+        var lvxingcai_panduan = {}
+        for(var i=0; i<lashou_peizhi_list.length; i++){
+          if(lashou_peizhi_list[i].lashou != ''){
+            lashou_xinghao_panduan[lashou_peizhi_list[i].lashou] = ""
+          }
+          if(lashou_peizhi_list[i].lvxingcai != ''){
+            lvxingcai_panduan[lashou_peizhi_list[i].lvxingcai] = ""
+          }
+        }
+        console.log(lashou_xinghao_panduan)
+        console.log(lvxingcai_panduan)
         console.log(canzhao_list)
         var boli_insert_sql_head = "insert into boli_xiadan(order_number,pinyin,boli_yanse,boli_shenjiagong,num,height,width,shuoming1,shuoming2,shengchan,guanlian) values "
         var boli_insert_sql_foot = ""
@@ -4346,23 +4359,31 @@ Page({
             if(body_list[i].zhuangsuoshuliang_insert_right1 != ""){
               shuoming2 = shuoming2 + body_list[i].zhuangsuoshuliang_insert_right1 * 1
             }
-            if((body_list[i].lashou_xinghao == "明装96拉手孔" || body_list[i].lashou_xinghao == "明装128拉手孔" || body_list[i].lashou_xinghao == "特殊孔拉手") && (body_list[i].lvxingcai == "小圆边铝框" || body_list[i].lvxingcai == "前20后45铝框")){
+            
+            if(lashou_xinghao_panduan[body_list[i].lashou_xinghao] != undefined && lvxingcai_panduan[body_list[i].lvxingcai] != undefined){
+              if(body_list[i].lashouwei_insert_left != ""){
+                if(body_list[i].lashouwei_insert_left * 1 < 13){
+                  shuoming1 = shuoming1 + 0
+                }else{
+                  shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
+                }
+              }
+              if(body_list[i].lashouwei_insert_right != ""){
+                if(body_list[i].lashouwei_insert_right * 1 < 13){
+                  shuoming1 = shuoming1 + 0
+                }else{
+                  shuoming1 = shuoming1 + body_list[i].lashou_shuliang_left * 1
+                }
+              }
+            }else if(lashou_xinghao_panduan[body_list[i].lashou_xinghao] != undefined){
               if(body_list[i].lashouwei_insert_left != ""){
                 shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
-              }else if(body_list[i].lashouwei_insert_right != ""){
-                shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
               }
-              if(shuoming1 < 13){
-                shuoming1 = 0
-              }else{
-                shuoming1 = 0
-                shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
+              if(body_list[i].lashouwei_insert_right != ""){
                 shuoming1 = shuoming1 + body_list[i].lashou_shuliang_left * 1
               }
-            }else if(body_list[i].lashou_xinghao == "明装96拉手孔" || body_list[i].lashou_xinghao == "明装128拉手孔" || body_list[i].lashou_xinghao == "特殊孔拉手"){
-              shuoming1 = shuoming1 + body_list[i].lashou_shuliang_right * 1
-              shuoming1 = shuoming1 + body_list[i].lashou_shuliang_left * 1
             }
+
             if(boli_insert_sql_foot == ""){
               boli_insert_sql_foot = "('" + header_list.order_number + "','" + header_list.pinyin + "','" + body_list[i].boli_yanse + "','" + body_list[i].boli_shenjiagong + "','" + num + "','" + height + "','" + width + "','" + shuoming1 + "','" + shuoming2 + "','正在加工','"  + header_list.order_number + i + "')"
             }else{
