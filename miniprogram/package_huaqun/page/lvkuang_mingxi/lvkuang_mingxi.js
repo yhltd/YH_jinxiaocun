@@ -429,9 +429,9 @@ Page({
     var _this = this
     var sql = ""
     if (_this.data.userInfo.power == '客户') {
-      sql = "select customer_name_renyuan,insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.company + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by customer_name_renyuan,insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.company + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
+      sql = "select customer_name_renyuan,insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.company + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by customer_name_renyuan,insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu,order_number desc;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and customer_name ='" + _this.data.userInfo.company + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
     } else{
-      sql = "select customer_name_renyuan,insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by customer_name_renyuan,insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
+      sql = "select customer_name_renyuan,insert_date,customer_name,case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end as wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan,case case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end when '优先处理' then '1' when '已审验' then '2' when '推迟处理' then '3' when '完成' then '4' else shunxu end as paixu from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' group by customer_name_renyuan,insert_date,customer_name,wancheng,order_number,kailiao,shunxu,zuzhuang,baozhuang,customer_number,install_address,phone,shipping_address,pinyin,shendan order by paixu,order_number desc;select insert_date,order_number,customer_name,isnull(num,'') as num,height,width,'正在加工' as jiagong,'' as shendan from lvkuang_xiadan where customer_number like '%" + e[0] + "%' and customer_name like '%" + e[1] + "%' and insert_date >= '" + e[2] + "' and insert_date <= '" + e[3] + "' and install_address like '%" + e[5] + "%' and case when isnull(wancheng,'未审验') = '' then '未审验' else isnull(wancheng,'未审验') end like '%" + e[4] + "%' and height != ''"
     }
     console.log(sql)
     wx.cloud.callFunction({
@@ -584,6 +584,32 @@ Page({
         yes_click: '完成',
         no_click: '未完成',
       })
+    }else if(column == "customer_name"){
+      if(_this.data.userInfo.power != '管理员' && _this.data.list[index].wancheng != "未审验"){
+        wx.showToast({
+          title: '只允许修改未审验订单！',
+          icon: 'none'
+        })
+        return;
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: '确认修改此条订单的明细信息？',
+          success(res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '../lvkuang_xiadan/lvkuang_xiadan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&order_number=' + JSON.stringify(order_number)
+              })
+            } else if (res.cancel) {
+              wx.showToast({
+                title: '已取消！',
+                icon: 'none'
+              })
+              return;
+            }
+          }
+        })
+      }
     }else {
       wx.showModal({
         title: '提示',

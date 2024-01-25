@@ -3484,6 +3484,13 @@ Page({
     console.log(_this.data.minDate)
     console.log(_this.data.maxDate)
     console.log(_this.data.currentDate)
+    var p_order_number = options.order_number
+    if(p_order_number != undefined){
+      p_order_number = JSON.parse(p_order_number)
+      _this.setData({
+        p_order_number
+      })
+    }
     if(_this.data.onload_panduan != 1){
       var userInfo = JSON.parse(options.userInfo)
       _this.setData({
@@ -3491,17 +3498,113 @@ Page({
         onload_panduan:1
       })
     }
-    var insert_date = getNowDate()
-    var header_list = _this.data.header_list
-    header_list.insert_date = insert_date
-    header_list.customer_name_renyuan =_this.data.userInfo.name
-    if(_this.data.userInfo.power == '客户'){
-      header_list.customer_name = _this.data.userInfo.company
-      header_list.pinyin = _this.data.userInfo.pinyin
+
+    if(p_order_number == undefined){
+      var insert_date = getNowDate()
+      var header_list = _this.data.header_list
+      header_list.insert_date = insert_date
+      header_list.customer_name_renyuan =_this.data.userInfo.name
+      if(_this.data.userInfo.power == '客户'){
+        header_list.customer_name = _this.data.userInfo.company
+        header_list.pinyin = _this.data.userInfo.pinyin
+      }
+      _this.setData({
+        header_list,
+      })
+  
+      var bianhao_left = getBianHao()
+      console.log(bianhao_left)
+      var sql = "select order_number from lvkuang_xiadan where order_number like '" + bianhao_left + "%'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var bianhao_list = res.result.recordset
+          var new_bianhao = "001" 
+          for(var i=0; i<bianhao_list.length; i++){
+            if(bianhao_list[i].order_number != '' && bianhao_list[i].order_number != null && bianhao_list[i].order_number != undefined){
+              var this_bianhao = bianhao_list[i].order_number.slice(10)
+              console.log(this_bianhao)
+              if(this_bianhao >= new_bianhao){
+                new_bianhao = (this_bianhao * 1 + 1).toString()
+                if(new_bianhao.length == 1){
+                  new_bianhao = "00" + new_bianhao.toString()
+                }else if(new_bianhao.length == 2){
+                  new_bianhao = "0" + new_bianhao.toString()
+                }
+                console.log(new_bianhao)
+              }
+            }
+          }
+          new_bianhao = bianhao_left.toString() + new_bianhao.toString()
+          var header_list = _this.data.header_list
+          header_list.order_number = new_bianhao
+          _this.setData({
+            header_list
+          })
+        },
+        err: res => {
+          wx.showToast({
+            title: '读取下拉列表错误！',
+            icon: 'none'
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+    }else{
+      var sql = "select * from lvkuang_xiadan where order_number ='" + p_order_number + "'"
+      wx.cloud.callFunction({
+        name: 'sqlserver_huaqun',
+        data: {
+          query: sql
+        },
+        success: res => {
+          var order_list = res.result.recordset
+          var header_list = _this.data.header_list
+          header_list.customer_name = order_list[0].customer_name
+          header_list.insert_date = order_list[0].insert_date
+          header_list.order_number = order_list[0].order_number
+          header_list.pinyin = order_list[0].pinyin
+          header_list.shipping_address = order_list[0].shipping_address
+          header_list.phone = order_list[0].phone
+          header_list.shipping_type = order_list[0].shipping_type
+          header_list.install_address = order_list[0].install_address
+          header_list.customer_name_renyuan = order_list[0].customer_name_renyuan
+          header_list.customer_number = order_list[0].customer_number
+          var body_list = order_list
+          _this.setData({
+            header_list,
+            body_list
+          })
+        },
+        err: res => {
+          wx.showToast({
+            title: '读取单据错误！',
+            icon: 'none'
+          })
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
     }
-    _this.setData({
-      header_list,
-    })
+
+
+
     var sql = "select * from userInfo where power = '客户'"
     wx.cloud.callFunction({
       name: 'sqlserver_huaqun',
@@ -3521,55 +3624,6 @@ Page({
         }
         _this.setData({
           customer_name
-        })
-      },
-      err: res => {
-        wx.showToast({
-          title: '读取下拉列表错误！',
-          icon: 'none'
-        })
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
-      }
-    })
-
-    var bianhao_left = getBianHao()
-    console.log(bianhao_left)
-    var sql = "select order_number from lvkuang_xiadan where order_number like '" + bianhao_left + "%'"
-    wx.cloud.callFunction({
-      name: 'sqlserver_huaqun',
-      data: {
-        query: sql
-      },
-      success: res => {
-        var bianhao_list = res.result.recordset
-        var new_bianhao = "001" 
-        for(var i=0; i<bianhao_list.length; i++){
-          if(bianhao_list[i].order_number != '' && bianhao_list[i].order_number != null && bianhao_list[i].order_number != undefined){
-            var this_bianhao = bianhao_list[i].order_number.slice(10)
-            console.log(this_bianhao)
-            if(this_bianhao >= new_bianhao){
-              new_bianhao = (this_bianhao * 1 + 1).toString()
-              if(new_bianhao.length == 1){
-                new_bianhao = "00" + new_bianhao.toString()
-              }else if(new_bianhao.length == 2){
-                new_bianhao = "0" + new_bianhao.toString()
-              }
-              console.log(new_bianhao)
-            }
-          }
-        }
-        new_bianhao = bianhao_left.toString() + new_bianhao.toString()
-        var header_list = _this.data.header_list
-        header_list.order_number = new_bianhao
-        _this.setData({
-          header_list
         })
       },
       err: res => {
@@ -4268,6 +4322,10 @@ Page({
     wx.showLoading({
       title:'保存中'
     })
+    var del_sql = ""
+    if(_this.data.p_order_number != undefined){
+      del_sql = "delete from lvkuang_xiadan where order_number='" + _this.data.p_order_number + "';delete from boli_xiadan where order_number='" + _this.data.p_order_number + "';"
+    }
     var insert_sql = "insert into lvkuang_xiadan(customer_name,insert_date,order_number,pinyin,shipping_address,phone,shipping_type,install_address,customer_number,height,width,num,lvxingcai,lvcai_yanse,boli_shenjiagong,boli_yanse,lashou_xinghao,jiaoliankong_fangxiang_left,jiaoliankong_fangxiang_right,lashou_shuliang_right,lashou_shuliang_left,lashouwei_select_left,lashouwei_insert_left,lashouwei_select_right,lashouwei_insert_right,zhuangsuoshuliang_insert_left1,zhuangsuoshuliang_insert_right1,zhuangsuofangwei_insert_left1,zhuangsuofangwei_insert_left2,zhuangsuofangwei_insert_right1,zhuangsuofangwei_insert_right2,kaijiaolian,jiaolian1_select_left,jiaolian1_insert_left,jiaolian1_select_right,jiaolian1_insert_right,jiaolian2_select_left,jiaolian2_insert_left,jiaolian2_select_right,jiaolian2_insert_right,jiaolian3_select_left,jiaolian3_insert_left,jiaolian3_select_right,jiaolian3_insert_right,jiaolian4_select_left,jiaolian4_insert_left,jiaolian4_select_right,jiaolian4_insert_right,jiaolian5_select_left,jiaolian5_insert_left,jiaolian5_select_right,jiaolian5_insert_right,jiaolian6_select_left,jiaolian6_insert_left,jiaolian6_select_right,jiaolian6_insert_right,qita,sum_shuliang1,danjia1,sum_jine1,fujian_select1,fujian_select2,fujian_select3,fujian_select4,pinpai_select1,pinpai_select2,pinpai_select3,pinpai_select4,fujian_shuliang1,fujian_shuliang2,fujian_shuliang3,fujian_shuliang4,sum_shuliang2,danjia2,sum_jine2,guanlian,customer_name_renyuan) values "
     var sql_foot = ""
     for(var i=0; i<body_list.length; i++){
@@ -4393,7 +4451,7 @@ Page({
         }
 
         if(boli_insert_sql_foot != ''){
-          insert_sql = insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
+          insert_sql = del_sql + insert_sql + boli_insert_sql_head + boli_insert_sql_foot + ";"
         }
         console.log(insert_sql)
         wx.cloud.callFunction({
