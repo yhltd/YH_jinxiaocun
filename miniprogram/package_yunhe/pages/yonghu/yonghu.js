@@ -171,8 +171,6 @@ var app = getApp()
 Page({
   data: {
     
-    appid: 'wxf3c03c2a0c59d299',
-    secret: 'e60ebda08d74b2aa95a84dc045accac4',
     showView: true,
     text: '\n',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),

@@ -1411,7 +1411,7 @@ Page({
       getCompanyTime(this,e.detail.value,'门店')
     }else if(this.data.system=="云合教务管理系统"){
       getCompanyTime(this,e.detail.value,'教务')
-    }else if(this.data.system=="零售管理系统" || this.data.system == "销售管理系统" || this.data.system == "浙江省磐安外贸药业"){
+    }else if(this.data.system=="零售管理系统" || this.data.system == "销售管理系统" || this.data.system == "浙江省磐安外贸药业" || this.data.system == "华群家具材料"){
       getCompanyTime(this,e.detail.value,this.data.system)
     }else{
       login(this,e.detail.value)

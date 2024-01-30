@@ -45,6 +45,11 @@
     "pages/frmadmindetails/frmadmindetails",
     "pages/frmadminsysm/frmadminsysm"
   ],
+  "requiredPrivateInfos":[
+    "getLocation",
+    "onLocationChange",
+    "startLocationUpdate"
+  ],
   "subpackages": [
     {
       "root": "packageA",
