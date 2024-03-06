@@ -1,0 +1,76 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="{{list[i].shengchan=='优先生产'?'list_view1':'list_view'}}" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView"
+              bindlongpress="del1">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="back" >返回</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+</view>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
+  <view class="bottom_view" style="height:10%;margin-top: 8%;">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_01">优先生产</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_02">正常</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+  <view class="lables">生产单号</view>
+    <input bindinput="onInput" data-column="productionNo" class="input_text_form"  value="{{productionNo}}" type="text" name="productionNo"></input>
+    <view class="lables">客户名称</view>
+    <input bindinput="onInput" data-column="customer_name" class="input_text_form"  value="{{customer_name}}" type="text" name="customer_name"></input>  
+    <view class="lables">终端用户</view>
+    <input bindinput="onInput" data-column="user" class="input_text_form" value="{{user}}" type="text" name="user"></input>
+    <view class="lables">订单备注</view>
+    <input bindinput="onInput" data-column="order_Content" class="input_text_form" value="{{order_Content}}" type="text" name="order_Content"></input>
+    <view class="lables">生产时效</view>
+    <input bindinput="onInput" data-column="beizhu2" class="input_text_form" value="{{beizhu2}}" type="text" name="beizhu2"></input>
+    <view class="lables">订单状态</view>
+    <input bindinput="onInput" data-column="orderState" class="input_text_form" value="{{orderState}}" type="text" name="orderState"></input>
+    <view class="lables">文件编号</view>
+    <input bindinput="onInput" data-column="spareMoney" class="input_text_form" value="{{spareMoney}}" type="text" name="spareMoney"></input>
+    <view class="lables">派单日期</view>
+    <input bindinput="onInput" data-column="paidanDate" class="input_text_form" value="{{paidanDate}}" type="text" name="paidanDate"></input>
+    <view class="lables">生产周期</view>
+    <input bindinput="onInput" data-column="" class="input_text_form" value="{{}}" type="text" name=""></input>
+    <view class="lables">倒计时</view>
+    <input bindinput="onInput" data-column="" class="input_text_form" value="{{}}" type="text" name=""></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow}}" actions="{{yewuyuan_list}}" close-on-click-overlay bind:close="select1" bind:select="select1" />

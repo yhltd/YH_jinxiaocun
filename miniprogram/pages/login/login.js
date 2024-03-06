@@ -481,8 +481,9 @@ var login = function(that,info) {
 
     //803登录  20210709  胡超
   }else if(system =="订单追踪系统"){
-    var sql = "select * from user_info where code = '" + info.inputName + "' and pwd = '" + info.inputPwd + "'";
-
+    console.log("803登录")
+    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "'";
+    
     wx.cloud.callFunction({
       
       name: 'sqlServer_tb3999803',
@@ -502,8 +503,9 @@ var login = function(that,info) {
             }else{
               that.remove_user()
             }
+            console.log("跳转")
             wx.navigateTo({
-              url: '../../package_tb3999803/pages/index/index?user=' + JSON.stringify(res.result.recordset[0])
+              url: '../../package_tb3999803/pages/wode/wode?userInfo=' + JSON.stringify(res.result.recordset[0])
             })
             wx.showToast({
               title: '登录成功',

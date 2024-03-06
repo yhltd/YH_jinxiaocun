@@ -505,6 +505,28 @@
         "pages/xiangqing/xiangqing",
         "pages/xiangqingxiugai/xiangqingxiugai"
       ]
+    },
+    {
+      "root": "package_tb3999803",
+      "name": "tb3999803",
+      "pages": [
+        "pages/index/index",
+        "pages/wode/wode",
+        "pages/chanpin/chanpin",
+        "pages/lianxi/lianxi",
+        "pages/xiaoxitongzhi/xiaoxitongzhi",
+        "pages/dingdanfukuan/dingdanfukuan",
+        "pages/saomabaogong/saomabaogong",
+        "pages/shengchandiaodu/shengchandiaodu",
+        "pages/zhanghaoguanli/zhanghaoguanli",
+        "pages/gongyilei/gongyilei",
+        "pages/moyalei/moyalei",
+        "pages/pingbanlei/pingbanlei",
+        "pages/taozhuanglei/taozhuanglei",
+        "pages/pinpaijiameng/pinpaijiameng",
+        "pages/pingtaigongxiang/pingtaigongxiang",
+        "pages/tousujianyi/tousujianyi"
+      ]
     }
   ],
   "window": {

@@ -1,0 +1,154 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="list_view" 
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="inquire" >添加</button>
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;" >
+  <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">账号</view>
+    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">权限</view>
+    <input bindinput="onInput" data-column="quanxian" class="input_text_form"  value="{{quanxian}}" type="text" name="quanxian"></input>
+    <view class="lables">是否允许编辑产品信息</view>
+    <input bindinput="onInput" data-column="bianjichanpinxinxi" class="input_text_form"  value="{{bianjichanpinxinxi}}" type="text" name="bianjichanpinxinxi"></input>
+    <view class="lables">配料</view>
+    <input bindinput="onInput" data-column="peiliao" class="input_text_form"  value="{{peiliao}}" type="text" name="peiliao"></input>
+    <view class="lables">开料</view>
+    <input bindinput="onInput" data-column="kailiao" class="input_text_form"  value="{{kailiao}}" type="text" name="kailiao"></input>
+    <view class="lables">封边</view>
+    <input bindinput="onInput" data-column="fengbian" class="input_text_form"  value="{{fengbian}}" type="text" name="fengbian"></input>
+    <view class="lables">排孔</view>
+    <input bindinput="onInput" data-column="paikong" class="input_text_form"  value="{{paikong}}" type="text" name="paikong"></input>
+    <view class="lables">线条</view>
+    <input bindinput="onInput" data-column="xiantiao" class="input_text_form"  value="{{xiantiao}}" type="text" name="xiantiao"></input>
+    <view class="lables">覆膜</view>
+    <input bindinput="onInput" data-column="fumo" class="input_text_form"  value="{{fumo}}" type="text" name="fumo"></input>
+    <view class="lables">手工</view>
+    <input bindinput="onInput" data-column="shougong" class="input_text_form"  value="{{shougong}}" type="text" name="shougong"></input>
+    <view class="lables">五金</view>
+    <input bindinput="onInput" data-column="wujin" class="input_text_form"  value="{{wujin}}" type="text" name="wujin"></input>
+    <view class="lables">包装</view>
+    <input bindinput="onInput" data-column="baozhuang" class="input_text_form"  value="{{baozhuang}}" type="text" name="baozhuang"></input>
+    <view class="lables">入库</view>
+    <input bindinput="onInput" data-column="ruku" class="input_text_form"  value="{{ruku}}" type="text" name="ruku"></input>
+    <view class="lables">出库</view>
+    <input bindinput="onInput" data-column="chuku" class="input_text_form"  value="{{chuku}}" type="text" name="chuku"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;" >
+  <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">账号</view>
+    <input bindinput="onInput" data-column="username" class="input_text_form"  value="{{username}}" type="text" name="username"></input>
+    <view class="lables">密码</view>
+    <input bindinput="onInput" data-column="password" class="input_text_form"  value="{{password}}" type="text" name="password"></input>
+    <view class="lables">权限</view>
+    <input bindinput="onInput" data-column="quanxian" class="input_text_form"  value="{{quanxian}}" type="text" name="quanxian"></input>
+    <view class="lables">是否允许编辑产品信息</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="bianjichanpinxinxi" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="bianjichanpinxinxi" class="input_text_form"  value="{{bianjichanpinxinxi}}" type="text" name="bianjichanpinxinxi" disabled="disabled"></input>
+    </picker>
+    <view class="lables">配料</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="peiliao" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="peiliao" class="input_text_form"  value="{{bianjichanpinxinxi}}" type="text" name="peiliao" disabled="disabled"></input>
+    </picker>
+    <view class="lables">开料</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="kailiao" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="kailiao" class="input_text_form"  value="{{kailiao}}" type="text" name="kailiao" disabled="disabled"></input>
+    </picker>
+    <view class="lables">封边</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="fengbian" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="fengbian" class="input_text_form"  value="{{fengbian}}" type="text" name="fengbian" disabled="disabled"></input>
+    </picker>
+    <view class="lables">排孔</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="paikong" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="bianjichanpinxinxi" class="input_text_form"  value="{{paikong}}" type="text" name="paikong" disabled="disabled"></input>
+    </picker>
+    <view class="lables">线条</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xiantiao" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="xiantiao" class="input_text_form"  value="{{xiantiao}}" type="text" name="xiantiao" disabled="disabled"></input>
+    </picker>
+    <view class="lables">覆膜</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="fumo" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="fumo" class="input_text_form"  value="{{fumo}}" type="text" name="fumo" disabled="disabled"></input>
+    </picker>
+    <view class="lables">手工</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="shougong" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="shougong" class="input_text_form"  value="{{shougong}}" type="text" name="shougong" disabled="disabled"></input>
+    </picker>
+    <view class="lables">五金</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="wujin" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="wujin" class="input_text_form"  value="{{wujin}}" type="text" name="wujin" disabled="disabled"></input>
+    </picker>
+    <view class="lables">包装</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="baozhuang" range="{{quanxian_list}}">
+      <input bindinput="onInput" data-column="baozhuang" class="input_text_form"  value="{{baozhuang}}" type="text" name="baozhuang" disabled="disabled"></input>
+    </picker>
+    <view class="lables">入库</view>
+    <input bindinput="onInput" data-column="ruku" class="input_text_form"  value="{{ruku}}" type="text" name="ruku"></input>
+    <view class="lables">出库</view>
+    <input bindinput="onInput" data-column="chuku" class="input_text_form"  value="{{chuku}}" type="text" name="chuku"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+  <view class="lables">姓名</view>
+    <input bindinput="onInput" data-column="name" class="input_text_form"  value="{{name}}" type="text" name="name"></input>
+    <view class="lables">权限</view>
+    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="quanxian" range="{{quanxian_type}}">
+      <input bindinput="onInput" data-column="quanxian" class="input_text_form"  value="{{quanxian}}" type="text" name="quanxian" disabled="disabled"></input>
+    </picker>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow2}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select2" bind:select="select2" />
