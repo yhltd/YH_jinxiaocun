@@ -519,10 +519,7 @@
         "pages/saomabaogong/saomabaogong",
         "pages/shengchandiaodu/shengchandiaodu",
         "pages/zhanghaoguanli/zhanghaoguanli",
-        "pages/gongyilei/gongyilei",
-        "pages/moyalei/moyalei",
-        "pages/pingbanlei/pingbanlei",
-        "pages/taozhuanglei/taozhuanglei",
+        "pages/chanpin_item/chanpin_item",
         "pages/pinpaijiameng/pinpaijiameng",
         "pages/pingtaigongxiang/pingtaigongxiang",
         "pages/tousujianyi/tousujianyi"

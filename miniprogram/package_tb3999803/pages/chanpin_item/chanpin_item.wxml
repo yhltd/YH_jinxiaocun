@@ -1,0 +1,84 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="list_view" style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView">
+          <image style="height:80%" wx:if="{{item.columnName == 'pic'}}" mode='aspectFit' catchtap="imgdown" data-column="pic" data-value="{{list_item.pic}}" src="{{list_item.pic + '?query=' + query}}" name="pic" data-index="{{i}}"></image>
+          <view wx:if="{{item.columnName != 'pic'}}" class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="inquire">添加</button>
+  <button class="bt_bottom" bindtap="entering">查询</button>
+</view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
+  <view class="lables">工艺名</view>
+  <input bindinput="onInput" data-column="gongyi" class="input_text_form" value="{{gongyi}}" type="text" name="gongyi"></input>
+  <view class="lables">备注</view>
+  <input bindinput="onInput" data-column="beizhu" class="input_text_form" value="{{beizhu}}" type="text" name="beizhu"></input>
+  <view class="lables">单价</view>
+  <input bindinput="onInput" data-column="danjia" class="input_text_form" value="{{danjia}}" type="text" name="danjia"></input>
+  <view class="lables">单位</view>
+  <input bindinput="onInput" data-column="danwei" class="input_text_form" value="{{danwei}}" type="text" name="danwei"></input>
+  <view class="lables">图片</view>
+  <view class="img_form"> 
+    <image mode='aspectFit' bindtap="imgload" data-column="pic" data-value="{{pic}}" src="{{pic}}" name="danwei"></image>
+  </view>
+
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;">
+  <view class="lables">工艺名</view>
+  <input bindinput="onInput" data-column="gongyi" class="input_text_form" value="{{gongyi}}" type="text" name="gongyi"></input>
+  <view class="lables">备注</view>
+  <input bindinput="onInput" data-column="beizhu" class="input_text_form" value="{{beizhu}}" type="text" name="beizhu"></input>
+  <view class="lables">单价</view>
+  <input bindinput="onInput" data-column="danjia" class="input_text_form" value="{{danjia}}" type="text" name="danjia"></input>
+  <view class="lables">单位</view>
+  <input bindinput="onInput" data-column="danwei" class="input_text_form" value="{{danwei}}" type="text" name="danwei"></input>
+  <view class="lables">图片</view>
+  <view class="img_form"> 
+    <image mode='aspectFit' bindtap="imgload" data-column="pic" data-value="{{pic}}" src="{{pic}}" name="danwei"></image>
+  </view>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 55%;">
+  <view class="lables">工艺名</view> 
+  <input bindinput="onInput" data-column="gongyi" class="input_text_form" value="{{gongyi}}" type="text" name="gongyi"></input>
+  <view class="lables">备注</view>
+  <input bindinput="onInput" data-column="beizhu" class="input_text_form" value="{{beizhu}}" type="text" name="beizhu"></input>
+  <view class="lables">单位</view>
+  <input bindinput="onInput" data-column="danwei" class="input_text_form" value="{{danwei}}" type="text" name="danwei"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

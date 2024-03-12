@@ -1,2 +1,36 @@
-<!--package_tb3999803/pages/tousujianyi/tousujianyi.wxml-->
-<text>package_tb3999803/pages/tousujianyi/tousujianyi.wxml</text>
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="lables">投诉或建议</view>
+  <textarea bindinput="onInput" maxlength="-1" data-column="text" class="input_text_form" value="{{text}}" type="textarea" name="text"></textarea>
+  <view class="lables">图片（最多上传9张）</view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic1" data-value="{{pic1}}" src="{{pic1}}" name="pic1"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic2" data-value="{{pic2}}" src="{{pic2}}" name="pic1"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic3" data-value="{{pic3}}" src="{{pic3}}" name="pic3"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic4" data-value="{{pic4}}" src="{{pic4}}" name="pic4"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic5" data-value="{{pic5}}" src="{{pic5}}" name="pic5"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic6" data-value="{{pic6}}" src="{{pic6}}" name="pic6"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic7" data-value="{{pic7}}" src="{{pic7}}" name="pic7"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic8" data-value="{{pic8}}" src="{{pic8}}" name="pic8"></image>
+  </view>
+  <view class="img_form">
+    <image mode='aspectFit' data-column="pic9" data-value="{{pic9}}" src="{{pic9}}" name="pic9"></image>
+  </view>
+</scroll-view>
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="imgload">选图</button>
+  <button class="bt_bottom" bindtap="add1">提交</button>
+</view>

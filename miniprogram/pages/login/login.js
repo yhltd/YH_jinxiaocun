@@ -482,7 +482,10 @@ var login = function(that,info) {
     //803登录  20210709  胡超
   }else if(system =="订单追踪系统"){
     console.log("803登录")
-    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "'";
+    wx.showLoading({
+      title:'正在登录...'
+    })
+    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "';select customerName as name,zhanghao as username,mima as password,'客户' as quanxian from customerInformation where zhanghao = '" + info.inputName + "' and mima = '" + info.inputPwd + "'";
     
     wx.cloud.callFunction({
       
@@ -491,13 +494,14 @@ var login = function(that,info) {
         query: sql
       },
       success(res) {
-        if(res.result.recordset.length == undefined){
+        if(res.result.recordsets[0].length == undefined && res.result.recordsets[1].length == undefined){
+          wx.hideLoading()
           wx.showToast({
             title: '用户密码错误',
             icon: 'none'
           })
         }else{
-          if (res.result.recordset.length > 0) {
+          if (res.result.recordsets[0].length > 0) {
             if(that.data.jizhu_panduan){
               that.remember_user(info.inputName,info.inputPwd)
             }else{
@@ -505,12 +509,28 @@ var login = function(that,info) {
             }
             console.log("跳转")
             wx.navigateTo({
-              url: '../../package_tb3999803/pages/wode/wode?userInfo=' + JSON.stringify(res.result.recordset[0])
+              url: '../../package_tb3999803/pages/wode/wode?userInfo=' + JSON.stringify(res.result.recordsets[0][0])
             })
+            wx.hideLoading()
+            wx.showToast({
+              title: '登录成功',
+            })
+          }else if (res.result.recordsets[1].length > 0) {
+            if(that.data.jizhu_panduan){
+              that.remember_user(info.inputName,info.inputPwd)
+            }else{
+              that.remove_user()
+            }
+            console.log("跳转")
+            wx.navigateTo({
+              url: '../../package_tb3999803/pages/wode/wode?userInfo=' + JSON.stringify(res.result.recordsets[1][0])
+            })
+            wx.hideLoading()
             wx.showToast({
               title: '登录成功',
             })
           } else {
+            wx.hideLoading()
             wx.showToast({
               title: '用户名密码错误',
               icon: "none"
@@ -519,6 +539,7 @@ var login = function(that,info) {
         }
       },
       fail(res) {
+        wx.hideLoading()
         console.log("失败", res)
       },
       complete: function () {

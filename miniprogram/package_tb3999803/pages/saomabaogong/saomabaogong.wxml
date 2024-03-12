@@ -1,2 +1,68 @@
-<!--package_tb3999803/pages/saomabaogong/saomabaogong.wxml-->
-<text>package_tb3999803/pages/saomabaogong/saomabaogong.wxml</text>
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+
+  <!------------------------->
+  <!---------下方按钮--------->
+  <!------------------------->
+  <view style="display: flex;">
+    <view class="lables_head" style="font-size: calc(40vmin / 7.5)">派单日期</view>
+    <input bindinput="onInput_header" data-column="pdrq" class="input_text_head" value="{{header_list.pdrq}}" type="text" name="pdrq" disabled="disabled"></input>
+  </view>
+
+  <view style="display: flex;">
+    <view class="lables_head" style="font-size: calc(40vmin / 7.5)">单号</view>
+    <input bindinput="onInput_header" data-column="dh" class="input_text_head" value="{{header_list.dh}}" type="text" name="dh" disabled="disabled"></input>
+  </view>
+
+  <view style="display: flex;">
+    <view class="lables_head" style="font-size: calc(40vmin / 7.5)">客户名称</view>
+    <input bindinput="onInput_header" data-column="khmc" class="input_text_head" value="{{header_list.khmc}}" type="text" name="khmc" disabled="disabled"></input>
+
+  </view>
+
+  <view style="display: flex;">
+    <view class="lables_head" style="font-size: calc(40vmin / 7.5)">终端用户</view>
+    <input bindinput="onInput_header" data-column="zdyh" class="input_text_head" value="{{header_list.zdyh}}" type="text" name="zdyh" disabled="disabled"></input>
+  </view>
+
+  <view style="display: flex;margin-bottom: 5px;">
+    <view class="lables_head" style="font-size: calc(40vmin / 7.5);">生产编号</view>
+    <input bindinput="onInput_header" data-column="scbh" class="input_text_head" value="{{header_list.scbh}}" type="text" name="scbh"></input>
+  </view>
+
+  <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="min-height:40%">
+    <view class="table">
+      <view class='table_header'>
+        <block class="title" wx:for="{{title}}">
+          <view class="title_text" style="width:{{item.width2}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        </block>
+      </view>
+      <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+        <view class="table_main">
+          <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="{{list_item[item.columnName + 'ys']=='15189684'?'list_view2':'list_view'}}" style="width:{{item.width2}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView1"> 
+            <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</scroll-view>
+<view class="bottom_view1">
+  <button class="bt_bottom" bindtap="bianhao_get">扫码查询</button>
+  <button class="bt_bottom" bindtap="save_baogong">保存</button>
+  <button class="bt_bottom" bindtap="type_switch">{{click_type}}</button>
+</view>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
+  <view class="lables">{{update_name[this_column]}}</view>
+  <input class="input_text_form" bindtap="sel_xiala" type="{{this_type}}" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" bindtap="upd2">确定</button>
+  </view>
+</van-popup>
+
+<!--表单下拉选择-->
+<van-action-sheet show="{{xlShow}}" actions="{{list_xiala}}" close-on-click-overlay bind:close="select1" bind:select="select1" />

@@ -1,10 +1,165 @@
-// package_tb3999803/pages/saomabaogong/saomabaogong.js
+// package_huaqun/page/ddxiadan/ddxiadan.js
+
 Page({
 
   /**
    * 页面的初始数据
    */
+  tableShow: true,
+  delWindow1: false,
+  tjShow: false,
+  rqxzShow1: false,
+  xgShow: false,
+  cxShow: false,
+  intoShow:false,
+  xlShow: false,
+  xlShow2: false,
+  sum_money:'',
   data: {
+    header_list:{
+      pdrq:'',
+      dh:'',
+      khmc:'',
+      zdyh:'',
+      scbh:'',
+    },
+    update_name:{
+      pl:"配料",
+      kl:"开料",
+      fb:"封边",
+      pk:"排孔",
+      xt:"线条",
+      fm:"覆膜",
+      sg:"手工",
+      wj:"五金",
+      bz:"包装",
+      rk:"入库",
+      ck:"出库",
+      pdts:"派单天数",
+    },
+    list: [],
+    title: [
+      {
+        text: "来料",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "ll",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "名称/数量",
+        width: "400rpx",
+        width2: "calc(400vmin / 7.5)",
+        columnName: "mcsl",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "配料",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "pl",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "开料",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "kl",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "封边",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "fb",
+        type: "text",
+        isupd: true
+      },{
+        text: "排孔",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "pk",
+        type: "text",
+        isupd: true
+      },{
+        text: "线条",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "xt",
+        type: "text",
+        isupd: true
+      },{
+        text: "覆膜",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "fm",
+        type: "text",
+        isupd: true
+      },{
+        text: "手工",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "sg",
+        type: "text",
+        isupd: true
+      },{
+        text: "五金",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "wj",
+        type: "text",
+        isupd: true
+      },{
+        text: "包装",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "bz",
+        type: "text",
+        isupd: true
+      },{
+        text: "入库",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "rk",
+        type: "text",
+        isupd: true
+      },{
+        text: "出库",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "ck",
+        type: "text",
+        isupd: true
+      },{
+        text: "派单天数",
+        width: "275rpx",
+        width2: "calc(275vmin / 7.5)",
+        columnName: "pdts",
+        type: "text",
+        isupd: true
+      },
+    ],
+    list:[],
+    khmc: "",
+    xdrq: "",
+    djbh: "",
+    shouhuo: "",
+    lxdh: "",
+    shfs: "",
+    azdz: "",
+    shfs: "",
+    ddh:"",
+    column_input : "",
+    empty:'',
+    xiala_panduan:0,
+    click_type: '设置报工',
+    xiala_panduan1:[{name:''},{name:'出库'}],
+    xiala_panduan2:[{name:''},{name:'完成'},{name:'缺料'}],
+    gongxu_arr:['pl','kl','fb','pk','xt','fm','sg','wj','bz','rk','ck','pdts']
 
   },
 
@@ -12,7 +167,401 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    var order_number = options.order_number
+    if(order_number == undefined){
+      order_number = ""
+    } 
+    var this_date = getNowDate()
+    _this.setData({
+      userInfo,
+      order_number,
+      this_date
+    })
+    if(order_number != ''){
+      _this.getBaoGong()
+    }
+  },
+ 
+  bianhao_get:function(e){
+    var _this = this
+    wx.scanCode({
+      success (res) {
+        var order_number = res.result
+        _this.setData({
+          order_number
+        })
+        _this.getBaoGong()
+      }
+    })
+  },
 
+  getBaoGong:function(){
+    var _this = this
+    console.log(_this.data.order_number)
+    if(_this.data.order_number != ''){
+      var sql = "select * from baogongmingxi where dh = '" + _this.data.order_number + "';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "'"
+      wx.cloud.callFunction({
+        name: 'sqlServer_tb3999803',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          var list = res.result.recordsets[0]
+          var order_money = ""
+          if(res.result.recordsets[1].length >= 1){
+            order_money = res.result.recordsets[1][0].spareMoney
+          }
+          console.log(order_money)
+          //如果已有报工单，读取此前报工单显示到此页
+          if(list.length > 0){
+            var header_list = {}
+            header_list.pdrq = list[0].pdrq
+            header_list.dh = list[0].dh
+            header_list.khmc = list[0].khmc
+            header_list.zdyh = list[0].zdyh
+            header_list.scbh = list[0].scbh
+            if(list[0].pdrq != ''){
+              for(var i=0; i<list.length; i++){
+                var paidan_date = list[0].pdrq.replaceAll("/","-")
+                var this_date = _this.data.this_date
+                list[i].pdts = DateDiff(this_date,paidan_date)
+              } 
+            }
+            var list_old = JSON.stringify(list)
+            list_old = JSON.parse(list_old)
+            _this.setData({
+              header_list,
+              list,
+              list_old,
+              order_money
+            })
+            wx.showToast({
+              title: '查询成功',
+              icon: 'none',
+            })
+          //如果没有报工单，读取订单信息生成新单
+          }else{
+            wx.showModal({
+              title: "提示",
+              content: '未读取到此单号报工单，是否新建？',
+              cancelColor: '#282B33',
+              confirmColor: '#BC4A4A',
+              success: res => {
+                if (res.confirm) {
+                  wx.cloud.callFunction({
+                    name: 'sqlServer_tb3999803',
+                    data: {
+                      query: "select paidanDate as pdrq,productionNO as dh,customerName as khmc,[user] as zdyh,spareMoney as scbh,orderMoney from madeOrder where productionNO = '" + _this.data.order_number + "';select pickingNo as ll,pickingName as mcsl,'' as pl,'' as kl,'' as fb,'' as pk,'' as xt,'' as fm,'' as sg,'' as wj,'' as bz,'' as rk,'' as ck,'15189684' as plys,'15189684' as klys,'15189684' as fbys,'15189684' as pkys,'15189684' as xtys,'15189684' as fmys,'15189684' as sgys,'15189684' as wjys,'15189684' as bzys,'15189684' as rkys,'15189684' as ckys from picking where productionNo = '" + _this.data.order_number + "'"
+                    }, 
+                    success: res => {
+                      console.log(res)
+                      var header_list = res.result.recordsets[0][0]
+                      var order_money = header_list.orderMoney
+                      console.log(order_money)
+                      var list = res.result.recordsets[1]
+                      if(header_list.length < 1){
+                        wx.showToast({
+                          title: '未读取到订单信息',
+                          icon: 'none',
+                        })
+                        return;
+                      }else if(list.length < 1){
+                        wx.showToast({
+                          title: '未读取到订单中材料信息',
+                          icon: 'none',
+                        })
+                        return;
+                      }
+                      if(header_list.pdrq != ''){
+                        for(var i=0; i<list.length; i++){
+                          var paidan_date = header_list.pdrq.replaceAll("/","-")
+                          var this_date = _this.data.this_date
+                          list[i].pdts = DateDiff(this_date,paidan_date)
+                        }
+                      }
+                      var list_old = JSON.stringify(list)
+                      list_old = JSON.parse(list_old)
+                      _this.setData({
+                        header_list,
+                        list,
+                        list_old: list_old,
+                        order_money
+                      })
+                      wx.showToast({
+                        title: '已创建',
+                        icon: 'none',
+                      })
+                    },
+                    err: res => {
+                      console.log("错误!")
+                    },
+                    fail: res => {
+                      wx.showToast({
+                        title: '请求失败！',
+                        icon: 'none'
+                      })
+                      console.log("请求失败！")
+                    }
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        },
+      })
+    }else{
+      wx.showToast({
+        title: '未读取到单号',
+      })
+    }
+  },
+
+  sel_xiala: function (e) {
+    var _this = this
+    console.log('列名：', e.currentTarget.dataset.column)
+    console.log('index：', e.currentTarget.dataset.index)
+    var list = _this.data[_this.data.this_column + "_list"]
+    if(_this.data.xiala_panduan == 0){
+      return;
+    }
+    if(_this.data.xiala_panduan == 1){
+      list = _this.data.xiala_panduan1
+    }else if(_this.data.xiala_panduan == 2){
+      list = _this.data.xiala_panduan2
+    }
+    _this.setData({
+      list_xiala: list,
+    })
+    console.log(list)
+    _this.setData({
+      xlShow: true
+    })
+  },
+
+  select1: function (e) {
+    var _this = this
+    if (e.type == "select") {
+      var this_value = e.detail.name
+      _this.setData({
+        xlShow: false,
+        this_value
+      })
+    } else if (e.type == "close") {
+      _this.setData({
+        xlShow: false,
+      })
+    }
+  },
+
+  qxShow: function () {
+    var _this = this
+    _this.setData({
+      tjShow: false,
+      xgShow: false,
+      cxShow: false,
+      intoShow:false,
+      currentDate: new Date().getTime()
+    })
+  },
+
+  clickView1:function(e){
+    var _this = this
+    var this_column = e.currentTarget.dataset.column
+    var index = e.currentTarget.dataset.index
+    var this_value = e.currentTarget.dataset.value
+    if(_this.data.click_type == '设置报工'){
+      if(this_column == "ll" || this_column == "mcsl" || this_column == "pdts"){
+        return;
+      }
+      console.log(e.currentTarget.dataset.column)
+      console.log(e.currentTarget.dataset.value)
+      console.log(e.currentTarget.dataset.index)
+      var panduan = 0
+      var this_type = "text"
+      if(this_column == 'rk'){
+        this_type = 'digit'
+      }
+  
+      if(this_column == "rk"){
+        panduan = 0
+      }else if(this_column == "ck"){
+        panduan = 1
+      }else{
+        panduan = 2
+      }
+  
+      var this_row = e.currentTarget.dataset.index
+   
+      _this.setData({
+        this_type,
+        this_column:e.currentTarget.dataset.column,
+        this_value:e.currentTarget.dataset.value,
+        xiala_panduan:panduan,
+        this_index:e.currentTarget.dataset.index,
+        xgShow:true,
+      })
+    }else{
+      var list = _this.data.list
+      console.log()
+      list[index][this_column + 'ys'] = list[index][this_column + 'ys'] == '16777215' ? '15189684' : '16777215' 
+      _this.setData({
+        list
+      })
+    }
+  },
+
+  upd2:function(){
+    var _this = this
+    var list = _this.data.list
+    var kailiao_list = _this.data.kailiao_list
+    var gongxu_arr = _this.data.gongxu_arr
+    list[_this.data.this_index][_this.data.this_column] = _this.data.this_value
+    for(var i=0; i<gongxu_arr.length; i++){
+      if(gongxu_arr[i] == _this.data.this_column){
+        break;
+      }
+      if(gongxu_arr[i] == 'rk'){
+        continue;
+      }
+      if(list[_this.data.this_index][gongxu_arr[i]] != '完成' && list[_this.data.this_index][gongxu_arr[i] + "ys"] != '16777215' && _this.data.this_column != gongxu_arr[i]){
+        list[_this.data.this_index][gongxu_arr[i]] = '完成'
+      }
+    }
+    _this.setData({
+      list:list,
+    })
+    _this.qxShow()
+  },
+
+  type_switch:function(){
+    var _this = this
+    var click_type = _this.data.click_type
+    var new_type = click_type == '设置报工'?'设置工序':'设置报工'
+    wx.showModal({
+      title: "提示",
+      content: '当前点击工序列时为'+ click_type +'操作，是否切换为' + new_type + '？',
+      cancelColor: '#282B33',
+      confirmColor: '#BC4A4A',
+      success: res => {
+        if (res.confirm) {
+          _this.setData({
+            click_type: new_type
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  save_baogong:function(){
+    var _this = this
+    var header_list = _this.data.header_list
+    var list = _this.data.list
+    var list_old = _this.data.list_old
+    var gongxu_arr = _this.data.gongxu_arr
+    if(list.length < 1){
+      wx.showToast({
+        title: '未读取到报工单信息',
+        icon: 'none',
+      })
+      return;
+    }
+    var del_sql = "delete from baogongmingxi where dh='" + header_list.dh + "';"
+    var ins_sql = "insert into baogongmingxi(pdrq,dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys) values "
+    var ins_sql2 = ""
+    for(var i=0; i<list.length; i++){
+      if(ins_sql2 == ''){
+        ins_sql2 = "('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "')"
+      }else{
+        ins_sql2 = ins_sql2 + ",('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "')"
+      }
+    }
+
+    var xiaoxi_sql = "insert into xiaoxiguanli(ddh,khmc,zdyh,ddje,gx,wczt,bgry,rq) values "
+    var xiaoxi_sql2 = ""
+    var this_riqi = getNowDate()
+    for(var i=0; i<list.length; i++){
+      for(var j=0; j<gongxu_arr.length; j++){
+        if(list[i][gongxu_arr[j]] != list_old[i][gongxu_arr[j]]){
+          if(xiaoxi_sql2 == ''){
+            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + _this.data.order_money + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "')"
+          }else{
+            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + _this.data.order_money + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "')"
+          }
+        }
+      }
+    }
+    
+    var sql = del_sql + ins_sql + ins_sql2 + ";"
+    if(xiaoxi_sql2 != ''){
+      sql = sql + xiaoxi_sql + xiaoxi_sql2 + ";"
+    }
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql
+      }, 
+      success: res => {
+        console.log(res)
+        wx.showToast({
+          title: '保存成功',
+          icon: 'none',
+        })
+        var order_number = _this.data.header_list.dh
+        _this.setData({
+          order_number
+        })
+        _this.getBaoGong()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none'
+        })
+        console.log("请求失败！")
+      }
+    })
+
+  },
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
+  },
+
+  onInput_header: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    var header_list = _this.data.header_list
+    header_list[column] = e.detail.value
+    _this.setData({
+      header_list
+    })
   },
 
   /**
@@ -64,3 +613,85 @@ Page({
 
   }
 })
+
+
+function getBianHao() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = "DD"+ year.toString() + month.toString() + day.toString() ;
+  return currentdate;
+ }
+
+ function getNowDate() {
+  var date = new Date();
+  var sign1 = "-";
+  var sign2 = ":";
+  var year = date.getFullYear() // 年
+  var month = date.getMonth() + 1; // 月
+  var day  = date.getDate(); // 日
+  var hour = date.getHours(); // 时
+  var minutes = date.getMinutes(); // 分
+  var seconds = date.getSeconds() //秒
+  var weekArr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期天'];
+  var week = weekArr[date.getDay()];
+  // 给一位数数据前面加 “0”
+  if (month >= 1 && month <= 9) {
+   month = "0" + month;
+  }
+  if (day >= 0 && day <= 9) {
+   day = "0" + day;
+  }
+  if (hour >= 0 && hour <= 9) {
+   hour = "0" + hour;
+  }
+  if (minutes >= 0 && minutes <= 9) {
+   minutes = "0" + minutes;
+  }
+  if (seconds >= 0 && seconds <= 9) {
+   seconds = "0" + seconds;
+  }
+  // var currentdate = year + sign1 + month + sign1 + day + " " + hour + sign2 + minutes + sign2 + seconds + " " + week;
+  var currentdate = year + sign1 + month + sign1 + day ;
+  return currentdate;
+ }
+
+ function DateDiff(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式  
+  var aDate, oDate1, oDate2, iDays
+  aDate = sDate1.split("-")
+  oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为12-18-2002格式  
+  aDate = sDate2.split("-")
+  oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+  iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数  
+  if(oDate1 - oDate2 > 0){
+    return iDays
+  }else{
+    return iDays * -1
+  }
+
+}

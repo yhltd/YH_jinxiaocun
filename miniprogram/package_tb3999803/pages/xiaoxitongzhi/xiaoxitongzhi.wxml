@@ -34,27 +34,29 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 80%;" >
   <view class="lables">订单号</view>
-    <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{order_number}}" type="text" name="ddh"></input>
-    <view class="lables">客户名称</view>
-    <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{customer_name}}" type="text" name="khmc"></input>  
-    <view class="lables">终端用户</view>
-    <input bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{customer_name}}" type="text" name="zdyh"></input>
+    <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{ddh}}" type="number" name="ddh"></input>
+    <view class="lables" wx:if="{{userInfo.quanxian != '客户'}}">客户名称</view>
+    <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>  
+    <view wx:if="{{userInfo.quanxian != '客户'}}" class="lables">终端用户</view>
+    <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{customezdyhr_name}}" type="text" name="zdyh"></input>
     <view class="lables">订单金额</view>
-    <input bindinput="onInput" data-column="ddje" class="input_text_form"  value="{{customer_name}}" type="text" name="ddje"></input>
+    <input bindinput="onInput" data-column="ddje" class="input_text_form"  value="{{ddje}}" type="digit" name="ddje"></input>
     <view class="lables">工序</view>
-    <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{wancheng}}" type="text" name="gx"></input>
+    <picker bindchange="bindPickerChange" data-column_name='gx' value="{{index}}" range="{{gongxu_list}}">
+      <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx" disabled="disabled"></input>
+    </picker>
     <view class="lables">完成状态</view>
-    <input bindinput="onInput" data-column="wczt" class="input_text_form" value="{{wancheng}}" type="text" name="wczt"></input>
+    <input bindinput="onInput" data-column="wczt" class="input_text_form" value="{{wczt}}" type="text" name="wczt"></input>
     <view class="lables">报工人员</view>
-    <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{install_address}}" type="text" name="bgry"></input>
+    <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry"></input>
   <view class="lables">开始日期</view>
-    <picker class="pick" mode="date" value="{{rq}}" data-column_name="rq" bindchange="choiceDate">
-      <input bindinput="onInput" data-column="rq" class="input_text_form" value="{{start_date}}" type="text" name="rq" disabled="disabled"></input>
+    <picker class="pick" mode="date" value="{{start_date}}" data-column_name="start_date" bindchange="choiceDate">
+      <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>
     </picker>
     <view class="lables">结束日期</view>
-    <picker class="pick" mode="rq" value="{{rq}}" data-column_name="stop_date" bindchange="choiceDate">
+    <picker class="pick" mode="date" value="{{stop_date}}" data-column_name="stop_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="stop_date" class="input_text_form" value="{{stop_date}}" type="text" name="stop_date" disabled="disabled"></input>
     </picker>
     <view class="bottom_view" style="height:10%">
@@ -62,6 +64,3 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
-
-<!--表单下拉选择-->
-<van-action-sheet show="{{xlShow}}" actions="{{yewuyuan_list}}" close-on-click-overlay bind:close="select1" bind:select="select1" />

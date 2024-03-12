@@ -225,7 +225,7 @@ Page({
       },
       success: res => {
         var list = res.result.recordsets
-        this_list = _this.get_list(list)
+        var this_list = _this.get_list(list)
         console.log(this_list)
         for(var i=0; i<this_list.length; i++){
           if(this_list[i].accounting.indexOf("科目：") != -1){

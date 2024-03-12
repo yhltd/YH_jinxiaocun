@@ -17,7 +17,7 @@
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
               bindtap="clickView"
-              bindlongpress="del1">
+              bindlongpress="goto_baogong">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
       </view>
@@ -35,7 +35,7 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 25%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 15%;" > 
   <view class="bottom_view" style="height:10%;margin-top: 8%;">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_01">优先生产</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_02">正常</button>
@@ -67,10 +67,5 @@
     <input bindinput="onInput" data-column="" class="input_text_form" value="{{}}" type="text" name=""></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>
-
-
-<!--表单下拉选择-->
-<van-action-sheet show="{{xlShow}}" actions="{{yewuyuan_list}}" close-on-click-overlay bind:close="select1" bind:select="select1" />

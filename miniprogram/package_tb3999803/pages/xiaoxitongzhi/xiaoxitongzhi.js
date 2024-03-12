@@ -1,77 +1,72 @@
-
 Page({
 
   /**
    * 页面的初始数据
    */
-  xlShow:false,
-  tableShow: true,
-  delWindow1: false,
-  tjShow: false,
-  rqxzShow1: false,
-  xgShow: false,
-  xgShow2: false,
   cxShow: false,
   data: {
     list: [],
-    title: [
-      {
-        text: "订单号",
-        width: "250rpx",
-        columnName: "ddh",
-        type: "text",
-        isupd: true
-      },{
-        text: "客户名称",
-        width: "250rpx",
-        columnName: "khmc",
-        type: "text",
-        isupd: true
-      },{
-        text: "终端用户",
-        width: "250rpx",
-        columnName: "zdyh",
-        type: "text",
-        isupd: true
-      },{
-        text: "订单金额",
-        width: "250rpx",
-        columnName: "ddje",
-        type: "text",
-        isupd: true
-      },{
-        text: "工序",
-        width: "250rpx",
-        columnName: "gx",
-        type: "text",
-        isupd: true
-      },{
-        text: "完成状态",
-        width: "250rpx",
-        columnName: "wczt",
-        type: "text",
-        isupd: true
-      },{
-        text: "报工人员",
-        width: "250rpx",
-        columnName: "bgry",
-        type: "text",
-        isupd: true
-      },{
-        text: "日期",
-        width: "250rpx",
-        columnName: "rq",
-        type: "text",
-        isupd: true
-      }
-    ],
+    title: [{
+      text: "订单号",
+      width: "250rpx",
+      columnName: "ddh",
+      type: "text",
+      isupd: true
+    }, {
+      text: "客户名称",
+      width: "250rpx",
+      columnName: "khmc",
+      type: "text",
+      isupd: true
+    }, {
+      text: "终端用户",
+      width: "250rpx",
+      columnName: "zdyh",
+      type: "text",
+      isupd: true
+    }, {
+      text: "订单金额",
+      width: "250rpx",
+      columnName: "ddje",
+      type: "text",
+      isupd: true
+    }, {
+      text: "工序",
+      width: "250rpx",
+      columnName: "gx",
+      type: "text",
+      isupd: true
+    }, {
+      text: "完成状态",
+      width: "250rpx",
+      columnName: "wczt",
+      type: "text",
+      isupd: true
+    }, {
+      text: "报工人员",
+      width: "250rpx",
+      columnName: "bgry",
+      type: "text",
+      isupd: true
+    }, {
+      text: "日期",
+      width: "250rpx",
+      columnName: "rq",
+      type: "text",
+      isupd: true
+    }],
+    id: '',
     ddh: '',
-    khmc :'',
+    khmc: '',
     zdyh: '',
     ddje: '',
     gx: '',
     wczt: '',
     bgry: '',
+    start_date: '',
+    stop_date: '',
+    where_sql : "",
+    gongxu_list: ['配料','开料','封边','排孔','线条','覆膜','手工','五金','包装','入库','出库'],
   },
 
   /**
@@ -83,33 +78,129 @@ Page({
     _this.setData({
       userInfo: userInfo,
     })
-    var e = ['']
+    var where_sql = ""
+    if(userInfo.quanxian == '工序员'){
+      if(userInfo.peiliao == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '配料'"
+        }else{
+          where_sql = where_sql + " or gx = '配料"
+        }
+      }
+      if(userInfo.kailiao == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '开料'"
+        }else{
+          where_sql = where_sql + " or gx = '开料"
+        }
+      }
+      if(userInfo.fengbian == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '封边'"
+        }else{
+          where_sql = where_sql + " or gx = '封边"
+        }
+      }
+      if(userInfo.paikong == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '排孔'"
+        }else{
+          where_sql = where_sql + " or gx = '排孔"
+        }
+      }
+      if(userInfo.xiantiao == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '线条'"
+        }else{
+          where_sql = where_sql + " or gx = '线条"
+        }
+      }
+      if(userInfo.fumo == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '覆膜'"
+        }else{
+          where_sql = where_sql + " or gx = '覆膜"
+        }
+      }
+      if(userInfo.shougong == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '手工'"
+        }else{
+          where_sql = where_sql + " or gx = '手工"
+        }
+      }
+      if(userInfo.wujin == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '五金'"
+        }else{
+          where_sql = where_sql + " or gx = '五金"
+        }
+      }
+      if(userInfo.baozhuang == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '包装'"
+        }else{
+          where_sql = where_sql + " or gx = '包装"
+        }
+      }
+      if(userInfo.ruku == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '入库'"
+        }else{
+          where_sql = where_sql + " or gx = '入库"
+        }
+      }
+      if(userInfo.chuku == '是'){
+        if(where_sql == ''){
+          where_sql = " where (gx = '出库'"
+        }else{
+          where_sql = where_sql + " or gx = '出库"
+        }
+      }
+      if (where_sql != ''){
+        where_sql = where_sql + ")"
+      }
+    }else if(userInfo.quanxian == '客户'){
+      where_sql = " where khmc = '" + userInfo.name + "'"
+    }
+    _this.setData({
+      where_sql
+    })
+    var e = ['','','','','','','','1900-01-01','2100-12-31']
     _this.tableShow(e)
   },
 
-  
-
   bindPickerChange: function (e) {
     var _this = this
-    var column_name = e.target.dataset.column_name
-    var list_name = e.target.dataset.list_name
-    console.log(_this.data[list_name][e.detail.value])
     _this.setData({
-      [column_name]: _this.data[list_name][e.detail.value]
+      [e.target.dataset.column_name]: _this.data.gongxu_list[e.detail.value]
+    })
+  },
+
+  choiceDate: function (e) {
+    var _this = this
+    console.log(e)
+    _this.setData({
+      [e.target.dataset.column_name]: e.detail.value
     })
   },
 
   tableShow: function (e) {
     var _this = this
-    _this.tableShow(e)
     var sql = ""
-      sql = "select ddh,khmc,zdyh,ddje,gx,wczt,bgry,rq from xiaoxiguanli" 
-    
-    console.log(sql)
+    sql = "select id,'',isnull(ddh,'') as ddh,isnull(khmc,'') as khmc,isnull(zdyh,'') as zdyh,isnull(ddje,'') as ddje,isnull(gx,'') as gx,isnull(wczt,'') as wczt,isnull(bgry,'') as bgry,isnull(rq,'') as rq from xiaoxiguanli "
+    var userInfo = _this.data.userInfo
+    var where_sql = _this.data.where_sql
+    if(where_sql == ""){
+      where_sql = " where ddh like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and ddje like '%" + e[3] + "%' and gx like '%" + e[4] + "%' and wczt like '%" + e[5] + "%' and bgry like '%" + e[6] + "%' and convert(date,rq) >= convert(date,'" + e[7] + "') and convert(date,rq) <= convert(date,'" + e[8] + "')"
+    }else{
+      where_sql = where_sql + " and ddh like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and ddje like '%" + e[3] + "%' and gx like '%" + e[4] + "%' and wczt like '%" + e[5] + "%' and bgry like '%" + e[6] + "%' and convert(date,rq) >= convert(date,'" + e[7] + "') and convert(date,rq) <= convert(date,'" + e[8] + "')"
+    }
+    console.log(sql + where_sql)
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
-        query: sql
+        query: sql + where_sql
       },
       success: res => {
         console.log(res)
@@ -130,57 +221,24 @@ Page({
         })
         console.log("请求失败！")
       },
-      // choiceDate: function (e) {
-      //   //e.preventDefault(); 
-      //   this.setData({
-      //     [e.target.dataset.column_name]: e.detail.value
-      //   })
-      //   console.log(e.detail.value)
-      // },
     })
   },
 
   qxShow: function () {
     var _this = this
     _this.setData({
-      tjShow: false,
-      xgShow: false,
-      xgShow2: false,
       cxShow: false,
-      currentDate: new Date().getTime()
+      ddh: '',
+      khmc: '',
+      zdyh: '',
+      ddje: '',
+      gx: '',
+      wczt: '',
+      bgry: '',
+      start_date: '',
+      stop_date: '',
     })
   },
-
-  xiala_open:function(){
-    var _this = this
-    _this.setData({
-      xlShow: true
-    })
-  },
-
-  // select1: function (e) {
-  //   var _this = this
-  //   if (e.type == "select") {
-  //     var new_val = e.detail.name
-  //     _this.setData({
-  //       xlShow: false,
-  //       this_value:new_val
-  //     })
-  //   } else if (e.type == "close") {
-  //     _this.setData({
-  //       xlShow: false,
-  //     })
-  //   }
-  // },
-
-  // onInput: function (e) {
-  //   var _this = this
-  //   let column = e.currentTarget.dataset.column
-  //   _this.setData({
-  //     currentDate: e.detail,
-  //     [column]: e.detail.value
-  //   })
-  // },
 
   back: function () {
     wx.navigateBack({
@@ -188,50 +246,34 @@ Page({
     });
   },
 
-  // entering: function () {
-  //   var _this = this
-  //   _this.setData({
-  //     cxShow: true,
-  //     ddh: "",
-  //     khmc: "",
-  //     zdyh: "",
-  //     ddje: "",
-  //     gx: "",
-  //     wczt: "",
-  //     bgry: "",
-  //     rq: "",
-  //     stop_date: "",
-  //   })
-  // },
-
-  choiceDate: function (e) {
-    //e.preventDefault(); 
-    this.setData({
-      [e.target.dataset.column_name]: e.detail.value
+  entering: function () {
+    var _this = this
+    _this.setData({
+      cxShow: true,
+      id: '',
+      ddh: '',
+      khmc: '',
+      zdyh: '',
+      ddje: '',
+      gx: '',
+      wczt: '',
+      bgry: '',
+      start_date: '',
+      stop_date: '',
     })
-    console.log(e.detail.value)
-  },
-
-
-
-  sel1: function () {
-    var _this = this
-    var e = ['']
-    _this.tableShow(e)
-    _this.qxShow()
   },
 
   sel1: function () {
     var _this = this
-    var rq = _this.data.rq
+    var start_date = _this.data.start_date
     var stop_date = _this.data.stop_date
-    if (rq == '') {
-      rq = '1900-01-01'
+    if(start_date == ''){
+      start_date = "1900-01-01"
     }
-    if (stop_date == '') {
+    if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx, _this.data.wczt,_this.data.bgry,rq, stop_date]
+    var e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx,_this.data.wczt,_this.data.bgry,start_date,stop_date]
     _this.tableShow(e)
     _this.qxShow()
   },
@@ -285,23 +327,3 @@ Page({
 
   }
 })
-
-function getTime(){
-  var myDate = new Date();
-  var year = myDate.getFullYear();
-  var month = myDate.getMonth()+1 > 10 ? myDate.getMonth() + 1 : "0" + (myDate.getMonth()+1);
-  var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
-  return year+"-"+month+"-"+day
-}
-
-function delCloudFile(fileId){
-  var fileIds = [];
-  fileIds.push(fileId);
-  wx.cloud.deleteFile({
-    fileList: fileIds,
-    success: res => {
-      console.log(res.fileList);
-    },
-    fail : console.error
-  })
-}
