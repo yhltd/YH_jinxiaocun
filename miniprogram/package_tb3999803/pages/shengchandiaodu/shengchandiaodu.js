@@ -111,7 +111,7 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'') as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo"
+    sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'') as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
@@ -132,7 +132,7 @@ Page({
           }
         }
         for (var j = 0; j < list.length; j++) {
-          var paidan_riqi = list[j].paidanDate
+          var paidan_riqi = list[j].beizhu2
           var riqi = new Date();
           var year = riqi.getFullYear(); //得到年份
           var month = riqi.getMonth(); //得到月份
@@ -147,7 +147,7 @@ Page({
           if (paidan_riqi != '' && paidan_riqi != null) {
             paidan_riqi = list[j].paidanDate.replaceAll("/", "-")
             riqi = time.replaceAll("/", "-")
-            var date = DateDiff(riqi,paidan_riqi)
+            var date = DateDiff(paidan_riqi,riqi) - 1
             list[j].daojishi = date
           }
         }
@@ -215,6 +215,24 @@ Page({
     })
   },
 
+  entering: function () {
+    var _this = this
+    _this.setData({
+      cxShow: true,
+      id: '',
+      ddh: '',
+      khmc: '',
+      zdyh: '',
+      ddje: '',
+      gx: '',
+      wczt: '',
+      bgry: '',
+      start_date: '',
+      stop_date: '',
+    })
+  },
+
+
   click_01: function () {
     var _this = this
     var sql = "update madeOrder set searchNO = '优先生产',endDate = '" + getNowDate() + "' where id=" + _this.data.id
@@ -250,7 +268,7 @@ Page({
 
   click_02: function () {
     var _this = this
-    var sql = "update madeOrder set searchNO = '',endDate = '" + getNowDate() + "' where id='" + _this.data.id + "'"
+    var sql = "update madeOrder set searchNO = '',endDate = '' where id='" + _this.data.id + "'"
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {

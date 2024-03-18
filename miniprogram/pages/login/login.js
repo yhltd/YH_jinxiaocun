@@ -485,7 +485,7 @@ var login = function(that,info) {
     wx.showLoading({
       title:'正在登录...'
     })
-    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "';select customerName as name,zhanghao as username,mima as password,'客户' as quanxian from customerInformation where zhanghao = '" + info.inputName + "' and mima = '" + info.inputPwd + "'";
+    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "';select customerName as name,zhanghao as username,mima as password,'客户' as quanxian from customerInformation where zhanghao = '" + info.inputName + "' and mima = '" + info.inputPwd + "' and zhanghao != '' and mima != ''";
     
     wx.cloud.callFunction({
       
@@ -494,7 +494,41 @@ var login = function(that,info) {
         query: sql
       },
       success(res) {
-        if(res.result.recordsets[0].length == undefined && res.result.recordsets[1].length == undefined){
+        console.log(res)
+        if(res.result.recordsets[0].length == 0 && res.result.recordsets[1].length == 0 && info.inputName == '' && info.inputPwd == ''){
+          wx.hideLoading()
+          
+          wx.showModal({
+            title: "提示",
+            content: '是否以游客身份登录?',
+            cancelColor: '#282B33',
+            confirmColor: '#BC4A4A',
+            success: res => {
+              if (res.confirm) {
+                var userInfo = {
+                  name: '游客',
+                  username: '',
+                  password: '',
+                  quanxian: '游客',
+                }
+                wx.navigateTo({
+                  url: '../../package_tb3999803/pages/chanpin/chanpin?userInfo=' + JSON.stringify(userInfo)
+                })
+              } else if (res.cancel) {
+                wx.showToast({
+                  title: '已取消',
+                  icon: 'none',
+                  duration: 3000
+                })
+              }
+            }
+          })
+          // wx.showToast({
+          //   title: '用户密码错误',
+          //   icon: 'none'
+          // })
+        }
+        else if(res.result.recordsets[0].length == 0 && res.result.recordsets[1].length == 0){
           wx.hideLoading()
           wx.showToast({
             title: '用户密码错误',

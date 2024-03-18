@@ -68,8 +68,10 @@ Page({
   onLoad(options) {
     var _this = this
     var this_type = options.type
+    var userInfo = JSON.parse(options.userInfo)
     _this.setData({
-      this_type
+      this_type,
+      userInfo
     })
     var e = ['', '', '']
     _this.tableShow(e)
@@ -496,6 +498,9 @@ Page({
             },
             err: res => {
               console.log("错误!")
+              _this.qxShow()
+              var e = ['', '', '']
+              _this.tableShow(e)
             },
             fail: res => {
               wx.showToast({
@@ -503,6 +508,14 @@ Page({
                 icon: 'none'
               })
               console.log("请求失败！")
+              _this.qxShow()
+              var e = ['', '', '']
+              _this.tableShow(e)
+            },
+            complete: res => {
+              _this.qxShow()
+              var e = ['', '', '']
+              _this.tableShow(e)
             }
           })
         } else if (res.cancel) {

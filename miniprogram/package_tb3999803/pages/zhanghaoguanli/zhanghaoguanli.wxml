@@ -110,47 +110,47 @@
   </picker>
   <view class="lables">配料</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="peiliao" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="peiliao" class="input_text_form" value="{{peiliao}}" type="text" name="peiliao"></input>
+    <input bindinput="onInput" data-column="peiliao" class="input_text_form" value="{{peiliao}}" type="text" name="peiliao" disabled="disabled"></input>
   </picker>
   <view class="lables">开料</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="kailiao" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="kailiao" class="input_text_form" value="{{kailiao}}" type="text" name="kailiao"></input>
+    <input bindinput="onInput" data-column="kailiao" class="input_text_form" value="{{kailiao}}" type="text" name="kailiao" disabled="disabled"></input>
   </picker>
   <view class="lables">封边</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="fengbian" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="fengbian" class="input_text_form" value="{{fengbian}}" type="text" name="fengbian"></input>
+    <input bindinput="onInput" data-column="fengbian" class="input_text_form" value="{{fengbian}}" type="text" name="fengbian" disabled="disabled"></input>
   </picker>
   <view class="lables">排孔</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="paikong" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="paikong" class="input_text_form" value="{{paikong}}" type="text" name="paikong"></input>
+    <input bindinput="onInput" data-column="paikong" class="input_text_form" value="{{paikong}}" type="text" name="paikong" disabled="disabled"></input>
   </picker>
   <view class="lables">线条</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xiantiao" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="xiantiao" class="input_text_form" value="{{xiantiao}}" type="text" name="xiantiao"></input>
+    <input bindinput="onInput" data-column="xiantiao" class="input_text_form" value="{{xiantiao}}" type="text" name="xiantiao" disabled="disabled"></input>
   </picker>
   <view class="lables">覆膜</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="fumo" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="fumo" class="input_text_form" value="{{fumo}}" type="text" name="fumo"></input>
+    <input bindinput="onInput" data-column="fumo" class="input_text_form" value="{{fumo}}" type="text" name="fumo" disabled="disabled"></input>
   </picker>
   <view class="lables">手工</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="shougong" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="shougong" class="input_text_form" value="{{shougong}}" type="text" name="shougong"></input>
+    <input bindinput="onInput" data-column="shougong" class="input_text_form" value="{{shougong}}" type="text" name="shougong" disabled="disabled"></input>
   </picker>
   <view class="lables">五金</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="wujin" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="wujin" class="input_text_form" value="{{wujin}}" type="text" name="wujin"></input>
+    <input bindinput="onInput" data-column="wujin" class="input_text_form" value="{{wujin}}" type="text" name="wujin" disabled="disabled"></input>
   </picker>
   <view class="lables">包装</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="baozhuang" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="baozhuang" class="input_text_form" value="{{baozhuang}}" type="text" name="baozhuang"></input>
+    <input bindinput="onInput" data-column="baozhuang" class="input_text_form" value="{{baozhuang}}" type="text" name="baozhuang" disabled="disabled"></input>
   </picker>
   <view class="lables">入库</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="ruku" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="ruku" class="input_text_form" value="{{ruku}}" type="text" name="ruku"></input>
+    <input bindinput="onInput" data-column="ruku" class="input_text_form" value="{{ruku}}" type="text" name="ruku" disabled="disabled"></input>
   </picker>
   <view class="lables">出库</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="chuku" range="{{quanxian_list}}">
-    <input bindinput="onInput" data-column="chuku" class="input_text_form" value="{{chuku}}" type="text" name="chuku"></input>
+    <input bindinput="onInput" data-column="chuku" class="input_text_form" value="{{chuku}}" type="text" name="chuku" disabled="disabled"></input>
   </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>

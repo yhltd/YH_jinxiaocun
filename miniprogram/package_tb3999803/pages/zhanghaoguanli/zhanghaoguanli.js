@@ -463,9 +463,10 @@ Page({
           wx.cloud.callFunction({
             name: 'sqlServer_tb3999803',
             data: {
-              query: "delete from userInfo where id='" + _this.data.id + "'"
+              query: "delete from user_Info where id='" + _this.data.id + "'"
             },
             success: res => {
+              console.log(res)
               _this.setData({
                 id: '',
                 name: '',

@@ -30,7 +30,7 @@
 <!------------------------->
 <view class="bottom_view">
 	<button class="bt_bottom" bindtap="back" >返回</button>
-  <button class="bt_bottom" bindtap="entering" >查询</button>
+  <button class="bt_bottom" bindtap="tableShow" >刷新</button>
 </view>
 <!------------------------->
 <!---------修改弹窗--------->

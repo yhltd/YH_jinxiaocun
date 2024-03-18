@@ -29,6 +29,7 @@ Page({
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
     console.log(_this.data.userInfo.power)
+    var userInfo = _this.data.userInfo
     if(index <= 1){
       wx.showToast({
         title: '敬请期待',
@@ -43,10 +44,32 @@ Page({
     }
   },
 
+  saoma: function (e) {
+    var _this = this;
+    var userInfo=_this.data.userInfo
+    if (_this.data.userInfo.quanxian == '客户'){
+      wx.showToast({
+        title: '没有权限!',
+        icon: 'none'
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: "../saomabaogong/saomabaogong" + "?userInfo=" + JSON.stringify(_this.data.userInfo)+"type=saoma"
+    })
+  },
+
   onChange: function (event) {
     var _this = this;
     console.log(_this.data.userInfo.power)
     if (event.detail == 0) {
+      if(_this.data.userInfo.quanxian == '游客'){
+        wx.showToast({
+          title: '请联系管理员!',
+          icon: 'none'
+        })
+        return;
+      }
       wx.redirectTo({
         url: '../wode/wode?userInfo=' + JSON.stringify(_this.data.userInfo)
       })

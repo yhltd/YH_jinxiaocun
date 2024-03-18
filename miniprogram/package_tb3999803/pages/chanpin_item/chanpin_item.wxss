@@ -91,7 +91,7 @@ button{
   display: flex;
   flex-direction: column;
   width: 200rpx;
-  height: 200rpx;
+  height: 300rpx;
   justify-content: center;
   align-items: center;
   background-color: white;

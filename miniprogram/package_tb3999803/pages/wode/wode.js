@@ -45,7 +45,7 @@ Page({
       }
     }
     if(userInfo.quanxian == '工序员'){
-      if(index = 4){
+      if(index == 4){
         panduan = false
       }
     }
@@ -57,10 +57,26 @@ Page({
       }
     }else{
       wx.showToast({
-        title: '无权限',
+        title: '无权限,请联系管理员',
         icon: 'none',
       })
     }
+  },
+
+  saoma: function (e) {
+    var _this = this;
+    var userInfo=_this.data.userInfo
+    if (_this.data.userInfo.quanxian == '客户'){
+      wx.showToast({
+        title: '没有权限!',
+        icon: 'none'
+      })
+      return;
+    }
+    
+    wx.navigateTo({
+      url: "../saomabaogong/saomabaogong" + "?userInfo=" + JSON.stringify(_this.data.userInfo)+"type=saoma"
+    })
   },
 
   onChange: function (event) {
@@ -87,8 +103,43 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var gongxu = ''
+    if (userInfo.peiliao == '是'){
+      gongxu = gongxu + " 配料"
+    }
+    if (userInfo.kailiao == '是'){
+      gongxu = gongxu + " 开料"
+    }
+    if (userInfo.fengbian == '是'){
+      gongxu = gongxu + " 封边"
+    }
+    if (userInfo.paikong == '是'){
+      gongxu = gongxu + " 排孔"
+    }
+    if (userInfo.xiantiao == '是'){
+      gongxu = gongxu + " 线条"
+    }
+    if (userInfo.fumo == '是'){
+      gongxu = gongxu + " 覆膜"
+    }
+    if (userInfo.shougong == '是'){
+      gongxu = gongxu + " 手工"
+    }
+    if (userInfo.wujin == '是'){
+      gongxu = gongxu + " 五金"
+    }
+    if (userInfo.baozhuang == '是'){
+      gongxu = gongxu + " 包装"
+    }
+    if (userInfo.ruku == '是'){
+      gongxu = gongxu + " 入库"
+    }
+    if (userInfo.chuku == '是'){
+      gongxu = gongxu + " 出库"
+    }
     _this.setData({
-      userInfo: userInfo
+      userInfo: userInfo,
+      gongxu: gongxu,
     })
   },
 

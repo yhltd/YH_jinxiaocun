@@ -29,19 +29,24 @@
 <view class="bottom_view">
 	<button class="bt_bottom" bindtap="back" >返回</button>
   <button class="bt_bottom" bindtap="entering" >查询</button>
+  <button class="bt_bottom" bindtap="getExcel" >导出</button>
 </view>
 
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 80%;" >
+  <view class="lables">查询方式</view>
+    <picker bindchange="bindPickerChange2" data-column_name='sel_type' value="{{index}}" range="{{sel_type_list}}">
+      <input bindinput="onInput" data-column="sel_type" class="input_text_form" value="{{sel_type}}" type="text" name="sel_type" disabled="disabled"></input>
+    </picker>
   <view class="lables">订单号</view>
     <input bindinput="onInput" data-column="ddh" class="input_text_form"  value="{{ddh}}" type="number" name="ddh"></input>
     <view class="lables" wx:if="{{userInfo.quanxian != '客户'}}">客户名称</view>
     <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>  
     <view wx:if="{{userInfo.quanxian != '客户'}}" class="lables">终端用户</view>
     <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{customezdyhr_name}}" type="text" name="zdyh"></input>
-    <view class="lables">订单金额</view>
+    <view class="lables">材料名称</view>
     <input bindinput="onInput" data-column="ddje" class="input_text_form"  value="{{ddje}}" type="digit" name="ddje"></input>
     <view class="lables">工序</view>
     <picker bindchange="bindPickerChange" data-column_name='gx' value="{{index}}" range="{{gongxu_list}}">

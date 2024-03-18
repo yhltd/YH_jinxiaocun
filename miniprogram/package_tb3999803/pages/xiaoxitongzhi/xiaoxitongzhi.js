@@ -8,49 +8,49 @@ Page({
     list: [],
     title: [{
       text: "订单号",
-      width: "250rpx",
+      width: "300rpx",
       columnName: "ddh",
       type: "text",
       isupd: true
     }, {
       text: "客户名称",
-      width: "250rpx",
+      width: "300rpx",
       columnName: "khmc",
       type: "text",
       isupd: true
     }, {
       text: "终端用户",
-      width: "250rpx",
+      width: "300rpx",
       columnName: "zdyh",
       type: "text",
       isupd: true
     }, {
-      text: "订单金额",
-      width: "250rpx",
+      text: "材料名称",
+      width: "300rpx",
       columnName: "ddje",
       type: "text",
       isupd: true
     }, {
       text: "工序",
-      width: "250rpx",
+      width: "300rpx",
       columnName: "gx",
       type: "text",
       isupd: true
     }, {
       text: "完成状态",
-      width: "250rpx",
+      width: "300rpx",
       columnName: "wczt",
       type: "text",
       isupd: true
     }, {
-      text: "报工人员",
-      width: "250rpx",
-      columnName: "bgry",
+      text: "数量",
+      width: "300rpx",
+      columnName: "sl",
       type: "text",
       isupd: true
     }, {
       text: "日期",
-      width: "250rpx",
+      width: "300rpx",
       columnName: "rq",
       type: "text",
       isupd: true
@@ -67,6 +67,7 @@ Page({
     stop_date: '',
     where_sql : "",
     gongxu_list: ['配料','开料','封边','排孔','线条','覆膜','手工','五金','包装','入库','出库'],
+    sel_type_list:['显示最后报工信息','显示全部报工信息']
   },
 
   /**
@@ -166,14 +167,30 @@ Page({
     _this.setData({
       where_sql
     })
-    var e = ['','','','','','','','1900-01-01','2100-12-31']
+    var e = ['','','','','','','','1900-01-01','2100-12-31','显示最后报工信息']
     _this.tableShow(e)
+  },
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      currentDate: e.detail,
+      [column]: e.detail.value
+    })
   },
 
   bindPickerChange: function (e) {
     var _this = this
     _this.setData({
       [e.target.dataset.column_name]: _this.data.gongxu_list[e.detail.value]
+    })
+  },
+
+  bindPickerChange2: function (e) {
+    var _this = this
+    _this.setData({
+      [e.target.dataset.column_name]: _this.data.sel_type_list[e.detail.value]
     })
   },
 
@@ -188,7 +205,12 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql = "select id,'',isnull(ddh,'') as ddh,isnull(khmc,'') as khmc,isnull(zdyh,'') as zdyh,isnull(ddje,'') as ddje,isnull(gx,'') as gx,isnull(wczt,'') as wczt,isnull(bgry,'') as bgry,isnull(rq,'') as rq from xiaoxiguanli "
+    if(e[9] == '显示全部报工信息'){
+      sql = "select * from xiaoxiguanli "
+    }else{
+      sql = "select * from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id "
+    }
+
     var userInfo = _this.data.userInfo
     var where_sql = _this.data.where_sql
     if(where_sql == ""){
@@ -250,6 +272,7 @@ Page({
     var _this = this
     _this.setData({
       cxShow: true,
+      sel_type: '显示最后报工信息',
       id: '',
       ddh: '',
       khmc: '',
@@ -263,6 +286,63 @@ Page({
     })
   },
 
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.title
+    var cloudList = {
+      name : '消息通知',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:'text',
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+    console.log(cloudList)
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        console.log("获取云储存id")
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            console.log("获取临时路径")
+            wx.hideLoading({
+              success: (res) => {},
+            })
+            console.log(res.tempFilePath)
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        console.log(res)
+      }
+    })
+  },
+
   sel1: function () {
     var _this = this
     var start_date = _this.data.start_date
@@ -273,7 +353,7 @@ Page({
     if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx,_this.data.wczt,_this.data.bgry,start_date,stop_date]
+    var e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx,_this.data.wczt,_this.data.bgry,start_date,stop_date,_this.data.sel_type]
     _this.tableShow(e)
     _this.qxShow()
   },

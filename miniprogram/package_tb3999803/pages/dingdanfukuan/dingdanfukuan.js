@@ -43,7 +43,15 @@ Page({
       columnName: "qiankuan",
       type: "text",
       isupd: true
-    }],
+    },
+    {
+      text: "是否付款",
+      width: "250rpx",
+      columnName: "shifoufukuan",
+      type: "text",
+      isupd: true
+    }
+  ],
     id: '',
     productionNO: '',
     customerName: '',
@@ -51,6 +59,7 @@ Page({
     orderMoney: '',
     shoukuan: '',
     qiankuan: '',
+    shifoufukuan: '',
   },
 
   /**
@@ -85,7 +94,7 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql = "select id,isnull(productionNO,'') as productionNO,isnull(customerName,'') as customerName,isnull([user],'') as [user],isnull(orderMoney,'') as orderMoney,isnull(dingjin,'') as shoukuan,convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) as qiankuan from madeOrder where orderState!='出库' and convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) > 0 and productionNO like '%" + e[0] + "%' and customerName like '%" + e[1] + "%' and [user] like '%" + e[2] + "%'"
+    sql = "select id,isnull(productionNO,'') as productionNO,isnull(customerName,'') as customerName,isnull([user],'') as [user],isnull(orderMoney,'') as orderMoney,isnull(dingjin,'') as shoukuan,convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) as qiankuan,isnull(shifoufukuan,'') as shifoufukuan from madeOrder where orderState!='出库' and convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) > 0 and productionNO like '%" + e[0] + "%' and customerName like '%" + e[1] + "%' and [user] like '%" + e[2] + "%'"
     var userInfo = _this.data.userInfo
     if (userInfo.quanxian == '客户') {
       sql = sql + " and customerName like '" + userInfo.name + "'"
@@ -164,7 +173,9 @@ Page({
     var _this = this
     console.log(e)
     _this.setData({
-      xgShow: true
+      xgShow: true,
+      index: e.currentTarget.dataset.index,
+      id: _this.data.list[e.currentTarget.dataset.index].id
     })
   },
 
@@ -268,6 +279,39 @@ Page({
     })
   },
 
+  click_03: function () {
+    var _this = this
+    var id = _this.data.id
+    var sql = "update madeOrder set shifoufukuan='已付款' where id = " + _this.data.id
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql
+      },
+      success: res => {
+        wx.showToast({
+          title: '已设置为付款',
+          icon: 'none',
+          duration: 3000
+        })
+        var e = ['','','']
+        _this.tableShow(e)
+        _this.qxShow()
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
   onInput: function (e) {
     var _this = this
     let column = e.currentTarget.dataset.column
@@ -319,8 +363,12 @@ Page({
                 filePath: path,
 
                 success: () => {
-
-                  CommonUtils.showToast('保存成功')
+                  
+                  wx.showToast({
+                    title: '保存成功！',
+                    icon: 'none',
+                    duration: 3000
+                  })
 
                 }
 

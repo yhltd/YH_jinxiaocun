@@ -22,6 +22,9 @@ Page({
       khmc:'',
       zdyh:'',
       scbh:'',
+      ddzt: '',
+      cl: '',
+      zbs: '',
     },
     update_name:{
       pl:"配料",
@@ -182,6 +185,90 @@ Page({
     if(order_number != ''){
       _this.getBaoGong()
     }
+    var saoma = options.saoma
+    if (saoma != undefined){
+      _this.bianhao_get()
+    }
+  },
+
+  get_ddzt:function(e){
+    var _this = this
+    var list = _this.data.list
+    var gongxu_arr=_this.data.gongxu_arr
+    var hang = ''
+    var lie = ''
+    console.log(list)
+    console.log(gongxu_arr)
+    for (var i=0;i<list.length; i++){
+      console.log(i)
+      for (var j= gongxu_arr.length - 1; j>=0;j--){
+        console.log(j)
+        console.log(list[i][gongxu_arr[j]])
+        if (list[i][gongxu_arr[j]] != ''){
+          if(list[i][gongxu_arr[j]] == '完成'){
+            var lie1 = j + 1
+              if(lie1 > 11){
+                lie1 = 11
+              }else{
+                lie1 = j + 1
+                if(lie == ''){
+                  lie = lie1
+                }else if (lie1 < lie){
+                  lie = lie1
+                } 
+              }
+              break;
+          }else if(list[i][gongxu_arr[j]] != ''){
+            var lie1 = j
+            if(lie == ''){
+              lie = lie1
+            }else if (lie1 < lie){
+              lie = lie1
+            }
+            break;
+          }
+        }else if(list[i][gongxu_arr[j]] == '' && j==0){
+          lie = 0
+          break;
+        }
+      }
+    }
+    var gongxumc = ''
+    if(lie != ''){
+      if(lie == 0){
+        gongxumc = '配料'
+      }else if(lie == 1){
+        gongxumc = '开料'
+      }else if(lie == 2){
+        gongxumc = '封边'
+      }else if(lie == 3){
+        gongxumc = '排孔'
+      }else if(lie == 4){
+        gongxumc = '线条'
+      }else if(lie == 5){
+        gongxumc = '覆膜'
+      }else if(lie == 6){
+        gongxumc = '手工'
+      }else if(lie == 7){
+        gongxumc = '五金'
+      }else if(lie == 8){
+        gongxumc = '包装'
+      }else if(lie == 9){
+        gongxumc = '入库'
+      }else if(lie == 10){
+        gongxumc = '出库'
+      }
+    }
+    console.log(gongxumc)
+    if(gongxumc == ''){
+      gongxumc = '配料'
+    }
+    var header_list = _this.data.header_list
+    header_list.ddzt = gongxumc
+    header_list.cl = _this.data.list.length
+    _this.setData({
+      header_list: header_list,
+    })
   },
  
   bianhao_get:function(e){
@@ -201,7 +288,7 @@ Page({
     var _this = this
     console.log(_this.data.order_number)
     if(_this.data.order_number != ''){
-      var sql = "select * from baogongmingxi where dh = '" + _this.data.order_number + "';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "'"
+      var sql = "select * from baogongmingxi where dh = '" + _this.data.order_number + "';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';select isnull(max(isnull(bh,'')),'') as bh from fenjiandabao where dh = '" + _this.data.order_number + "'"
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
         data: {
@@ -210,6 +297,24 @@ Page({
         success: res => {
           console.log(res)
           var list = res.result.recordsets[0]
+          var baoshu = res.result.recordsets[2][0].bh
+          if(res.result.recordsets[0].length > 0){
+            if(res.result.recordsets[0][0].zbs == ''){
+              var header_list = _this.data.header_list
+              console.log(header_list)
+              header_list.zbs = baoshu
+              _this.setData({
+                header_list
+              })
+            }else{
+              var header_list = _this.data.header_list
+              console.log(header_list)
+              header_list.zbs = res.result.recordsets[0][0].zbs
+              _this.setData({
+                header_list
+              })
+            }
+          }
           var order_money = ""
           if(res.result.recordsets[1].length >= 1){
             order_money = res.result.recordsets[1][0].spareMoney
@@ -217,12 +322,15 @@ Page({
           console.log(order_money)
           //如果已有报工单，读取此前报工单显示到此页
           if(list.length > 0){
-            var header_list = {}
+            var header_list = _this.data.header_list
             header_list.pdrq = list[0].pdrq
             header_list.dh = list[0].dh
             header_list.khmc = list[0].khmc
             header_list.zdyh = list[0].zdyh
             header_list.scbh = list[0].scbh
+            // header_list.ddzt = list[0].ddzt
+            // header_list.cl = list[0].cl
+            // header_list.zbs = list[0].zbs
             if(list[0].pdrq != ''){
               for(var i=0; i<list.length; i++){
                 var paidan_date = list[0].pdrq.replaceAll("/","-")
@@ -242,6 +350,7 @@ Page({
               title: '查询成功',
               icon: 'none',
             })
+            _this.get_ddzt()
           //如果没有报工单，读取订单信息生成新单
           }else{
             wx.showModal({
@@ -294,6 +403,7 @@ Page({
                         title: '已创建',
                         icon: 'none',
                       })
+                      _this.get_ddzt()
                     },
                     err: res => {
                       console.log("错误!")
@@ -424,6 +534,7 @@ Page({
         list
       })
     }
+    _this.get_ddzt()
   },
 
   upd2:function(){
@@ -447,6 +558,7 @@ Page({
       list:list,
     })
     _this.qxShow()
+    _this.get_ddzt()
   },
 
   type_switch:function(){
@@ -484,26 +596,36 @@ Page({
       return;
     }
     var del_sql = "delete from baogongmingxi where dh='" + header_list.dh + "';"
-    var ins_sql = "insert into baogongmingxi(pdrq,dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys) values "
+    var ins_sql = "insert into baogongmingxi(pdrq,dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,zbs) values "
     var ins_sql2 = ""
     for(var i=0; i<list.length; i++){
       if(ins_sql2 == ''){
-        ins_sql2 = "('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "')"
+        ins_sql2 = "('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "','" + header_list.zbs + "')"
       }else{
-        ins_sql2 = ins_sql2 + ",('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "')"
+        ins_sql2 = ins_sql2 + ",('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "','" + header_list.zbs + "')"
       }
     }
 
-    var xiaoxi_sql = "insert into xiaoxiguanli(ddh,khmc,zdyh,ddje,gx,wczt,bgry,rq) values "
+    var xiaoxi_sql = "insert into xiaoxiguanli(ddh,khmc,zdyh,ddje,gx,wczt,bgry,rq,sl) values "
     var xiaoxi_sql2 = ""
     var this_riqi = getNowDate()
     for(var i=0; i<list.length; i++){
       for(var j=0; j<gongxu_arr.length; j++){
         if(list[i][gongxu_arr[j]] != list_old[i][gongxu_arr[j]]){
-          if(xiaoxi_sql2 == ''){
-            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + _this.data.order_money + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "')"
+          var cailiao = list[i].mcsl.split('/')
+          var mingcheng = ''
+          var shuliang = ''
+          if (cailiao.length >= 2){
+            mingcheng = cailiao[0]
+            shuliang = cailiao[1]
           }else{
-            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + _this.data.order_money + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "')"
+            mingcheng = cailiao[0]
+            shuliang = ''
+          }
+          if(xiaoxi_sql2 == ''){
+            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" + shuliang + "')"
+          }else{
+            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" + shuliang + "')"
           }
         }
       }
