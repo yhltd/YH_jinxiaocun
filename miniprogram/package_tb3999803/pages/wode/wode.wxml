@@ -1,14 +1,14 @@
 <view class="list">
-  <view class="item2" hover-class="item_hover">
+  <view class="item2" bindtap= "click" wx:key="text" data-index="{{index}}">
     {{userInfo.name+" "+userInfo.quanxian + gongxu}}
     <image class="img" src="../../images/qianwang.png"></image>
   </view>
-  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
-    {{item.text}}
+  <view wx:if="{{userInfo.quanxian != '游客' && userInfo.quanxian != '客户'}}" class="item" hover-class="item_hover" bindtap="saoma">
+    {{'一键扫码'}}
     <image class="img" src="../../images/qianwang.png"></image>
   </view>
-  <view wx:if="{{userInfo.quanxian != '游客'}}" class="item" hover-class="item_hover" bindtap="saoma">
-    {{'一键扫码'}}
+  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}" wx:if="{{showList[index][userInfo.quanxian]}}">
+    {{item.text}}
     <image class="img" src="../../images/qianwang.png"></image>
   </view>
 </view>

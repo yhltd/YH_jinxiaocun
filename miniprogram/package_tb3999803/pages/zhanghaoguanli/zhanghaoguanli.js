@@ -42,7 +42,7 @@ Page({
       },
       {
         text: "权限",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "quanxian",
         type: "text",
         isupd: true
@@ -56,77 +56,77 @@ Page({
       },
       {
         text: "配料",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "peiliao",
         type: "text",
         isupd: true
       },
       {
         text: "开料",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "kailiao",
         type: "text",
         isupd: true
       },
       {
         text: "封边",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "fengbian",
         type: "text",
         isupd: true
       },
       {
         text: "排孔",
-        width: "300rpx",
+        width: "180rpx",
         columnName: "paikong",
         type: "text",
         isupd: true
       },
       {
         text: "线条",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "xiantiao",
         type: "text",
         isupd: true
       },
       {
         text: "覆膜",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "fumo",
         type: "text",
         isupd: true
       },
       {
         text: "手工",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "shougong",
         type: "text",
         isupd: true
       },
       {
         text: "五金",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "wujin",
         type: "text",
         isupd: true
       },
       {
         text: "包装",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "baozhuang",
         type: "text",
         isupd: true
       },
       {
         text: "入库",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "ruku",
         type: "text",
         isupd: true
       },
       {
         text: "出库",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "chuku",
         type: "text",
         isupd: true

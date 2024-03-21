@@ -377,7 +377,7 @@ button{
   border: calc(5vmin / 7.5) solid #E6E6E6;
   margin: auto;
   width: 50%;
-  height: calc(64vmin / 7.5);
+  height: calc(64vmin / 10);
   align-items: center; 
   border-radius: calc(19vmin / 7.5);
   margin-top: calc(10vmin / 7.5);

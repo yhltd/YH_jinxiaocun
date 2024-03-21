@@ -9,28 +9,60 @@ Page({
     active: 0,
     showList: [{
         text: "消息通知",
-        url: "../xiaoxitongzhi/xiaoxitongzhi"
+        url: "../xiaoxitongzhi/xiaoxitongzhi",
+        "管理员":true,
+        "工序员":true,
+        "客户":true
       },
       {
         text: "订单付款",
-        url: "../dingdanfukuan/dingdanfukuan"
+        url: "../dingdanfukuan/dingdanfukuan",
+        "管理员":true,
+        "工序员":true,
+        "客户":true
       },
       {
         text: "扫码报工",
-        url: "../saomabaogong/saomabaogong"
+        url: "../saomabaogong/saomabaogong",
+        "管理员":true,
+        "工序员":true,
+        "客户":false
       },
       {
         text: "生产调度",
-        url: "../shengchandiaodu/shengchandiaodu"
+        url: "../shengchandiaodu/shengchandiaodu",
+        "管理员":true,
+        "工序员":true,
+        "客户":false
       },
       {
         text: "账号管理",
-        url: "../zhanghaoguanli/zhanghaoguanli"
+        url: "../zhanghaoguanli/zhanghaoguanli",
+        "管理员":true,
+        "工序员":false,
+        "客户":false
       }
     ]
   },
+  click: function (e){
+   var _this =this;
+   console.log(this.data.userInfo)
+  //  var userInfo=_this.data.userInfo
+  wx.showModal({
+    title: '提示',
+    content: '确认返回登录页？',
+    success (res) {
+      if (res.confirm) {
+        wx.redirectTo({
+          url: '../../../pages/login/login?userInfo=' + JSON.stringify(_this.data.userInfo)
+        })
+      } else if (res.cancel) {
 
+      }
+    }
+  })
 
+},
   go: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
@@ -62,20 +94,19 @@ Page({
       })
     }
   },
-
+  
   saoma: function (e) {
     var _this = this;
     var userInfo=_this.data.userInfo
-    if (_this.data.userInfo.quanxian == '客户'){
+    if (_this.data.userInfo.quanxian == '客户' || _this.data.userInfo.quanxian == '游客'){
       wx.showToast({
-        title: '没有权限!',
+        title: '没有扫码报工权限!',
         icon: 'none'
       })
       return;
     }
-    
     wx.navigateTo({
-      url: "../saomabaogong/saomabaogong" + "?userInfo=" + JSON.stringify(_this.data.userInfo)+"type=saoma"
+      url: "../saomabaogong/saomabaogong" + "?userInfo=" + JSON.stringify(_this.data.userInfo)+"&type=saoma"
     })
   },
 
@@ -137,6 +168,7 @@ Page({
     if (userInfo.chuku == '是'){
       gongxu = gongxu + " 出库"
     }
+    console.log(userInfo)
     _this.setData({
       userInfo: userInfo,
       gongxu: gongxu,

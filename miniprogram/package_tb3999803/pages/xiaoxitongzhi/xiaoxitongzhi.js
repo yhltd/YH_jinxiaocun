@@ -8,7 +8,7 @@ Page({
     list: [],
     title: [{
       text: "订单号",
-      width: "300rpx",
+      width: "200rpx",
       columnName: "ddh",
       type: "text",
       isupd: true
@@ -20,37 +20,37 @@ Page({
       isupd: true
     }, {
       text: "终端用户",
-      width: "300rpx",
+      width: "400rpx",
       columnName: "zdyh",
       type: "text",
       isupd: true
     }, {
       text: "材料名称",
-      width: "300rpx",
+      width: "270rpx",
       columnName: "ddje",
       type: "text",
       isupd: true
     }, {
       text: "工序",
-      width: "300rpx",
+      width: "150rpx",
       columnName: "gx",
       type: "text",
       isupd: true
     }, {
       text: "完成状态",
-      width: "300rpx",
+      width: "180rpx",
       columnName: "wczt",
       type: "text",
       isupd: true
     }, {
-      text: "数量",
-      width: "300rpx",
+      text: "总包数",
+      width: "150rpx",
       columnName: "sl",
       type: "text",
       isupd: true
     }, {
       text: "日期",
-      width: "300rpx",
+      width: "200rpx",
       columnName: "rq",
       type: "text",
       isupd: true
@@ -214,7 +214,7 @@ Page({
     var userInfo = _this.data.userInfo
     var where_sql = _this.data.where_sql
     if(where_sql == ""){
-      where_sql = " where ddh like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and ddje like '%" + e[3] + "%' and gx like '%" + e[4] + "%' and wczt like '%" + e[5] + "%' and bgry like '%" + e[6] + "%' and convert(date,rq) >= convert(date,'" + e[7] + "') and convert(date,rq) <= convert(date,'" + e[8] + "')"
+      where_sql = " where ddh like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and ddje like '%" + e[3] + "%' and gx like '%" + e[4] + "%' and wczt like '%" + e[5] + "%' and bgry like '%" + e[6] + "%' and convert(date,rq) >= convert(date,'" + e[7] + "') and convert(date,rq) <= convert(date,'" + e[8] + "') "
     }else{
       where_sql = where_sql + " and ddh like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and ddje like '%" + e[3] + "%' and gx like '%" + e[4] + "%' and wczt like '%" + e[5] + "%' and bgry like '%" + e[6] + "%' and convert(date,rq) >= convert(date,'" + e[7] + "') and convert(date,rq) <= convert(date,'" + e[8] + "')"
     }

@@ -60,87 +60,87 @@ Page({
       },
       {
         text: "配料",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "pl",
         type: "text",
         isupd: true
       },
       {
         text: "开料",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "kl",
         type: "text",
         isupd: true
       },
       {
         text: "封边",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "fb",
         type: "text",
         isupd: true
       },{
         text: "排孔",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "pk",
         type: "text",
         isupd: true
       },{
         text: "线条",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "xt",
         type: "text",
         isupd: true
       },{
         text: "覆膜",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "fm",
         type: "text",
         isupd: true
       },{
         text: "手工",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "sg",
         type: "text",
         isupd: true
       },{
         text: "五金",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "wj",
         type: "text",
         isupd: true
       },{
         text: "包装",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "bz",
         type: "text",
         isupd: true
       },{
         text: "入库",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "rk",
         type: "text",
         isupd: true
       },{
         text: "出库",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "ck",
         type: "text",
         isupd: true
       },{
         text: "派单天数",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "pdts",
         type: "text",
         isupd: true
@@ -177,18 +177,17 @@ Page({
       order_number = ""
     } 
     var this_date = getNowDate()
+    var saoma = options.type
     _this.setData({
       userInfo,
       order_number,
-      this_date
+      this_date,
+      saoma
     })
     if(order_number != ''){
       _this.getBaoGong()
     }
-    var saoma = options.saoma
-    if (saoma != undefined){
-      _this.bianhao_get()
-    }
+
   },
 
   get_ddzt:function(e){
@@ -623,9 +622,9 @@ Page({
             shuliang = ''
           }
           if(xiaoxi_sql2 == ''){
-            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" + shuliang + "')"
+            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" +  _this.data.header_list.zbs + "')"
           }else{
-            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" + shuliang + "')"
+            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" +  _this.data.header_list.zbs + "')"
           }
         }
       }
@@ -697,7 +696,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    var _this = this
+    var saoma = _this.data.saoma
+    console.log(saoma)
+    if (saoma != undefined){
+      _this.bianhao_get()
+      _this.setData({
+        saoma:undefined
+      })
+    }
   },
 
   /**

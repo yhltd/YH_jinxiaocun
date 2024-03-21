@@ -9,7 +9,7 @@ Page({
     list: [],
     title: [{
         text: "生产单号",
-        width: "250rpx",
+        width: "200rpx",
         columnName: "productionNo",
         type: "text",
         isupd: true
@@ -23,7 +23,7 @@ Page({
       },
       {
         text: "终端用户",
-        width: "450rpx",
+        width: "400rpx",
         columnName: "user",
         type: "text",
         isupd: true
@@ -35,13 +35,7 @@ Page({
         type: "text",
         isupd: true
       },
-      {
-        text: "生产时效",
-        width: "250rpx",
-        columnName: "beizhu2",
-        type: "text",
-        isupd: true
-      },
+      
       {
         text: "订单状态",
         width: "180rpx",
@@ -57,8 +51,15 @@ Page({
         isupd: true
       },
       {
+        text: "生产时效",
+        width: "200rpx",
+        columnName: "beizhu2",
+        type: "text",
+        isupd: true
+      },
+      {
         text: "派单日期",
-        width: "250rpx",
+        width: "200rpx",
         columnName: "paidanDate",
         type: "text",
         isupd: true
@@ -91,6 +92,13 @@ Page({
         type: "text",
         isupd: true
       },
+      {
+        text: "订单状态调度",
+        width: "250rpx",
+        columnName: "gx",
+        type: "text",
+        isupd: true
+      },
     ],
     shengchan_list: ['优先生产', '正常'],
     shengchan: "",
@@ -111,7 +119,9 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'') as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
+    sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,paidanDate,shengchanzhouqi,daojishi,searchNO,endDate,isnull(ddh,'') as ddh,isnull(gx,'') as gx from (select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中'  ) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gongxu on productionNo = ddh order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
+    // sql = "select paixu,A,B,C,D,E,F,G,H,I,M,N,J,K,L,isnull(gx,'') as gx from (select a.paixu,'□' as A,isnull(a.productionNO,'') as B,isnull(a.customerName,'') as C,isnull(a.[user],'') as D,isnull(a.orderContent,'') as E,isnull(a.beizhu2,'') as F,isnull(a.orderState,'') as G,isnull(a.spareMoney,'') as H,isnull(paidanDate,'') as I,'' as M,'' as N,isnull(searchNO,'') as J,isnull(endDate,'') as K,case a.orderState when '生产' then 1 else 2 end as L from(select isnull(paixu,'') as paixu,productionNO,customerName,[user],orderContent,orderType,deliveryMode,CONVERT(float,isnull(orderMoney,0))-CONVERT(float,isnull(dingjin,0))-CONVERT(float,isnull(yukuan,0)) as chukufukuan,orderState,spareMoney,wenjian_name,baozhuangshuliang,beizhu1,beizhu2,shou_yukuan,shou_yukuan_riqi,paidanDate,searchNO,endDate from madeOrder where orderState is not NULL and orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' ) as a left join (select payNo,max(convert(date,opetationDate)) as opetationDate from moneyDetails group by payNo) as b on a.productionNO = b.payNo) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gx on B = ddh"
+   
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {

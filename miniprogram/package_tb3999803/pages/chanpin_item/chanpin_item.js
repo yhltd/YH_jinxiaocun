@@ -33,14 +33,14 @@ Page({
       },
       {
         text: "单价",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "danjia",
         type: "text",
         isupd: true
       },
       {
         text: "单位",
-        width: "250rpx",
+        width: "180rpx",
         columnName: "danwei",
         type: "text",
         isupd: true

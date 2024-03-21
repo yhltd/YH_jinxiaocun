@@ -9,7 +9,7 @@ Page({
     list: [],
     title: [{
       text: "订单号",
-      width: "250rpx",
+      width: "200rpx",
       columnName: "productionNO",
       type: "text",
       isupd: true
@@ -21,32 +21,32 @@ Page({
       isupd: true
     }, {
       text: "终端用户",
-      width: "250rpx",
+      width: "400rpx",
       columnName: "user",
       type: "text",
       isupd: true
     }, {
       text: "订单金额",
-      width: "250rpx",
+      width: "180rpx",
       columnName: "orderMoney",
       type: "text",
       isupd: true
     }, {
       text: "已付款",
-      width: "250rpx",
+      width: "180rpx",
       columnName: "shoukuan",
       type: "text",
       isupd: true
     }, {
       text: "欠款",
-      width: "250rpx",
+      width: "180rpx",
       columnName: "qiankuan",
       type: "text",
       isupd: true
     },
     {
       text: "是否付款",
-      width: "250rpx",
+      width: "180rpx",
       columnName: "shifoufukuan",
       type: "text",
       isupd: true
