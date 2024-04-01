@@ -18,7 +18,7 @@ Page({
         text: "订单付款",
         url: "../dingdanfukuan/dingdanfukuan",
         "管理员":true,
-        "工序员":true,
+        "工序员":false,
         "客户":true
       },
       {

@@ -1,2 +1,14 @@
-<!--package_tb3999803/pages/pingtaigongxiang/pingtaigongxiang.wxml-->
-<text>package_tb3999803/pages/pingtaigongxiang/pingtaigongxiang.wxml</text>
+<!--package_tb3999803/pages/pinpaijiameng/pinpaijiameng.wxml-->
+<!-- <text>package_tb3999803/pages/pinpaijiameng/pinpaijiameng.wxml</text> -->
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:5%"></scroll-view>
+
+<view bindtap="showContent" data-id="1" style="text-align: center;margin-bottom: 10px;">平台共享</view>
+<view >智居系产品标准：标准化生产流程，订单时时信息掌控，高定工艺量产，全产品链供货，让销售团队无后顾之忧</view>
+<view >智居系生产平台：生产平台产品库/信息化共享，为工作室/整装/零售店提供更合理的合作模式。</view>
+<view >服务电话：{{list[0].ptgx}}</view>
+<!-- <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 15%;" >
+
+  <view class="bottom_view" style="height:10%;margin-top: 8%;">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_03">平台共享</button>
+    </view>
+</van-popup> -->

@@ -132,13 +132,13 @@ Page({
     _this.setData({
       cxShow: false,
       xgShow: false,
-      id: '',
-      productionNO: '',
-      customerName: '',
-      user: '',
-      orderMoney: '',
-      shoukuan: '',
-      qiankuan: '',
+      // id: '',
+      // productionNO: '',
+      // customerName: '',
+      // user: '',
+      // orderMoney: '',
+      // shoukuan: '',
+      // qiankuan: '',
     })
   },
 
@@ -152,13 +152,13 @@ Page({
     var _this = this
     _this.setData({
       cxShow: true,
-      id: '',
-      productionNO: '',
-      customerName: '',
-      user: '',
-      orderMoney: '',
-      shoukuan: '',
-      qiankuan: '',
+      // id: '',
+      // productionNO: '',
+      // customerName: '',
+      // user: '',
+      // orderMoney: '',
+      // shoukuan: '',
+      // qiankuan: '',
     })
   },
 
@@ -290,7 +290,7 @@ Page({
       },
       success: res => {
         wx.showToast({
-          title: '已设置为付款',
+          title: '已付款回传',
           icon: 'none',
           duration: 3000
         })

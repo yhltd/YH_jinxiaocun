@@ -26,12 +26,12 @@
 
   <view style="display: flex;margin-bottom: 5px;">
     <view class="lables_head" style="font-size: calc(35vmin / 8);">生产编号</view>
-    <input bindinput="onInput_header" data-column="scbh" class="input_text_head" value="{{header_list.scbh}}" type="text" name="scbh"></input>
+    <input bindinput="onInput_header" data-column="scbh" class="input_text_head" value="{{header_list.scbh}}" type="text" name="scbh" disabled="disabled"></input>
   </view>
 
   <view style="display: flex;margin-bottom: 5px;">
     <view class="lables_head" style="font-size: calc(35vmin / 8);">订单状态</view>
-    <input bindinput="onInput_header" data-column="ddzt" class="input_text_head" value="{{header_list.ddzt}}" type="text" name="ddzt"></input>
+    <input bindinput="onInput_header" data-column="ddzt" class="input_text_head" value="{{header_list.ddzt}}" type="text" name="ddzt" disabled="disabled"></input>
   </view>
 
   <view style="display: flex;margin-bottom: 5px;">

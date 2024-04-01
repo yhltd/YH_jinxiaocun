@@ -30,13 +30,13 @@ Page({
     var text = _this.data.showList[index].text
     console.log(_this.data.userInfo.power)
     var userInfo = _this.data.userInfo
-    if(index <= 1){
-      wx.showToast({
-        title: '敬请期待',
-        icon: 'none'
-      })
-      return;
-    }
+    // if(index <= 1){
+    //   wx.showToast({
+    //     title: '敬请期待',
+    //     icon: 'none'
+    //   })
+    //   return;
+    // }
     if (url != '') {
       wx.navigateTo({
         url: url + "?userInfo=" + JSON.stringify(_this.data.userInfo)

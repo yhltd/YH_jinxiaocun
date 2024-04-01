@@ -119,7 +119,10 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,paidanDate,shengchanzhouqi,daojishi,searchNO,endDate,isnull(ddh,'') as ddh,isnull(gx,'') as gx from (select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中'  ) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gongxu on productionNo = ddh order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
+    // sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,paidanDate,shengchanzhouqi,daojishi,searchNO,endDate,isnull(ddh,'') as ddh,isnull(gx,'') as gx from (select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中'  ) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gongxu on productionNo = ddh order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
+
+sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc;select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+    console.log(sql)
     // sql = "select paixu,A,B,C,D,E,F,G,H,I,M,N,J,K,L,isnull(gx,'') as gx from (select a.paixu,'□' as A,isnull(a.productionNO,'') as B,isnull(a.customerName,'') as C,isnull(a.[user],'') as D,isnull(a.orderContent,'') as E,isnull(a.beizhu2,'') as F,isnull(a.orderState,'') as G,isnull(a.spareMoney,'') as H,isnull(paidanDate,'') as I,'' as M,'' as N,isnull(searchNO,'') as J,isnull(endDate,'') as K,case a.orderState when '生产' then 1 else 2 end as L from(select isnull(paixu,'') as paixu,productionNO,customerName,[user],orderContent,orderType,deliveryMode,CONVERT(float,isnull(orderMoney,0))-CONVERT(float,isnull(dingjin,0))-CONVERT(float,isnull(yukuan,0)) as chukufukuan,orderState,spareMoney,wenjian_name,baozhuangshuliang,beizhu1,beizhu2,shou_yukuan,shou_yukuan_riqi,paidanDate,searchNO,endDate from madeOrder where orderState is not NULL and orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' ) as a left join (select payNo,max(convert(date,opetationDate)) as opetationDate from moneyDetails group by payNo) as b on a.productionNO = b.payNo) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gx on B = ddh"
    
     wx.cloud.callFunction({
@@ -129,7 +132,15 @@ Page({
       },
       success: res => {
         console.log(res)
-        var list = res.result.recordset
+        var list = res.result.recordsets[0]
+        var gongxu_list = res.result.recordsets[1]
+        for(var i=0; i<list.length; i++){
+          for(var j=0; j<gongxu_list.length; j++){
+            if(list[i].productionNo == gongxu_list[j].ddh){
+              list[i].orderState = gongxu_list[j].gx
+            }
+          }
+        }
         for (var i = 0; i < list.length; i++) {
           var shengchan_shixiao = list[i].beizhu2
           var paidan_riqi = list[i].paidanDate
@@ -151,11 +162,8 @@ Page({
           if (month < 10) month = "0" + month;
           if (date < 10) date = "0" + date;
           var time = year + "/" + month + "/" + date; //（格式化"yyyy-MM-dd"）
-          (function () {
-            time.value = time;
-          })
-          if (paidan_riqi != '' && paidan_riqi != null) {
-            paidan_riqi = list[j].paidanDate.replaceAll("/", "-")
+          if (paidan_riqi != '' && paidan_riqi != null && paidan_riqi !== "") {
+            paidan_riqi = paidan_riqi.replaceAll("/", "-")
             riqi = time.replaceAll("/", "-")
             var date = DateDiff(paidan_riqi,riqi) - 1
             list[j].daojishi = date
@@ -193,6 +201,14 @@ Page({
     var id = _this.data.list[index].id
     var searchNO = _this.data.list[index].searchNO
     var endDate = _this.data.list[index].endDate
+    var userInfo = _this.data.userInfo
+    if(userInfo.quanxian == '工序员'){
+      wx.showToast({
+        title: '工序员无设置生产顺序权限',
+        icon: 'none'
+      })
+      return;
+    }
     _this.setData({
       id,
       index,
@@ -406,13 +422,13 @@ function getNowDate() {
   return currentdate;
  }
 
-
+//ios端字符串转时间戳，字符串必须以yyyy/m/d hh:mm:ss格式放入时间戳
 function DateDiff(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式  
   var aDate, oDate1, oDate2, iDays
   aDate = sDate1.split("-")
-  oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为12-18-2002格式  
+  oDate1 = new Date(aDate[0] + '/' + aDate[1] + '/' + aDate[2] + " 00:00:00") //转换为12-18-2002格式  
   aDate = sDate2.split("-")
-  oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+  oDate2 = new Date(aDate[0] + '/' + aDate[1] + '/' + aDate[2] + " 00:00:00")
   iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数  
   if(oDate1 - oDate2 > 0){
     return iDays
@@ -421,3 +437,4 @@ function DateDiff(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式
   }
 
 }
+  

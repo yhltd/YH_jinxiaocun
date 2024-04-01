@@ -159,12 +159,14 @@ Page({
     column_input : "",
     empty:'',
     xiala_panduan:0,
-    click_type: '设置报工',
+    click_type: '报工界面',
     xiala_panduan1:[{name:''},{name:'出库'}],
     xiala_panduan2:[{name:''},{name:'完成'},{name:'缺料'}],
     gongxu_arr:['pl','kl','fb','pk','xt','fm','sg','wj','bz','rk','ck','pdts']
 
   },
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -172,6 +174,43 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
+    var title = _this.data.title
+    console.log(userInfo)
+    if(userInfo.quanxian == '工序员'){
+      if(userInfo.peiliao != '是'){
+        title[2].isupd = false
+      }
+      if(userInfo.kailiao != '是'){
+        title[3].isupd = false
+      }
+      if(userInfo.fengbian != '是'){
+        title[4].isupd = false
+      }
+      if(userInfo.paikong != '是'){
+        title[5].isupd = false
+      }
+      if(userInfo.xiantiao != '是'){
+        title[6].isupd = false
+      }
+      if(userInfo.fumo != '是'){
+        title[7].isupd = false
+      }
+      if(userInfo.shougong != '是'){
+        title[8].isupd = false
+      }
+      if(userInfo.wujin != '是'){
+        title[9].isupd = false
+      }
+      if(userInfo.baozhuang != '是'){
+        title[10].isupd = false
+      }
+      if(userInfo.ruku != '是'){
+        title[11].isupd = false
+      }
+      if(userInfo.chuku != '是'){
+        title[12].isupd = false
+      }
+    }
     var order_number = options.order_number
     if(order_number == undefined){
       order_number = ""
@@ -182,7 +221,8 @@ Page({
       userInfo,
       order_number,
       this_date,
-      saoma
+      saoma,
+      title
     })
     if(order_number != ''){
       _this.getBaoGong()
@@ -198,8 +238,12 @@ Page({
     var lie = ''
     console.log(list)
     console.log(gongxu_arr)
+    var zongbaoshu = 0
     for (var i=0;i<list.length; i++){
       console.log(i)
+      if(list[i].rk != ''){
+        zongbaoshu = zongbaoshu + (list[i].rk * 1)
+      }
       for (var j= gongxu_arr.length - 1; j>=0;j--){
         console.log(j)
         console.log(list[i][gongxu_arr[j]])
@@ -265,6 +309,7 @@ Page({
     var header_list = _this.data.header_list
     header_list.ddzt = gongxumc
     header_list.cl = _this.data.list.length
+    header_list.zbs = zongbaoshu
     _this.setData({
       header_list: header_list,
     })
@@ -287,7 +332,7 @@ Page({
     var _this = this
     console.log(_this.data.order_number)
     if(_this.data.order_number != ''){
-      var sql = "select * from baogongmingxi where dh = '" + _this.data.order_number + "';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';select isnull(max(isnull(bh,'')),'') as bh from fenjiandabao where dh = '" + _this.data.order_number + "'"
+      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
         data: {
@@ -296,24 +341,6 @@ Page({
         success: res => {
           console.log(res)
           var list = res.result.recordsets[0]
-          var baoshu = res.result.recordsets[2][0].bh
-          if(res.result.recordsets[0].length > 0){
-            if(res.result.recordsets[0][0].zbs == ''){
-              var header_list = _this.data.header_list
-              console.log(header_list)
-              header_list.zbs = baoshu
-              _this.setData({
-                header_list
-              })
-            }else{
-              var header_list = _this.data.header_list
-              console.log(header_list)
-              header_list.zbs = res.result.recordsets[0][0].zbs
-              _this.setData({
-                header_list
-              })
-            }
-          }
           var order_money = ""
           if(res.result.recordsets[1].length >= 1){
             order_money = res.result.recordsets[1][0].spareMoney
@@ -330,6 +357,11 @@ Page({
             // header_list.ddzt = list[0].ddzt
             // header_list.cl = list[0].cl
             // header_list.zbs = list[0].zbs
+            for(var i=0; i<list.length; i++){
+              if(list[i].rk == 0 || list[i].rk == '0'){
+                list[i].rk = ''
+              }
+            } 
             if(list[0].pdrq != ''){
               for(var i=0; i<list.length; i++){
                 var paidan_date = list[0].pdrq.replaceAll("/","-")
@@ -345,10 +377,10 @@ Page({
               list_old,
               order_money
             })
-            wx.showToast({
-              title: '查询成功',
-              icon: 'none',
-            })
+            // wx.showToast({
+            //   title: '查询成功',
+            //   icon: 'none',
+            // })
             _this.get_ddzt()
           //如果没有报工单，读取订单信息生成新单
           }else{
@@ -493,8 +525,16 @@ Page({
     var _this = this
     var this_column = e.currentTarget.dataset.column
     var index = e.currentTarget.dataset.index
+    var isupd = e.currentTarget.dataset.isupd
+    if(isupd == false){
+      wx.showToast({
+        title: '当前人员无此工序报工权限',
+        icon: 'none',
+      })
+      return;
+    }
     var this_value = e.currentTarget.dataset.value
-    if(_this.data.click_type == '设置报工'){
+    if(_this.data.click_type == '报工界面'){
       if(this_column == "ll" || this_column == "mcsl" || this_column == "pdts"){
         return;
       }
@@ -563,7 +603,15 @@ Page({
   type_switch:function(){
     var _this = this
     var click_type = _this.data.click_type
-    var new_type = click_type == '设置报工'?'设置工序':'设置报工'
+    var userInfo = _this.data.userInfo
+    if(userInfo.quanxian == '工序员'){
+      wx.showToast({
+        title: '工序员不允许使用工序调整',
+        icon : 'none'
+      })
+      return;
+    }
+    var new_type = click_type == '报工界面'?'工序调整':'报工界面'
     wx.showModal({
       title: "提示",
       content: '当前点击工序列时为'+ click_type +'操作，是否切换为' + new_type + '？',
@@ -813,9 +861,9 @@ function getBianHao() {
  function DateDiff(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式  
   var aDate, oDate1, oDate2, iDays
   aDate = sDate1.split("-")
-  oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为12-18-2002格式  
+  oDate1 = new Date(aDate[1] + '/' + aDate[2] + '/' + aDate[0] + " 00:00:00") //转换为12-18-2002格式  
   aDate = sDate2.split("-")
-  oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+  oDate2 = new Date(aDate[1] + '/' + aDate[2] + '/' + aDate[0] + " 00:00:00")
   iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数  
   if(oDate1 - oDate2 > 0){
     return iDays

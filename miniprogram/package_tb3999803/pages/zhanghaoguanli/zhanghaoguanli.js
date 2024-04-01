@@ -281,6 +281,7 @@ Page({
       chuku: '',
     })
   },
+ 
   add1: function () {
     var _this = this
 

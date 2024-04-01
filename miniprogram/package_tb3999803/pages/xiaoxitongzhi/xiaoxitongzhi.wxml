@@ -1,4 +1,4 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -27,6 +27,11 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
+	<button class="bt_bottom" style="width: 15%;" bindtap="page_down_click" >{{"<<"}}</button>
+  <button class="bt_bottom" style="width: 20%;" >{{this_page + "/" + max_page}}</button>
+  <button class="bt_bottom" style="width: 15%;" bindtap="page_up_click" >{{">>"}}</button>
+</view>
+<view class="bottom_view">
 	<button class="bt_bottom" bindtap="back" >返回</button>
   <button class="bt_bottom" bindtap="entering" >查询</button>
   <button class="bt_bottom" bindtap="getExcel" >导出</button>
@@ -36,7 +41,7 @@
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 80%;" >
-  <view class="lables">查询方式</view>
+  <view class="lables">信息筛选</view>
     <picker bindchange="bindPickerChange2" data-column_name='sel_type' value="{{index}}" range="{{sel_type_list}}">
       <input bindinput="onInput" data-column="sel_type" class="input_text_form" value="{{sel_type}}" type="text" name="sel_type" disabled="disabled"></input>
     </picker>
@@ -45,17 +50,10 @@
     <view class="lables" wx:if="{{userInfo.quanxian != '客户'}}">客户名称</view>
     <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>  
     <view wx:if="{{userInfo.quanxian != '客户'}}" class="lables">终端用户</view>
-    <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{customezdyhr_name}}" type="text" name="zdyh"></input>
-    <view class="lables">材料名称</view>
-    <input bindinput="onInput" data-column="ddje" class="input_text_form"  value="{{ddje}}" type="digit" name="ddje"></input>
-    <view class="lables">工序</view>
-    <picker bindchange="bindPickerChange" data-column_name='gx' value="{{index}}" range="{{gongxu_list}}">
-      <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx" disabled="disabled"></input>
-    </picker>
-    <view class="lables">完成状态</view>
-    <input bindinput="onInput" data-column="wczt" class="input_text_form" value="{{wczt}}" type="text" name="wczt"></input>
+    <input wx:if="{{userInfo.quanxian != '客户'}}" bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{zdyh}}" type="text" name="zdyh"></input>
     <view class="lables">报工人员</view>
-    <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry"></input>
+    <picker bindchange="bindPickerChange3" data-column_name='bgry' value="{{index}}" range="{{list2}}"><input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry" disabled="disabled"></input>
+    </picker>
   <view class="lables">开始日期</view>
     <picker class="pick" mode="date" value="{{start_date}}" data-column_name="start_date" bindchange="choiceDate">
       <input bindinput="onInput" data-column="start_date" class="input_text_form" value="{{start_date}}" type="text" name="start_date" disabled="disabled"></input>

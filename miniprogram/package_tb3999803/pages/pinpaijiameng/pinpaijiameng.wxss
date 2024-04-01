@@ -1,1 +1,17 @@
 /* package_tb3999803/pages/pinpaijiameng/pinpaijiameng.wxss */
+page{
+  height: 100%;
+}
+.bt_bottom{
+  width: 30%;
+  background-color: #009688;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+}
+.bottom_view{
+  height: 10%;
+  align-items: center;
+  display: flex;
+  bottom: 2%;
+}
