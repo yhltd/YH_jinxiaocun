@@ -485,7 +485,7 @@ var login = function(that,info) {
     wx.showLoading({
       title:'正在登录...'
     })
-    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "';select customerName as name,zhanghao as username,mima as password,'客户' as quanxian from customerInformation where zhanghao = '" + info.inputName + "' and mima = '" + info.inputPwd + "' and zhanghao != '' and mima != ''";
+    var sql = "select * from user_info where username = '" + info.inputName + "' and password = '" + info.inputPwd + "';select customerName as name,zhanghao as username,mima as password,'客户' as quanxian,khpower from customerInformation where zhanghao = '" + info.inputName + "' and mima = '" + info.inputPwd + "' and zhanghao != '' and mima != ''";
     
     wx.cloud.callFunction({
       

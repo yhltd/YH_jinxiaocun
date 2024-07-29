@@ -15,6 +15,20 @@ Page({
         "客户":true
       },
       {
+        text: "店面订单",
+        url: "../dianmiandingdan/dianmiandingdan",
+        "管理员":true,
+        "工序员":false,
+        "客户":true
+      },
+      {
+        text: "补货明细",
+        url: "../buhuomingxi/buhuomingxi",
+        "管理员":true,
+        "工序员":true,
+        "客户":true
+      },
+      {
         text: "订单付款",
         url: "../dingdanfukuan/dingdanfukuan",
         "管理员":true,
@@ -41,6 +55,13 @@ Page({
         "管理员":true,
         "工序员":false,
         "客户":false
+      },
+      {
+        text: "客户账号管理",
+        url: "../kehuzhanghaoguanli/kehuzhanghaoguanli",
+        "管理员":true,
+        "工序员":false,
+        "客户":true
       }
     ]
   },
@@ -69,18 +90,25 @@ Page({
     var url = _this.data.showList[index].url
     var text = _this.data.showList[index].text
     console.log(_this.data.userInfo.power)
+    // console.log(_this.data.khpower)
     var userInfo = _this.data.userInfo
     var panduan = true
     if(userInfo.quanxian == '客户'){
-      if(index >= 2){
+      if(index >= 8){
         panduan = false
       }
     }
     if(userInfo.quanxian == '工序员'){
-      if(index == 4){
+      if(index == 6){
         panduan = false
       }
     }
+    if(userInfo.khpower == '店员'){
+      if(index >= 3){
+        panduan = false
+      }
+    }
+
     if(panduan){
       if (url != '') {
         wx.navigateTo({
