@@ -29,26 +29,74 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="back" >返回</button>
-  <!-- <button class="bt_bottom" bindtap="entering" >查询</button> -->
-  <button class="bt_bottom" bindtap="tableShow" >刷新</button>
+	<!-- <button class="bt_bottom" bindtap="back" >返回</button> -->
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+  <button class="bt_bottom" bindtap="inquire">添加</button>
+  <!-- <button class="bt_bottom" bindtap="tableShow" >刷新</button> -->
 </view>
+
+<!------------------------->
+<!---------添加弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
+  <view class="lables">客户名称</view>
+  <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc"></input>
+  <view class="lables">终端用户</view>
+  <input bindinput="onInput" data-column="zdyh" class="input_text_form" value="{{zdyh}}" type="text" name="zdyh"></input>
+  <view class="lables">进度</view>
+  <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
+    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
+  </picker>
+  <view class="lables">备注</view>
+  <input bindinput="onInput" data-column="bz" class="input_text_form" value="{{bz}}" type="text" name="bz"></input>
+  <view class="lables">项目负责</view>
+  <input bindinput="onInput" data-column="xmfz" class="input_text_form" value="{{xmfz}}" type="text" name="xmfz"></input>
+  <view class="lables">联系方式</view>
+  <input bindinput="onInput" data-column="lxfs" class="input_text_form" value="{{lxfs}}" type="text" name="lxfs"></input>
+  <view class="lables">订单属性</view>
+  <input bindinput="onInput" data-column="ddsx" class="input_text_form" value="{{ddsx}}" type="text" name="ddsx"></input>
+  <view class="lables">订单号</view>
+  <input bindinput="onInput" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
+  </view>
+</van-popup>
+
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;">
+  <view class="lables">客户名称</view>
+  <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc"></input>
+  <view class="lables">终端用户</view>
+  <input bindinput="onInput" data-column="zdyh" class="input_text_form" value="{{zdyh}}" type="text" name="zdyh"></input>
+  <view class="lables">进度</view>
+  <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
+    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
+  </picker>
+  <view class="lables">备注</view>
+  <input bindinput="onInput" data-column="bz" class="input_text_form" value="{{bz}}" type="text" name="bz"></input>
+  <view class="lables">项目负责</view>
+  <input bindinput="onInput" data-column="xmfz" class="input_text_form" value="{{xmfz}}" type="text" name="xmfz"></input>
+  <view class="lables">联系方式</view>
+  <input bindinput="onInput" data-column="lxfs" class="input_text_form" value="{{lxfs}}" type="text" name="lxfs"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+  </view>
+</van-popup>
 
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;">
-  <view class="lables">项目</view>
-  <!-- <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="xm" range="{{xm_list}}">
-    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" disabled="disabled"></input>
-  </picker> -->
-  <input bindinput="onInput" data-column="xm" class="input_text_form"  value="{{xm}}" type="text" name="xm"></input>
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;">
   <view class="lables">客户名称</view>
   <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>
-  <view class="lables">终端用户</view>
-  <input bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{zdyh}}" type="text" name="zdyh"></input>
-  <view class="lables">材料名称</view>
-  <input bindinput="onInput" data-column="clmc" class="input_text_form"  value="{{clmc}}" type="text" name="clmc"></input>
+  <view class="lables">备注</view>
+  <input bindinput="onInput" data-column="bz" class="input_text_form"  value="{{bz}}" type="text" name="bz"></input>
+  <view class="lables">联系方式</view>
+  <input bindinput="onInput" data-column="lxfs" class="input_text_form"  value="{{lxfs}}" type="text" name="lxfs"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

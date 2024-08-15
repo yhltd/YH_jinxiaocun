@@ -109,6 +109,12 @@ Page({
       }
     }
 
+    if(userInfo.khpower == ''){
+      if(index >= 0){
+        panduan = false
+      }
+    }
+
     if(panduan){
       if (url != '') {
         wx.navigateTo({

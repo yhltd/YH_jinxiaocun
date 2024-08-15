@@ -5,13 +5,11 @@ Page({
    * 页面的初始数据
    */
   tableShow: true,
-  delWindow1: false,
   tjShow: false,
-  rqxzShow1: false,
   xgShow: false,
   cxShow: false,
   data: {
-    khpower_list: ['管理员', '店员'],
+    khpower_type: ['管理员', '店员'],
     list: [],
     title: [{
       text: "区域",
@@ -86,36 +84,40 @@ Page({
     _this.tableShow()
   },
 
-  header_xiala: function () {
-    var _this = this
-    console.log('列名：', e.currentTarget.dataset.column)
-    var column = e.currentTarget.dataset.column
-    var list = _this.data[column + "_list"]
-    var list2 = []
-    console.log(list)
-    for (var i = 0; i < list.length; i++) {
-      var name = list[i].name
-      console.log(name.indexOf(_this.data.khpower))
-    }
-    console.log(list2)
-    _this.setData({
-      list_xiala: list2,
-      click_column: column,
-    })
-    console.log(list)
-    _this.setData({
-      xlShow2: true
-    })
-  },
+  // header_xiala: function () {
+  //   var _this = this
+  //   console.log('列名：', e.currentTarget.dataset.column)
+  //   var column = e.currentTarget.dataset.column
+  //   var list = _this.data[column + "_list"]
+  //   var list2 = []
+  //   console.log(list)
+  //   for (var i = 0; i < list.length; i++) {
+  //     var name = list[i].name
+  //     console.log(name.indexOf(_this.data.khpower))
+  //   }
+  //   console.log(list2)
+  //   _this.setData({
+  //     list_xiala: list2,
+  //     click_column: column,
+  //   })
+  //   console.log(list)
+  //   _this.setData({
+  //     xlShow2: true
+  //   })
+  // },
 
   bindPickerChange1: function (e) {
     var _this = this
-    console.log(e.currentTarget.dataset.column)
-    var column = e.currentTarget.dataset.column_name
-    console.log(_this.data.khpower_list[e.detail.value])
     _this.setData({
-      [column]: _this.data.khpower_list[e.detail.value]
+      [e.target.dataset.column_name]: _this.data.khpower_type[e.detail.value]
     })
+  },
+
+  choiceDate: function (e) {
+    _this.setData({
+      [e.target.dataset.column_name]: e.detail.value
+    })
+    console.log(e.detail.value)
   },
 
   tableShow: function () {

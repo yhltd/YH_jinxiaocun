@@ -20,7 +20,7 @@
 <!------------------------->
 <view class="bottom_view">
   <button class="bt_bottom" bindtap="inquire">添加</button>
-  <button class="bt_bottom" bindtap="tableShow">刷新</button>
+  <!-- <button class="bt_bottom" bindtap="tableShow">刷新</button> -->
 </view>
 
 <!------------------------->
@@ -42,7 +42,7 @@
   <view class="lables">备注</view>
   <input bindinput="onInput" data-column="remarks" class="input_text_form" value="{{remarks}}" type="text" name="remarks"></input>
   <view class="lables">权限</view>
-  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="khpower" range="{{khpower_list}}">
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="khpower" range="{{khpower_type}}">
     <input bindinput="onInput" data-column="khpower" class="input_text_form" value="{{khpower}}" type="text" name="khpower" disabled="disabled"></input>
   </picker>
   <view class="bottom_view" style="height:10%">
@@ -69,7 +69,9 @@
   <view class="lables">备注</view>
   <input bindinput="onInput" data-column="remarks" class="input_text_form" value="{{remarks}}" type="text" name="remarks"></input>
   <view class="lables">权限</view>
-  <input bindinput="onInput" data-column="khpower" class="input_text_form" value="{{khpower}}" type="text" name="khpower"></input>
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="khpower" range="{{khpower_type}}">
+    <input bindinput="onInput" data-column="khpower" class="input_text_form" value="{{khpower}}" type="text" name="khpower" disabled="disabled"></input>
+  </picker>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
