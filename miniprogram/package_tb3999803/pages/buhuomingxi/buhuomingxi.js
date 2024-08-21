@@ -5,11 +5,12 @@ Page({
    * 页面的初始数据
    */
   tableShow: true,
+  tjShow: false,
   xgShow: false,
   cxShow: false,
   data: {
-    // xm_type: ['补板','配件','返厂'],
-    // dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
+    xm_type: ['补板','配件','返厂','外购','整改','少料'],
+    dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
     jd_type: ['已审','已补','入库','缺料'],
     list: [],
     title: [{
@@ -265,16 +266,174 @@ Page({
   qxShow: function () {
     var _this = this
     _this.setData({
+      tjShow: false,
       cxShow: false,
       xgShow: false,
     })
   },
 
-  back: function () {
-    wx.navigateBack({
-      delta: 1
-    });
-  },
+  // back: function () {
+  //   wx.navigateBack({
+  //     delta: 1
+  //   });
+  // },
+
+  
+  inquire: function () {
+  var _this = this
+  _this.setData({
+    tjShow: true,
+    id: '',
+    xm: '',
+    dl: '',
+    mcsl: '',
+    jd: '',
+    fqrq: '',
+    dh: '',
+    khmc: '',
+    zdyh: '',
+    clmc: '',
+  })
+},
+
+add1: function () {
+  var _this = this
+
+  if (_this.data.khmc == '') {
+    wx.showToast({
+      title: '请输入客户名称！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.zdyh == '') {
+    wx.showToast({
+      title: '请输入终端用户！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.xm == '') {
+    wx.showToast({
+      title: '请选择项目！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.dl == '') {
+    wx.showToast({
+      title: '请选择大类！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.mcsl == '') {
+    wx.showToast({
+      title: '请输入名称数量！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.jd == '') {
+    wx.showToast({
+      title: '请选择进度！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.dh == '') {
+    wx.showToast({
+      title: '请输入单号！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.khmc == '') {
+    wx.showToast({
+      title: '请输入客户名称！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.zdyh == '') {
+    wx.showToast({
+      title: '请输入终端用户！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  if (_this.data.clmc == '') {
+    wx.showToast({
+      title: '请输入材料名称！',
+      icon: 'none',
+      duration: 3000
+    })
+    return;
+  }
+
+  var sql = ""
+  var userInfo = _this.data.userInfo
+  var date = new Date();
+  sql="insert into buhuoxialiao(xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc) values('" + _this.data.xm + "','" + _this.data.dl + "','" + _this.data.mcsl + "','" + _this.data.jd + "','" + _this.date.fqrq + "','" + _this.data.dh + "','" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.clmc + "')"
+  if (userInfo.quanxian == '客户') {
+    sql="insert into dianmiandingdan(xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clms) values('" + _this.data.xm + "','" + _this.data.dl + "','" + _this.data.mcsl + "','" + _this.data.jd + "','" + _this.date.fqrq + "','" + _this.data.dh + "','" + userInfo.khmc + "','" + userInfo.zdyh + "','" + _this.data.clmc + "')"
+    }
+  wx.cloud.callFunction({
+    name: 'sqlServer_tb3999803',
+    data: {
+      query: sql
+    },
+    success: res => {
+      console.log(res)
+      _this.setData({
+        id: '',
+        khmc: '',
+        zdyh: '',
+        jd: '',
+        bz: '',
+        xmfz: '',
+        lxfs: '',
+        ddsx: '',
+        ddh: '',
+      })
+      var e = ['','']
+      _this.qxShow()
+      _this.tableShow(e)
+      wx.showToast({
+        title: '添加成功！',
+        icon: 'none'
+      })
+    },
+    err: res => {
+      console.log("错误!")
+    },
+    fail: res => {
+      wx.showToast({
+        title: '请求失败！',
+        icon: 'none'
+      })
+      console.log("请求失败！")
+    }
+  })
+},
 
   onInput: function (e) {
     var _this = this

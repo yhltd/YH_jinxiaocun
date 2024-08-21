@@ -29,7 +29,7 @@ Page({
         "客户":true
       },
       {
-        text: "订单付款",
+        text: "在产订单",
         url: "../dingdanfukuan/dingdanfukuan",
         "管理员":true,
         "工序员":false,
