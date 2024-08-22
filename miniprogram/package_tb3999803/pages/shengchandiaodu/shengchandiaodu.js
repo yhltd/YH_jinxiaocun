@@ -219,20 +219,44 @@ sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,
     })
   },
 
+  // goto_baogong: function(e){
+  //   var _this = this
+  //   wx.showModal({
+  //     title: "提示",
+  //     content: '是否查看此订单的报工单？',
+  //     cancelColor: '#282B33',
+  //     confirmColor: '#BC4A4A',
+  //     success: res => {
+  //       if (res.confirm) { 
+  //         var index = e.currentTarget.dataset.index
+  //         var order_number = _this.data.list[index].productionNo
+  //         console.log(order_number)
+  //         wx.navigateTo({
+  //           url: '../saomabaogong/saomabaogong?userInfo=' + JSON.stringify(_this.data.userInfo) + '&order_number=' + order_number,
+  //         })
+  //       } else if (res.cancel) {
+  //         console.log('用户点击取消')
+  //       }
+  //     }
+  //   })
+  // },
   goto_baogong: function(e){
     var _this = this
     wx.showModal({
       title: "提示",
-      content: '是否查看此订单的报工单？',
+      content: '是否跳转此订单的下料单？',
       cancelColor: '#282B33',
       confirmColor: '#BC4A4A',
       success: res => {
         if (res.confirm) { 
           var index = e.currentTarget.dataset.index
-          var order_number = _this.data.list[index].productionNo
-          console.log(order_number)
+          // var order_number = _this.data.list[index].productionNo
+          // console.log(order_number)
+          var khmc = _this.data.list[index].customerName
+          var zdyh = _this.data.list[index].user
+          var productionNo = _this.data.list[index].productionNo
           wx.navigateTo({
-            url: '../saomabaogong/saomabaogong?userInfo=' + JSON.stringify(_this.data.userInfo) + '&order_number=' + order_number,
+            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + productionNo,
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -240,7 +264,6 @@ sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,
       }
     })
   },
-
   entering: function () {
     var _this = this
     _this.setData({

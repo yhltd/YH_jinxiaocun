@@ -7,7 +7,7 @@ page{
   height: 100%
 }
 page{
-  height: 115%;
+  height: 160%;
   display: flex;
   align-items: center;
 }

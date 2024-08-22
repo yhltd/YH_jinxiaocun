@@ -21,6 +21,7 @@ Page({
    * 页面的初始数据
    */
   cxShow: false,
+  panduan:"0",
   data: {
     list: [],
     title: [{
@@ -91,11 +92,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log(options.panduan)
+    console.log(11)
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
     _this.setData({
       userInfo: userInfo,
     })
+    var panduan="0"
+    if(options.panduan=="1"){
+    panduan=options.panduan}
+    console.log(options.panduan +"hang 999")
+    if(panduan=="0")
+    {
     var where_sql = ""
     if(userInfo.quanxian == '工序员'){
       if(userInfo.peiliao == '是'){
@@ -214,7 +223,64 @@ Page({
         })
         console.log("请求失败！")
       },
-    })
+    })}
+    if(panduan=="1"){
+      console.log("hang 99033")
+    // var _this = this
+      _this.setData({
+        panduan: "1",
+         ddh:options.productionNO,
+      })
+      
+      _this.sel1()
+    }
+    
+    // else
+  //   {
+  //   var djbh=options.productionNO;
+  //   sql = "select * from xiaoxiguanli where ddh='"+djbh+"'"
+  //   console.log(options.productionNO)
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_tb3999803',
+  //     data: {
+  //       query: sql
+  //     },
+  //     success: res => {
+  //       console.log(res)
+  //       var list = res.result.recordsets[0]
+  //       console.log(list)
+  //       var max_page = Math.ceil(list.length * 1 / 50)
+  //       var list_new = []
+  //       for(var i=0; i<49; i++){
+  //         if(i < list.length){
+  //           list_new.push(list[i])
+  //         }
+  //       }
+  //       _this.setData({
+  //         this_page:1,
+  //         list_all: list,
+  //         list: list_new,
+  //         max_page
+  //       })
+        
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //       console.log("请求失败！")
+  //     },
+  //   })
+  //   _this.setData({
+  //     djbh,
+  //   })
+  //   panduan="0"
+  // }
   },
 
   onInput: function (e) {
@@ -259,6 +325,7 @@ Page({
     var _this = this
     var sql = ""
     console.log(e)
+    console.log(e[9]+"hang 328")
     if(e[9] == '全部消息'){
       sql = "select * from xiaoxiguanli "
     }else{
@@ -389,6 +456,7 @@ Page({
     _this.setData({
       cxShow: true,
       sel_type: '最新进度消息',
+      ddh:_this.djbh
       // id: '',
       // ddh: '',
       // khmc: '',
@@ -469,7 +537,32 @@ Page({
     if(stop_date == ''){
       stop_date = '2100-12-31'
     }
-    var e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx,_this.data.wczt,_this.data.bgry,start_date,stop_date,_this.data.sel_type]
+    var e
+    console.log(_this.data.panduan +"hang 538")
+    if (_this.data.panduan =="1")
+    {
+      console.log( _this.data.ddh+ "hang 541")
+      
+
+      var _this = this
+      let column 
+      _this.setData({
+        panduan: "0",
+        [column]:  _this.data.ddh,
+        sel_type: '最新进度消息',
+      })
+      e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx,_this.data.wczt,_this.data.bgry,start_date,stop_date,_this.data.sel_type]
+
+        // _this.setData({
+        //   currentDate: e.detail,
+        
+        // })
+
+    }
+    else
+    {
+     e = [_this.data.ddh,_this.data.khmc,_this.data.zdyh,_this.data.ddje,_this.data.gx,_this.data.wczt,_this.data.bgry,start_date,stop_date,_this.data.sel_type]
+    }
     _this.tableShow(e)
     _this.qxShow()
   },

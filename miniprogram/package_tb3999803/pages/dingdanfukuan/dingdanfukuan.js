@@ -26,28 +26,21 @@ Page({
       type: "text",
       isupd: true
     }, {
-      text: "订单金额",
+      text: "包装数量",
       width: "180rpx",
-      columnName: "orderMoney",
+      columnName: "baozhuangshuliang",
       type: "text",
       isupd: true
     }, {
-      text: "已付款",
+      text: "生产时效",
       width: "180rpx",
-      columnName: "shoukuan",
+      columnName: "beizhu2",
       type: "text",
       isupd: true
     }, {
-      text: "欠款",
+      text: "派单日期",
       width: "180rpx",
-      columnName: "qiankuan",
-      type: "text",
-      isupd: true
-    },
-    {
-      text: "是否付款",
-      width: "180rpx",
-      columnName: "shifoufukuan",
+      columnName: "paidanDate",
       type: "text",
       isupd: true
     }
@@ -56,10 +49,9 @@ Page({
     productionNO: '',
     customerName: '',
     user: '',
-    orderMoney: '',
-    shoukuan: '',
-    qiankuan: '',
-    shifoufukuan: '',
+    baozhuangshuliang: '',
+    beizhu2: '',
+    paidanDate: ''
   },
 
   /**
@@ -94,7 +86,10 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql = "select id,isnull(productionNO,'') as productionNO,isnull(customerName,'') as customerName,isnull([user],'') as [user],isnull(orderMoney,'') as orderMoney,isnull(dingjin,'') as shoukuan,convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) as qiankuan,isnull(shifoufukuan,'') as shifoufukuan from madeOrder where orderState!='出库' and convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) > 0 and productionNO like '%" + e[0] + "%' and customerName like '%" + e[1] + "%' and [user] like '%" + e[2] + "%'"
+    // sql = "select id,isnull(productionNO,'') as productionNO,isnull(customerName,'') as customerName,isnull([user],'') as [user],isnull(orderMoney,'') as orderMoney,isnull(dingjin,'') as shoukuan,convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) as qiankuan,isnull(shifoufukuan,'') as shifoufukuan from madeOrder where orderState!='出库' and convert(float,isnull(orderMoney,0)) - convert(float,isnull(dingjin,0)) > 0 and productionNO like '%" + e[0] + "%' and customerName like '%" + e[1] + "%' and [user] like '%" + e[2] + "%'"
+
+    sql = "select id,isnull(productionNO,'') as productionNO,isnull(customerName,'') as customerName,isnull([user],'') as [user], isnull(baozhuangshuliang,'') as baozhuangshuliang,isnull(beizhu2,'') as beizhu2,isnull(paidanDate,'') as paidanDate from madeOrder where orderState!='出库' and productionNO like '%" + e[0] + "%' and customerName like '%" + e[1] + "%' and [user] like '%" + e[2] + "%'"
+
     var userInfo = _this.data.userInfo
     if (userInfo.quanxian == '客户') {
       sql = sql + " and customerName like '" + userInfo.name + "'"
@@ -384,6 +379,33 @@ Page({
 
     })
 
+  },
+  goto_buhuo: function(e){
+    var _this = this
+
+    var index1 = e.currentTarget.dataset.index
+   
+   
+    wx.showModal({
+      title: "提示",
+      content: '是否跳转至消息管理？',
+      cancelColor: '#282B33',
+      confirmColor: '#BC4A4A',
+      success: res => {
+        if (res.confirm) { 
+          var index = e.currentTarget.dataset.index
+          var productionNO = _this.data.list[index].productionNO
+          
+          wx.navigateTo({
+            url: '../xiaoxitongzhi/xiaoxitongzhi?userInfo=' + JSON.stringify(_this.data.userInfo) + '&productionNO='+ productionNO+'&panduan='+"1",
+           
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+ 
   },
 
   /**

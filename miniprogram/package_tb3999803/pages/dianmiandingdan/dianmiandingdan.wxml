@@ -40,7 +40,7 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
   <view class="lables">客户名称</view>
-  <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc"></input>
+  <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc" disabled="{{panduan_khmc}}"></input>
   <view class="lables">终端用户</view>
   <input bindinput="onInput" data-column="zdyh" class="input_text_form" value="{{zdyh}}" type="text" name="zdyh"></input>
   <view class="lables">进度</view>

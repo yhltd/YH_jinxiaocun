@@ -1,0 +1,103 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:90%">
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view style="display: flex;">
+  <view class="lables_head" style="font-size: calc(35vmin / 8)">单号</view>
+  <input bindinput="onInput_header" data-column="dh" class="input_text_head" value="{{header_list.dh}}" type="text" name="dh" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables_head" style="font-size: calc(35vmin / 8)">客户名称</view>
+  <input bindinput="onInput_header" data-column="khmc" class="input_text_head" value="{{header_list.khmc}}" type="text" name="khmc" disabled="disabled"></input>
+</view>
+
+<view style="display: flex;">
+  <view class="lables_head" style="font-size: calc(35vmin / 8)">终端用户</view>
+  <input bindinput="onInput_header" data-column="zdyh" class="input_text_head" value="{{header_list.zdyh}}" type="text" name="zdyh" disabled="disabled"></input>
+
+</view>
+
+<view style="display: flex;">
+  <view class="lables_head" style="font-size: calc(35vmin / 8)">材料名称</view>
+  <input bindinput="onInput_header" data-column="clmc" class="input_text_head" value="{{header_list.clmc}}" type="text" name="clmc"></input>
+</view>
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="min-height:40%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width2}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="{{list_item[item.columnName + 'ys']=='15189684'?'list_view2':'list_view'}}" style="width:{{item.width2}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}" bindtap="clickView1"> 
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+</scroll-view>
+<view class="bottom_view1">
+<button class="bt_bottom" bindtap="add_row">增加一行</button>
+<button class="bt_bottom" bindtap="add1">保存</button>
+</view>
+<!------------------------->
+<!---------修改弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
+  <view class="lables">{{update_name[this_column]}}</view>
+  <view class="lables">名称数量</view>
+    <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd">确定</button>
+  </view>
+</van-popup>
+
+<!--表单下拉选择-->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow1 }}" position="bottom" custom-style="height: 30%;">
+  <view class="lables">项目</view>
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xm" range="{{xm_type}}">
+    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm"></input>
+  </picker>
+ 
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">确定</button>
+  </view>
+</van-popup>
+
+
+
+
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 30%;">
+  <view class="lables">大类</view>
+  <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
+    <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl"></input>
+  </picker>
+ 
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">确定</button>
+  </view>
+</van-popup>
+
+
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow3 }}" position="bottom" custom-style="height: 30%;">
+  <view class="lables">进度</view>
+  <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
+    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
+  </picker>
+ 
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd3">确定</button>
+  </view>
+</van-popup>

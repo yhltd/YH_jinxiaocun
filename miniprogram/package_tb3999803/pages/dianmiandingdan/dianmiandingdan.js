@@ -258,16 +258,19 @@ Page({
     if (jd=='补货'){
     wx.showModal({
       title: "提示",
-      content: '是否跳转至补货明细？',
+      content: '是否跳转至补货下料单？',
       cancelColor: '#282B33',
       confirmColor: '#BC4A4A',
       success: res => {
         if (res.confirm) { 
           var index = e.currentTarget.dataset.index
           var khmc = _this.data.list[index].khmc
-          console.log(khmc)
+          var ddh = _this.data.list[index].ddh
+          var zdyh = _this.data.list[index].zdyh
+          console.log(ddh)
           wx.navigateTo({
-            url: '../buhuomingxi/buhuomingxi?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc,
+            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ ddh +'&khmc='+khmc +'&zdyh='+zdyh,
+           
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -288,6 +291,7 @@ Page({
 
   inquire: function () {
     var _this = this
+    var userInfo = _this.data.userInfo
     _this.setData({
       tjShow: true,
       id: '',
@@ -300,6 +304,12 @@ Page({
       ddsx: '',
       ddh: '',
     })
+    if(userInfo.quanxian == '客户'){
+      _this.setData({
+        khmc: userInfo.name,
+        panduan_khmc:true,
+      })
+    }
   },
 
   add1: function () {

@@ -20,7 +20,14 @@ Page({
         "管理员":true,
         "工序员":false,
         "客户":true
-      },
+      },{
+        text: "补货下料",
+        url: "../buhuoxialiaodan/buhuoxialiaodan",
+        "管理员":true,
+        "工序员":true,
+        "客户":true
+      }
+      ,
       {
         text: "补货明细",
         url: "../buhuomingxi/buhuomingxi",
