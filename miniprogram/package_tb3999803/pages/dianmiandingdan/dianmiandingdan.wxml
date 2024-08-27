@@ -1,4 +1,4 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+<!-- <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
@@ -10,7 +10,7 @@
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
-              class="{{list[i].jd=='补货'?'list_view1':'list_view'}}"
+              class="{{'list_view'}}"
               style="width:{{item.width}}" data-index="{{i}}" 
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 
@@ -23,11 +23,47 @@
       </view>
     </block>
   </view>
+</scroll-view> -->
+
+
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="{{list[i].jd=='补货'?'list_view1':'list_view'}}"
+             
+              style="width:{{item.width}}" data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView"
+              bindlongpress="goto_buhuo"
+              >
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
 </scroll-view>
+
 
 <!------------------------->
 <!---------下方按钮--------->
 <!------------------------->
+<view class="bottom_view">
+	<button class="bt_bottom" style="width: 15%;" bindtap="page_down_click" >{{"<<"}}</button>
+  <button class="bt_bottom" style="width: 20%;" >{{this_page + "/" + max_page}}</button>
+  <button class="bt_bottom" style="width: 15%;" bindtap="page_up_click" >{{">>"}}</button>
+</view>
 <view class="bottom_view">
 	<!-- <button class="bt_bottom" bindtap="back" >返回</button> -->
   <button class="bt_bottom" bindtap="entering" >查询</button>
@@ -40,23 +76,25 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
   <view class="lables">客户名称</view>
-  <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc" disabled="{{panduan_khmc}}"></input>
+  <input bindinput="onInput" data-column="customerName"class="input_text_form" value="{{customerName}}" type="text" name="customerName" disabled="{{panduan_khmc}}"></input>
   <view class="lables">终端用户</view>
-  <input bindinput="onInput" data-column="zdyh" class="input_text_form" value="{{zdyh}}" type="text" name="zdyh"></input>
+  <input bindinput="onInput" data-column="user" class="input_text_form" value="{{user}}" type="text" name="user"></input>
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
     <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
   </picker>
   <view class="lables">备注</view>
-  <input bindinput="onInput" data-column="bz" class="input_text_form" value="{{bz}}" type="text" name="bz"></input>
+  <input bindinput="onInput" data-column="beizhu1" class="input_text_form" value="{{beizhu1}}" type="text" name="beizhu1"></input>
   <view class="lables">项目负责</view>
   <input bindinput="onInput" data-column="xmfz" class="input_text_form" value="{{xmfz}}" type="text" name="xmfz"></input>
   <view class="lables">联系方式</view>
   <input bindinput="onInput" data-column="lxfs" class="input_text_form" value="{{lxfs}}" type="text" name="lxfs"></input>
   <view class="lables">订单属性</view>
-  <input bindinput="onInput" data-column="ddsx" class="input_text_form" value="{{ddsx}}" type="text" name="ddsx"></input>
+  <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="shuxing" range="{{shuxing_type}}">
+    <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing"></input>
+  </picker>
   <view class="lables">订单号</view>
-  <input bindinput="onInput" data-column="ddh" class="input_text_form" value="{{ddh}}" type="text" name="ddh"></input>
+  <input bindinput="onInput" data-column="productionNO" class="input_text_form" value="{{productionNO}}" type="text" name="productionNO"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -68,19 +106,25 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;">
   <view class="lables">客户名称</view>
-  <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc"></input>
+  <input bindinput="onInput" data-column="customerName" class="input_text_form" value="{{customerName}}" type="text" name="customerName"></input>
   <view class="lables">终端用户</view>
-  <input bindinput="onInput" data-column="zdyh" class="input_text_form" value="{{zdyh}}" type="text" name="zdyh"></input>
+  <input bindinput="onInput" data-column="user" class="input_text_form" value="{{user}}" type="text" name="user"></input>
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
     <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
   </picker>
   <view class="lables">备注</view>
-  <input bindinput="onInput" data-column="bz" class="input_text_form" value="{{bz}}" type="text" name="bz"></input>
+  <input bindinput="onInput" data-column="beizhu1" class="input_text_form" value="{{beizhu1}}" type="text" name="beizhu1"></input>
   <view class="lables">项目负责</view>
   <input bindinput="onInput" data-column="xmfz" class="input_text_form" value="{{xmfz}}" type="text" name="xmfz"></input>
   <view class="lables">联系方式</view>
   <input bindinput="onInput" data-column="lxfs" class="input_text_form" value="{{lxfs}}" type="text" name="lxfs"></input>
+  <view class="lables">订单属性</view>
+  <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="shuxing" range="{{shuxing_type}}">
+    <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing"></input>
+  </picker>
+  <!-- <view class="lables">订单号</view>
+  <input bindinput="onInput" data-column="productionNO" class="input_text_form" value="{{productionNO}}" type="text" name="productionNO"></input> -->
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
@@ -92,9 +136,9 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;">
   <view class="lables">客户名称</view>
-  <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>
+  <input bindinput="onInput" data-column="customerName" class="input_text_form"  value="{{customerName}}" type="text" name="customerName"></input>
   <view class="lables">备注</view>
-  <input bindinput="onInput" data-column="bz" class="input_text_form"  value="{{bz}}" type="text" name="bz"></input>
+  <input bindinput="onInput" data-column="beizhu1" class="input_text_form"  value="{{beizhu1}}" type="text" name="beizhu1"></input>
   <view class="lables">联系方式</view>
   <input bindinput="onInput" data-column="lxfs" class="input_text_form"  value="{{lxfs}}" type="text" name="lxfs"></input>
   <view class="bottom_view" style="height:10%">

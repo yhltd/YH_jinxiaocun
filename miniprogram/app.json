@@ -526,7 +526,8 @@
         "pages/dianmiandingdan/dianmiandingdan",
         "pages/buhuomingxi/buhuomingxi",
         "pages/kehuzhanghaoguanli/kehuzhanghaoguanli",
-        "pages/buhuoxialiaodan/buhuoxialiaodan"
+        "pages/buhuoxialiaodan/buhuoxialiaodan",
+        "pages/shaoliaomingxibiao/shaoliaomingxibiao"
       ]
     }
   ],

@@ -7,23 +7,30 @@ Page({
   xgShow: false,
   data: {
     list: [],
-    title: [{
+    title: [ {
+      text: "倒计时",
+      width: "150rpx",
+      columnName: "daojishi",
+      type: "text",
+      isupd: true
+    },
+      {
         text: "生产单号",
-        width: "200rpx",
+        width: "180rpx",
         columnName: "productionNo",
         type: "text",
         isupd: true
       },
       {
         text: "客户名称",
-        width: "250rpx",
+        width: "200rpx",
         columnName: "customerName",
         type: "text",
         isupd: true
       },
       {
         text: "终端用户",
-        width: "400rpx",
+        width: "300rpx",
         columnName: "user",
         type: "text",
         isupd: true
@@ -71,13 +78,7 @@ Page({
         type: "text",
         isupd: true
       },
-      {
-        text: "倒计时",
-        width: "180rpx",
-        columnName: "daojishi",
-        type: "text",
-        isupd: true
-      },
+     
       {
         text: "生产顺序",
         width: "180rpx",
@@ -256,7 +257,7 @@ sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,
           var zdyh = _this.data.list[index].user
           var productionNo = _this.data.list[index].productionNo
           wx.navigateTo({
-            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + productionNo,
+            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + productionNo+'&xmjy='+"1",
           })
         } else if (res.cancel) {
           console.log('用户点击取消')

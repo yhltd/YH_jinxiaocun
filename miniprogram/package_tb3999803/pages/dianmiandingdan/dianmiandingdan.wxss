@@ -336,3 +336,16 @@ button{
   border-bottom: 1rpx solid #F0F0F0;
   line-height: 70rpx;  
 }
+.list_view1{
+  display: flex;
+  flex-direction: column;
+  width: 200rpx;
+  height: 70rpx;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(251, 255, 0);
+  color: black;
+  border-right: 1rpx solid #F0F0F0;
+  border-bottom: 1rpx solid #F0F0F0;
+  line-height: 70rpx;  
+}

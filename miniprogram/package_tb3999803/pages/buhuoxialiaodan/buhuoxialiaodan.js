@@ -22,7 +22,11 @@ Page({
       khmc:'',
       zdyh:'',
       clmc:'',
+      xmjy:'',
+      dmdd:''
     },
+    isdisabled:true,
+    khmcisdisabled:true,
     list: [],
     title: [
       {
@@ -69,8 +73,8 @@ Page({
         type: "text",
         isupd: true
       }
-    ]
-
+    ],
+    xmjy:''
   },
 
   /**
@@ -78,6 +82,11 @@ Page({
    */
   onLoad(options) {
     var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo: userInfo,
+    })
+    // var userInfo = _this.data.userInfo
     console.log(options.ddh+"    81")
     console.log(options.dh+"    82")
     var header_list = _this.data.header_list
@@ -95,31 +104,63 @@ Page({
       console.log(options.productionNo+"   91")
       header_list.dh = options.productionNo
     }
+    header_list.xmjy = options.xmjy
     // ------------------------------
     header_list.khmc = options.khmc
     // console.log(options.khmc)
     header_list.zdyh = options.zdyh
 // ------------------20240822 xt
-header_list.clmc = options.clmc
+// header_list.clmc = options.clmc
+header_list.dmdd = options.dmdd
 // ------------------------------
     // console.log(options.zdyh)
     // console.log(header_list.dh)
     // console.log(header_list)
     // var dh = options.ddh
     // console.log(dh)
+    
+    if(header_list.dmdd==undefined && header_list.xmjy==undefined){
+      _this.setData({
+        isdisabled:false,
+        khmcisdisabled:false
+      })
+    }
+    if(userInfo.quanxian == '客户'){
+      header_list.khmc = userInfo.name
+      _this.setData({
+        isdisabled:false,
+        khmcisdisabled:true
+      })
+    }
     _this.setData({
-      header_list
+      header_list,
     })
+    if(options.dmdd=="1"){
+      _this.tableShow()
+    }
   },
   add_row: function () {
     var _this = this
     var list = _this.data.list
-    var _this = this
+  
+    var header_list = _this.data.header_list
     // 获取当前日期
     const currentDate = new Date();
     // 格式化日期为 "yyyy-MM-dd" 格式
     const formattedDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1).toString().padStart(2, '0') + '-' + currentDate.getDate().toString().padStart(2, '0');
     // 将格式化后的日期设置为 input 元素的值
+    if(header_list.xmjy == "1"){
+      console.log(111)
+      list.push({
+        xm:"少料",
+        dl:"",
+        mcsl:"",
+        jd:"",
+        fqrq:formattedDate,
+      })
+      list.xm
+    }else{
+      console.log(222)
     list.push({
       xm:"",
       dl:"",
@@ -128,6 +169,7 @@ header_list.clmc = options.clmc
       fqrq:formattedDate,
     
     })
+  }
     _this.setData({
       list
     })
@@ -137,9 +179,17 @@ header_list.clmc = options.clmc
     var this_column = e.currentTarget.dataset.column
     var index = e.currentTarget.dataset.index
     var this_value = e.currentTarget.dataset.value
+    var header_list = _this.data.header_list
     console.log(index)
     console.log(this_column)
     if(this_column == 'xm'){
+      if(header_list.xmjy == "1"){
+        console.log("11")
+        _this.setData({
+         
+        })
+      }else{
+
       console.log("11")
       _this.setData({
         this_column:e.currentTarget.dataset.column,
@@ -148,6 +198,7 @@ header_list.clmc = options.clmc
         xgShow1:true,
         
       })
+    }
   }else if(this_column == 'dl'){
     _this.setData({
       this_column:e.currentTarget.dataset.column,
@@ -203,6 +254,17 @@ header_list.clmc = options.clmc
       [column]: e.detail.value
     })
   },
+
+  onInput_header: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    var header_list = _this.data.header_list
+    header_list[column] = e.detail.value
+    _this.setData({
+      header_list
+    })
+  },
+
   bindPickerChange1: function (e) {
     var _this = this
     _this.setData({
@@ -289,16 +351,17 @@ header_list.clmc = options.clmc
   },
   add1: function(){
     var _this = this
-      var sql1 = "insert into buhuoxialiao(dh,khmc,zdyh,clmc,xm,dl,mcsl,jd,fqrq) values"
-      var sql2 = ""
-      for(var i=0; i< _this.data.list.length; i++){
-        if(sql2 == ""){
-          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"')"
-        }else{
-          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"')"
-        }
-      }
-      var sql=sql1+sql2
+    var header_list=_this.data.header_list
+    var dh =header_list.dh
+    var khmc = header_list.khmc
+    var zdyh = header_list.zdyh
+    var clmc = header_list.clmc
+    
+    
+    if(header_list.dmdd=="1"){
+      var sql = "delete from baogongmingxi where dh='"+dh+"' and khmc='"+khmc+"' and zdyh = '"+zdyh+"'"
+    }
+      
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
@@ -308,18 +371,52 @@ header_list.clmc = options.clmc
         success: res => {
           // _this.qxShow()
           wx.showToast({
+            icon: 'none'
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,clmc,xm,dl,mcsl,jd,fqrq) values"
+      var sql2 = ""
+      for(var i=0; i< _this.data.list.length; i++){
+        if(sql2 == ""){
+          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"')"
+        }else{
+          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"')"
+        }
+      }
+      var sql3=sql1+sql2
+      console.log(sql3)
+      wx.cloud.callFunction({
+        name: 'sqlServer_tb3999803',
+        data: {
+          query: sql3
+        },
+        success: res => {
+          // _this.qxShow()
+          wx.showToast({
             title: '添加成功！',
             icon: 'none'
           })
+          // if(header_list.clmc==undefined){
+          //   header_list.clmc=""
+           
+          // }
+          //   header_list.clmc=res.clmc,
+          //   console.log( header_list.clmc)
+          //   _this.setData({
+          //     header_list: header_list,
+          //   })
           
-          // var common_Interval = setInterval(()=>
-          // {
-          //   wx.navigateBack({ 
-          //     delta: 1
-          //   });
-          //   clearInterval(common_Interval);
-          // }, 2000)
-
           
         },
         err: res => {
@@ -333,7 +430,9 @@ header_list.clmc = options.clmc
           console.log("请求失败！")
         }
       })
+     
     },
+   
     qxShow: function () {
       var _this = this
       _this.setData({
@@ -344,6 +443,60 @@ header_list.clmc = options.clmc
       
       })
     },
+
+
+    tableShow: function (e) {
+      var _this = this
+      var sql = ""
+      var userInfo = _this.data.userInfo
+      var header_list=_this.data.header_list
+      var dh =header_list.dh
+      var khmc = header_list.khmc
+      var zdyh = header_list.zdyh
+         
+        sql = "select xm,dl,mcsl,jd,fqrq,clmc,id from baogongmingxi where dh = '" + dh + "' and khmc = '" + khmc + "' and zdyh = '" +zdyh + "' order by fqrq"
+       
+        console.log(sql)
+      
+      wx.cloud.callFunction({
+        name: 'sqlServer_tb3999803',
+        data: {
+          query: sql
+        },
+        success: res => {
+          console.log(res)
+          var list = res.result.recordset
+          console.log(list)
+          if(list==""){
+            console.log(66)
+          }else{
+          header_list.clmc=list[0].clmc
+          }
+          console.log( header_list.clmc)
+          _this.setData({
+            list: list,
+            header_list: header_list,
+          })
+          console.log(list)
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        },
+      })
+    },
+
+
+
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

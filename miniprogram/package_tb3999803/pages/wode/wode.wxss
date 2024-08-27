@@ -7,7 +7,7 @@ page{
   height: 100%
 }
 page{
-  height: 160%;
+  height: 150%;
   display: flex;
   align-items: center;
 }
@@ -21,7 +21,7 @@ page{
 }
 .item{
   width: 73%;
-  height: 7%;
+  height: 6.5%;
   display: flex;
   align-items: center;
   background-color:rgba(213,226,220,0.7);

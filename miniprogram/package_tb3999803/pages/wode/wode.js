@@ -36,6 +36,13 @@ Page({
         "客户":true
       },
       {
+        text: "少料明细",
+        url: "../shaoliaomingxibiao/shaoliaomingxibiao",
+        "管理员":true,
+        "工序员":true,
+        "客户":false
+      },
+      {
         text: "在产订单",
         url: "../dingdanfukuan/dingdanfukuan",
         "管理员":true,
@@ -68,7 +75,8 @@ Page({
         url: "../kehuzhanghaoguanli/kehuzhanghaoguanli",
         "管理员":true,
         "工序员":false,
-        "客户":true
+        "客户":true,
+      
       }
     ]
   },
@@ -101,7 +109,7 @@ Page({
     var userInfo = _this.data.userInfo
     var panduan = true
     if(userInfo.quanxian == '客户'){
-      if(index >= 8){
+      if(index >= 10){
         panduan = false
       }
     }
@@ -111,7 +119,7 @@ Page({
       }
     }
     if(userInfo.khpower == '店员'){
-      if(index >= 3){
+      if(index >= 4){
         panduan = false
       }
     }

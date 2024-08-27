@@ -9,7 +9,7 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
-    xm_type: ['补板','配件','返厂','外购','整改','少料'],
+    xm_type: ['少料'],
     dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
     jd_type: ['已审','已补','入库','缺料'],
     list: [],
@@ -132,29 +132,22 @@ Page({
     var userInfo = _this.data.userInfo
     // sql = "select * from buhuoxialiao where clmc like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
-      if(userInfo.quanxian=='工序员'){
-        sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc,id from baogongmingxi where xm='补货' or xm='配件' or xm='返厂' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
-      }else if(userInfo.quanxian=='客户'){
-        console.log(111)
-        sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc,id from baogongmingxi where khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
-
-      }else{
-      sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc,id from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
-      }
-      console.log(sql)
-    // }else{
-    // sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}
+      sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc,id from baogongmingxi where xm='少料' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
+    // }
+    // else{
+    // sql = "select * from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}
 
     // sql = "select * from baogongmingxi where xm like '%" + e[0] + "%'"
   
     // var userInfo = _this.data.userInfo
     // if (userInfo.quanxian == '客户') {
-    //   if(e[0]==""&&e[1]==""&&e[2]==""&&e[3]==""&&e[4]==""){
-    //     sql ="select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi where khmc = '" + userInfo.name + "'"
-    //   }else{
-    //   sql= "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi where khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"
+      // if(e[0]==""&&e[1]==""&&e[2]==""&&e[3]==""&&e[4]==""){
+      //   sql ="select * from baogongmingxi where khmc = '" + userInfo.name + "'"
+      // }else{
+     
     //   }
     // }
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
@@ -163,18 +156,20 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordset
+        var max_page = Math.ceil(list.length * 1 / 20)
         console.log(list)
-        var max_page = Math.ceil(list.length * 1 / 50)
+       
         var list_new = []
-        for(var i=0; i<49; i++){
+        for(var i=0; i<19; i++){
           if(i < list.length){
             list_new.push(list[i])
           }
         }
         _this.setData({
           this_page:1,
-          list_all: list,
+          // list: list,
           list: list_new,
+          list_all: list,
           max_page
         })
         console.log(list)
@@ -192,7 +187,6 @@ Page({
       },
     })
   },
-
   page_down_click:function(){
     var _this = this
     var this_page = _this.data.this_page
@@ -208,7 +202,7 @@ Page({
     }
     var list_all = _this.data.list_all
     var list = []
-    for(var i=50*this_page - 50; i<50*this_page-1; i++){
+    for(var i=20*this_page - 20; i<20*this_page-1; i++){
       if(i < list_all.length){
         list.push(list_all[i])
       }
@@ -234,13 +228,14 @@ Page({
     }
     var list_all = _this.data.list_all
     var list = []
-    for(var i=50*this_page - 50; i<50*this_page-1; i++){
+    for(var i=20*this_page - 20; i<20*this_page-1; i++){
       if(i < list_all.length){
         list.push(list_all[i])
       }
     }
     _this.setData({
       list:list,
+      max_page,
       this_page:this_page,
     })
     
@@ -263,7 +258,6 @@ Page({
       data: {
         query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',clmc='" + _this.data.clmc + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
       },
-     
       success: res => {
         _this.setData({
           id: '',
