@@ -250,9 +250,31 @@ PikerChange(e){
           sql= "update madeOrder set customerName='" + _this.data.customerName + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "' where id=" + _this.data.id
         }
         console.log(sql)
+        if(_this.data.jd=="补货"){
+          wx.showModal({
+            title: "提示",
+            content: '是否跳转至补货下料单？',
+            cancelColor: '#282B33',
+            confirmColor: '#BC4A4A',
+            success: res => {
+              if (res.confirm) { 
+                var customerName = _this.data.customerName
+                var productionNO = _this.data.productionNO
+                var user = _this.data.user
+                console.log(productionNO)
+                console.log(user)
+                console.log(customerName)
+                wx.navigateTo({
+                  url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ productionNO +'&khmc='+customerName +'&zdyh='+user+'&dmdd='+1,
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
-
       data: {
         // query: "update dianmiandingdan set khmc='" + _this.data.khmc + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "' where id=" + _this.data.id
         query: sql
@@ -275,6 +297,7 @@ PikerChange(e){
           title: '修改成功！',
           icon: 'none'
         })
+        
       },
       err: res => {
         console.log("错误!")
@@ -287,6 +310,8 @@ PikerChange(e){
         console.log("请求失败！")
       }
     })
+   
+    
   },
 
   
@@ -304,12 +329,19 @@ PikerChange(e){
       xmfz: _this.data.list[e.currentTarget.dataset.index].xmfz,
       lxfs: _this.data.list[e.currentTarget.dataset.index].lxfs,
       shuxing: _this.data.list[e.currentTarget.dataset.index].shuxing,
+      productionNO: _this.data.list[e.currentTarget.dataset.index].productionNO,
       xgShow: true,
     })
   },
 
   del1: function () {
     var _this = this
+    if(_this.data.productionNO!=""){
+      wx.showToast({
+        title: '该订单不能删除！',
+        icon: 'none'
+      })
+    }else{
     wx.showModal({
       title: "提示",
       content: '确定删除？',
@@ -356,7 +388,7 @@ PikerChange(e){
           console.log('用户点击取消')
         }
       }
-    })
+    })}
   },
     
   goto_buhuo: function(e){

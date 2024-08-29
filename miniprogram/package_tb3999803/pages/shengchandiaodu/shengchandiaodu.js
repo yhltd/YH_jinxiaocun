@@ -9,7 +9,7 @@ Page({
     list: [],
     title: [ {
       text: "倒计时",
-      width: "150rpx",
+      width: "110rpx",
       columnName: "daojishi",
       type: "text",
       isupd: true
@@ -45,14 +45,14 @@ Page({
       
       {
         text: "订单状态",
-        width: "180rpx",
+        width: "160rpx",
         columnName: "orderState",
         type: "text",
         isupd: true
       },
       {
         text: "文件编号",
-        width: "250rpx",
+        width: "210rpx",
         columnName: "spareMoney",
         type: "text",
         isupd: true
@@ -220,44 +220,20 @@ sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,
     })
   },
 
-  // goto_baogong: function(e){
-  //   var _this = this
-  //   wx.showModal({
-  //     title: "提示",
-  //     content: '是否查看此订单的报工单？',
-  //     cancelColor: '#282B33',
-  //     confirmColor: '#BC4A4A',
-  //     success: res => {
-  //       if (res.confirm) { 
-  //         var index = e.currentTarget.dataset.index
-  //         var order_number = _this.data.list[index].productionNo
-  //         console.log(order_number)
-  //         wx.navigateTo({
-  //           url: '../saomabaogong/saomabaogong?userInfo=' + JSON.stringify(_this.data.userInfo) + '&order_number=' + order_number,
-  //         })
-  //       } else if (res.cancel) {
-  //         console.log('用户点击取消')
-  //       }
-  //     }
-  //   })
-  // },
   goto_baogong: function(e){
     var _this = this
     wx.showModal({
       title: "提示",
-      content: '是否跳转此订单的下料单？',
+      content: '是否查看此订单的报工单？',
       cancelColor: '#282B33',
       confirmColor: '#BC4A4A',
       success: res => {
         if (res.confirm) { 
           var index = e.currentTarget.dataset.index
-          // var order_number = _this.data.list[index].productionNo
-          // console.log(order_number)
-          var khmc = _this.data.list[index].customerName
-          var zdyh = _this.data.list[index].user
-          var productionNo = _this.data.list[index].productionNo
+          var order_number = _this.data.list[index].productionNo
+          console.log(order_number)
           wx.navigateTo({
-            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + productionNo+'&xmjy='+"1",
+            url: '../saomabaogong/saomabaogong?userInfo=' + JSON.stringify(_this.data.userInfo) + '&order_number=' + order_number,
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -265,6 +241,30 @@ sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,
       }
     })
   },
+  // goto_baogong: function(e){
+  //   var _this = this
+  //   wx.showModal({
+  //     title: "提示",
+  //     content: '是否跳转此订单的下料单？',
+  //     cancelColor: '#282B33',
+  //     confirmColor: '#BC4A4A',
+  //     success: res => {
+  //       if (res.confirm) { 
+  //         var index = e.currentTarget.dataset.index
+  //         // var order_number = _this.data.list[index].productionNo
+  //         // console.log(order_number)
+  //         var khmc = _this.data.list[index].customerName
+  //         var zdyh = _this.data.list[index].user
+  //         var productionNo = _this.data.list[index].productionNo
+  //         wx.navigateTo({
+  //           url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + productionNo+'&xmjy='+"1",
+  //         })
+  //       } else if (res.cancel) {
+  //         console.log('用户点击取消')
+  //       }
+  //     }
+  //   })
+  // },
   entering: function () {
     var _this = this
     _this.setData({

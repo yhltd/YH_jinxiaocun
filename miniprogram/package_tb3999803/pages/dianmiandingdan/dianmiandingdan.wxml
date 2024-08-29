@@ -123,8 +123,8 @@
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="shuxing" range="{{shuxing_type}}">
     <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing"></input>
   </picker>
-  <!-- <view class="lables">订单号</view>
-  <input bindinput="onInput" data-column="productionNO" class="input_text_form" value="{{productionNO}}" type="text" name="productionNO"></input> -->
+  <view class="lables" hidden="true">订单号</view>
+  <input bindinput="onInput" data-column="productionNO" class="input_text_form" value="{{productionNO}}" type="text" name="productionNO" hidden="true"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>

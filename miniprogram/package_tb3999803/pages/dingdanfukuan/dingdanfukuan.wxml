@@ -43,10 +43,3 @@
 <!------------------------->
 <!---------修改弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 15%;" > 
-  <view class="bottom_view" style="height:10%;margin-top: 8%;">
-    <button wx:if="{{userInfo.quanxian=='管理员'}}" class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_01">上传收款码</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_02">下载收款码</button>
-    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="click_03">已付款回传</button> -->
-  </view>
-</van-popup>
