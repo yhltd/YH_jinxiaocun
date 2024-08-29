@@ -132,7 +132,7 @@ Page({
     var userInfo = _this.data.userInfo
     // sql = "select * from buhuoxialiao where clmc like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
-      sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc,id from baogongmingxi where xm='少料' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
+      sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc,id from baogongmingxi where jlbh='1' and xm='少料' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
     // }
     // else{
     // sql = "select * from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}

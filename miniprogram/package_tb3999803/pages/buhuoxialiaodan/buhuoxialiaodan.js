@@ -385,13 +385,13 @@ header_list.dmdd = options.dmdd
           console.log("请求失败！")
         }
       })
-      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,clmc,xm,dl,mcsl,jd,fqrq) values"
+      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,clmc,xm,dl,mcsl,jd,fqrq,jlbh) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"')"
+          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"')"
+          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1')"
         }
       }
       var sql3=sql1+sql2

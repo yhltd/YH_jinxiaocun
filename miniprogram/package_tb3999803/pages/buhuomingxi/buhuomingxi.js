@@ -133,13 +133,13 @@ Page({
     // sql = "select * from buhuoxialiao where clmc like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
       if(userInfo.quanxian=='工序员'){
-        sql = "select DISTINCT bg.id, bg.xm,bg.dl,bg.mcsl,bg.jd,bg.fqrq,bg.dh,bg.khmc,bg.zdyh,bg.clmc from baogongmingxi as bg,madeOrder as mo where bg.dh=mo.productionNo and bg.xm='补货' or bg.xm='配件' or bg.xm='返厂' and bg.khmc like '%" + e[1] + "%' and bg.zdyh like '%" + e[2] + "%' and bg.clmc like '%" + e[3] + "%' and bg.jd like '%" + e[4] + "%' order by bg.dh"
+        sql = "select DISTINCT id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi as bg,madeOrder as mo where  jlbh='1' and xm='补货' or xm='配件' or xm='返厂' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
       }else if(userInfo.quanxian=='客户'){
         console.log(111)
-        sql = "selectDISTINCT bg.id, bg.xm,bg.dl,bg.mcsl,bg.jd,bg.fqrq,bg.dh,bg.khmc,bg.zdyh,bg.clmc from  baogongmingxi as bg,madeOrder as mo where bg.khmc = '" + userInfo.name + "' and bg.xm like '%" + e[0] + "%' and bg.zdyh like '%" + e[2] + "%' and bg.clmc like '%" + e[3] + "%' and bg.jd like '%" + e[4] + "%' order by bg.dh"
+        sql = "selectDISTINCT id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
 
       }else{
-      sql = "select DISTINCT bg.id, bg.xm,bg.dl,bg.mcsl,bg.jd,bg.fqrq,bg.dh,bg.khmc,bg.zdyh,bg.clmc from baogongmingxi as bg,madeOrder as mo where bg.dh=mo.productionNo and bg.khmc like '%" + e[1] + "%' and bg.zdyh like '%" + e[2] + "%' and bg.clmc like '%" + e[3] + "%' and bg.jd like '%" + e[4] + "%' order by bg.dh"
+      sql = "select DISTINCT id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi  where jlbh='1' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
       }
       console.log(sql)
     // }else{
