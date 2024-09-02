@@ -81,7 +81,7 @@
   <input bindinput="onInput" data-column="user" class="input_text_form" value="{{user}}" type="text" name="user"></input>
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
-    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
+    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd" disabled="disabled"></input>
   </picker>
   <view class="lables">备注</view>
   <input bindinput="onInput" data-column="beizhu1" class="input_text_form" value="{{beizhu1}}" type="text" name="beizhu1"></input>
@@ -91,7 +91,7 @@
   <input bindinput="onInput" data-column="lxfs" class="input_text_form" value="{{lxfs}}" type="text" name="lxfs"></input>
   <view class="lables">订单属性</view>
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="shuxing" range="{{shuxing_type}}">
-    <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing"></input>
+    <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing" disabled="disabled"></input>
   </picker>
   <view class="lables">订单号</view>
   <input bindinput="onInput" data-column="productionNO" class="input_text_form" value="{{productionNO}}" type="text" name="productionNO"></input>
@@ -111,8 +111,9 @@
   <input bindinput="onInput" data-column="user" class="input_text_form" value="{{user}}" type="text" name="user"></input>
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
-    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
+    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"  disabled="disabled"></input>
   </picker>
+  
   <view class="lables">备注</view>
   <input bindinput="onInput" data-column="beizhu1" class="input_text_form" value="{{beizhu1}}" type="text" name="beizhu1"></input>
   <view class="lables">项目负责</view>
@@ -121,7 +122,7 @@
   <input bindinput="onInput" data-column="lxfs" class="input_text_form" value="{{lxfs}}" type="text" name="lxfs"></input>
   <view class="lables">订单属性</view>
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="shuxing" range="{{shuxing_type}}">
-    <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing"></input>
+    <input bindinput="onInput" data-column="shuxing" class="input_text_form" value="{{shuxing}}" type="text" name="shuxing" disabled="disabled"></input>
   </picker>
   <view class="lables" hidden="true">订单号</view>
   <input bindinput="onInput" data-column="productionNO" class="input_text_form" value="{{productionNO}}" type="text" name="productionNO" hidden="true"></input>

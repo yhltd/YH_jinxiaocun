@@ -53,7 +53,7 @@ Page({
         text: "扫码报工",
         url: "../saomabaogong/saomabaogong",
         "管理员":true,
-        "工序员":true,
+        "工序员":false,
         "客户":false
       },
       {

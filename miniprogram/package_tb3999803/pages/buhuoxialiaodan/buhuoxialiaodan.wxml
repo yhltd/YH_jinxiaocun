@@ -21,7 +21,7 @@
 
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">材料名称</view>
-  <input bindinput="onInput_header" data-column="clmc" class="input_text_head" value="{{header_list.clmc}}" type="text" name="clmc"></input>
+  <input bindinput="onInput_header" data-column="mccl" class="input_text_head" value="{{header_list.mccl}}" type="text" name="mccl"></input>
 </view>
 <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="min-height:40%">
   <view class="table">
@@ -62,7 +62,7 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow1 }}" position="bottom" custom-style="height: 30%;">
   <view class="lables">项目</view>
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xm" range="{{xm_type}}">
-    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm"></input>
+    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" disabled="disabled"></input>
   </picker>
  
   <view class="bottom_view" style="height:10%">
@@ -78,7 +78,7 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow2 }}" position="bottom" custom-style="height: 30%;">
   <view class="lables">大类</view>
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
-    <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl"></input>
+    <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl" disabled="disabled"></input>
   </picker>
  
   <view class="bottom_view" style="height:10%">
@@ -92,7 +92,7 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow3 }}" position="bottom" custom-style="height: 30%;">
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
-    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd"></input>
+    <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd" disabled="disabled"></input>
   </picker>
  
   <view class="bottom_view" style="height:10%">

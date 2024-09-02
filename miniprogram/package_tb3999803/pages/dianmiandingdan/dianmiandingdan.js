@@ -15,7 +15,7 @@ Page({
     list: [],
     title: [{
       text: "客户名称",
-      width: "350rpx",
+      width: "170rpx",
       columnName: "customerName",
       type: "text",
       isupd: true
@@ -27,7 +27,7 @@ Page({
       isupd: true
     }, {
       text: "进度",
-      width: "270rpx",
+      width: "100rpx",
       columnName: "jd",
       type: "text",
       isupd: true
@@ -51,13 +51,13 @@ Page({
       isupd: true
     }, {
       text: "订单属性",
-      width: "230rpx",
+      width: "150rpx",
       columnName: "shuxing",
       type: "text",
       isupd: true
     }, {
       text: "订单号",
-      width: "350rpx",
+      width: "180rpx",
       columnName: "productionNO",
       type: "text",
       isupd: true
@@ -526,9 +526,8 @@ PikerChange(e){
       return;
     }
     if (userInfo.quanxian == '客户') {
-      console.log(khkh)
+      sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
       }else{
-        console.log("ggggg")
         sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
       }
       
@@ -539,7 +538,9 @@ PikerChange(e){
           query: sql
         },
         success: res => {
+          var e=['','','']
           _this.qxShow()
+          _this.tableShow(e)
           wx.showToast({
             title: '添加成功！',
             icon: 'none'
@@ -632,12 +633,12 @@ PikerChange(e){
 
     var sql = ""
     var userInfo = _this.data.userInfo
-   
+   console.log(userInfo)
     if (userInfo.quanxian == '客户') {
-      console.log(khkh)
-      sql="insert into madeOrder(customerName,user,jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
+      
+      sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
       }else{
-        sql="insert into madeOrder(customerName,user,jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
+        sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
       }
       console.log(sql)
     wx.cloud.callFunction({

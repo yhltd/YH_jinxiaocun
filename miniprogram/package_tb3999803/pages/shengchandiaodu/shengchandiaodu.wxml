@@ -10,7 +10,7 @@
         <view wx:for="{{title}}" 
               wx:for-item="item" 
               wx:key="item" 
-              class="{{list[i].searchNO=='优先生产'?'list_view1':list[i].daojishi<=0 && list[i].orderState!='入库'?'list_view_daojishi':list[i].daojishi>0 && list[i].daojishi<=8 && list[i].orderState!='入库'?'list_view_daojishi1':'list_view'}}" 
+              class="{{list[i].searchNO=='优先生产'?'list_view1':list[i].daojishi<=0 && list[i].orderState!='入库'?'list_view_daojishi':list[i].daojishi>0 && list[i].daojishi<=3 && list[i].orderState!='入库'?'list_view_daojishi1':list[i].orderState=='入库'?'list_view_ruku':'list_view'}}" 
               style="width:{{item.width}}" data-index="{{i}}"
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 

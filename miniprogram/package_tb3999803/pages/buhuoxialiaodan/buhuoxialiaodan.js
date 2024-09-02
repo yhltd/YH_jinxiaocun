@@ -21,7 +21,7 @@ Page({
       dh:'',
       khmc:'',
       zdyh:'',
-      clmc:'',
+      mccl:'',
       xmjy:'',
       dmdd:''
     },
@@ -31,22 +31,22 @@ Page({
     title: [
       {
         text: "序号",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "90rpx",
+        width2: "calc(90vmin / 7.5)",
         columnName: "rownum",
         type: "text",
         isupd: true
       },{
         text: "项目",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "120rpx",
+        width2: "calc(120vmin / 7.5)",
         columnName: "xm",
         type: "text",
         isupd: true
       },{
         text: "大类",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "180rpx",
+        width2: "calc(180vmin / 7.5)",
         columnName: "dl",
         type: "text",
         isupd: true
@@ -112,6 +112,14 @@ Page({
 // ------------------20240822 xt
 // header_list.clmc = options.clmc
 header_list.dmdd = options.dmdd
+console.log(options.mccl)
+if(options.mccl != undefined){
+  header_list.mccl = options.mccl
+  console.log(12345)
+}else{
+  header_list.mccl=" "
+  console.log(54321)
+}
 // ------------------------------
     // console.log(options.zdyh)
     // console.log(header_list.dh)
@@ -355,8 +363,17 @@ header_list.dmdd = options.dmdd
     var dh =header_list.dh
     var khmc = header_list.khmc
     var zdyh = header_list.zdyh
-    var clmc = header_list.clmc
-    
+    var mccl = header_list.mccl
+    var now = new Date();
+
+// 获取年、月、日、时、分、秒
+var year = now.getFullYear(); // 年份
+var month = now.getMonth() + 1; // 月份（注意：月份是从0开始的，所以需要加1）
+var day = now.getDate(); // 日期
+var hour = now.getHours(); // 小时
+var minute = now.getMinutes(); // 分钟
+var second = now.getSeconds(); // 秒钟
+    var riqipx = year+ '/' +month+ '/' +day+ ' ' +hour+ ':' +minute+ ':' +second;
     
     if(header_list.dmdd=="1"){
       var sql = "delete from baogongmingxi where dh='"+dh+"' and khmc='"+khmc+"' and zdyh = '"+zdyh+"'"
@@ -385,13 +402,13 @@ header_list.dmdd = options.dmdd
           console.log("请求失败！")
         }
       })
-      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,clmc,xm,dl,mcsl,jd,fqrq,jlbh) values"
+      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,mccl,xm,dl,mcsl,jd,fqrq,jlbh,riqipx) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1')"
+          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1',"+riqipx+")"
         }else{
-          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.clmc +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1')"
+          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1',"+riqipx+")"
         }
       }
       var sql3=sql1+sql2
@@ -454,7 +471,7 @@ header_list.dmdd = options.dmdd
       var khmc = header_list.khmc
       var zdyh = header_list.zdyh
          
-        sql = "select xm,dl,mcsl,jd,fqrq,clmc,id from baogongmingxi where dh = '" + dh + "' and khmc = '" + khmc + "' and zdyh = '" +zdyh + "' order by fqrq"
+        sql = "select xm,dl,mcsl,jd,fqrq,mccl,id from baogongmingxi where dh = '" + dh + "' and khmc = '" + khmc + "' and zdyh = '" +zdyh + "' order by fqrq"
        
         console.log(sql)
       
@@ -470,9 +487,9 @@ header_list.dmdd = options.dmdd
           if(list==""){
             console.log(66)
           }else{
-          header_list.clmc=list[0].clmc
+          header_list.mccl=list[0].mccl
           }
-          console.log( header_list.clmc)
+          console.log( header_list.mccl)
           _this.setData({
             list: list,
             header_list: header_list,

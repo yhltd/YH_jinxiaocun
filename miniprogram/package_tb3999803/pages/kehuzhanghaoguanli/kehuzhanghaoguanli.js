@@ -168,6 +168,7 @@ Page({
 
   inquire: function () {
     var _this = this
+    
     _this.setData({
       tjShow: true,
       id: '',
@@ -251,44 +252,119 @@ Page({
       })
       return;
     }
-
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
-        query: "insert into customerInformation(district,customerName,address,principal,zhanghao,mima,remarks,khpower) values('" + _this.data.district + "','" + _this.data.customerName + "','" + _this.data.address + "','" + _this.data.principal + "','" + _this.data.zhanghao + "','" + _this.data.mima + "','" + _this.data.remarks + "','" + _this.data.khpower + "')"
+        query: "SELECT * FROM customerInformation WHERE zhanghao = '" + _this.data.zhanghao + "'"
       },
       success: res => {
-        console.log(res)
-        _this.setData({
-          id: '',
-          district: '',
-          customerName: '',
-          address: '',
-          principal: '',
-          zhanghao: '',
-          mima: '',
-          remarks: '',
-          khpower: '',
-        })
-        _this.qxShow()
-        _this.tableShow()
-        wx.showToast({
-          title: '添加成功！',
-          icon: 'none'
-        })
-      },
-      err: res => {
-        console.log("错误!")
+        if (res.result.recordsets[0].length > 0) {
+          // 如果查询结果不为空，说明账号已存在
+          wx.showToast({
+            title: '账号已存在！',
+            icon: 'none',
+            duration: 3000
+          });
+        } else {
+          // 如果查询结果为空，说明账号不存在，可以继续插入操作
+          wx.cloud.callFunction({
+            name: 'sqlServer_tb3999803',
+            data: {
+              query: "insert into customerInformation(district,customerName,address,principal,zhanghao,mima,remarks,khpower) values('" + _this.data.district + "','" + _this.data.customerName + "','" + _this.data.address + "','" + _this.data.principal + "','" + _this.data.zhanghao + "','" + _this.data.mima + "','" + _this.data.remarks + "','" + _this.data.khpower + "')"
+            },
+            success: res => {
+              console.log(res);
+              _this.setData({
+                id: '',
+                district: '',
+                customerName: '',
+                address: '',
+                principal: '',
+                zhanghao: '',
+                mima: '',
+                remarks: '',
+                khpower: '',
+              });
+              _this.qxShow();
+              _this.tableShow();
+              wx.showToast({
+                title: '添加成功！',
+                icon: 'none'
+              });
+            },
+            err: res => {
+              console.log("错误！");
+            },
+            fail: res => {
+              wx.showToast({
+                title: '请求失败！',
+                icon: 'none'
+              });
+              console.log("请求失败！");
+            }
+          });
+        }
       },
       fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
+        console.log("查询失败！");
       }
-    })
+    });
   },
+//     wx.cloud.callFunction({
+//       name: 'sqlServer_tb3999803',
+//       data: {
+//         query: "SELECT * FROM customerInformation WHERE zhanghao = '" + _this.data.zhanghao + "'"
+//       },
+//       success: res => {
+//         if (res.result.recordsets[0].length > 0) {
+//           // 如果查询结果不为空，说明账号已存在
+//           wx.showToast({
+//             title: '账号已存在！',
+//             icon: 'none',
+//             duration: 3000
+//           });
+//         }else{
+//     wx.cloud.callFunction({
+//       name: 'sqlServer_tb3999803',
+//       data: {
+//         query: "insert into customerInformation(district,customerName,address,principal,zhanghao,mima,remarks,khpower) values('" + _this.data.district + "','" + _this.data.customerName + "','" + _this.data.address + "','" + _this.data.principal + "','" + _this.data.zhanghao + "','" + _this.data.mima + "','" + _this.data.remarks + "','" + _this.data.khpower + "')"
+//       },
+//       success: res => {
+//         console.log(res)
+//         _this.setData({
+//           id: '',
+//           district: '',
+//           customerName: '',
+//           address: '',
+//           principal: '',
+//           zhanghao: '',
+//           mima: '',
+//           remarks: '',
+//           khpower: '',
+//         })
+//         _this.qxShow()
+//         _this.tableShow()
+//         wx.showToast({
+//           title: '添加成功！',
+//           icon: 'none'
+//         })
+//       },
+//       err: res => {
+//         console.log("错误!")
+//       },
+//       fail: res => {
+//         wx.showToast({
+//           title: '请求失败！',
+//           icon: 'none'
+//         })
+//         console.log("请求失败！")
+//       }
+//     })
+//   }
+// },fail: res => {
+//   console.log("查询失败！");
+// }
+// },
 
   onInput: function (e) {
     var _this = this
@@ -337,6 +413,7 @@ Page({
         console.log("请求失败！")
       }
     })
+    
   },
 
   clickView: function (e) {

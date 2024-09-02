@@ -480,7 +480,7 @@ var login = function(that,info) {
     })
 
     //803登录  20210709  胡超
-  }else if(system =="订单追踪系统"){
+  }else if(system =="智居生产平台"){
     console.log("803登录")
     wx.showLoading({
       title:'正在登录...'
@@ -1222,11 +1222,11 @@ Page({
     var arr = "";
 
     //803登录  20210709  胡超
-    if (system == '订单追踪系统'){
+    if (system == '智居生产平台'){
       _this.setData({
         system,
-        gongsi : '订单追踪系统',
-        pickerArray: ['订单追踪系统']
+        gongsi : '智居生产平台',
+        pickerArray: ['智居生产平台']
       })
       return;
     //结束

@@ -15,13 +15,13 @@ Page({
     list: [],
     title: [{
       text: "项目",
-      width: "230rpx",
+      width: "150rpx",
       columnName: "xm",
       type: "text",
       isupd: true
     }, {
       text: "大类",
-      width: "300rpx",
+      width: "180rpx",
       columnName: "dl",
       type: "text",
       isupd: true
@@ -33,7 +33,7 @@ Page({
       isupd: true
     }, {
       text: "进度",
-      width: "270rpx",
+      width: "180rpx",
       columnName: "jd",
       type: "text",
       isupd: true
@@ -45,7 +45,7 @@ Page({
       isupd: true
     }, {
       text: "单号",
-      width: "300rpx",
+      width: "180rpx",
       columnName: "dh",
       type: "text",
       isupd: true
@@ -64,7 +64,7 @@ Page({
     }, {
       text: "材料名称",
       width: "350rpx",
-      columnName: "clmc",
+      columnName: "mccl",
       type: "text",
       isupd: true
     },
@@ -75,7 +75,7 @@ Page({
     mcsl: '',
     jd: '',
     fqrq: '',
-    clmc: '',
+    mccl: '',
   },
 
   onLoad(options) {
@@ -130,29 +130,29 @@ Page({
     var _this = this
     var sql = ""
     var userInfo = _this.data.userInfo
-    // sql = "select * from buhuoxialiao where clmc like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
+    // sql = "select * from buhuoxialiao where mccl like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
       if(userInfo.quanxian=='工序员'){
-        sql = "select DISTINCT id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi as bg,madeOrder as mo where  jlbh='1' and xm='补货' or xm='配件' or xm='返厂' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
+        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi as bg,madeOrder as mo where  jlbh='1' and xm='补货' or xm='配件' or xm='返厂' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh order by riqipx desc"
       }else if(userInfo.quanxian=='客户'){
         console.log(111)
-        sql = "selectDISTINCT id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
+        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
 
       }else{
-      sql = "select DISTINCT id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi  where jlbh='1' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh"
+      sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where jlbh='1' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc "
       }
       console.log(sql)
     // }else{
-    // sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}
+    // sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}
 
     // sql = "select * from baogongmingxi where xm like '%" + e[0] + "%'"
   
     // var userInfo = _this.data.userInfo
     // if (userInfo.quanxian == '客户') {
     //   if(e[0]==""&&e[1]==""&&e[2]==""&&e[3]==""&&e[4]==""){
-    //     sql ="select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi where khmc = '" + userInfo.name + "'"
+    //     sql ="select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi where khmc = '" + userInfo.name + "'"
     //   }else{
-    //   sql= "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc from baogongmingxi where khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and clmc like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"
+    //   sql= "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi where khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"
     //   }
     // }
     wx.cloud.callFunction({
@@ -261,7 +261,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
-        query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',clmc='" + _this.data.clmc + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
+        query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
       },
      
       success: res => {
@@ -271,7 +271,7 @@ Page({
           dl: '',
           mcsl: '',
           jd: '',
-          clmc: '',
+          mccl: '',
           fqrq:''
         })
         _this.qxShow()
@@ -307,7 +307,7 @@ Page({
       dl: _this.data.list[e.currentTarget.dataset.index].dl,
       mcsl: _this.data.list[e.currentTarget.dataset.index].mcsl,
       jd: _this.data.list[e.currentTarget.dataset.index].jd,
-      clmc: _this.data.list[e.currentTarget.dataset.index].clmc,
+      mccl: _this.data.list[e.currentTarget.dataset.index].mccl,
       fqrq: _this.data.list[e.currentTarget.dataset.index].fqrq,
       xgShow: true,
     })
@@ -335,7 +335,7 @@ Page({
                 dl: '',
                 mcsl: '',
                 jd: '',
-                clmc: '',
+                mccl: '',
               })
               _this.qxShow()
               var e = ['','','','','']
@@ -403,7 +403,7 @@ Page({
     dh: dh,
     khmc: '',
     zdyh: '',
-    clmc: '',
+    mccl: '',
   
   })
 },
@@ -492,7 +492,7 @@ Page({
 //     return;
 //   }
 
-//   if (_this.data.clmc == '') {
+//   if (_this.data.mccl == '') {
 //     wx.showToast({
 //       title: '请输入材料名称！',
 //       icon: 'none',
@@ -504,9 +504,9 @@ Page({
 //   var sql = ""
 //   var userInfo = _this.data.userInfo
 //   var date = new Date();
-//   sql="insert into buhuoxialiao(xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clmc) values('" + _this.data.xm + "','" + _this.data.dl + "','" + _this.data.mcsl + "','" + _this.data.jd + "','" + _this.date.fqrq + "','" + _this.data.dh + "','" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.clmc + "')"
+//   sql="insert into buhuoxialiao(xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl) values('" + _this.data.xm + "','" + _this.data.dl + "','" + _this.data.mcsl + "','" + _this.data.jd + "','" + _this.date.fqrq + "','" + _this.data.dh + "','" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.mccl + "')"
 //   if (userInfo.quanxian == '客户') {
-//     sql="insert into dianmiandingdan(xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clms) values('" + _this.data.xm + "','" + _this.data.dl + "','" + _this.data.mcsl + "','" + _this.data.jd + "','" + _this.date.fqrq + "','" + _this.data.dh + "','" + userInfo.khmc + "','" + userInfo.zdyh + "','" + _this.data.clmc + "')"
+//     sql="insert into dianmiandingdan(xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,clms) values('" + _this.data.xm + "','" + _this.data.dl + "','" + _this.data.mcsl + "','" + _this.data.jd + "','" + _this.date.fqrq + "','" + _this.data.dh + "','" + userInfo.khmc + "','" + userInfo.zdyh + "','" + _this.data.mccl + "')"
 //     }
 //   wx.cloud.callFunction({
 //     name: 'sqlServer_tb3999803',
@@ -567,10 +567,10 @@ Page({
 //         var khmc = _this.data.list[index].khmc
 //         var dh = _this.data.list[index].dh
 //         var zdyh = _this.data.list[index].zdyh
-//         var clmc = _this.data.list[index].clmc
+//         var mccl = _this.data.list[index].mccl
 //         console.log(dh)
 //         wx.navigateTo({
-//           url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh='+ dh +'&khmc='+khmc +'&zdyh='+zdyh +'&clmc='+clmc,
+//           url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh='+ dh +'&khmc='+khmc +'&zdyh='+zdyh +'&mccl='+mccl,
          
 //         })
 //       } else if (res.cancel) {
@@ -598,15 +598,15 @@ Page({
       xm:"",
       khmc: "",
       zdyh:"",
-      clmc:"",
+      mccl:"",
       jd: "",
     })
   },
 
   sel1: function () {
     var _this = this
-    // var e = [_this.data.clmc]
-    var e = [_this.data.xm,_this.data.khmc,_this.data.zdyh,_this.data.clmc,_this.data.jd,]
+    // var e = [_this.data.mccl]
+    var e = [_this.data.xm,_this.data.khmc,_this.data.zdyh,_this.data.mccl,_this.data.jd,]
     _this.tableShow(e)
     _this.qxShow()
   },

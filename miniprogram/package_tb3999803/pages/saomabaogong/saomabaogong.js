@@ -44,8 +44,8 @@ Page({
     title: [
       {
         text: "来料",
-        width: "275rpx",
-        width2: "calc(275vmin / 7.5)",
+        width: "120rpx",
+        width2: "calc(120vmin / 7.5)",
         columnName: "ll",
         type: "text",
         isupd: true
@@ -332,7 +332,7 @@ Page({
     var _this = this
     console.log(_this.data.order_number)
     if(_this.data.order_number != ''){
-      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh from fenjiandabao  where bh != '' group by dh) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
+      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh!= '1';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
@@ -580,9 +580,11 @@ Page({
   upd2:function(){
     var _this = this
     var list = _this.data.list
+    
     var kailiao_list = _this.data.kailiao_list
     var gongxu_arr = _this.data.gongxu_arr
     var header_list = _this.data.header_list
+  
     list[_this.data.this_index][_this.data.this_column] = _this.data.this_value
     for(var i=0; i<gongxu_arr.length; i++){
       if(gongxu_arr[i] == _this.data.this_column){
@@ -598,7 +600,7 @@ Page({
     if(list[_this.data.this_index][gongxu_arr[i]]=='缺料'){
       wx.showModal({
         title: "提示",
-        content: '是否跳转此订单的下料单？',
+        content: '是否为此订单进行补货跳转？',
         cancelColor: '#282B33',
         confirmColor: '#BC4A4A',
         success: res => {
@@ -606,11 +608,15 @@ Page({
             
             // var order_number = _this.data.list[index].productionNo
             // console.log(order_number)
+            
             var khmc = header_list.khmc
             var zdyh = header_list.zdyh
             var dh = header_list.dh
+            console.log("---------------")
+          
+            var mccl =list[_this.data.this_index].mcsl.split('/')
             wx.navigateTo({
-              url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1",
+              url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1"+'&mccl='+mccl,
             })
           } else if (res.cancel) {
             console.log('用户点击取消')
