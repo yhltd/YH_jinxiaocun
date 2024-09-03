@@ -373,7 +373,7 @@ var day = now.getDate(); // 日期
 var hour = now.getHours(); // 小时
 var minute = now.getMinutes(); // 分钟
 var second = now.getSeconds(); // 秒钟
-    var riqipx = year+ '/' +month+ '/' +day+ ' ' +hour+ ':' +minute+ ':' +second;
+    var riqipx = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
     
     if(header_list.dmdd=="1"){
       var sql = "delete from baogongmingxi where dh='"+dh+"' and khmc='"+khmc+"' and zdyh = '"+zdyh+"'"
@@ -406,9 +406,9 @@ var second = now.getSeconds(); // 秒钟
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1',"+riqipx+")"
+          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1','"+riqipx+"')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1',"+riqipx+")"
+          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1','"+riqipx+"')"
         }
       }
       var sql3=sql1+sql2
