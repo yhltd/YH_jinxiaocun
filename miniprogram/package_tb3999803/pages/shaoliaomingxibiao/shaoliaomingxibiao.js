@@ -15,13 +15,13 @@ Page({
     list: [],
     title: [{
       text: "项目",
-      width: "150rpx",
+      width: "90rpx",
       columnName: "xm",
       type: "text",
       isupd: true
     }, {
       text: "大类",
-      width: "180rpx",
+      width: "90rpx",
       columnName: "dl",
       type: "text",
       isupd: true
@@ -33,7 +33,7 @@ Page({
       isupd: true
     }, {
       text: "进度",
-      width: "180rpx",
+      width: "90rpx",
       columnName: "jd",
       type: "text",
       isupd: true
@@ -45,7 +45,7 @@ Page({
       isupd: true
     }, {
       text: "单号",
-      width: "180rpx",
+      width: "160rpx",
       columnName: "dh",
       type: "text",
       isupd: true

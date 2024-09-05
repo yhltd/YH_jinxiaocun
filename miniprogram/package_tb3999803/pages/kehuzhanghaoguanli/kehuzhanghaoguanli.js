@@ -9,8 +9,10 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
+    userInfo: [],
     khpower_type: ['管理员', '店员'],
     list: [],
+    isdisabled:true,
     title: [{
       text: "区域",
       width: "250rpx",
@@ -169,18 +171,69 @@ Page({
   inquire: function () {
     var _this = this
     
+    var userInfo = _this.data.userInfo
+    var quanxian = userInfo.quanxian
+    console.log(quanxian)
+    var khmc = userInfo.name
+    console.log(khmc)
+    if (quanxian == "客户"){
+    var sql = ""
+    sql = "select * from customerInformation where customerName = '" + khmc + "'"
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql
+      },
+    success: res => {
+      console.log(res)
+      console.log(sql)
+      var list = res.result.recordsets[0]
+      console.log(list)
+      _this.setData({
+        tjShow: true,
+        id: '',
+        district: list[0].district,
+        customerName: userInfo.name,
+        address: list[0].address,
+        principal: '',
+        zhanghao: '',
+        mima: '',
+        remarks: '',
+        khpower: '',
+      })
+    },
+    err: res => {
+      console.log("错误!")
+    },
+    fail: res => {
+      wx.showToast({
+        title: '请求失败！',
+        icon: 'none',
+        duration: 3000
+      })
+      console.log("请求失败！")
+    },
+  })
+}else{
+  _this.setData({
+    tjShow: true,
+    id: '',
+    district: '',
+    customerName: '',
+    address: '',
+    principal: '',
+    zhanghao: '',
+    mima: '',
+    remarks: '',
+    khpower: '',
+  })
+}
+console.log(userInfo.username)
+  if (userInfo.username == 'admin'){
     _this.setData({
-      tjShow: true,
-      id: '',
-      district: '',
-      customerName: '',
-      address: '',
-      principal: '',
-      zhanghao: '',
-      mima: '',
-      remarks: '',
-      khpower: '',
+      isdisabled:false,
     })
+  }
   },
 
   add1: function () {

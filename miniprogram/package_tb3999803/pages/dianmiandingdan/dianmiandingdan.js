@@ -128,9 +128,9 @@ Page({
     var sql = ""
     var userInfo = _this.data.userInfo
     if(userInfo.quanxian=="客户"){
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%'"
+      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by productionNO desc"
     }else{
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName like'%"+e[0]+"%' and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%'"
+      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName like'%"+e[0]+"%' and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by productionNO desc"
     }
     
     wx.cloud.callFunction({

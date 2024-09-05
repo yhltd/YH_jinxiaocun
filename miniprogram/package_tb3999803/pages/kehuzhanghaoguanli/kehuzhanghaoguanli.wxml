@@ -28,11 +28,11 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;">
   <view class="lables">区域</view>
-  <input bindinput="onInput" data-column="district" class="input_text_form" value="{{district}}" type="text" name="district"></input>
+  <input bindinput="onInput" data-column="district" class="input_text_form" value="{{district}}" type="text" name="district" disabled="{{isdisabled}}"></input>
   <view class="lables">客户名称</view>
-  <input bindinput="onInput" data-column="customerName" class="input_text_form" value="{{customerName}}" type="text" name="customerName"></input>
+  <input bindinput="onInput" data-column="customerName" class="input_text_form" value="{{customerName}}" type="text" name="customerName" disabled="{{isdisabled}}"></input>
   <view class="lables">地址</view>
-  <input bindinput="onInput" data-column="address" class="input_text_form" value="{{address}}" type="text" name="address"></input>
+  <input bindinput="onInput" data-column="address" class="input_text_form" value="{{address}}" type="text" name="address" disabled="{{isdisabled}}"></input>
   <view class="lables">负责人</view>
   <input bindinput="onInput" data-column="principal" class="input_text_form" value="{{principal}}" type="text" name="principal"></input>
   <view class="lables">账号</view>
@@ -55,11 +55,11 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 80%;">
   <view class="lables">区域</view>
-  <input bindinput="onInput" data-column="district" class="input_text_form" value="{{district}}" type="text" name="district"></input>
+  <input bindinput="onInput" data-column="district" class="input_text_form" value="{{district}}" type="text" name="district" disabled="{{isdisabled}}"></input>
   <view class="lables">客户名称</view>
-  <input bindinput="onInput" data-column="customerName" class="input_text_form" value="{{customerName}}" type="text" name="customerName"></input>
+  <input bindinput="onInput" data-column="customerName" class="input_text_form" value="{{customerName}}" type="text" name="customerName" disabled="{{isdisabled}}"></input>
   <view class="lables">地址</view>
-  <input bindinput="onInput" data-column="address" class="input_text_form" value="{{address}}" type="text" name="address"></input>
+  <input bindinput="onInput" data-column="address" class="input_text_form" value="{{address}}" type="text" name="address" disabled="{{isdisabled}}"></input>
   <view class="lables">负责人</view>
   <input bindinput="onInput" data-column="principal" class="input_text_form" value="{{principal}}" type="text" name="principal"></input>
   <view class="lables">账号</view>

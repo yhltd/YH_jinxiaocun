@@ -53,7 +53,7 @@ Page({
         text: "扫码报工",
         url: "../saomabaogong/saomabaogong",
         "管理员":true,
-        "工序员":false,
+        "工序员":true,
         "客户":false
       },
       {
@@ -114,12 +114,12 @@ Page({
       }
     }
     if(userInfo.quanxian == '工序员'){
-      if(index == 6){
+      if(index == 8){
         panduan = false
       }
     }
     if(userInfo.khpower == '店员'){
-      if(index >= 4){
+      if(index >= 6){
         panduan = false
       }
     }
