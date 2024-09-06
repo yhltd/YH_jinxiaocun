@@ -9,6 +9,7 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
+    danhaohidden:false,
     jd_type: ['意向', '初算','预约量尺','改方案','算报价','定稿','拆单上传','进料','送货','安装','补货','暂停','验收','完工'],
     shuxing_type: ['整体订单','全屋整装','整体代工','整体贴牌','整体批货','挂靠代工','单项代工','单项批货'],
     index:0,
@@ -72,6 +73,7 @@ Page({
   lxfs: '',
   shuxing:'',
   productionNO:''
+  
   },
 
   /**
@@ -128,7 +130,7 @@ Page({
     var sql = ""
     var userInfo = _this.data.userInfo
     if(userInfo.quanxian=="客户"){
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by productionNO desc"
+      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by CASE WHEN productionNO ='' THEN 0 ELSE 1 END,productionNO desc"
     }else{
       sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName like'%"+e[0]+"%' and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by productionNO desc"
     }
@@ -265,7 +267,7 @@ PikerChange(e){
                 console.log(user)
                 console.log(customerName)
                 wx.navigateTo({
-                  url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ productionNO +'&khmc='+customerName +'&zdyh='+user+'&dmdd='+1,
+                  url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ productionNO +'&khmc='+customerName +'&zdyh='+user+'&dmdd='+1
                 })
               } else if (res.cancel) {
                 console.log('用户点击取消')
@@ -434,6 +436,11 @@ PikerChange(e){
   inquire: function () {
     var _this = this
     var userInfo = _this.data.userInfo
+    if(userInfo.quanxian="客户"){
+        _this.setData({
+          danhaohidden:true
+        })
+    }
     _this.setData({
       tjShow: true,
       id: '',
@@ -517,14 +524,17 @@ PikerChange(e){
       })
       return;
     }
-    if (_this.data.productionNO == '') {
-      wx.showToast({
-        title: '请输入订单号！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
+    if(userInfo.quanxian!="客户"){
+      if (_this.data.productionNO == '') {
+        wx.showToast({
+          title: '请输入订单号！',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
     }
+    
     if (userInfo.quanxian == '客户') {
       sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
       }else{
@@ -622,13 +632,15 @@ PikerChange(e){
       })
       return;
     }
-    if (_this.data.productionNO == '') {
-      wx.showToast({
-        title: '请输入订单号！',
-        icon: 'none',
-        duration: 3000
-      })
-      return;
+    if(userInfo.quanxian!="客户"){
+      if (_this.data.productionNO == '') {
+        wx.showToast({
+          title: '请输入订单号！',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
     }
 
     var sql = ""

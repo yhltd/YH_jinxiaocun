@@ -25,6 +25,7 @@ Page({
       ddzt: '',
       cl: '',
       zbs: '',
+      order_number:'',
     },
     update_name:{
       pl:"配料",
@@ -332,7 +333,7 @@ Page({
     var _this = this
     console.log(_this.data.order_number)
     if(_this.data.order_number != ''){
-      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh!= '1';select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
+      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh is null;select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
@@ -341,13 +342,16 @@ Page({
         },
         success: res => {
           console.log(res)
+          
           var list = res.result.recordsets[0]
+          console.log(list)
           var order_money = ""
           if(res.result.recordsets[1].length >= 1){
             order_money = res.result.recordsets[1][0].spareMoney
           }
           console.log(order_money)
           //如果已有报工单，读取此前报工单显示到此页
+          console.log(list.length)
           if(list.length > 0){
             var header_list = _this.data.header_list
             header_list.pdrq = list[0].pdrq
@@ -721,7 +725,9 @@ Page({
       data: {
         query: sql
       }, 
+      
       success: res => {
+        console.log(_this.data.header_list.dh),
         console.log(res)
         wx.showToast({
           title: '保存成功',
@@ -731,6 +737,7 @@ Page({
         _this.setData({
           order_number
         })
+        console.log(order_number)
         _this.getBaoGong()
       },
       err: res => {

@@ -27,6 +27,8 @@ Page({
     },
     isdisabled:true,
     khmcisdisabled:true,
+    zdyhisdisabled:true,
+    dhdisabled:true,
     list: [],
     title: [
       {
@@ -112,6 +114,11 @@ Page({
 // ------------------20240822 xt
 // header_list.clmc = options.clmc
 header_list.dmdd = options.dmdd
+if(userInfo.quanxian=="客户"){
+  _this.setData({
+    xm_type: ['补板','配件','返厂','外购','整改'],
+  })
+}
 console.log(options.mccl)
 if(options.mccl != undefined){
   header_list.mccl = options.mccl
@@ -130,6 +137,8 @@ if(options.mccl != undefined){
     if(header_list.dmdd==undefined && header_list.xmjy==undefined){
       _this.setData({
         isdisabled:false,
+        dhdisabled:false,
+        zdyhisdisabled:false,
         khmcisdisabled:false
       })
     }
@@ -137,15 +146,17 @@ if(options.mccl != undefined){
       header_list.khmc = userInfo.name
       _this.setData({
         isdisabled:false,
+        zdyhisdisabled:false,
+        dhdisabled:true,
         khmcisdisabled:true
       })
     }
     _this.setData({
       header_list,
     })
-    if(options.dmdd=="1"){
-      _this.tableShow()
-    }
+    // if(options.dmdd=="1"){
+    //   _this.tableShow()
+    // }
   },
   add_row: function () {
     var _this = this
@@ -374,8 +385,8 @@ var hour = now.getHours(); // 小时
 var minute = now.getMinutes(); // 分钟
 var second = now.getSeconds(); // 秒钟
     var riqipx = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
-    
-    if(header_list.dmdd=="1"){
+    console.log(header_list.dmdd)
+    if(header_list.dmdd==1){
       var sql = "delete from baogongmingxi where dh='"+dh+"' and khmc='"+khmc+"' and zdyh = '"+zdyh+"'"
     }
       

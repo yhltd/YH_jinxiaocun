@@ -5,7 +5,7 @@
 <!------------------------->
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">单号</view>
-  <input bindinput="onInput_header" data-column="dh" class="input_text_head" value="{{header_list.dh}}" type="text" name="dh" disabled="{{isdisabled}}"></input>
+  <input bindinput="onInput_header" data-column="dh" class="input_text_head" value="{{header_list.dh}}" type="text" name="dh" disabled="{{dhdisabled}}"></input>
 </view>
 
 <view style="display: flex;">
@@ -15,7 +15,7 @@
 
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">终端用户</view>
-  <input bindinput="onInput_header" data-column="zdyh" class="input_text_head" value="{{header_list.zdyh}}" type="text" name="zdyh" disabled="{{isdisabled}}"></input>
+  <input bindinput="onInput_header" data-column="zdyh" class="input_text_head" value="{{header_list.zdyh}}" type="text" name="zdyh" disabled="{{zdyhisdisabled}}"></input>
 
 </view>
 

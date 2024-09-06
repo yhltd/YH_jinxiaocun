@@ -133,13 +133,13 @@ Page({
     // sql = "select * from buhuoxialiao where mccl like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
       if(userInfo.quanxian=='工序员'){
-        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi as bg,madeOrder as mo where  jlbh='1' and xm='补货' or xm='配件' or xm='返厂' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by dh order by riqipx desc"
+        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
       }else if(userInfo.quanxian=='客户'){
         console.log(111)
-        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and xm like '%" + e[0] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
+        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and (xm like '%" + e[0] + "%' and xm !='少料') and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
 
       }else{
-      sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where jlbh='1' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc "
+      sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where jlbh='1' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc "
       }
       console.log(sql)
     // }else{
