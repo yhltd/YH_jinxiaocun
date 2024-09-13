@@ -10,6 +10,7 @@ Page({
     start_date:'',
     stop_date:'',
     order_number:'',
+    page:1,
     title: [{
       text: "订单号",
       width: "200rpx",
@@ -88,13 +89,19 @@ Page({
     var gongsi = app.globalData.gongsi
     that.sel1()
   },
-
+  sel11:function(){
+    this.setData({
+      page:1
+    })
+    this.sel1()
+  },
   sel1:function(){
     var _this = this
     var gongsi = app.globalData.gongsi
     var start_date = _this.data.start_date
     var stop_date = _this.data.stop_date
     var order_number = _this.data.order_number
+    var page = _this.data.page-1
     if (start_date != ''){
       start_date = start_date + " 00:00:00"
     }else{
@@ -105,13 +112,12 @@ Page({
     }else{
       stop_date = "2100-12-31 23:59:59"
     }
-
-    console.log("SELECT *,'' as checkbox,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" )
+    console.log("SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT '"+page+"', 5;" )
 
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "SELECT *,'' as checkbox,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d') as time,date_format(yh_jinxiaocun_mingxi.shijian,'%Y-%m-%d %h:%m:%s') as time2,yh_jinxiaocun_jichuziliao.mark1 as mark1 from yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname = yh_jinxiaocun_jichuziliao.`name` where yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "' and shijian >='" + start_date + "' and shijian <='" + stop_date + "' and orderid like '%" + order_number + "%'" 
+        sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT "+page+", 5" 
       },
       success(res) {
         for(var i=0;i<res.result.length;i++){
@@ -122,6 +128,7 @@ Page({
         console.log(res.result)
         _this.setData({
           szzhi: res.result,
+         
           // start_date:'',
           // stop_date:'',
           // order_number:'',
@@ -129,11 +136,46 @@ Page({
         console.log(_this.data.szzhi)
       },
       fail(res) {
+        console.log(res.result)
         console.log("失败", res)
 
       }
     });
   },
+ up:function(){
+   var _this=this
+   var page = _this.data.page
+   page=page-1
+   if(page<1){
+    wx.showToast({
+      title: '已经是第一页',
+      icon: 'none'
+    })
+    return;
+   }e
+   _this.setData({
+     page:page
+   })
+ 
+   _this.sel1()
+ },
+ down:function(){
+ var _this=this
+ var page = _this.data.page
+  page=page+1
+  if(page<1){
+   wx.showToast({
+     title: '已经是第一页',
+     icon: 'none'
+   })
+   return;
+  }
+  _this.setData({
+    page:page
+  })
+
+  _this.sel1()
+},
 
   print_out:function(){
     var _this = this

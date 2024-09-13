@@ -73,7 +73,6 @@ Page({
   lxfs: '',
   shuxing:'',
   productionNO:''
-  
   },
 
   /**
@@ -85,6 +84,11 @@ Page({
     _this.setData({
       userInfo: userInfo,
     })
+    if(userInfo.quanxian=="客户"){
+      _this.setData({
+        danhaohidden: true,
+      })
+    }
     var e = ['','','']
     _this.tableShow(e)
   },
@@ -130,9 +134,9 @@ Page({
     var sql = ""
     var userInfo = _this.data.userInfo
     if(userInfo.quanxian=="客户"){
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by CASE WHEN productionNO ='' THEN 0 ELSE 1 END,productionNO desc"
+      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and isnull(beizhu1,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN productionNO ='' THEN 0 ELSE 1 END,productionNO desc"
     }else{
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName like'%"+e[0]+"%' and beizhu1 like'%"+e[1]+"%' and lxfs like '%"+e[2]+"%' order by productionNO desc"
+      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName like'%"+e[0]+"%' and isnull(beizhu1,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN productionNO = '' THEN 0 ELSE 1 END, productionNO desc"
     }
     
     wx.cloud.callFunction({
@@ -246,10 +250,10 @@ PikerChange(e){
       
       if (userInfo.quanxian == '客户') {
         console.log(123)
-        sql="update madeOrder set customerName='" + userInfo.name + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "' where id=" + _this.data.id
+        sql="update madeOrder set customerName='" + userInfo.name + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "',paixu1='" + _this.data.productionNO + "' where id=" + _this.data.id+""
         }else{
           console.log(321)
-          sql= "update madeOrder set customerName='" + _this.data.customerName + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "' where id=" + _this.data.id
+          sql= "update madeOrder set customerName='" + _this.data.customerName + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "' ,productionNO='" + _this.data.productionNO + "',paixu1='" + _this.data.productionNO + "'where id=" + _this.data.id+""
         }
         console.log(sql)
         if(_this.data.jd=="补货"){
@@ -436,7 +440,7 @@ PikerChange(e){
   inquire: function () {
     var _this = this
     var userInfo = _this.data.userInfo
-    if(userInfo.quanxian="客户"){
+    if(userInfo.quanxian=="客户"){
         _this.setData({
           danhaohidden:true
         })
@@ -536,9 +540,9 @@ PikerChange(e){
     }
     
     if (userInfo.quanxian == '客户') {
-      sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
+      sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,paixu1) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "','" + _this.data.productionNO + "')"
       }else{
-        sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
+        sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,paixu1) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "','" + _this.data.productionNO + "')"
       }
       
       console.log(sql)

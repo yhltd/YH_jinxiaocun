@@ -184,26 +184,26 @@ Page({
       }
     });
 
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
-      },
-      success(res) {
-        for(var i=0;i<res.result.length;i++){
-          if(res.result[i].mark1 != null){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-          }
-        }
-        that.setData({
-          shangpin_list: res.result,
-          szzhi:res.result
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+    // wx.cloud.callFunction({
+    //   name: "sqlConnection",
+    //   data: {
+    //     sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
+    //   },
+    //   success(res) {
+    //     for(var i=0;i<res.result.length;i++){
+    //       if(res.result[i].mark1 != null){
+    //         res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+    //       }
+    //     }
+    //     that.setData({
+    //       shangpin_list: res.result,
+    //       szzhi:res.result
+    //     })
+    //   },
+    //   fail(res) {
+    //     console.log("失败", res)
+    //   }
+    // });
   },
 
   srJg: function(e) {
@@ -513,26 +513,26 @@ tjjg: function(e) {
                   // that.setData({
                   //   all: res.result[id][0].beizhu
                   // })
-                  wx.cloud.callFunction({
-                    name: "sqlConnection",
-                    data: {
-                      sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
-                    },
-                    success(res) {
-                      for(var i=0;i<res.result.length;i++){
-                        if(res.result[i].mark1 != null){
-                          res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-                        }
-                      }
-                      that.setData({
-                        shangpin_list: res.result,
-                        szzhi:res.result
-                      })
-                    },
-                    fail(res) {
-                      console.log("失败", res)
-                    }
-                  });
+                  // wx.cloud.callFunction({
+                  //   name: "sqlConnection",
+                  //   data: {
+                  //     sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
+                  //   },
+                  //   success(res) {
+                  //     for(var i=0;i<res.result.length;i++){
+                  //       if(res.result[i].mark1 != null){
+                  //         res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+                  //       }
+                  //     }
+                  //     that.setData({
+                  //       shangpin_list: res.result,
+                  //       szzhi:res.result
+                  //     })
+                  //   },
+                  //   fail(res) {
+                  //     console.log("失败", res)
+                  //   }
+                  // });
                 },
                 fail(res) {
                   console.log("失败", res)

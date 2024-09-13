@@ -199,3 +199,29 @@ left: 46%;
   justify-content: center;
    z-index: 9;
   }
+  .bottom_view{
+    height: 6%;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    bottom: 2%;
+    position: fixed;
+    background-color: #1c60a3;
+  }
+  .bt_bottom{
+    width: 30%;
+    background-color: #1c60a3;
+    color: #E6E6E6;
+    height: 75rpx;
+    margin: auto; 
+   
+  }
+  .bt_bottom1{
+    width: 10%;
+    background-color: #1c60a3;
+    color: #E6E6E6;
+    height: 75rpx;
+    margin: auto; 
+    text-align:center;
+    
+  }

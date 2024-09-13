@@ -8,9 +8,11 @@
   </picker>
   <input class='bk_ss3' type="text" bindinput="onInput" data-column="order_number" value="{{order_number}}" name="order_number"  style="color:#f8f8f8;text-align:center;" placeholder="请输入订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
   <button class="button_css" bindtap="use_book">使用说明</button>
-  <button class="button_css2" bindtap="sel1">查询</button>
+  <button class="button_css2" bindtap="sel11">查询</button>
   <button class="button_css3" bindtap="getExcel">导出</button>
+ 
 </view>
+
 <view class=' main'>
   <view class='list_ps' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{szzhi[i]._id}}"  data-uid="{{szzhi[i]._id}}" bindlongpress="shanchu" bindtap='upd'>
     <view class='shangpin'>
@@ -32,6 +34,12 @@
     </view>
     
   </view>
+
 </view>
 
 <image class='jiahao2' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/print_btn.png' bindtap='print_out'> </image>
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="up" >上一页</button>
+  <span class="bt_bottom1" >{{page}}</span>
+  <button class="bt_bottom" bindtap="down" >下一页</button>
+</view>

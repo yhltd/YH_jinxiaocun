@@ -86,12 +86,22 @@ Page({
       success(res) {
         console.log(res.result)
         for(var i=0; i<res.result.length; i++){
+          console.log(res.result[i].cpid)
+          if(fun=='qichu'){
           var imgData = QR.drawImg(res.result[i].cpid, {
             typeNumber: 4,
             errorCorrectLevel: 'M',
             size: 500
           })
           res.result[i].qrcode = imgData
+        }else{
+          var imgData = QR.drawImg(res.result[i].sp_dm, {
+            typeNumber: 4,
+            errorCorrectLevel: 'M',
+            size: 500
+          })
+          res.result[i].qrcode = imgData 
+        }
         }
         that.setData({
           all: res.result
