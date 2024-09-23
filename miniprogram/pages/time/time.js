@@ -143,10 +143,10 @@ Page({
       pd: 0
     });
     var id = null
-    if (options.id != null) {
-      id = options.id
-    }
-    console.log(id)
+    // if (options.id != null) {
+    //   id = options.id
+    // }
+    // console.log(id)
     if (id != null) {
       that.setData({
         hideen1: !that.data.hideen1,
@@ -495,7 +495,17 @@ tjjg: function(e) {
             })
           } else {
 
-            var today = that.data.sjkj;
+            // var today = that.data.sjkj;
+            var date = new Date();
+            var y = date.getFullYear();
+            var mon = date.getMonth()+1;
+            var d = date.getDay();
+
+            var h = date.getHours();
+            var m = date.getMinutes();
+            var s = date.getSeconds();
+
+            var today = `${y}-${mon}-${d} ${h}:${m}:${s}`;
             var ddh = that.data.ddh;
             const db = wx.cloud.database();
             pd = 0

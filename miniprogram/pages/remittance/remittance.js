@@ -488,7 +488,17 @@ zongjia_refresh:function(){
     console.log(szzhi.length)
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
-    var today = that.data.date;
+    // var today = that.data.date;
+    var date = new Date();
+    var y = date.getFullYear();
+    var mon = date.getMonth()+1;
+    var d = date.getDay();
+
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+
+    var today = `${y}-${mon}-${d} ${h}:${m}:${s}`;
     if (that.data.sjkj == "") {
       console.log(that.data.sjkj, "!!!!!!!!!!!")
       wx.showModal({

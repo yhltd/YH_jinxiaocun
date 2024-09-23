@@ -152,7 +152,7 @@ Page({
       icon: 'none'
     })
     return;
-   }e
+   }
    _this.setData({
      page:page
    })
