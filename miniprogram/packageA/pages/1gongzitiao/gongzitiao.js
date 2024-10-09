@@ -527,7 +527,14 @@ Page({
   },
 
   getList : function(riqi1,riqi2,pageNum,countPage,_this,companyName,where){
-    var sql= "select * from (select *,ROW_NUMBER() over(order by [id]) ROW_ID from [gongzi_gongzimingxi] where BC between '"+ _this.data.riqi1 +"' and '"+ _this.data.riqi2 +"' and  BD = '"+companyName+"') t where t.ROW_ID >("+pageNum+"-1)*"+countPage+" and t.ROW_ID<("+pageNum+"*"+countPage+"+1) "+where
+    riqi1 = riqi1.replace(/-/g, '/');
+    riqi2=riqi2.replace(/-/g, '/');
+    this.setData({
+      riqi1: riqi1,
+      riqi2:riqi2
+    })
+     var sql= "select * from (select *,ROW_NUMBER() over(order by [id]) ROW_ID from [gongzi_gongzimingxi] where BC between '"+ _this.data.riqi1 +"' and '"+ _this.data.riqi2 +"' and  BD = '"+companyName+"') t where t.ROW_ID >("+pageNum+"-1)*"+countPage+" and t.ROW_ID<("+pageNum+"*"+countPage+"+1) "+where
+    
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -608,7 +615,8 @@ Page({
     // }
     if(_this.data.riqi1==''){
       _this.setData({
-        riqi1:'1900-01-01'
+        // riqi1:'1900-01-01'
+        riqi1:'1900/01/01'
       })
     }
     if(_this.data.riqi2==''){

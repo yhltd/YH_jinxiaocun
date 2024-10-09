@@ -106,13 +106,19 @@ Page({
       result : JSON.parse(options.access)
     })
     console.log(_this.data.result)
+   
+    var sql ="SELECT TOP 100 id, B, BC, AY, M,CASE WHEN ISNUMERIC(AJ) = 1 THEN CAST(AJ AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AK) = 1 THEN CAST(AK AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AL) = 1 THEN CAST(AL AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AM) = 1 THEN CAST(AM AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AN) = 1 THEN CAST(AN AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AO) = 1 THEN CAST(AO AS FLOAT) ELSE 0 END AS geren,CASE WHEN ISNUMERIC(Z) = 1 THEN CAST(Z AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AA) = 1 THEN CAST(AA AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AB) = 1 THEN CAST(AB AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AC) = 1 THEN CAST(AC AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AD) = 1 THEN CAST(AD AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AE) = 1 THEN CAST(AE AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AF) = 1 THEN CAST(AF AS FLOAT) ELSE 0 END AS qiye FROM gongzi_gongzimingxi WHERE BD = '"+_this.data.companyName+"'"
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+_this.data.companyName+"'"
+        // query: "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+_this.data.companyName+"'"
+        query: "SELECT TOP 100 id, B, BC, AY, M,CASE WHEN ISNUMERIC(AJ) = 1 THEN CAST(AJ AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AK) = 1 THEN CAST(AK AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AL) = 1 THEN CAST(AL AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AM) = 1 THEN CAST(AM AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AN) = 1 THEN CAST(AN AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AO) = 1 THEN CAST(AO AS FLOAT) ELSE 0 END AS geren,CASE WHEN ISNUMERIC(Z) = 1 THEN CAST(Z AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AA) = 1 THEN CAST(AA AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AB) = 1 THEN CAST(AB AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AC) = 1 THEN CAST(AC AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AD) = 1 THEN CAST(AD AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AE) = 1 THEN CAST(AE AS FLOAT) ELSE 0 END +CASE WHEN ISNUMERIC(AF) = 1 THEN CAST(AF AS FLOAT) ELSE 0 END AS qiye FROM gongzi_gongzimingxi WHERE BD = '"+_this.data.companyName+"'"
       },
       success: res => {
         console.log(res.result)
+        console.log(res.query)
+        
         if (res.result.recordset.length < 100) {
           this.setData({
             list: res.result.recordset,
@@ -125,6 +131,7 @@ Page({
             isLoad : true
           })
         }
+    
       },
       err: res => {
         console.log("错误!")
@@ -321,15 +328,19 @@ Page({
     var start_date = that.data.start_date
     var stop_date = that.data.stop_date
     if(start_date == ''){
-      start_date = '1900-01-01'
+      //start_date = '1900-01-01'
+      start_date = '1900/01/01'
     }
     if(stop_date == ''){
-      stop_date = '2100-12-31'
+      // stop_date = '2100-12-31'
+      stop_date = '2100/12/31'
     }
     console.log(start_date)
     console.log(stop_date)
+    start_date = start_date.replace(/-/g, '/');
+    stop_date =stop_date.replace(/-/g, '/');
     var sql = "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+that.data.companyName+"' and BC != '' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
-    
+    console.log(sql)
     if (index == 0) {
       //按姓名查询
       wx.cloud.callFunction({

@@ -227,7 +227,8 @@
 		<tui-list-cell hover="{{false}}">
 			<view class="tui-line-cell">
 				<view class="tui-title">▹ 个人养老：</view>
-				<input placeholder-class="phcolor" class="tui-input" name="qiye_yanglao" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AJ}}" />
+				<!-- <input placeholder-class="phcolor" class="tui-input" name="qiye_yanglao" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AJ}}" /> -->
+        <input placeholder-class="phcolor" class="tui-input" name="AJ" placeholder="请输入" maxlength="50" type="number" value="{{list[0].AJ}}"/>
 			</view>
 		</tui-list-cell>
 		<tui-list-cell hover="{{false}}">

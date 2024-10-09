@@ -784,11 +784,13 @@ Page({
         query: sql
       },
       success: res => {
+        if(sql !=""){
         if (res.result.recordset.length < 100) {
           this.setData({
             list: res.result.recordset,
             IsLastPage: true
           })
+        }
         } else {
           this.setData({
             list: res.result.recordset
