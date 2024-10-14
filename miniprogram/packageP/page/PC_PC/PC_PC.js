@@ -1736,6 +1736,7 @@ Page({
                     xdrq: "",
                     sfcd: "",
                     xdsl: "",
+                    wcrq:"",
                   })
                 },
                 err: res => {

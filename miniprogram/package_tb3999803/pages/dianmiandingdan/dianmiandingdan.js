@@ -11,19 +11,19 @@ Page({
   data: {
     danhaohidden:false,
     jd_type: ['意向', '初算','预约量尺','改方案','算报价','定稿','拆单上传','进料','送货','安装','补货','暂停','验收','完工'],
-    shuxing_type: ['整体订单','全屋整装','整体代工','整体贴牌','整体批货','挂靠代工','单项代工','单项批货'],
+    ddsx_type: ['整体订单','全屋整装','整体代工','整体贴牌','整体批货','挂靠代工','单项代工','单项批货'],
     index:0,
     list: [],
     title: [{
       text: "客户名称",
       width: "170rpx",
-      columnName: "customerName",
+      columnName: "khmc",
       type: "text",
       isupd: true
     },{
       text: "终端用户",
       width: "350rpx",
-      columnName: "user",
+      columnName: "zdyh",
       type: "text",
       isupd: true
     }, {
@@ -35,7 +35,7 @@ Page({
     }, {
       text: "备注",
       width: "400rpx",
-      columnName: "beizhu1",
+      columnName: "bz",
       type: "text",
       isupd: true
     }, {
@@ -53,26 +53,26 @@ Page({
     }, {
       text: "订单属性",
       width: "150rpx",
-      columnName: "shuxing",
+      columnName: "ddsx",
       type: "text",
       isupd: true
     }, {
       text: "订单号",
       width: "180rpx",
-      columnName: "productionNO",
+      columnName: "ddh",
       type: "text",
       isupd: true
     },
   ],
   id: '',
-  customerName: '',
-  user: '',
+  khmc: '',
+  zdyh: '',
   jd: '',
-  beizhu1: '',
+  bz: '',
   xmfz: '',
   lxfs: '',
-  shuxing:'',
-  productionNO:''
+  ddsx:'',
+  ddh:''
   },
 
   /**
@@ -118,7 +118,7 @@ Page({
   bindPickerChange3: function (e) {
     var _this = this
     _this.setData({
-      [e.target.dataset.column_name]: _this.data.shuxing_type[e.detail.value]
+      [e.target.dataset.column_name]: _this.data.ddsx_type[e.detail.value]
     })
   },
       
@@ -134,9 +134,9 @@ Page({
     var sql = ""
     var userInfo = _this.data.userInfo
     if(userInfo.quanxian=="客户"){
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName='"+userInfo.name+"'and isnull(beizhu1,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN productionNO ='' THEN 0 ELSE 1 END,productionNO desc"
+      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where zdyh='"+userInfo.name+"'and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh ='' THEN 0 ELSE 1 END,ddh desc"
     }else{
-      sql = "select customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,id from madeOrder where customerName like'%"+e[0]+"%' and isnull(beizhu1,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN productionNO = '' THEN 0 ELSE 1 END, productionNO desc"
+      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where khmc like'%"+e[0]+"%' and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh = '' THEN 0 ELSE 1 END, ddh desc"
     }
     
     wx.cloud.callFunction({
@@ -250,10 +250,10 @@ PikerChange(e){
       
       if (userInfo.quanxian == '客户') {
         console.log(123)
-        sql="update madeOrder set customerName='" + userInfo.name + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "',paixu1='" + _this.data.productionNO + "' where id=" + _this.data.id+""
+        sql="update new_dianmiandingdan set khmc='" + userInfo.name + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',ddsx='" + _this.data.ddsx + "',paixu1='" + _this.data.ddh + "' where id=" + _this.data.id+""
         }else{
           console.log(321)
-          sql= "update madeOrder set customerName='" + _this.data.customerName + "',[user]='" + _this.data.user + "',jd='" + _this.data.jd + "',beizhu1='" + _this.data.beizhu1 + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',shuxing='" + _this.data.shuxing + "' ,productionNO='" + _this.data.productionNO + "',paixu1='" + _this.data.productionNO + "'where id=" + _this.data.id+""
+          sql= "update new_dianmiandingdan set khmc='" + _this.data.khmc + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',ddsx='" + _this.data.ddsx + "' ,ddh='" + _this.data.ddh + "',paixu1='" + _this.data.ddh + "'where id=" + _this.data.id+""
         }
         console.log(sql)
         if(_this.data.jd=="补货"){
@@ -264,14 +264,14 @@ PikerChange(e){
             confirmColor: '#BC4A4A',
             success: res => {
               if (res.confirm) { 
-                var customerName = _this.data.customerName
-                var productionNO = _this.data.productionNO
-                var user = _this.data.user
-                console.log(productionNO)
-                console.log(user)
-                console.log(customerName)
+                var khmc = _this.data.khmc
+                var ddh = _this.data.ddh
+                var zdyh = _this.data.zdyh
+                console.log(ddh)
+                console.log(zdyh)
+                console.log(khmc)
                 wx.navigateTo({
-                  url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ productionNO +'&khmc='+customerName +'&zdyh='+user+'&dmdd='+1
+                  url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ ddh +'&khmc='+khmc +'&zdyh='+zdyh+'&dmdd='+1
                 })
               } else if (res.cancel) {
                 console.log('用户点击取消')
@@ -288,10 +288,10 @@ PikerChange(e){
       success: res => {
         _this.setData({
           id: '',
-          customerName: '',
-          user: '',
+          khmc: '',
+          zdyh: '',
           jd: '',
-          beizhu1: '',
+          bz: '',
           xmfz: '',
           lxfs: '',
         })
@@ -328,21 +328,21 @@ PikerChange(e){
     var column = e.currentTarget.dataset.column
     _this.setData({
       id: _this.data.list[e.currentTarget.dataset.index].id,
-      customerName: _this.data.list[e.currentTarget.dataset.index].customerName,
-      user: _this.data.list[e.currentTarget.dataset.index].user,
+      khmc: _this.data.list[e.currentTarget.dataset.index].khmc,
+      zdyh: _this.data.list[e.currentTarget.dataset.index].zdyh,
       jd: _this.data.list[e.currentTarget.dataset.index].jd,
-      beizhu1: _this.data.list[e.currentTarget.dataset.index].beizhu1,
+      bz: _this.data.list[e.currentTarget.dataset.index].bz,
       xmfz: _this.data.list[e.currentTarget.dataset.index].xmfz,
       lxfs: _this.data.list[e.currentTarget.dataset.index].lxfs,
-      shuxing: _this.data.list[e.currentTarget.dataset.index].shuxing,
-      productionNO: _this.data.list[e.currentTarget.dataset.index].productionNO,
+      ddsx: _this.data.list[e.currentTarget.dataset.index].ddsx,
+      ddh: _this.data.list[e.currentTarget.dataset.index].ddh,
       xgShow: true,
     })
   },
 
   del1: function () {
     var _this = this
-    if(_this.data.productionNO!=""){
+    if(_this.data.ddh!=""){
       wx.showToast({
         title: '该订单不能删除！',
         icon: 'none'
@@ -358,16 +358,16 @@ PikerChange(e){
           wx.cloud.callFunction({
             name: 'sqlServer_tb3999803',
             data: {
-              query: "delete from madeOrder where id='" + _this.data.id + "'"
+              query: "delete from new_dianmiandingdan where id='" + _this.data.id + "'"
             },
             success: res => {
               console.log(res)
               _this.setData({
                 id: '',
-                customerName: '',
-                user: '',
+                khmc: '',
+                zdyh: '',
                 jd: '',
-                beizhu1: '',
+                bz: '',
                 xmfz: '',
                 lxfs: '',
               })
@@ -412,12 +412,12 @@ PikerChange(e){
       success: res => {
         if (res.confirm) { 
           var index = e.currentTarget.dataset.index
-          var customerName = _this.data.list[index].customerName
-          var productionNO = _this.data.list[index].productionNO
-          var user = _this.data.list[index].user
-          console.log(productionNO)
+          var khmc = _this.data.list[index].khmc
+          var ddh = _this.data.list[index].ddh
+          var zdyh = _this.data.list[index].zdyh
+          console.log(ddh)
           wx.navigateTo({
-            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ productionNO +'&khmc='+customerName +'&zdyh='+user+'&dmdd='+1,
+            url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&ddh='+ ddh +'&khmc='+khmc +'&zdyh='+zdyh+'&dmdd='+1,
            
           })
         } else if (res.cancel) {
@@ -448,18 +448,18 @@ PikerChange(e){
     _this.setData({
       tjShow: true,
       id: '',
-      customerName: '',
-      user: '',
+      khmc: '',
+      zdyh: '',
       jd: '',
-      beizhu1: '',
+      bz: '',
       xmfz: '',
       lxfs: '',
-      shuxing: '',
-      productionNO: '',
+      ddsx: '',
+      ddh: '',
     })
     if(userInfo.quanxian == '客户'){
       _this.setData({
-        customerName: userInfo.name,
+        khmc: userInfo.name,
         panduan_khmc:true,
       })
     }
@@ -470,7 +470,7 @@ PikerChange(e){
     var _this = this
     var sql=""
     var userInfo = _this.data.userInfo
-    if (_this.data.customerName == '') {
+    if (_this.data.khmc == '') {
       wx.showToast({
         title: '请输入客户名称！',
         icon: 'none',
@@ -479,7 +479,7 @@ PikerChange(e){
       return;
     }
 
-    if (_this.data.user == '') {
+    if (_this.data.zdyh == '') {
       wx.showToast({
         title: '请输入终端用户！',
         icon: 'none',
@@ -496,7 +496,7 @@ PikerChange(e){
       })
       return;
     }
-    if (_this.data.beizhu1 == '') {
+    if (_this.data.bz == '') {
       wx.showToast({
         title: '请输入备注！',
         icon: 'none',
@@ -520,7 +520,7 @@ PikerChange(e){
       })
       return;
     }
-    if (_this.data.shuxing == '') {
+    if (_this.data.ddsx == '') {
       wx.showToast({
         title: '请输入订单属性！',
         icon: 'none',
@@ -529,7 +529,7 @@ PikerChange(e){
       return;
     }
     if(userInfo.quanxian!="客户"){
-      if (_this.data.productionNO == '') {
+      if (_this.data.ddh == '') {
         wx.showToast({
           title: '请输入订单号！',
           icon: 'none',
@@ -540,9 +540,9 @@ PikerChange(e){
     }
     
     if (userInfo.quanxian == '客户') {
-      sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,paixu1) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "','" + _this.data.productionNO + "')"
+      sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,paixu1) values('" + userInfo.name + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "','" + _this.data.ddh + "')"
       }else{
-        sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO,paixu1) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "','" + _this.data.productionNO + "')"
+        sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,paixu1) values('" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "','" + _this.data.ddh + "')"
       }
       
       console.log(sql)
@@ -578,7 +578,7 @@ PikerChange(e){
   add2: function () {
     var _this = this
 
-    if (_this.data.customerName == '') {
+    if (_this.data.khmc == '') {
       wx.showToast({
         title: '请输入客户名称！',
         icon: 'none',
@@ -587,7 +587,7 @@ PikerChange(e){
       return;
     }
 
-    if (_this.data.user == '') {
+    if (_this.data.zdyh == '') {
       wx.showToast({
         title: '请输入终端用户！',
         icon: 'none',
@@ -604,7 +604,7 @@ PikerChange(e){
       })
       return;
     }
-    if (_this.data.beizhu1 == '') {
+    if (_this.data.bz == '') {
       wx.showToast({
         title: '请输入备注！',
         icon: 'none',
@@ -628,7 +628,7 @@ PikerChange(e){
       })
       return;
     }
-    if (_this.data.shuxing == '') {
+    if (_this.data.ddsx == '') {
       wx.showToast({
         title: '请输入订单属性！',
         icon: 'none',
@@ -637,7 +637,7 @@ PikerChange(e){
       return;
     }
     if(userInfo.quanxian!="客户"){
-      if (_this.data.productionNO == '') {
+      if (_this.data.ddh == '') {
         wx.showToast({
           title: '请输入订单号！',
           icon: 'none',
@@ -652,9 +652,9 @@ PikerChange(e){
    console.log(userInfo)
     if (userInfo.quanxian == '客户') {
       
-      sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + userInfo.name + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
+      sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh) values('" + userInfo.name + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "')"
       }else{
-        sql="insert into madeOrder(customerName,[user],jd,beizhu1,xmfz,lxfs,shuxing,productionNO) values('" + _this.data.customerName + "','" + _this.data.user + "','" + _this.data.jd + "','" + _this.data.beizhu1 + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.shuxing + "','" + _this.data.productionNO + "')"
+        sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh) values('" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "')"
       }
       console.log(sql)
     wx.cloud.callFunction({
@@ -666,14 +666,14 @@ PikerChange(e){
         console.log(res)
         // _this.setData({
         //   id: '',
-        //   customerName: '',
-        //   user: '',
+        //   khmc: '',
+        //   zdyh: '',
         //   jd: '',
-        //   beizhu1: '',
+        //   bz: '',
         //   xmfz: '',
         //   lxfs: '',
-        //   shuxing: '',
-        //   productionNO: '',
+        //   ddsx: '',
+        //   ddh: '',
         // })
         // var e = ['', '','']
         // _this.qxShow()
@@ -714,15 +714,15 @@ PikerChange(e){
     var _this = this
     _this.setData({
       cxShow: true,
-      customerName: "",
-      beizhu1: "",
+      khmc: "",
+      bz: "",
       lxfs: "",
     })
   },
 
   sel1: function () {
     var _this = this
-    var e = [_this.data.customerName,_this.data.beizhu1, _this.data.lxfs]
+    var e = [_this.data.khmc,_this.data.bz, _this.data.lxfs]
     _this.tableShow(e)
     _this.qxShow()
   },

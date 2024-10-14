@@ -203,8 +203,9 @@ Page({
             title: '添加成功！',
             icon: 'none'
           })
+          var e = ['', '']
           _this.qxShow()
-          _this.tableShow()
+          _this.tableShow(e)
         },
         err: res => {
           console.log("错误!")
@@ -312,7 +313,8 @@ Page({
           icon: 'none',
           duration: 3000
         })
-        _this.tableShow()
+        var e = ['', '']
+        _this.tableShow(e)
         _this.setData({
           handle: true
         })
