@@ -568,9 +568,14 @@ Page({
           }
         }else if(columnName=="zhiwu"){
           for(var i=0;i<items.length;i++){
+            if (options.indexOf(items[i].zhiwu) === -1) {
+              console.log(items[i])
             options.push(items[i].zhiwu)
+            }
           }
         }
+        console.log(options)
+        console.log(items)
         _this.setData({
           ["options["+index+"].items"] : options
         })
@@ -586,6 +591,10 @@ Page({
     var _this = this;
     var items_index = e.currentTarget.dataset.items_index
     var selectHid = _this.data.options[items_index].selectHid
+    console.log(items_index)
+    console.log(selectHid)
+    console.log("-----------------------")
+    
     _this.setData({
       ["options["+items_index+"].selectHid"] : selectHid?false:true
     })

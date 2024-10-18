@@ -156,12 +156,14 @@ Page({
         icon: "none"
       });
       var sql = "";
+      var riqics =formData.chushengriqi.replace("-","/")
+      riqics = riqics.replace("-","/")
       if(id==undefined || id==-1){
         console.log(sql)
         wx.cloud.callFunction({
           name: 'sqlServer_117',
           data: {
-            query: "insert into gongzi_renyuan (B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,AC) values('" + formData.name + "','" + formData.department + "','" + formData.job + "','" + formData.idcard + "','" + formData.money + "','" + formData.card + "','" + formData.date + "','" + formData.account + "','" + formData.pwd + "','" + formData.age + "','"+that.data.companyName+"_hr','"+ formData.minzu +"','"+ formData.jiguan +"','" + formData.shoujihao + "','" + formData.xueli + "','" + formData.chushengriqi + "','" + formData.hunyinzhuangkuang + "','" + formData.jiuzhizhuangtai + "','" + formData.AC + "');insert into gongzi_renyuanManager (R_id,[add],del,upd,sel,look,view_id) values((select @@identity),'1','1','1','1','1','1'),((select @@identity),'0','0','0','0','0','2'),((select @@identity),'1','1','1','1','1','3'),((select @@identity),'1','1','1','1','1','4'),((select @@identity),'1','1','1','1','1','5'),((select @@identity),'1','1','1','1','1','6'),((select @@identity),'1','1','1','1','1','7'),((select @@identity),'1','1','1','1','1','8'),((select @@identity),'1','1','1','1','1','9'),((select @@identity),'0','0','0','0','0','10'),((select @@identity),'1','1','1','1','1','11'),((select @@identity),'1','1','1','1','1','12')"
+            query: "insert into gongzi_renyuan (B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,AC) values('" + formData.name + "','" + formData.department + "','" + formData.job + "','" + formData.idcard + "','" + formData.money + "','" + formData.card + "','" + formData.date + "','" + formData.account + "','" + formData.pwd + "','" + formData.age + "','"+that.data.companyName+"_hr','"+ formData.minzu +"','"+ formData.jiguan +"','" + formData.shoujihao + "','" + formData.xueli + "','" + riqics + "','" + formData.hunyinzhuangkuang + "','" + formData.jiuzhizhuangtai + "','" + formData.AC + "');insert into gongzi_renyuanManager (R_id,[add],del,upd,sel,look,view_id) values((select @@identity),'1','1','1','1','1','1'),((select @@identity),'0','0','0','0','0','2'),((select @@identity),'1','1','1','1','1','3'),((select @@identity),'1','1','1','1','1','4'),((select @@identity),'1','1','1','1','1','5'),((select @@identity),'1','1','1','1','1','6'),((select @@identity),'1','1','1','1','1','7'),((select @@identity),'1','1','1','1','1','8'),((select @@identity),'1','1','1','1','1','9'),((select @@identity),'0','0','0','0','0','10'),((select @@identity),'1','1','1','1','1','11'),((select @@identity),'1','1','1','1','1','12')"
           },
           success: res => {
             console.log(log)
@@ -179,7 +181,9 @@ Page({
         })
         log = sql;
       }else{
-        sql = "update gongzi_renyuan set B = '" + formData.name + "',C ='" + formData.department + "',D = '" + formData.job + "',E = '" + formData.idcard + "',F = '" + formData.money + "',G = '" + formData.card + "',H = '" + formData.date + "',I = '" + formData.account + "',J = '" + formData.pwd + "',K = '" + formData.age + "',M = '" + formData.minzu + "',N = '" + formData.jiguan + "',O = '" + formData.shoujihao + "',P = '" + formData.xueli + "',Q = '" + formData.chushengriqi + "',R = '" + formData.hunyinzhuangkuang + "',S = '" + formData.jiuzhizhuangtai + "',AC = '" + formData.AC  + "' where id =" + that.data.id
+        var riqics = formData.chushengriqi.replace("-", "/")
+        riqics=riqics.replace("-", "/")
+        sql = "update gongzi_renyuan set B = '" + formData.name + "',C ='" + formData.department + "',D = '" + formData.job + "',E = '" + formData.idcard + "',F = '" + formData.money + "',G = '" + formData.card + "',H = '" + formData.date + "',I = '" + formData.account + "',J = '" + formData.pwd + "',K = '" + formData.age + "',M = '" + formData.minzu + "',N = '" + formData.jiguan + "',O = '" + formData.shoujihao + "',P = '" + formData.xueli + "',Q = '" + riqics  + "',R = '" + formData.hunyinzhuangkuang + "',S = '" + formData.jiuzhizhuangtai + "',AC = '" + formData.AC  + "' where id =" + that.data.id
         log = "修改成功！";
         wx.cloud.callFunction({
           name: 'sqlServer_117',
