@@ -499,26 +499,31 @@ tjjg: function(e) {
             var date = new Date();
             var y = date.getFullYear();
             var mon = date.getMonth()+1;
-            var d = date.getDay();
+            var d = date.getDate();
 
             var h = date.getHours();
             var m = date.getMinutes();
             var s = date.getSeconds();
-
+console.log(date)
             var today = `${y}-${mon}-${d} ${h}:${m}:${s}`;
+            console.log(today)
             var ddh = that.data.ddh;
             const db = wx.cloud.database();
             pd = 0
             var finduser = app.globalData.finduser
             var gongsi = app.globalData.gongsi
             console.log(finduser)
+         
             for (var i = 0; i < cpxinxi.length; i++) {
+             
               wx.cloud.callFunction({
                 name: "sqlConnection",
                 data: {
                   sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "')"
+                  
                 },
                 success(res) {
+                  
                   console.log("成功", res)
                   // that.setData({
                   //   all: res.result[id][0].beizhu

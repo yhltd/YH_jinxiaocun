@@ -134,11 +134,11 @@ Page({
     var sql = ""
     var userInfo = _this.data.userInfo
     if(userInfo.quanxian=="客户"){
-      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where zdyh='"+userInfo.name+"'and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh ='' THEN 0 ELSE 1 END,ddh desc"
+      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where khmc='"+userInfo.name+"'and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh ='' THEN 0 ELSE 1 END,ddh desc"
     }else{
       sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where khmc like'%"+e[0]+"%' and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh = '' THEN 0 ELSE 1 END, ddh desc"
     }
-    
+    console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {

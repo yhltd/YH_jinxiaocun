@@ -492,7 +492,7 @@ zongjia_refresh:function(){
     var date = new Date();
     var y = date.getFullYear();
     var mon = date.getMonth()+1;
-    var d = date.getDay();
+    var d = date.getDate();
 
     var h = date.getHours();
     var m = date.getMinutes();
