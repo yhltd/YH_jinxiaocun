@@ -33,7 +33,7 @@
 <!--订单信息-->
 <!--- 查询 --->
 <!----------->
-<scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}">
+<!-- <scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
     <view>
       <view class="lables">订单号:</view>
@@ -49,6 +49,31 @@
       <view class="lables">结束日期:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="enddate" bindchange="choiceDate">
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{enddate}}" name="enddate" disabled="disabled"></input>
+      </picker>
+      
+    </view>
+    <view class="bt_view">
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</scroll-view> -->
+<scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}">
+  <form bindsubmit="save">
+    <view>
+      <view class="lables">订单号:</view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="ddh"></input>
+      <view class="lables">收银员:</view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="syy"></input>
+      <view class="lables">会员姓名:</view>
+      <input class="input_text_form"  value="{{empty}}" type="text" name="hyxm"></input>
+      <view class="lables">起始日期:</view>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{start_date}}" name="start_date" disabled="disabled"></input>
+      </picker>
+      <view class="lables">结束日期:</view>
+      <picker class="pick" mode="date" value="{{date}}" data-column_name="end_date" bindchange="choiceDate">
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{end_date}}" name="end_date" disabled="disabled"></input>
       </picker>
       
     </view>

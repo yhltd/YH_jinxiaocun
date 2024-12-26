@@ -29,7 +29,7 @@
 <!--客户信息-->
 <!--- 查询 --->
 <!----------->
-<view class="choiceList" hidden="{{frmStudfind}}">
+<!-- <view class="choiceList" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
     <view>
       <view class="lables">收卡人:</view>
@@ -44,8 +44,23 @@
       <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
     </view>
   </form>
-</view>
-
+</view> -->
+<scroll-view scroll-y="true"  class="choiceList" hidden="{{frmStudfind}}">
+  <form bindsubmit="save">
+    <view>
+      <view class="lables">收卡人:</view>
+      <input class="input_text_form"  value="{{empty}}" type="{{dataset_input.input_type}}" name="skr"></input>
+      <view class="lables">付款人:</view>
+      <input class="input_text_form"  value="{{empty}}" type="{{dataset_input.input_type}}" name="fkr"></input>
+      <view class="lables">持卡人:</view>
+      <input class="input_text_form"  value="{{empty}}" type="{{dataset_input.input_type}}" name="ckr"></input>
+    </view>
+    <view class="bt_view">
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</scroll-view>
 
 
 

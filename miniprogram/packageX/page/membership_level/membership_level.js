@@ -30,16 +30,22 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
+    // title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
+    //         { text: "级别名称", width: "200rpx", columnName: "jibie", type: "text",isupd: true},
+    //         { text: "消费额度门槛",width: "200rpx",columnName: "menkan",type: "text",isupd: true},
+    //         { text: "折扣比例", width: "200rpx", columnName: "bili", type: "text", isupd: true},
+          
+    //         ],
     title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
             { text: "级别名称", width: "200rpx", columnName: "jibie", type: "text",isupd: true},
-            { text: "消费额度门槛",width: "200rpx",columnName: "menkan",type: "text",isupd: true},
+            { text: "消费额度门槛",width: "310rpx",columnName: "menkan",type: "text",isupd: true},
             { text: "折扣比例", width: "200rpx", columnName: "bili", type: "text", isupd: true},
-          
+            
             ],
 
             title2: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
             { text: "级别名称", width: "200rpx", columnName: "jibie", type: "text",isupd: true},
-            { text: "消费额度门槛",width: "200rpx",columnName: "menkan",type: "text",isupd: true},
+            { text: "消费额度门槛",width: "260rpx",columnName: "menkan",type: "text",isupd: true},
             { text: "折扣比例", width: "200rpx", columnName: "bili", type: "text", isupd: true},
           
             ],
@@ -492,7 +498,7 @@ Page({
     var list = _this.data.list2;
     var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "digit", isupd: true },
     { text: "级别名称", width: "250rpx", columnName: "jibie", type: "text", isupd: true },
-    { text: "消费额度门槛", width: "200rpx", columnName: "menkan", type: "text", isupd: true },
+    { text: "消费额度门槛", width: "260rpx", columnName: "menkan", type: "text", isupd: true },
     { text: "折扣比例", width: "400rpx", columnName: "bili", type: "text", isupd: true },
     
     ]
@@ -554,7 +560,7 @@ Page({
     var list = _this.data.list;
     var title = [
       { text: "级别名称", width: "200rpx", columnName: "jibie", type: "text",isupd: true},
-      { text: "消费额度门槛",width: "200rpx",columnName: "menkan",type: "text",isupd: true},
+      { text: "消费额度门槛",width: "400rpx",columnName: "menkan",type: "text",isupd: true},
       { text: "折扣比例", width: "200rpx", columnName: "bili", type: "text", isupd: true},
       
     ]

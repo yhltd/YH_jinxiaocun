@@ -88,14 +88,14 @@
       </view>
       
     </view>
-    <view class="row-btn">
+    <view class="row-btn" style="padding: 20px;">
       <view class="left-btn" bindtap="closePopup">取消</view>
       <view class="right-btn" bindtap="addtocart">添加购物车</view>
     </view>
   </view>
 </view>
 <!-- 底部弹窗 -->
-<view class="info-bottom" hidden="{{bottom_jiesuan}}">
+<scroll-view scroll-y class="info-bottom" hidden="{{bottom_jiesuan}}">
   <view class="row-info">
     <view>
       <text>购物车</text>
@@ -138,10 +138,10 @@
     <view class="left-btn" bindtap="closejiesuan">作废</view>
     <view class="right-btn" bindtap="order_insert">立即结账</view>
   </view>
-</view>
+</scroll-view>
 
 <!-- 会员选择弹窗 -->
-<view class="member" hidden="{{member_hid}}">
+<scroll-view scroll-y class="member" hidden="{{member_hid}}">
   <input class="input_member" bindinput="onInput" data-name="member_where" value="{{member_where}}" placeholder="手机号/卡号/姓名"></input>
   <view class="member_title">
     <view class="member_title_item1">卡号</view>
@@ -163,7 +163,7 @@
   </scroll-view>
   <button bindtap="member_sel" class="member_btn_L member_btn" >查询</button>
   <button class="member_btn_R member_btn" bindtap="closemember">取消</button>
-</view>
+</scroll-view>
 
 <!-- 黑底 -->
 <view class="mask" bindtap="specifications_show" hidden="{{mask_hid}}"></view>

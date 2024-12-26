@@ -32,28 +32,62 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
-            { text: "日期", width: "200rpx", columnName: "riqi", type: "text",isupd: true},
+    // title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
+    //         { text: "日期", width: "200rpx", columnName: "riqi", type: "text",isupd: true},
+    //         { text: "订单号",width: "200rpx",columnName: "ddh",type: "text",isupd: true},
+    //         { text: "会员账号", width: "200rpx", columnName: "hyzh", type: "text", isupd: true},
+    //         { text: "会员姓名", width: "400rpx", columnName: "hyxm", type: "text", isupd: true},
+    //         { text: "优惠方案", width: "250rpx", columnName: "yhfa", type: "date", isupd: true},
+    //         { text: "消费金额", width: "250rpx", columnName: "xfje", type: "date", isupd: true},
+    //         { text: "实收金额", width: "200rpx", columnName: "ssje", type: "digit", isupd: true},
+    //         { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "digit", isupd: true},
+    //         { text: "收银员", width: "200rpx", columnName: "syy", type: "digit", isupd: true},
+    //         ],
+
+            // title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
+            // { text: "日期", width: "200rpx", columnName: "riqi", type: "text",isupd: true},
+            // { text: "订单号",width: "200rpx",columnName: "ddh",type: "text",isupd: true},
+            // { text: "会员账号", width: "200rpx", columnName: "hyzh", type: "text", isupd: true},
+            // { text: "会员姓名", width: "400rpx", columnName: "hyxm", type: "text", isupd: true},
+            // { text: "优惠方案", width: "250rpx", columnName: "yhfa", type: "date", isupd: true},
+            // { text: "消费金额", width: "250rpx", columnName: "xfje", type: "date", isupd: true},
+            // { text: "实收金额", width: "200rpx", columnName: "ssje", type: "digit", isupd: true},
+            // { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "digit", isupd: true},
+            // { text: "收银员", width: "200rpx", columnName: "syy", type: "digit", isupd: true},
+            // ],
+  //   input_hid: true,
+  //   frmStudfind: true,
+  //   mask_hid: true,
+  //   addTable: true,
+  //   handle: true,
+  //   details:true,
+  //   addTable2: true,
+  //   input_hid2: true,
+  //   handle2: true,
+  //   handle3:true,
+  // },
+  title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
+            { text: "日期", width: "200rpx", columnName: "riqi", type: "date",isupd: true},
             { text: "订单号",width: "200rpx",columnName: "ddh",type: "text",isupd: true},
             { text: "会员账号", width: "200rpx", columnName: "hyzh", type: "text", isupd: true},
             { text: "会员姓名", width: "400rpx", columnName: "hyxm", type: "text", isupd: true},
-            { text: "优惠方案", width: "250rpx", columnName: "yhfa", type: "date", isupd: true},
-            { text: "消费金额", width: "250rpx", columnName: "xfje", type: "date", isupd: true},
-            { text: "实收金额", width: "200rpx", columnName: "ssje", type: "digit", isupd: true},
-            { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "digit", isupd: true},
-            { text: "收银员", width: "200rpx", columnName: "syy", type: "digit", isupd: true},
+            { text: "优惠方案", width: "250rpx", columnName: "yhfa", type: "text", isupd: true},
+            { text: "消费金额", width: "250rpx", columnName: "xfje", type: "text", isupd: true},
+            { text: "实收金额", width: "200rpx", columnName: "ssje", type: "text", isupd: true},
+            { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "text", isupd: true},
+            { text: "收银员", width: "200rpx", columnName: "syy", type: "text", isupd: true},
             ],
 
-            title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
-            { text: "日期", width: "200rpx", columnName: "riqi", type: "text",isupd: true},
+            title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "text",isupd: true},
+            { text: "日期", width: "200rpx", columnName: "riqi", type: "date",isupd: true},
             { text: "订单号",width: "200rpx",columnName: "ddh",type: "text",isupd: true},
             { text: "会员账号", width: "200rpx", columnName: "hyzh", type: "text", isupd: true},
             { text: "会员姓名", width: "400rpx", columnName: "hyxm", type: "text", isupd: true},
-            { text: "优惠方案", width: "250rpx", columnName: "yhfa", type: "date", isupd: true},
-            { text: "消费金额", width: "250rpx", columnName: "xfje", type: "date", isupd: true},
-            { text: "实收金额", width: "200rpx", columnName: "ssje", type: "digit", isupd: true},
-            { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "digit", isupd: true},
-            { text: "收银员", width: "200rpx", columnName: "syy", type: "digit", isupd: true},
+            { text: "优惠方案", width: "250rpx", columnName: "yhfa", type: "text", isupd: true},
+            { text: "消费金额", width: "250rpx", columnName: "xfje", type: "text", isupd: true},
+            { text: "实收金额", width: "200rpx", columnName: "ssje", type: "text", isupd: true},
+            { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "text", isupd: true},
+            { text: "收银员", width: "200rpx", columnName: "syy", type: "text", isupd: true},
             ],
     input_hid: true,
     frmStudfind: true,
@@ -628,6 +662,30 @@ Page({
     })
   },
 
+  // get_excel: function () {
+  //   var _this = this;
+  //   wx.showLoading({
+  //     title: '打开Excel中',
+  //     mask: 'true'
+  //   })
+  //   var list = _this.data.list2;
+  //   var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "digit", isupd: true },
+  //   { text: "日期", width: "250rpx", columnName: "riqi", type: "date", isupd: true },
+  //   { text: "订单号", width: "200rpx", columnName: "ddh", type: "text", isupd: true },
+  //   { text: "会员账号", width: "400rpx", columnName: "hyzh", type: "text", isupd: true },
+  //   { text: "会员姓名", width: "200rpx", columnName: "hyxm", type: "text", isupd: true },
+  //   { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
+  //   { text: "消费金额", width: "200rpx", columnName: "xfje", type: "text", isupd: true },
+  //   { text: "实收金额", width: "200rpx", columnName: "ssje", type: "text", isupd: true },
+  //   { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
+  //   { text: "收银员", width: "200rpx", columnName: "syy", type: "text", isupd: true },
+    
+  //   ]
+  //   var cloudList = {
+  //     name: '订单信息',
+  //     items: [],
+  //     header: []
+  //   }
   get_excel: function () {
     var _this = this;
     wx.showLoading({
@@ -635,15 +693,16 @@ Page({
       mask: 'true'
     })
     var list = _this.data.list2;
-    var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "digit", isupd: true },
+    var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "text", isupd: true },
     { text: "日期", width: "250rpx", columnName: "riqi", type: "date", isupd: true },
     { text: "订单号", width: "200rpx", columnName: "ddh", type: "text", isupd: true },
     { text: "会员账号", width: "400rpx", columnName: "hyzh", type: "text", isupd: true },
     { text: "会员姓名", width: "200rpx", columnName: "hyxm", type: "text", isupd: true },
     { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
-    { text: "消费金额", width: "200rpx", columnName: "xfje", type: "text", isupd: true },
-    { text: "实收金额", width: "200rpx", columnName: "ssje", type: "text", isupd: true },
-    { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
+    { text: "消费金额", width: "200rpx", columnName: "xfje", type: "number", isupd: true },
+    { text: "实收金额", width: "200rpx", columnName: "ssje", type: "number", isupd: true },
+    { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "number", isupd: true },
+    // { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
     { text: "收银员", width: "200rpx", columnName: "syy", type: "text", isupd: true },
     
     ]
@@ -696,6 +755,29 @@ Page({
     })
   },
 
+  // getExcel: function () {
+  //   var _this = this;
+  //   wx.showLoading({
+  //     title: '打开Excel中',
+  //     mask: 'true'
+  //   })
+  //   var list = _this.data.list;
+  //   var title = [
+  //     { text: "日期", width: "250rpx", columnName: "riqi", type: "date", isupd: true },
+  //     { text: "订单号", width: "200rpx", columnName: "ddh", type: "text", isupd: true },
+  //     { text: "会员账号", width: "400rpx", columnName: "hyzh", type: "text", isupd: true },
+  //     { text: "会员姓名", width: "200rpx", columnName: "hyxm", type: "text", isupd: true },
+  //     { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
+  //     { text: "消费金额", width: "200rpx", columnName: "xfje", type: "text", isupd: true },
+  //     { text: "实收金额", width: "200rpx", columnName: "ssje", type: "text", isupd: true },
+  //     { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
+  //     { text: "收银员", width: "200rpx", columnName: "syy", type: "text", isupd: true },
+  //   ]
+  //   var cloudList = {
+  //     name: '订单信息',
+  //     items: [],
+  //     header: []
+  //   }
   getExcel: function () {
     var _this = this;
     wx.showLoading({
@@ -709,9 +791,10 @@ Page({
       { text: "会员账号", width: "400rpx", columnName: "hyzh", type: "text", isupd: true },
       { text: "会员姓名", width: "200rpx", columnName: "hyxm", type: "text", isupd: true },
       { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
-      { text: "消费金额", width: "200rpx", columnName: "xfje", type: "text", isupd: true },
-      { text: "实收金额", width: "200rpx", columnName: "ssje", type: "text", isupd: true },
-      { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
+      { text: "消费金额", width: "200rpx", columnName: "xfje", type: "number", isupd: true },
+      { text: "实收金额", width: "200rpx", columnName: "ssje", type: "number", isupd: true },
+       { text: "优惠金额", width: "200rpx", columnName: "yhje", type: "number", isupd: true },
+      // { text: "优惠方案", width: "200rpx", columnName: "yhfa", type: "text", isupd: true },
       { text: "收银员", width: "200rpx", columnName: "syy", type: "text", isupd: true },
     ]
     var cloudList = {

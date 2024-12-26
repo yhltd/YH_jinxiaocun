@@ -334,7 +334,7 @@
   </view>
 </scroll-view>
 
-<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}" style="margin-left: 30rpx;height: 230px;">
   <form bindsubmit="save">
     <view wx:if="{{isDate}}">
       <view class="lables" style="margin-top: 10rpx;">修改内容</view>
@@ -349,6 +349,7 @@
     <view class="bt_view">  
       <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
       <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+      <button class="bt_form" bindtap="clear" hover-class="bt_form_hover">清空</button>
     </view>
   </form>
 

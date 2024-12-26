@@ -243,15 +243,22 @@ button{
 
 
 
-.choiceList{
+/* .choiceList{
   position: fixed;
   height: 40%;
   width:100%;
   top:58%;
   background-color: white;
   z-index: 20;
+} */
+.choiceList{
+  position: fixed;
+  height: 40%;
+  width:100%;
+  top:60%;
+  background-color: white;
+  z-index: 20;
 }
-
 
 
 /*
@@ -280,8 +287,13 @@ button{
   margin-top: 30rpx;
 }
 
-.canvas {
+/* .canvas {
   margin-top: 300rpx;
+  width: 750rpx;
+  height: 500rpx;
+} */
+.canvas {
+  margin-top: 110rpx;
   width: 750rpx;
   height: 500rpx;
 }

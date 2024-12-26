@@ -31,19 +31,53 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
-            { text: "商品编码", width: "200rpx", columnName: "product_bianhao", type: "text",isupd: true},
+  //   title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
+  //           { text: "商品编码", width: "200rpx", columnName: "product_bianhao", type: "text",isupd: true},
+  //           { text: "商品类别",width: "200rpx",columnName: "type",type: "text",isupd: true},
+  //           { text: "商品名称", width: "200rpx", columnName: "product_name", type: "text", isupd: true},
+  //           { text: "单位", width: "400rpx", columnName: "unit", type: "text", isupd: true},
+  //           { text: "单价", width: "250rpx", columnName: "price", type: "text", isupd: true},
+  //           { text: "成本", width: "250rpx", columnName: "chengben", type: "text", isupd: true},
+  //           { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+  //           { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+  //           { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true},
+  //           ],
+
+  //   title2: [{ text: "商品编码", width: "100rpx", columnName: "product_name", type: "digit", isupd: true },
+  //             { text: "商品类别", width: "250rpx", columnName: "type", type: "text", isupd: true },
+  //             { text: "商品名称", width: "200rpx", columnName: "product_name", type: "text", isupd: true },
+  //             { text: "单位", width: "400rpx", columnName: "unit", type: "text", isupd: true },
+  //             { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
+  //             { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+  //             { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+  //             { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+  //             { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true }
+              
+  //             ],
+  //   input_hid: true,
+  //   frmStudfind: true,
+  //   mask_hid: true,
+  //   addTable: true,
+  //   handle: true,
+  //   details:true,
+  //   addTable2: true,
+  //   input_hid2: true,
+  //   handle2: true,
+  //   handle3:true,
+  // },
+  title: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
+            { text: "商品编码", width: "300rpx", columnName: "product_bianhao", type: "text",isupd: true},
             { text: "商品类别",width: "200rpx",columnName: "type",type: "text",isupd: true},
             { text: "商品名称", width: "200rpx", columnName: "product_name", type: "text", isupd: true},
-            { text: "单位", width: "400rpx", columnName: "unit", type: "text", isupd: true},
+            { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true},
             { text: "单价", width: "250rpx", columnName: "price", type: "text", isupd: true},
             { text: "成本", width: "250rpx", columnName: "chengben", type: "text", isupd: true},
             { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
-            { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+            { text: "保存方式", width: "300rpx", columnName: "practice", type: "text", isupd: true },
             { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true},
             ],
 
-    title2: [{ text: "商品编码", width: "100rpx", columnName: "product_name", type: "digit", isupd: true },
+    title2: [{ text: "商品编码", width: "100rpx", columnName: "product_bianhao", type: "digit", isupd: true },
               { text: "商品类别", width: "250rpx", columnName: "type", type: "text", isupd: true },
               { text: "商品名称", width: "200rpx", columnName: "product_name", type: "text", isupd: true },
               { text: "单位", width: "400rpx", columnName: "unit", type: "text", isupd: true },
@@ -645,73 +679,73 @@ Page({
     })
   },
 
-  get_excel: function () {
-    var _this = this;
-    wx.showLoading({
-      title: '打开Excel中',
-      mask: 'true'
-    })
-    var list = _this.data.list;
-    var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "digit", isupd: true },
-    { text: "商品编码", width: "250rpx", columnName: "product_bianhao", type: "text", isupd: true },
-    { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
-    { text: "商品名称", width: "400rpx", columnName: "product_name", type: "text", isupd: true },
-    { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
-    { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
-    { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
-    { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
-    { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
-    { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
+  // get_excel: function () {
+  //   var _this = this;
+  //   wx.showLoading({
+  //     title: '打开Excel中',
+  //     mask: 'true'
+  //   })
+  //   var list = _this.data.list;
+  //   var title = [{ text: "序号", width: "100rpx", columnName: "id", type: "digit", isupd: true },
+  //   { text: "商品编码", width: "250rpx", columnName: "product_bianhao", type: "text", isupd: true },
+  //   { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
+  //   { text: "商品名称", width: "400rpx", columnName: "product_name", type: "text", isupd: true },
+  //   { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
+  //   { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
+  //   { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+  //   { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+  //   { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+  //   { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
     
-    ]
-    var cloudList = {
-      name: '商品设置',
-      items: [],
-      header: []
-    }
+  //   ]
+  //   var cloudList = {
+  //     name: '商品设置',
+  //     items: [],
+  //     header: []
+  //   }
 
-    for (let i = 0; i < title.length; i++) {
-      cloudList.header.push({
-        item: title[i].text,
-        type: title[i].type,
-        width: parseInt(title[i].width.split("r")[0]) / 6,
-        columnName: title[i].columnName
-      })
-    }
-    cloudList.items = list
-    console.log(cloudList)
+  //   for (let i = 0; i < title.length; i++) {
+  //     cloudList.header.push({
+  //       item: title[i].text,
+  //       type: title[i].type,
+  //       width: parseInt(title[i].width.split("r")[0]) / 6,
+  //       columnName: title[i].columnName
+  //     })
+  //   }
+  //   cloudList.items = list
+  //   console.log(cloudList)
 
-    wx.cloud.callFunction({
-      name: 'getExcel',
-      data: {
-        list: cloudList
-      },
-      success: function (res) {
-        console.log("获取云储存id")
-        wx.cloud.downloadFile({
-          fileID: res.result.fileID,
-          success: res => {
-            console.log("获取临时路径")
-            wx.hideLoading({
-              success: (res) => {},
-            })
-            console.log(res.tempFilePath)
-            wx.openDocument({
-              filePath: res.tempFilePath,
-              showMenu: 'true',
-              fileType: 'xlsx',
-              success: res => {
-                console.log("打开Excel")
-              }
-            })
-          }
-        })
-      },
-      fail: res => {
-        console.log(res)
-      }
-    })
-  },
+  //   wx.cloud.callFunction({
+  //     name: 'getExcel',
+  //     data: {
+  //       list: cloudList
+  //     },
+  //     success: function (res) {
+  //       console.log("获取云储存id")
+  //       wx.cloud.downloadFile({
+  //         fileID: res.result.fileID,
+  //         success: res => {
+  //           console.log("获取临时路径")
+  //           wx.hideLoading({
+  //             success: (res) => {},
+  //           })
+  //           console.log(res.tempFilePath)
+  //           wx.openDocument({
+  //             filePath: res.tempFilePath,
+  //             showMenu: 'true',
+  //             fileType: 'xlsx',
+  //             success: res => {
+  //               console.log("打开Excel")
+  //             }
+  //           })
+  //         }
+  //       })
+  //     },
+  //     fail: res => {
+  //       console.log(res)
+  //     }
+  //   })
+  // },
 
   getExcel: function () {
     var _this = this;
@@ -720,21 +754,23 @@ Page({
       mask: 'true'
     })
     var list = _this.data.list;
-    var title = [
-    { text: "商品编码", width: "250rpx", columnName: "product_bianhao", type: "text", isupd: true },
-    { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
-    { text: "商品名称", width: "400rpx", columnName: "product_name", type: "text", isupd: true },
-    { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
-    { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
-    { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
-    { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
-    { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
-    { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
-    ]
+    var title = _this.data.title2
+
+    // var title = [
+    // { text: "商品编码", width: "250rpx", columnName: "product_bianhao", type: "text", isupd: true },
+    // { text: "商品类别", width: "200rpx", columnName: "type", type: "text", isupd: true },
+    // { text: "商品名称", width: "400rpx", columnName: "product_name", type: "text", isupd: true },
+    // { text: "单位", width: "200rpx", columnName: "unit", type: "text", isupd: true },
+    // { text: "单价", width: "200rpx", columnName: "price", type: "number", isupd: true },
+    // { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
+    // { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
+    // { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+    // { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true },
+    // ]
     var cloudList = {
       name: '商品设置',
       items: [],
-      header: []
+      header: [],
     }
 
     for (let i = 0; i < title.length; i++) {
@@ -746,6 +782,9 @@ Page({
       })
     }
     cloudList.items = list
+    for (let j = 0; j < list.length; j++) {
+      list[j].photo=""
+    }
     console.log(cloudList)
 
     wx.cloud.callFunction({

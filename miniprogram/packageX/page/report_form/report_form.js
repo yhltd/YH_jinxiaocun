@@ -24,20 +24,34 @@ Page({
       var day = myDate.getDate() > 10 ? myDate.getDate() : "0" + myDate.getDate();
       return year + "-" + month + "-" + day
     },
-    title: [
-            { text: "会员总数", width: "200rpx", columnName: "hyzs", type: "date", isupd: true },
-            { text: "下单会员人数", width: "180rpx", columnName: "xdhyrs", type: "number", isupd: true },
-            { text: "订单总数", width: "250rpx", columnName: "ddzs", type: "number", isupd: true },
-            { text: "消费金额", width: "180rpx", columnName: "xfje", type: "number", isupd: true },
-            { text: "实收金额", width: "180rpx", columnName: "ssje", type: "number", isupd: true },
-            { text: "优惠金额", width: "180rpx", columnName: "yhje", type: "number", isupd: true },
+  //   title: [
+  //           { text: "会员总数", width: "200rpx", columnName: "hyzs", type: "date", isupd: true },
+  //           { text: "下单会员人数", width: "180rpx", columnName: "xdhyrs", type: "number", isupd: true },
+  //           { text: "订单总数", width: "250rpx", columnName: "ddzs", type: "number", isupd: true },
+  //           { text: "消费金额", width: "180rpx", columnName: "xfje", type: "number", isupd: true },
+  //           { text: "实收金额", width: "180rpx", columnName: "ssje", type: "number", isupd: true },
+  //           { text: "优惠金额", width: "180rpx", columnName: "yhje", type: "number", isupd: true },
       
-      ],
-    input_hid: true,
-    frmStudfind: true,
-    mask_hid: true,
-    handle3 : true,
-  },
+  //     ],
+  //   input_hid: true,
+  //   frmStudfind: true,
+  //   mask_hid: true,
+  //   handle3 : true,
+  // },
+  title: [
+    { text: "会员总数", width: "200rpx", columnName: "hyzs", type: "date", isupd: true },
+    { text: "下单会员人数", width: "230rpx", columnName: "xdhyrs", type: "number", isupd: true },
+    { text: "订单总数", width: "200rpx", columnName: "ddzs", type: "number", isupd: true },
+    { text: "消费金额", width: "180rpx", columnName: "xfje", type: "number", isupd: true },
+    { text: "实收金额", width: "180rpx", columnName: "ssje", type: "number", isupd: true },
+    { text: "优惠金额", width: "180rpx", columnName: "yhje", type: "number", isupd: true },
+
+],
+input_hid: true,
+frmStudfind: true,
+mask_hid: true,
+handle3 : true,
+},
 
 
   choiceDate: function (e) {
