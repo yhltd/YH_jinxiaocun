@@ -246,11 +246,10 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-
     wx.cloud.callFunction({
       name: 'sql_jiaowu', 
       data: {
-        sql: "select paiment from shezhi where Company = '" + userInfo.Company + "'"
+        sql: "select paiment from shezhi where Company = '" + userInfo.Company + "' GROUP BY paiment "
       },
       success: res => {
         var list = res.result
@@ -278,7 +277,8 @@ Page({
         console.log("请求失败！")
       }
     })
-
+  
+   
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
       data: {
@@ -487,10 +487,12 @@ Page({
   bindPickerChange6: function(e) {
     var _this = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    
     _this.setData({
       jffs: _this.data.tpaiment_list[e.detail.value]
     })
   },
+
   upd1:function(){
     var _this = this
     let user = app.globalData.gongsi;

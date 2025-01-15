@@ -275,10 +275,14 @@ Page({
         console.log(res.result)
         var list = res.result
         var fenlei = []
+        var fenlei1 = []
         var jingshou = []
         for(var i=0; i<list.length; i++){
           if(list[i].msort != '' && list[i].msort != null && list[i].msort != undefined){
             fenlei.push(list[i].msort)
+          }
+          if(list[i].psort != '' && list[i].psort != null && list[i].psort != undefined){
+            fenlei1.push(list[i].psort)
           }
           if(list[i].teacher != '' && list[i].teacher != null && list[i].teacher != undefined){
             jingshou.push(list[i].teacher)
@@ -286,6 +290,7 @@ Page({
         }
         _this.setData({
           fenlei_list: fenlei,
+          fenlei1_list: fenlei1,
           jingshou_list:jingshou
         })
 
@@ -327,10 +332,10 @@ Page({
   bindPickerChange2: function(e) {
     var _this = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    var fenlei = _this.data.fenlei_list[e.detail.value]
-    console.log(fenlei)
+    var fenlei1 = _this.data.fenlei1_list[e.detail.value]
+    console.log(fenlei1)
     _this.setData({
-      zcfl: fenlei,
+      zcfl: fenlei1,
     })
   },
 

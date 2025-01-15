@@ -56,7 +56,7 @@
     <view class="lables">支出金额</view>
     <input bindinput="onInput" data-column="zcje" class="input_text_form" value="{{zcje}}" type="number" name="zcje" ></input>
     <view class="lables">支出分类</view>
-    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{fenlei_list}}">
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{fenlei1_list}}">
       <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" disabled="disabled"></input>
     </picker>
     <view class="lables">支出备注</view>
@@ -89,7 +89,7 @@
     <view class="lables">支出金额</view>
     <input bindinput="onInput" data-column="zcje" class="input_text_form" value="{{zcje}}" type="number" name="zcje" ></input>
     <view class="lables">支出分类</view>
-    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{fenlei_list}}">
+    <picker bindchange="bindPickerChange2" value="{{index}}" range="{{fenlei1_list}}">
       <input bindinput="onInput" data-column="zcfl" class="input_text_form" value="{{zcfl}}" type="text" name="zcfl" disabled="disabled"></input>
     </picker>
     <view class="lables">支出备注</view>

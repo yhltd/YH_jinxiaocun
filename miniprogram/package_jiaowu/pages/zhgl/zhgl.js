@@ -167,7 +167,84 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.title
+    var title = [{
+      text: "登录名",
+      width: "200rpx",
+      columnName: "UserName",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "密码",
+      width: "200rpx",
+      columnName: "Password",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "姓名",
+      width: "200rpx",
+      columnName: "RealName",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "用户类别",
+      width: "200rpx",
+      columnName: "UseType",
+      type: "number",
+      isupd: true
+    },
+    {
+      text: "年龄",
+      width: "200rpx",
+      columnName: "Age",
+      type: "number",
+      isupd: true
+    },
+    {
+      text: "电话",
+      width: "200rpx",
+      columnName: "Phone",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "家庭住址",
+      width: "200rpx",
+      columnName: "Home",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "身份证号",
+      width: "200rpx",
+      columnName: "photo",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "学历",
+      width: "200rpx",
+      columnName: "Education",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "状态",
+      width: "200rpx",
+      columnName: "state",  
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "绑定微信",
+      width: "200rpx",
+      columnName: "wechart_user2",  
+      type: "text",
+      isupd: true
+    },
+    ]
     var cloudList = {
       name : '用户管理',
       items : [],

@@ -188,7 +188,106 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.title
+    var title = [{
+      text: "学生姓名",
+      width: "200rpx",
+      columnName: "RealName",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "性别",
+      width: "200rpx",
+      columnName: "Sex",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "报名日期",
+      width: "200rpx",
+      columnName: "rgdate",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "培训课程",
+      width: "200rpx",
+      columnName: "Course",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "责任教师",
+      width: "200rpx",
+      columnName: "Teacher",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "班级",
+      width: "200rpx",
+      columnName: "Classnum",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "电话",
+      width: "200rpx",
+      columnName: "phone",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "学费",
+      width: "200rpx",
+      columnName: "Fee",
+      type: "number",
+      isupd: true
+    },
+    {
+      text: "已缴费",
+      width: "200rpx",
+      columnName: "mall",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "未交费",
+      width: "200rpx",
+      columnName: "Nocost",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "已上课时",
+      width: "200rpx",
+      columnName: "nall",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "剩余课时",
+      width: "200rpx",
+      columnName: "Nohour",
+      type: "text",
+      isupd: true
+    },
+    {
+      text: "总课时",
+      width: "200rpx",
+      columnName: "Allhour",
+      type: "number",
+      isupd: true
+    },
+    {
+      text: "状态",
+      width: "200rpx",
+      columnName: "Type",
+      type: "text",
+      isupd: true
+    },
+  
+    ]
     var cloudList = {
       name : '学生信息',
       items : [],

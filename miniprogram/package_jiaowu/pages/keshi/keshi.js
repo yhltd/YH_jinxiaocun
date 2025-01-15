@@ -191,7 +191,50 @@ Page({
       mask : 'true'
     })
     var list = _this.data.list;
-    var title = _this.data.title
+    var title = [
+      {
+        text: "日期",
+        width: "200rpx",
+        columnName: "riqi",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "学生姓名",
+        width: "200rpx",
+        columnName: "student_name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "培训课程",
+        width: "200rpx",
+        columnName: "course",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "课时",
+        width: "200rpx",
+        columnName: "keshi",
+        type: "number",
+        isupd: true
+      },
+      {
+        text: "责任教师",
+        width: "200rpx",
+        columnName: "teacher_name",
+        type: "text",
+        isupd: true
+      },
+      {
+        text: "每节课时金额",
+        width: "200rpx",
+        columnName: "jine",
+        type: "number",
+        isupd: true
+      },
+    ]
     var cloudList = {
       name : '课时统计',
       items : [],

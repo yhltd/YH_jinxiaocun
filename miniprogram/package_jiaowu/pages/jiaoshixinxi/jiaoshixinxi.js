@@ -168,7 +168,7 @@ Page({
         sql: "select * from teacherinfo where company ='"+user+"' and t_name like '%" + e[0] + "%'"
       },
       success: res => {
-        console.log(res.result)
+        // console.log(res.result)
         var list = res.result
         
         _this.setData({

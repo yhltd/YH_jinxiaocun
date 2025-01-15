@@ -290,7 +290,7 @@ Page({
   add1: function () {
     var _this = this
     let user = _this.data.userInfo.Company;
-    console.log(_this.data.id)
+    console.log(_this.data.t_id)
     console.log(_this.data.xm)
     console.log(_this.data.ymmc)
     console.log(_this.data.zeng)
@@ -301,7 +301,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "insert into power (t_id,view_name,`add`,del,upd,sel,company) values('"+_this.data.id+"','"+_this.data.ymmc+"','"+_this.data.zeng+"','"+_this.data.shan+"','"+_this.data.gai+"','"+_this.data.cha+"','"+user+"')"
+          sql: "insert into power (t_id,view_name,`add`,del,upd,sel,company) values('"+_this.data.t_id+"','"+_this.data.ymmc+"','"+_this.data.zeng+"','"+_this.data.shan+"','"+_this.data.gai+"','"+_this.data.cha+"','"+user+"')"
         },
         success: res => {
           _this.setData({

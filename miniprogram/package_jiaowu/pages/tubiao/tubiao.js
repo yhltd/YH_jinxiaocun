@@ -44,7 +44,10 @@ Page({
       },
       xAxis: {
         type: 'category',
-        data: ['累计收入','累计支出','学费收入','累计结余',]
+        data: ['累计收入','累计支出','学费收入','累计结余',],
+        axisLabel: {
+          fontSize: 10 // 设置X轴标签的文字大小为14
+        }
       },
       yAxis: {
         type: 'value'
