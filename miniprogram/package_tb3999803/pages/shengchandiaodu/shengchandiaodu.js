@@ -94,14 +94,22 @@ Page({
         isupd: true
       },
       {
-        text: "订单状态调度",
+        text: "总包数",
         width: "250rpx",
         columnName: "gx",
         type: "text",
         isupd: true
       },
+      {
+        text: "材料数量",
+        width: "250rpx",
+        columnName: "sl",
+        type: "text",
+        isupd: true
+      },
     ],
     shengchan_list: ['优先生产', '正常'],
+    gongxu_list: ['配料','开料','封边','排孔','线条','覆膜','手工','五金','包装','入库','出库','派单'],
     shengchan: "",
   },
 
@@ -115,7 +123,16 @@ Page({
     _this.setData({
       userInfo
     })
-    _this.tableShow()
+    var e = ''
+    _this.tableShow(e)
+  },
+
+  
+  bindPickerChange: function (e) {
+    var _this = this
+    _this.setData({
+      [e.target.dataset.column_name]: _this.data.gongxu_list[e.detail.value]
+    })
   },
 
   tableShow: function (e) {
@@ -124,7 +141,7 @@ Page({
     // sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,paidanDate,shengchanzhouqi,daojishi,searchNO,endDate,isnull(ddh,'') as ddh,isnull(gx,'') as gx from (select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中'  ) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gongxu on productionNo = ddh order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
 
     // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case searchNO when '优先生产' then 1 else 2 end,orderState,convert(datetime,endDate),productionNo;select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
-    sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,orderState asc,convert(datetime,endDate),productionNo desc;select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+    sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,orderState asc,convert(datetime,endDate),productionNo desc;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx like '%" + e + "%'"
     console.log(sql)
     // sql = "select paixu,A,B,C,D,E,F,G,H,I,M,N,J,K,L,isnull(gx,'') as gx from (select a.paixu,'□' as A,isnull(a.productionNO,'') as B,isnull(a.customerName,'') as C,isnull(a.[user],'') as D,isnull(a.orderContent,'') as E,isnull(a.beizhu2,'') as F,isnull(a.orderState,'') as G,isnull(a.spareMoney,'') as H,isnull(paidanDate,'') as I,'' as M,'' as N,isnull(searchNO,'') as J,isnull(endDate,'') as K,case a.orderState when '生产' then 1 else 2 end as L from(select isnull(paixu,'') as paixu,productionNO,customerName,[user],orderContent,orderType,deliveryMode,CONVERT(float,isnull(orderMoney,0))-CONVERT(float,isnull(dingjin,0))-CONVERT(float,isnull(yukuan,0)) as chukufukuan,orderState,spareMoney,wenjian_name,baozhuangshuliang,beizhu1,beizhu2,shou_yukuan,shou_yukuan_riqi,paidanDate,searchNO,endDate from madeOrder where orderState is not NULL and orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' ) as a left join (select payNo,max(convert(date,opetationDate)) as opetationDate from moneyDetails group by payNo) as b on a.productionNO = b.payNo) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gx on B = ddh"
    
@@ -176,7 +193,7 @@ Page({
         _this.setData({
           list: list,
         })
-        // console.log(list)
+        console.log(list)
         // list.sort(_this.compare("daojishi"))
         // console.log(list)
         // _this.setData({
@@ -201,6 +218,7 @@ Page({
     var _this = this
     _this.setData({
       xgShow: false,
+      cxShow: false,
     })
   },
 
@@ -288,8 +306,17 @@ Page({
       bgry: '',
       start_date: '',
       stop_date: '',
+
     })
   },
+  sel1: function () {
+    var _this = this
+    // var e = [_this.data.mccl]
+    var e = [_this.data.gx]
+    _this.tableShow(e)
+    _this.qxShow()
+  },
+
 
 
   click_01: function () {
@@ -364,11 +391,7 @@ Page({
     })
   },
 
-  back: function () {
-    wx.navigateBack({
-      delta: 1
-    });
-  },
+
 
 
   /**

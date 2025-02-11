@@ -15,13 +15,13 @@ Page({
    */
   data: {
     xm_type: ['补板','配件','返厂','外购','整改','少料'],
-    dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
-    jd_type: ['已审','已补','入库','缺料'],
+    dl_type: ['缺柜板','缺门板','缺条子','缺条子','灯带板','异形板','手工件','弧形板','五金配件','其他'],
+    jd_type: ['已审','已补','入库','出库'],
     header_list:{
       dh:'',
       khmc:'',
       zdyh:'',
-      mccl:'',
+      shengchanbianhao:'',
       xmjy:'',
       dmdd:''
     },
@@ -54,10 +54,10 @@ Page({
         isupd: true
       }
       ,{
-        text: "名称数量",
+        text: "名称+材料+备注",
         width: "275rpx",
         width2: "calc(275vmin / 7.5)",
-        columnName: "mcsl",
+        columnName: "mccl",
         type: "text",
         isupd: true
       },{
@@ -374,7 +374,7 @@ if(options.mccl != undefined){
     var dh =header_list.dh
     var khmc = header_list.khmc
     var zdyh = header_list.zdyh
-    var mccl = header_list.mccl
+    var shengchanbianhao = header_list.shengchanbianhao
     var now = new Date();
 
 // 获取年、月、日、时、分、秒
@@ -413,13 +413,13 @@ var second = now.getSeconds(); // 秒钟
           console.log("请求失败！")
         }
       })
-      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,mccl,xm,dl,mcsl,jd,fqrq,jlbh,riqipx) values"
+      var sql1 = "insert into baogongmingxi(dh,khmc,zdyh,shengchanbianhao,xm,dl,mccl,jd,fqrq,jlbh,riqipx) values"
       var sql2 = ""
       for(var i=0; i< _this.data.list.length; i++){
         if(sql2 == ""){
-          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1','"+riqipx+"')"
+          sql2 = "('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.shengchanbianhao +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mccl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1','"+riqipx+"')"
         }else{
-          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.mccl +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mcsl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1','"+riqipx+"')"
+          sql2 = sql2 + ",('" + _this.data.header_list.dh + "','"+ _this.data.header_list.khmc +"','" + _this.data.header_list.zdyh +"','" + _this.data.header_list.shengchanbianhao +"','"+  _this.data.list[i].xm +"','"+  _this.data.list[i].dl +"','"+  _this.data.list[i].mccl +"','"+  _this.data.list[i].jd +"','"+  _this.data.list[i].fqrq +"','1','"+riqipx+"')"
         }
       }
       var sql3=sql1+sql2
@@ -521,7 +521,67 @@ var second = now.getSeconds(); // 秒钟
       })
     },
 
-
+    tableShow1: function (e) {
+      var _this = this
+      var sql1 = ""
+      console.log(_this.data.header_list.dh)
+      if(_this.data.header_list.dh != ''){
+        sql1 = "select dh,khmc,zdyh,shengchanbianhao,xm,dl,mccl,jd,fqrq from baogongmingxi where dh = '" + _this.data.header_list.dh + "' order by fqrq"
+        console.log(sql1)
+      wx.cloud.callFunction({
+        name: 'sqlServer_tb3999803',
+        data: {
+          query: sql1
+        },
+        success: res => {
+          console.log(res)
+          var list = res.result.recordset
+          console.log(list)
+          if(list.length > 0){
+            var header_list = _this.data.header_list
+            header_list.dh = list[0].dh
+            header_list.khmc = list[0].khmc
+            header_list.zdyh = list[0].zdyh
+            header_list.scbh = list[0].scbh
+            var list_old = JSON.stringify(list)
+            list_old = JSON.parse(list_old)
+            _this.setData({
+              header_list,
+              list,
+              list_old,
+            })
+          }
+          _this.setData({
+            list: list,
+            header_list: header_list,
+          })
+          console.log(list)
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        },
+      })
+      }
+    },
+  
+  
+    sel1: function () {
+      var _this = this
+      var header_list = _this.data.header_list
+      // var e = [_this.data.mccl]
+      var e = header_list.dh
+      _this.tableShow1(e)
+      _this.qxShow()
+    },
+  
 
 
 

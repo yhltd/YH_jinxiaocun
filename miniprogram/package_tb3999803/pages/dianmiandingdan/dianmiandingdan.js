@@ -39,18 +39,41 @@ Page({
       type: "text",
       isupd: true
     }, {
-      text: "项目负责",
+      text: "项目负责人",
       width: "270rpx",
       columnName: "xmfz",
       type: "text",
       isupd: true
-    }, {
-      text: "联系方式",
+    }, 
+    {
+      text: "项目联系方式",
       width: "300rpx",
       columnName: "lxfs",
       type: "text",
       isupd: true
-    }, {
+    }, 
+    {
+      text: "项目方案",
+      width: "300rpx",
+      columnName: "xmfa",
+      type: "text",
+      isupd: true
+    }, 
+    {
+      text: "项目工程量",
+      width: "300rpx",
+      columnName: "xmgcl",
+      type: "text",
+      isupd: true
+    }, 
+    {
+      text: "项目简要要求",
+      width: "300rpx",
+      columnName: "xmjyyq",
+      type: "text",
+      isupd: true
+    }, 
+    {
       text: "订单属性",
       width: "150rpx",
       columnName: "ddsx",
@@ -71,6 +94,9 @@ Page({
   bz: '',
   xmfz: '',
   lxfs: '',
+  xmfa: '',
+  xmgcl: '',
+  xmjyyq: '',
   ddsx:'',
   ddh:''
   },
@@ -89,7 +115,7 @@ Page({
         danhaohidden: true,
       })
     }
-    var e = ['','','']
+    var e = ['','共享']
     _this.tableShow(e)
   },
 
@@ -133,11 +159,17 @@ Page({
     var _this = this
     var sql = ""
     var userInfo = _this.data.userInfo
+    // if(userInfo.quanxian=="客户"){
+    //   sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh,id from new_dianmiandingdan where khmc='"+userInfo.name+"'and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh ='' THEN 0 ELSE 1 END,ddh desc"
+    // }else{
+    //   sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh,id from new_dianmiandingdan where khmc like'%"+e[0]+"%' and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh = '' THEN 0 ELSE 1 END, ddh desc"
+    // }
     if(userInfo.quanxian=="客户"){
-      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where khmc='"+userInfo.name+"'and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh ='' THEN 0 ELSE 1 END,ddh desc"
+      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh,id from new_dianmiandingdan where khmc='"+userInfo.name+"'and zdyh like'%"+e[0]+"%' and isnull(jd,'') like'%"+e[1]+"%' order by CASE WHEN ddh ='' THEN 0 ELSE 1 END,ddh desc"
     }else{
-      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,id from new_dianmiandingdan where khmc like'%"+e[0]+"%' and isnull(bz,'') like'%"+e[1]+"%' and isnull(lxfs,'') like '%"+e[2]+"%' order by CASE WHEN ddh = '' THEN 0 ELSE 1 END, ddh desc"
+      sql = "select khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh,id from new_dianmiandingdan where zdyh like'%"+e[0]+"%' and isnull(jd,'') like'%"+e[1]+"%' order by CASE WHEN ddh = '' THEN 0 ELSE 1 END, ddh desc"
     }
+    
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
@@ -177,6 +209,28 @@ Page({
       }
     })
   },
+
+  xialiao: function (e) {
+    var _this = this
+    wx.showModal({
+      title: "提示",
+      content: '是否查看此订单的补货下料单？',
+      cancelColor: '#282B33',
+      confirmColor: '#BC4A4A',
+      success: res => {
+        if (res.confirm) { 
+    var ddh = _this.data.ddh
+    console.log(ddh)
+    wx.navigateTo({
+      url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + ddh,
+    })
+  } else if (res.cancel) {
+    console.log('用户点击取消')
+  }
+}
+})
+  },
+  
 
   page_down_click:function(){
     var _this = this
@@ -248,12 +302,20 @@ PikerChange(e){
       var sql = ""
       var userInfo = _this.data.userInfo
       
+      // if (userInfo.quanxian == '客户') {
+      //   console.log(123)
+      //   sql="update new_dianmiandingdan set khmc='" + userInfo.name + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',xmfa='" + _this.data.xmfa + "',xmgcl='" + _this.data.xmgcl + "',xmjyyq='" + _this.data.xmjyyq + "',ddsx='" + _this.data.ddsx + "',paixu1='" + _this.data.ddh + "' where id=" + _this.data.id+""
+      //   }else{
+      //     console.log(321)
+      //     sql= "update new_dianmiandingdan set khmc='" + _this.data.khmc + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',xmfa='" + _this.data.xmfa + "',xmgcl='" + _this.data.xmgcl + "',xmjyyq='" + _this.data.xmjyyq + "',ddsx='" + _this.data.ddsx + "' ,ddh='" + _this.data.ddh + "',paixu1='" + _this.data.ddh + "'where id=" + _this.data.id+""
+      //   }
+
       if (userInfo.quanxian == '客户') {
         console.log(123)
-        sql="update new_dianmiandingdan set khmc='" + userInfo.name + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',ddsx='" + _this.data.ddsx + "',paixu1='" + _this.data.ddh + "' where id=" + _this.data.id+""
+        sql="update new_dianmiandingdan set zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',xmfa='" + _this.data.xmfa + "',xmgcl='" + _this.data.xmgcl + "',xmjyyq='" + _this.data.xmjyyq + "' where id=" + _this.data.id+""
         }else{
           console.log(321)
-          sql= "update new_dianmiandingdan set khmc='" + _this.data.khmc + "',zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',ddsx='" + _this.data.ddsx + "' ,ddh='" + _this.data.ddh + "',paixu1='" + _this.data.ddh + "'where id=" + _this.data.id+""
+          sql= "update new_dianmiandingdan set zdyh='" + _this.data.zdyh + "',jd='" + _this.data.jd + "',bz='" + _this.data.bz + "',xmfz='" + _this.data.xmfz + "',lxfs='" + _this.data.lxfs + "',xmfa='" + _this.data.xmfa + "',xmgcl='" + _this.data.xmgcl + "',xmjyyq='" + _this.data.xmjyyq + "',paixu1='" + _this.data.ddh + "'where id=" + _this.data.id+""
         }
         console.log(sql)
         if(_this.data.jd=="补货"){
@@ -296,7 +358,7 @@ PikerChange(e){
           lxfs: '',
         })
         _this.qxShow()
-        var e = ['','','']
+        var e = ['','共享']
         _this.tableShow(e)
 
         wx.showToast({
@@ -320,6 +382,26 @@ PikerChange(e){
     
   },
 
+//   xialiao: function (e) {
+//     var _this = this
+//     wx.showModal({
+//       title: "提示",
+//       content: '是否查看此订单的补货下料单？',
+//       cancelColor: '#282B33',
+//       confirmColor: '#BC4A4A',
+//       success: res => {
+//         if (res.confirm) { 
+//     var dh = _this.data.dh
+//     console.log(dh)
+//     wx.navigateTo({
+//       url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh,
+//     })
+//   } else if (res.cancel) {
+//     console.log('用户点击取消')
+//   }
+// }
+// })
+//   },
   
  
   clickView: function (e) {
@@ -334,6 +416,12 @@ PikerChange(e){
       bz: _this.data.list[e.currentTarget.dataset.index].bz,
       xmfz: _this.data.list[e.currentTarget.dataset.index].xmfz,
       lxfs: _this.data.list[e.currentTarget.dataset.index].lxfs,
+
+      xmfa: _this.data.list[e.currentTarget.dataset.index].xmfa,
+      xmgcl: _this.data.list[e.currentTarget.dataset.index].xmgcl,
+      xmjyyq: _this.data.list[e.currentTarget.dataset.index].xmjyyq,
+
+
       ddsx: _this.data.list[e.currentTarget.dataset.index].ddsx,
       ddh: _this.data.list[e.currentTarget.dataset.index].ddh,
       xgShow: true,
@@ -454,6 +542,9 @@ PikerChange(e){
       bz: '',
       xmfz: '',
       lxfs: '',
+      xmfa: '',
+      xmgcl: '',
+      xmjyyq: '',
       ddsx: '',
       ddh: '',
     })
@@ -506,7 +597,7 @@ PikerChange(e){
     }
     if (_this.data.xmfz == '') {
       wx.showToast({
-        title: '请输入项目负责！',
+        title: '请输入项目负责人！',
         icon: 'none',
         duration: 3000
       })
@@ -514,12 +605,40 @@ PikerChange(e){
     }
     if (_this.data.lxfs == '') {
       wx.showToast({
-        title: '请输入联系方式！',
+        title: '请输入项目联系方式！',
         icon: 'none',
         duration: 3000
       })
       return;
     }
+
+
+    if (_this.data.xmfa == '') {
+      wx.showToast({
+        title: '请输入项目方案！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if (_this.data.xmgcl == '') {
+      wx.showToast({
+        title: '请输入项目工程量！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if (_this.data.xmjyyq == '') {
+      wx.showToast({
+        title: '请输入项目简要要求！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
+
     if (_this.data.ddsx == '') {
       wx.showToast({
         title: '请输入订单属性！',
@@ -540,9 +659,9 @@ PikerChange(e){
     }
     
     if (userInfo.quanxian == '客户') {
-      sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,paixu1) values('" + userInfo.name + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "','" + _this.data.ddh + "')"
+      sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh,paixu1) values('" + userInfo.name + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.xmfa + "','" + _this.data.xmgcl + "','" + _this.data.xmjyyq + "','" + _this.data.ddsx + "','" + _this.data.ddh + "','" + _this.data.ddh + "')"
       }else{
-        sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh,paixu1) values('" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "','" + _this.data.ddh + "')"
+        sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh,paixu1) values('" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.xmfa + "','" + _this.data.xmgcl + "','" + _this.data.xmjyyq + "','" + _this.data.ddsx + "','" + _this.data.ddh + "','" + _this.data.ddh + "')"
       }
       
       console.log(sql)
@@ -614,7 +733,7 @@ PikerChange(e){
     }
     if (_this.data.xmfz == '') {
       wx.showToast({
-        title: '请输入项目负责！',
+        title: '请输入项目负责人！',
         icon: 'none',
         duration: 3000
       })
@@ -622,7 +741,33 @@ PikerChange(e){
     }
     if (_this.data.lxfs == '') {
       wx.showToast({
-        title: '请输入联系方式！',
+        title: '请输入项目联系方式！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
+
+    if (_this.data.xmfa == '') {
+      wx.showToast({
+        title: '请输入项目方案！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if (_this.data.xmgcl == '') {
+      wx.showToast({
+        title: '请输入项目工程量！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+    if (_this.data.xmjyyq == '') {
+      wx.showToast({
+        title: '请输入项目简要要求！',
         icon: 'none',
         duration: 3000
       })
@@ -652,9 +797,9 @@ PikerChange(e){
    console.log(userInfo)
     if (userInfo.quanxian == '客户') {
       
-      sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh) values('" + userInfo.name + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "')"
+      sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh) values('" + userInfo.name + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.xmfa + "','" + _this.data.xmgcl + "','" + _this.data.xmjyyq + "','" + _this.data.ddsx + "','" + _this.data.ddh + "')"
       }else{
-        sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,ddsx,ddh) values('" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.ddsx + "','" + _this.data.ddh + "')"
+        sql="insert into new_dianmiandingdan(khmc,zdyh,jd,bz,xmfz,lxfs,xmfa,xmgcl,xmjyyq,ddsx,ddh) values('" + _this.data.khmc + "','" + _this.data.zdyh + "','" + _this.data.jd + "','" + _this.data.bz + "','" + _this.data.xmfz + "','" + _this.data.lxfs + "','" + _this.data.xmfa + "','" + _this.data.xmgcl + "','" + _this.data.xmjyyq + "','" + _this.data.ddsx + "','" + _this.data.ddh + "')"
       }
       console.log(sql)
     wx.cloud.callFunction({
@@ -710,22 +855,38 @@ PikerChange(e){
     })
   },
 
+  // entering: function () {
+  //   var _this = this
+  //   _this.setData({
+  //     cxShow: true,
+  //     khmc: "",
+  //     bz: "",
+  //     lxfs: "",
+  //   })
+  // },
   entering: function () {
     var _this = this
     _this.setData({
       cxShow: true,
-      khmc: "",
-      bz: "",
-      lxfs: "",
+      zdyh: "",
+      jd: "",
     })
   },
 
+  // sel1: function () {
+  //   var _this = this
+  //   var e = [_this.data.khmc,_this.data.bz, _this.data.lxfs]
+  //   _this.tableShow(e)
+  //   _this.qxShow()
+  // },
+
   sel1: function () {
     var _this = this
-    var e = [_this.data.khmc,_this.data.bz, _this.data.lxfs]
+    var e = [_this.data.zdyh,_this.data.jd]
     _this.tableShow(e)
     _this.qxShow()
   },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -29,7 +29,7 @@
 <!---------下方按钮--------->
 <!------------------------->
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="back" >返回</button>
+	<button class="bt_bottom" bindtap="entering" >查询</button>
   <button class="bt_bottom" bindtap="tableShow" >刷新</button>
 </view>
 <!------------------------->
@@ -44,7 +44,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
+<!-- <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
   <view class="lables">生产单号</view>
     <input bindinput="onInput" data-column="productionNo" class="input_text_form"  value="{{productionNo}}" type="text" name="productionNo"></input>
     <view class="lables">客户名称</view>
@@ -67,5 +67,16 @@
     <input bindinput="onInput" data-column="" class="input_text_form" value="{{}}" type="text" name=""></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+  </view>
+</van-popup> -->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+  <view class="lables">工序</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="gx" range="{{gongxu_list}}">
+    <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx"  disabled="disabled"></input>
+  </picker>
+
+    <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>
 </van-popup>

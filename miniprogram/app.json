@@ -527,7 +527,9 @@
         "pages/buhuomingxi/buhuomingxi",
         "pages/kehuzhanghaoguanli/kehuzhanghaoguanli",
         "pages/buhuoxialiaodan/buhuoxialiaodan",
-        "pages/shaoliaomingxibiao/shaoliaomingxibiao"
+        "pages/shaoliaomingxibiao/shaoliaomingxibiao",
+        "pages/baogongchaxun/baogongchaxun",
+        "pages/gongzuoshouce/gongzuoshouce"
       ]
     }
   ],

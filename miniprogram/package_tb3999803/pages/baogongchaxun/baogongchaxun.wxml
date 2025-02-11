@@ -1,0 +1,41 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" wx:for-item="item" wx:key="item" class="list_view" style="width:{{item.width}}" data-index="{{i}}" data-column="{{item.columnName}}" data-value="{{list_item[item.columnName]}}" data-input_type="{{item.type}}" data-isupd="{{item.isupd}}">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!------------------------->
+<!---------下方按钮--------->
+<!------------------------->
+<view class="bottom_view">
+  <button class="bt_bottom" bindtap="entering" >查询</button>
+</view>
+
+<!------------------------->
+<!---------查询弹窗--------->
+<!------------------------->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;">
+  <view class="lables">月份</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="rq" range="{{rq_type}}">
+    <input bindinput="onInput" data-column="rq" class="input_text_form" value="{{rq}}" type="text" name="rq" disabled="disabled"></input>
+  </picker>
+  <view class="lables">工序</view>
+  <input bindinput="onInput" data-column="wczt" class="input_text_form" value="{{wczt}}" type="text" name="wczt"></input>
+  <view class="lables">工序员</view>
+  <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry"></input>
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>

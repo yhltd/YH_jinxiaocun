@@ -162,7 +162,7 @@ Page({
     xiala_panduan:0,
     click_type: '报工界面',
     xiala_panduan1:[{name:''},{name:'出库'}],
-    xiala_panduan2:[{name:''},{name:'完成'},{name:'缺料'}],
+    xiala_panduan2:[{name:''},{name:'完成'},{name:'缺料'},{name:'破损'}],
     gongxu_arr:['pl','kl','fb','pk','xt','fm','sg','wj','bz','rk','ck','pdts']
 
   },
@@ -333,7 +333,7 @@ Page({
     var _this = this
     console.log(_this.data.order_number)
     if(_this.data.order_number != ''){
-      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh is null;select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
+      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku,dl from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh is null;select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
@@ -568,6 +568,8 @@ Page({
         this_value:e.currentTarget.dataset.value,
         xiala_panduan:panduan,
         this_index:e.currentTarget.dataset.index,
+        dl: _this.data.list[e.currentTarget.dataset.index].dl,
+        mcsl: _this.data.list[e.currentTarget.dataset.index].mcsl,
         xgShow:true,
       })
     }else{

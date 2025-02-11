@@ -9,9 +9,9 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
-    xm_type: ['补板','配件','返厂','外购','整改','少料'],
+    // xm_type: ['补板','配件','返厂','外购','整改','少料'],
     dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
-    jd_type: ['已审','已补','入库','缺料'],
+    jd_type: ['已审','已补','入库','缺料','出库'],
     list: [],
     title: [{
       text: "项目",
@@ -25,13 +25,29 @@ Page({
       columnName: "dl",
       type: "text",
       isupd: true
-    }, {
-      text: "名称数量",
-      width: "450rpx",
-      columnName: "mcsl",
+    },
+    // {
+    //   text: "名称数量",
+    //   width: "450rpx",
+    //   columnName: "mcsl",
+    //   type: "text",
+    //   isupd: true
+    // },
+    {
+      text: "名称+材料+备注",
+      width: "500rpx",
+      columnName: "mccl",
       type: "text",
       isupd: true
-    }, {
+    },
+    {
+      text: "生产编号",
+      width: "300rpx",
+      columnName: "shengchanbianhao",
+      type: "text",
+      isupd: true
+    }
+    , {
       text: "进度",
       width: "180rpx",
       columnName: "jd",
@@ -61,13 +77,7 @@ Page({
       columnName: "zdyh",
       type: "text",
       isupd: true
-    }, {
-      text: "材料名称",
-      width: "350rpx",
-      columnName: "mccl",
-      type: "text",
-      isupd: true
-    },
+    }, 
   ],
     id: '',
     xm: '',
@@ -86,6 +96,36 @@ Page({
     })
     var e = ['','','','','']
     _this.tableShow(e)
+
+    var sql = 'select xm from baogongmingxi where xm is not null group by xm'
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql 
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets[0]
+        var list2 = []
+        for(var item = 0;item < list.length; item++){
+          list2.push(list[item].xm)
+        }
+        _this.setData({
+          list2:list2
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+    })
     
   },
 
@@ -101,9 +141,10 @@ Page({
   bindPickerChange1: function (e) {
     var _this = this
     _this.setData({
-      [e.target.dataset.column_name]: _this.data.xm_type[e.detail.value]
+      [e.target.dataset.column_name]: _this.data.list2[e.detail.value]
     })
   },
+
 
   bindPickerChange2: function (e) {
     var _this = this
@@ -133,14 +174,23 @@ Page({
     // sql = "select * from buhuoxialiao where mccl like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
       if(userInfo.quanxian=='工序员'){
-        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
+        sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库')  order by riqipx desc"
       }else if(userInfo.quanxian=='客户'){
         console.log(111)
-        sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and (xm like '%" + e[0] + "%' and xm !='少料') and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
+        sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and (xm like '%" + e[0] + "%' and xm !='少料') and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库')  order by riqipx desc"
 
       }else{
-      sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where jlbh='1' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc "
+      sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from baogongmingxi  where jlbh='1' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库') order by riqipx desc "
       }
+      // if(userInfo.quanxian=='工序员'){
+      //   sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
+      // }else if(userInfo.quanxian=='客户'){
+      //   console.log(111)
+      //   sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and (xm like '%" + e[0] + "%' and xm !='少料') and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
+
+      // }else{
+      // sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where jlbh='1' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc "
+      // }
       console.log(sql)
     // }else{
     // sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}
@@ -261,7 +311,8 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
-        query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
+        // query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
+        query: "update baogongmingxi set jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "' where id=" + _this.data.id
       },
      
       success: res => {
@@ -309,6 +360,7 @@ Page({
       jd: _this.data.list[e.currentTarget.dataset.index].jd,
       mccl: _this.data.list[e.currentTarget.dataset.index].mccl,
       fqrq: _this.data.list[e.currentTarget.dataset.index].fqrq,
+      dh: _this.data.list[e.currentTarget.dataset.index].dh,
       xgShow: true,
     })
   },
@@ -373,10 +425,36 @@ Page({
   },
 
   back: function () {
-    wx.navigateBack({
-      delta: 1
-    });
+    // wx.navigateBack({
+    //   delta: 1
+    // });
+    wx.navigateTo({
+      url: '../buhuoxialiaodan/buhuoxialiaodan'
+    })
   },
+  
+  xialiao: function (e) {
+    var _this = this
+    wx.showModal({
+      title: "提示",
+      content: '是否查看此订单的补货下料单？',
+      cancelColor: '#282B33',
+      confirmColor: '#BC4A4A',
+      success: res => {
+        if (res.confirm) { 
+    var dh = _this.data.dh
+    console.log(dh)
+    wx.navigateTo({
+      url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh,
+    })
+  } else if (res.cancel) {
+    console.log('用户点击取消')
+  }
+}
+})
+  },
+  
+
 
   
   inquire: function () {

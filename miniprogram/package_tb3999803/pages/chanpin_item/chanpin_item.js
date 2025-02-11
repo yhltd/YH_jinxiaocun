@@ -173,7 +173,7 @@ Page({
   inquire: function () {
     var _this = this
     var userInfo = _this.data.userInfo
-    if(userInfo.quanxian != '管理员' && userInfo.bianjichanpinxinxi != '是'){
+    if(userInfo.quanxian != '超级管理员' &&userInfo.quanxian != '管理员' && userInfo.bianjichanpinxinxi != '是'){
       wx.showToast({
         title: '无权限',
         icon: 'none'
@@ -424,7 +424,7 @@ Page({
     console.log(e)
     var column = e.currentTarget.dataset.column
     var userInfo = _this.data.userInfo
-    if(userInfo.quanxian != '管理员' && userInfo.bianjichanpinxinxi != '是'){
+    if(userInfo.quanxian != '超级管理员' && userInfo.quanxian != '管理员' && userInfo.bianjichanpinxinxi != '是'){
       wx.showToast({
         title: '无权限',
         icon: 'none'
@@ -446,7 +446,7 @@ Page({
   del1: function () {
     var _this = this
     var userInfo = _this.data.userInfo
-    if(userInfo.quanxian != '管理员' && userInfo.bianjichanpinxinxi != '是'){
+    if(userInfo.quanxian != '超级管理员' &&userInfo.quanxian != '管理员' && userInfo.bianjichanpinxinxi != '是'){
       wx.showToast({
         title: '无权限',
         icon: 'none'

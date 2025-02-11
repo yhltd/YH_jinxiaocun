@@ -433,15 +433,15 @@ Page({
     var _this = this
     _this.setData({
       cxShow: false,
-      // ddh: '',
-      // khmc: '',
-      // zdyh: '',
-      // ddje: '',
-      // gx: '',
-      // wczt: '',
-      // bgry: '',
-      // start_date: '',
-      // stop_date: '',
+      ddh: '',
+      khmc: '',
+      zdyh: '',
+      ddje: '',
+      gx: '',
+      wczt: '',
+      bgry: '',
+      start_date: '',
+      stop_date: '',
     })
   },
 

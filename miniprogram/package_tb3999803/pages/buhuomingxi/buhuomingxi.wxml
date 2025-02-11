@@ -35,7 +35,7 @@
   <button class="bt_bottom" style="width: 15%;" bindtap="page_up_click" >{{">>"}}</button>
 </view>
 <view class="bottom_view">
-	<button class="bt_bottom" bindtap="back" >返回</button>
+	<button class="bt_bottom" bindtap="back" >补货下料</button>
   <!-- <button class="bt_bottom" bindtap="inquire">添加</button> -->
   <button class="bt_bottom" bindtap="entering" >查询</button>
   <!-- <button class="bt_bottom" bindtap="tableShow" >刷新</button> -->
@@ -53,8 +53,8 @@
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
     <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl" disabled="disabled"></input>
   </picker>
-  <view class="lables">名称数量</view>
-  <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input>
+  <!-- <view class="lables">名称数量</view>
+  <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input> -->
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
     <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd" disabled="disabled"></input>
@@ -70,7 +70,7 @@
   <input bindinput="onInput" data-column="khmc" class="input_text_form" value="{{khmc}}" type="text" name="khmc"></input>
   <view class="lables">终端用户</view>
   <input bindinput="onInput" data-column="zdyh" class="input_text_form" value="{{zdyh}}" type="text" name="zdyh"></input>
-  <view class="lables">材料名称</view>
+  <view class="lables">名称+材料+备注</view>
   <input bindinput="onInput" data-column="mccl" class="input_text_form" value="{{mccl}}" type="text" name="mccl"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
@@ -90,19 +90,22 @@
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
     <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl" disabled="disabled"></input>
   </picker>
-  <view class="lables">名称数量</view>
-  <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input>
+  <!-- <view class="lables">名称数量</view>
+  <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input> -->
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
     <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd" disabled="disabled"></input>
   </picker>
-  <view class="lables">材料名称</view>
+  <view class="lables">名称+材料+备注</view>
   <input bindinput="onInput" data-column="mccl" class="input_text_form" value="{{mccl}}" type="text" name="mccl"></input>
   <view class="lables">发起日期</view>
   <input bindinput="onInput" data-column="fqrq" class="input_text_form" value="{{fqrq}}" type="text" name="fqrq" disabled></input>
+
+  <input bindinput="onInput" data-column="dh" class="input_text_form" value="{{dh}}" type="text" name="dh" disabled hidden></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button>
-    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="xialiao">补货下料</button>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">保存</button>
   </view>
 </van-popup>
 
@@ -111,16 +114,20 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;">
   <view class="lables">项目</view>
-  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xm" range="{{xm_type}}">
+  <!-- <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xm" range="{{xm_type}}">
+    <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" disabled="disabled"></input>
+  </picker> -->
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xm" range="{{list2}}">
     <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" disabled="disabled"></input>
   </picker>
+
   <view class="lables">客户名称</view>
   <input bindinput="onInput"  data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc"></input>
   <!-- <view class="lables">客户名称</view>
   <input bindinput="onInput" data-column="khmc" class="input_text_form"  value="{{khmc}}" type="text" name="khmc1"></input> -->
   <view class="lables">终端用户</view>
   <input bindinput="onInput" data-column="zdyh" class="input_text_form"  value="{{zdyh}}" type="text" name="zdyh"></input>
-  <view class="lables">材料名称</view>
+  <view class="lables">名称+材料+备注</view>
   <input bindinput="onInput" data-column="mccl" class="input_text_form"  value="{{mccl}}" type="text" name="mccl"></input>
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="jd" range="{{jd_type}}">

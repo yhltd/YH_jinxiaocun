@@ -11,7 +11,7 @@ Page({
   data: {
     xm_type: ['少料'],
     dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
-    jd_type: ['已审','已补','入库','缺料'],
+    jd_type: ['已审','已补','入库','缺料','出库'],
     list: [],
     title: [{
       text: "项目",
@@ -25,13 +25,22 @@ Page({
       columnName: "dl",
       type: "text",
       isupd: true
-    }, {
-      text: "名称数量",
-      width: "450rpx",
-      columnName: "mcsl",
+    },
+    {
+      text: "名称+材料+备注",
+      width: "500rpx",
+      columnName: "mccl",
       type: "text",
       isupd: true
-    }, {
+    },
+    // {
+    //   text: "名称数量",
+    //   width: "450rpx",
+    //   columnName: "mcsl",
+    //   type: "text",
+    //   isupd: true
+    // },
+     {
       text: "进度",
       width: "90rpx",
       columnName: "jd",
@@ -61,13 +70,14 @@ Page({
       columnName: "zdyh",
       type: "text",
       isupd: true
-    }, {
-      text: "材料名称",
-      width: "350rpx",
-      columnName: "mccl",
-      type: "text",
-      isupd: true
-    },
+    }, 
+    // {
+    //   text: "材料名称",
+    //   width: "350rpx",
+    //   columnName: "mccl",
+    //   type: "text",
+    //   isupd: true
+    // },
   ],
     id: '',
     xm: '',
@@ -86,8 +96,38 @@ Page({
     })
     var e = ['','','','','']
     _this.tableShow(e)
+    var sql = 'select xm from baogongmingxi where xm is not null group by xm'
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql 
+      },
+      success: res => {
+        console.log(res)
+        var list = res.result.recordsets[0]
+        var list2 = []
+        for(var item = 0;item < list.length; item++){
+          list2.push(list[item].xm)
+        }
+        _this.setData({
+          list2:list2
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      },
+    })
     
   },
+
 
   
 
@@ -132,7 +172,7 @@ Page({
     var userInfo = _this.data.userInfo
     // sql = "select * from buhuoxialiao where mccl like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
-      sql = "select xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl,id from baogongmingxi where jlbh='1' and xm='少料' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc"
+      sql = "select xm,dl,mccl,jd,fqrq,dh,khmc,zdyh,id from baogongmingxi where jlbh='1' and xm='少料' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc"
     // }
     // else{
     // sql = "select * from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}
@@ -256,14 +296,13 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
-        query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
+        query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
       },
       success: res => {
         _this.setData({
           id: '',
           xm: '',
           dl: '',
-          mcsl: '',
           jd: '',
           mccl: '',
           fqrq:''

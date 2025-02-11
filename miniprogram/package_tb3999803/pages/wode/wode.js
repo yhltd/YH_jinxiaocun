@@ -10,6 +10,7 @@ Page({
     showList: [{
         text: "消息通知",
         url: "../xiaoxitongzhi/xiaoxitongzhi",
+        "超级管理员":true,
         "管理员":true,
         "工序员":true,
         "客户":true
@@ -17,41 +18,45 @@ Page({
       {
         text: "店面订单",
         url: "../dianmiandingdan/dianmiandingdan",
-        "管理员":true,
+        "超级管理员":true,
+        "管理员":false,
         "工序员":false,
         "客户":true
       },{
         text: "补货下料",
         url: "../buhuoxialiaodan/buhuoxialiaodan",
-        "管理员":true,
-        "工序员":true,
+        "超级管理员":true,
+        "管理员":false,
+        "工序员":false,
+        "客户":false
+      },{
+        text: "在产订单",
+        url: "../dingdanfukuan/dingdanfukuan",
+        "超级管理员":true,
+        "管理员":false,
+        "工序员":false,
         "客户":true
-      }
-      ,
+      },
       {
         text: "补货明细",
         url: "../buhuomingxi/buhuomingxi",
+        "超级管理员":true,
         "管理员":true,
         "工序员":true,
         "客户":true
       },
       {
-        text: "少料明细",
+        text: "报工明细",
         url: "../shaoliaomingxibiao/shaoliaomingxibiao",
+        "超级管理员":true,
         "管理员":true,
         "工序员":true,
         "客户":false
       },
       {
-        text: "在产订单",
-        url: "../dingdanfukuan/dingdanfukuan",
-        "管理员":true,
-        "工序员":false,
-        "客户":true
-      },
-      {
         text: "扫码报工",
         url: "../saomabaogong/saomabaogong",
+        "超级管理员":true,
         "管理员":true,
         "工序员":true,
         "客户":false
@@ -59,6 +64,7 @@ Page({
       {
         text: "生产调度",
         url: "../shengchandiaodu/shengchandiaodu",
+        "超级管理员":true,
         "管理员":true,
         "工序员":true,
         "客户":false
@@ -66,6 +72,7 @@ Page({
       {
         text: "账号管理",
         url: "../zhanghaoguanli/zhanghaoguanli",
+        "超级管理员":true,
         "管理员":true,
         "工序员":false,
         "客户":false
@@ -73,10 +80,26 @@ Page({
       {
         text: "客户账号管理",
         url: "../kehuzhanghaoguanli/kehuzhanghaoguanli",
-        "管理员":true,
+        "超级管理员":true,
+        "管理员":false,
         "工序员":false,
         "客户":true,
-      
+      },
+      {
+        text: "报工查询",
+        url: "../baogongchaxun/baogongchaxun",
+        "超级管理员":true,
+        "管理员":true,
+        "工序员":true,
+        "客户":false,
+      },
+      {
+        text: "操作手册",
+        url: "../gongzuoshouce/gongzuoshouce",
+        "超级管理员":true,
+        "管理员":true,
+        "工序员":true,
+        "客户":false,
       }
     ]
   },
@@ -273,3 +296,5 @@ Page({
 
   }
 })
+
+

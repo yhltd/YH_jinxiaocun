@@ -72,6 +72,11 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
   <view class="lables">{{update_name[this_column]}}</view>
   <input class="input_text_form" bindtap="sel_xiala" type="{{this_type}}" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
+    <view class="lables">大类</view>
+  <input bindinput="onInput"  data-column="dl" class="input_text_form"  value="{{dl}}" type="text" name="dl"></input>
+  <view class="lables">材料+名称+备注</view>
+  <input bindinput="onInput"  data-column="mcsl" class="input_text_form"  value="{{mcsl}}" type="text" name="mcsl"></input>
+
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
