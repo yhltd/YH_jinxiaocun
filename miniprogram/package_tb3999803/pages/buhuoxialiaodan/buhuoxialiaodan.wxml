@@ -5,17 +5,17 @@
 <!------------------------->
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">单号</view>
-  <input bindinput="onInput_header" data-column="dh" class="input_text_head" value="{{header_list.dh}}" type="text" name="dh" disabled="{{dhdisabled}}"></input>
+  <input bindinput="onInput_header" data-column="dh" class="input_text_head" value="{{header_list.dh}}" type="text" name="dh" ></input>
 </view>
 
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">客户名称</view>
-  <input bindinput="onInput_header" data-column="khmc" class="input_text_head" value="{{header_list.khmc}}" type="text" name="khmc" disabled="{{khmcisdisabled}}"></input>
+  <input bindinput="onInput_header" data-column="khmc" class="input_text_head" value="{{header_list.khmc}}" type="text" name="khmc" ></input>
 </view>
 
 <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">终端用户</view>
-  <input bindinput="onInput_header" data-column="zdyh" class="input_text_head" value="{{header_list.zdyh}}" type="text" name="zdyh" disabled="{{zdyhisdisabled}}"></input>
+  <input bindinput="onInput_header" data-column="zdyh" class="input_text_head" value="{{header_list.zdyh}}" type="text" name="zdyh" ></input>
 
 </view>
 

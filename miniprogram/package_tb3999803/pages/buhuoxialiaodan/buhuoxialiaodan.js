@@ -91,6 +91,10 @@ Page({
     // var userInfo = _this.data.userInfo
     console.log(options.ddh+"    81")
     console.log(options.dh+"    82")
+    console.log(options.khmc+"    83")
+    console.log(options.zdyh+"    84")
+    console.log(options.shengchanbianhao+"    85")
+   
     var header_list = _this.data.header_list
     // header_list.dh = options.ddh
     // ------------------20240822 xt
@@ -157,7 +161,63 @@ if(options.mccl != undefined){
     // if(options.dmdd=="1"){
     //   _this.tableShow()
     // }
+    if(header_list.dh != ''){
+      _this.getBaoGong()
+    }
   },
+
+  getBaoGong:function(){
+    var _this = this
+      var sql1 = ""
+      console.log(_this.data.header_list.dh)
+      if(_this.data.header_list.dh != ''){
+        sql1 = "select dh,khmc,zdyh,shengchanbianhao,xm,dl,mccl,jd,fqrq from baogongmingxi where dh = '" + _this.data.header_list.dh + "' order by fqrq"
+        console.log(sql1)
+      wx.cloud.callFunction({
+        name: 'sqlServer_tb3999803',
+        data: {
+          query: sql1
+        },
+        success: res => {
+          console.log(res)
+          var list = res.result.recordset
+          console.log(list)
+          if(list.length > 0){
+            var header_list = _this.data.header_list
+            header_list.dh = list[0].dh
+            header_list.khmc = list[0].khmc
+            header_list.zdyh = list[0].zdyh
+            header_list.scbh = list[0].scbh
+            var list_old = JSON.stringify(list)
+            list_old = JSON.parse(list_old)
+            _this.setData({
+              header_list,
+              list,
+              list_old,
+            })
+          }
+          _this.setData({
+            list: list,
+            header_list: header_list,
+          })
+          console.log(list)
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        },
+      })
+      }
+    },
+  
+
   add_row: function () {
     var _this = this
     var list = _this.data.list

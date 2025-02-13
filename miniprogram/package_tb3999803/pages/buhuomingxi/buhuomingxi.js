@@ -243,6 +243,8 @@ Page({
     })
   },
 
+ 
+
   page_down_click:function(){
     var _this = this
     var this_page = _this.data.this_page
@@ -421,6 +423,36 @@ Page({
       tjShow: false,
       cxShow: false,
       xgShow: false,
+    })
+  },
+
+  goto_baogong: function(e){
+    var _this = this
+    wx.showModal({
+      title: "提示",
+      content: '是否跳转到补货下料单？',
+      cancelColor: '#282B33',
+      confirmColor: '#BC4A4A',
+      success: res => {
+        if (res.confirm) { 
+        // var dh = _this.data.dh
+        // var khmc = _this.data.khmc
+        // var zdyh = _this.data.zdyh   
+        // var shengchanbianhao = _this.data.shengchanbianhao
+        var index = e.currentTarget.dataset.index
+          var dh = _this.data.list[index].dh
+          var khmc = _this.data.list[index].khmc
+          var zdyh = _this.data.list[index].zdyh
+          var shengchanbianhao = _this.data.list[index].shengchanbianhao
+        console.log(dh)
+        wx.navigateTo({
+     url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh + '&khmc=' + khmc +'&zdyh=' + zdyh + '&shengchanbianhao=' + shengchanbianhao,
+        })
+     
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
   },
 

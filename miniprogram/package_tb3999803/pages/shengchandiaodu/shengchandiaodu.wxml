@@ -69,11 +69,20 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
   </view>
 </van-popup> -->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
   <view class="lables">工序</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="gx" range="{{gongxu_list}}">
     <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx"  disabled="disabled"></input>
   </picker>
+
+  <view class="lables">报工状态</view>
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="baogongzhuangtai" range="{{baogongzhuangtai_list}}">
+    <input bindinput="onInput" data-column="baogongzhuangtai" class="input_text_form" value="{{baogongzhuangtai}}" type="text" name="baogongzhuangtai"  disabled="disabled"></input>
+  </picker>
+  <view class="lables">订单数量</view>
+    <input bindinput="onInput" data-column="olist" class="input_text_form" value="{{olist}}" type="text" name="olist"></input>
+    <view class="lables">原料数量</view>
+    <input bindinput="onInput" data-column="sllist" class="input_text_form" value="{{sllist}}" type="text" name="sllist"></input>
 
     <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
