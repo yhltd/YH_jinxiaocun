@@ -1,7 +1,5 @@
-// 100lie_page/pages/work_bench/work_bench.js
 var app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -128,26 +126,22 @@ Page({
         width: "100rpx",
         columnName: "ROW_ID",
         hidden: false
-      },
-      {
+      },{
         text: "人员",
         width: "200rpx",
         columnName: "人员",
         hidden: false
-      },
-      {
+      },{
         text: "录入时间",
         width: "220rpx",
         columnName: "日期",
         hidden: false
-      },
-      {
+      },{
         text: "最后修改时间",
         width: "220rpx",
         columnName: "a最后修改日期",
         hidden: false
-      },
-      {
+      },{
         text: "A",
         width: "300rpx",
         columnName: "A"
@@ -186,8 +180,7 @@ Page({
         width: "300rpx",
         columnName: "H",
         hidden: false
-      },
-      {
+      },{
         text: "I",
         width: "300rpx",
         columnName: "I",
@@ -227,8 +220,7 @@ Page({
         width: "300rpx",
         columnName: "P",
         hidden: false
-      },
-      {
+      },{
         text: "Q",
         width: "300rpx",
         columnName: "Q",
@@ -268,8 +260,7 @@ Page({
         width: "300rpx",
         columnName: "X",
         hidden: false
-      },
-      {
+      },{
         text: "Y",
         width: "300rpx",
         columnName: "Y",
@@ -279,8 +270,7 @@ Page({
         width: "300rpx",
         columnName: "Z",
         hidden: false
-      },
-      {
+      },{
         text: "AA",
         width: "300rpx",
         columnName: "AA",
@@ -320,8 +310,7 @@ Page({
         width: "300rpx",
         columnName: "AH",
         hidden: false
-      },
-      {
+      },{
         text: "AI",
         width: "300rpx",
         columnName: "AI",
@@ -361,8 +350,7 @@ Page({
         width: "300rpx",
         columnName: "AP",
         hidden: false
-      },
-      {
+      },{
         text: "AQ",
         width: "300rpx",
         columnName: "AQ",
@@ -402,8 +390,7 @@ Page({
         width: "300rpx",
         columnName: "AX",
         hidden: false
-      },
-      {
+      },{
         text: "AY",
         width: "300rpx",
         columnName: "AY",
@@ -413,8 +400,7 @@ Page({
         width: "300rpx",
         columnName: "AZ",
         hidden: false
-      },
-      {
+      },{
         text: "BA",
         width: "300rpx",
         columnName: "BA",
@@ -454,8 +440,7 @@ Page({
         width: "300rpx",
         columnName: "BH",
         hidden: false
-      },
-      {
+      },{
         text: "BI",
         width: "300rpx",
         columnName: "BI",
@@ -495,8 +480,7 @@ Page({
         width: "300rpx",
         columnName: "BP",
         hidden: false
-      },
-      {
+      },{
         text: "BQ",
         width: "300rpx",
         columnName: "BQ",
@@ -536,8 +520,7 @@ Page({
         width: "300rpx",
         columnName: "BX",
         hidden: false
-      },
-      {
+      },{
         text: "BY",
         width: "300rpx",
         columnName: "BYY",
@@ -547,8 +530,7 @@ Page({
         width: "300rpx",
         columnName: "BZ",
         hidden: false
-      },
-      {
+      },{
         text: "CA",
         width: "300rpx",
         columnName: "CA",
@@ -588,8 +570,7 @@ Page({
         width: "300rpx",
         columnName: "CH",
         hidden: false
-      },
-      {
+      },{
         text: "CI",
         width: "300rpx",
         columnName: "CI",
@@ -629,8 +610,7 @@ Page({
         width: "300rpx",
         columnName: "CP",
         hidden: false
-      },
-      {
+      },{
         text: "CQ",
         width: "300rpx",
         columnName: "CQ",
@@ -672,28 +652,23 @@ Page({
         text: "年",
         name: "year",
         value: ""
-      },
-      {
+      },{
         text: "月",
         name: "month",
         value: ""
-      },
-      {
+      },{
         text: "日",
         name: "day",
         value: ""
-      },
-      {
+      },{
         text: "时",
         name: "hour",
         value: ""
-      },
-      {
+      },{
         text: "分",
         name: "minute",
         value: ""
-      },
-      {
+      },{
         text: "秒",
         name: "second",
         value: ""
@@ -701,9 +676,7 @@ Page({
     ],
     accounting_arr: [],
     animationData_upd_code: "",
-
     upd_index: 0,
-
     animationData_moreDo_view: "",
     animationData_select_view: "",
     options: [{
@@ -721,7 +694,6 @@ Page({
     gai: '否',
     cha: '否',
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -790,7 +762,6 @@ Page({
   user_set: function () {
     var _this = this
     var sql = "select * from baitaoquanxian_gongsi where B='" + _this.data.userInfo.B + "'; select * from baitaoquanxian_copy1 where renyuan_id ='" + _this.data.userInfo.renyuan_id + "' and chashanquanxian ='修改'; select C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AH,AI,AJ,AK,AL,AM,AN,AO,AP,AQ,AR,ASS,AT,AU,AV,AW,AX,AY,AZ,BA,BB,BC,BD,BE,BF,BG,BH,BI,BJ,BK,BL,BM,BN,BO,BP,BQ,BR,BS,BT,BU,BV,BW,BX,BYY,BZ,CA,CB,CC,CD,CE,CF,CG,CH,CI,CJ,CK,CL,CM,CN,CO,CP,CQ,CR,CS,CT,CU,CV,CW,CX from baitaoquanxian_copy1 where renyuan_id ='" + _this.data.userInfo.renyuan_id + "' and chashanquanxian ='查询';select ins,del,upd,sel from baitaoquanxian_department where company='" + _this.data.userInfo.B + "' and view_name ='工作台' and department_name ='" + _this.data.userInfo.bumen + "'"
-
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
@@ -837,7 +808,6 @@ Page({
             titil[i].hidden = true
           }
         }
-
         for (var i = 0; i < quanxian_arr.length; i++) {
           if (list1[0][quanxian_arr[i]] == "√" && list2[0][quanxian_arr[i]] == "√") {
             quanxian_list[quanxian_arr[i]] = "√"
@@ -847,7 +817,6 @@ Page({
           titil: titil,
           quanxian_list: quanxian_list
         })
-
         var e = ['', '日期', '1900-01-01', '2100-12-31']
         _this.init(e)
         _this.hid_view()
@@ -864,15 +833,12 @@ Page({
       }
     })
   },
-
-
   bindPickerChange1: function (e) {
     var _this = this
     _this.setData({
       countPage: _this.data.page_arr[e.detail.value]
     })
   },
-
   clickView: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
@@ -917,7 +883,6 @@ Page({
                 upd_db_id,
                 money_type
               })
-
               if (input_type == "date") {
                 if (value != "") {
                   var arr = value.split(" ");
@@ -942,7 +907,6 @@ Page({
                   input_type: "text"
                 })
               }
-
               _this.showView(_this, "input");
             },
             err: res => {
@@ -962,31 +926,22 @@ Page({
         console.log("请求失败！")
       }
     })
-
-
   },
-
   save: function (e) {
     var _this = this;
-
     var new_value_input = ""
     var new_value_input = e.detail.value.new
     if (new_value_input == "") {
       new_value_input = _this.data.value_input
     }
-
     var index = _this.data.index_input;
     var column = _this.data.column_input;
     var id = _this.data.upd_db_id
-
     _this.hidView(_this, "input")
-
     _this.setData({
       ["list[" + index + "]." + column]: new_value_input,
       empty: ""
     })
-
-
     var this_time = _this.getNowTime()
     wx.cloud.callFunction({
       name: "sqlServer_117",
@@ -1007,7 +962,6 @@ Page({
       }
     })
   },
-
   clear: function (e) {
     var _this = this;
     var index = _this.data.index_input;
@@ -1018,7 +972,6 @@ Page({
       ["list[" + index + "]." + column]: "",
       empty: ""
     })
-
     var this_time = _this.getNowTime()
     wx.cloud.callFunction({
       name: "sqlServer_117",
@@ -1039,7 +992,6 @@ Page({
       }
     })
   },
-
   delete: function (e) {
     var _this = this;
     if (_this.data.shan != '是') {
@@ -1092,7 +1044,6 @@ Page({
       }
     })
   },
-
   insert: function () {
     var _this = this
     var this_time = _this.getNowTime()
@@ -1139,7 +1090,6 @@ Page({
       }
     })
   },
-
   hid_view: function () {
     var _this = this;
     _this.hidView(_this, "input")
@@ -1149,7 +1099,6 @@ Page({
     _this.hidView(_this, "moreDo")
     _this.hidView(_this, "examine")
   },
-
   hidView: function (_this, type) {
     var animation = wx.createAnimation({
       duration: 300
@@ -1157,7 +1106,6 @@ Page({
     _this.setData({
       hid_view: false
     })
-
     switch (type) {
       case "input":
         animation.translateX(-400).step()
@@ -1176,7 +1124,6 @@ Page({
             }
           })
         }
-
         _this.setData({
           animationData_input: animation.export(),
           value_input: "",
@@ -1216,13 +1163,11 @@ Page({
         break;
     }
   },
-
   showSelect: function () {
     var _this = this;
     _this.hidView(_this, "moreDo")
     _this.showView(_this, "select")
   },
-
   showChoiceMonth1: function (e) {
     var _this = this;
     _this.setData({
@@ -1235,7 +1180,6 @@ Page({
       stop_date: e.detail.value
     })
   },
-
   init: function (e) {
     var _this = this;
     if (_this.data.cha != '是') {
@@ -1245,12 +1189,10 @@ Page({
       })
       return;
     }
-
     wx.showLoading({
       title: '加载中',
       mask: 'true'
     })
-
     var userInfo = _this.data.userInfo;
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
@@ -1277,7 +1219,6 @@ Page({
           list: list
         })
         wx.hideLoading({
-
         })
       },
       err: res => {
@@ -1292,7 +1233,6 @@ Page({
     })
     setTimeout(yanshi, 2000);
     var _this = this;
-
     function yanshi() {
       wx.cloud.callFunction({
         name: 'sqlServer_117',
@@ -12729,7 +12669,6 @@ Page({
       })
     }
   },
-
   select: function (e) {
     var _this = this
     var start_date = e.detail.value.start_date
@@ -12749,7 +12688,6 @@ Page({
       })
       return
     }
-
     var e = [person_name, '日期', start_date, stop_date]
     _this.setData({
       this_where: e
@@ -12757,12 +12695,10 @@ Page({
     _this.init(e)
     _this.hidView(_this, "select");
   },
-
   moreDo: function () {
     var _this = this;
     _this.showView(_this, "moreDo")
   },
-
   switchpage: function (e) {
     var _this = this;
     if (_this.data.isSelect) {
@@ -12771,7 +12707,6 @@ Page({
     var index = e.currentTarget.dataset.index;
     var pageNum = _this.data.pageNum;
     var pageCount = _this.data.pageCount;
-
     if (index == "-1") {
       pageNum--;
       if (pageNum < 1) {
@@ -12802,12 +12737,10 @@ Page({
       }
     }
   },
-
   show_updPageCount: function () {
     var _this = this;
     _this.showView(_this, "countPage")
   },
-
   save_countPage: function (e) {
     var _this = this;
     var countPage = e.detail.value.countPage
@@ -12819,7 +12752,6 @@ Page({
     var e = _this.data.this_where
     _this.init(e)
   },
-
   showView: function (_this, type) {
     var animation = wx.createAnimation({
       duration: 300
@@ -12828,7 +12760,6 @@ Page({
       initHidView: false,
       hid_view: true
     })
-
     switch (type) {
       case "input":
         animation.translateX(0).step()
@@ -12867,9 +12798,7 @@ Page({
         })
         break;
     }
-
   },
-
   getPageCount: function (e) {
     var _this = this;
     var userInfo = _this.data.userInfo
@@ -12903,7 +12832,6 @@ Page({
       }
     })
   },
-
   //获取当前时间
   getNowTime: function () {
     var date = new Date();
@@ -12926,7 +12854,6 @@ Page({
   addZero: function (s) {
     return s < 10 ? ('0' + s) : s;
   },
-
   getExcel: function () {
     var _this = this;
     wx.showLoading({
@@ -12940,7 +12867,6 @@ Page({
       items: [],
       header: []
     }
-
     for (let i = 0; i < title.length; i++) {
       cloudList.header.push({
         item: title[i].text,
@@ -12950,7 +12876,6 @@ Page({
       })
     }
     cloudList.items = list
-
     wx.cloud.callFunction({
       name: 'getExcel',
       data: {
@@ -12982,54 +12907,40 @@ Page({
       }
     })
   },
-
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
     var _this = this;
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
   },
-
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
   },
-
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom() {
-
   },
-
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-
   }
 })

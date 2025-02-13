@@ -1,4 +1,3 @@
-
 <scroll-view class="sv_list" scroll-x="true" scroll-y="true">
   <view class="table">
     <view class='table_header'>
@@ -103,7 +102,6 @@
         <view class="list_view" hidden="{{titil[29].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="Z" data-value="{{list_item.Z}}" bindtap="{{quanxian_list.AB == '√'?'clickView':''}}" style="{{quanxian_list.AB == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.Z}}</view>
         </view>
-
         <view class="list_view" hidden="{{titil[30].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AA" data-value="{{list_item.AA}}" bindtap="{{quanxian_list.AC == '√'?'clickView':''}}" style="{{quanxian_list.AC == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.AA}}</view>
         </view>
@@ -182,7 +180,6 @@
         <view class="list_view" hidden="{{titil[55].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="AZ" data-value="{{list_item.AZ}}" bindtap="{{quanxian_list.BB == '√'?'clickView':''}}" style="{{quanxian_list.BB == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.AZ}}</view>
         </view>
-
         <view class="list_view" hidden="{{titil[56].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BA" data-value="{{list_item.BA}}" bindtap="{{quanxian_list.BC == '√'?'clickView':''}}" style="{{quanxian_list.BC == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.BA}}</view>
         </view>
@@ -261,7 +258,6 @@
         <view class="list_view" hidden="{{titil[81].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="BZ" data-value="{{list_item.BZ}}" bindtap="{{quanxian_list.CB == '√'?'clickView':''}}" style="{{quanxian_list.CB == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.BZ}}</view>
         </view>
-
         <view class="list_view" hidden="{{titil[82].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CA" data-value="{{list_item.CA}}" bindtap="{{quanxian_list.CC == '√'?'clickView':''}}" style="{{quanxian_list.CC == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.CA}}</view>
         </view>
@@ -328,12 +324,10 @@
         <view class="list_view" hidden="{{titil[103].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="CV" data-value="{{list_item.CV}}" bindtap="{{quanxian_list.CX == '√'?'clickView':''}}" style="{{quanxian_list.CX == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">
           <view class="list_text">{{list_item.CV}}</view>
         </view>
-
       </view>
     </block>
   </view>
 </scroll-view>
-
 <view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}" style="margin-left: 30rpx;height: 230px;">
   <form bindsubmit="save">
     <view wx:if="{{isDate}}">
@@ -352,9 +346,7 @@
       <button class="bt_form" bindtap="clear" hover-class="bt_form_hover">清空</button>
     </view>
   </form>
-
 </view>
-
 <view class="upd_code_view" animation="{{animationData_upd_code}}" hidden="{{initHidView?initHidView:''}}">
   <view class="upd_area1">
     <block wx:for="{{accounting}}">
@@ -374,7 +366,6 @@
     </scroll-view>
   </view>
 </view>
-
 <view class="examine_view" animation="{{animationData_examine}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="examine_save">
     <view class="examine_input_view">
@@ -385,9 +376,7 @@
       <button class="examine_bt" form-type="submit">确定</button>
     </view>
   </form>
-  
 </view>
-
 <view class="upd_countPage_view" animation="{{animationData_countPage}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="save_countPage" style="height:100%;width:100%">
     <picker bindchange="bindPickerChange1" value="{{index}}" range="{{page_arr}}">
@@ -396,7 +385,6 @@
     <button class="upd_countPage_bt" form-type="submit">保存</button>
   </form>
 </view>
-
 <view class="bottom_view">
   <view style="{{isSelect?'opacity:0.3':'opacity:1'}}">
     <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
@@ -408,10 +396,8 @@
   </view>
   <button class="moreDo" bindtap="{{examine?'upd_examine':'moreDo'}}">{{examine?'审核':'更多操作'}}</button>
 </view>
-
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}">
 </view>
-
 <view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{initHidView?initHidView:''}}">
   <form bindsubmit="select">
     <view class="option">
@@ -429,10 +415,8 @@
     </view>
   </form>
 </view>
-
 <view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
   <button class="moreDo_view_bt" disabled="{{zeng=='是'?'':'disabled'}}" bindtap="insert">添加一行</button>
   <button class="moreDo_view_bt" disabled="{{cha=='是'?'':'disabled'}}" bindtap="showSelect">查询</button>
   <button class="moreDo_view_bt" disabled="{{cha=='是'?'':'disabled'}}" bindtap="getExcel">生成Excel</button>
-  <!-- <button class="moreDo_view_bt" bindtap="use_book">使用说明</button> -->
 </view>

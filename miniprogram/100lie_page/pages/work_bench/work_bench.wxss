@@ -1,27 +1,21 @@
 page{
   height: 100%;
 }
-
 .lables{
   font-size: 40rpx;
   margin-left: 90rpx;
   margin-top: 4rpx;
 }
-
 view {
   font-size: 30rpx;
 }
-
 button{
   font-size: 30rpx;
 }
-  
-
 .table{
   display: inline-flex;
   flex-direction: column;
 }
-
 .sv_list{
   width: auto;
   white-space: nowrap;
@@ -29,12 +23,10 @@ button{
   height: 90%;
   background-color: #FCFCFC;
 }
-
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: rgba(155, 153, 153, 0.589);
 }
-
 .table_header {
   display: inline-flex;
   z-index: 1;
@@ -42,14 +34,12 @@ button{
   position: sticky;
   top: 0;
 }
-
 .title{
   height: 100%;
   margin-right: 23rpx;
   display: inline-block;
   margin-left: 10px;
 }
-
 .title_text{
   display: flex;
   width: 200rpx;
@@ -63,17 +53,14 @@ button{
   font-weight: bold;
   font-size: 35rpx;  
 }
-
 .list_row{
   display: inline-flex;
   flex-direction: row;
 }
-
 .table_main{
   display: inline-flex;
   height: 7%;
 }
-
 .list_view{
   display: flex;
   flex-direction: column;
@@ -88,7 +75,6 @@ button{
   line-height: 70rpx;  
   overflow: hidden;
 }
-
 .input_view{
   position: fixed;
   width: 90%;
@@ -99,7 +85,6 @@ button{
   box-shadow: 10rpx 10rpx 10rpx black;
   z-index: 20;
 }
-
 .input_text_form{
   border: 5rpx solid #E6E6E6;
   margin: auto;
@@ -110,7 +95,6 @@ button{
   border-radius: 19rpx;
   padding-left: 3%;
 }
-
 .input_date_form{
   float: left;
   width: 44%;
@@ -135,7 +119,6 @@ button{
   text-align: center;
   line-height: 60rpx;
 }
-
 .bt_view{
   margin: auto;
   border-top: 1rpx solid #3D3D3D;
@@ -143,7 +126,6 @@ button{
   height: 38%;
   margin-top: 10%;  
 }
-
 .bt_form{
   background-color: #009688;
   width: 39%;
@@ -152,7 +134,6 @@ button{
   margin-left: 7%;
   color: white;
 }
-
 .bt_form_hover{
   background-color: #03C9B6;
   width: 39%;
@@ -161,7 +142,6 @@ button{
   margin-left: 7%;
   color: white;
 }
-
 .bottom_view{
   height: 10%;
 }
@@ -195,7 +175,6 @@ button{
   margin-top: 3%;
   margin-left: 3%;
 }
-
 .upd_code_view{
   position: absolute;
   top: 20%;
@@ -206,14 +185,12 @@ button{
   box-shadow: 0rpx 10rpx 10rpx black;
   z-index: 20;
 }
-
 .upd_area1{
   width: 100%;
   height: 17%;
   border-bottom: 1rpx solid #E6E6E6;
   padding-bottom: -3%;
   margin-bottom: 2%;
-  
 }
 .upd_area2{
   width: 100%;
@@ -256,7 +233,6 @@ button{
   top: 19%;
   border-radius: 10rpx;
   color: white;
-  
 }
 .sv_upd_show{
   width: 97%;
@@ -265,7 +241,6 @@ button{
   border: 1rpx solid #E6E6E6;
   border-radius: 10rpx;
   margin: 12rpx;
-  
 }
 .sv_upd_show_hover{
   width: 97%;
@@ -276,7 +251,6 @@ button{
   border-radius: 10rpx;
   margin: 12rpx;
 }
-
 .upd_text1{
   float: left;
   width: 31%;
@@ -289,7 +263,6 @@ button{
   height: 100%;
   line-height: 70rpx;
 }
-
 .moreDo{
   width: 41%;
   background-color: #009688;
@@ -299,8 +272,6 @@ button{
   margin-top: 3%;
   margin-left: 8%;
 }
-
-
 .moreDo_hover{
   width: 41%;
   background-color: #009688;
@@ -320,15 +291,12 @@ button{
   border-radius: 20rpx;
   z-index: 20;
 }
-
 .option{
   height: auto;
   width: 100%;
   margin-top: 4%;  
   border : none;
 }
-
-
 .option_sv{
   height: 200rpx;
   width: 85%;
@@ -340,7 +308,6 @@ button{
   top: 26%;
   left: 7%;
 }
-
 .option_text{
   width: 70%;
   height: 30px;
@@ -350,7 +317,6 @@ button{
   border-radius: 10rpx 10rpx 10rpx 10rpx;
   margin-top: 7%;
 }
-
 .option_bt{
   width: 100%;
   background-color: #282B33;
@@ -396,8 +362,6 @@ button{
   background-color: #282B33;
   color: white;
 }
-
-
 .backSelect{
   position: fixed;
   right: 34rpx;
@@ -412,7 +376,6 @@ button{
   background-color: #282538;  
   box-shadow: 10rpx 10rpx 10rpx black;
 }
-
 .examine_view{
   position: fixed;
   width: 90%;
@@ -437,7 +400,6 @@ button{
   margin: auto;
   padding-left: 4%;
   padding-top: 1%;
-  
 }
 .examine_bt_view{
   height: 30%;
@@ -480,7 +442,6 @@ button{
   margin: auto;
   margin-top: 5%;  
 }
-
 .moreDo_view{
   position: fixed;
   height: 96%;
@@ -500,8 +461,6 @@ button{
   margin-top: 45rpx;
   line-height: 100rpx;  
 }
-
-
 .mask{
   visibility: visible;
   opacity: 1;

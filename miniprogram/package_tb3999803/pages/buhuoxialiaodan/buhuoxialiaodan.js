@@ -171,7 +171,7 @@ if(options.mccl != undefined){
       var sql1 = ""
       console.log(_this.data.header_list.dh)
       if(_this.data.header_list.dh != ''){
-        sql1 = "select dh,khmc,zdyh,shengchanbianhao,xm,dl,mccl,jd,fqrq from baogongmingxi where dh = '" + _this.data.header_list.dh + "' order by fqrq"
+        sql1 = "select dh,khmc,zdyh,shengchanbianhao,xm,dl,mcsl as mccl,mccl,jd,fqrq from baogongmingxi where dh = '" + _this.data.header_list.dh + "' order by fqrq"
         console.log(sql1)
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',

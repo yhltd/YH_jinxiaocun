@@ -8,6 +8,6 @@
     "van-datetime-picker": "../../components/datetime-picker/index"
   },
   "navigationBarBackgroundColor": "#393D49",
-  "navigationBarTitleText": "报工明细" 
+  "navigationBarTitleText": "报工记事" 
 }
 

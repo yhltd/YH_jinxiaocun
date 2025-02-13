@@ -50,16 +50,20 @@ Page({
     _this.setData({
       userInfo
     })
-    var e = ['', '', '']
+    var e = ['', '',]
     _this.tableShow(e)
   },
 
   tableShow: function (e) {
     var _this = this
     var userInfo = _this.data.userInfo
-    console.log(userInfo)
+    console.log(userInfo.quanxian)
     var sql = ""
-    sql="select * from gongzuoshouce where ckr = '" + userInfo.quanxian + "'"
+    if (userInfo.quanxian == '超级管理员' || userInfo.quanxian == '管理员'){
+      sql="select * from gongzuoshouce where dl like '%" + e[0] + "%' and gd like '%" + e[1] + "%'"
+    }else{
+      sql="select * from gongzuoshouce where ckr = '" + userInfo.quanxian + "' and dl like '%" + e[0] + "%' and gd like '%" + e[1] + "%'"
+    }
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
@@ -87,6 +91,39 @@ Page({
         })
         console.log("请求失败！")
       }
+    })
+  },
+
+  qxShow: function () {
+    var _this = this
+    _this.setData({
+      tjShow: false,
+      cxShow: false,
+      xgShow: false,
+    })
+  },
+
+  entering: function () {
+    var _this = this
+    _this.setData({
+      cxShow: true,
+      dl: '',
+      gd: '',
+    })
+  },
+  
+  sel1: function () {
+    var _this = this
+    var e = [_this.data.dl,_this.data.gd]
+    _this.tableShow(e)
+    _this.qxShow()
+  },
+
+  onInput: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    _this.setData({
+      [column]: e.detail.value
     })
   },
 

@@ -17,15 +17,15 @@ Page({
         type: "text",
         isupd: true
       },{
-        text: "工序",
-        width: "250rpx",
-        columnName: "wczt",
-        type: "text",
-        isupd: true
-      },{
         text: "工序员",
         width: "250rpx",
         columnName: "bgry",
+        type: "text",
+        isupd: true
+      },{
+        text: "工序",
+        width: "250rpx",
+        columnName: "wczt",
         type: "text",
         isupd: true
       },{
@@ -62,7 +62,8 @@ Page({
   tableShow: function (e) {
     var _this = this
     var sql = ""
-    sql="select id,month(rq) as rq,wczt,bgry,sl from xiaoxiguanli where month(rq) = '" + e[0] + "' and wczt like '%" + e[1] + "%' and  bgry like '%" + e[2] + "%'"
+    // sql="select id,month(rq) as rq,wczt,bgry,sl from xiaoxiguanli where month(rq) = '" + e[0] + "' and wczt like '%" + e[1] + "%' and  bgry like '%" + e[2] + "%'"
+    sql="WITH RankedRecords AS (SELECT id,wczt,bgry,MONTH(rq) AS rq_month,sl,ROW_NUMBER() OVER (PARTITION BY id, wczt ORDER BY rq DESC) AS rn FROM xiaoxiguanli WHERE MONTH(rq) = '" + e[0] + "' AND wczt like '%" + e[1] + "%' AND bgry LIKE '%" + e[2] + "%')SELECT wczt,bgry,rq_month AS rq,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl FROM RankedRecords WHERE rn = 1 GROUP BY wczt,bgry,rq_month"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
@@ -71,7 +72,6 @@ Page({
       },
       success: res => {
         console.log(res)
-        
         var list = res.result.recordset
         console.log(list)
         _this.setData({

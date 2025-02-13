@@ -231,11 +231,12 @@ Page({
     var baogongzhuangtai = _this.data.baogongzhuangtai
     console.log(baogongzhuangtai)
     if(baogongzhuangtai == "已报工订单"){
-      sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as orderContent from xiaoxiguanli where gx like '%" + e + "%' group by ddh,khmc,zdyh,gx"
+      // sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as orderContent from xiaoxiguanli where gx like '%" + e + "%' group by ddh,khmc,zdyh,gx"
+      sql="WITH RankedRecords AS (SELECT ddh,khmc,zdyh,gx,sl,ROW_NUMBER() OVER (PARTITION BY ddh ORDER BY sl DESC) AS rn FROM xiaoxiguanli WHERE gx LIKE '%" + e + "%')SELECT ddh AS productionNo,khmc AS customerName,zdyh AS [user],gx,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl,COUNT(*) AS ds FROM RankedRecords WHERE rn = 1 GROUP BY ddh, khmc, zdyh, gx"
     }else{
-      sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as ds from xiaoxiguanli where gx not like '%配料%' group by ddh,khmc,zdyh,gx"
+      // sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as ds from xiaoxiguanli where gx not like '%配料%' group by ddh,khmc,zdyh,gx"
+      sql="WITH RankedRecords AS (SELECT ddh,khmc,zdyh,gx,sl,ROW_NUMBER() OVER (PARTITION BY ddh ORDER BY sl DESC) AS rn FROM xiaoxiguanli WHERE gx not LIKE '%" + e + "%')SELECT ddh AS productionNo,khmc AS customerName,zdyh AS [user],gx,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl,COUNT(*) AS ds FROM RankedRecords WHERE rn = 1 GROUP BY ddh, khmc, zdyh, gx"
     }
-   
  
     console.log(sql)
   
@@ -252,7 +253,7 @@ Page({
         for(var i=0; i<list.length; i++){
          
             sllist = sllist + list[i].sl 
-            olist = olist + list[i].orderContent  
+            olist = olist + list[i].ds  
          
           
         }

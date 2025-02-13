@@ -46,7 +46,7 @@ Page({
         "客户":true
       },
       {
-        text: "报工明细",
+        text: "报工记事",
         url: "../shaoliaomingxibiao/shaoliaomingxibiao",
         "超级管理员":true,
         "管理员":true,
