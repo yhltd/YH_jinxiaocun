@@ -4,11 +4,11 @@ page{
 }
 
 view {
-  font-size: 28rpx;
+  font-size: calc(28vmin / 7.5);
 }
 
 button{
-  font-size: 30rpx;
+  font-size: calc(30vmin / 7.5);
 }
   
 
@@ -20,14 +20,14 @@ button{
 .sv_list{
   width: auto;
   white-space: nowrap;
-  margin-top: 0px;
+  margin-top: calc(0vmin / 7.5);
   height: 86%;
-  background-color: #f2f2f2;  
+  background-color: #FFFFFF;  
 }
 .sv_list2{
   width: auto;
   white-space: nowrap;
-  margin-top: 0px;
+  margin-top: calc(0vmin / 7.5);
  
   background-color: #f2f2f2;  
 }
@@ -35,37 +35,37 @@ button{
 
 
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: calc(10vmin / 7.5);
   background-color: rgba(155, 153, 153, 0.589);
 }
 
 .table_header {
   display: inline-flex;
   z-index: 6;
-  height: 100rpx;
+  height: calc(100vmin / 7.5);
   position: sticky;
   top: 0;
 }
 
 .title{
   height: 100%;
-  margin-right: 23rpx;
+  margin-right: calc(23vmin / 7.5);
   display: inline-block;
-  margin-left: 10px;
+  margin-left: calc(10vmin / 7.5);
 }
 
 .title_text{
   display: flex;
   width: 100%;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
+  border-right: calc(1vmin / 7.5) solid #F0F0F0;
+  border-bottom: calc(1vmin / 7.5) solid #F0F0F0;
   justify-content: center;
   align-items: center;
   overflow-x: auto;
   background-color: #24cab7;
   color: white;
   font-weight: bold;
-  font-size: 35rpx;   
+  font-size: calc(35vmin / 7.5);   
 }
 
 .list_row{
@@ -82,92 +82,53 @@ button{
   height: 7%;
   display: flex;
   align-items: center;
-  border-bottom: 1rpx solid #E6E6E6;
-  font-size: 32rpx;
-  padding-left: 20rpx;
+  border-bottom: calc(1vmin / 7.5) solid #E6E6E6;
+  font-size: calc(32vmin / 7.5);
+  padding-left: calc(20vmin / 7.5);
   font-weight: bold;  
 }
-/* 未审验 */
+
 .list_view{
   display: flex;
   flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
+  width: calc(200vmin / 7.5);
+  height: calc(70vmin / 7.5);
   justify-content: center;
   align-items: center;
   background-color: white;
   color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx;  
+  border-right: calc(1vmin / 7.5) solid #F0F0F0;
+  border-bottom: calc(1vmin / 7.5) solid #F0F0F0;
+  line-height: calc(70vmin / 7.5);  
 }
-/* 优先处理 */
-.list_view1{
+
+.list_view2{
   display: flex;
   flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
+  width: calc(200vmin / 7.5);
+  height: calc(70vmin / 7.5);
   justify-content: center;
   align-items: center;
-  background-color: yellow;
+  background-color: #B4C6E7;
   color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx;  
+  border-right: calc(1vmin / 7.5) solid #F0F0F0;
+  border-bottom: calc(1vmin / 7.5) solid #F0F0F0;
+  line-height: calc(70vmin / 7.5);  
 }
-/* 倒计时负数 */
-.list_view_daojishi{
-  display: flex;
-  flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
-  justify-content: center;
-  align-items: center;
-  background-color: red;
-  color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx;  
-}
-/* 倒计时小于3大于0 */
-.list_view_daojishi1{
-  display: flex;
-  flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(255, 117, 117);
-  color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx;  
-}
-.list_view_ruku{
-  display: flex;
-  flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(43, 255, 0);
-  color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx; 
-}
+
+
 .list_view_fixed{
   display: flex;
   flex-direction: column;
-  width: 200rpx;
-  height: 70rpx;
+  width: calc(200vmin / 7.5);
+  height: calc(70vmin / 7.5);
   justify-content: center;
   align-items: center;
   background-color: white;
   color: black;
-  border-right: 1rpx solid #F0F0F0;
-  border-bottom: 1rpx solid #F0F0F0;
-  line-height: 70rpx;  
+  border-right: calc(1vmin / 7.5) solid #F0F0F0;
+  border-bottom: calc(1vmin / 7.5) solid #F0F0F0;
+  line-height: calc(70vmin / 7.5);  
   position:sticky;
   left:0;
   z-index:5;
@@ -184,48 +145,48 @@ button{
   height: auto;
   top: 25%;
   background-color: white;
-  border-radius: 10rpx;
-  box-shadow: 10rpx 10rpx 10rpx black;
+  border-radius: calc(10vmin / 7.5);
+  box-shadow: calc(10vmin / 7.5) calc(10vmin / 7.5) calc(10vmin / 7.5) black;
   z-index: 20;
   left:5%;
 }
 
 .input_text_form{
-  border: 5rpx solid #E6E6E6;
+  border: calc(5vmin / 7.5) solid #E6E6E6;
   margin: auto;
   width: 80%;
-  height: 64rpx;
+  height: calc(64vmin / 7.5);
   align-items: center;
   margin-top: 5%;
-  border-radius: 19rpx;
+  border-radius: calc(19vmin / 7.5);
   padding-left: 3%;
   margin-bottom:5% ;
 }
 .input_text_form2{
-  border: 5rpx solid #E6E6E6;
+  border: calc(5vmin / 7.5) solid #E6E6E6;
   margin: auto;
   width: 80%;
-  height: 64rpx;
+  height: calc(64vmin / 7.5);
   align-items: center;
   margin-top: 5%;
-  border-radius: 19rpx;
+  border-radius: calc(19vmin / 7.5);
   padding-left: 3%;
   margin-bottom: 10%;
 }
 .input_text_form_small{
-  border: 5rpx solid #E6E6E6;
+  border: calc(5vmin / 7.5) solid #E6E6E6;
   margin: auto;
   width: 30%;
-  height: 64rpx;
+  height: calc(64vmin / 7.5);
   align-items: center;
   margin-top: 5%;
-  border-radius: 19rpx;
+  border-radius: calc(19vmin / 7.5);
   padding-left: 3%;
   color: black;
 }
 .bt_view{
   margin: auto;
-  border-top: 1rpx solid #3D3D3D;
+  border-top: calc(1vmin / 7.5) solid #3D3D3D;
   width: 90%;
   height: 38%;
   margin-top: 10%;  
@@ -238,7 +199,7 @@ button{
   float: left;
   margin-left: 7%;
   color: white;
-  margin-bottom: 38rpx
+  margin-bottom: calc(38vmin / 7.5)
 }
 
 .bt_form_hover{
@@ -248,7 +209,7 @@ button{
   float: left;
   margin-left: 7%;
   color: white;
-  margin-bottom: 38rpx;
+  margin-bottom: calc(38vmin / 7.5);
 }
 
 /*
@@ -261,26 +222,26 @@ button{
   top:0;
   background-color: white;
   z-index: 20;
-  box-shadow: 10rpx 10rpx 10rpx black;
+  box-shadow: calc(10vmin / 7.5) calc(10vmin / 7.5) calc(10vmin / 7.5) black;
 }
 .input{
   width: 92%;
-  height: 90rpx;
-  line-height: 86rpx;
-  border-bottom: 2px solid #E6E6E6;
+  height: calc(90vmin / 7.5);
+  line-height: calc(86vmin / 7.5);
+  border-bottom: calc(2vmin / 7.5) solid #E6E6E6;
   margin: auto;
-  border-radius: 15rpx;
-  font-size: 33rpx;
-  padding-top: 22rpx;
+  border-radius: calc(15vmin / 7.5);
+  font-size: calc(33vmin / 7.5);
+  padding-top: calc(22vmin / 7.5);
   padding-left: 5%;   
 }
 .input_text{
   width: 30%;
-  height: 50rpx;
-  line-height: 65rpx;
-  text-shadow: 5rpx 5rpx 5rpx #D6D6D6;
+  height: calc(50vmin / 7.5);
+  line-height: calc(65vmin / 7.5);
+  text-shadow: calc(5vmin / 7.5) calc(5vmin / 7.5) calc(5vmin / 7.5) #D6D6D6;
   color: #424242;
-  margin-left: 50rpx;
+  margin-left: calc(50vmin / 7.5);
 }
 
 
@@ -289,10 +250,28 @@ button{
   bottom_view
 */
 .bottom_view{
-  height: 10%;
+  height: 20%;
   align-items: center;
   display: flex;
   bottom: 2%;
+}
+
+.bottom_view4{
+  align-items: center;
+  /* display: flex; */
+  bottom: 2%;
+}
+
+.bottom_view1{
+  display: flex;
+}
+
+.sum_money{
+  display: flex;
+  margin-bottom:40rpx ;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 80rpx;
 }
 
 .bottom_view2{
@@ -303,15 +282,15 @@ button{
   width: 30%;
   background-color: #009688;
   color: #E6E6E6;
-  height: 75rpx;
+  height: calc(75vmin / 7.5);
   margin: auto;
 }
 
 .bt_bottom_hover{
-  width: 30%;
+  width: 15%;
   background-color: #009688;
   color: #E6E6E6;
-  height: 75rpx;
+  height: calc(75vmin / 7.5);
   margin: auto;
 }
 
@@ -343,6 +322,8 @@ button{
   z-index: 20;
 }
 
+
+
 /*
   select_view
 */
@@ -351,37 +332,55 @@ button{
   height: 10%;
   display: flex;
   align-items: center;
-  border-bottom: 1rpx solid #E6E6E6;  
+  border-bottom: calc(1vmin / 7.5) solid #E6E6E6;  
 }
 .sel_view_top_input{
   width: 23%;
   height: 65%;
-  border: 1rpx solid #E6E6E6;
-  border-radius: 10rpx;
-  margin-left: 26rpx;
-  margin-right: 26rpx;
-  padding-left: 19rpx;  
+  border: calc(1vmin / 7.5) solid #E6E6E6;
+  border-radius: calc(10vmin / 7.5);
+  margin-left: calc(26vmin / 7.5);
+  margin-right: calc(26vmin / 7.5);
+  padding-left: calc(19vmin / 7.5);  
 }
 
 .lables{
-  font-size: 40rpx;
-  margin-left: 90rpx;
-  margin-top: 10rpx;
+  font-size: calc(40vmin / 7.5);
+  margin-left: calc(90vmin / 7.5);
+  margin-top: calc(10vmin / 7.5);
 }
 
 .lables1{
-  font-size: 40rpx;
-  margin-left: 90rpx;
+  font-size: calc(40vmin / 7.5);
+  margin-left: calc(90vmin / 7.5);
   margin-top: 13%;
 }
 
 .lables_small{
-  font-size: 40rpx;
-  margin-left: 90rpx;
-  margin-top: 40rpx;
+  font-size: calc(40vmin / 7.5);
+  margin-left: calc(90vmin / 7.5);
+  margin-top: calc(40vmin / 7.5);
 }
 .swit{
-  font-size: 30rpx;
-  margin-left: 55rpx;
-  margin-top: 15rpx;
+  font-size: calc(30vmin / 7.5);
+  margin-left: calc(55vmin / 7.5);
+  margin-top: calc(15vmin / 7.5);
+}
+.lables_head{
+  width: 30%;
+  font-size: calc(40vmin / 7.5);
+  margin-left: calc(30vmin / 7.5);
+  margin-top: calc(10vmin / 7.5);
+  float: left;
+}
+.input_text_head{
+  border: calc(5vmin / 7.5) solid #E6E6E6;
+  margin: auto;
+  width: 50%;
+  height: calc(64vmin / 10);
+  align-items: center; 
+  border-radius: calc(19vmin / 7.5);
+  margin-top: calc(10vmin / 7.5);
+  /* margin-right: calc(10vmin / 7.5); */
+  
 }

@@ -10,7 +10,7 @@ Page({
     list: [],
     title: [{
         text: "大类",
-        width: "250rpx",
+        width: "270rpx",
         columnName: "dl",
         type: "text",
         isupd: true
@@ -21,15 +21,15 @@ Page({
         type: "text",
         isupd: true
       },{
-        text: "问题",
-        width: "250rpx",
-        columnName: "wt",
+        text: "扣分值",
+        width: "270rpx",
+        columnName: "kfz",
         type: "text",
         isupd: true
       },{
-        text: "扣分值",
-        width: "250rpx",
-        columnName: "kfz",
+        text: "问题",
+        width: "1300rpx",
+        columnName: "wt",
         type: "text",
         isupd: true
       },

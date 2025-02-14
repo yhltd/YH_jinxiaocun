@@ -6,6 +6,10 @@ Page({
    */
   xgShow: false,
   data: {
+    header_list:{
+      olist:'',
+      slist:'',
+    },
     list: [],
     title: [ {
       text: "倒计时",
@@ -248,24 +252,25 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordsets[0]
-        var sllist = 0
+        var header_list = _this.data.header_list
+        var slist = 0
         var olist = 0
         for(var i=0; i<list.length; i++){
          
-            sllist = sllist + list[i].sl 
-            olist = olist + list[i].ds  
+          slist = slist + list[i].sl 
+          olist = olist + list[i].ds  
          
-          
         }
-        console.log(sllist)
+        console.log(slist)
         console.log(olist)
+        header_list.slist = slist
+        header_list.olist = olist
         _this.setData({
           list: list,
-          sllist:sllist,
-          olist:olist,
-          
+          header_list: header_list,
         })
-        console.log(list)
+        
+        // console.log(list)
        
       },
       err: res => {
@@ -279,6 +284,16 @@ Page({
         })
         console.log("请求失败！")
       }
+    })
+  },
+
+  onInput_header: function (e) {
+    var _this = this
+    let column = e.currentTarget.dataset.column
+    var header_list = _this.data.header_list
+    header_list[column] = e.detail.value
+    _this.setData({
+      header_list
     })
   },
 
@@ -374,7 +389,7 @@ Page({
       bgry: '',
       start_date: '',
       stop_date: '',
-
+      baogongzhuangtai:'',
     })
   },
   sel1: function () {
@@ -382,7 +397,7 @@ Page({
     // var e = [_this.data.mccl]
     var e = [_this.data.gx]
     _this.tableShow1(e)
-    // _this.qxShow()
+    _this.qxShow()
   },
 
 
