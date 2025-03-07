@@ -72,8 +72,12 @@
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
   <view class="lables">{{update_name[this_column]}}</view>
   <input class="input_text_form" bindtap="sel_xiala" type="{{this_type}}" bindinput="onInput" value="{{this_value}}" data-column="this_value" name="this_value" disabled="{{xiala_panduan==0?false:true}}"></input>
-    <view class="lables">大类</view>
-  <input bindinput="onInput"  data-column="dl" class="input_text_form"  value="{{dl}}" type="text" name="dl"></input>
+  <!-- <view class="lables">大类</view>
+  <input bindinput="onInput"  data-column="dl" class="input_text_form"  value="{{dl}}" type="text" name="dl"></input> -->
+  <view class="lables">大类</view>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
+    <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl"  disabled="disabled"></input>
+  </picker>
   <view class="lables">材料+名称+备注</view>
   <input bindinput="onInput"  data-column="mcsl" class="input_text_form"  value="{{mcsl}}" type="text" name="mcsl"></input>
 

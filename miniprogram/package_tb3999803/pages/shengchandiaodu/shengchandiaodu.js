@@ -4,12 +4,13 @@ Page({
   /**
    * 页面的初始数据
    */
+  tableShow: true,
   xgShow: false,
   data: {
-    header_list:{
-      olist:'',
-      slist:'',
-    },
+    // header_list:{
+    //   olist:'',
+    //   slist:'',
+    // },
     list: [],
     title: [ {
       text: "倒计时",
@@ -100,14 +101,14 @@ Page({
       {
         text: "总包数",
         width: "250rpx",
-        columnName: "gx",
+        columnName: "baozhuangshuliang",
         type: "text",
         isupd: true
       },
       {
         text: "材料数量",
         width: "250rpx",
-        columnName: "sl",
+        columnName: "beizhu1",
         type: "text",
         isupd: true
       }
@@ -131,8 +132,9 @@ Page({
     _this.setData({
       userInfo
     })
-    var e = ''
+    var e = ['']
     _this.tableShow(e)
+    // _this.tableShow3(e)
   },
 
   
@@ -154,8 +156,14 @@ Page({
     var sql = ""
     // sql = "select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,paidanDate,shengchanzhouqi,daojishi,searchNO,endDate,isnull(ddh,'') as ddh,isnull(gx,'') as gx from (select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中'  ) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gongxu on productionNo = ddh order by case orderState when '生产' then 1 else 2 end,orderState,case searchNO when '优先生产' then 1 else 2 end,convert(datetime,endDate),productionNo desc"
 
-    // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case searchNO when '优先生产' then 1 else 2 end,orderState,convert(datetime,endDate),productionNo;select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
-    sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,orderState asc,convert(datetime,endDate),productionNo desc;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx like '%" + e + "%';"
+    // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,beizhu1 as sl from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by case searchNO when '优先生产' then 1 else 2 end,orderState,convert(datetime,endDate),productionNo;select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+    
+    // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,orderState asc,convert(datetime,endDate),productionNo desc;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx like '%" + e + "%'"
+    
+    // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,isnull(beizhu1,'') as sl1 from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+    // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,beizhu1 from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+    sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+    // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,beizhu1 as sl from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,orderState asc,convert(datetime,endDate),productionNo desc;select ddh,gx,sl as gx from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx like '%" + e + "%'"
     console.log(sql)
     // sql = "select paixu,A,B,C,D,E,F,G,H,I,M,N,J,K,L,isnull(gx,'') as gx from (select a.paixu,'□' as A,isnull(a.productionNO,'') as B,isnull(a.customerName,'') as C,isnull(a.[user],'') as D,isnull(a.orderContent,'') as E,isnull(a.beizhu2,'') as F,isnull(a.orderState,'') as G,isnull(a.spareMoney,'') as H,isnull(paidanDate,'') as I,'' as M,'' as N,isnull(searchNO,'') as J,isnull(endDate,'') as K,case a.orderState when '生产' then 1 else 2 end as L from(select isnull(paixu,'') as paixu,productionNO,customerName,[user],orderContent,orderType,deliveryMode,CONVERT(float,isnull(orderMoney,0))-CONVERT(float,isnull(dingjin,0))-CONVERT(float,isnull(yukuan,0)) as chukufukuan,orderState,spareMoney,wenjian_name,baozhuangshuliang,beizhu1,beizhu2,shou_yukuan,shou_yukuan_riqi,paidanDate,searchNO,endDate from madeOrder where orderState is not NULL and orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' ) as a left join (select payNo,max(convert(date,opetationDate)) as opetationDate from moneyDetails group by payNo) as b on a.productionNO = b.payNo) as dingdan left join (select ddh,gx from (select max(id) as max_id from xiaoxiguanli group by ddh,khmc,zdyh,ddje) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料') as gx on B = ddh"
    
@@ -207,12 +215,69 @@ Page({
         _this.setData({
           list: list,
         })
+        _this.tableShow3(e)
         console.log(list)
         // list.sort(_this.compare("daojishi"))
         // console.log(list)
         // _this.setData({
         //   list: list,
         // })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+
+  tableShow3: function (e) {
+    var _this = this
+    var sql = ""
+
+    sql="select id,productionNo,customerName,[user],orderContent,beizhu1,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,isnull(baozhuangshuliang,'') from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中';select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料'"
+
+    console.log(sql)
+   
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log(res)
+        var list111 = res.result.recordsets[0]
+        console.log("123123")
+        console.log(_this.data.list)
+        // var gongxu_list1 = res.result.recordsets[1]
+        for(var i=0; i<_this.data.list.length; i++){
+          const user = list111.find(user => user.id === _this.data.list[i].id);
+          // const foundUser = this.data.users.find(user => user.name === 'Bob');
+          _this.data.list[i].beizhu1=user.beizhu1
+          console.log("55555")
+          console.log(user)
+          console.log(_this.data.list[i].beizhu1)
+          // for(var j=0; j<list111.length; j++){
+          //   _this.data.list[i].beizhu1=list111[j].beizhu1
+          //   console.log(list111[j].beizhu1)
+          //   console.log(_this.data.list[i].beizhu1)
+          //   _this.setData({
+          //     list: _this.data.list,
+          //   })
+          // }
+          _this.setData({
+            list: _this.data.list,
+          })
+        }
+       
+        // console.log(list)
       },
       err: res => {
         console.log("错误!")
@@ -236,12 +301,15 @@ Page({
     console.log(baogongzhuangtai)
     if(baogongzhuangtai == "已报工订单"){
       // sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as orderContent from xiaoxiguanli where gx like '%" + e + "%' group by ddh,khmc,zdyh,gx"
-      sql="WITH RankedRecords AS (SELECT ddh,khmc,zdyh,gx,sl,ROW_NUMBER() OVER (PARTITION BY ddh ORDER BY sl DESC) AS rn FROM xiaoxiguanli WHERE gx LIKE '%" + e + "%')SELECT ddh AS productionNo,khmc AS customerName,zdyh AS [user],gx,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl,COUNT(*) AS ds FROM RankedRecords WHERE rn = 1 GROUP BY ddh, khmc, zdyh, gx"
+      // sql="WITH RankedRecords AS (SELECT ddh,khmc,zdyh,gx,sl,ROW_NUMBER() OVER (PARTITION BY ddh ORDER BY sl DESC) AS rn FROM xiaoxiguanli WHERE gx LIKE '%" + e + "%')SELECT ddh AS productionNo,khmc AS customerName,zdyh AS [user],gx,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl,COUNT(*) AS ds FROM RankedRecords WHERE rn = 1 GROUP BY ddh, khmc, zdyh, gx"
+      // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,isnull(beizhu1,'') as clsl from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx like '%" + e + "%'"
+      sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx like '%" + e + "%'"
     }else{
       // sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as ds from xiaoxiguanli where gx not like '%配料%' group by ddh,khmc,zdyh,gx"
-      sql="WITH RankedRecords AS (SELECT ddh,khmc,zdyh,gx,sl,ROW_NUMBER() OVER (PARTITION BY ddh ORDER BY sl DESC) AS rn FROM xiaoxiguanli WHERE gx not LIKE '%" + e + "%')SELECT ddh AS productionNo,khmc AS customerName,zdyh AS [user],gx,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl,COUNT(*) AS ds FROM RankedRecords WHERE rn = 1 GROUP BY ddh, khmc, zdyh, gx"
+      // sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate,isnull(beizhu1,'') as clsl from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx not like '%" + e + "%'"
+      sql="select id,productionNo,customerName,[user],orderContent,beizhu2,orderState,spareMoney,isnull(paidanDate,'')  as paidanDate,'' as shengchanzhouqi,'' as daojishi,isnull(searchNO,'') as searchNO,isnull(endDate,'') as endDate from madeOrder where orderState <> '出库' and orderState <> '制单中' and orderState <> '预算中' order by searchNO desc,productionNo;select ddh,gx,sl from (select max(id) as max_id from xiaoxiguanli group by ddh) as quchong left join xiaoxiguanli on max_id = id where ddje != '生产时效超期' and wczt != '' and wczt != '缺料' and gx not like '%" + e + "%'"
     }
- 
+    _this.tableShow3(e)
     console.log(sql)
   
     wx.cloud.callFunction({
@@ -252,25 +320,26 @@ Page({
       success: res => {
         console.log(res)
         var list = res.result.recordsets[0]
-        var header_list = _this.data.header_list
-        var slist = 0
-        var olist = 0
+        var slist = 0;
+        var olist = 0;
         for(var i=0; i<list.length; i++){
-         
-          slist = slist + list[i].sl 
-          olist = olist + list[i].ds  
+
+          if (_this.data.list[i].beizhu1 != '' && isFinite(_this.data.list[i].beizhu1)){
+            slist += parseInt(_this.data.list[i].beizhu1);
+          }
+          
+          olist = i;
          
         }
         console.log(slist)
         console.log(olist)
-        header_list.slist = slist
-        header_list.olist = olist
+        slist = slist
+        olist = olist
         _this.setData({
           list: list,
-          header_list: header_list,
+          slist: slist,
+          olist: olist,
         })
-        
-        // console.log(list)
        
       },
       err: res => {
@@ -283,19 +352,19 @@ Page({
           duration: 3000
         })
         console.log("请求失败！")
-      }
+      },
     })
   },
 
-  onInput_header: function (e) {
-    var _this = this
-    let column = e.currentTarget.dataset.column
-    var header_list = _this.data.header_list
-    header_list[column] = e.detail.value
-    _this.setData({
-      header_list
-    })
-  },
+  // onInput_header: function (e) {
+  //   var _this = this
+  //   let column = e.currentTarget.dataset.column
+  //   var header_list = _this.data.header_list
+  //   header_list[column] = e.detail.value
+  //   _this.setData({
+  //     header_list
+  //   })
+  // },
 
   qxShow: function () {
     var _this = this
@@ -390,6 +459,8 @@ Page({
       start_date: '',
       stop_date: '',
       baogongzhuangtai:'',
+      olist:'',
+      slist:'',
     })
   },
   sel1: function () {
@@ -397,7 +468,7 @@ Page({
     // var e = [_this.data.mccl]
     var e = [_this.data.gx]
     _this.tableShow1(e)
-    _this.qxShow()
+    // _this.qxShow()
   },
 
 

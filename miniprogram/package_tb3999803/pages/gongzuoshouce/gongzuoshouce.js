@@ -7,6 +7,9 @@ Page({
   tableShow: true,
   cxShow: false,
   data: {
+    dl_type: [],
+    gd_type: [],
+    zc:'',
     list: [],
     title: [{
         text: "大类",
@@ -52,6 +55,8 @@ Page({
     })
     var e = ['', '',]
     _this.tableShow(e)
+    _this.xlShow1()
+    
   },
 
   tableShow: function (e) {
@@ -111,6 +116,97 @@ Page({
       gd: '',
     })
   },
+
+  xlShow1: function () {
+    var _this = this
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: "select DISTINCT dl from gongzuoshouce where dl is not null and dl <> ''"
+      },
+      success: res => {
+        console.log(res)
+        var dl_type = []
+        var list = res.result.recordset
+        
+        console.log(list)
+        for(var i=0; i<list.length; i++){
+          dl_type.push(list[i].dl)
+        }
+        _this.setData({
+          dl_type:dl_type
+        })
+      },
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+
+  },
+
+  xlShow2: function (e) {
+    var _this = this
+    wx.cloud.callFunction({
+      name: 'sqlServer_tb3999803',
+      data: {
+        query: "select DISTINCT gd from gongzuoshouce where dl='"+_this.data.dl_type[e.detail.value]+"' and gd is not null and gd <> ''"
+      },
+      success: res => {
+        console.log(res)
+        var gd_type = []
+        var list = res.result.recordset
+        
+        console.log(list)
+        for(var i=0; i<list.length; i++){
+          gd_type.push(list[i].gd)
+        }
+        _this.setData({
+          gd_type:gd_type
+        })
+      },
+     
+      err: res => {
+        console.log("错误!")
+      },
+      fail: res => {
+        wx.showToast({
+          title: '请求失败！',
+          icon: 'none',
+          duration: 3000
+        })
+        console.log("请求失败！")
+      }
+    })
+  },
+
+bindPickerChange: function(e){
+  var _this = this
+  var column = e.currentTarget.dataset.column_name
+  console.log(_this.data.dl_type[e.detail.value])
+   var zc=_this.data.dl_type[e.detail.value]
+   console.log(zc)
+  _this.setData({
+    [column]: _this.data.dl_type[e.detail.value]
+  })
+  _this.xlShow2(e)
+},
+
+bindPickerChange1: function(e){
+  var _this = this
+  var column = e.currentTarget.dataset.column_name
+  console.log(_this.data.gd_type[e.detail.value])
+  _this.setData({
+    [column]: _this.data.gd_type[e.detail.value]
+  })
+},
   
   sel1: function () {
     var _this = this

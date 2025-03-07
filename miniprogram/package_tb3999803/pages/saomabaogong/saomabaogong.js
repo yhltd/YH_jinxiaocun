@@ -58,6 +58,13 @@ Page({
         columnName: "mcsl",
         type: "text",
         isupd: true
+      },{
+        text: "大类",
+        width: "0rpx",
+        width2: "calc(0vmin / 7.5)",
+        columnName: "dl",
+        type: "text",
+        isupd: true
       },
       {
         text: "配料",
@@ -145,6 +152,13 @@ Page({
         columnName: "pdts",
         type: "text",
         isupd: true
+      },{
+        text: "材料+名称+备注",
+        width: "0rpx",
+        width2: "calc(0vmin / 7.5)",
+        columnName: "mccl",
+        type: "text",
+        isupd: true
       },
     ],
     list:[],
@@ -163,6 +177,7 @@ Page({
     click_type: '报工界面',
     xiala_panduan1:[{name:''},{name:'出库'}],
     xiala_panduan2:[{name:''},{name:'完成'},{name:'缺料'},{name:'破损'}],
+    dl_type: ['缺柜板','缺门板','缺条子','灯带板','异形板','手工件','弧形板','五金配件','其他'],
     gongxu_arr:['pl','kl','fb','pk','xt','fm','sg','wj','bz','rk','ck','pdts']
 
   },
@@ -331,9 +346,9 @@ Page({
 
   getBaoGong:function(){
     var _this = this
-    console.log(_this.data.order_number)
+    var header_list = _this.data.header_list
     if(_this.data.order_number != ''){
-      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku,dl from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh is null;select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
+      var sql = "select id,pdrq,baogongmingxi.dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,case when rk != '' then rk when ruku is not null then ruku else '' end as rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,bgry,ddzt,cl,zbs,ruku,isnull(dl,'') as dl from baogongmingxi left join (select max(convert(float,bh)) as ruku,dh,clmc from fenjiandabao  where bh != '' group by dh,clmc) as baohao on baogongmingxi.dh = baohao.dh and mcsl = clmc where baogongmingxi.dh = '" + _this.data.order_number + "' and baogongmingxi.jlbh is null;select spareMoney from madeOrder where productionNO='" + _this.data.order_number + "';"
       console.log(sql)
       wx.cloud.callFunction({
         name: 'sqlServer_tb3999803',
@@ -349,11 +364,8 @@ Page({
           if(res.result.recordsets[1].length >= 1){
             order_money = res.result.recordsets[1][0].spareMoney
           }
-          console.log(order_money)
           //如果已有报工单，读取此前报工单显示到此页
-          console.log(list.length)
           if(list.length > 0){
-            var header_list = _this.data.header_list
             header_list.pdrq = list[0].pdrq
             header_list.dh = list[0].dh
             header_list.khmc = list[0].khmc
@@ -382,10 +394,33 @@ Page({
               list_old,
               order_money
             })
-            // wx.showToast({
-            //   title: '查询成功',
-            //   icon: 'none',
-            // })
+            var list1 = _this.data.list
+            var gongxu_arr = _this.data.gongxu_arr
+            // list1[_this.data.this_index][_this.data.this_column] = _this.data.this_value
+            // for(var i=0; i<list.length; i++){
+            //   if (list[i].pl == "缺料" || list[i].pl == "破损") {
+            //     wx.showModal({
+            //       title: "提示",
+            //       content: '是否为此订单进行补货跳转？',
+            //       cancelColor: '#282B33',
+            //       confirmColor: '#BC4A4A',
+            //       success: res => {
+            //         if (res.confirm) { 
+            //           var khmc = header_list.khmc
+            //           var zdyh = header_list.zdyh
+            //           var dh = header_list.dh
+            //           var mccl=""
+            //           wx.navigateTo({
+            //             url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1"+'&mccl='+mccl+'&dh=' +dh+'&tz='+"smbg",
+            //           })
+            //         } else if (res.cancel) {
+            //           console.log('用户点击取消')
+            //         }
+            //       }
+            //     })
+            //   }
+            // }
+
             _this.get_ddzt()
           //如果没有报工单，读取订单信息生成新单
           }else{
@@ -515,6 +550,13 @@ Page({
     }
   },
 
+  bindPickerChange: function (e) {
+    var _this = this
+    _this.setData({
+      [e.target.dataset.column_name]: _this.data.dl_type[e.detail.value]
+    })
+  },
+
   qxShow: function () {
     var _this = this
     _this.setData({
@@ -603,35 +645,68 @@ Page({
         list[_this.data.this_index][gongxu_arr[i]] = '完成'
       }
     }
-    if(list[_this.data.this_index][gongxu_arr[i]]=='缺料'){
-      wx.showModal({
-        title: "提示",
-        content: '是否为此订单进行补货跳转？',
-        cancelColor: '#282B33',
-        confirmColor: '#BC4A4A',
-        success: res => {
-          if (res.confirm) { 
+    // if(list[_this.data.this_index][gongxu_arr[i]]=='缺料'){
+    //   wx.showModal({
+    //     title: "提示",
+    //     content: '是否为此订单进行补货跳转？',
+    //     cancelColor: '#282B33',
+    //     confirmColor: '#BC4A4A',
+    //     success: res => {
+    //       if (res.confirm) { 
             
-            // var order_number = _this.data.list[index].productionNo
-            // console.log(order_number)
+    //         // var order_number = _this.data.list[index].productionNo
+    //         // console.log(order_number)
             
-            var khmc = header_list.khmc
-            var zdyh = header_list.zdyh
-            var dh = header_list.dh
-            console.log("---------------")
+    //         var khmc = header_list.khmc
+    //         var zdyh = header_list.zdyh
+    //         var dh = header_list.dh
+    //         console.log("---------------")
+    //         var xm=list[_this.data.this_index][gongxu_arr[0]]
+    //         var dl=this.data.dl
+    //         console.log(xm)
+    //         console.log(dl)
+    //         var mccl =list[_this.data.this_index].mcsl.split('/')
+    //         wx.navigateTo({
+    //           url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1"+'&mccl='+mccl+'&dh=' +dh+'&tz='+"smbg",
+    //         })
+    //       } else if (res.cancel) {
+    //         console.log('用户点击取消')
+    //       }
+    //     }
+    //   })
+    // }
+    // if(list[_this.data.this_index][gongxu_arr[i]]=='破损'){
+    //   wx.showModal({
+    //     title: "提示",
+    //     content: '是否为此订单进行补货跳转？',
+    //     cancelColor: '#282B33',
+    //     confirmColor: '#BC4A4A',
+    //     success: res => {
+    //       if (res.confirm) { 
+            
+    //         var khmc = header_list.khmc
+    //         var zdyh = header_list.zdyh
+    //         var dh = header_list.dh
+    //         console.log("---------------")
           
-            var mccl =list[_this.data.this_index].mcsl.split('/')
-            wx.navigateTo({
-              url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1"+'&mccl='+mccl,
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
-    }
+    //         var mccl =list[_this.data.this_index].mcsl.split('/')
+    //         wx.navigateTo({
+    //           url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1"+'&mccl='+mccl+'&dh='+dh+'&tz='+"smbg",
+    //         })
+    //       } else if (res.cancel) {
+    //         console.log('用户点击取消')
+    //       }
+    //     }
+    //   })
+    // }
     console.log("---------------")
     console.log(list[_this.data.this_index][gongxu_arr[i]])
+    var index = _this.data.this_index
+    var this_column = "mccl"
+    var this_column1 = "dl"
+    var list = _this.data.list
+    list[index][this_column] = _this.data.mcsl
+    list[index][this_column1] = _this.data.dl
     _this.setData({
       list:list,
     })
@@ -674,6 +749,7 @@ Page({
     var list = _this.data.list
     var list_old = _this.data.list_old
     var gongxu_arr = _this.data.gongxu_arr
+    var lie = 'pl'
     if(list.length < 1){
       wx.showToast({
         title: '未读取到报工单信息',
@@ -681,14 +757,36 @@ Page({
       })
       return;
     }
+    
     var del_sql = "delete from baogongmingxi where dh='" + header_list.dh + "';"
-    var ins_sql = "insert into baogongmingxi(pdrq,dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,zbs) values "
+    var ins_sql = "insert into baogongmingxi(pdrq,dh,khmc,zdyh,scbh,ll,mcsl,pl,kl,fb,pk,xt,fm,sg,wj,bz,rk,ck,plys,klys,fbys,pkys,xtys,fmys,sgys,wjys,bzys,rkys,ckys,zbs,dl,xm,mccl,fqrq) values "
     var ins_sql2 = ""
     for(var i=0; i<list.length; i++){
+      var xzxm = ""
+      if (list[i].pl == "缺料" || list[i].pl == "破损") {
+        xzxm = list[i].pl
+      } else if(list[i].kl == "缺料" || list[i].kl == "破损") {
+        xzxm = list[i].kl
+      }else if(list[i].fb == "缺料" || list[i].fb == "破损") {
+        xzxm = list[i].fb
+      }else if(list[i].pk == "缺料" || list[i].pk == "破损") {
+        xzxm = list[i].pk
+      }else if(list[i].xt == "缺料" || list[i].xt == "破损") {
+        xzxm = list[i].xt
+      }else if(list[i].fm == "缺料" || list[i].fm == "破损") {
+        xzxm = list[i].fm
+      }else if(list[i].sg == "缺料" || list[i].sg == "破损") {
+        xzxm = list[i].sg
+      }else if(list[i].wj == "缺料" || list[i].wj == "破损") {
+        xzxm = list[i].wj
+      }else if(list[i].bz == "缺料" || list[i].bz == "破损") {
+        xzxm = list[i].bz
+      }
+
       if(ins_sql2 == ''){
-        ins_sql2 = "('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "','" + header_list.zbs + "')"
+        ins_sql2 = "('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "','" + header_list.zbs + "','"+ list[i].dl +"','" + xzxm + "','" + list[i].mccl + "',CONVERT(varchar, GETDATE(), 120))"
       }else{
-        ins_sql2 = ins_sql2 + ",('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "','" + header_list.zbs + "')"
+        ins_sql2 = ins_sql2 + ",('" + header_list.pdrq + "','" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + header_list.scbh + "','" + list[i].ll + "','" + list[i].mcsl + "','" + list[i].pl + "','" + list[i].kl + "','" + list[i].fb + "','" + list[i].pk + "','" + list[i].xt + "','" + list[i].fm + "','" + list[i].sg + "','" + list[i].wj + "','" + list[i].bz + "','" + list[i].rk + "','" + list[i].ck + "','" + list[i].plys + "','" + list[i].klys + "','" + list[i].fbys + "','" + list[i].pkys + "','" + list[i].xtys + "','" + list[i].fmys + "','" + list[i].sgys + "','" + list[i].wjys + "','" + list[i].bzys + "','" + list[i].rkys + "','" + list[i].ckys + "','" + header_list.zbs + "','"+ list[i].dl +"','" + xzxm + "','" + list[i].mccl + "',CONVERT(varchar, GETDATE(), 120))"
       }
     }
 
@@ -709,9 +807,9 @@ Page({
             shuliang = ''
           }
           if(xiaoxi_sql2 == ''){
-            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" +  _this.data.header_list.zbs + "')"
+            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" +  _this.data.header_list.cl + "')"
           }else{
-            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" +  _this.data.header_list.zbs + "')"
+            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" +  _this.data.header_list.cl + "')"
           }
         }
       }
@@ -754,6 +852,39 @@ Page({
       }
     })
 
+    _this.ff()
+
+  },
+
+  ff: function() {
+    var _this = this
+    var header_list = _this.data.header_list
+    var list = _this.data.list
+    setTimeout(() => {
+      for(var i=0; i<list.length; i++){
+        if (list[i].pl == "缺料" || list[i].pl == "破损" || list[i].kl == "缺料" || list[i].kl == "破损" || list[i].fb == "缺料" || list[i].fb == "破损" || list[i].pk == "缺料" || list[i].pk == "破损" || list[i].xt == "缺料" || list[i].xt == "破损" || list[i].fm == "缺料" || list[i].fm == "破损" || list[i].sg == "缺料" || list[i].sg == "破损" || list[i].wj == "缺料" || list[i].wj == "破损" || list[i].bz == "缺料" || list[i].bz == "破损") {
+          wx.showModal({
+            title: "提示",
+            content: '是否为此订单进行补货跳转？',
+            cancelColor: '#282B33',
+            confirmColor: '#BC4A4A',
+            success: res => {
+              if (res.confirm) { 
+                var khmc = header_list.khmc
+                var zdyh = header_list.zdyh
+                var dh = header_list.dh
+                var mccl=""
+                wx.navigateTo({
+                  url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&khmc=' + khmc+'&zdyh=' + zdyh+ '&productionNo=' + dh+'&xmjy='+"1"+'&mccl='+mccl+'&dh=' +dh+'&tz='+"smbg",
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    }, 2000);
   },
 
   onInput: function (e) {

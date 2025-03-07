@@ -1,41 +1,28 @@
-<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:90%">
-
-<view style="display: flex;">
-  <view class="lables_head" style="font-size: calc(35vmin / 8)">订单数量</view>
-  <input bindinput="onInput_header" data-column="olist" class="input_text_head" value="{{header_list.olist}}" type="text" name="olist" ></input>
-</view>
-
-<view style="display: flex;">
-  <view class="lables_head" style="font-size: calc(35vmin / 8)">原料数量</view>
-  <input bindinput="onInput_header" data-column="slist" class="input_text_head" value="{{header_list.slist}}" type="text" name="slist" ></input>
-</view>
-
-  <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="min-height:40%">
-    <view class="table">
-      <view class='table_header'>
-        <block class="title" wx:for="{{title}}">
-          <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
-        </block>
-      </view>
-      <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
-        <view class="table_main">
-          <view wx:for="{{title}}" 
-                wx:for-item="item" 
-                wx:key="item" 
-                class="{{list_item[i].searchNO=='优先生产'?'list_view1':list_item[i].daojishi<=0 && list_item[i].orderState!='入库'?'list_view_daojishi':list_item[i].daojishi>0 && list_item[i].daojishi<=3 && list_item[i].orderState!='入库'?'list_view_daojishi1':list_item[i].orderState=='入库'?'list_view_ruku':'list_view'}}" 
-                style="width:{{item.width}}" data-index="{{i}}"
-                data-column="{{item.columnName}}" 
-                data-value="{{list_item[item.columnName]}}" 
-                data-input_type="{{item.type}}"
-                data-isupd="{{item.isupd}}"
-                bindtap="clickView"
-                bindlongpress="goto_baogong">
-            <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
-          </view>
-        </view>
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{title}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
-  </scroll-view>
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{title}}" 
+              wx:for-item="item" 
+              wx:key="item" 
+              class="{{list[i].searchNO=='优先生产'?'list_view1':list[i].daojishi<=0 && list[i].orderState!='入库'?'list_view_daojishi':list[i].daojishi>0 && list[i].daojishi<=3 && list[i].orderState!='入库'?'list_view_daojishi1':list[i].orderState=='入库'?'list_view_ruku':'list_view'}}" 
+              style="width:{{item.width}}" data-index="{{i}}"
+              data-column="{{item.columnName}}" 
+              data-value="{{list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView"
+              bindlongpress="goto_baogong">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
 </scroll-view>
 
 <!------------------------->
@@ -82,7 +69,7 @@
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
   </view>
 </van-popup> -->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
   <view class="lables">工序</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="gx" range="{{gongxu_list}}">
     <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx"  disabled="disabled"></input>
@@ -92,10 +79,10 @@
   <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="baogongzhuangtai" range="{{baogongzhuangtai_list}}">
     <input bindinput="onInput" data-column="baogongzhuangtai" class="input_text_form" value="{{baogongzhuangtai}}" type="text" name="baogongzhuangtai"  disabled="disabled"></input>
   </picker>
-  <!-- <view class="lables">订单数量</view>
+  <view class="lables">订单数量</view>
   <input bindinput="onInput" data-column="olist" class="input_text_form" value="{{olist}}" type="text" name="olist"></input>
   <view class="lables">原料数量</view>
-  <input bindinput="onInput" data-column="slist" class="input_text_form" value="{{slist}}" type="text" name="slist"></input> -->
+  <input bindinput="onInput" data-column="slist" class="input_text_form" value="{{slist}}" type="text" name="slist"></input>
 
     <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

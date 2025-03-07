@@ -9,19 +9,19 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
-    xm_type: ['少料'],
+    xm_type: ['缺料','破损'],
     dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
     jd_type: ['已审','已补','入库','缺料','出库'],
     list: [],
     title: [{
       text: "项目",
-      width: "90rpx",
+      width: "130rpx",
       columnName: "xm",
       type: "text",
       isupd: true
     }, {
       text: "大类",
-      width: "90rpx",
+      width: "240rpx",
       columnName: "dl",
       type: "text",
       isupd: true
@@ -42,19 +42,19 @@ Page({
     // },
      {
       text: "进度",
-      width: "90rpx",
+      width: "130rpx",
       columnName: "jd",
       type: "text",
       isupd: true
     }, {
       text: "发起日期",
-      width: "180rpx",
+      width: "300rpx",
       columnName: "fqrq",
       type: "text",
       isupd: true
     }, {
       text: "单号",
-      width: "160rpx",
+      width: "180rpx",
       columnName: "dh",
       type: "text",
       isupd: true
@@ -66,8 +66,14 @@ Page({
       isupd: true
     }, {
       text: "终端用户",
-      width: "270rpx",
+      width: "300rpx",
       columnName: "zdyh",
+      type: "text",
+      isupd: true
+    }, {
+      text: "生产编号",
+      width: "270rpx",
+      columnName: "scbh",
       type: "text",
       isupd: true
     }, 
@@ -96,7 +102,7 @@ Page({
     })
     var e = ['','','','','']
     _this.tableShow(e)
-    var sql = 'select xm from baogongmingxi where xm is not null group by xm'
+    var sql = "select xm from baogongmingxi where xm is not null and xm='缺料' or xm='破损' group by xm"
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
@@ -172,7 +178,7 @@ Page({
     var userInfo = _this.data.userInfo
     // sql = "select * from buhuoxialiao where mccl like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
-      sql = "select xm,dl,mccl,jd,fqrq,dh,khmc,zdyh,id from baogongmingxi where jlbh='1' and xm='少料' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc"
+      sql = "select xm,dl,mccl as mccl,jd,fqrq,dh,khmc,zdyh,scbh,id from baogongmingxi where jlbh='1' and xm='缺料' or xm='破损' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%' order by riqipx desc"
     // }
     // else{
     // sql = "select * from baogongmingxi where xm like '%" + e[0] + "%' and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'"}

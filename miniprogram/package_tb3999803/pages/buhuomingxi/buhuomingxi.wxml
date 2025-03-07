@@ -91,8 +91,8 @@
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
     <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl" disabled="disabled"></input>
   </picker>
-  <!-- <view class="lables">名称数量</view>
-  <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input> -->
+  <view class="lables">生产编号</view>
+  <input bindinput="onInput" data-column="shengchanbianhao" class="input_text_form" value="{{shengchanbianhao}}" type="text" name="shengchanbianhao"></input>
   <view class="lables">进度</view>
   <picker bindchange="bindPickerChange3" value="{{index}}" data-column_name="jd" range="{{jd_type}}">
     <input bindinput="onInput" data-column="jd" class="input_text_form" value="{{jd}}" type="text" name="jd" disabled="disabled"></input>
@@ -113,7 +113,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;">
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;">
   <view class="lables">项目</view>
   <!-- <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="xm" range="{{xm_type}}">
     <input bindinput="onInput" data-column="xm" class="input_text_form" value="{{xm}}" type="text" name="xm" disabled="disabled"></input>

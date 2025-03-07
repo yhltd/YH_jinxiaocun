@@ -27,10 +27,18 @@
 <!---------查询弹窗--------->
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;">
+  <!-- <view class="lables">大类</view>
+  <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl"></input> -->
   <view class="lables">大类</view>
-  <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl"></input>
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
+    <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl"  disabled="disabled"></input>
+  </picker>
   <view class="lables">工段</view>
-  <input bindinput="onInput" data-column="gd" class="input_text_form" value="{{gd}}" type="text" name="gd"></input>
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="gd" range="{{gd_type}}">
+    <input bindinput="onInput" data-column="gd" class="input_text_form" value="{{gd}}" type="text" name="gd"  disabled="disabled"></input>
+  </picker>
+  <!-- <view class="lables">工段</view>
+  <input bindinput="onInput" data-column="gd" class="input_text_form" value="{{gd}}" type="text" name="gd"></input> -->
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

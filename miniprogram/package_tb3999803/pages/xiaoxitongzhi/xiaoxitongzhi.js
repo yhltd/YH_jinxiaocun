@@ -61,7 +61,7 @@ Page({
       type: "text",
       isupd: true
     }, {
-      text: "总包数",
+      text: "数量",
       width: "150rpx",
       columnName: "sl",
       type: "text",

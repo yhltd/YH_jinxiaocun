@@ -9,7 +9,7 @@ Page({
   xgShow: false,
   cxShow: false,
   data: {
-    // xm_type: ['补板','配件','返厂','外购','整改','少料'],
+    xm_type: ['工厂补板','工厂配货','工厂修改','市场采购','现场整改','缺料','破损'],
     dl_type: ['缺大板','缺中板','缺小板','缺条子','灯带板','异形板','拉手板','手工件','弧形板','其他'],
     jd_type: ['已审','已补','入库','缺料','出库'],
     list: [],
@@ -43,7 +43,7 @@ Page({
     {
       text: "生产编号",
       width: "300rpx",
-      columnName: "shengchanbianhao",
+      columnName: "scbh",
       type: "text",
       isupd: true
     }
@@ -86,6 +86,8 @@ Page({
     jd: '',
     fqrq: '',
     mccl: '',
+    khmc: '',
+    zdyh:'',
   },
 
   onLoad(options) {
@@ -97,7 +99,7 @@ Page({
     var e = ['','','','','']
     _this.tableShow(e)
 
-    var sql = 'select xm from baogongmingxi where xm is not null group by xm'
+    var sql = "select distinct xm from baogongmingxi where xm is not null and xm <> ''"
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
@@ -174,13 +176,15 @@ Page({
     // sql = "select * from buhuoxialiao where mccl like '%" + e[0] + "%' or xm = '补货' or xm = '补板' or xm = '配件' or xm = '返厂'"
     // if(e[0] =="" && e[1] == "" && e[2] == "" && e[3] =="" && e[4]== ""){
       if(userInfo.quanxian=='工序员'){
-        sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库')  order by riqipx desc"
+        // sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库')  order by riqipx desc"
+        sql = "select id, xm,dl,isnull(mccl,'') as mccl,isnull(scbh,'') as scbh,isnull(jd,'') as jd,fqrq,dh,khmc,zdyh from baogongmingxi  where jlbh='1' and (xm like '%工厂%') and khmc like '%%' and zdyh like '%%' and mccl like '%%' and (jd like '%%' and jd !='出库')  order by riqipx desc"
       }else if(userInfo.quanxian=='客户'){
         console.log(111)
-        sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from  baogongmingxi  where jlbh='1' and khmc = '" + userInfo.name + "' and (xm like '%" + e[0] + "%' and xm !='少料') and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库')  order by riqipx desc"
+        sql = "select id, xm,dl,isnull(mccl,'') as mccl,isnull(scbh,'') as scbh,isnull(jd,'') as jd,fqrq,dh,khmc,zdyh from  baogongmingxi where jlbh='1' and khmc = '" + userInfo.name + "' and (xm like '%" + e[0] + "%' and xm !='缺料') and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库') and xm like '%工厂%' or xm like '%现场%' or xm like '%市场%' order by riqipx desc"
 
       }else{
-      sql = "select id, xm,dl,mccl,shengchanbianhao,jd,fqrq,dh,khmc,zdyh from baogongmingxi  where jlbh='1' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库') order by riqipx desc "
+      // sql = "select id, xm,dl,mccl,isnull(shengchanbianhao,''),jd,fqrq,dh,khmc,zdyh from baogongmingxi  where jlbh='1' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and (jd like '%" + e[4] + "%' and jd !='出库') order by riqipx desc "
+      sql="select DISTINCT id,isnull(xm,'') as xm,isnull(dl,'') as dl,isnull(dh,'') as dh,isnull(mccl,'') as mccl,isnull(khmc,'') as khmc,isnull(zdyh,'') as zdyh,isnull(scbh,'') as scbh,isnull(jd,'') as jd,isnull(fqrq,'') as fqrq from baogongmingxi  where xm != '' and xm like '%工厂%' or xm like '%现场%' or xm like '%市场%' order by fqrq,dh desc"
       }
       // if(userInfo.quanxian=='工序员'){
       //   sql = "select id, xm,dl,mcsl,jd,fqrq,dh,khmc,zdyh,mccl from baogongmingxi  where  jlbh='1' and (xm='补货' or xm='配件' or xm='返厂') and jd is not null and jd != ' ' and (xm like '%" + e[0] + "%' and xm !='少料') and khmc like '%" + e[1] + "%' and zdyh like '%" + e[2] + "%' and mccl like '%" + e[3] + "%' and jd like '%" + e[4] + "%'  order by riqipx desc"
@@ -313,8 +317,8 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_tb3999803',
       data: {
-        // query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mcsl='" + _this.data.mcsl + "',jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "',fqrq='" + _this.data.fqrq + "' where id=" + _this.data.id
-        query: "update baogongmingxi set jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "' where id=" + _this.data.id
+        query: "update baogongmingxi set xm='" + _this.data.xm + "',dl='" + _this.data.dl + "',mccl='" + _this.data.mccl + "',jd='" + _this.data.jd + "',fqrq='" + _this.data.fqrq + "',scbh='" + _this.data.scbh + "' where id=" + _this.data.id
+        // query: "update baogongmingxi set jd='" + _this.data.jd + "',mccl='" + _this.data.mccl + "' where id=" + _this.data.id
       },
      
       success: res => {
@@ -325,7 +329,8 @@ Page({
           mcsl: '',
           jd: '',
           mccl: '',
-          fqrq:''
+          fqrq:'',
+          scbh:''
         })
         _this.qxShow()
         var e = ['','','','','']
@@ -363,6 +368,9 @@ Page({
       mccl: _this.data.list[e.currentTarget.dataset.index].mccl,
       fqrq: _this.data.list[e.currentTarget.dataset.index].fqrq,
       dh: _this.data.list[e.currentTarget.dataset.index].dh,
+      scbh: _this.data.list[e.currentTarget.dataset.index].scbh,
+      khmc: _this.data.list[e.currentTarget.dataset.index].khmc,
+      zdyh: _this.data.list[e.currentTarget.dataset.index].zdyh,
       xgShow: true,
     })
   },
@@ -443,10 +451,13 @@ Page({
           var dh = _this.data.list[index].dh
           var khmc = _this.data.list[index].khmc
           var zdyh = _this.data.list[index].zdyh
-          var shengchanbianhao = _this.data.list[index].shengchanbianhao
+          var scbh = _this.data.list[index].scbh
+          var id = _this.data.list[index].id
         console.log(dh)
+        console.log(khmc)
+        console.log(zdyh)
         wx.navigateTo({
-     url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh + '&khmc=' + khmc +'&zdyh=' + zdyh + '&shengchanbianhao=' + shengchanbianhao,
+     url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh + '&khmc=' + khmc +'&zdyh=' + zdyh + '&scbh=' + scbh + '&id=' + id + '&tz='+"bhmx",
         })
      
         } else if (res.cancel) {
@@ -475,9 +486,13 @@ Page({
       success: res => {
         if (res.confirm) { 
     var dh = _this.data.dh
+    var khmc = _this.data.khmc
+    var zdyh = _this.data.zdyh
     console.log(dh)
+    console.log(khmc)
+    console.log(zdyh)
     wx.navigateTo({
-      url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh,
+      url: '../buhuoxialiaodan/buhuoxialiaodan?userInfo=' + JSON.stringify(_this.data.userInfo) + '&dh=' + dh+ '&khmc=' + khmc+ '&zdyh=' + zdyh + '&tz='+"bhmx",
     })
   } else if (res.cancel) {
     console.log('用户点击取消')

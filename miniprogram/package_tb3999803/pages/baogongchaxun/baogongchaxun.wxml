@@ -30,10 +30,21 @@
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="rq" range="{{rq_type}}">
     <input bindinput="onInput" data-column="rq" class="input_text_form" value="{{rq}}" type="text" name="rq" disabled="disabled"></input>
   </picker>
-  <view class="lables">工序</view>
+  <!-- <view class="lables">工序</view>
   <input bindinput="onInput" data-column="wczt" class="input_text_form" value="{{wczt}}" type="text" name="wczt"></input>
   <view class="lables">工序员</view>
-  <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry"></input>
+  <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry"></input> -->
+  
+  <view class="lables">工序</view>
+  <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="gx" range="{{gx_type}}">
+    <input bindinput="onInput" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx"  disabled="disabled"></input>
+  </picker>
+
+  <view class="lables">工序员</view>
+  <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="bgry" range="{{bgry_type}}">
+    <input bindinput="onInput" data-column="bgry" class="input_text_form" value="{{bgry}}" type="text" name="bgry"  disabled="disabled"></input>
+  </picker>
+  
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>

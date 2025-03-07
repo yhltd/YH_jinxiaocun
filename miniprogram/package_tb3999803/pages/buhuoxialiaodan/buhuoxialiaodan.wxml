@@ -19,10 +19,10 @@
 
 </view>
 
-<view style="display: flex;">
+<!-- <view style="display: flex;">
   <view class="lables_head" style="font-size: calc(35vmin / 8)">生产编号</view>
   <input bindinput="onInput_header" data-column="shengchanbianhao" class="input_text_head" value="{{header_list.shengchanbianhao}}" type="text" name="shengchanbianhao"></input>
-</view>
+</view> -->
 
 <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="min-height:40%">
   <view class="table">
@@ -51,8 +51,8 @@
 <!------------------------->
 <van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 35%;">
   <view class="lables">{{update_name[this_column]}}</view>
-  <view class="lables">名称+材料+备注</view>
-    <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input>
+  <!-- <view class="lables">名称+材料+备注</view> -->
+  <input bindinput="onInput" data-column="mcsl" class="input_text_form" value="{{mcsl}}" type="text" name="mcsl"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
@@ -82,11 +82,22 @@
   <picker bindchange="bindPickerChange2" value="{{index}}" data-column_name="dl" range="{{dl_type}}">
     <input bindinput="onInput" data-column="dl" class="input_text_form" value="{{dl}}" type="text" name="dl" disabled="disabled"></input>
   </picker>
- 
+
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd2">确定</button>
+  </view>
+</van-popup>
+
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow4 }}" position="bottom" custom-style="height: 30%;">
+  <view class="lables">生产编号</view>
+  <input bindinput="onInput" data-column="scbh" class="input_text_form" value="{{scbh}}" type="text" name="scbh"></input>
+ 
+  <view class="bottom_view" style="height:10%">
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+    <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1">删除</button> -->
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd4">确定</button>
   </view>
 </van-popup>
 
