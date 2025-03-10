@@ -191,7 +191,6 @@ Page({
             shengchan_shixiao = list[i].beizhu2.replaceAll("/", "-")
             paidan_riqi = list[i].paidanDate.replaceAll("/", "-")
             var date = DateDiff(shengchan_shixiao,paidan_riqi)
-            // console.log(date)
             list[i].shengchan_zhouqi = date
           }
         }
@@ -254,16 +253,12 @@ Page({
       success: res => {
         console.log(res)
         var list111 = res.result.recordsets[0]
-        console.log("123123")
         console.log(_this.data.list)
         // var gongxu_list1 = res.result.recordsets[1]
         for(var i=0; i<_this.data.list.length; i++){
           const user = list111.find(user => user.id === _this.data.list[i].id);
           // const foundUser = this.data.users.find(user => user.name === 'Bob');
           _this.data.list[i].beizhu1=user.beizhu1
-          console.log("55555")
-          console.log(user)
-          console.log(_this.data.list[i].beizhu1)
           // for(var j=0; j<list111.length; j++){
           //   _this.data.list[i].beizhu1=list111[j].beizhu1
           //   console.log(list111[j].beizhu1)
@@ -298,7 +293,6 @@ Page({
     var _this = this
     var sql = ""
     var baogongzhuangtai = _this.data.baogongzhuangtai
-    console.log(baogongzhuangtai)
     if(baogongzhuangtai == "已报工订单"){
       // sql="select ddh as productionNo,khmc as customerName,zdyh as [user],gx,max(id) as max_id,SUM(CASE WHEN sl <> '' THEN CONVERT(int,sl) ELSE 0 END) as sl,count(*) as orderContent from xiaoxiguanli where gx like '%" + e + "%' group by ddh,khmc,zdyh,gx"
       // sql="WITH RankedRecords AS (SELECT ddh,khmc,zdyh,gx,sl,ROW_NUMBER() OVER (PARTITION BY ddh ORDER BY sl DESC) AS rn FROM xiaoxiguanli WHERE gx LIKE '%" + e + "%')SELECT ddh AS productionNo,khmc AS customerName,zdyh AS [user],gx,SUM(CASE WHEN sl <> '' THEN CONVERT(int, sl) ELSE 0 END) AS sl,COUNT(*) AS ds FROM RankedRecords WHERE rn = 1 GROUP BY ddh, khmc, zdyh, gx"
@@ -331,8 +325,6 @@ Page({
           olist = i;
          
         }
-        console.log(slist)
-        console.log(olist)
         slist = slist
         olist = olist
         _this.setData({
@@ -410,7 +402,6 @@ Page({
         if (res.confirm) { 
           var index = e.currentTarget.dataset.index
           var order_number = _this.data.list[index].productionNo
-          console.log(order_number)
           wx.navigateTo({
             url: '../saomabaogong/saomabaogong?userInfo=' + JSON.stringify(_this.data.userInfo) + '&order_number=' + order_number,
           })

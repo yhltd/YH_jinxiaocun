@@ -178,7 +178,7 @@ Page({
     xiala_panduan1:[{name:''},{name:'出库'}],
     xiala_panduan2:[{name:''},{name:'完成'},{name:'缺料'},{name:'破损'}],
     dl_type: ['缺柜板','缺门板','缺条子','灯带板','异形板','手工件','弧形板','五金配件','其他'],
-    gongxu_arr:['pl','kl','fb','pk','xt','fm','sg','wj','bz','rk','ck','pdts']
+    gongxu_arr:['pl','kl','fb','pk','xt','fm','sg','wj','bz','rk','ck']
 
   },
 
@@ -194,37 +194,37 @@ Page({
     console.log(userInfo)
     if(userInfo.quanxian == '工序员'){
       if(userInfo.peiliao != '是'){
-        title[2].isupd = false
-      }
-      if(userInfo.kailiao != '是'){
         title[3].isupd = false
       }
-      if(userInfo.fengbian != '是'){
+      if(userInfo.kailiao != '是'){
         title[4].isupd = false
       }
-      if(userInfo.paikong != '是'){
+      if(userInfo.fengbian != '是'){
         title[5].isupd = false
       }
-      if(userInfo.xiantiao != '是'){
+      if(userInfo.paikong != '是'){
         title[6].isupd = false
       }
-      if(userInfo.fumo != '是'){
+      if(userInfo.xiantiao != '是'){
         title[7].isupd = false
       }
-      if(userInfo.shougong != '是'){
+      if(userInfo.fumo != '是'){
         title[8].isupd = false
       }
-      if(userInfo.wujin != '是'){
+      if(userInfo.shougong != '是'){
         title[9].isupd = false
       }
-      if(userInfo.baozhuang != '是'){
+      if(userInfo.wujin != '是'){
         title[10].isupd = false
       }
-      if(userInfo.ruku != '是'){
+      if(userInfo.baozhuang != '是'){
         title[11].isupd = false
       }
-      if(userInfo.chuku != '是'){
+      if(userInfo.ruku != '是'){
         title[12].isupd = false
+      }
+      if(userInfo.chuku != '是'){
+        title[13].isupd = false
       }
     }
     var order_number = options.order_number
@@ -616,7 +616,6 @@ Page({
       })
     }else{
       var list = _this.data.list
-      console.log()
       list[index][this_column + 'ys'] = list[index][this_column + 'ys'] == '16777215' ? '15189684' : '16777215' 
       _this.setData({
         list
@@ -814,7 +813,6 @@ Page({
         }
       }
     }
-    
     var sql = del_sql + ins_sql + ins_sql2 + ";"
     if(xiaoxi_sql2 != ''){
       sql = sql + xiaoxi_sql + xiaoxi_sql2 + ";"
