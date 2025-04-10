@@ -159,6 +159,13 @@ Page({
         columnName: "mccl",
         type: "text",
         isupd: true
+      },{
+        text: "数量",
+        width: "0rpx",
+        width2: "calc(0vmin / 7.5)",
+        columnName: "xxgl_sl",
+        type: "text",
+        isupd: true
       },
     ],
     list:[],
@@ -252,17 +259,12 @@ Page({
     var gongxu_arr=_this.data.gongxu_arr
     var hang = ''
     var lie = ''
-    console.log(list)
-    console.log(gongxu_arr)
     var zongbaoshu = 0
     for (var i=0;i<list.length; i++){
-      console.log(i)
       if(list[i].rk != ''){
         zongbaoshu = zongbaoshu + (list[i].rk * 1)
       }
       for (var j= gongxu_arr.length - 1; j>=0;j--){
-        console.log(j)
-        console.log(list[i][gongxu_arr[j]])
         if (list[i][gongxu_arr[j]] != ''){
           if(list[i][gongxu_arr[j]] == '完成'){
             var lie1 = j + 1
@@ -318,7 +320,6 @@ Page({
         gongxumc = '出库'
       }
     }
-    console.log(gongxumc)
     if(gongxumc == ''){
       gongxumc = '配料'
     }
@@ -384,6 +385,10 @@ Page({
                 var paidan_date = list[0].pdrq.replaceAll("/","-")
                 var this_date = _this.data.this_date
                 list[i].pdts = DateDiff(this_date,paidan_date)
+                const a1=list[i].mcsl.split("/")[1]
+                const a2=a1.split("+")[0]
+                const num = parseFloat(a2) || 0
+                list[i].xxgl_sl = num
               } 
             }
             var list_old = JSON.stringify(list)
@@ -460,6 +465,10 @@ Page({
                           var paidan_date = header_list.pdrq.replaceAll("/","-")
                           var this_date = _this.data.this_date
                           list[i].pdts = DateDiff(this_date,paidan_date)
+                          const a1=list[i].mcsl.split("/")[1]
+                          const a2=a1.split("+")[0]
+                          const num = parseFloat(a2) || 0
+                          list[i].xxgl_sl = num
                         }
                       }
                       var list_old = JSON.stringify(list)
@@ -806,9 +815,13 @@ Page({
             shuliang = ''
           }
           if(xiaoxi_sql2 == ''){
-            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" +  _this.data.header_list.cl + "')"
+          //   xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" +  _this.data.header_list.cl + "')"
+          // }else{
+          //   xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" +  _this.data.header_list.cl + "')"
+          // }
+            xiaoxi_sql2 = "('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/")+ "','" +  _this.data.list[i].xxgl_sl + "')"
           }else{
-            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" +  _this.data.header_list.cl + "')"
+            xiaoxi_sql2 = xiaoxi_sql2 + ",('" + header_list.dh + "','" + header_list.khmc + "','" + header_list.zdyh + "','" + mingcheng + "','" + _this.data.update_name[gongxu_arr[j]] + "','" + list[i][gongxu_arr[j]] + "','" + _this.data.userInfo.name + "','" + this_riqi.replaceAll("-","/") + "','" +  _this.data.list[i].xxgl_sl + "')"
           }
         }
       }
