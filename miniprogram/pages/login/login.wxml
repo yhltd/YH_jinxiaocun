@@ -1,14 +1,17 @@
-<view class="top-bgimage" style="height: 25%;">
-<view bindtap="goyh" style="color:white;font-size: 15dp;padding-left: 10dp;">云合</view>
+<view class="top-bgimage" style="height: 100%;display: grid;">
+<view bindtap="goyh" style="color:black;font-size: 32rpx;padding-left: 10dp;">版本号：5.1.0.60k</view>
   <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
   <view class="container">
+    <div class="rotating-mask"></div>
     <view class="userinfo">
-      <image class="userinfo-avatar" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/login.png" background-size="cover"></image>
+      <text class="userinfo-nickname1">欢迎使用云合一体化系统</text>
+      <image class="userinfo-avatar" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/companyLogo.png" background-size="cover"></image>
       <text class="userinfo-nickname">请登录</text>
     </view>
   </view>
-</view>
-<view class="main-body" style="height: 65%;">
+
+  <view class="middle-bgimage" style="height: 100%;">
+<view class="main-body"  >
   <form bindsubmit="formLogin">
 
     <picker class="picker_system" bindcancel="out_choice_system" mode="selector" bindchange="choice_system" range="{{systemArray}}">
@@ -33,17 +36,18 @@
     </view>
     <view class="hs20"></view>
     <view>
-      <checkbox bindtap="checkboxChange" checked="{{jizhu_panduan}}" >记住密码</checkbox>
+      <checkbox style="color: white;" bindtap="checkboxChange" checked="{{jizhu_panduan}}" >记住密码</checkbox>
     </view>
     <view class="hs20"></view>
     <view>
       <button class="btn-login" hover-class="btn-login-hover" form-type="submit">进入系统</button>
     </view>
   </form>
+  </view>
 </view>
-
-
-
 <view>
-版本号：5.1.0.59k
 </view>
+</view>
+
+
+

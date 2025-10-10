@@ -5,9 +5,24 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isBannerHidden: true,
+    showXuanTu: true,
+    swiperImg: [
+      "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/mendian-lunbo1.jpg",
+      "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/mendian-lunbo2.jpg",
+      "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/mendian-lunbo3.jpg"
+  ],
+  swiperIndex:0,//轮播图索引
+  bgColor:[
+      "linear-gradient(145deg, #477ead 0%, #cccccc 100%)",
+      "linear-gradient(145deg, #f3f3f3 0%, #dc7b28 100%)",
+      "linear-gradient(145deg, #c2da77 0%, #b3d289 100%);"
+  ],
     gongsi:"aa",
     uname:"aa",
     id:"aa",
+    position:"aa",
+    zname:"aa",
 
     sheetqx1:[],
     sheetqx2: [],
@@ -50,12 +65,22 @@ Page({
       }, {
         text: "统计报表",
         url: "../../packageX/page/report_form/report_form"
-      },  {
+      }, {
+        text: "个人中心",
+        url: "../../packageX/page/gerenzhongxin/gerenzhongxin"
+      }, {
         text: "退出",
         url: 　""
       }
     ]
   },
+  getSwiperIndex(e){
+    let currentIndex = e.detail.current
+    this.setData({
+        swiperIndex:currentIndex
+    })
+},
+
   go: function (e) {
     var _this = this;
     var index = e.currentTarget.dataset.index;
@@ -191,7 +216,18 @@ Page({
             }) 
           })
         
-      }else if (text == "统计报表") {
+      }else if (text == "个人中心") {
+        
+        wx.navigateTo({
+          url: url + '?userInfo=' + JSON.stringify({
+            company: _this.data.gongsi,
+            uname: _this.data.uname,
+            zname: _this.data.zname,
+            position: _this.data.position
+          }) 
+        })
+      
+    }else if (text == "统计报表") {
         
           wx.navigateTo({
             url: url + '?userInfo=' + JSON.stringify({
@@ -249,7 +285,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.queryUserPermissions()
     var _this = this
+    // var userInfo = JSON.parse(options.userInfo)
+    // console.log("zhuyeneiro",userInfo)
+    // _this.setData({
+    //   userInfo:userInfo,
+    // })
     if(options.company == undefined){
       wx.login({
         success: (res) => {
@@ -283,12 +325,14 @@ Page({
                       success(res){
                         console.log(res)
                         var list = res.result
-                        console.log(list)
+                        console.log("门店首页数据list",list)
                         if(list.length > 0){
                           _this.setData({
                             gongsi: list[0].company,
                             uname: list[0].uname,
                             id: list[0].id,
+                            position: list[0].position,
+                            zname: list[0].zname,
                           })
                           _this.quanxian()
                         }else{
@@ -305,10 +349,14 @@ Page({
     })
     }else{
       var _this=this
+      console.log(options.position)
+      console.log(options.zname)
       _this.setData({
         gongsi: options.company,
         uname: options.uname,
         id: options.id,
+        position: options.position,
+        zname: options.zname,
       })
       _this.quanxian()
     }
@@ -361,5 +409,98 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  hideBanner: function() {
+    this.setData({
+      isBannerHidden: false
+    });
+  },
+  closeXuanTu: function() {
+    this.setData({
+      showXuanTu: false
+    })
+  },
+
+  queryUserPermissions: function() {
+    console.log('=== 开始调用云函数 ===')
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "SELECT tptop1,tptop2,tptop3,tptop4,tptop5,tptop6,topgao,xuankuan,xuangao,textbox,beizhu1  FROM yh_notice.dbo.product_pushnews WHERE gsname='云合未来' AND  xtname='云合智慧门店收银系统' AND ((qidate IS NULL OR GETUTCDATE() >= CONVERT(DATETIME, LEFT(qidate, 10), 120)) AND (zhidate IS NULL OR GETUTCDATE() <= CONVERT(DATETIME, LEFT(zhidate, 10), 120)))"
+      },
+      success: res => {
+        var pushdata = res.result.recordset
+        if (pushdata && pushdata.length > 0) {
+          const firstItem = pushdata[0]
+          const bannerImages = []
+          let singleImage = '' 
+          if(firstItem.beizhu1 == "隐藏广告"){
+            this.hideBanner()
+            this.closeXuanTu()
+            return;
+          }
+
+          let marqueeText = firstItem.textbox || '暂无公告信息'
+          let xuankuan = firstItem.xuankuan ? firstItem.xuankuan + 'px' : '300rpx' 
+          let xuangao = firstItem.xuankuan ? firstItem.xuangao + 'px' : '300rpx' 
+          let topgao = firstItem.topgao ? firstItem.topgao + 'px' : '200rpx'       // 默认高度
+          
+          for (let i = 1; i <= 6; i++) {
+            const fieldName = `tptop${i}`
+            const rawData = firstItem[fieldName]
+            
+            if (rawData && rawData.trim() !== '') {
+              // 清理数据
+              const cleanedData = rawData
+                .replace(/\r?\n|\r/g, '')
+                .replace(/\s/g, '')
+                .trim()
+              
+              // 确定图片格式
+              let mimeType = 'image/jpeg'
+              if (cleanedData.startsWith('iVBORw0KGgo')) {
+                mimeType = 'image/png'
+                console.log(`tptop${i} 检测为PNG格式`)
+              } else if (cleanedData.startsWith('/9j/')) {
+                mimeType = 'image/jpeg'
+                console.log(`tptop${i} 检测为JPEG格式`)
+              }
+              
+              const finalUrl = `data:${mimeType};base64,${cleanedData}`
+              
+              // tptop1 单独处理，其他作为轮播图
+              if (i === 1) {
+                singleImage = finalUrl
+                console.log('单独图片 tptop1 已设置')
+              } else {
+                bannerImages.push(finalUrl)
+                console.log(`轮播图添加 tptop${i}`)
+              }
+            }
+          }
+
+          // 更新页面数据
+          this.setData({ 
+            singleImage: singleImage,      // 单独图片
+            bannerImages: bannerImages,    // 轮播图数组
+            hasSingleImage: !!singleImage, // 是否有单独图片
+            hasBannerImages: bannerImages.length > 0, // 是否有轮播图
+            marqueeText: marqueeText,
+            xuanTuStyle: `width: ${xuankuan};height: ${xuangao};`,
+            topTuStyle: `height: ${topgao};`
+          })
+          
+          // 测试图片加载
+          if (singleImage) {
+            this.testImageLoad(singleImage, '单独图片')
+          }
+          if (bannerImages.length > 0) {
+            this.testImageLoad(bannerImages[0], '轮播图第一张')
+          }
+        }
+      },
+      
+    })
   }
 })

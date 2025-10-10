@@ -65,26 +65,74 @@ page{
   align-items: center;
  }
  .input_text_form{
-  border: 5rpx solid #E6E6E6;
+  border: 5rpx solid #000000;
   margin: auto;
   width: 80%;
   height: 64rpx;
   align-items: center;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   border-radius: 19rpx;
   padding-left: 3%;
+  background: white;
 }
 .bt_bottom{
   width: 42%;
-  background-color: #009688;
+  background-color: #34364c;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
   margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bt_bottom_hover{
+  width: 42%;
+  background-color: #595c81;
+  color: #E6E6E6;
+  height: 75rpx;
+  margin: auto;
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .bottom_view{
   height: 10%;
   align-items: center;
   display: flex;
   bottom: 2%;
+}
+
+.chaxun1{    
+  display: flex;
+  margin-top: 25rpx;
+}
+.chaxun2{
+  display: flex;
+  margin-top: 25rpx;
+}
+
+.chaxun3{
+  display: flex;
+  margin-top: 25rpx;
+}
+.chaxun4{
+  display: flex;
+  margin-top: 25rpx;
+}
+
+.lables{
+  margin: auto;
+  font-size: 40rpx;
+  width: 240rpx;
+}
+
+.pick{
+  width: 66%;
+  margin: auto;
+}
+page{
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/biaoge-bg.png?sign=877e823…&t=1758702189);
 }

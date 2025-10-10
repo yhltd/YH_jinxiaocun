@@ -14,11 +14,11 @@
     </view>
     <view class="input_view">
       <view class="input_text">凭证号</view>
-      <input name="name" placeholder="请输入凭证号" name="no" type="text" value="{{empty}}"></input>
+      <input class="ipt flow-container" name="name" placeholder="请输入凭证号" name="no" type="text" value="{{empty}}"></input>
     </view>
     <view class="input_view">
       <view class="input_text">摘要</view>
-      <input name="name" placeholder="请输入摘要" name="abstract" type="text" value="{{empty}}"></input>
+      <input class="ipt" name="name" placeholder="请输入摘要" name="abstract" type="text" value="{{empty}}"></input>
     </view>
     <view class="input_view">
       <view class="input_text">科目代码</view>
@@ -57,15 +57,15 @@
     </view>
     <view class="input_view">
       <view class="input_text">备注</view>
-      <input name="name" placeholder="请输入备注" name="note" type="text" value="{{empty}}"></input>
+      <input class="ipt" name="name" placeholder="请输入备注" name="note" type="text" value="{{empty}}"></input>
     </view>
     <view class="input_view">
       <view class="input_text">金额</view>
-      <input name="name" placeholder="请输入金额" name="money" type="number" value="{{empty}}"></input>
+      <input class="ipt" name="name" placeholder="请输入金额" name="money" type="number" value="{{empty}}"></input>
     </view>
     <view class="input_view">
       <view class="input_text">实收金额</view>
-      <input name="name" placeholder="请输入实收金额" name="real" type="number" value="{{empty}}"></input>
+      <input class="ipt" name="name" placeholder="请输入实收金额" name="real" type="number" value="{{empty}}"></input>
     </view>
 
     <view class="bottom">

@@ -60,22 +60,41 @@
 </scroll-view> -->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+   
       <view class="lables">订单号:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="ddh"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">收银员:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="syy"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">会员姓名:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="hyxm"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">起始日期:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{start_date}}" name="start_date" disabled="disabled"></input>
       </picker>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">结束日期:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="end_date" bindchange="choiceDate">
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{end_date}}" name="end_date" disabled="disabled"></input>
       </picker>
-      
+    </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -105,7 +124,7 @@
 <!--- 删除 --->
 <!----------->
 <view class="input_view" hidden="{{handle}}">
-      <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
+      <button class="bt_form2" bindtap="sanchu" hover-class="bt_form_hover2">删除</button>
 </view>
 
 

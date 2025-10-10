@@ -17,21 +17,34 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var _this = this
+    var userInfo = JSON.parse(options.userInfo)
+    _this.setData({
+      userInfo:userInfo,
+    })
 
   },
   onChange: function (event) {
     var _this = this;
     if (event.detail == 0) {
       wx.redirectTo({
-        url: '../PeiZhiBiao/PeiZhiBiao'
+        url: '../PeiZhiBiao/PeiZhiBiao?userInfo='+JSON.stringify(_this.data.userInfo)
       })
     } else if (event.detail == 1) {
       wx.redirectTo({
-        url: '../DingDan/DingDan'
+        url: '../DingDan/DingDan?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    }  else if (event.detail == 3) {
+    } else if (event.detail == 2) {
       wx.redirectTo({
-        url: '../HuiZong/HuiZong'
+        url: '../PaiChan/PaiChan?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 3) {
+      wx.redirectTo({
+        url: '../HuiZong/HuiZong?userInfo='+JSON.stringify(_this.data.userInfo)
+      })
+    } else if (event.detail == 4) {
+      wx.redirectTo({
+        url: '../paichan_grzx/paichan_grzx?userInfo='+JSON.stringify(_this.data.userInfo)
       })
     }
   },

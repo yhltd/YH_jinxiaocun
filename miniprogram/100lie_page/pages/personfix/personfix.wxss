@@ -6,7 +6,7 @@
    }  */
    .scroll2{
     width: 100%;
-    height: 850rpx;
+    height: 1020rpx;
     margin-top: 20px;
  } 
  .table{
@@ -18,6 +18,9 @@
   flex-direction: row;
 margin: 0;
 padding: 0;
+}
+.thead{
+  background:linear-gradient(45deg, #334d82 0%, #4e5f82 20%, #6f8cb7 45%, #4e5f82 70%, #334d82 100%);
 }
 .tr{
    /* padding: 10rpx;
@@ -43,7 +46,7 @@ padding: 0;
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #009688;
+  /* background-color: #009688; */
   color: white;
   font-weight: bold;
   font-size: 35rpx;  
@@ -76,14 +79,15 @@ padding: 0;
 } 
 
 .input_text_form{
-  border: 5rpx solid #E6E6E6;
-  margin: auto;
-  width: 80%;
+  border: 5rpx solid #000000;
+  margin: 0 auto;
+  width: 450rpx;
   height: 64rpx;
   align-items: center;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   border-radius: 19rpx;
   padding-left: 3%;
+  background: white;
 }
 
 .bottom_view{
@@ -100,7 +104,7 @@ padding: 0;
   margin: auto;
   margin-top: 5%; */
   width: 30%;
-  background-color: #009688;
+  background-color: #384050;
   color: #E6E6E6;
   /* height: 100rpx; */
   float: left;
@@ -117,7 +121,7 @@ padding: 0;
 
 .scroll{
   margin-top: 30rpx;
-  height: 350rpx;
+  /* height: 350rpx; */
   width: 100%;
   /* white-space: nowrap; */
   }
@@ -125,7 +129,7 @@ padding: 0;
 .lables{
   font-size: 40rpx;
   margin-left: 90rpx;
-  margin-top: 30rpx;
+  /* margin-top: 30rpx; */
 }
 
 .input_view{
@@ -162,3 +166,18 @@ padding: 0;
   z-index: 19;
   transition: all 0.3s ease-in-out;
 } 
+
+.chaxun1{
+  display: flex;
+}
+.chaxun2{
+  display: flex;
+  margin-top: 30rpx;
+}
+.pick{
+  width: 500rpx;
+  margin-left: 40rpx;
+}
+page{
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/biaoge-bg.png?sign=877e823…&t=1758702189);
+}

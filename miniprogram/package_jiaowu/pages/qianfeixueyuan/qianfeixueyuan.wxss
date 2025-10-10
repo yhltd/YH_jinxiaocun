@@ -22,7 +22,9 @@ button{
   white-space: nowrap;
   margin-top: 0px;
   height: 86%;
-  background-color: #f2f2f2;  
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/biaoge-bg2.jpg?sign=e2e6da267b1c23049b09e826010ca72b&t=1759128000);  
+  background-size: cover;
+
 }
 .sv_list2{
   width: auto;
@@ -45,6 +47,8 @@ button{
   height: 100rpx;
   position: sticky;
   top: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
 }
 
 .title{
@@ -62,10 +66,10 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #24cab7;
+  /* background-color: #24cab7; */
   color: white;
   font-weight: bold;
-  font-size: 35rpx;   
+  font-size: 40rpx;   
 }
 
 .list_row{
@@ -95,7 +99,7 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #ffffffd9;
   color: black;
   border-right: 1rpx solid #F0F0F0;
   border-bottom: 1rpx solid #F0F0F0;
@@ -246,7 +250,7 @@ button{
 }
 .bt_bottom{
   width: 30%;
-  background-color: #009688;
+  background-color: #4449e0;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;

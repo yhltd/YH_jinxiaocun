@@ -2,7 +2,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#ff7905;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
@@ -47,10 +47,14 @@
 </view> -->
 <scroll-view scroll-y="true" class="choiceList3" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">员工名称:</view>
       <input class="input_text_form" placeholder="请输入员工名称" value="{{empty}}" type="text" name="name"></input>
     </view>
+  </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
       <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
@@ -104,19 +108,35 @@
 <!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">职位:</view>
      <!--placeholder="{{dataset_input.value}}"--> 
       <input class="input_text_form"  value="{{empty}}" type="text" name="zw"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">员工:</view>
       <!--placeholder="{{dataset_input.value}}"--> 
       <input class="input_text_form"  value="{{empty}}" type="text" name="yg"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">账号:</view>
       <!--placeholder="{{dataset_input.value}}"--> 
       <input class="input_text_form"  value="{{empty}}" type="text" name="zh"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">密码:</view>
       <!--placeholder="{{dataset_input.value}}"--> 
       <input class="input_text_form"  value="{{empty}}" type="text" name="mm"></input>
+    </view>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

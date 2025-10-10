@@ -5,16 +5,17 @@ page {
 .shangpin {
   display: flex;
   width: 100%;
-  background-color: white;
+  background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
   border-bottom: 0.5px solid #5b5b5b;
   margin-bottom: 7px;
   padding: 8px;
+  border-radius: 20rpx;
 }
 
 .shangpin-jin {
   display: flex;
   position: relative;
-  left: 67%;
+  left: 61%;
   bottom: 100rpx;
   font-size: 62%;
   flex-direction: column;  
@@ -24,11 +25,13 @@ page {
   position: absolute;
   width: 100%;
   top: 17%;
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/ruku_bg.png?sign=9f0294bdfbc6841048d178ae5ffd52b0&t=1757651379);
 }
 
 .shangpin-text {
   width: 35%;
-  font-size: 65%;
+  font-size: 75%;
+  color: white;
   
 }
 
@@ -41,6 +44,10 @@ page {
   margin-right: 6%;
 }
 
+.shangpin-input{
+  color: #fff800;
+  font-size: 26rpx;
+}
 /* .pm{
 background-color: rgb(26,26,26,0.4);
 display: flex;
@@ -54,7 +61,7 @@ height: 55rpx;
 } */
 
 .red {
-  color: #ee4000;
+  color: #26ff41;
 }
 
 /* .pm-text{
@@ -68,11 +75,12 @@ left: 46%;
 } */
 
 .Hs {
-  color: #666;
+  color: rgb(255, 255, 255);
 }
 
 .Hs1 {
   font-size: 10px;
+  color: white;
 }
 
 /* .header {
@@ -92,7 +100,8 @@ left: 46%;
   left: 5%;
   top: 0.5%;
   color: #f8f8f8;
-  background-color: #1c60a3;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
 }
 
 .bk_ss2 {
@@ -102,8 +111,10 @@ left: 46%;
   position: absolute;
   left: 5%;
   top: 6%;
+ 
   color: #f8f8f8;
-  background-color: #1c60a3;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
 }
 
 .bk_ss3 {
@@ -114,12 +125,28 @@ left: 46%;
   left: 5%;
   top: 11.5%;
   color: #f8f8f8;
-  background-color: #1c60a3;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
 }
 
 .header {
-  background-color: rgb(30, 144, 255);
+
   padding: 5%;
+  background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
 }
 
 .ss-text {
@@ -131,8 +158,9 @@ left: 46%;
 }
 
 .list_ps {
-  margin-bottom: -2%;
+  margin-bottom: -9%;
 }
+
 
 .dq_y {
   font-weight: bold;
@@ -143,7 +171,7 @@ left: 46%;
 }
 
 .button_css{
-  font-size: 15px;
+  font-size: 40rpx;
   height: 2.0rem;
   min-height: 2.0rem;
   width: 30%;
@@ -151,14 +179,14 @@ left: 46%;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  background-color:rgb(95, 101, 119);
+  background-color: rgb(60 187 75);
   position: absolute;
   left: 68%;
   top: 1%;
 }
 
 .button_css2{
-  font-size: 15px;
+  font-size: 40rpx;
   height: 2.0rem;
   min-height: 2.0rem;
   width: 30%; 
@@ -166,14 +194,14 @@ left: 46%;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  background-color:rgb(95, 101, 119);
+  background-color: rgb(60 187 75);
   position: absolute;
   left: 68%;
   top: 6%;
 }
 
 .button_css3{
-  font-size: 15px;
+  font-size: 40rpx;
   height: 2.0rem;
   min-height: 2.0rem;
   width: 30%; 
@@ -181,7 +209,7 @@ left: 46%;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  background-color:rgb(95, 101, 119);
+  background-color: rgb(60 187 75);
   position: absolute;
   left: 68%;
   top: 11%;
@@ -204,24 +232,24 @@ left: 46%;
     width: 100%;
     align-items: center;
     display: flex;
-    bottom: 2%;
+    bottom: 0%;
     position: fixed;
-    background-color: #1c60a3;
+    background-color: #ffffff;
   }
   .bt_bottom{
     width: 30%;
-    background-color: #1c60a3;
-    color: #E6E6E6;
+
+    color: #000000;
     height: 75rpx;
     margin: auto; 
    
   }
   .bt_bottom1{
     width: 10%;
-    background-color: #1c60a3;
-    color: #E6E6E6;
+    color: #000000;
     height: 75rpx;
     margin: auto; 
     text-align:center;
     
   }
+

@@ -5,5 +5,6 @@
     "van-cell": "../../components/cell/index",
     "van-cell-group": "../../components/cell-group/index"
   },
-  "navigationBarTitleText": "云合分权编辑系统"
+  "navigationBarTitleText": "云合分权编辑系统",
+  "navigationBarBackgroundColor": "#4e4d4d"
 }

@@ -18,15 +18,14 @@
     </view>
   </view>
 </view>
-<view class='header'>
-  <view class='dq_y'>入库</view>
+<view class='header' style="height:155rpx">
+  <view class='dq_y'>输入入库订单号：</view>
   <view class='pm'></view>
-  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="输入入库订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
-</view>
-<view class='zg'>
+  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <view class='zg'>
   <view class='xzkh'>
     <view class='xzkhWwb'>
-      <text hidden='{{hideen1}}'>进货方：{{all}}</text>
+      <text style="color: white;"  hidden='{{hideen1}}'>进货方：{{all}}</text>
       <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text>
       <text class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
     </view>
@@ -36,10 +35,14 @@
     </view>
   </view>
 </view>
+</view>
+
 <view class="tui-picker-content">
+  <view class="riqi">请选择入库日期：</view>
   <picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
+    
     <view class="tui-picker-detail">
-      <text decode="true">&nbsp;&nbsp;</text>选择入库日期（年月日）: {{date}}
+      <text decode="true">&nbsp;&nbsp;</text>{{date}}
     </view>
   </picker>
 </view>

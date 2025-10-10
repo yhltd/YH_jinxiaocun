@@ -8,5 +8,6 @@
     "van-datetime-picker": "../../components/datetime-picker/index"
   },
   
-  "navigationBarTitleText": "工作台公式设置"
+  "navigationBarTitleText": "工作台公式设置",
+  "navigationBarBackgroundColor": "#4e4d4d"
 }

@@ -5,15 +5,15 @@ page{
 
 .other_view{
   position: fixed;
-  width: 96%;
-  height: 15%;
-  bottom: 0;
+  width: 100%;
+  height: 20%;
+  bottom: 0%;
   z-index: 20;
   background-color: white;
   right: 0;
   border-radius: 10rpx 10rpx 0 0;
-  box-shadow: 0 -5rpx 15rpx black;
-  left: 2%
+  box-shadow: 0 -3rpx 10rpx black;
+  left: 0%;
 }
 .sv{
   width: 100%;
@@ -24,8 +24,8 @@ page{
 }
 .sv_item{
   width: 20%;
-  height: 80%;
-  border: 1rpx solid #E6E6E6;
+  height: 75%;
+  border: 1rpx solid #25c53a;
   font-size: 17rpx;
   line-height: 50rpx;
   border-radius: 5rpx;
@@ -34,11 +34,11 @@ page{
   justify-content: center;
   margin-left: 20rpx;
   margin-right: 20rpx;
-  margin-top: 1%;  
+  margin-top: 5rpx;
 }
 .sv_item_hover{
   width: 20%;
-  height: 80%;
+  height: 75%;
   border: 1rpx solid #E6E6E6;
   font-size: 17rpx;
   line-height: 50rpx;
@@ -48,8 +48,8 @@ page{
   justify-content: center;
   margin-left: 20rpx;
   margin-right: 20rpx;
-  margin-top: 1%;
-  background-color: #2E2E2E;
+  margin-top: 0;
+  background-color: #39b15b;
   color: white;
 }
 
@@ -69,18 +69,23 @@ page{
   padding-left: 3%;
   margin-bottom:5% ;
   position: absolute;
+  background: white;
 }
 
 .lables{
   position: absolute;
+  color: white;
 }
 
 .moreDo{
   
-  background-color: #282B33;
+  background-color: #39b15b;
   color: #E6E6E6;
   height: 75rpx;
   font-size: 90%;
   line-height:35rpx;
   z-index:10;
+}
+page{
+  background: linear-gradient(135deg, #717171 0%, #737171 100%);
 }

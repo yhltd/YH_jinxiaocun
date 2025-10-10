@@ -23,7 +23,7 @@
 
 <view  class='xuan' bindtap='xuanshangpin'> 
 <image class='jiahao'  src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png'></image>
-<text decode="emsp">&emsp;&emsp;选商品</text> 
+<text decode="emsp" style="color: white;font-size: 40rpx;">选商品</text> 
   </view>
 
 <!-- <view class='divline2'></view> -->

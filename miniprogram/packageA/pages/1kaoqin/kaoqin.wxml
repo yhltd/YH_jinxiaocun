@@ -226,7 +226,7 @@
 
 </view>
 <!--左抽屉-->
-<drawer mode="left" visible="{{leftDrawer}}" bind:close="closeDrawer" data-mode="left">
+<drawer mode="left" visible="{{leftDrawer}}" bind:close="closeDrawer" data-mode="left" class="drawer">
   <view class="d-container">
     <view>
       <text style="font-size:26rpx">您的权限：</text>

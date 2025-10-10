@@ -16,12 +16,12 @@
         </view>
   </view>
 </scroll-view>
-<view class='kongbai'></view>
+<!-- <view class='kongbai'></view> -->
 <view class='divline'></view>
 
 <view  class='xuan' bindtap='tianjia'> 
 <image class='jiahao'  src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png'></image>
-<text decode="emsp">&emsp;&emsp;添加</text>
+<text decode="emsp">添加</text>
   </view>
 
 <view class='divline2'></view>

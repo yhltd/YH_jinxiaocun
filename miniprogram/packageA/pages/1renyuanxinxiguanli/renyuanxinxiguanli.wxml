@@ -31,7 +31,7 @@
 
 <!--标题栏-->
 <scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
-	<view class='table' style="width:100%;display:flex;align-items: center;justify-content: center;margin-left: 130rpx;">
+	<view class='table' style="width:100%;display:flex;align-items: center;justify-content: center;   padding-right: 80px;padding-left: 65px;">
 		<view class='table_header'>
 			<block wx:for="{{title}}" wx:key="">
 				<view class="th {{(item.renyuanxinxiguanli == '编号')?'tap_120':''||(item.renyuanxinxiguanli == '操作栏')?'change_x':''}}" data-renyuanxinxiguanli='{{item.renyuanxinxiguanli}}'>
@@ -47,7 +47,7 @@
 		<block wx:for="{{list}}">
 			<view class='table_main'>
 				<!--序号 -->
-				<view class='td' style='width:120rpx;background-color:white;'>
+				<view class='td xuhao' style='width:120rpx;background-color:white;'>
 					<view class="cell_label centerclass">{{item.id}}</view>
 				</view>
 				<view class='td'>
@@ -62,7 +62,7 @@
 				<view class='td'>
 					<view class="cell_label centerclass" style="{{item.num=='未设置'?'color:#DD5044':item.num=='部分设置'?'color:#84B9F2':item.num=='全部设置'?'color:#6FCB53':''}}" bindtap="upd_access" data-id="{{item.id}}">{{item.num}}</view>
 				</view>
-				<view class="td" style="background-color:white;width:190rpx;display:inline-flex; flex-direction:row;">
+				<view class="td bjs" style="background-color: #393e48; width:190rpx;display:inline-flex; flex-direction:row;">
 					<view><button class='del' data-id='{{item.id}}' bindtap='onDel' disabled="{{result.del!=1}}">删除</button></view>
 					<view style="width:10rpx"></view>
 					<view><button class='update' data-id='{{item.id}}' disabled="{{result.upd!=1}}" bindtap='onUpdate'>修改</button></view>

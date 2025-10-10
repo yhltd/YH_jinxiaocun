@@ -1,7 +1,7 @@
 
-<view class="scroll">
+<view class="scroll" style="display: flex;">
     <view class="lables">姓名</view>
-    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="this_column" range="{{renyuan_select}}">
+    <picker style="width: 70%;" bindchange="bindPickerChange1" value="{{index}}" data-column_name="this_column" range="{{renyuan_select}}">
       <input bindinput="onInput" data-column="renyuan_name" class="input_text_form" value="{{renyuan_name}}" type="text" name="renyuan_name" disabled="disabled"></input>
     </picker>
 </view>

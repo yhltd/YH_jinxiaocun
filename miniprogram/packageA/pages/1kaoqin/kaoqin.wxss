@@ -30,8 +30,11 @@ page {
   width: auto;
   white-space: nowrap;
   margin-top: 0px;
-  height: 75%;
-  background-color:#f2f2f2;
+  height: 70%;
+  /* background-color:#f2f2f2; */
+  background-image: url('https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/renshibeijing.png?sign=0c075a527577334ccd695fe5f0edbeaf&t=1759026269');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /*头部设置flex并吸顶，因为是改成纵向渲染所以不会有很大影响，并且可以实现标题和列表同步*/
@@ -41,6 +44,7 @@ page {
   position: sticky;
   top: 0rpx;
   z-index: 1;
+  
 }
 
 .th {
@@ -73,19 +77,33 @@ page {
   border-right: 1rpx solid rgba(218, 217, 217, 1);
 }
 
+
 .kaoqinbiao {
   display: flex;
   flex-direction: column;
   width: 90rpx;
   height: 100rpx;
-  background: #d2f1f0;
-  border-right: 1rpx solid #fff;
-  border-bottom: 1rpx solid rgba(218, 217, 217, 1);
+  background: linear-gradient(135deg, 
+    rgba(15, 27, 53, 0.9) 0%, 
+    rgba(28, 46, 74, 0.8) 50%, 
+    rgba(42, 67, 101, 0.7) 100%);
+  border-right: 1rpx solid rgba(102, 178, 255, 0.2);
+  border-bottom: 1rpx solid rgba(102, 178, 255, 0.3);
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch
+  -webkit-overflow-scrolling: touch;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 24rpx;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    inset 0 1px 1px rgba(102, 178, 255, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
+
+
 
 .kaoqinbiao.xingming {
   width: 150rpx;
@@ -101,18 +119,22 @@ page {
 }
 
 .cell_label {
-  font-size: 26rpx;
-  color: rgba(74, 74, 74, 1);
+  font-size: 34rpx;
+  color: rgba(255, 255, 255, 0.9);
   width: 100%;
   height: 100%;
   text-align: center;
   line-height: 50rpx;
-
+  background: linear-gradient(135deg, 
+  rgba(8, 18, 40, 0.9) 0%, 
+  rgba(15, 30, 55, 0.8) 100%);
+  border-radius: 4rpx;
+  margin: 2rpx;
 }
 
 .cell_label_header{
-  font-size: 26rpx;
-  color: rgba(74, 74, 74, 1);
+  font-size: 39rpx;
+  color: rgba(255, 255, 255, 0.9);
   width: 100%;
   height: 100%;
   text-align: center;
@@ -186,7 +208,7 @@ page {
   bottom: 0;
   left: 0;
   z-index: 10;
-  background: #fff;
+  background: #e9edfc;
   padding-top: 20rpx;
   height: 712rpx;
   padding: 40rpx 30rpx 48rpx 30rpx;
@@ -226,5 +248,435 @@ page {
   color: #fff;
 }
 
-/*底部抽屉样式 end*/
+/* 时间选择按钮样式 */
+.btn_yearmonth {
+  background: linear-gradient(135deg, 
+  #0f1b35 0%, 
+  #1c2e4a 25%, 
+  #2a4365 50%, 
+  #3182ce 75%, 
+  #4299e1 100%);
+  box-shadow: 
+    0 8px 32px rgba(49, 130, 206, 0.4),
+    inset 0 2px 4px rgba(102, 178, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(66, 153, 225, 0.3);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
+.btn_yearmonth:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 32px rgba(49, 130, 206, 0.4),
+    inset 0 2px 4px rgba(102, 178, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(66, 153, 225, 0.3);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn_yearmonth:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* 下方按钮区域 */
+.down {
+  display: flex;
+  position: sticky;
+  z-index: 1;
+  flex-direction: column;
+  margin-top: -150rpx;
+  background: linear-gradient(135deg, 
+  #0f1b35 0%, 
+  #1c2e4a 25%, 
+  #2a4365 50%, 
+  #3182ce 75%, 
+  #4299e1 100%);
+  box-shadow: 
+    0 8px 32px rgba(49, 130, 206, 0.4),
+    inset 0 2px 4px rgba(102, 178, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(66, 153, 225, 0.3);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  border-radius: 16px;
+  padding: 10rpx 0;
+  margin-top: 1px;
+}
+
+.pageButton, .btn-primary {
+  background: linear-gradient(135deg, 
+  #0f1b35 0%, 
+  #1c2e4a 25%, 
+  #2a4365 50%, 
+  #3182ce 75%, 
+  #4299e1 100%);
+  box-shadow: 
+    0 8px 32px rgba(49, 130, 206, 0.4),
+    inset 0 2px 4px rgba(102, 178, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(66, 153, 225, 0.3);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pageButton_page {
+    background: linear-gradient(135deg, 
+    #0f1b35 0%, 
+    #1c2e4a 25%, 
+    #2a4365 50%, 
+    #3182ce 75%, 
+    #4299e1 100%);
+    box-shadow: 
+      0 8px 32px rgba(49, 130, 206, 0.4),
+      inset 0 2px 4px rgba(102, 178, 255, 0.5),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(66, 153, 225, 0.3);
+    border: 2px solid rgba(102, 178, 255, 0.4);
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.pageButton:active, .btn-primary:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* 按钮光效 */
+.pageButton::before, .btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.pageButton-hover::before, .btn-hover::before {
+  left: 100%;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .down {
+    margin: 10rpx;
+    padding: 15rpx 0;
+  }
+  
+  .pageButton, .btn-primary, .pageButton_page {
+    font-size: 12px;
+    padding: 10rpx 20rpx;
+  }
+  
+  view[style*="width:5%"] {
+    width: 3% !important;
+  }
+  
+  view[style*="width:10%"] {
+    width: 5% !important;
+  }
+}
+
+/* 左侧抽屉样式 */
+.d-container {
+  padding: 40rpx 30rpx;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, 
+    rgba(36, 0, 70, 0.95) 0%, 
+    rgba(60, 9, 108, 0.9) 50%, 
+    rgba(90, 24, 154, 0.85) 100%);
+}
+
+/* 权限显示样式 */
+.d-container > view:first-child {
+  background: linear-gradient(135deg, 
+    rgba(9, 86, 158, 0.4) 0%, 
+    rgba(4, 54, 95, 0.3)0%);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  padding: 20rpx;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.d-container > view:first-child text:first-child {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.d-container > view:first-child text:last-child {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+}
+
+
+/* 返回按钮特殊样式 */
+.btn-primary-back {
+  background: linear-gradient(135deg, 
+  #0f1b35 0%, 
+  #1c2e4a 25%, 
+  #2a4365 50%, 
+  #3182ce 75%, 
+  #4299e1 100%);
+  box-shadow: 
+    0 8px 32px rgba(49, 130, 206, 0.4),
+    inset 0 2px 4px rgba(102, 178, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(66, 153, 225, 0.3);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  margin-bottom: 20rpx;
+  font-size: 20px;
+  color:white;
+  font-weight: 600px;
+}
+
+
+/* 按钮光效 */
+.btn-primary::before, .btn-primary-back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-hover::before {
+  left: 100%;
+}
+
+/* 按钮点击效果 */
+.btn-primary:active, .btn-primary-back:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .d-container {
+    padding: 30rpx 20rpx;
+  }
+  
+  .btn-primary, .btn-primary-back {
+    font-size: 14px;
+    padding: 18rpx 25rpx;
+  }
+  
+  .d-container > view:first-child {
+    padding: 15rpx;
+    margin-bottom: 20rpx;
+  }
+}
+
+.table {
+  background: linear-gradient(135deg, 
+      rgba(15, 27, 53, 0.9) 0%, 
+      rgba(28, 46, 74, 0.85) 50%, 
+      rgba(42, 67, 101, 0.8) 100%);
+  box-shadow: 
+      0 8px 32px rgba(49, 130, 206, 0.3),
+      inset 0 2px 4px rgba(102, 178, 255, 0.3),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(66, 153, 225, 0.2);
+  border: 1px solid rgba(102, 178, 255, 0.3);
+  margin: 20rpx 0;
+}
+
+.table_header {
+  background: linear-gradient(135deg, 
+      #0f1b35 0%, 
+      #1c2e4a 50%, 
+      #2a4365 100%);
+  padding: 24rpx 20rpx;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 2px solid rgba(102, 178, 255, 0.4);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+      inset 0 1px 2px rgba(102, 178, 255, 0.4),
+      0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.table_main {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1px solid rgba(102, 178, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+/* 查询按钮底部弹窗 */
+.maskWindowContent {
+  padding: 10rpx;
+  background: rgba(36, 0, 70, 0.8);
+}
+
+.maskWindowTitleText{
+  color:white;
+}
+
+.maskWindowText{
+  color:white;
+}
+
+.maskWindowInput {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(102, 178, 255, 0.4);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 
+    inset 0 2px 4px rgba(102, 178, 255, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.maskWindowInput:focus {
+  border-color: rgba(102, 178, 255, 0.8);
+  box-shadow: 
+    inset 0 2px 6px rgba(102, 178, 255, 0.3),
+    0 4px 15px rgba(102, 178, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.maskWindowInput::placeholder {
+  color: white;
+  font-size: 14px;
+}
+
+/* 按钮容器 */
+.maskWindowBtnView {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx 30rpx;
+  
+}
+
+.maskWindowBtn {
+  flex: 1;
+  background: linear-gradient(135deg, 
+    #0f1b35 0%, 
+    #1c2e4a 25%, 
+    #2a4365 50%, 
+    #3182ce 75%, 
+    #4299e1 100%);
+  border: 1px solid rgba(102, 178, 255, 0.4);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 20rpx 0;
+  text-align: center;
+  box-shadow: 
+    0 4px 15px rgba(49, 130, 206, 0.3),
+    inset 0 1px 2px rgba(102, 178, 255, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 取消按钮特殊样式 */
+.maskWindowBtn:first-child {
+  background: linear-gradient(135deg, 
+    rgba(113, 128, 150, 0.8) 0%, 
+    rgba(160, 174, 192, 0.6) 100%);
+  border: 1px solid rgba(200, 200, 200, 0.4);
+  color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 
+    0 4px 15px rgba(113, 128, 150, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* 确定按钮特殊样式 */
+.maskWindowBtn:last-child {
+  background: linear-gradient(135deg, 
+    #1c2e4a 0%, 
+    #2a4365 25%, 
+    #3182ce 50%, 
+    #4299e1 75%, 
+    #66b2ff 100%);
+  border: 1px solid rgba(102, 178, 255, 0.6);
+  box-shadow: 
+    0 4px 15px rgba(49, 130, 206, 0.4),
+    inset 0 1px 2px rgba(102, 178, 255, 0.7);
+}
+
+
+/* 点击效果 */
+.maskWindowBtn:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* 按钮光效 */
+.maskWindowBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.maskWindowBtn:hover::before {
+  left: 100%;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .maskWindowInputView {
+    padding: 20rpx;
+  }
+  
+  .maskWindowBtnView {
+    padding: 0 20rpx 20rpx;
+  }
+  
+  .maskWindowInput {
+    padding: 15rpx 20rpx;
+    font-size: 14px;
+  }
+  
+  .maskWindowBtn {
+    padding: 15rpx 0;
+    font-size: 14px;
+  }
+}

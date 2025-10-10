@@ -7,9 +7,10 @@
 }
 
 .list {
-  margin-bottom: -3%;
+  margin-bottom: -10rpx;
   height: 209rpx;
-  background-color: white;
+  background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
+  border-radius: 30rpx;
 }
 .shangpinline{
   display: flex;
@@ -42,10 +43,12 @@
 
 .shangpin {
   width: 70%;
-  height: 100%;
+  height: 95%;
   display: flex;
   padding: 8px;
   align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .shangpin-image {
@@ -60,12 +63,13 @@
 
 .shangpin-text {
   height: 50%;
-  font-size: 61%;
+  font-size: 100%;
   margin-left: 15rpx;
+  color: white;
 }
 
 .shangpin-jin {
-  font-size: 24rpx;
+  font-size: 26rpx;
   width: 30%;
   height: 132rpx;  
 }
@@ -74,6 +78,7 @@
 }
 
 .shangpin-input {
+  color: white;
 }
 
 .test {
@@ -123,7 +128,7 @@
   position: absolute;
   top: 34%;
   left: 21%;
-  background-color: #1c9ef1;
+  background-color: #22c727;
   width: 55%;
   font-size: 68%;
   color: #f8f8f8;
@@ -222,13 +227,26 @@
 
 .sp_dm {
   font-size: 90%;
-  color: red;
+  color: rgb(255, 255, 255);
 }
 
 .header {
-  background-color: rgb(30, 144, 255);
+  background: linear-gradient(135deg, #9885ff, #4c51f7, #bea3ff);
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
   padding: 5%;
   margin-bottom: -2%;
+}
+@keyframes gradientFlow {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
 }
 
 .ss-text {
@@ -247,5 +265,6 @@
   left: 21.3%;
   top: 0.5%;
   color: #f8f8f8;
-  background-color: #1c60a3;
+  background-color: #ffffff3d;
+  font-size: 40rpx;
 }

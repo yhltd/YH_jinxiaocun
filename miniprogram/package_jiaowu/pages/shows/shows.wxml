@@ -4,15 +4,81 @@
 <!-- <view class = "beijing_css" >
   <image src='../../../images/beijing.png' style="position: absolute;left: 0;bottom: 0;display: block;width: 100%;z-index: -999;"></image>
 </view> -->
+<view class="all">
+<!-- 轮播图部分 -->
+<view class="top-tu" style="{{topTuStyle}}" wx:if="{{isBannerHidden && hasBannerImages}}">
+  <view class="banner-close" bindtap="hideBanner" wx:if="{{bannerImages.length > 0}}">×</view>
+  <swiper 
+    class="swiper-container" 
+    indicator-dots="{{bannerImages.length > 1}}" 
+    autoplay="{{bannerImages.length > 1}}" 
+    interval="{{3000}}" 
+    duration="{{500}}"
+    wx:if="{{bannerImages.length > 0}}"
+  >
+    <swiper-item wx:for="{{bannerImages}}" wx:key="index">
+      <image 
+        class="swiper-image" 
+        src="{{item}}" 
+        mode="aspectFill" 
+        lazy-load="true"
+        binderror="onImageError"
+        data-index="{{index}}"
+      ></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 空状态提示 -->
+  <view class="empty-banner" wx:if="{{bannerImages.length === 0 && !isLoading}}">
+    <text>暂无轮播图数据</text>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view class="loading-banner" wx:if="{{isLoading}}">
+    <text>轮播图加载中...</text>
+  </view>
+</view>
+<!-- 跑马灯 -->
+<view class="wenben-container" wx:if="{{isBannerHidden && hasBannerImages}}">
+  <view class="wenben">
+    <text class="marquee-text">{{marqueeText}}</text>
+  </view>
+</view>
+
+<!-- 悬浮弹窗 -->
+  <view class="xuan-tu" style="{{xuanTuStyle}}" wx:if="{{hasSingleImage && showXuanTu}}">
+  <!-- 关闭按钮 -->
+  <view class="xuan-tu-close" bindtap="closeXuanTu">×</view>
+  <image 
+    class="xuan-tu-image" 
+    src="{{singleImage}}" 
+    mode="aspectFill"
+    binderror="onImageError"
+    bindload="onImageLoad"
+  ></image>
+</view>
+<!-- 广告加这里 -->
+  <view class="tab-list-movie" style="background:{{bgColor[swiperIndex]}}">
+    <swiper class="movie-swiper" autoplay interval="6000" circular indicator-dots indicator-active-color="white" bindchange="getSwiperIndex">
+     
+        <swiper-item class="swiper-item" wx:for="{{swiperImg}}" wx:key="index">
+            <image class="swiper-item-img" mode="heightFix" src="{{item}}" />
+           
+        </swiper-item>
+      
+    </swiper>
 
 <view class="list">
   <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
+    <view class="rotating-bg"></view>
+    <!-- <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image> -->
   </view>
 </view>
-
+</view>
 <!-- <button class="btn-primary" hover-class="btn-hover" disabled="{{isdis!=1}}" bindtap="chazhao">查找</button> -->
+
+</view>
 
 <van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
   <van-tabbar-item icon="../../images/work.png">基础信息</van-tabbar-item>

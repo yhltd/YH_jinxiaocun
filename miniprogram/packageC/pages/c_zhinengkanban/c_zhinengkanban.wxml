@@ -1,10 +1,10 @@
-<view class="lables" style="width: 110rpx; height: 34rpx; display: block; box-sizing: border-box; left: 15rpx; top: 6rpx; position: absolute">开始时间:</view>
+<view class="lables" style="width: 80rpx; height: 34rpx; display: block; box-sizing: border-box; left: 40rpx; top: 13rpx; position: absolute">开始时间:</view>
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
-  <input bindinput="onInput2" data-column="riqi1" class="input_text_form" value="{{riqi1}}" type="date" name="riqi1" disabled="disabled" style="position: absolute; left: 114rpx; top: -31rpx; width: 180rpx; height: 32rpx; display: block; box-sizing: border-box"></input>
+  <input bindinput="onInput2" data-column="riqi1" class="input_text_form" value="{{riqi1}}" type="date" name="riqi1" disabled="disabled" style="position: absolute; left: 114rpx; top: -31rpx; width: 180rpx; height: 32rpx; display: flex; box-sizing: border-box"></input>
   </picker>
-  <view class="lables" style="width: 110rpx; height: 34rpx; display: block; box-sizing: border-box; left: 315rpx; top: 6rpx; position: absolute">结束时间:</view>
+  <view class="lables" style="width: 80rpx; height: 34rpx; display: block; box-sizing: border-box; left: 335rpx; top: 13rpx; position: absolute">结束时间:</view>
   <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
-  <input bindinput="onInput2" data-column="riqi2" class="input_text_form" value="{{riqi2}}" type="date" name="riqi2" disabled="disabled" style="position: absolute; left: 414rpx; top: -31rpx; width: 180rpx; height: 32rpx; display: block; box-sizing: border-box"></input>
+  <input bindinput="onInput2" data-column="riqi2" class="input_text_form" value="{{riqi2}}" type="date" name="riqi2" disabled="disabled" style="position: absolute; left: 414rpx; top: -31rpx; width: 180rpx; height: 32rpx; display: flex; box-sizing: border-box"></input>
   </picker>
   <view><button class="moreDo" bindtap="date_cha" style="position: absolute; left: 620rpx; top: 6rpx; width: 110rpx; height: 34rpx; display: block; box-sizing: border-box">查询</button></view>
 <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ec}}">

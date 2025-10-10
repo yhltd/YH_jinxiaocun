@@ -88,3 +88,139 @@ page{
   height: 87rpx;
   
 }
+
+.left_area {
+  background: linear-gradient(135deg, 
+    rgba(36, 0, 70, 0.9) 0%, 
+    rgba(60, 9, 108, 0.85) 100%);
+  border-right: 2px solid rgba(102, 178, 255, 0.4);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.left_item {
+  background: linear-gradient(135deg, 
+    rgba(15, 27, 53, 0.8) 0%, 
+    rgba(28, 46, 74, 0.7) 100%);
+  border-radius: 12px;
+  margin-bottom: 20rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 3rpx solid rgba(102, 178, 255, 0.3) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.left_item[style*="border:5rpx solid #99D4FF"] {
+  border: 3rpx solid rgba(102, 178, 255, 0.8) !important;
+  background: linear-gradient(135deg, 
+    rgba(28, 46, 74, 0.9) 0%, 
+    rgba(42, 67, 101, 0.8) 100%);
+  box-shadow: 0 0 20px rgba(102, 178, 255, 0.5);
+}
+
+.left_image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 10rpx;
+  filter: brightness(0) invert(1);
+}
+
+.left_text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+.right_item, .right_item_choice {
+  background: linear-gradient(135deg, 
+    rgba(15, 27, 53, 0.7) 0%, 
+    rgba(28, 46, 74, 0.6) 100%);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  border-radius: 12px;
+  padding: 20rpx 30rpx;
+  margin: 10rpx 0;
+  color: #ffffff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.right_item_choice {
+  background: linear-gradient(135deg, 
+    rgba(28, 46, 74, 0.9) 0%, 
+    rgba(42, 67, 101, 0.8) 100%);
+  border: 2px solid rgba(102, 178, 255, 0.8);
+  box-shadow: 0 0 20px rgba(102, 178, 255, 0.4);
+  color: #66b2ff;
+  font-weight: 600;
+}
+
+.right_item:hover, .right_item_choice:hover {
+  transform: translateX(5px);
+  background: rgba(102, 178, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(102, 178, 255, 0.3);
+}
+
+.bottom_bt {
+  background: linear-gradient(135deg, 
+    #0f1b35 0%, 
+    #1c2e4a 25%, 
+    #2a4365 50%, 
+    #3182ce 75%, 
+    #4299e1 100%);
+  border: 2px solid rgba(102, 178, 255, 0.4);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 20rpx 40rpx;
+  box-shadow: 
+    0 8px 32px rgba(49, 130, 206, 0.4),
+    inset 0 2px 4px rgba(102, 178, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(66, 153, 225, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bottom_bt:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(49, 130, 206, 0.6),
+    inset 0 2px 6px rgba(102, 178, 255, 0.7),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(66, 153, 225, 0.5);
+}
+
+.bottom_bt:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .left_sv {
+    padding: 15rpx;
+  }
+  
+  .right_area {
+    padding: 20rpx;
+  }
+  
+  .bottom_view {
+    padding: 20rpx;
+  }
+  
+  .bottom_bt {
+    padding: 15rpx 30rpx;
+    font-size: 14px;
+  }
+  
+  .left_item, .right_item, .right_item_choice {
+    padding: 15rpx 20rpx;
+    font-size: 14px;
+  }
+}

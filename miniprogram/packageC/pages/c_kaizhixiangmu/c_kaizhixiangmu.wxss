@@ -22,6 +22,7 @@ button{
   margin-top: 0px;
   height: 90%;
   background-color: #FCFCFC;
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/biaoge-bg.png?sign=877e823…&t=1758702189);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -35,6 +36,7 @@ button{
   height: 100rpx;
   position: sticky;
   top: 0;
+  background:linear-gradient(45deg, #334d82 0%, #4e5f82 20%, #6f8cb7 45%, #4e5f82 70%, #334d82 100%);
 }
 
 .title{
@@ -52,10 +54,10 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #009688;
+  /* background-color: #009688; */
   color: white;
   font-weight: bold;
-  font-size: 35rpx;  
+  font-size: 40rpx;
 }
 
 .list_row{
@@ -76,7 +78,7 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #ffffff;
   color: black;
   line-height: 70rpx;  
   border-right: 1rpx solid #C4C5C9;
@@ -152,7 +154,7 @@ button{
 }
 .init{
   width: 40%;
-  background-color: #282B33;
+  background-color: #384050;
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;

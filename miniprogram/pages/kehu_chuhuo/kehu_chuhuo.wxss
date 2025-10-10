@@ -3,7 +3,7 @@ page{
 }
 .shangpin{display: flex;
 width: 100%;
-background-color: white;
+
 border-bottom: 0.5px solid #5B5B5B;
 margin-bottom: 7px;
 padding: 8px;
@@ -18,6 +18,7 @@ padding: 8px;
 }
 .main{
   position: absolute;
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/ruku_bg.png?sign=9f0294bdfbc6841048d178ae5ffd52b0&t=1757651379);
 width: 100%;
 /* top: 6%; */
 
@@ -27,6 +28,8 @@ width: 100%;
   width: 30%;
  font-size: 45%;
  margin-left: 2%;
+ color:white;
+ font-size: 78%;
 }
 .shangpin-img{
     display: flex;
@@ -84,13 +87,28 @@ left: 46%;
   left: 21.3%;
   top: 2.5%;
   color: #f8f8f8;
-  background-color: #1c60a3;
+  background-color: #ffffff3d;
+  font-size: 40rpx;
 }
 
 .header{
-  background-color: rgb(30,144,255);
+  background: linear-gradient(135deg, #9885ff, #4c51f7, #bea3ff);
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
   padding: 7%;
 
+}
+
+@keyframes gradientFlow {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
 }
 .ss-text{
   position: absolute;
@@ -100,16 +118,19 @@ left: 46%;
   left: 7%;
 }
 
-/* .list_ps2{
+.list_ps2{
 
-  margin-bottom: -2%;
-} */
+  background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
+  border-radius: 30rpx;
+  margin-bottom:10rpx;
+}
 
 .dq_y{
   font-weight: bold;
 position: absolute;
 top: 2.5%;
 left: 4%;
+font-size: 40rpx;
 color: white;
 
 }
@@ -121,7 +142,8 @@ color: white;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  background-color: rgb(95, 101, 119);
+  background-color: rgb(60 187 75);
+    font-size: 40rpx;
   float: right;
   font-size: 15px;
   right: 2%;

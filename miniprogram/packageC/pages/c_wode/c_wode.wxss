@@ -1,15 +1,26 @@
 .bg {
-  height: 150px;
+  height: 160px;
 }
 
 .head {
   display: flex;
-  flex-direction: column;
+  width: 95%;
+  /* background: rgb(255, 255, 255); */
+  margin: 30rpx auto;
+  border-radius: 20rpx;
+  height: 60%;
+  overflow: hidden;
+  background: linear-gradient( 45deg, #bdbdbd 0%, #5e687b 80% );
+
 }
+
 
 .headIcon {
   display: flex;
   justify-content: center;
+  font-size: 40rpx;
+  margin-left: 20rpx;
+  z-index: 2;
 }
 
 .login {
@@ -27,7 +38,14 @@
 
 .head image {
   border-radius: 50%;
+  font-size: 40rpx;
+  /* margin-left: 20rpx; */
+  z-index: 2;
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 26rpx;
 }
+
 
 .hr {
   width: 100%;
@@ -36,28 +54,218 @@
 }
 
 .item {
+  display: grid;
+  position: relative;
+  margin-left: 25rpx;
+  /* background: #ffffff; */
+  width: 140rpx;
+
+
+}
+
+.item2 {
   display: flex;
   flex-direction: row;
+  position: relative;
+
+  /* background: #ffffff; */
+  margin: 0 auto;
+
 }
 
 .title {
+  padding-top: 5px;
+  padding-bottom: 15px;
+  /* padding-left: 15px; */
+  margin: auto;
+  font-size: 35rpx;
+
+}
+
+.title2 {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 15px;
-  font-size: 15px;
+  margin: 0 5rpx auto;
+  /* font-size: 40rpx; */
+  color: #01ffe8;
 }
 
 .detail2 {
   font-size: 15px;
   position: absolute;
-  right: 10px;
+  right: 40rpx;
   height: 50px;
   line-height: 50px;
   color: #888;
 }
 
 .line {
-  border: 1px solid #ccc;
-  opacity: 0.2;
+  /* border: 1px solid #ccc; */
+  opacity: 0.5;
+  /* width: 90%; */
+  margin-left: 30rpx;
 }
- 
+
+.dakuang1{
+  width: 95%;
+  border-radius: 30rpx;
+  overflow: hidden;
+  margin: 0 auto;
+  background: white;
+  /* border: 1px #8a8a8a solid; */
+  display: flex;
+  position: relative;
+  flex-wrap: wrap
+}
+
+.flow-bg {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: -0%;
+  left: -50%;
+  background: linear-gradient( 45deg, #efefef70 0%, #f1f1f175 80% );
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+  z-index: 0;
+  transition: all 0.5s ease;
+}
+
+@keyframes gradientFlow {
+  0% {
+      background-position: 0% 50%;
+      transform: rotate(0deg);
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+      transform: rotate(360deg);
+  }
+}
+
+/* 流动边框核心样式 */
+.flow-border-container {
+  position: relative; /* 必须设置为relative */
+  z-index: 1; /* 确保内容在边框之上 */
+  /* 原有容器样式保持不变 */
+}
+
+
+/* 流动边框伪元素 */
+.flow-border-container::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(45deg, 
+      #ff0000, #ff7300, #fffb00, 
+      #48ff00, #00ffd5, #002bff,
+      #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: flowBorder 100s linear infinite;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+
+/* 内层遮罩伪元素 */
+.flow-border-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit; /* 继承容器背景色 */
+  border-radius: inherit; /* 继承容器圆角 */
+  z-index: -1;
+}
+
+
+/* 悬停效果 */
+.flow-border-container:hover::before {
+  animation: flowBorder 8s linear infinite;
+  opacity: 1;
+  filter: blur(5px);
+}
+
+
+/* 流动动画 */
+@keyframes flowBorder {
+  0% { background-position: 0 0; }
+  50% { background-position: 300% 0; }
+  100% { background-position: 0 0; }
+}
+
+.dakuang2{
+  width: 95%;
+  border-radius: 30rpx;
+  overflow: hidden;
+  margin:  auto 0;
+margin-left: 150rpx;
+}
+
+page{
+  background: linear-gradient(135deg,
+  #f8f9fa 0%,
+  #e9ecef 20%,
+  #dee2e6 40%,
+  #ced4da 60%,
+  #adb5bd 80%,
+  #6c757d 100%);
+}
+
+.tubiao{
+  width: 50rpx;
+  height: 50rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.huanying{
+  font-size: 45rpx;
+  background-color: #6585bf;
+  color: white;
+  margin: auto;
+  width: 95%;
+  height: 80rpx;
+  display: flex;
+  border: 5px white solid;
+  border-radius: 30rpx;
+  box-sizing: border-box;
+}
+
+.txbt{
+  height: 80rpx;
+  width: 95%;
+  margin: auto;
+  display: flex;
+  background: white;
+  margin-top: 40rpx;
+  border-radius: 20rpx;
+}
+.item-text{
+  color: rgb(0 0 0);
+  font-size: 45rpx;
+  margin: auto;
+}
+
+.gongsi{
+  display: flex;
+  flex-wrap: wrap
+}
+.gongsi_text1{
+  margin-top: 30rpx;
+  margin-left: 3%;
+}
+.gongsi_text2{
+  margin-top: 30rpx;
+  margin-left: 33%;
+}

@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "部门设置"
+  "navigationBarTitleText": "部门设置",
+  "navigationBarBackgroundColor": "#4e4d4d"
 }

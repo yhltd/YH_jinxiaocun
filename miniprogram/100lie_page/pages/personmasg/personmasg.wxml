@@ -1,8 +1,12 @@
 <scroll-view class="scroll" scroll-x="true" scroll-y="true">
 <view class="table">
+<view class="thead">
+  
+
 <view class="th" wx:for="{{titil}}" wx:key="text" wx:for-item="item" >
   <view class="tr">{{item.text}}</view>
 </view> 
+</view>
 <view class="th" wx:for="{{list}}" wx:for-index="index" wx:key="list" wx:for-item="item" >
   <view class="td" bindlongpress="delete" data-index="{{index}}" >{{item.C}}</view>
   <view class="td" bindtap="update" data-index="{{index}}" >{{item.D}}</view>
@@ -82,7 +86,7 @@
   
 <button class="bt_form_hover" disabled="{{zeng=='是'?'':'disabled'}}"  bindtap="add">添加</button>
 <button class="bt_form_hover" disabled="{{cha=='是'?'':'disabled'}}"  bindtap="sel_show">查询</button>
-<view style="float: left;">总人数:{{list.length}}</view>
+<view style="float: left;margin-left: 50rpx;">总人数:{{list.length}}</view>
 <view class="mask" bindtap="hid_view" hidden="{{mask_hid}}"></view>
 <!-- 删除 -->
   <view class="input_view2" hidden="{{input_det}}">

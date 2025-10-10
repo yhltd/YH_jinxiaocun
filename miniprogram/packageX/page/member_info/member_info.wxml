@@ -2,7 +2,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#ff7905;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
@@ -32,14 +32,21 @@
 <!--会员管理-->
 <!--- 查询 --->
 <!----------->
-<view class="choiceList" hidden="{{frmStudfind}}">
+<view class="choiceList1" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">会员姓名:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="name"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">会员电话:</view>
       <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="phone"></input>
-      
+    </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -69,7 +76,7 @@
 <!--- 删除 --->
 <!----------->
 <view class="input_view" hidden="{{handle}}">
-      <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
+      <button  class="bt_form2" bindtap="sanchu" hover-class="bt_form_hover2">删除</button>
 </view>
 
 <!--会员管理-->
@@ -77,33 +84,63 @@
 <!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">账号:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="username"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">密码:</view>
       <input class="input_text_form" type="text" placeholder="{{}}" value="{{password}}" name="password"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">确认密码:</view>
       <input class="input_text_form" type="text" placeholder="{{}}" value="{{password}}"  name="password2"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">姓名:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{unit}}" type="text" name="name"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">性别:</view>
       <!-- 下拉性别 -->
-      <picker bindchange="bindPickerChangeXB" value="{{index}}" range="{{gender_list}}">
+      <picker class="pick" bindchange="bindPickerChangeXB" value="{{index}}" range="{{gender_list}}">
         <input class="input_text_form" value="{{window_gender}}" name="gender" disabled="disabled"></input>
       </picker>
-      
+    </view>
+    <view class="xiaokuang">
+       
       <view  class="lables">账号状态:</view>
       <!-- 下拉状态 -->
-      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{state_list}}">
+      <picker class="pick" bindchange="bindPickerChange1" value="{{index}}" range="{{state_list}}">
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{window_state}}" name="state" disabled="disabled"></input>
       </picker>
       
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view  class="lables">电话号:</view>
       <input class="input_text_form" type="number" placeholder="{{}}" value="{{specifications}}" name="phone"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view  class="lables">生日:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="birthday" bindchange="choiceDate">
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{birthday}}" name="birthday" disabled="disabled"></input>
       </picker>
+    </view>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

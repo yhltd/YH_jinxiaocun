@@ -1,0 +1,106 @@
+<view class="bg">
+  <view class="head flow-border-container">
+    <view class="flow-bg" id="flowBg"></view>
+    <view class="headIcon">
+      <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png" style="width:70px;height:70px;margin:auto"></image>
+    </view>
+    <text class="headIcon" >{{userInfo.I}}</text>
+    <view class="dakuang2">
+    <view class='item2' bindtap="go3">
+  <view class="title2">
+    <image  src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu-qingse.png" class="images_st tuichu"></image>
+  退出登录</view>
+  <view class="detail2">
+    <text> ></text>
+  </view>
+</view>
+  </view>
+</view>
+
+
+  <view class="huanying">
+  <text style="margin: auto;">欢迎使用云合人事管理系统</text>
+</view>
+</view>
+
+<!-- <view class="hr"></view> -->
+<view class="xinxi">
+<view class='item' >
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongsi.png" class="images_st"></image>
+  所属公司</view>
+  <view class="detail2">
+    <text>{{userInfo.L}}</text>
+  </view>
+</view>
+<view class="line"></view>
+
+<view class='item' >
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/bianhao.png" class="images_st"></image>
+    员工名称</view>
+  <view class="detail2">
+    <text>{{userInfo.B}}</text>
+  </view>
+</view>
+<view class="line"></view>
+
+<view class='item' >
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/zhuangtai.png" class="images_st"></image>
+  员工部门</view>
+  <view class="detail2">
+    <text>{{userInfo.C}}</text>
+  </view>
+</view>
+<view class="line"></view>
+
+<view class='item' >
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/youxiang.png" class="images_st"></image>
+  员工身份</view>
+  <view class="detail2">
+    <text>{{userInfo.D}}</text>
+  </view>
+</view>
+<view class="line"></view>
+
+<!-- <view class='item' >
+  <view class="title">
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shouji.png" class="images_st"></image>
+  手机号</view>
+  <view class="detail2">
+    <text>{{userInfo.phone}}</text>
+  </view>
+</view> -->
+</view>
+
+<!-- <view class="hr"></view> -->
+
+
+<!-- <view class="line"></view> -->
+<!-- <view class="hr"></view> -->
+
+<swiper 
+  indicator-dots="true"
+  indicator-color="rgba(0,0,0,0.3)"
+  indicator-active-color="#000000"
+  autoplay="true"
+  interval="3000"
+  duration="500"
+  circular="true"
+  style="height:330rpx ;box-sizing:border-box;border: 3rpx solid;margin-top:30rpx ;margin-left: 20rpx;border-radius: 30rpx;width: 95%;overflow: hidden;">
+  
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-grzx1.jpg" mode="aspectFill‌" style="width: 100%;"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-grzx2.jpg" style="width: 100%;"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-grzx3.jpg" mode="aspectFill" style="width: 100%;"/>
+  </swiper-item>
+</swiper>
+
+
+

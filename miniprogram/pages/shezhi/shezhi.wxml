@@ -1,9 +1,27 @@
 <view class="tl_css">
-  <image class="tu_pian_shezhi" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/shezhi_jxc.jpeg'></image>
+  <image class="tu_pian_shezhi" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_bg_2.png'></image>
   <!-- <image class="tu_pian_cc" src='/images/huise_logo.jpg'></image> -->
-  <view class="mz_css">云合进销存系统</view>
+  <view class="account row-box">
+
+<image class="touxiang" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png"></image>
+<view class="yonghu" >
+  <!-- <text>133****1234</text> -->
+  <text class="nickName">{{
+    finduser
+    }}</text>
+  <text>天天开心</text>
 </view>
 
+<image class="xiaoren" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/weixiaoxr.png"></image> 
+
+</view>
+
+<view class="huanying">
+  <text class="huanying-text">欢迎使用云合未来进销存系统</text>
+</view>
+  
+</view>
+<view class="biankuang" style="margin-top: 220rpx;"></view>
 <view class="da_kuang">
   <view class="xiao_kuang">
     <navigator class="txbt" url='/pages/frmgerenxinxi/frmgerenxinxi'>
@@ -49,6 +67,42 @@
     <!-- 分割线 -->
     <view class="divLine"></view>
   </view>
+
+
+  <view class="container">
+    <!-- 分割线 -->
+    <view class="divLine"></view>
+  </view>
+
+ 
+
+
+</view>
+
+
+<swiper 
+  indicator-dots="true"
+  indicator-color="rgba(0,0,0,0.3)"
+  indicator-active-color="#000000"
+  autoplay="true"
+  interval="3000"
+  duration="500"
+  circular="true"
+  style="height:300rpx ;box-sizing:border-box;border: 3rpx solid;margin-top:30rpx ;margin-left: 20rpx;border-radius: 30rpx;width: 95%;overflow: hidden;">
+  
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_lunbo_1.png" mode="aspectFill" style="width: 100%;"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_lunbo_2.png" mode="aspectFill" style="width: 100%;"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_lunbo_3.png" mode="aspectFill" style="width: 100%;"/>
+  </swiper-item>
+</swiper>
+
+
+<view class="da_kuang2">
   <view class="xiao_kuang">
     <navigator class="txbt" url='/pages/frmadmindetails/frmadmindetails'>
 
@@ -56,16 +110,45 @@
       <text class="item-text">公司详情</text>
     </navigator>
   </view>
+  <!-- <view class="container">
+  <!-- 分割线 -->
+  <!-- <view class="divLine"></view>
+</view> -->
+  <!-- <navigator class="txbt" url='/pages/frmDeleteInputData/frmDeleteInputData'>
+
+  <text class="nav-mainitem-text">清空数据</text>
+</navigator> -->
+
+
 
   <view class="container">
     <!-- 分割线 -->
     <view class="divLine"></view>
   </view>
 
-  <view class="xiao_kuang" bindtap="go3">
-    <navigator class="txbt">
-      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/20190805090541.png'></image>
-      <text class="item-text">退出登录</text>
+
+  <!-- <navigator class="txbt" url='/pages/frmbasedata/frmbasedata'>
+
+  <text class="nav-mainitem-text">设定参数</text>
+</navigator>
+
+<view class="container">
+  <!-- 分割线 -->
+  <!-- <view class="divLine"></view>
+  
+</view>  -->
+  <!-- <navigator class="txbt" url='/pages/frmadminform/frmadminform'> -->
+
+  <view class="container">
+    <!-- 分割线 -->
+    <view class="divLine"></view>
+  </view>
+  <view class="xiao_kuang">
+    <navigator class="txbt" url='/pages/frmadmindetails/frmadmindetails' hover-class="none" 
+  disabled="{{true}}">
+
+      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_mingxi.png'></image>
+      <text class="item-text"style="color: rgb(138, 138, 138);">明细</text>
     </navigator>
   </view>
 
@@ -73,6 +156,45 @@
     <!-- 分割线 -->
     <view class="divLine"></view>
   </view>
-  
+
+  <view class="xiao_kuang">
+    <navigator class="txbt"  hover-class="none" 
+  disabled="{{true}}" >
+
+      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_shuju.png'></image>
+      <text class="item-text" style="color: rgb(138, 138, 138);">数据管理</text>
+    </navigator>
+  </view>
+
+ 
+
+  <view class="xiao_kuang">
+    <navigator class="txbt"  hover-class="none" 
+  disabled="{{true}}">
+
+      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tuichu_guanyu.png'></image>
+      <text class="item-text" style="color: rgb(138, 138, 138);">关于</text>
+    </navigator>
+  </view>
+
+  <view class="xiao_kuang" bindtap="go3">
+    <navigator class="txbt"  url='/pages/login/login'>
+      <image class="item-image" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/20190805090541.png'></image>
+      <text class="item-text">退出登录</text>
+    </navigator>
+  </view>
 
 </view>
+
+
+<view class="kapian">
+  <view class="kapian1">
+  <!-- <text class="wenzi">云合未来</text> -->
+  <text class="wenzi">{{
+    gongsi
+    }}</text>
+  </view>
+
+</view>
+
+

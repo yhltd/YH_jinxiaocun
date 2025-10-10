@@ -1,4 +1,4 @@
-<image class="background" mode="widthFix" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/zhanghaoguanli.jpeg"></image>
+<!-- <image class="background" mode="widthFix" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/zhanghaoguanli.jpeg"></image> -->
 <view class="search-box row-box {{searchClass}}">
 
   <input placeholder="按名字搜索" placeholderClass="search-placeholder" bindtap="searchFocus" bindblur="searchBlur" confirm-type="search" bindinput="searchKey"></input>

@@ -9,10 +9,11 @@ page {
   border-radius: 29rpx;
   width: 45%;
   position: absolute;
-  left: 21.3%;
-  top: 0%;
+  left: 28.3%;
+  top: 0.8%;
   color: #f8f8f8;
-  background-color: #1c60a3;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
 }
 
 .tui-picker-content{
@@ -27,13 +28,15 @@ page {
 }
 .list{
   display: flex;
+  background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
+  border-radius: 50rpx;
+  margin-bottom:10rpx;
 
 
 }
 
 .shangpin{display: flex;
 width: 100%;
-background-color: white;
 border-bottom: 1px dashed black;
 margin-bottom: 7px;
 padding: 8px;
@@ -44,20 +47,23 @@ padding: 8px;
   position: absolute;
   left: 55%;
   margin-top: 12%;
-  font-size: 62%;
+  font-size: 80%;
+  color: white;
 
 
 }
 .main{
   position: absolute;
   width: 100%;
-  top: 12%;
+  top: 10%;
   z-index: 5;
-  height: 78%;
+  height: 87%;
+  background:url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/ruku_bg.png?sign=844d3b8e7e6c389539bd0b36c892057c&t=1757644878);
 }
 .shangpin-text{
-  width: 28%;
- font-size: 65%;
+  width: 40%;
+  font-size: 100%;
+  color: white;
 
 }
 .shangpin-img{
@@ -77,10 +83,10 @@ margin-right: 6%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FFF;
+  /* background-color: #FFF; */
   height: 86rpx;
-  font-size: 57%;
-  color: rgb(80,80,80);
+  font-size: 40rpx;
+  color: rgb(255 255 255);
   position: absolute;
   width: 100%;
   top: 5%;
@@ -92,7 +98,7 @@ margin-right: 6%;
 }
 
 .divline{
-  background:#e0e3Da;
+ 
   width:100%;
   height: 2rpx;
    position: absolute;
@@ -121,11 +127,26 @@ top: 0%;
 left: 6%;
 color: white;
 
+font-size: 40rpx;
+
 }
 
   .dqy_bj{
 
-    background-color: #1e90ff;
-    height: 55rpx;
+    background: linear-gradient(135deg, #9885ff, #4c51f7, #bea3ff);
+    background-size: 200% 200%;
+    animation: gradientFlow 15s ease infinite;
+    height: 145rpx;
 
+  }
+  @keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
   }

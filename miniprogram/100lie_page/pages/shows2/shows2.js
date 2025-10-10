@@ -5,6 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    swiperImg: [
+      "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/fenquan-lunbotu2.jpg",
+      "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-shouye1.jpg",
+      "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-shouye2.jpg"
+  ],
+  swiperIndex:0,//轮播图索引
+  bgColor:[
+      "linear-gradient(145deg, #477ead 0%, #cccccc 100%)",
+      "linear-gradient(145deg, #dedede 0%, #142638 100%)",
+      "linear-gradient(145deg, #679a5a 0%, #b5d6b9 100%);"
+  ],// linear-gradient 渐变色需要四个颜色属性
     gongsi:'',
     name:'',
     user:'',
@@ -22,7 +33,12 @@ Page({
     },
   ]
   },
-
+  getSwiperIndex(e){
+    let currentIndex = e.detail.current
+    this.setData({
+        swiperIndex:currentIndex
+    })
+},
   /**
    * 生命周期函数--监听页面加载
    */

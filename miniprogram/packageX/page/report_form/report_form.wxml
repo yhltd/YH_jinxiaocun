@@ -52,7 +52,7 @@
     </block>
     
   </view>
-  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas"></canvas>
+  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas" style=" height: 1300rpx;"></canvas>
 </scroll-view>
 
 
@@ -62,15 +62,23 @@
 <!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+  
       <view class="lables">开始日期:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
       <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{riqi1}}" disabled="disabled" name="riqi1"></input>
       </picker>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">结束日期:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
       <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{riqi2}}" disabled="disabled" name="riqi2"></input>
       </picker>
+    </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -86,7 +94,7 @@
 <!------------->
 <!-- 下方按钮 -->
 <!------------->
-<view class="bottom_view" style="height:16%">
+<view class="bottom_view" style="height:17%">
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire">查询</button>
 	<button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering">全部</button>
   <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="gengduo_show">更多功能</button> -->

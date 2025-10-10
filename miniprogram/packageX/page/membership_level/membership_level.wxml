@@ -3,7 +3,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#ff7905;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
@@ -33,12 +33,15 @@
 <!--会员等级-->
 <!--- 查询 --->
 <!----------->
-<view class="choiceList" hidden="{{frmStudfind}}">
+<view class="choiceList1" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">会员等级:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="jibie"></input>
-      
+    </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -68,7 +71,7 @@
 <!--- 删除 --->
 <!----------->
 <view class="input_view" hidden="{{handle}}">
-      <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
+      <button class="bt_form2" bindtap="sanchu" hover-class="bt_form_hover2">删除</button>
 </view>
 
 <!--会员等级-->
@@ -76,13 +79,25 @@
 <!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">级别名称:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="jibie"></input>
+    </view>
+    <view class="xiaokuang">
+      
+    
       <view class="lables">消费额度门槛:</view>
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{empty}}" name="menkan"></input>
+      </view>
+      <view class="xiaokuang">
+        
+    
       <view class="lables">折扣比例:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="bili"></input>
+    </view>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

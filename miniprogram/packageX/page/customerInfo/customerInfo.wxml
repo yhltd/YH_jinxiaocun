@@ -2,7 +2,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#ff7905;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
@@ -48,15 +48,27 @@
     </view>
   </form>
 </view> -->
-<scroll-view scroll-y="true" class="choiceList" hidden="{{frmStudfind}}" >
+<scroll-view scroll-y="true" class="choiceList1" hidden="{{frmStudfind}}" >
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">收卡人:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="skr"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">付款人:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="fkr"></input>
+    </view>
+    <view class="xiaokuang">
+      
+ 
       <view class="lables">持卡人:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="ckr"></input>
+    </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -113,39 +125,96 @@
 <!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">收卡人:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="skr"></input>
+    </view>
+      <view class="xiaokuang">
+        
+      
       <view class="lables">付款人:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="fkr"></input>
+    </view>
+     <view class="xiaokuang">
+       
+    
       <view class="lables">持卡人:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="ckr"></input>
+    </view>
+     <view class="xiaokuang">
+       
+    
       <view class="lables">发卡行:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="fkh"></input>
+    </view>
+      <view class="xiaokuang">
+        
+      
       <view class="lables">账单日:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="zdr" bindchange="choiceDate">
         <input class="input_text_form" placeholder="{{}}" value="{{zdr}}" name="zdr" disabled="disabled"></input>
       </picker>
+    </view>
+      <view class="xiaokuang">
+        
+    
       <view  class="lables">还款日:</view>
       <picker class="pick" mode="date" value="{{date}}" data-column_name="hkr" bindchange="choiceDate">
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{hkr}}" name="hkr" disabled="disabled"></input>
       </picker>
+    </view>
+     <view class="xiaokuang">
+       
+     
       <view  class="lables">总金额:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="zje"></input>
+    </view>
+      <view class="xiaokuang">
+        
+      
       <view  class="lables">应还款:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="yhk"></input>
+    </view>
+      <view class="xiaokuang">
+        
+     
       <view  class="lables">余款额:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="yke"></input>
+    </view>
+      <view class="xiaokuang">
+        
+     
       <view  class="lables">借款额:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="jke"></input>
+    </view>
+     <view class="xiaokuang">
+       
+   
       <view  class="lables">手续费:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="sxf"></input>
+    </view>
+      <view class="xiaokuang">
+        
+      
       <view  class="lables">电话号:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="dhh"></input>
+    </view>
+      <view class="xiaokuang">
+        
+   
       <view  class="lables">密码:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="mm"></input>
+    </view>
+     <view class="xiaokuang">
+       
+    
       <view  class="lables">员工:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="yg"></input>
+    </view>
+    
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -167,7 +236,7 @@
     <view class="table">
       <view class='table_header'>
         <block class="title" wx:for="{{title2}}">
-          <view class="title_text" style="width:{{item.width}};{{item.text=='编号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          <view class="title_text" style="background-color: white;width:{{item.width}};{{item.text=='编号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
         </block>
       </view>
       <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">

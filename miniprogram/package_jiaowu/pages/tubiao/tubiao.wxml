@@ -1,7 +1,26 @@
-<view class="lables">累计收入：{{huizong_list[0]}}</view>
-<view class="lables">累计支出：{{huizong_list[1]}}</view>
-<view class="lables">学费收入：{{huizong_list[2]}}</view>
-<view class="lables">累计结余：{{huizong_list[3]}}</view>
+<view class="liebiao">
+  
 
+<view class="lables">累计收入：
+<view class="shuzi">
+  {{huizong_list[0]}}
+</view>
+</view>
+<view class="lables">累计支出：
+<view class="shuzi">
+  {{huizong_list[1]}}
+</view>
+</view>
+<view class="lables">学费收入：
+  <view class="shuzi">
+{{huizong_list[2]}}
+</view>
+</view>
+<view class="lables">累计结余：
+  <view class="shuzi">
+{{huizong_list[3]}}
+</view>
+</view>
+</view>
 <ec-canvas id="mychart-dom-bar"  ec="{{ec}}">
 </ec-canvas>

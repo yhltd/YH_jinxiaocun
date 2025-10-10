@@ -1,20 +1,218 @@
 /* pages/shouye/shouye.wxss */
 .image{
-  height: 150rpx;
-  width: 150rpx;
-  margin-bottom: 20rpx;
+  height: 120rpx;
+  width: 120rpx;
+  margin-top: 18rpx;
+  z-index: 2;
+  position: inherit;
 }
 .contain{
-  width: 33.3%;
+  width: 30%;
+  height: 230rpx;
   text-align: center;
   margin-top: 50rpx;
+  margin-left: 19rpx;
+  border-radius: 50%;
   float: left;
+  overflow: hidden;
+  position: relative;
+
 }
+
+.rotating-bg {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient( from 1deg, #98c9ce, #82a5bf, #4450ea, #40afc1, #8896da );
+  animation: rotate 15s linear infinite;
+  z-index: 1;
+}
+
+  @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
 .outer{
   width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-image: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/shouye_bg_1.png?sign=d2d81dd824c04a3bef15f693c79a998c&t=1757563445);
 }
 .divLine{
  background: #E0E3DA;
  width: 100%;
  height: 5rpx;
+}
+
+.fon-30{
+  font-weight: 600;
+  position: inherit;
+    z-index: 2;
+}
+
+page{
+  height: 100%;
+}
+
+.top-tu{
+  width: 100%;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.banner-close {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.banner-close:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.xuan-tu {
+  width: 50%;
+  height: 200px;
+  
+  /* 定位设置 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* 确保在最上层 */
+  z-index: 9999;
+  
+  /* 容器样式 */
+  border-radius: 16rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  
+  /* 浮动动画 */
+  animation: randomFloat 15s ease-in-out infinite;
+}
+
+/* 关闭按钮样式 */
+.xuan-tu-close {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: bold;
+  z-index: 10000; /* 确保在图片上方 */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.xuan-tu-close:active {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(0.9);
+}
+
+.xuan-tu-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+/* 随机浮动动画 */
+@keyframes randomFloat {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0);
+  }
+  20% {
+    transform: translate(-50%, -50%) translate(200rpx, 150rpx);
+  }
+  40% {
+    transform: translate(-50%, -50%) translate(-180rpx, 100rpx);
+  }
+  60% {
+    transform: translate(-50%, -50%) translate(150rpx, -120rpx);
+  }
+  80% {
+    transform: translate(-50%, -50%) translate(-100rpx, -80rpx);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0);
+  }
+}
+
+.wenben-container {
+  width: 100%;
+  height: 60rpx;
+  color: wheat;
+  overflow: hidden;
+  font-weight: 500;
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.wenben {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  white-space: nowrap;
+  animation: marquee 15s linear infinite;
+  /* 硬件加速优化 */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* 分隔符样式 */
+.marquee-text::before {
+  content: "●";
+  margin: 0 40rpx;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 20rpx;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
 }

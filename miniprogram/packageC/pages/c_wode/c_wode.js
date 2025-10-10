@@ -9,6 +9,7 @@ Page({
     userInfo:"",
     bianhao:"",
     this_name:"",
+    gongsi:""
   },
 
   go1:function(){
@@ -80,17 +81,20 @@ Page({
 
   },
 
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var _this = this;
     var user = JSON.parse(options.userInfo)
-    console.log(options.userInfo)
+    console.log("财务公司数据",user)
     _this.setData({
       userInfo : JSON.parse(options.userInfo),
       this_name:user.name,
-      bianhao:user.bianhao
+      bianhao:user.bianhao,
+      user:user
     })
   },
 

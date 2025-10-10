@@ -11,26 +11,28 @@ button {
 
 .all{
   height: 100%;
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/biaoge-bg.png?sign=877e823…&t=1758702189);
+  overflow: auto;
 }
 
 .option_view{
   height: auto;
-  width: 100%;
+  width: 554rpx;
 }
 .option{
-  width: 97%;
+  width: 100%;
   margin: auto;
   height: 100rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 35rpx;
+  /* margin-bottom: 35rpx; */
   border: 0;
 }
 
 
 .option_sv{
-  height: 200rpx;
+  height: 450rpx;
   width: 97%;
   border: 1px solid #282B33;
   border-radius: 10rpx;
@@ -45,79 +47,85 @@ button {
 }
 .option_text{
   border-radius: 10rpx 0 0 10rpx;  
+  border: 1px solid;
 }
 .option_bt{
   width: 15%;
-  background-color: #009688;
+  background-color: #46bb5f;
   text-align: center;
-  height: 99rpx;
+  height: 108rpx;
   font-weight: bolder;
   border-radius: 0 10rpx 10rpx 0;
   color: white;
-  margin-top: 50rpx;  
-  line-height: 99rpx;
+  line-height: 108rpx;
 }
 .option_sv_item{
   width: 92%;
   border: 1rpx solid #282B33;
   text-align: center;
   margin: auto;
-  height: 69rpx;
-  line-height: 69rpx;
+  height: 100rpx;
+  line-height: 100rpx;
   border-radius: 10rpx;
   margin-top: 10rpx;
   font-size: 35rpx;
 }
 
 .input_view{
-  height: 200rpx;
+  height: 120rpx;
   margin-top: 30rpx;
+  display: flex;
 }
 .input_text{
-  width: 30%;
+  width: 180rpx;
   height: 75rpx;
   line-height: 75rpx;
   text-shadow: 5rpx 5rpx 5rpx #D6D6D6;
-  color: #424242;
-  margin-left: 50rpx;
-
+  color: #000;
+  font-weight: 800;
+  margin-top: 10rpx;
 }
+.ipt{
+  width: 550rpx;
+ 
+}
+
+
+
 input{
   width: 92%;
   height: 100rpx;
   line-height: 86rpx;
-  border-bottom: 2px solid #E6E6E6;
-  margin: auto;
   border-radius: 15rpx;
   font-size: 33rpx;
-  padding-top: 22rpx;
-  padding-left: 5%;   
+  border: 1px solid;
+  background: white;
 }
 .radio{
-  width: 92%;
+  width: 552rpx;
   height: 100rpx;
   line-height: 86rpx;
-  border-bottom: 2px solid #E6E6E6;
-  margin: auto;
+  border: 1px solid;
+  /* margin: auto; */
   border-radius: 15rpx;
   font-size: 33rpx;
-  padding-top: 22rpx;
-  padding-left: 5%;   
+  background: white;
 }
 radio{
   width: 200rpx;
   font-size: 30rpx;  
+  margin-left: 60rpx;
 }
 .code_input{
-  height: 127rpx;
-  width: 97%;
-  margin: auto;
-  background-color: #009688;
+  height: 100rpx;
+  width: 554rpx;
+  /* margin: auto; */
+  background-color: #46bb5f;
   color: white;
   border-radius: 10rpx;
-  border-bottom: 2rpx solid #282B33;
+  border: 1px rgb(53, 53, 53) solid;
   text-align: center;
-  line-height: 127rpx;
+  line-height: 104rpx;
   font-size: 33rpx;  
 }
 .upd_code_view{
@@ -144,15 +152,15 @@ radio{
   height: 75%;
 }
 .bt_upd_code{
-  background-color: #009688;
+  background-color: #3dbd39;
   margin-top: 15%;
   color: white;
   width: 17%;
   float: left;
-  font-size: 25rpx;
+  font-size: 35rpx;
   margin-left: 2.5%;
   margin-top: 2.5%;
-  height: 60%;
+  height: 70%;
 }
 .bt_upd_code_hover{
   background-color: #009688;
@@ -160,7 +168,7 @@ radio{
   color: white;
   width: 17%;
   float: left;
-  font-size: 25rpx;
+  font-size: 35rpx;
   margin-left: 2.5%;
   margin-top: 2.5%
 }
@@ -175,7 +183,7 @@ radio{
   width: 95%;
   height: 70rpx;
   text-align: center;
-  background-color: #009688;
+  background-color: #3dbd39;
   position: fixed;
   top: 19%;
   border-radius: 10rpx;
@@ -221,7 +229,7 @@ radio{
   margin-top: 70rpx;
 }
 .bt{
-  background-color: #009688;
+  background-color: #46bb5f;
   color: white;
   width: 25%;
   height: 80rpx;
@@ -242,3 +250,5 @@ radio{
   z-index: 19;
   transition: all 0.3s ease-in-out;
 }
+
+

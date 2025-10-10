@@ -1,10 +1,104 @@
 
+<view class="all">
+<!-- 轮播图部分 -->
+<view class="top-tu" style="{{topTuStyle}}" wx:if="{{isBannerHidden && hasBannerImages}}">
+  <view class="banner-close" bindtap="hideBanner" wx:if="{{bannerImages.length > 0}}">×</view>
+  <swiper 
+    class="swiper-container" 
+    indicator-dots="{{bannerImages.length > 1}}" 
+    autoplay="{{bannerImages.length > 1}}" 
+    interval="{{3000}}" 
+    duration="{{500}}"
+    wx:if="{{bannerImages.length > 0}}"
+  >
+    <swiper-item wx:for="{{bannerImages}}" wx:key="index">
+      <image 
+        class="swiper-image" 
+        src="{{item}}" 
+        mode="aspectFill" 
+        lazy-load="true"
+        binderror="onImageError"
+        data-index="{{index}}"
+      ></image>
+    </swiper-item>
+  </swiper>
 
-<view class="list">
-  <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
-    {{item.text}}
-    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
+  <!-- 空状态提示 -->
+  <view class="empty-banner" wx:if="{{bannerImages.length === 0 && !isLoading}}">
+    <text>暂无轮播图数据</text>
   </view>
+  
+  <!-- 加载状态 -->
+  <view class="loading-banner" wx:if="{{isLoading}}">
+    <text>轮播图加载中...</text>
+  </view>
+</view>
+<!-- 跑马灯 -->
+<view class="wenben-container" wx:if="{{isBannerHidden && hasBannerImages}}">
+  <view class="wenben">
+    <text class="marquee-text">{{marqueeText}}</text>
+  </view>
+</view>
+
+<!-- 悬浮弹窗 -->
+  <view class="xuan-tu" style="{{xuanTuStyle}}" wx:if="{{hasSingleImage && showXuanTu}}">
+  <!-- 关闭按钮 -->
+  <view class="xuan-tu-close" bindtap="closeXuanTu">×</view>
+  <image 
+    class="xuan-tu-image" 
+    src="{{singleImage}}" 
+    mode="aspectFill"
+    binderror="onImageError"
+    bindload="onImageLoad"
+  ></image>
+</view>
+  <!-- 广告加在这里 -->
+
+  <view class="tab-list-movie" style="background:{{bgColor[swiperIndex]}}">
+    <swiper class="movie-swiper" autoplay interval="6000" circular indicator-dots indicator-active-color="white" bindchange="getSwiperIndex">
+     
+        <swiper-item class="swiper-item" wx:for="{{swiperImg}}" wx:key="index">
+            <image class="swiper-item-img" mode="heightFix" src="{{item}}" />
+           
+        </swiper-item>
+      
+    </swiper>
+    <text class="wenzi">通过权限分配实现多人对文档协同编辑</text>
+    <view class="list">
+  
+  <view class="item " hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
+    
+    {{item.text}}
+    <view class="rotating-bg"></view>
+    <!-- <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image> -->
+  </view>
+</view>
+</view>
+
+<!-- <swiper 
+  indicator-dots="true"
+  indicator-color="rgba(0,0,0,0.3)"
+  indicator-active-color="#000000"
+  autoplay="true"
+  interval="3000"
+  duration="500"
+  circular="true"
+  style="height:450rpx ;box-sizing:border-box;border: 3rpx solid;margin-top:30rpx ;margin-left: 20rpx;border-radius: 30rpx;width: 95%;overflow: hidden;">
+  
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbotu-wode-1.jpg" mode="aspectFill‌" style="width: 100%;"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-wode-2.jpg" mode="aspectFill" style="width: 100%;"/>
+  </swiper-item>
+  <swiper-item>
+    <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-wode-3.jpg" mode="aspectFill" style="width: 100%;"/>
+  </swiper-item>
+</swiper> -->
+
+
+
+
 </view>
 
 <van-tabbar active="{{ 0 }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">

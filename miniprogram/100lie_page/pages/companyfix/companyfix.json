@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "公司规定"
+  "navigationBarTitleText": "公司规定",
+  "navigationBarBackgroundColor": "#4e4d4d"
 }

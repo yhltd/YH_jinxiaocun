@@ -4,14 +4,14 @@
 <template is="ruku_upd" data="{{jghide,cpid,cpsl,cpjg,szzhi}}" />
 <view class="dqy_bj"></view>
 <view class='header'>
-	<view class="dq_y">出库</view>
-	<input class='bk_ss' type="text" style="color:#f8f8f8;text-align: center;" bindinput='ddh_input' value="" placeholder="输入出库订单号" placeholder-style="color:#f8f8f8;text-align: center;z-index: 0"></input>
+	<view class="dq_y">输入出库订单号</view>
+	<input class='bk_ss' type="text" style="color:#f8f8f8;text-align: center;" bindinput='ddh_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align: center;z-index: 0"></input>
 </view>
 
 <view class="XzkhMain">
 	<view class='xzkh'>
 		<view class='xzkhWwb'>
-			<text class="xzkhtt" hidden="{{hidden1}}">客户:{{khname}}</text>
+			<text style="color: white;"  class="xzkhtt" hidden="{{hidden1}}">客户:{{khname}}</text>
 			<text class="Xzkhtext" hidden="{{hidden2}}">请选择客户</text>
 			<text class='xzkhA' bindtap='xuanzekehu'>选择</text>
 		</view>
@@ -21,9 +21,10 @@
 		</view>
 	</view>
 	<view class="tui-picker-content">
+    <view class="riqi">请选择出库日期：</view>
 		<picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
 			<view class="tui-picker-detail">
-				<text decode="true">&nbsp;&nbsp;</text>选择出库日期 （年月日）: {{date}}
+				<text decode="true">&nbsp;&nbsp;</text>{{date}}
 			</view>
 		</picker>
 	</view>

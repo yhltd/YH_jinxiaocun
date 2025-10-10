@@ -232,8 +232,8 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <button class="bt_bottom" bindtap="getExcel">打印</button>
-  <button class="bt_bottom" bindtap="selAgain">查询</button>
+  <button class="bt_bottom btn-primary" bindtap="getExcel">打印</button>
+  <button class="bt_bottom btn-primary" bindtap="selAgain">查询</button>
 </view>
 
 <view class="Mask" hidden="{{hidMask}}">

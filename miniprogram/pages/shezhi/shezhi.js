@@ -9,6 +9,22 @@ Page({
     showView: true,
     text: '\n',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    // 小程序版本
+    version: "1.0.0",
+
+    // 用户信息
+    userInfo: {
+      avatarUrl: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/login.png",
+      bind_account: {
+        zxyy_id: "------"
+      },
+      doctor: false
+    },
+    finduser: "",
+    listAll: [],
+    isUpdPwd :true,
+    empty : "",
+    gongsi:""
   },
 
   
@@ -46,8 +62,12 @@ Page({
       }
     })
   },
-  onLoad: function (options) {
-
+  onLoad: function (a) {
+    Object.defineProperty(this.data, "userInfo", {
+      set: data => {
+        app.globalData.userInfo = data;
+      }
+    });
   },
 
   /**
@@ -61,7 +81,29 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+    var listAll = [];
+    const db = wx.cloud.database();
+    var finduser = app.globalData.finduser
+    var gongsi = app.globalData.gongsi
+    console.log("进销存公司名称",gongsi)
+    wx.cloud.callFunction({
+      name : 'sqlConnection',
+      data : {
+        sql : "select * from yh_jinxiaocun_user where gongsi = '"+gongsi+"' and name = '"+finduser+"'"
+      },
+      success : res=> {
+        that.setData({
+          listAll : res.result
+          
+        })
+        console.log("进销存数据检查",listAll)
+      }
+    })
+    this.setData({
+      finduser: app.globalData.finduser,
+      gongsi: app.globalData.gongsi
+    })
   },
 
   /**

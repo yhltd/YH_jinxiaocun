@@ -21,7 +21,8 @@ button{
   white-space: nowrap;
   margin-top: 0px;
   height: 86%;
-  background-color: #f2f2f2;  
+  background: url(https://gips1.baidu.com/it/u=2174727038,2634554346&fm=3086&app=3086&f=JPEG&wm=1,baiduai3,0,0,13,9&wmo=5,5&w=720&h=1280);
+  background-size: cover;
 }
 
 
@@ -37,6 +38,8 @@ button{
   height: 100rpx;
   position: sticky;
   top: 0;
+  background: linear-gradient(135deg, #FFA500, #FF8C00, #FF7F50);
+
 }
 
 .title{
@@ -54,10 +57,10 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #009688;
+  /* background-color: #009688; */
   color: white;
   font-weight: bold;
-  font-size: 35rpx;  
+  font-size: 40rpx;  
 }
 
 .list_row{
@@ -87,7 +90,8 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #ffffffde;
+
   color: black;
   border-right: 1rpx solid #F0F0F0;
   border-bottom: 1rpx solid #F0F0F0;
@@ -128,14 +132,15 @@ button{
 }
 
 .input_text_form{
-  border: 5rpx solid #E6E6E6;
+  border: 5rpx solid #000000;
   margin: auto;
-  width: 80%;
+  width: 460rpx;
   height: 64rpx;
   align-items: center;
   margin-top: 5%;
   border-radius: 19rpx;
-  padding-left: 3%;
+  background-color: white;
+  font-size: 35rpx;
 }
 
 .bt_view{
@@ -143,11 +148,12 @@ button{
   border-top: 1rpx solid #3D3D3D;
   width: 90%;
   height: 38%;
-  margin-top: 10%;  
+  margin-top: 5%;  
 }
 
 .bt_form{
-  background-color: #009688;
+  background-color: #ec7800;
+
   width: 39%;
   margin-top: 4%;
   float: left;
@@ -211,7 +217,8 @@ button{
 }
 .bt_bottom{
   width: 30%;
-  background-color: #282B33;
+  background-color: #ff700a;
+
   color: #E6E6E6;
   height: 75rpx;
   margin: auto;
@@ -245,11 +252,11 @@ button{
 
 .choiceList{
   position: fixed;
-  height: 70%;
-  width:100%;
-  top:45%;
+  width: 100%;
   background-color: white;
   z-index: 20;
+  box-shadow: 0px -4px 14px 4px #1f1f1f;
+  bottom: 0%;
 }
 
 
@@ -274,8 +281,28 @@ button{
   padding-left: 19rpx;  
 }
 
+
+
 .lables{
   font-size: 40rpx;
   margin-left: 90rpx;
-  margin-top: 30rpx;
+  margin-top: 5%;
+  color: white;
+  font-weight: bold;
+  width: 140rpx;
+}
+
+.xiaokuang{
+  display: flex;
+  width: 100%;
+  height: 110rpx;
+}
+.pick{
+  margin-left: 24rpx;
+  margin-top: 10rpx;
+}
+
+.dakuang{
+  padding-bottom: 20rpx;
+  background:linear-gradient(145deg, #ff6b02, #f98f5c);
 }

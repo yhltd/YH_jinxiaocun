@@ -28,12 +28,12 @@
         <text class="Hs">金额：</text>{{szzhi[i].cpsj}}</view>
     </view>
     <view class='shangpin-kucun' data-id="{{i}}">
-      <view style="margin-right: 15px;">
+      <view style="margin-right: 15px;  color: #26ff41;font-size: 28rpx;">
         <text class="Hs">期初数：</text>{{szzhi[i].qcsl}}</view>
-      <view style="margin-right: 15px;"> 
+      <view style="margin-right: 15px; color: #26ff41;font-size: 28rpx;"> 
         <text class="Hs">入库数：</text>{{szzhi[i].rksl}}</view>
-      <view>
-        <text class="Hs">出库数：</text>{{szzhi[i].cksl}}</view>
+      <view style=" color: #26ff41;font-size: 28rpx;">
+        <text class="Hs ">出库数：</text>{{szzhi[i].cksl}}</view>
     </view>
     
   </view>

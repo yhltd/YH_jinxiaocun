@@ -2,7 +2,7 @@
 <!------------------------->
 <!---------模块添加--------->
 <!------------------------->
-<view>此处可左右滑动</view>
+<!-- <view>此处可左右滑动</view> -->
 <view class="flex-wrp">
 <van-tag wx:if="{{ show.success }}" closeable size="large" id="{{item.id}}" type="primary" color="#d9ecff" text-color="#409EFF" bind:close="onClose" custom-class="custom" wx:for="{{list}}" wx:key="text">{{item.name}}</van-tag>
   <van-button type="small" custom-class="custom2" bind:click="onClick1" >+添加</van-button>
@@ -90,7 +90,7 @@
 <!------------------------->
 <!---------添加弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;" >
+<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;background: linear-gradient(135deg, #e8f4f8 0%, #d8ecf5 100%); border-radius: 20px 20px 0 0;" >
 	<view class="lables1">模块类别</view>
     <input bindinput="onInput" bindtap="onClick2" data-column="mklb" class="input_text_form" value="{{mklb}}" type="text" name="mklb" disabled="disabled"></input>
     <view class="lables1">名称</view>
@@ -125,7 +125,7 @@
 <!---------查询弹窗--------->
 <!------------------------->
 
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" bind:close="onClose" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;background: linear-gradient(135deg, #e8f4f8 0%, #d8ecf5 100%); border-radius: 20px 20px 0 0;" bind:close="onClose" >
   <view class="lables">查询类别:</view>
   <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="moduleName" range="{{xiala}}">
     <input bindinput="onInput" class="input_text_form" data-column="moduleName" value="{{moduleName}}" type="{{dataset_input.input_type}}" name="moduleName" disabled="disabled"></input>

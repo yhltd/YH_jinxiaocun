@@ -2,7 +2,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#ff7905;left:0;z-index:5':''}}">{{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
@@ -32,14 +32,21 @@
 <!--商品设置-->
 <!--- 查询 --->
 <!----------->
-<view class="choiceList" hidden="{{frmStudfind}}">
+<view class="choiceList1" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+    
       <view class="lables">商品名称:</view>
       <input class="input_text_form"  value="{{empty}}" type="text" name="product_name"></input>
+    </view>
+    <view class="xiaokuang">
+      
+   
       <view class="lables">商品类别:</view>
       <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type"></input>
-      
+    </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -69,7 +76,7 @@
 <!--- 删除 --->
 <!----------->
 <view class="input_view" hidden="{{handle}}">
-      <button class="bt_form" bindtap="sanchu" hover-class="bt_form_hover">删除</button>
+      <button class="bt_form2" bindtap="sanchu" hover-class="bt_form_hover2">删除</button>
 </view>
 
 <!--商品设置-->
@@ -77,28 +84,63 @@
 <!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
-    <view>
+    <view class="dakuang">
+    <view class="xiaokuang">
+      
+   
       <view class="lables">商品编码:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="product_bianhao"></input>
+    </view>
+    <view  class="xiaokuang">
+      
+   
       <view class="lables">商品类别:</view>
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type"></input>
+      </view>
+      <view  class="xiaokuang">
+        
+     
       <view class="lables">商品名称:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{product_name}}" type="text" name="product_name"></input>
+    </view>
+    <view  class="xiaokuang">
+      
+    
       <view class="lables">单位:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{unit}}" type="text" name="unit"></input>
+    </view>
+    <view  class="xiaokuang">
+      
+    
       <view class="lables">单价:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{price}}" name="price"></input>
+    </view>
+    <view  class="xiaokuang">
+      
+    
       <view  class="lables">成本:</view>
       <input class="input_text_form" type="text" placeholder="{{}}" value="{{chengben}}" name="chengben"></input>
+    </view>
+    <view  class="xiaokuang">
+      
+   
       <view  class="lables">商品规格:</view>
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{specifications}}" name="specifications"></input>
+      </view>
+      <view  class="xiaokuang">
+        
+     
       <view  class="lables">保存方式:</view>
         <input class="input_text_form" type="text" placeholder="{{}}" value="{{practice}}" name="practice"></input>
+      </view>
+      <view class="xiaokuang">
+        
+     
       <view  class="lables">是否停用:</view>
-      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{tingyong_list}}">
+      <picker class="pick" bindchange="bindPickerChange1" value="{{index}}" range="{{tingyong_list}}">
         <input class="input_text_form" value="{{window_tingyong}}" type="text" name="tingyong" disabled="disabled"></input>
       </picker>
-      
+    </view>
       <!-- <view  class="lables">图片:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="photo"></input> -->
     </view>

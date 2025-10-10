@@ -7,6 +7,8 @@ Page({
    */
   data: {
     id : 0,
+    isBannerHidden: true,
+    showXuanTu: true,
     list: [{
         url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rili.png",
         text: "考勤表",
@@ -84,6 +86,12 @@ Page({
         lianjie: "../../packageA/pages/1gongzitiao/gongzitiao"
       },{
         url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "个人中心",
+        index: 14,
+        hid : true,
+        lianjie: "../../packageA/pages/gerenzhongxin/gerenzhongxin"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
         text: "生日提醒",
         index: 13,
         hid : true,
@@ -94,6 +102,7 @@ Page({
   submit: function(e) {
     console.log('跳转')
     var that = this
+    console.log("人事数据1",that.data.userInfo)
     var index = e.currentTarget.dataset.index;
     if(!that.data.list[index].hid){
       return;
@@ -120,23 +129,25 @@ Page({
       },
       success: res => {
         var access = [0,0,0,0];
+        console.log("人事数据2",index)
         if(res.result.recordset.length!=0){
           var access  = res.result.recordset[0];
         }
         if(old_view_id == 13){
           wx.navigateTo({
-            url: that.data.list[12].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0]
+            url: that.data.list[12].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0] + '&userInfo=' + JSON.stringify(that.data.userInfo) ,
           })
         }else if(index == 9){
           wx.navigateTo({
-            url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+gongsi
+            url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+gongsi + '&userInfo=' + JSON.stringify(that.data.userInfo) ,
           })
         }else{
           wx.navigateTo({
-            url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0]
+            url: that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0] + '&userInfo=' + JSON.stringify(that.data.userInfo) ,
           })
         }
-        
+        console.log("人事数据3",JSON.stringify(that.data.userInfo))
+        console.log("人事数据4",that.data.list[index].lianjie + '?access=' + JSON.stringify(access) +"&companyName="+companyArr[0] + '&userInfo=' + JSON.stringify(that.data.userInfo))
       }
     })
 
@@ -151,6 +162,13 @@ Page({
    */
   onLoad: function(options) {
     var _this = this;
+
+    var userInfo = JSON.parse(options.userInfo)
+    console.log("人事数据1",userInfo)
+    _this.setData({
+      userInfo:userInfo,
+    })
+
     wx.setNavigationBarTitle({
       title: '人资管理系统'
     })
@@ -159,6 +177,7 @@ Page({
       backgroundColor: '#4876ff',
     })
 
+    this.queryUserPermissions()
     var id = options.id;
     if(id == undefined){
       wx.login({
@@ -307,5 +326,99 @@ Page({
    */
   onShareAppMessage: function() {
 
+  },
+
+  hideBanner: function() {
+    this.setData({
+      isBannerHidden: false
+    });
+  },
+  closeXuanTu: function() {
+    this.setData({
+      showXuanTu: false
+    })
+  },
+
+  queryUserPermissions: function() {
+    console.log('=== 开始调用云函数 ===')
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "SELECT tptop1,tptop2,tptop3,tptop4,tptop5,tptop6,topgao,xuankuan,xuangao,textbox,beizhu1  FROM yh_notice.dbo.product_pushnews WHERE gsname='云合未来' AND  xtname='云合人事管理系统' AND ((qidate IS NULL OR GETUTCDATE() >= CONVERT(DATETIME, LEFT(qidate, 10), 120)) AND (zhidate IS NULL OR GETUTCDATE() <= CONVERT(DATETIME, LEFT(zhidate, 10), 120)))"
+      },
+      success: res => {
+        var pushdata = res.result.recordset
+        if (pushdata && pushdata.length > 0) {
+          const firstItem = pushdata[0]
+          const bannerImages = []
+          let singleImage = '' 
+          if(firstItem.beizhu1 == "隐藏广告"){
+            this.hideBanner()
+            this.closeXuanTu()
+            return;
+          }
+
+          let marqueeText = firstItem.textbox || '暂无公告信息'
+          let xuankuan = firstItem.xuankuan ? firstItem.xuankuan + 'px' : '300rpx' 
+          let xuangao = firstItem.xuankuan ? firstItem.xuangao + 'px' : '300rpx' 
+          let topgao = firstItem.topgao ? firstItem.topgao + 'px' : '200rpx'       // 默认高度
+          
+          for (let i = 1; i <= 6; i++) {
+            const fieldName = `tptop${i}`
+            const rawData = firstItem[fieldName]
+            
+            if (rawData && rawData.trim() !== '') {
+              // 清理数据
+              const cleanedData = rawData
+                .replace(/\r?\n|\r/g, '')
+                .replace(/\s/g, '')
+                .trim()
+              
+              // 确定图片格式
+              let mimeType = 'image/jpeg'
+              if (cleanedData.startsWith('iVBORw0KGgo')) {
+                mimeType = 'image/png'
+                console.log(`tptop${i} 检测为PNG格式`)
+              } else if (cleanedData.startsWith('/9j/')) {
+                mimeType = 'image/jpeg'
+                console.log(`tptop${i} 检测为JPEG格式`)
+              }
+              
+              const finalUrl = `data:${mimeType};base64,${cleanedData}`
+              
+              // tptop1 单独处理，其他作为轮播图
+              if (i === 1) {
+                singleImage = finalUrl
+                console.log('单独图片 tptop1 已设置')
+              } else {
+                bannerImages.push(finalUrl)
+                console.log(`轮播图添加 tptop${i}`)
+              }
+            }
+          }
+
+          // 更新页面数据
+          this.setData({ 
+            singleImage: singleImage,      // 单独图片
+            bannerImages: bannerImages,    // 轮播图数组
+            hasSingleImage: !!singleImage, // 是否有单独图片
+            hasBannerImages: bannerImages.length > 0, // 是否有轮播图
+            marqueeText: marqueeText,
+            xuanTuStyle: `width: ${xuankuan};height: ${xuangao};`,
+            topTuStyle: `height: ${topgao};`
+          })
+          
+          // 测试图片加载
+          if (singleImage) {
+            this.testImageLoad(singleImage, '单独图片')
+          }
+          if (bannerImages.length > 0) {
+            this.testImageLoad(bannerImages[0], '轮播图第一张')
+          }
+        }
+      },
+      
+    })
   }
 })

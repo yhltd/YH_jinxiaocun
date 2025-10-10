@@ -666,7 +666,7 @@ Page({
        sheetqx1: sheetqx1,
        sheetqx2: sheetqx2,
      })
-    console.log(userInfo)
+    console.log("ceshineirong",userInfo)
     _this.init();
   },
 

@@ -1,10 +1,20 @@
 
 
+
+  <view class="tab-list-movie" style="background:{{bgColor[swiperIndex]}}">
+    <swiper class="movie-swiper" autoplay interval="6000" circular indicator-dots indicator-active-color="white" bindchange="getSwiperIndex">
+        <swiper-item class="swiper-item" wx:for="{{swiperImg}}" wx:key="index">
+            <image class="swiper-item-img" mode="heightFix" src="{{item}}" />
+        </swiper-item>
+    </swiper>
+
 <view class="list">
   <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">
     {{item.text}}
-    <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
+    <view class="rotating-bg"></view>
+    <!-- <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image> -->
   </view>
+</view>
 </view>
 
 <van-tabbar active="{{ 1 }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">

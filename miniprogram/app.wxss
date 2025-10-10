@@ -181,7 +181,7 @@ button::after {
   /* width: 94vw; */
   min-height: 30rpx;
   margin: 0 auto;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 10rpx;
   box-shadow: 0 2px 5px var(--shadow-color);
 }
@@ -300,11 +300,11 @@ button::after {
 
 .search-box {
   position: absolute;
-  top: 270rpx;
+  top: 50rpx;
   width: 90vw;
   margin: 0 5vw;
   padding: 0;
-  background-color: white;
+  background-color: #ffffffc2;
   transition: 0.25s;
 }
 
@@ -708,22 +708,24 @@ button::after {
 .jiage {
   height: 100%;
   width: 60%;
+  font-size: 40rpx;
   display: flex;
   justify-content: left;
   align-items: center;
-  background-color: #ffcbcb;
-  color: red;
+  background-color: #53d03d;
+  color: white;
   float: left;
 }
 
 .queren {
   height: 100%;
   width: 40%;
+  font-size: 40rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(255, 255, 255);
-  background-color: rgb(104, 140, 248);
+  background-color: #2870f5;
   float: right;
 }
 

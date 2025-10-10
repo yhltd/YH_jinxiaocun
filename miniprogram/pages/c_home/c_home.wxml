@@ -1,4 +1,58 @@
 <view class="body">
+<!-- 轮播图部分 -->
+<view class="top-tu" style="{{topTuStyle}}" wx:if="{{isBannerHidden && hasBannerImages}}">
+  <view class="banner-close" bindtap="hideBanner" wx:if="{{bannerImages.length > 0}}">×</view>
+  <swiper 
+    class="swiper-container" 
+    indicator-dots="{{bannerImages.length > 1}}" 
+    autoplay="{{bannerImages.length > 1}}" 
+    interval="{{3000}}" 
+    duration="{{500}}"
+    wx:if="{{bannerImages.length > 0}}"
+  >
+    <swiper-item wx:for="{{bannerImages}}" wx:key="index">
+      <image 
+        class="swiper-image" 
+        src="{{item}}" 
+        mode="aspectFill" 
+        lazy-load="true"
+        binderror="onImageError"
+        data-index="{{index}}"
+      ></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 空状态提示 -->
+  <view class="empty-banner" wx:if="{{bannerImages.length === 0 && !isLoading}}">
+    <text>暂无轮播图数据</text>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view class="loading-banner" wx:if="{{isLoading}}">
+    <text>轮播图加载中...</text>
+  </view>
+</view>
+<!-- 跑马灯 -->
+<view class="wenben-container" wx:if="{{isBannerHidden && hasBannerImages}}">
+  <view class="wenben">
+    <text class="marquee-text">{{marqueeText}}</text>
+  </view>
+</view>
+
+<!-- 悬浮弹窗 -->
+  <view class="xuan-tu" style="{{xuanTuStyle}}" wx:if="{{hasSingleImage && showXuanTu}}">
+  <!-- 关闭按钮 -->
+  <view class="xuan-tu-close" bindtap="closeXuanTu">×</view>
+  <image 
+    class="xuan-tu-image" 
+    src="{{singleImage}}" 
+    mode="aspectFill"
+    binderror="onImageError"
+    bindload="onImageLoad"
+  ></image>
+</view>
+
+
     <view class="list" wx:for="{{names}}" wx:for-item="items" wx:for-index="i" wx:key="id">
       <view class="item{{items.listHid?'_hover':''}}" bindtap="choice" data-index="{{i}}">
         <view class="item_text1">{{items.name}}</view>
@@ -8,7 +62,7 @@
           {{item.text}}</view>
       </scroll-view>
     
-      <image style="height:95%;width:80%;padding-left:2%" src="{{items.src}}" hidden="{{items.listHid}}" />
+      <image class="flow-border-container" style="height:85%;border: 3rpx solid;border-radius:0 30rpx 30rpx 0;width:81%;margin-top: 6rpx;padding-left:1%" src="{{items.src}}" hidden="{{items.listHid}}" />
       </view>
 </view>
 

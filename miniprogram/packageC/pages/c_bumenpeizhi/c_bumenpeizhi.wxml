@@ -8,7 +8,7 @@
     <view class="list_row">
       <view class="table_main" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
         <view class="list_view" style="width: 80rpx;justify-content: flex-start;padding-left: 20rpx;width: 80rpx;" data-id="{{list_item.id}}" data-index="{{index}}" bindlongtap="delete">
-          <text class="iconfont icon-RectangleCopy icon-danger"></text>
+          <text class="iconfont icon-RectangleCopy icon-danger" style="font-size: 50rpx;"></text>
           <view class="list_text">{{list_item.ROW_ID}}</view>
         </view>
         <view class="list_view" style="width:249rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="department" data-value="{{list_item.department}}" bindtap="clickView" data-input_type="text">

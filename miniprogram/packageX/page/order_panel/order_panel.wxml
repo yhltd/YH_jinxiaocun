@@ -10,13 +10,21 @@
 </view>
 <view class="menu" scroll-y show-scrollbar="{{ false }}" enhanced>
   <scroll-view class="sidebar">
+    <view class="left-dakuang">
     <block wx:for="{{title}}">
+   
+      
+    
       <view class="sidebar-item active" data-name="{{item.name}}" bindtap="type_click">
         <view class="item-label">{{item.name}}</view>
-        <view class="left-line"></view>
+       
+        <!-- <view class="left-line"></view> -->
       </view>
+      <view class="fangkuai">
+          
+        </view>
     </block>
-
+  </view>
   </scroll-view>
   <scroll-view class="menu-list" scroll-y show-scrollbar="{{ false }}" enhanced>
     <view class="list">
@@ -24,11 +32,20 @@
        <block wx:for="{{product_list}}">
         <view class="menu-item">
           <image class="item-photo" src="{{item.photo}}" mode=""/> 
+          <view class="youce">
+            
+          
           <view class="item_details" data-name="{{item.product_name}}">
             <view class="item-name">{{item.product_name}}</view>
-            <view class="item-price">{{item.price_look}}</view>
+           
           </view>
+          <view class="price-btn">
+            
+          
+          <view class="item-price">{{item.price_look}}</view>
           <button class="item-chooseGG" bindtap="openPopup" data-index="{{index}}">规格</button>
+        </view>
+        </view>
         </view>
        </block>
     
@@ -42,8 +59,9 @@
     <input class="product_num" disabled="disabled" value="{{num_sum}}"></input>
     <view class="text_money">金额:</view>
     <input class="product_money" disabled="disabled" value="{{price_sum}}"></input>
+    <button class="footer_jiesuan" bindtap="jiesuan">立即结算</button>
   </view>
-  <button class="footer_jiesuan" bindtap="jiesuan">立即结算</button>
+ 
 </view>
 
 <!-- 弹窗窗口 -->
@@ -51,36 +69,36 @@
 <!-- 中间弹窗 -->
 <view class="popup-box" hidden="{{mask_hid}}" bindtap="closePopup"></view> 
 <view class="info-center"  hidden="{{specifications_hid}}">
-  <view>
+  <view style="width: 100%;">
     <view class="row-info">
       <view class="row-author">{{window_name}}</view>
       <view class="Product_details">
-        <view class="row-photo">
+        <!-- <view class="row-photo">
         <image class="row-photo-item" src="{{window_photo}}" mode=""/>
-        </view>
+        </view> -->
         <view class="row-text">
           <view class="product_item">
-            <view>商品类型</view>
+            <view class="wenzi">商品类型</view>
            <input class="input_text_form"  value="{{window_type}}" type="text" name="window_type" disabled="disabled"></input>
           </view>
           <view class="product_item">
-            <view>商品数量</view>
+            <view  class="wenzi">商品数量</view>
             <input class="input_text_form" bindinput="onInput" value="{{window_num}}" type="number" data-name="window_num"></input>
           </view>
           <view class="product_item">
-            <view>商品规格</view>
+            <view  class="wenzi">商品规格</view>
             <picker bindchange="bindPickerChange1" value="{{index}}" range="{{guige_list}}">
               <input class="input_text_form"  value="{{window_guige}}" type="text" name="window_guige" disabled="disabled"></input>
             </picker>
           </view>
           <view class="product_item">
-            <view>保存方式</view>
+            <view  class="wenzi">保存方式</view>
             <picker bindchange="bindPickerChange2" value="{{index}}" range="{{baocun_list}}">
               <input class="input_text_form"  value="{{window_practice}}" type="text" name="window_practice" disabled="disabled"></input>
             </picker>
           </view>
           <view class="product_item">
-            <view>商品单价</view>
+            <view  class="wenzi">商品单价</view>
             <input class="input_text_form"  value="{{window_price}}" type="text" name="window_price" disabled="disabled"></input>
           </view>
         </view>
@@ -98,7 +116,7 @@
 <scroll-view scroll-y class="info-bottom" hidden="{{bottom_jiesuan}}">
   <view class="row-info">
     <view>
-      <text>购物车</text>
+      <text class="gouwuche">购物车</text>
     </view>
     <!-- <view class="row-author">
       <view>
@@ -108,11 +126,11 @@
     </view> -->
 
     <view class="choosemember_info">
-      <view>会员账号</view>
-      <input class="input_text_form"  value="{{member_zhanghao}}" type="text" name="product_type" bindtap="chooseMember"></input>
+      <view class="jiesuan-wenzi">会员账号</view>
+      <input class="input_text_form2"  value="{{member_zhanghao}}" type="text" name="product_type" bindtap="chooseMember"></input>
 
-      <view>会员姓名</view>
-      <input class="input_text_form"  value="{{member_xingming}}" type="text" name="product_type" bindtap="chooseMember"></input>
+      <view class="jiesuan-wenzi">会员姓名</view>
+      <input class="input_text_form2"  value="{{member_xingming}}" type="text" name="product_type" bindtap="chooseMember"></input>
     </view>
     
       <view class="table_title">
@@ -161,8 +179,12 @@
       </view>
     </block>
   </scroll-view>
+  <view class="dibu-btn">
+    
+ 
   <button bindtap="member_sel" class="member_btn_L member_btn" >查询</button>
   <button class="member_btn_R member_btn" bindtap="closemember">取消</button>
+</view>
 </scroll-view>
 
 <!-- 黑底 -->

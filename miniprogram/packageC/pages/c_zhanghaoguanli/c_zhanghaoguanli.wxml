@@ -3,13 +3,13 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{titil}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#8e97a9;left:0':''}}">
           {{item.text}}</view>
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
       <view class="table_main">
-        <view class="list_view" style="width:100rpx;position:sticky;left:0">
+        <view class="list_view" style="width:100rpx;position:sticky;left:0;background-color: white;">
           <view wx:if="{{!examine}}" bindlongtap="moreDo" data-id="{{list_item.id}}" class="list_text">
             {{list_item.rownum}}</view>
           <view wx:if="{{examine}}">

@@ -22,7 +22,9 @@ button {
   white-space: nowrap;
   margin-top: 0px;
   height: 86%;
-  background-color: #f2f2f2;
+  background-image: url('https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/caiwu3.png?sign=6a8a025631c6c2b803098f8aa20bc8c8&t=1760000876');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 
@@ -406,4 +408,210 @@ button {
   background-color: #009688;
   color: white;
   margin-top: 30px;
+}
+
+.bt_bottom{
+  width: 33%;
+  background: linear-gradient(135deg, #5a7592 0%, #3a4a6c 100%) !important;
+  color: #ffffff !important;
+  border: 1rpx solid rgba(255, 255, 255, 0.2) !important;
+  height: 75rpx;
+}
+.bt_bottom_hover{
+  width: 33%;
+  background: linear-gradient(135deg, #5a7592 0%, #3a4a6c 100%) !important;
+  color: #ffffff !important;
+  border: 1rpx solid rgba(255, 255, 255, 0.2) !important;
+  height: 75rpx;
+}
+
+
+.bottom_view{
+  height: 10%;
+  align-items: center;
+  display: flex;
+  bottom: 2%;
+  background: linear-gradient(135deg, #e8f4f8 0%, #d4e8f2 100%) !important;
+}
+
+.flex-wrp{
+  display: flex;
+  overflow-x: scroll;
+  height: 10%;
+  background: linear-gradient(135deg, #e8f4f8 0%, #d4e8f2 100%) !important;
+}
+
+/* 标签容器样式优化 */
+.van-tag{
+  background: linear-gradient(135deg, #5a7592 0%, #3a4a6c 100%) !important;
+  color: #ffffff !important;
+  border: 1rpx solid rgba(255, 255, 255, 0.2) !important;
+  margin: 2rpx 12rpx !important;
+  font-size: 28rpx !important;
+  font-weight: 700 !important;
+}
+
+/* 点击效果 */
+.van-tag:active {
+  transform: translateY(-2rpx) !important;
+  box-shadow: 
+    0 6rpx 16rpx rgba(42, 58, 92, 0.3),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.15) !important;
+  background: linear-gradient(135deg, #637e9b 0%, #42527a 100%) !important;
+}
+
+/* 关闭按钮样式 */
+.van-tag .van-icon-cross {
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin-left: 12rpx !important;
+  width: 32rpx !important;
+  height: 32rpx !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.custom2 {
+  background: linear-gradient(135deg, #5a7592 0%, #3a4a6c 100%) !important;
+  color: #ffffff !important;
+  border: 1rpx solid rgba(255, 255, 255, 0.2) !important;
+  margin: 8rpx 12rpx !important;
+  font-size: 28rpx !important;
+  font-weight: 700 !important;
+}
+
+.custom2:active {
+  transform: translateY(-2rpx) !important;
+  box-shadow: 
+    0 6rpx 16rpx rgba(42, 58, 92, 0.3),
+    inset 0 1rpx 0 rgba(255, 255, 255, 0.15) !important;
+  background: linear-gradient(135deg, #637e9b 0%, #42527a 100%) !important;
+}
+
+/* 表头样式 */
+.title_text {
+  background: linear-gradient(135deg, #5a7592 0%, #3a4a6c 100%) !important;
+  color: #ffffff !important;
+  font-size: 32rpx !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.3) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  border-right: 1rpx solid rgba(255, 255, 255, 0.1) !important;
+}
+
+
+/* 表格主体样式 */
+.table_main {
+  backdrop-filter: blur(10rpx) !important;
+}
+
+.list_view {
+  display: flex !important;
+  align-items: center !important;
+  height: 70rpx !important;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s ease !important;
+  
+}
+
+/* 表格单元格文字样式 */
+.list_text {
+  color: #ffffff !important;
+  font-size: 30rpx !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+  border-right: 1rpx solid rgba(90, 117, 146, 0.1) !important;
+  padding: 0 10rpx !important;
+}
+
+.list_text:last-child {
+  border-right: none !important;
+}
+
+/* 奇偶行颜色区分 */
+.list_view:nth-child(even) {
+  background: rgba(74, 101, 130, 0.85) !important;
+}
+
+.list_view:nth-child(odd) {
+  background: rgba(42, 58, 92, 0.75) !important;
+}
+
+/* 现代风格备选方案 */
+.custom-class {
+  background: linear-gradient(135deg, #07418d 0%, #113146 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+
+.lables {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 20px 15px 10px 15px;
+}
+
+.input_text_form {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin: 0 15px 20px 15px;
+  font-size: 14px;
+  color: #2c3e50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.bottom_view {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #f8fbff 0%, #f0f9ff 100%);
+  border-top: 1px solid #e1e8ed;
+  display: flex;
+  gap: 10px;
+}
+
+/* 标签文字样式 */
+.lables, .lables1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 20px 15px 8px 15px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+/* 输入框样式 */
+.input_text_form {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #b8d8e6;
+  border-radius: 10px;
+  margin: 0 15px 15px 15px;
+  font-size: 15px;
+  color: #2c3e50;
+  box-shadow: 
+    inset 0 1px 3px rgba(139, 197, 216, 0.2),
+    0 2px 4px rgba(139, 197, 216, 0.1);
+}
+
+/* 输入框聚焦效果 */
+.input_text_form:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: #8bc5d8;
+  box-shadow: 
+    inset 0 1px 3px rgba(139, 197, 216, 0.3),
+    0 0 0 2px rgba(139, 197, 216, 0.2);
+  outline: none;
 }

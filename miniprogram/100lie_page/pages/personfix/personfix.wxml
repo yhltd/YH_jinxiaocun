@@ -1,14 +1,26 @@
 <view class="scroll">
+  <view class="chaxun1">
     <view class="lables">姓名</view>
     <input bindinput="onInput" data-column="renyuan_name" class="input_text_form" value="{{renyuan_name}}" type="text" name="renyuan_name" ></input>
+  </view>
+
+  <view class="chaxun2">
     <view class="lables">权限</view>
-    <picker bindchange="bindPickerChange1" value="{{index}}" data-column_name="this_column" range="{{quanxian_list}}">
+    <picker class="pick" bindchange="bindPickerChange1" value="{{index}}" data-column_name="this_column" range="{{quanxian_list}}">
       <input bindinput="onInput" data-column="quanxian_leixing" class="input_text_form" value="{{quanxian_leixing}}" type="text" name="quanxian_leixing" disabled="disabled"></input>
     </picker>
+  </view>
 </view>
+
+<view class="bottom_view" style="height:10%">
+  <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
+  <!-- <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="back">返回</button> -->
+  <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="goto">样式</button>
+</view>
+
   <scroll-view scroll-y="true" scroll-x="true" class="scroll2">
   <view class="table">
-  <view class="th">
+  <view class="th thead">
   <block  wx:for="{{titil}}" wx:key="titil" wx:for-item="item" wx:for-index="indwx">
      <view class="tr">{{item.text}}</view>
   </block>
@@ -125,11 +137,7 @@
   </view>
 </scroll-view>
 
-<view class="bottom_view" style="height:10%">
-  <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="sel">查询</button>
-  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="back">返回</button>
-  <button class="bt_bottom" disabled="{{cha=='是'?'':'disabled'}}" hover-class="bt_bottom_hover" bindtap="goto">样式</button>
-</view>
+
 
 <!------------------------->
 <!---------批量设置权限--------->

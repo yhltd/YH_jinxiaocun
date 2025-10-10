@@ -2,7 +2,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{titil}}" wx:key="text">
-        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;left:0':''}}"
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#8e97a9;left:0':''}}"
           data-index="{{index}}"
           bindtap="insert"
         >{{item.text}}</view>

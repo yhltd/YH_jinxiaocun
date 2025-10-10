@@ -22,6 +22,7 @@ button{
   margin-top: 0px;
   height: 90%;
   background-color: #FCFCFC;
+  background: url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/biaoge-bg.png?sign=877e823…&t=1758702189);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -35,6 +36,7 @@ button{
   height: 100rpx;
   position: sticky;
   top: 0;
+  background:linear-gradient(45deg, #334d82 0%, #4e5f82 20%, #6f8cb7 45%, #4e5f82 70%, #334d82 100%);
 }
 
 .title{
@@ -52,10 +54,10 @@ button{
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  background-color: #009688;
+  /* background-color: #009688; */
   color: white;
   font-weight: bold;
-  font-size: 35rpx;  
+  font-size: 40rpx;  
 }
 
 .list_row{
@@ -75,7 +77,7 @@ button{
   height: 70rpx;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #ffffffd9;
   color: black;
   border-right: 1rpx solid #C4C5C9;
   border-bottom: 1rpx solid #C4C5C9;
@@ -89,7 +91,7 @@ button{
 }
 .bt_bottom{
   width: 13%;
-  background-color: #282B33;
+  background-color: #384050;
   color: #E6E6E6;
   float: left;
   height: 75rpx;
@@ -106,7 +108,7 @@ button{
   margin-left: 3%;
 }
 .page_bottom{
-  background-color: #282B33;
+  background-color: #384050;
   color: #E6E6E6;
   width: 13%;
   text-align: center;
@@ -122,7 +124,7 @@ button{
 
 .moreDo{
   width: 41%;
-  background-color: #282B33;
+  background-color: #384050;
   color: #E6E6E6;
   height: 75rpx;
   float: left;
@@ -131,18 +133,25 @@ button{
 }
 .moreDo_view{
   position: fixed;
-  height: 96%;
+  height: 100%;
   width: 40%;
-  top: 2%;
+  top: 0%;
   background-color: white;
   z-index: 20;
   border-radius: 0 10rpx 10rpx 0;
   box-shadow: 10rpx 10rpx 10rpx black;  
+  background: linear-gradient(135deg,
+  #f8f9fa 0%,
+  #e9ecef 20%,
+  #dee2e6 40%,
+  #ced4da 60%,
+  #adb5bd 80%,
+  #6c757d 100%);
 }
 .moreDo_view_bt{
   width: 90%;
   height: 100rpx;
-  background-color: #009688;
+  background-color: #384050;
   color: white;
   font-size: 37rpx;
   margin-top: 45rpx;
@@ -152,10 +161,10 @@ button{
 .sw_view{
   position: fixed;
   bottom: 0;
-  width: 96%;
+  width: 100%;
   height: 19%;
   background-color: white;
-  left: 2%;
+  left: 0%;
   border-radius: 10rpx 10rpx 0 0;
   box-shadow: 0 -10rpx 10rpx black;
   z-index: 20;
@@ -169,7 +178,7 @@ button{
 .sv_view_btView_bt{
   width: 18%;
   height: 60rpx;
-  background-color: #009688;
+  background-color: #384050;
   color: white;
   line-height: 60rpx;  
 }
@@ -177,7 +186,7 @@ button{
   margin: auto;
   width: 96%;
   height: 115rpx;
-  border: 5rpx solid #E6E6E6;
+  border: 2rpx solid #000000;
   border-radius: 10rpx;
   text-align: center;
   line-height: 115rpx;

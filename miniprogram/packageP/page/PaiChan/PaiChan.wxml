@@ -1,5 +1,10 @@
 <!-- <van-cell is-link title="排产" link-type="navigateTo" url="../PC_PC/PC_PC"/> -->
-
+<view class="list1" style="width: 100%; height: 100%; display: flex;">
+<view class="list-left" style="width: 18%;height: 100%;display: flex;">
+  <view class="list-left-1" style="width: 30%;height: 100%;margin-right: 4%;"></view>
+  <view class="list-left-1" style="width: 30%;height: 100%;margin-right: 4%;"></view>
+  <view class="list-left-1" style="width: 30%;height: 100%;margin-right: 4%;"></view>
+</view>
 <view class="list">
   <view class="item" hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go1" data-index="{{index}}">
     {{item.text}}
@@ -22,11 +27,12 @@
     <image class="img" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qianwang.png"></image>
   </view>
 </view>
-
+</view>
 
 <van-tabbar active="{{ active }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
-  <van-tabbar-item icon="../../images/peizhi.png">配置表</van-tabbar-item>
-  <van-tabbar-item icon="../../images/dingdan.png">订单及部门</van-tabbar-item>
+  <van-tabbar-item icon="../../images/work.png">配置表</van-tabbar-item>
+  <van-tabbar-item icon="../../images/dingdan.png" disabled="{{isdis!=1}}" >订单及部门</van-tabbar-item>
   <van-tabbar-item icon="../../images/paichan.png">排产及排班</van-tabbar-item>
   <van-tabbar-item icon="../../images/caozuo-huizong.png">汇总</van-tabbar-item>
+  <van-tabbar-item icon="../../images/peizhi.png">我的</van-tabbar-item>
 </van-tabbar>

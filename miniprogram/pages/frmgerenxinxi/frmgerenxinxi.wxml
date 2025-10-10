@@ -24,7 +24,7 @@
 <!-- 四格分栏 -->
 <view class="row-box clearfix four-list-icon">
 	<block wx:if="{{!doctor}}">
-		<view bindtap="Show_updPwd" data-page="askList/askList?type=PatAlive" data-pro="put">
+		<view style="    margin-left: 170rpx;" bindtap="Show_updPwd" data-page="askList/askList?type=PatAlive" data-pro="put">
 			<icon class="iconfont icon-xiaoxi color5"></icon>
 			<text>改密码</text>
 		</view>

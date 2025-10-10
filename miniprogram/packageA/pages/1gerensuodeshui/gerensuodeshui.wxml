@@ -5,7 +5,7 @@
         <block wx:for="{{title}}" wx:key="">
           <view class="th {{(item.gerensuodeshui == '税率')?'tap':''}}" data-gerensuodeshui='{{item.gerensuodeshui}}'>
             <view class="cell_label centerclass">
-              <text style="font-size:; font-weight:bold;">{{item.gerensuodeshui}}</text>
+              <text style=" font-weight:bold;">{{item.gerensuodeshui}}</text>
             </view>
           </view>
         </block>

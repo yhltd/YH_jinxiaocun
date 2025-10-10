@@ -25,7 +25,7 @@ var login = function(that,info) {
     var login = false;
     //人资管理系统
     console.log("ligng")
-    var sql = "select id from gongzi_renyuan where L = '" + that.data.gongsi + "' and J = '" + info.inputPwd + "' and I ='" + info.inputName + "'"
+    var sql = "select * from gongzi_renyuan where L = '" + that.data.gongsi + "' and J = '" + info.inputPwd + "' and I ='" + info.inputName + "'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -41,7 +41,7 @@ var login = function(that,info) {
             that.remove_user()
           }
           wx.navigateTo({
-            url: '../home/home?id='+res.result.recordset[0].id,
+            url: '../home/home?id='+res.result.recordset[0].id + '&userInfo=' + JSON.stringify(res.result.recordset[0])
           })
           wx.showToast({
             title: '登录成功',
@@ -370,14 +370,18 @@ var login = function(that,info) {
       },
       success(res) {
         if (res.result.length > 0) {
+          console.log("智慧门店登录数据",res.result)
+          console.log("智慧门店登录数据",res.result[0].uname)
+          console.log("智慧门店登录数据",res.result[0].position)
           if (info.inputName == "bbb") {
             if(that.data.jizhu_panduan){
               that.remember_user(info.inputName,info.inputPwd)
             }else{
               that.remove_user()
             }
+            
             wx.navigateTo({
-              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id
+              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id + '&position=' + res.result[0].position + '&zname=' + res.result[0].uname
             })
             wx.showToast({
               title: '登录成功',
@@ -389,7 +393,7 @@ var login = function(that,info) {
               that.remove_user()
             }
             wx.navigateTo({
-              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id
+              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id + '&position=' + res.result[0].position + '&zname=' + res.result[0].uname
             })
             wx.showToast({
               title: '登录成功',
@@ -435,6 +439,7 @@ var login = function(that,info) {
         //app.paichan_user.gongsi = that.data.gongsi
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
+          console.log("denglu",userInfo)
           if(userInfo.state != '正常'){
             wx.showToast({
               title: '此账号已被锁定',
@@ -448,7 +453,8 @@ var login = function(that,info) {
             that.remove_user()
           }
           wx.navigateTo({
-            url: '../../packageP/page/PeiZhiBiao/PeiZhiBiao'
+            // url: '../../packageP/page/PeiZhiBiao/PeiZhiBiao'
+            url: '../../packageP/page/PeiZhiBiao/PeiZhiBiao?userInfo='+JSON.stringify(userInfo)
           })
           wx.showToast({
             title: '登录成功',
