@@ -94,7 +94,7 @@
     <view class="lables">*计划名称</view>
     <input bindinput="onInput" data-column="jhmc" class="input_text_form" value="{{jhmc}}" type="text" name="jhmc"></input>
     <!-- 下方部门信息 -->
-    <scroll-view class="sv_list2" scroll-x="true" scroll-y="true" >
+    <scroll-view class="sv_list2" style="margin-bottom: 30%;" scroll-x="true" scroll-y="true" >
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{title2}}">
@@ -102,7 +102,7 @@
       </block>
     </view>
     <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
-      <view class="table_main">
+      <view class="table_main" style="margin-bottom: 40%;" >
         <view wx:for="{{title2}}" 
               wx:for-item="item" 
               wx:key="item" 
@@ -197,7 +197,7 @@
     <view class="lables">人数</view>
     <input bindinput="onInput" data-column="renshu" class="input_text_form" value="{{renshu}}" type="idcard" name="renshu"></input>
     <view class="lables">部门</view>
-    <input bindinput="onInput" data-column="department_name" class="input_text_form" value="{{department_name}}" type="text" name="department_name"></input>
+    <input bindinput="onInput" data-column="department_name" class="input_text_form" style="margin-bottom: 30%;" value="{{department_name}}" type="text" name="department_name"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1">修改</button>

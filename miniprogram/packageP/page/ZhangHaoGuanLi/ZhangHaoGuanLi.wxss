@@ -535,3 +535,7 @@ button{
     0 0 0 2px rgba(139, 197, 216, 0.2);
   outline: none;
 }
+
+.di-bottom{
+  margin-bottom: 20%;
+}

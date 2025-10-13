@@ -62,11 +62,11 @@
     <input bindinput="onInput" data-column="xdrq" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq"  disabled="disabled"></input>
     </picker>
     <view class="lables">下单数量</view>
-    <input bindinput="onInput" data-column="xdsl" class="input_text_form" value="{{xdsl}}" type="digit" name="xdsl"></input>
+    <input bindinput="onInput" data-column="xdsl" class="input_text_form di-bottom" value="{{xdsl}}" type="digit" name="xdsl"></input>
 <!------------------------->
 <!---------选择物料--------->
 <!------------------------->
-  <view class="bottom_view" style="height:30%">
+  <view class="bottom_view" style="height:30% ; margin-bottom: 30%;">
     <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
   <view class="table">
     <view class='table_header'>
@@ -135,7 +135,7 @@
     <input bindinput="onInput" data-column="xdrq" class="input_text_form" value="{{xdrq}}" type="text" name="xdrq"  disabled="disabled"></input>
     </picker>
     <view class="lables">下单数量</view>
-    <input bindinput="onInput" data-column="xdsl" class="input_text_form" value="{{xdsl}}" type="digit" name="xdsl"></input>
+    <input bindinput="onInput" data-column="xdsl" class="input_text_form di-bottom" value="{{xdsl}}" type="digit" name="xdsl"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>

@@ -104,6 +104,7 @@ button{
   border-radius: 10rpx;
   box-shadow: 10rpx 10rpx 10rpx black;
   z-index: 20;
+  left: 5%;
 }
 
 .input_text_form{
@@ -151,7 +152,7 @@ button{
 }
 
 .bt_form{
-  background-color: #009688;
+  background-color: #384050;
   width: 39%;
   margin-top: 4%;
   float: left;
@@ -497,7 +498,7 @@ button{
 .moreDo_view_bt{
   width: 90%;
   height: 100rpx;
-  background-color: #009688;
+  background-color: #384050;
   color: white;
   font-size: 37rpx;
   margin-top: 45rpx;

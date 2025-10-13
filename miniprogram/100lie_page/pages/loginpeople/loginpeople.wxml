@@ -1,3 +1,6 @@
+<view class="all">
+  
+
 <view class="bg">
   <view class="head flow-border-container">
     <view class="flow-bg" id="flowBg"></view>
@@ -101,7 +104,7 @@
     <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lunbo-grzx3.jpg" mode="aspectFill" style="width: 100%;"/>
   </swiper-item>
 </swiper>
-
+</view>
 
 <van-tabbar active="{{ 3 }}" bind:change="onChange" active-color="#1296db" inactive-color="#000">
   <van-tabbar-item icon="../../images/gongsi.png">公司</van-tabbar-item>

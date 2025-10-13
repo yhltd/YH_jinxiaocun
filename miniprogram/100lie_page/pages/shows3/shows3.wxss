@@ -128,7 +128,8 @@ page{
         }
 
         .tab-list-movie {
-          height: 100%;
+          height: 90%;
+          overflow: auto;
         }
         .movie-swiper{
           padding-top: 80rpx;

@@ -15,7 +15,7 @@
     <view class='maskWindowInputView11'>
       <view hidden="{{!svHidden}}" style="width:88%;margin: auto;">
         <view style="float: left;width: 87%;">
-          <input class="textView" value="{{selectText}}" bindinput="onInput" placeholder="请选择"/>
+          <input class="textView" style="color: white;" value="{{selectText}}" bindinput="onInput" placeholder="请选择"/>
         </view>
         <view style="float: left;width: 13%;">
           <view class="selectHead" bindtap="selectTap">V</view>

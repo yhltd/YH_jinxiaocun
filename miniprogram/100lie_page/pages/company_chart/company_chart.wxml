@@ -1,3 +1,4 @@
+
 <view class="chaxun1">
 <view class="lables">选择开始日期</view>
 <picker class="pick" mode="date" value="{{xdrq}}" data-column_name="xdrq" bindchange="choiceDate">
@@ -23,5 +24,7 @@
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" disabled="{{cha=='是'?'':'disabled'}}" style="position: relative; left: -4rpx; top: 0rpx; width: 164rpx; height: 75rpx;  box-sizing: border-box">查询</button>
 </view>
 
+
+  
 
 <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ecage}}" style="height: 90%;"></ec-canvas>

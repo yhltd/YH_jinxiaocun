@@ -255,4 +255,9 @@ page{
   #ced4da 60%,
   #adb5bd 80%,
   #6c757d 100%);
+  height: 100%;
+}
+.all{
+  height: 90%;
+  overflow: auto;
 }

@@ -235,9 +235,10 @@ button{
 }
 .moreDo_bt_view{
   display: flex;
-  height: 50%;
+  /* height: 50%; */
   flex-direction: row;
   align-items: center;
+  margin-top:20rpx;
 }
 .moreDo_bt{
   width: 24%;

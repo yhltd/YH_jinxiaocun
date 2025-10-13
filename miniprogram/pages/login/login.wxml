@@ -10,7 +10,7 @@
     </view>
   </view>
 
-  <view class="middle-bgimage" style="height: 100%;">
+  <view class="middle-bgimage" style="height: 93%;">
 <view class="main-body"  >
   <form bindsubmit="formLogin">
 

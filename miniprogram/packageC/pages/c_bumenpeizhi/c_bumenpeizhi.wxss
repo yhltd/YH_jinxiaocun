@@ -239,9 +239,9 @@ button{
 .select_view_box{
   background-color: #FFFFFF;
   width: 92%;
-  height: 37%;
+  height: 25%;
   position: fixed;
-  bottom: 0;
+  bottom: 5%;
   margin: 4%;
   border-radius: 20rpx;
   z-index: 20;
@@ -312,9 +312,10 @@ button{
 }
 .moreDo_bt_view{
   display: flex;
-  height: 70%;
-  flex-direction: row;
-  align-items: center;
+    /* height: 70%; */
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20rpx;
 }
 .moreDo_bt{
   width: 24%;

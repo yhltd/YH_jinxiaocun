@@ -69,7 +69,7 @@
 <!-- 中间弹窗 -->
 <view class="popup-box" hidden="{{mask_hid}}" bindtap="closePopup"></view> 
 <view class="info-center"  hidden="{{specifications_hid}}">
-  <view style="width: 100%;">
+  <view style="width: 100%; height: 100%;">
     <view class="row-info">
       <view class="row-author">{{window_name}}</view>
       <view class="Product_details">
@@ -106,7 +106,7 @@
       </view>
       
     </view>
-    <view class="row-btn" style="padding: 20px;">
+    <view class="row-btn" >
       <view class="left-btn" bindtap="closePopup">取消</view>
       <view class="right-btn" bindtap="addtocart">添加购物车</view>
     </view>

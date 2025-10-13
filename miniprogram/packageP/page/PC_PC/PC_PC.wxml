@@ -275,7 +275,7 @@
       <input bindinput="onInput3" data-column="wcrq" class="input_text_form" value="{{wcrq}}" type="text" name="wcrq" disabled="disabled"></input>
     </picker>
     <view class="lables">是否插单</view>
-    <input bindinput="onInput3" data-column="sfcd" bindtap="selSFCD"  class="input_text_form" value="{{sfcd}}" type="text" name="sfcd" disabled="disabled"></input>
+    <input bindinput="onInput3" data-column="sfcd" bindtap="selSFCD"  class="input_text_form" style="margin-bottom: 30%;" value="{{sfcd}}" type="text" name="sfcd" disabled="disabled"></input>
     <view class="lables" hidden="{{shiFouChaDan}}" >插至此单后</view>
     <input hidden="{{shiFouChaDan}}"  bindinput="onInput" bindtap="selCD" data-column="xdsl" class="input_text_form" value="{{xdsl}}" type="digit" name="xdsl" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">

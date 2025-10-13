@@ -55,15 +55,19 @@
   <!-- 广告加在这里 -->
 
   <view class="tab-list-movie" style="background:{{bgColor[swiperIndex]}}">
+  <view class="shangbu">
+    
+  
     <swiper class="movie-swiper" autoplay interval="6000" circular indicator-dots indicator-active-color="white" bindchange="getSwiperIndex">
      
         <swiper-item class="swiper-item" wx:for="{{swiperImg}}" wx:key="index">
             <image class="swiper-item-img" mode="heightFix" src="{{item}}" />
            
         </swiper-item>
-      
+       
     </swiper>
     <text class="wenzi">通过权限分配实现多人对文档协同编辑</text>
+  </view>
     <view class="list">
   
   <view class="item " hover-class="item_hover" wx:for="{{showList}}" wx:key="text" bindtap="go" data-index="{{index}}">

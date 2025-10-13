@@ -127,14 +127,16 @@ page{
 
 
 
-.tab-list-movie {
-  height: 100%;
+/* .tab-list-movie {
+  height: 88%;
   position: absolute;
-}
+  overflow: auto;
+} */
 .movie-swiper{
   padding-top: 60rpx;
   margin: 0 32rpx;
   height: 400rpx;
+  width: 100%;
 }
 .swiper-item{
   width: 100%;
@@ -318,4 +320,9 @@ page{
   100% {
     transform: translate3d(-100%, 0, 0);
   }
+}
+
+.shangbu{
+  display: flex;
+  position: relative;
 }

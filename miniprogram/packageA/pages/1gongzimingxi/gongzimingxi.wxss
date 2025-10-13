@@ -536,3 +536,9 @@ page {
     font-size: 14px;
   }
 }
+
+/* 当前显示框的样式 */
+.select-main {
+  color:rgb(53, 111, 218); /* 保持原有颜色 */
+  background: transparent;
+}

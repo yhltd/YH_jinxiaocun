@@ -340,8 +340,8 @@ button{
   height: 500rpx;
 } */
 .canvas {
-  margin-top: 80%;
-  width: 100%;
+  margin-top: 40%;
+  width: 380px;
   /* margin-left: 2.8%; */
   /* height: 1000rpx; */
   /* border-radius: 30rpx; */

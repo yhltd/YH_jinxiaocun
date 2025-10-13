@@ -2,7 +2,7 @@
   <view class="table">
     <view class='table_header'>
       <block class="title" wx:for="{{titil}}">
-        <view class="title_text" hidden="{{item.hidden}}" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#8e97a9;left:0':''}}">{{item.text}}</view>
+        <view class="title_text" hidden="{{item.hidden}}" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#8e97a9;left:0':''}}{{item.text=='最后修改时间'?'width:240rpx':''}}">{{item.text}}</view>
       </block>
     </view> 
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
@@ -21,7 +21,7 @@
         <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="日期" data-value="{{list_item['日期']}}" style="width:220rpx">
           <view class="list_text">{{list_item["日期"]}}</view> 
         </view>
-        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="a最后修改日期" data-value="{{list_item['a最后修改日期']}}" style="width:220rpx">
+        <view class="list_view" data-index="{{index}}" data-id="{{list_item.id}}" data-column="a最后修改日期" data-value="{{list_item['a最后修改日期']}}" style="width:240rpx">
           <view class="list_text">{{list_item["a最后修改日期"]}}</view>
         </view>
         <view class="list_view" hidden="{{titil[4].hidden}}" data-index="{{index}}" data-id="{{list_item.id}}" data-column="A" data-value="{{list_item.A}}" bindtap="{{quanxian_list.C == '√'?'clickView':''}}" style="{{quanxian_list.C == '√'?'width:300rpx':'width:300rpx;background-color:#a9a9a9'}}" data-input_type="text">

@@ -37,7 +37,7 @@
     <view class="lables">效率/时</view>
     <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
     <view class="lables">父模块(选择已有模块作为父模块)</view>
-    <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
+    <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form di-bottom" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
   <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del" disabled="{{isdisshan!=1}}">删除</button>
@@ -90,7 +90,7 @@
 <!------------------------->
 <!---------添加弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 80%;background: linear-gradient(135deg, #e8f4f8 0%, #d8ecf5 100%); border-radius: 20px 20px 0 0;" >
+<van-popup bind:click-overlay="tjShow" show="{{ tjShow }}" position="bottom" custom-style="height: 100%;background: linear-gradient(135deg, #e8f4f8 0%, #d8ecf5 100%); border-radius: 20px 20px 0 0；" >
 	<view class="lables1">模块类别</view>
     <input bindinput="onInput" bindtap="onClick2" data-column="mklb" class="input_text_form" value="{{mklb}}" type="text" name="mklb" disabled="disabled"></input>
     <view class="lables1">名称</view>
@@ -98,7 +98,7 @@
     <view class="lables1">效率/时</view>
     <input bindinput="onInput" data-column="xls" class="input_text_form" value="{{xls}}" type="digit" name="xls"></input>
     <view class="lables1">父模块(选择已有模块作为父模块)</view>
-    <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
+    <input bindinput="onInput" bindtap="onClick2" data-column="fmk" class="input_text_form di-bottom" value="{{fmk}}" type="text" name="fmk" disabled="disabled"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="save2">添加</button>

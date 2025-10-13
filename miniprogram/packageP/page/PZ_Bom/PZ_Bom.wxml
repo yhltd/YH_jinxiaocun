@@ -60,7 +60,7 @@
     <view class="lables">大小</view>
     <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="digit" name="dx"></input>
     <view class="lables">单位</view>
-    <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
+    <input bindinput="onInput" data-column="dw" class="input_text_form di-bottom" value="{{dw}}" type="text" name="dw"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -83,7 +83,7 @@
     <view class="lables">大小</view>
     <input bindinput="onInput" data-column="dx" class="input_text_form" value="{{dx}}" type="digit" name="dx"></input>
     <view class="lables">单位</view>
-    <input bindinput="onInput" data-column="dw" class="input_text_form" value="{{dw}}" type="text" name="dw"></input>
+    <input bindinput="onInput" data-column="dw" class="input_text_form di-bottom" value="{{dw}}" type="text" name="dw"></input>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>

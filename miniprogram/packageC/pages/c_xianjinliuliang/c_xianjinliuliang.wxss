@@ -164,7 +164,7 @@ button{
   width: 92%;
   height: 37%;
   position: fixed;
-  bottom: 0;
+  bottom: 0%;
   margin: 4%;
   border-radius: 20rpx;
   z-index: 20;
@@ -235,9 +235,9 @@ button{
 }
 .moreDo_bt_view{
   display: flex;
-  height: 70%;
   flex-direction: row;
   align-items: center;
+  margin-top: 20rpx;
 }
 .moreDo_bt{
   width: 24%;

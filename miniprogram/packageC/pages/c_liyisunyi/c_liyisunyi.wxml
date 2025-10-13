@@ -87,7 +87,7 @@
         <input class="option_text" value="{{stop_date}}" bindinput="input" placeholder="结束日期" name="stop_date" disabled='disabled'/>
       </picker>
     </view>
-    <view class="moreDo_bt_view" style="">
+    <view class="moreDo_bt_view" >
       <button class="moreDo_bt" bindtap="chaxun_quxiao">返回</button>
       <button class="moreDo_bt" form-type="submit">查询</button>
     </view>

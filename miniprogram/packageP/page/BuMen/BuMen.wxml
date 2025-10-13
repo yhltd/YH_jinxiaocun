@@ -35,7 +35,7 @@
     disabled="{{isdischa!=1}}">刷新</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="entering" 
    disabled="{{isdischa!=1}}">查询</button>
-  <button class="bt_bottom" style=" width: 20%;" bindtap="goto_yanshi">演示</button>
+  <button class="bt_bottom " style=" width: 20%;" bindtap="goto_yanshi">演示</button>
 </view>
 
 
@@ -73,7 +73,7 @@
     <view class="swit">否<switch data-column="dupd" name="dupd" checked="{{dupd=='是'?true:false}}" bindchange="switch3Change"></switch>是</view>
     <!-- <input bindinput="onInput" data-column="dupd" class="input_text_form" value="{{dupd}}" type="text" name="dupd" ></input> -->
     <view class="lables">查询</view>
-    <view class="swit">否<switch data-column="dsel" name="dsel" checked="{{dsel=='是'?true:false}}" bindchange="switch4Change"></switch>是</view>
+    <view class="swit" style="margin-bottom: 30%;">否<switch data-column="dsel" name="dsel" checked="{{dsel=='是'?true:false}}" bindchange="switch4Change"></switch>是</view>
     <!-- <input bindinput="onInput" data-column="dsel" class="input_text_form" value="{{dsel}}" 
     type="text" name="dsel"></input> -->
   <view class="bottom_view" style="height:10%">
@@ -100,7 +100,7 @@
     <view class="swit">否<switch  data-column="dupd" name="dupd" checked="{{dupd=='是'?true:false}}" bindchange="switch3Change"></switch>是</view>
     <!-- <input bindinput="onInput" data-column="dupd" class="input_text_form" value="{{dupd}}" type="text" name="dupd"></input> -->
     <view class="lables">查询</view>
-    <view class="swit">否<switch  data-column="dsel" name="dsel" checked="{{dsel=='是'?true:false}}" bindchange="switch4Change"></switch>是</view>
+    <view class="swit" style="margin-bottom: 30%;">否<switch  data-column="dsel" name="dsel" checked="{{dsel=='是'?true:false}}" bindchange="switch4Change"></switch>是</view>
     <!-- <input bindinput="onInput" data-column="dsel" class="input_text_form" value="{{dsel}}" type="digit" name="dsel"></input> -->
     <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
