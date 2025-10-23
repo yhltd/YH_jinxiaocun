@@ -17,7 +17,7 @@ var login = function(that,info) {
   var listAll = [];
   const db = wx.cloud.database();
   var gongsi = app.globalData.gongsi
-  console.log(that.data.gongsi)
+  console.log("1212",that.data.gongsi)
   //财务
   var system = that.data.system
   if (system=="云合人事管理系统") {
@@ -1484,72 +1484,238 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(e) {
+  // onLoad: function(e) {
     
+  //   var that = this;
+  //   app.globalData.finduser = 'name1'
+  //   if (app.globalData.finduser != null && app.globalData.gongsi != null) {
+  //     /*
+  //     wx.switchTab({
+  //       url: '../shouye/shouye'
+  //     })
+  //     */
+  //   }
+  //   // wx.getStorage({
+  //   //   key: 'IsLogin',
+  //   //   success: function (res) {
+  //   //     if (res.data) {
+
+  //   //       wx.switchTab({
+  //   //         url: '../shouye/shouye'
+  //   //       })
+  //   //       // wx.navigateTo({
+  //   //       //   url: '../shouye/shouye',
+  //   //       // })
+  //   //     }
+  //   //   }
+  //   // })
+  //   wx.getStorage({
+  //     key: 'system',
+  //     success (res) {
+  //       console.log(res.data)
+  //       that.setData({
+  //         system:res.data,
+  //         jizhu_panduan:true
+  //       })
+  //     }
+  //   })
+  //   wx.getStorage({
+  //     key: 'gongsi',
+  //     success (res) {
+  //       console.log(res.data)
+  //       that.setData({
+  //         gongsi:res.data,
+  //         jizhu_panduan:true
+  //       })
+  //     }
+  //   })
+  //   wx.getStorage({
+  //     key: 'user',
+  //     success (res) {
+  //       console.log(res.data)
+  //       that.setData({
+  //         name:res.data,
+  //         jizhu_panduan:true
+  //       })
+  //     }
+  //   })
+  //   wx.getStorage({
+  //     key: 'pass',
+  //     success (res) {
+  //       console.log(res.data)
+  //       that.setData({
+  //         pwd:res.data,
+  //         jizhu_panduan:true
+  //       })
+  //     }
+  //   })
+  // },
+
+  onLoad: function(e) {
     var that = this;
     app.globalData.finduser = 'name1'
-    if (app.globalData.finduser != null && app.globalData.gongsi != null) {
-      /*
-      wx.switchTab({
-        url: '../shouye/shouye'
-      })
-      */
-    }
-    // wx.getStorage({
-    //   key: 'IsLogin',
-    //   success: function (res) {
-    //     if (res.data) {
-
-    //       wx.switchTab({
-    //         url: '../shouye/shouye'
-    //       })
-    //       // wx.navigateTo({
-    //       //   url: '../shouye/shouye',
-    //       // })
-    //     }
-    //   }
-    // })
+    
+    // 定义变量来存储公司名和系统名
+    let companyName = '';
+    let systemName = '';
+    
+    // 从缓存获取系统名称
     wx.getStorage({
       key: 'system',
-      success (res) {
-        console.log(res.data)
+      success: function(res) {
+        console.log('获取系统名称:', res.data)
+        systemName = res.data;
         that.setData({
-          system:res.data,
-          jizhu_panduan:true
+          system: res.data,
+          jizhu_panduan: true
         })
+        
+        // 检查是否两个值都有了，然后发送请求
+        if (companyName && systemName && companyName !== '选择公司' && systemName !== '选择系统') {
+          that.queryUserPermissions(companyName, systemName);
+        }
       }
     })
+    
+    // 从缓存获取公司名称
     wx.getStorage({
       key: 'gongsi',
-      success (res) {
-        console.log(res.data)
+      success: function(res) {
+        console.log('获取公司名称:', res.data)
+        companyName = res.data;
         that.setData({
-          gongsi:res.data,
-          jizhu_panduan:true
+          gongsi: res.data,
+          jizhu_panduan: true
         })
+        
+        // 检查是否两个值都有了，然后发送请求
+        if (companyName && systemName && companyName !== '选择公司' && systemName !== '选择系统') {
+          that.queryUserPermissions(companyName, systemName);
+        }
       }
     })
+    
+    // 获取用户名
     wx.getStorage({
       key: 'user',
-      success (res) {
-        console.log(res.data)
+      success: function(res) {
+        console.log('获取用户名:', res.data)
         that.setData({
-          name:res.data,
-          jizhu_panduan:true
+          name: res.data,
+          jizhu_panduan: true
         })
       }
     })
+    
+    // 获取密码
     wx.getStorage({
       key: 'pass',
-      success (res) {
-        console.log(res.data)
+      success: function(res) {
+        console.log('获取密码:', res.data)
         that.setData({
-          pwd:res.data,
-          jizhu_panduan:true
+          pwd: res.data,
+          jizhu_panduan: true
         })
       }
     })
   },
+  
+  /**
+   * 查询用户权限和推送数据
+   */
+  queryUserPermissions: function(companyName, systemName) {
+    console.log('=== 开始调用云函数 ===')
+    console.log('公司名称:', companyName)
+    console.log('系统名称:', systemName)
+
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "SELECT beizhu1, beizhu2, beizhu3 FROM yh_notice.dbo.product_pushnews WHERE gsname = '" + companyName + "' AND xtname = '" + systemName + "'"
+      },
+      success: res => {
+        console.log('云函数返回结果:', res)
+        var pushdata = res.result.recordset
+        if (pushdata && pushdata.length > 0) {
+          const firstItem = pushdata[0]
+          
+  
+          // 处理beizhu2（图片数据）
+
+            this.processBeizhu2(firstItem.beizhu2);
+
+            this.processBeizhu3(firstItem.beizhu3);
+          
+        } else {
+          console.log('未查询到相关数据')
+        }
+      },
+      fail: err => {
+        console.error('云函数调用失败:', err)
+      }
+    })
+  },
+  
+  /**
+   * 处理beizhu2（图片数据）
+   */
+ /**
+ * 处理beizhu2（图片数据）
+ */
+processBeizhu2: function(beizhu2) {
+    console.log('beizhu2原始数据:', beizhu2);
+    
+    // 🆕 使用更严格的判断条件
+    const isValidBeizhu2 = beizhu2 && 
+                          typeof beizhu2 === 'string' && 
+                          beizhu2.trim().length > 0;
+    
+    if (isValidBeizhu2) {
+        const cleanedData = beizhu2.replace(/\r?\n|\r/g, '').replace(/\s/g, '').trim();
+        
+        // 🆕 再次验证清理后的数据
+        if (cleanedData && cleanedData.length > 10) { // 假设base64数据至少10个字符
+            let mimeType = 'image/jpeg';
+            if (cleanedData.startsWith('iVBORw0KGgo')) {
+                mimeType = 'image/png';
+            }
+            const logoImage = `data:${mimeType};base64,${cleanedData}`;
+            
+            this.setData({
+                logoImage: logoImage
+            });
+            console.log('beizhu2图片已设置，使用返回的图片');
+            return; // 🆕 提前返回
+        }
+    }
+    
+    // 🆕 所有其他情况都使用默认图片
+    this.setData({
+        logoImage: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/companyLogo.png"
+    });
+    console.log('beizhu2无效，使用默认图片');
+},
+  
+  /**
+   * 处理beizhu3（文本数据）
+   */
+  processBeizhu3: function(beizhu3) {
+    if (beizhu3 && beizhu3.trim() !== '') {
+      // 更新页面标题为返回的内容
+      this.setData({
+        pageTitle: beizhu3.trim()
+      });
+      console.log('beizhu3文本已设置:', beizhu3.trim());
+    } else {
+      // 没有内容时保留默认文本
+      this.setData({
+        pageTitle: "欢迎使用云合一体化系统"
+      });
+      console.log('beizhu3无内容，使用默认文本');
+    }
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

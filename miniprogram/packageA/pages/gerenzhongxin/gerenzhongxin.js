@@ -16,10 +16,49 @@ Page({
   onLoad(options) {
     var _this = this
     var userInfo = JSON.parse(options.userInfo)
-    console.log("人事数据",userInfo)
+    console.log("人事数据", userInfo)
+    
+    // 设置用户信息
     _this.setData({
-      userInfo:userInfo,
+      userInfo: userInfo,
+      // 初始化欢迎语
+      welcomeText: "欢迎使用云合人事管理系统"
     })
+    
+    // 生成动态欢迎语
+    _this.generateWelcomeText(userInfo)
+  },
+  
+  /**
+   * 生成动态欢迎语
+   */
+  generateWelcomeText: function(userInfo) {
+    var _this = this
+    
+    // 从userInfo中获取公司名称（L字段）
+    if (userInfo && userInfo.L && userInfo.L.trim() !== "") {
+      var companyName = userInfo.L.trim()
+      
+      // 取前四位，不足四位取全部
+      var firstFourChars = companyName.length >= 4 ? 
+                          companyName.substring(0, 4) : 
+                          companyName
+      
+      // 拼接欢迎语
+      var welcomeText = "欢迎使用" + firstFourChars + "人事管理系统"
+      
+      console.log('公司名称:', companyName)
+      console.log('前四位:', firstFourChars)
+      console.log('欢迎语:', welcomeText)
+      
+      // 更新到页面数据
+      _this.setData({
+        welcomeText: welcomeText
+      })
+      
+    } else {
+      console.log('L字段为空或不存在，使用默认欢迎语')
+    }
   },
 
   go3:function(){

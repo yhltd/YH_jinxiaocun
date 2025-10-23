@@ -62,12 +62,39 @@ Page({
       }
     })
   },
-  onLoad: function (a) {
+  onLoad: function (options) {
+    // 设置用户信息到全局
     Object.defineProperty(this.data, "userInfo", {
       set: data => {
         app.globalData.userInfo = data;
       }
     });
+    
+    // 获取公司名称并处理欢迎语
+    var companyName = app.globalData.gongsi;
+    if (companyName) {
+      // 取公司名称的前四位
+      var firstFourChars = companyName.substring(0, 4);
+      console.log('完整公司名称:', companyName);
+      console.log('前四位:', firstFourChars);
+      
+      // 拼接欢迎语：欢迎使用 + 公司前四位 + 进销存系统
+      var welcomeText = "欢迎使用" + firstFourChars + "进销存系统";
+      console.log('拼接后的欢迎语:', welcomeText);
+      
+      // 保存到页面数据中
+      this.setData({
+        companyFirstFour: firstFourChars,
+        welcomeText: welcomeText  // 新增欢迎语字段
+      });
+      
+    } else {
+      console.log('公司名称为空');
+      // 设置默认欢迎语
+      this.setData({
+        welcomeText: "欢迎使用云合未来进销存系统"
+      });
+    }
   },
 
   /**

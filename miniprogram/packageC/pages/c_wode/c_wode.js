@@ -89,13 +89,59 @@ Page({
   onLoad: function (options) {
     var _this = this;
     var user = JSON.parse(options.userInfo)
-    console.log("财务公司数据",user)
+    console.log("财务公司数据", user)
+    
+    // 设置用户信息
     _this.setData({
-      userInfo : JSON.parse(options.userInfo),
-      this_name:user.name,
-      bianhao:user.bianhao,
-      user:user
+      userInfo: JSON.parse(options.userInfo),
+      this_name: user.name,
+      bianhao: user.bianhao,
+      user: user,
+      // 初始化欢迎语
+      welcomeText: "欢迎使用云合未来财务系统"
     })
+    
+    // 生成动态欢迎语
+    _this.generateWelcomeText(user)
+  },
+  
+  /**
+   * 生成动态欢迎语
+   */
+  generateWelcomeText: function(user) {
+    var _this = this
+    
+    // 从user中获取公司名称
+    if (user && user.company && user.company.trim() !== "") {
+      var companyName = user.company.trim()
+      
+      // 如果包含下划线，取第一部分
+      if (companyName.includes('_')) {
+        companyName = companyName.split('_')[0]
+      }
+      
+      // 取前四位，不足四位取全部
+      var firstFourChars = companyName.length >= 4 ? 
+                          companyName.substring(0, 4) : 
+                          companyName
+      
+      // 拼接欢迎语
+      var welcomeText = "欢迎使用" + firstFourChars + "财务系统"
+      
+      console.log('公司名称:', companyName)
+      console.log('前四位:', firstFourChars)
+      console.log('欢迎语:', welcomeText)
+      
+      // 更新到页面数据
+      _this.setData({
+        welcomeText: welcomeText,
+        companyFirstFour: firstFourChars
+      })
+      
+    } else {
+      console.log('company字段为空或不存在，使用默认欢迎语')
+      // 保持默认欢迎语
+    }
   },
 
   go3:function(){

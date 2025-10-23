@@ -18,7 +18,7 @@
   </view>
 
 <view class="huanying">
-  <text style="margin: auto;">欢迎使用云合未来财务系统</text>
+  <text style="margin: auto;">{{welcomeText}}</text>
 </view>
 
 

@@ -1,11 +1,11 @@
 <view class="top-bgimage" style="height: 100%;display: grid;">
-<view bindtap="goyh" style="color:black;font-size: 32rpx;padding-left: 10dp;">版本号：5.1.0.60k</view>
+<view bindtap="goyh" style="color:black;font-size: 32rpx;padding-left: 10dp;">版本号：5.1.0.61k</view>
   <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
   <view class="container">
     <div class="rotating-mask"></div>
     <view class="userinfo">
-      <text class="userinfo-nickname1">欢迎使用云合一体化系统</text>
-      <image class="userinfo-avatar" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/companyLogo.png" background-size="cover"></image>
+      <text class="userinfo-nickname1">{{pageTitle}}</text>
+      <image class="userinfo-avatar" src="{{logoImage}}" background-size="cover"></image>
       <text class="userinfo-nickname">请登录</text>
     </view>
   </view>

@@ -22,7 +22,7 @@
 
 
   <view class="huanying">
-  <text style="margin: auto;">欢迎使用云合分权编辑系统</text>
+    <text style="margin: auto;">{{welcomeText}}</text>
 </view>
 </view>
 

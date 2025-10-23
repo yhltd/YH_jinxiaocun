@@ -17,7 +17,7 @@
 </view>
 
 <view class="huanying">
-  <text class="huanying-text">欢迎使用云合未来进销存系统</text>
+  <text class="huanying-text">{{welcomeText}}</text>
 </view>
   
 </view>
