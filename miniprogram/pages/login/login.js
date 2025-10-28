@@ -25,7 +25,7 @@ var login = function(that,info) {
     var login = false;
     //人资管理系统
     console.log("ligng")
-    var sql = "select * from gongzi_renyuan where L = '" + that.data.gongsi + "' and J = '" + info.inputPwd + "' and I ='" + info.inputName + "'"
+    var sql = "select id,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,wechart_user from gongzi_renyuan where L = '" + that.data.gongsi + "' and J = '" + info.inputPwd + "' and I ='" + info.inputName + "'"
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -34,6 +34,15 @@ var login = function(that,info) {
       },
       success: res => {
         console.log("小程序连接数据库成功,返回res为: ", res.result.recordset)
+
+        if (res.result.recordset && res.result.recordset.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.recordset.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result.recordset);
+        }
+
         if (res.result.recordset.length > 0) {
           if(that.data.jizhu_panduan){
             that.remember_user(info.inputName,info.inputPwd)
@@ -69,13 +78,22 @@ var login = function(that,info) {
   } else if(system=="云合未来财务系统"){
     console.log("财务管理")
     //财务管理
-    var sql = "select * from Account where name = '"+info.inputName+"' and pwd = '"+info.inputPwd+"' and company = '"+that.data.gongsi+"'"
+    var sql = "select id,company,pwd,do,name,salt,bianhao,wechart_user,xingming from Account where name = '"+info.inputName+"' and pwd = '"+info.inputPwd+"' and company = '"+that.data.gongsi+"'"
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
         query: sql
       },
       success: res => {
+
+        if (res.result.recordset && res.result.recordset.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.recordset.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result.recordset);
+        }
+
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]
           if(that.data.jizhu_panduan){
@@ -122,10 +140,20 @@ var login = function(that,info) {
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select * from yh_jinxiaocun_user where gongsi = '" + that.data.gongsi + "' and `password` = '" + that.data.pwd + "' and `name` ='" + that.data.name + "'"
+        sql: "select _id,AdminIS,Btype,Createdate,_openid,gongsi,jigoudaima,name,password,mi_bao,C_id,wechart_user from yh_jinxiaocun_user where gongsi = '" + that.data.gongsi + "' and `password` = '" + that.data.pwd + "' and `name` ='" + that.data.name + "'"
+       
       },
       success(res) {
         console.log("成功", res)
+
+        if (res.result && res.result.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result);
+        }
+
         if (res.result.length > 0) {
           listAll.push(res.result)
           gongsi = listAll[0][0].gongsi,
@@ -181,10 +209,19 @@ var login = function(that,info) {
     wx.cloud.callFunction({
       name: "sql_jiaowu",
       data: {
-        sql: "select * from teacher where Company = '" + that.data.gongsi + "' and `Password` = '" + that.data.pwd + "' and `UserName` ='" + that.data.name + "'"
+        sql: "select ID,UserName,Password,RealName,UseType,Age,Phone,Home,photo,Education,Company,state,wechart_user from teacher where Company = '" + that.data.gongsi + "' and `Password` = '" + that.data.pwd + "' and `UserName` ='" + that.data.name + "'"
       },
       success(res) {
         console.log("成功", res)
+
+        if (res.result && res.result.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result);
+        }
+
         if (res.result.length > 0) {
           var userInfo = res.result[0]
           console.log(userInfo)
@@ -270,13 +307,22 @@ var login = function(that,info) {
       }
     })
   }else if(system=="云合分权编辑系统"){
-    var ssql = "select * from baitaoquanxian_renyun where B = '" + that.data.gongsi + "' and E = '" + info.inputPwd + "' and D ='" + info.inputName + "'"
+    var ssql = "select B,C,D,E,renyuan_id,zhuangtai,email,phone,bianhao,quanxian_id,bumen,wechart_user from baitaoquanxian_renyun where B = '" + that.data.gongsi + "' and E = '" + info.inputPwd + "' and D ='" + info.inputName + "'"
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data:{
         query : ssql
       },
       success(res){       
+
+        if (res.result.recordset && res.result.recordset.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.recordset.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result.recordset);
+        }
+        
         if(res.result.recordset.length > 0){
           let user = res.result.recordset[0]
           if(user.zhuangtai != '正常'){
@@ -361,7 +407,7 @@ var login = function(that,info) {
       }
     })
   }else if(system=="云合智慧门店收银系统") {
-    var xsql = "select * from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and account ='" + info.inputName + "'"
+    var xsql = "select id,company,position,uname,account,password,wechart_user from users where company = '" + that.data.gongsi + "' and password = '" + info.inputPwd + "' and account ='" + info.inputName + "'"
     wx.cloud.callFunction({
       
       name: 'sqlserver_xinyongka',
@@ -369,10 +415,17 @@ var login = function(that,info) {
         sql: xsql
       },
       success(res) {
+
+        if (res.result && res.result.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result);
+          console.log("处理mima: ", res.result[0].password);
+        }
+
         if (res.result.length > 0) {
-          console.log("智慧门店登录数据",res.result)
-          console.log("智慧门店登录数据",res.result[0].uname)
-          console.log("智慧门店登录数据",res.result[0].position)
           if (info.inputName == "bbb") {
             if(that.data.jizhu_panduan){
               that.remember_user(info.inputName,info.inputPwd)
@@ -381,7 +434,7 @@ var login = function(that,info) {
             }
             
             wx.navigateTo({
-              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id + '&position=' + res.result[0].position + '&zname=' + res.result[0].uname
+              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id + '&position=' + res.result[0].position + '&zname=' + res.result[0].uname + '&password=' + res.result[0].password
             })
             wx.showToast({
               title: '登录成功',
@@ -393,7 +446,7 @@ var login = function(that,info) {
               that.remove_user()
             }
             wx.navigateTo({
-              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id + '&position=' + res.result[0].position + '&zname=' + res.result[0].uname
+              url: '../x_home/x_home?company=' + that.data.gongsi + '&uname=' + info.inputName + '&id=' + res.result[0].id + '&position=' + res.result[0].position + '&zname=' + res.result[0].uname + '&password=' + res.result[0].password
             })
             wx.showToast({
               title: '登录成功',
@@ -430,12 +483,21 @@ var login = function(that,info) {
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from user_info where user_code = '" + info.inputName + "' and password = '" + info.inputPwd + "' and company = '" + that.data.gongsi + "'"
+        query: "select id,user_code,password,company,department_name,state,wechart_user from user_info where user_code = '" + info.inputName + "' and password = '" + info.inputPwd + "' and company = '" + that.data.gongsi + "'"
       },
       success: res => {
         wx.hideLoading({
           success: (res) => { },
         })
+
+        if (res.result.recordset && res.result.recordset.length > 0) {
+          // 遍历所有记录，删除touxiang字段
+          res.result.recordset.forEach(function(row) {
+            delete row.touxiang;
+          });
+          console.log("处理后数据（已删除touxiang字段）: ", res.result.recordset);
+        }
+
         //app.paichan_user.gongsi = that.data.gongsi
         if (res.result.recordset.length > 0) {
           var userInfo = res.result.recordset[0]

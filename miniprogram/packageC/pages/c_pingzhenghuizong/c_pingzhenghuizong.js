@@ -141,7 +141,6 @@ Page({
     }
 
     var sql = "select * from (select (select name from Accounting where code = LEFT (vs.code, 4)) AS name1,(select name from Accounting where code = LEFT (vs.code, 6)) AS name2,(select name from Accounting where code = LEFT (vs.code, 8)) AS name3,year(vs.voucherDate) as [year],month(vs.voucherDate) as [month],vs.id,vs.word,vs.[no],ISNULL(CONVERT(VARCHAR(100), vs.voucherDate, 20), '') as voucherDate,vs.abstract,vs.code,vs.department,vs.expenditure,vs.note,vs.man,ac.name,ac.load,ac.borrowed,vs.money,vs.real,(money-real) as not_get,ROW_NUMBER() over(order by vs.id) ROW_ID from VoucherSummary as vs left join Accounting as ac on vs.code = ac.code and ac.company = '"+_this.data.userInfo.company+"' where vs.company = '"+_this.data.userInfo.company+"' ) t "+where+where2
-
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
@@ -150,7 +149,9 @@ Page({
       success: res => {
 
         var list = res.result.recordset
-        
+        if (list && Array.isArray(list)) {
+        if(list.length>0){
+          // 这两个if后添加，如果影响异常去掉，加入原因页面一致加载，空数据导致
         for(var i=0;i<list.length;i++){
           if(list[i].name1!=list[i].name2){
             list[i].name1 +="-"+list[i].name2
@@ -167,6 +168,8 @@ Page({
             list[i].borrowed = 0
           }
         }
+      }
+    }
         console.log(list)
         _this.setData({
           list

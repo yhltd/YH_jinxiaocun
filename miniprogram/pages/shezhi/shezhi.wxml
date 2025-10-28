@@ -3,7 +3,10 @@
   <!-- <image class="tu_pian_cc" src='/images/huise_logo.jpg'></image> -->
   <view class="account row-box">
 
-<image class="touxiang" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png"></image>
+<!-- <image class="touxiang" src="{{avatarImageSrc}}"></image> -->
+<view class="headIcon">
+      <image class="touxiang" src="{{avatarImageSrc}}" bindtap="changeAvatar"></image>
+</view>
 <view class="yonghu" >
   <!-- <text>133****1234</text> -->
   <text class="nickName">{{

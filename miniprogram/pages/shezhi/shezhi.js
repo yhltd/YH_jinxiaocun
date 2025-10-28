@@ -63,12 +63,17 @@ Page({
     })
   },
   onLoad: function (options) {
+    this.queryUserPermissions()
     // 设置用户信息到全局
     Object.defineProperty(this.data, "userInfo", {
       set: data => {
         app.globalData.userInfo = data;
+        
       }
     });
+
+    console.log("全局",app.globalData.finduser)
+    console.log("全局user",app.globalData.passwod)
     
     // 获取公司名称并处理欢迎语
     var companyName = app.globalData.gongsi;
@@ -173,4 +178,620 @@ Page({
       url: '../../pages/login/login',
     })
   },
+
+  // queryUserPermissions: function() {
+  //   var that = this;
+    
+  //   // 统一在函数内部获取缓存数据
+  //   wx.getStorage({
+  //     key: 'gongsi',
+  //     success: function(gongsiRes) {
+  //       wx.getStorage({
+  //         key: 'system',
+  //         success: function(systemRes) {
+  //           let companyName = gongsiRes.data;
+  //           let systemName = systemRes.data;
+            
+  //           console.log('想要获取公司名称:', companyName);
+  //           console.log('获取系统名称:', systemName);
+  //           that.setData({
+  //             gongsi: companyName,
+  //             system: systemName,
+  //             jizhu_panduan: true
+  //           });
+            
+  //           console.log('=== 开始调用云函数 ===');
+  //           console.log('查询的用户名:', app.globalData.finduser);
+  //           console.log('查询的密码:', app.globalData.passwod);
+            
+  //           wx.cloud.callFunction({
+  //             name: 'sqlConnection',
+  //             data: {
+  //               sql: "select touxiang from yh_jinxiaocun_user where gongsi = '" + companyName + "' and `password` = '" + app.globalData.passwod + "' and `name` ='" + app.globalData.finduser + "'"
+  //             },
+  //             success: res => {
+  //               console.log("云函数返回结果:", res);
+  //               console.log("完整响应:", JSON.stringify(res));
+                
+  //               // 检查云函数是否执行成功
+  //               if (res.result) {
+  //                 var pushdata = res.result;
+  //                 console.log("处理后的数据:", pushdata);
+                  
+  //                 if (pushdata && pushdata.length > 0) {
+  //                   const firstItem = pushdata[0];
+                    
+  //                   // 专门处理 touxiang 字段的 base64 数据
+  //                   const touxiangRawData = firstItem.touxiang;
+  //                   let avatarImageSrc = 'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png'; // 默认头像
+                    
+  //                   if (touxiangRawData && touxiangRawData.trim() !== '') {
+  //                     // 清理数据
+  //                     const cleanedData = touxiangRawData
+  //                       .replace(/\r?\n|\r/g, '')
+  //                       .replace(/\s/g, '')
+  //                       .trim();
+                      
+  //                     // 确定图片格式
+  //                     let mimeType = 'image/jpeg';
+  //                     if (cleanedData.startsWith('iVBORw0KGgo')) {
+  //                       mimeType = 'image/png';
+  //                       console.log('头像检测为PNG格式');
+  //                     } else if (cleanedData.startsWith('/9j/')) {
+  //                       mimeType = 'image/jpeg';
+  //                       console.log('头像检测为JPEG格式');
+  //                     }
+                      
+  //                     // 生成 base64 URL
+  //                     avatarImageSrc = `data:${mimeType};base64,${cleanedData}`;
+  //                     console.log('头像图片已处理');
+  //                   }
+                    
+  //                   // 更新页面数据，替换头像图片源
+  //                   that.setData({ 
+  //                     avatarImageSrc: avatarImageSrc
+  //                   });
+  //                 } else {
+  //                   console.log("查询结果为空数组");
+  //                 }
+  //               } else {
+  //                 console.log("云函数执行失败:", res.result);
+  //               }
+  //             },
+  //             fail: err => {
+  //               console.error("云函数调用失败:", err);
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+  
+  queryUserPermissions: function() {
+    var that = this;
+    
+    console.log('=== 开始查询用户权限 ===');
+    
+    // 统一在函数内部获取缓存数据
+    wx.getStorage({
+      key: 'gongsi',
+      success: function(gongsiRes) {
+        console.log('获取公司缓存成功:', gongsiRes.data);
+        
+        wx.getStorage({
+          key: 'system',
+          success: function(systemRes) {
+            console.log('获取系统缓存成功:', systemRes.data);
+            
+            let companyName = gongsiRes.data;
+            let systemName = systemRes.data;
+            
+            console.log('公司名称:', companyName);
+            console.log('系统名称:', systemName);
+            console.log('查询的用户名:', app.globalData.finduser);
+            console.log('查询的密码:', app.globalData.passwod);
+            
+            // 检查必要的参数是否存在
+            if (!app.globalData.finduser || !app.globalData.passwod) {
+              console.error('用户信息不完整，缺少用户名或密码');
+              that.setDefaultAvatar();
+              return;
+            }
+            
+            that.setData({
+              gongsi: companyName,
+              system: systemName,
+              jizhu_panduan: true
+            });
+            
+            // 开始分段获取头像数据
+            that.queryUserAvatarInChunks(companyName, app.globalData.finduser, app.globalData.passwod);
+          },
+          fail: systemErr => {
+            console.error('获取system缓存失败:', systemErr);
+            that.setDefaultAvatar();
+          }
+        });
+      },
+      fail: gongsiErr => {
+        console.error('获取gongsi缓存失败:', gongsiErr);
+        that.setDefaultAvatar();
+      }
+    });
+  },
+
+  // 分段获取大base64数据的主方法
+  queryUserAvatarInChunks: function(companyName, userName, password) {
+    var that = this;
+    
+    console.log('=== 分段获取头像数据 ===');
+    console.log('查询参数:', { companyName, userName, password });
+    
+    // 显示加载状态
+    wx.showLoading({
+      title: '加载头像中...',
+      mask: true
+    });
+    
+    // 第一步：获取头像数据长度 - MySQL写法
+    wx.cloud.callFunction({
+      name: 'sqlConnection',
+      data: {
+        sql: "SELECT LENGTH(touxiang) as data_length FROM yh_jinxiaocun_user WHERE gongsi = '" + companyName + "' AND `password` = '" + password + "' AND `name` ='" + userName + "'"
+      },
+      success: res => {
+        console.log('数据长度查询结果:', res);
+        
+        if (res.result && res.result.length > 0) {
+          const dataLength = res.result[0].data_length;
+          console.log('头像数据长度:', dataLength);
+          
+          if (dataLength > 0) {
+            if (dataLength > 1000000) { // 如果超过1MB，分段获取
+              console.log('头像数据超过1MB，启用分段获取');
+              that.getAvatarByChunks(companyName, userName, password, dataLength);
+            } else {
+              // 直接获取完整数据
+              console.log('头像数据较小，直接获取');
+              that.queryUserAvatarDirectly(companyName, userName, password);
+            }
+          } else {
+            console.log('头像数据长度为0，使用默认头像');
+            that.setDefaultAvatar();
+          }
+        } else {
+          console.log('未找到用户数据');
+          that.setDefaultAvatar();
+        }
+      },
+      fail: err => {
+        console.error('数据长度查询失败:', err);
+        that.setDefaultAvatar();
+      }
+    });
+  },
+
+  // 分段获取头像数据 - MySQL写法
+  getAvatarByChunks: function(companyName, userName, password, totalLength) {
+    var that = this;
+    const CHUNK_SIZE = 300000; // 每段300KB，避免单次请求过大
+    let allChunks = [];
+    let currentChunk = 0;
+    let totalChunks = Math.ceil(totalLength / CHUNK_SIZE);
+    
+    console.log(`开始分段获取，总长度: ${totalLength}, 分 ${totalChunks} 段`);
+    
+    function getNextChunk() {
+      const start = currentChunk * CHUNK_SIZE;
+      const chunkSize = Math.min(CHUNK_SIZE, totalLength - start);
+      
+      console.log(`获取第 ${currentChunk + 1}/${totalChunks} 段, 位置: ${start}-${start + chunkSize}`);
+      
+      // 更新加载提示
+      wx.showLoading({
+        title: `加载头像中`,
+        mask: true
+      });
+      
+      // MySQL使用SUBSTRING函数，注意MySQL的SUBSTRING索引从1开始
+      wx.cloud.callFunction({
+        name: 'sqlConnection',
+        data: {
+          sql: `SELECT SUBSTRING(touxiang, ${start + 1}, ${chunkSize}) as chunk FROM yh_jinxiaocun_user WHERE gongsi = '${companyName}' AND \`password\` = '${password}' AND \`name\` ='${userName}'`
+        },
+        success: res => {
+          if (res.result && res.result.length > 0) {
+            const chunk = res.result[0].chunk;
+            if (chunk) {
+              allChunks.push(chunk);
+              console.log(`第${currentChunk + 1}段获取成功，长度:`, chunk.length);
+              
+              currentChunk++;
+              
+              if (currentChunk < totalChunks) {
+                // 继续获取下一段
+                setTimeout(getNextChunk, 100); // 添加小延迟避免请求过快
+              } else {
+                // 所有数据获取完成
+                console.log('所有分段获取完成');
+                wx.hideLoading();
+                that.combineAndProcessAvatar(allChunks, totalLength);
+              }
+            } else {
+              console.error(`第${currentChunk + 1}段数据为空`);
+              that.setDefaultAvatar();
+            }
+          } else {
+            console.error(`第${currentChunk + 1}段获取失败，返回数据为空`);
+            that.setDefaultAvatar();
+          }
+        },
+        fail: err => {
+          console.error(`获取第${currentChunk + 1}段数据失败:`, err);
+          wx.hideLoading();
+          that.setDefaultAvatar();
+        }
+      });
+    }
+    
+    // 开始获取第一段
+    getNextChunk();
+  },
+
+  // 合并并处理分段数据
+  combineAndProcessAvatar: function(chunks, expectedLength) {
+    var that = this;
+    
+    console.log('开始合并分段数据');
+    
+    try {
+      const fullData = chunks.join('');
+      console.log('合并后数据总长度:', fullData.length, '期望长度:', expectedLength);
+      
+      // 验证数据完整性
+      if (fullData.length === expectedLength) {
+        console.log('数据完整性验证通过');
+        that.processAvatarData(fullData);
+      } else {
+        console.error(`数据不完整，期望: ${expectedLength}, 实际: ${fullData.length}`);
+        // 即使不完整也尝试处理
+        that.processAvatarData(fullData);
+      }
+    } catch (error) {
+      console.error('合并数据时发生错误:', error);
+      that.setDefaultAvatar();
+    }
+  },
+
+  // 直接获取完整头像数据（用于小数据）- MySQL写法
+  queryUserAvatarDirectly: function(companyName, userName, password) {
+    var that = this;
+    
+    console.log('直接获取完整头像数据');
+    
+    wx.cloud.callFunction({
+      name: 'sqlConnection',
+      data: {
+        sql: "SELECT touxiang FROM yh_jinxiaocun_user WHERE gongsi = '" + companyName + "' AND `password` = '" + password + "' AND `name` ='" + userName + "'"
+      },
+      success: res => {
+        wx.hideLoading();
+        console.log('直接获取头像结果:', res);
+        
+        if (res.result && res.result.length > 0) {
+          const touxiangRawData = res.result[0].touxiang;
+          that.processAvatarData(touxiangRawData);
+        } else {
+          console.log('直接获取未找到头像数据');
+          that.setDefaultAvatar();
+        }
+      },
+      fail: err => {
+        wx.hideLoading();
+        console.error('直接获取头像失败:', err);
+        that.setDefaultAvatar();
+      }
+    });
+  },
+
+  // 处理头像数据
+  processAvatarData: function(touxiangRawData) {
+    var that = this;
+    
+    console.log('处理头像数据，原始数据长度:', touxiangRawData ? touxiangRawData.length : 'null');
+    
+    if (!touxiangRawData || touxiangRawData.trim() === '') {
+      console.log('头像数据为空');
+      that.setDefaultAvatar();
+      return;
+    }
+    
+    try {
+      // 清理数据
+      const cleanedData = touxiangRawData
+        .replace(/\r?\n|\r/g, '')
+        .replace(/\s/g, '')
+        .trim();
+      
+      console.log('清理后数据长度:', cleanedData.length);
+      console.log('数据前30字符:', cleanedData.substring(0, 30));
+      
+      // 确定图片格式
+      let mimeType = 'image/jpeg';
+      if (cleanedData.startsWith('iVBORw0KGgo')) {
+        mimeType = 'image/png';
+        console.log('头像检测为PNG格式');
+      } else if (cleanedData.startsWith('/9j/')) {
+        mimeType = 'image/jpeg';
+        console.log('头像检测为JPEG格式');
+      } else if (cleanedData.startsWith('R0lGODlh')) {
+        mimeType = 'image/gif';
+        console.log('头像检测为GIF格式');
+      } else {
+        console.log('头像格式未知，默认使用JPEG');
+      }
+      
+      // 生成 base64 URL
+      const avatarImageSrc = `data:${mimeType};base64,${cleanedData}`;
+      console.log('头像处理完成，准备更新页面');
+      
+      // 更新页面数据
+      that.setData({ 
+        avatarImageSrc: avatarImageSrc
+      });
+      
+      // 显示成功提示
+      wx.showToast({
+        title: '头像加载成功',
+        icon: 'success',
+        duration: 1500
+      });
+      
+    } catch (error) {
+      console.error('处理头像数据时发生错误:', error);
+      that.setDefaultAvatar();
+    }
+  },
+
+  // 设置默认头像
+  setDefaultAvatar: function() {
+    var that = this;
+    
+    console.log('设置默认头像');
+    
+    that.setData({ 
+      avatarImageSrc: 'cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png'
+    });
+    
+    wx.hideLoading();
+  },
+
+  // ============ 头像选择功能 ============
+  
+  // 点击头像事件
+  // 头像点击事件
+changeAvatar: function() {
+  const that = this;
+  console.log('头像点击事件触发');
+  
+  wx.showActionSheet({
+    itemList: ['拍照', '从相册选择'],
+    itemColor: "#000000",
+    success(res) {
+      if (!res.cancel) {
+        if (res.tapIndex === 0) {
+          that.chooseWxImage('camera');
+        } else if (res.tapIndex === 1) {
+          that.chooseWxImage('album');
+        }
+      }
+    },
+    fail(err) {
+      console.log('显示操作菜单失败:', err);
+    }
+  });
+},
+
+// 处理图片选择
+chooseWxImage: function(sourceType) {
+  const that = this;
+  wx.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: [sourceType],
+    success(res) {
+      const tempFilePaths = res.tempFilePaths[0];
+      console.log('选择的图片临时路径:', tempFilePaths);
+      
+      wx.showLoading({
+        title: '处理图片中...',
+        mask: true
+      });
+      
+      // 先更新本地显示
+      that.setData({
+        avatarImageSrc: tempFilePaths
+      });
+      
+      // 转换为base64并上传
+      that.convertImageToBase64(tempFilePaths);
+    },
+    fail(err) {
+      console.log('选择图片失败:', err);
+      wx.showToast({
+        title: '选择图片失败',
+        icon: 'none'
+      });
+    }
+  });
+},
+
+// 将图片转换为base64
+convertImageToBase64: function(tempFilePath) {
+  const that = this;
+  
+  wx.getFileSystemManager().readFile({
+    filePath: tempFilePath,
+    encoding: 'base64',
+    success(res) {
+      console.log('图片转换为base64成功，数据长度:', res.data.length);
+      
+      const cleanedBase64 = res.data
+        .replace(/\r?\n|\r/g, '')
+        .replace(/\s/g, '')
+        .trim();
+      
+      console.log('清理后base64长度:', cleanedBase64.length);
+      
+      // 上传到MySQL数据库
+      that.uploadAvatarToMySQL(cleanedBase64);
+    },
+    fail(err) {
+      console.error('图片转换base64失败:', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: '图片处理失败',
+        icon: 'none'
+      });
+    }
+  });
+},
+
+// 上传头像到MySQL数据库
+uploadAvatarToMySQL: function(base64Image) {
+  const that = this;
+  
+  // 获取用户信息
+  const companyName = this.data.gongsi;
+  const userName = app.globalData.finduser;
+  const password = app.globalData.passwod;
+  
+  if (!companyName || !userName || !password) {
+    console.error('用户信息不完整，无法上传头像');
+    wx.hideLoading();
+    wx.showToast({
+      title: '用户信息缺失',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  console.log('开始上传头像到MySQL数据库，参数:', {
+    companyName,
+    userName,
+    base64Length: base64Image.length
+  });
+  
+  // MySQL UPDATE语句
+  const sql = `UPDATE yh_jinxiaocun_user SET touxiang = '${base64Image}' WHERE gongsi = '${companyName}' AND \`password\` = '${password}' AND \`name\` = '${userName}'`;
+  
+  console.log('执行MySQL SQL:', sql);
+  
+  wx.cloud.callFunction({
+    name: 'sqlConnection',
+    data: {
+      sql: sql
+    },
+    success: res => {
+      wx.hideLoading();
+      console.log('头像上传到MySQL数据库成功:', res);
+      
+      if (res.result) {
+        // MySQL返回的结果格式
+        if (res.result.affectedRows > 0) {
+          wx.showToast({
+            title: '头像更新成功',
+            icon: 'success',
+            duration: 2000
+          });
+          
+          // 更新本地显示的base64 URL
+          const mimeType = that.detectImageType(base64Image);
+          const avatarImageSrc = `data:${mimeType};base64,${base64Image}`;
+          that.setData({
+            avatarImageSrc: avatarImageSrc
+          });
+          
+          console.log('MySQL头像更新完成，影响行数:', res.result.affectedRows);
+        } else {
+          wx.showToast({
+            title: '更新失败，用户不存在',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      } else {
+        wx.showToast({
+          title: '更新失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    },
+    fail: err => {
+      wx.hideLoading();
+      console.error('头像上传到MySQL数据库失败:', err);
+      
+      // MySQL错误处理
+      if (err.errMsg && (err.errMsg.includes('exceeded') || err.errMsg.includes('too large'))) {
+        wx.showModal({
+          title: '图片太大',
+          content: '选择的图片太大，请选择较小的图片重试',
+          showCancel: false
+        });
+      } else if (err.errMsg && err.errMsg.includes('connection')) {
+        wx.showToast({
+          title: '数据库连接失败',
+          icon: 'none',
+          duration: 2000
+        });
+      } else {
+        wx.showToast({
+          title: '上传失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    }
+  });
+},
+
+// 检测图片类型
+detectImageType: function(base64Data) {
+  if (base64Data.startsWith('iVBORw0KGgo')) {
+    return 'image/png';
+  } else if (base64Data.startsWith('/9j/')) {
+    return 'image/jpeg';
+  } else if (base64Data.startsWith('R0lGODlh')) {
+    return 'image/gif';
+  } else {
+    return 'image/jpeg';
+  }
+},
+
+// 图片大小检查
+checkImageSize: function(base64Image, callback) {
+  const maxSize = 800000; // 800KB限制
+  
+  if (base64Image.length <= maxSize) {
+    callback(base64Image);
+    return;
+  }
+  
+  console.log('图片过大，原大小:', base64Image.length);
+  
+  wx.showModal({
+    title: '图片太大',
+    content: '图片尺寸较大，可能会影响加载速度，建议选择较小的图片',
+    success(res) {
+      if (res.confirm) {
+        callback(base64Image);
+      } else {
+        wx.hideLoading();
+      }
+    }
+  });
+}
+
 })

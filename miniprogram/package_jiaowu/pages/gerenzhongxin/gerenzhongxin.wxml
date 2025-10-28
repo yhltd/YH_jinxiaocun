@@ -2,7 +2,10 @@
   <view class="head flow-border-container">
     <view class="flow-bg" id="flowBg"></view>
     <view class="headIcon">
-      <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png" style="width:70px;height:70px;margin:auto"></image>
+      <!-- <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/touxiang.png" style="width:70px;height:70px;margin:auto"></image> -->
+      <view class="headIcon">
+      <image class="touxiang" src="{{avatarImageSrc}}" bindtap="changeAvatar" style="width:70px;height:70px;margin:auto"></image>
+    </view>
     </view>
     <text class="headIcon" >{{userInfo.UserName}}</text>
     <view class="dakuang2">
