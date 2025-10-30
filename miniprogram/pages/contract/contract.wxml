@@ -1,11 +1,13 @@
 <import src="/pages/template/jinhuo.wxml" />
 <template is="jinhuo" data="{{jinhuo,hidden1}}" />
 <view class="hidden_kh" hidden="{{backhidden}}"></view>
-<view class="dqy_bj"><button class="button_css" bindtap="use_book">使用说明</button></view>
-<view class="dq_y">客户资料</view> 
+<view class="dqy_bj">
+  <view class="dq_y">客户资料</view> 
 <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索客户名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
-<!-- <view class="ke_bt">客户配置:</view> -->
+<button class="button_css" bindtap="use_book">使用说明</button>
 
+<!-- <view class="ke_bt">客户配置:</view> -->
+</view>
 <view class='divline2'></view>  
 <view wx:for="{{all}}" bindlongpress='shanchu' bindtap='ke' data-id="{{all[i]._id}}" wx:key="" wx:for-index='i' data-index="{{i}}" class='jinhuofan'>
   <image class='kh_tx' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/kuhu.png'> </image>

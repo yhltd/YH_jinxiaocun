@@ -145,14 +145,14 @@ transition: all 0.2s ease;
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 9999996;
+  /* z-index: 9999996; */
   transition: all 0.3s ease-in-out;
 }
 
 .criteria_view{
   position: fixed;
   top: 20%;
-  height: 59%;
+  height: 850rpx;
   width: 96%;
   background: #FEFEFE;
   border-radius: 39rpx;  
@@ -161,19 +161,20 @@ transition: all 0.2s ease;
 
 .option{
   height: 100rpx;
-  width: 50%;
+  width: 45%;
   margin-top: 2%;
   float: left;
+  display: flex;
 }
 
 
-.option_sv{
+/* .option_sv{
   height: 400rpx;
   width: 81%;
   margin-top: -24rpx;
   border: 1px solid #4876FF;
   margin-left: 24rpx;
-}
+} */
 .option_text{
   width: 96%;
   height: 73rpx;
@@ -185,13 +186,13 @@ transition: all 0.2s ease;
 }
 .option_bt{
   width: 92%;
-  background-color: #4876ff;
+  /* background-color: #4876ff;
   text-align: center;
-  line-height: 75rpx;
+  line-height: 75rpx; */
   height: 75rpx;
-  border-radius: 0 12rpx 0 0;
+  /* border-radius: 0 12rpx 0 0;
   color: white;
-  font-size: 35rpx;
+  font-size: 35rpx; */
 }
 .option_sv_item{
   width: 92%;
@@ -207,7 +208,7 @@ transition: all 0.2s ease;
 
 .criteria_view_bottom{
   position: fixed;
-  top: 67%;
+  /* top: 67%; */
   left: 10%;
   height: 108rpx;
   width: 80%;  
@@ -719,19 +720,19 @@ margin-top: 5%;
   border-radius: 8px;
   color: #ffffff;
   font-size: 14px;
-  box-shadow: 
+  /* box-shadow: 
     0 4px 15px rgba(49, 130, 206, 0.3),
     inset 0 1px 2px rgba(102, 178, 255, 0.5);
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; */
   margin-left: 10px;
 }
 
-.option_bt:hover {
+/* .option_bt:hover {
   transform: translateY(-2px);
   box-shadow: 
     0 6px 20px rgba(49, 130, 206, 0.5),
     inset 0 2px 4px rgba(102, 178, 255, 0.7);
-}
+} */
 
 .option_sv {
   background: rgba(15, 27, 53, 0.9);
@@ -739,6 +740,7 @@ margin-top: 5%;
   border-radius: 8px;
   max-height: 200rpx;
   margin-top: 10rpx;
+  z-index: 9999 !important;
 }
 
 .option_sv_item {
@@ -760,10 +762,12 @@ margin-top: 5%;
 }
 
 .criteria_view_bottom {
+  position: absolute;
   display: flex;
   justify-content: space-around;
-  margin-top: 40rpx;
+  /* margin-top: 120rpx; */
   padding-top: 20rpx;
+  bottom: 20rpx;
   border-top: 1px solid rgba(102, 178, 255, 0.3);
 }
 
@@ -815,6 +819,7 @@ margin-top: 5%;
   .criteria_view {
     margin: 20rpx;
     padding: 20rpx;
+    display: flex;
   }
   
   .bt_save {

@@ -96,12 +96,12 @@
   </swiper-item>
 </swiper>
 
-<view class="xiao_kuang">
+<!-- <view class="xiao_kuang">
     <navigator class="txbt" url='/pages/c_home/c_home'>
 
       <text class="item-text">返回首页</text>
     </navigator>
-  </view>
+  </view> -->
 
 <view class="gongsi">
   <text class="gongsi_text1">当前登录公司：{{user.company}}</text>

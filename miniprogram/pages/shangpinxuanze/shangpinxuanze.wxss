@@ -7,7 +7,7 @@
 }
 
 .list {
-  margin-bottom: -10rpx;
+  margin-top: -10rpx;
   height: 209rpx;
   background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
   border-radius: 30rpx;
@@ -46,7 +46,7 @@
   height: 95%;
   display: flex;
   padding: 8px;
-  align-items: center;
+  /* align-items: center; */
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -54,6 +54,7 @@
 .shangpin-image {
   width: 130rpx;
   height: 130rpx;
+  margin: auto 0;
 }
 
 .shangpinpm {
@@ -235,7 +236,7 @@
   background-size: 200% 200%;
   animation: gradientFlow 15s ease infinite;
   padding: 5%;
-  margin-bottom: -2%;
+  /* margin-bottom: -2%; */
 }
 @keyframes gradientFlow {
   0% {

@@ -18,7 +18,7 @@ page {
   background-size: 200% 200%;
   animation: gradientFlow 15s ease infinite;
   padding: 10%;
-  height: 125rpx;
+  height: 155rpx;
 }
 
 @keyframes flow {
@@ -106,7 +106,7 @@ page {
   font-size: 77%;
   flex-direction: column;
   position: absolute;
-  top: 13%;
+  top: 15%;
 }
 
 .shangpin {

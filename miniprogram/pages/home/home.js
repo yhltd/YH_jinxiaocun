@@ -86,16 +86,16 @@ Page({
         lianjie: "../../packageA/pages/1gongzitiao/gongzitiao"
       },{
         url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
-        text: "个人中心",
-        index: 14,
-        hid : true,
-        lianjie: "../../packageA/pages/gerenzhongxin/gerenzhongxin"
-      },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
         text: "生日提醒",
         index: 13,
         hid : true,
         lianjie: "../../packageA/pages/1shengri_tixing/shengri_tixing"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "个人中心",
+        index: 14,
+        hid : true,
+        lianjie: "../../packageA/pages/gerenzhongxin/gerenzhongxin"
       }
     ]
   },
@@ -104,7 +104,17 @@ Page({
     var that = this
     console.log("人事数据1",that.data.userInfo)
     var index = e.currentTarget.dataset.index;
+    console.log("=== 调试信息 ===");
+    console.log("index:", index);
+    console.log("list[13]:", that.data.list[13]);
+    console.log("list[13].hid:", that.data.list[13].hid);
+    console.log("!list[13].hid:", !that.data.list[13].hid);
+    console.log("hid类型:", typeof that.data.list[13].hid);
+
     if(!that.data.list[index].hid){
+      console.log("222 - 进入if条件，index:", index);
+  console.log("111 - 完整对象:", that.data.list[index]);
+  console.log("hid具体值:", that.data.list[index].hid);
       return;
     }
     var id = that.data.id;
@@ -253,9 +263,12 @@ Page({
       },
       success: res => {
         looks = res.result.recordset;
+        console.log("looks",looks)
+        console.log("looks1",looks.length)
         var list = _this.data.list
         list:
         for(var i=0;i<list.length;i++){
+          console.log("执行1",list.length)
           for(var j=0;j<looks.length;j++){
             if(list[i].text==looks[j].viewName){
               _this.setData({
@@ -264,11 +277,12 @@ Page({
               continue list
             }
           }
-          if(i != 12){
-            _this.setData({
-              ["list["+i+"].hid"] : false
-            })
-          }
+          // if(i != 12){
+          //   console.log("执行",["list["+i+"].hid"])
+          //   _this.setData({
+          //     ["list["+i+"].hid"] : false
+          //   })
+          // }
         }
         wx.hideLoading({
           complete: (res) => {},

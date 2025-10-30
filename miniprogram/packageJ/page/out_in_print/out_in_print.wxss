@@ -14,15 +14,15 @@ button{
   margin-top: 20rpx;
 }
 .blueListView{
-  margin-top: 520rpx;
+  /* margin-top: 520rpx; */
   margin-bottom: 80rpx;
   border: 1rpx solid #e6e6e6;
-  width: 98%;
-  position: absolute;
+  width: 100%;
+  /* position: absolute; */
 }
 
 .blueListView_title_false{
-  background-color: #282B33;
+  background-color: #2b2b3e;
   border: none;
   border-radius: 0;
   color: white;
@@ -65,12 +65,12 @@ button{
 }
 .bt_bottom{
   width: 39%;
-  background-color: #282B33;
+  background-color: #2b2b3e;
   color: #E6E6E6;
   height: 80rpx;
   margin: auto;
   line-height: 80rpx;
-  top: 850rpx;
+  /* top: 850rpx; */
 }
 .bt_bottom_hover{
   width: 39%;

@@ -74,12 +74,12 @@ page{
   border: 1px solid #1c60a3;
   border-radius: 29rpx;
   width: 45%;
-  position: absolute;
   left: 21.3%;
   top: 2%;
   color: #f8f8f8;
   font-size: 40rpx;
   background-color: #ffffff3d;
+  margin: auto;
 }
 
 .yi_kuai {
@@ -174,10 +174,10 @@ page{
 
 .dq_y {
   font-weight: bold;
-  position: absolute;
   top: 2%;
   left: 5%;
   color: #f8f8f8;
+  margin: auto;
 }
 
 .dqy_bj {
@@ -185,6 +185,7 @@ page{
   background-size: 200% 200%;
   animation: gradientFlow 15s ease infinite;
   height: 50px;
+  display: flex;
 }
 @keyframes gradientFlow {
   0% {
@@ -200,7 +201,7 @@ page{
 
 .button_css{
   height: 95%;
-  width: 25%;
+  width: 28%;
   font-size: 40rpx;
   display: flex;
   justify-content: center;
@@ -210,5 +211,7 @@ page{
   float: right;
   font-size: 15px;
   right: 1%;
+  margin: auto 0;
+ 
 }
 

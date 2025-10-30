@@ -88,7 +88,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 30%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 50%;" >
 	<!-- <view class="lables">账号</view> -->
     <input placeholder="根据账号搜索" bindinput="onInput" data-column="zh" class="input_text_form" value="{{zh}}" type="text" name="zh" style="margin-top:16%"></input>
   <view class="bottom_view" style="height:10%">

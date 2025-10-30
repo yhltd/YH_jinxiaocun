@@ -130,7 +130,7 @@ button{
 .input_view{
   position: fixed;
   width: 90%;
-  height: 20%;
+  height: 22%;
   top: 25%;
   background-color: white;
   border-radius: 10rpx;

@@ -42,7 +42,7 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 70%;" >
 	<view class="lables">部门名称</view>
     <input bindinput="onInput" data-column="department_name" class="input_text_form" value="{{department_name}}" type="text" name="department_name" ></input>
     <view class="lables">页面名称</view>

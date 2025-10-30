@@ -247,6 +247,7 @@
       <input bindinput="onInput" data-column="riqi2" class="input_text_form"  value="{{riqi2}}" type="date" name="riqi2" disabled="disabled"></input>
     </picker>
     <view class="option" wx:for="{{options}}" wx:for-index="op_index" wx:for-item="op_item">
+      <view>
       <view style="width:88%;margin: auto;height: 100%;">
         <view style="float: left;width: 65%;">
           <input class="option_text" value="{{op_item.text}}" bindinput="input" data-index="{{op_index}}"/>
@@ -258,6 +259,7 @@
       <scroll-view class="option_sv" hidden="{{op_item.selectHid}}" scroll-y="true">
         <view class="option_sv_item" wx:for="{{op_item.items}}" wx:for-index="index" wx:for-item="item" catchtap="choice" data-items_index="{{op_index}}" data-item_index="{{index}}">{{item}}</view>
       </scroll-view>
+    </view>
     </view>
     <view class="criteria_view_bottom">
       <button class="bt_save" bindtap="sel" disabled="{{result.sel!=1}}">查询</button>

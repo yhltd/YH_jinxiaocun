@@ -18,12 +18,13 @@ page{
   border: 1px solid #1c60a3;
   border-radius: 29rpx;
   width: 45%;
-  position: absolute;
+  /* position: absolute; */
   left: 21.3%;
   top: 2%;
   color: #f8f8f8;
   font-size: 40rpx;
   background-color: #ffffff3d;
+  margin: auto;
 }
 
 .jinhuo-text {
@@ -155,11 +156,12 @@ left: 85%; */
 
 .dq_y {
   font-weight: bold;
-  position: absolute;
+  /* position: absolute; */
   top: 2%;
   left: 2%;
   color: #f8f8f8;
-  z-index: 0
+  z-index: 0;
+  margin: auto;
 }
 
 .dqy_bj {
@@ -167,6 +169,7 @@ left: 85%; */
   background-size: 200% 200%;
   animation: gradientFlow 15s ease infinite;
   height: 50px;
+  display: flex;
 }
 @keyframes gradientFlow {
   0% {
@@ -183,7 +186,7 @@ left: 85%; */
 .button_css{
   font-size: 40rpx;
   height: 95%;
-  width: 25%;
+  width: 28%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -191,5 +194,5 @@ left: 85%; */
   background-color: rgb(60 187 75);
   float: right;
   font-size: 15px;
-  right: 1%;
+  right: 0%;
 }

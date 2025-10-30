@@ -73,13 +73,16 @@ Page({
   },
   baochi: function () {
     var that = this
+    console.log('=== 同步数据按钮被点击 ===');
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
         query: "select top 100 AU,sum((cast(ATA as money)*cast(AU as money))) AS COUNT1,COUNT(id) as num, sum((cast(AW AS money)*cast(AU AS money))) AS COUNT2 FROM gongzi_gongzimingxi WHERE AU is not null and BD = '"+that.data.companyName+"' GROUP BY AU"
       },
       success: res => {
+       
         var list = res.result.recordset;
+        console.log("成功返回数据",list);
         var heji = {jishui : 0,renshu : 0,gerensuodeshui : 0};
         for(var i=0;i<list.length;i++){
           var count1 = parseInt(list[i].COUNT1);

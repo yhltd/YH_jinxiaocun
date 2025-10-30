@@ -52,7 +52,7 @@
     </block>
     
   </view>
-  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas" style=" height: 1300rpx;"></canvas>
+  <canvas canvas-id="columnCanvas" disable-scroll="true" class="canvas" style=" height: 100%;"></canvas>
 </scroll-view>
 
 
