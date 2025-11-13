@@ -232,7 +232,10 @@ Page({
         console.log(res.result)
         var panduan = false
         var qr_order_dm = res.result
-        var sql = "select * from yh_jinxiaocun_mingxi where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
+
+        if(app.globalData.shujuku==0){
+
+          var sql = "select * from yh_jinxiaocun_mingxi where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
         wx.cloud.callFunction({
           name: "sqlConnection",
           data: {
@@ -240,7 +243,10 @@ Page({
           },
           success(res) {
             console.log(res.result)
-            var order_list = res.result
+
+            if(app.globalData.shujuku==0){
+
+              var order_list = res.result
             var gongsi = app.globalData.gongsi
             var sql = "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,ifnull(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select ifnull(link_rk.cpid,'') as cpid,ifnull(link_rk.cpname,'') as cpname,ifnull(link_rk.cplb,'') as cplb,ifnull(link_rk.cpsl,0) as qcsl,ifnull(link_rk.cpje,0) as qcje,ifnull(link_rk.rksl,0) as rksl,ifnull(link_rk.rkje,0) as rkje,ifnull(ck.cksl,0) as cksl,ifnull(ck.ckje,0) as ckje,ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl,ifnull(cpje,0)+ifnull(rkje,0)-ifnull(ckje,0) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from  yh_jinxiaocun_mingxi where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,sum(cpsl) as cpsl,sum(cpsj*cpsl) as cpje from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,sum(cpsl) as rksl,sum(cpsl*cpsj) as rkje from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname  and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,sum(cpsl) as cksl,sum(cpsl*cpsj) as ckje from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,`name`,bianyuan,mark1 from yh_jinxiaocun_jichuziliao where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.`name` and jxc.cplb = bian_yuan.lei_bie "
             var where_sql = ""
@@ -299,11 +305,222 @@ Page({
                 console.log("失败", res)
               }
             });
+
+            }else if(app.globalData.shujuku == 1){
+
+              var order_list = res.result
+            var gongsi = app.globalData.gongsi
+            var sql = "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,ISNULL(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select ISNULL(link_rk.cpid,'') as cpid,ISNULL(link_rk.cpname,'') as cpname,ISNULL(link_rk.cplb,'') as cplb,CAST(ISNULL(link_rk.cpsl,0) AS DECIMAL(18,2)) as qcsl,CAST(ISNULL(link_rk.cpje,0) AS DECIMAL(18,2)) as qcje,CAST(ISNULL(link_rk.rksl,0) AS DECIMAL(18,2)) as rksl,CAST(ISNULL(link_rk.rkje,0) AS DECIMAL(18,2)) as rkje,CAST(ISNULL(ck.cksl,0) AS DECIMAL(18,2)) as cksl,CAST(ISNULL(ck.ckje,0) AS DECIMAL(18,2)) as ckje,CAST(ISNULL(cpsl,0) AS DECIMAL(18,2))+CAST(ISNULL(rksl,0) AS DECIMAL(18,2))-CAST(ISNULL(cksl,0) AS DECIMAL(18,2)) as jcsl,CAST(ISNULL(cpje,0) AS DECIMAL(18,2))+CAST(ISNULL(rkje,0) AS DECIMAL(18,2))-CAST(ISNULL(ckje,0) AS DECIMAL(18,2)) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from  yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,SUM(CAST(cpsl AS DECIMAL(18,2))) as cpsl,SUM(CAST(cpsj AS DECIMAL(18,2))*CAST(cpsl AS DECIMAL(18,2))) as cpje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,SUM(CAST(cpsl AS DECIMAL(18,2))) as rksl,SUM(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as rkje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '入库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname  and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,SUM(CAST(cpsl AS DECIMAL(18,2))) as cksl,SUM(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as ckje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '出库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,[name],bianyuan,mark1 from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.[name] and jxc.cplb = bian_yuan.lei_bie "
+            var where_sql = ""
+            console.log(order_list)
+            for(var i=0; i<order_list.length; i++){
+              if(where_sql == ""){
+                if(order_list[i].sp_dm != null && order_list[i].sp_dm != "" && order_list[i].sp_dm != undefined){
+                  where_sql = "where cpid ='" + order_list[i].sp_dm + "' "
+                }
+              }else{
+                if(order_list[i].sp_dm != null && order_list[i].sp_dm != "" && order_list[i].sp_dm != undefined){
+                  where_sql = where_sql + " or cpid ='" + order_list[i].sp_dm + "' "
+                }
+              }
+            }
+            sql = sql + where_sql
+            console.log(sql)
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: sql
+              },
+              success(res) {
+                for(var i=0;i<res.result.recordset.length;i++){
+                  if(res.result.recordset[i].mark1 != null){
+                    res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+                  }
+                }
+                var all = []
+                all = res.result.recordset;
+                var szary = []
+                var inserti = 0
+                console.log(all)
+                for(var i = 0; i < all.length; i++){
+                  szary.push({
+                    mark1:all[i].mark1,
+                    name:all[i].cpname,
+                    sp_dm:all[i].cpid,
+                    cplb:all[i].cplb,
+                    cpsl:all[i].jcsl,
+                    cpsj:all[i].jcje,
+                    qcsl:all[i].qcsl,
+                    qcje:all[i].qcje,
+                    rksl:all[i].rksl,
+                    rkje:all[i].rkje,
+                    cksl:all[i].cksl,
+                    ckje:all[i].ckje,
+                    bianyuan:all[i].bianyuan,
+                  })
+                }
+                that.setData({
+                  szzhi: szary
+                })
+              },
+              fail(res) {
+                console.log("失败", res)
+              }
+            });
+              
+            }
+
+            
           },
           fail(res) {
             console.log("失败", res)
           }
         });
+
+        }else if(app.globalData.shujuku == 1){
+
+          var sql = "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
+        wx.cloud.callFunction({
+          name: "sqlServer_117",
+          data: {
+            query: sql
+          },
+          success(res) {
+            console.log(res.result.recordset)
+            if(app.globalData.shujuku==0){
+
+            var order_list = res.result.recordset
+            var gongsi = app.globalData.gongsi
+            var sql = "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,ifnull(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select ifnull(link_rk.cpid,'') as cpid,ifnull(link_rk.cpname,'') as cpname,ifnull(link_rk.cplb,'') as cplb,ifnull(link_rk.cpsl,0) as qcsl,ifnull(link_rk.cpje,0) as qcje,ifnull(link_rk.rksl,0) as rksl,ifnull(link_rk.rkje,0) as rkje,ifnull(ck.cksl,0) as cksl,ifnull(ck.ckje,0) as ckje,ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl,ifnull(cpje,0)+ifnull(rkje,0)-ifnull(ckje,0) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from  yh_jinxiaocun_mingxi where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,sum(cpsl) as cpsl,sum(cpsj*cpsl) as cpje from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,sum(cpsl) as rksl,sum(cpsl*cpsj) as rkje from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname  and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,sum(cpsl) as cksl,sum(cpsl*cpsj) as ckje from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,`name`,bianyuan,mark1 from yh_jinxiaocun_jichuziliao where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.`name` and jxc.cplb = bian_yuan.lei_bie "
+            var where_sql = ""
+            console.log(order_list)
+            for(var i=0; i<order_list.length; i++){
+              if(where_sql == ""){
+                if(order_list[i].sp_dm != null && order_list[i].sp_dm != "" && order_list[i].sp_dm != undefined){
+                  where_sql = "where cpid ='" + order_list[i].sp_dm + "' "
+                }
+              }else{
+                if(order_list[i].sp_dm != null && order_list[i].sp_dm != "" && order_list[i].sp_dm != undefined){
+                  where_sql = where_sql + " or cpid ='" + order_list[i].sp_dm + "' "
+                }
+              }
+            }
+            sql = sql + where_sql
+            console.log(sql)
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: sql
+              },
+              success(res) {
+                for(var i=0;i<res.result.length;i++){
+                  if(res.result[i].mark1 != null){
+                    res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+                  }
+                }
+                var all = []
+                all = res.result;
+                var szary = []
+                var inserti = 0
+                console.log(all)
+                for(var i = 0; i < all.length; i++){
+                  szary.push({
+                    mark1:all[i].mark1,
+                    name:all[i].cpname,
+                    sp_dm:all[i].cpid,
+                    cplb:all[i].cplb,
+                    cpsl:all[i].jcsl,
+                    cpsj:all[i].jcje,
+                    qcsl:all[i].qcsl,
+                    qcje:all[i].qcje,
+                    rksl:all[i].rksl,
+                    rkje:all[i].rkje,
+                    cksl:all[i].cksl,
+                    ckje:all[i].ckje,
+                    bianyuan:all[i].bianyuan,
+                  })
+                }
+                that.setData({
+                  szzhi: szary
+                })
+              },
+              fail(res) {
+                console.log("失败", res)
+              }
+            });
+
+            }else if(app.globalData.shujuku == 1){
+
+              var order_list = res.result.recordset
+            var gongsi = app.globalData.gongsi
+            var sql = "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,ISNULL(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select ISNULL(link_rk.cpid,'') as cpid,ISNULL(link_rk.cpname,'') as cpname,ISNULL(link_rk.cplb,'') as cplb,CAST(ISNULL(link_rk.cpsl,0) AS DECIMAL(18,2)) as qcsl,CAST(ISNULL(link_rk.cpje,0) AS DECIMAL(18,2)) as qcje,CAST(ISNULL(link_rk.rksl,0) AS DECIMAL(18,2)) as rksl,CAST(ISNULL(link_rk.rkje,0) AS DECIMAL(18,2)) as rkje,CAST(ISNULL(ck.cksl,0) AS DECIMAL(18,2)) as cksl,CAST(ISNULL(ck.ckje,0) AS DECIMAL(18,2)) as ckje,CAST(ISNULL(cpsl,0) AS DECIMAL(18,2))+CAST(ISNULL(rksl,0) AS DECIMAL(18,2))-CAST(ISNULL(cksl,0) AS DECIMAL(18,2)) as jcsl,CAST(ISNULL(cpje,0) AS DECIMAL(18,2))+CAST(ISNULL(rkje,0) AS DECIMAL(18,2))-CAST(ISNULL(ckje,0) AS DECIMAL(18,2)) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from  yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,SUM(CAST(cpsl AS DECIMAL(18,2))) as cpsl,SUM(CAST(cpsj AS DECIMAL(18,2))*CAST(cpsl AS DECIMAL(18,2))) as cpje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,SUM(CAST(cpsl AS DECIMAL(18,2))) as rksl,SUM(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as rkje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '入库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname  and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,SUM(CAST(cpsl AS DECIMAL(18,2))) as cksl,SUM(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as ckje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '出库' and gs_name = '"+ gongsi +"' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,[name],bianyuan,mark1 from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.[name] and jxc.cplb = bian_yuan.lei_bie "
+            var where_sql = ""
+            console.log(order_list)
+            for(var i=0; i<order_list.length; i++){
+              if(where_sql == ""){
+                if(order_list[i].sp_dm != null && order_list[i].sp_dm != "" && order_list[i].sp_dm != undefined){
+                  where_sql = "where cpid ='" + order_list[i].sp_dm + "' "
+                }
+              }else{
+                if(order_list[i].sp_dm != null && order_list[i].sp_dm != "" && order_list[i].sp_dm != undefined){
+                  where_sql = where_sql + " or cpid ='" + order_list[i].sp_dm + "' "
+                }
+              }
+            }
+            sql = sql + where_sql
+            console.log(sql)
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: sql
+              },
+              success(res) {
+                for(var i=0;i<res.result.recordset.length;i++){
+                  if(res.result.recordset[i].mark1 != null){
+                    res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+                  }
+                }
+                var all = []
+                all = res.result.recordset;
+                var szary = []
+                var inserti = 0
+                console.log(all)
+                for(var i = 0; i < all.length; i++){
+                  szary.push({
+                    mark1:all[i].mark1,
+                    name:all[i].cpname,
+                    sp_dm:all[i].cpid,
+                    cplb:all[i].cplb,
+                    cpsl:all[i].jcsl,
+                    cpsj:all[i].jcje,
+                    qcsl:all[i].qcsl,
+                    qcje:all[i].qcje,
+                    rksl:all[i].rksl,
+                    rkje:all[i].rkje,
+                    cksl:all[i].cksl,
+                    ckje:all[i].ckje,
+                    bianyuan:all[i].bianyuan,
+                  })
+                }
+                that.setData({
+                  szzhi: szary
+                })
+              },
+              fail(res) {
+                console.log("失败", res)
+              }
+            });
+              
+            }
+          },
+          fail(res) {
+            console.log("失败", res)
+          }
+        });
+          
+        }
+
+        
       },
       fail: (res) => {
       wx.showToast({
@@ -342,48 +559,99 @@ Page({
       stop_date = "2100-12-31 23:59:59"
     }
 
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,ifnull(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select ifnull(link_rk.cpid,'') as cpid,ifnull(link_rk.cpname,'') as cpname,ifnull(link_rk.cplb,'') as cplb,ifnull(link_rk.cpsl,0) as qcsl,ifnull(link_rk.cpje,0) as qcje,ifnull(link_rk.rksl,0) as rksl,ifnull(link_rk.rkje,0) as rkje,ifnull(ck.cksl,0) as cksl,ifnull(ck.ckje,0) as ckje,ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl,ifnull(cpje,0)+ifnull(rkje,0)-ifnull(ckje,0) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from  yh_jinxiaocun_mingxi where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,sum(cpsl) as cpsl,sum(cpsj*cpsl) as cpje from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,sum(cpsl) as rksl,sum(cpsl*cpsj) as rkje from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '"+ gongsi +"' and shijian between '" + start_date + "' and '" + stop_date + "' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname  and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,sum(cpsl) as cksl,sum(cpsl*cpsj) as ckje from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '"+ gongsi +"' and shijian between '" + start_date + "' and '" + stop_date + "' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,`name`,bianyuan,mark1 from yh_jinxiaocun_jichuziliao where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.`name` and jxc.cplb = bian_yuan.lei_bie  where cpid like '%" + product_number + "%'"
-      },
-      success(res) {
-        for(var i=0;i<res.result.length;i++){
-          if(res.result[i].mark1 != null){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-          }
-        }
-        var all = []
-        all = res.result;
-        var szary = []
-        var inserti = 0
-        console.log(all)
-        for(var i = 0; i < all.length; i++){
-          szary.push({
-            mark1:all[i].mark1,
-            name:all[i].cpname,
-            sp_dm:all[i].cpid,
-            cplb:all[i].cplb,
-            cpsl:all[i].jcsl,
-            cpsj:all[i].jcje,
-            qcsl:all[i].qcsl,
-            qcje:all[i].qcje,
-            rksl:all[i].rksl,
-            rkje:all[i].rkje,
-            cksl:all[i].cksl,
-            ckje:all[i].ckje,
-            bianyuan:all[i].bianyuan,
-          })
-        }
+    if(app.globalData.shujuku==0){
 
-        that.setData({
-          szzhi: szary
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,ifnull(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select ifnull(link_rk.cpid,'') as cpid,ifnull(link_rk.cpname,'') as cpname,ifnull(link_rk.cplb,'') as cplb,ifnull(link_rk.cpsl,0) as qcsl,ifnull(link_rk.cpje,0) as qcje,ifnull(link_rk.rksl,0) as rksl,ifnull(link_rk.rkje,0) as rkje,ifnull(ck.cksl,0) as cksl,ifnull(ck.ckje,0) as ckje,ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl,ifnull(cpje,0)+ifnull(rkje,0)-ifnull(ckje,0) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from  yh_jinxiaocun_mingxi where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,sum(cpsl) as cpsl,sum(cpsj*cpsl) as cpje from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,sum(cpsl) as rksl,sum(cpsl*cpsj) as rkje from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '"+ gongsi +"' and shijian between '" + start_date + "' and '" + stop_date + "' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname  and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,sum(cpsl) as cksl,sum(cpsl*cpsj) as ckje from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '"+ gongsi +"' and shijian between '" + start_date + "' and '" + stop_date + "' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,`name`,bianyuan,mark1 from yh_jinxiaocun_jichuziliao where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.`name` and jxc.cplb = bian_yuan.lei_bie  where cpid like '%" + product_number + "%'"
+        },
+        success(res) {
+          for(var i=0;i<res.result.length;i++){
+            if(res.result[i].mark1 != null){
+              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+            }
+          }
+          var all = []
+          all = res.result;
+          var szary = []
+          var inserti = 0
+          console.log(all)
+          for(var i = 0; i < all.length; i++){
+            szary.push({
+              mark1:all[i].mark1,
+              name:all[i].cpname,
+              sp_dm:all[i].cpid,
+              cplb:all[i].cplb,
+              cpsl:all[i].jcsl,
+              cpsj:all[i].jcje,
+              qcsl:all[i].qcsl,
+              qcje:all[i].qcje,
+              rksl:all[i].rksl,
+              rkje:all[i].rkje,
+              cksl:all[i].cksl,
+              ckje:all[i].ckje,
+              bianyuan:all[i].bianyuan,
+            })
+          }
+  
+          that.setData({
+            szzhi: szary
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: "select cpid,cpname,cplb,qcsl,qcje,rksl,rkje,cksl,ckje,jcsl,jcje,isnull(bian_yuan.bianyuan,'') as bianyuan,mark1 from (select isnull(link_rk.cpid,'') as cpid,isnull(link_rk.cpname,'') as cpname,isnull(link_rk.cplb,'') as cplb,isnull(CAST(link_rk.cpsl AS DECIMAL(18,2)),0) as qcsl,isnull(CAST(link_rk.cpje AS DECIMAL(18,2)),0) as qcje,isnull(CAST(link_rk.rksl AS DECIMAL(18,2)),0) as rksl,isnull(CAST(link_rk.rkje AS DECIMAL(18,2)),0) as rkje,isnull(CAST(ck.cksl AS DECIMAL(18,2)),0) as cksl,isnull(CAST(ck.ckje AS DECIMAL(18,2)),0) as ckje,isnull(CAST(cpsl AS DECIMAL(18,2)),0)+isnull(CAST(rksl AS DECIMAL(18,2)),0)-isnull(CAST(cksl AS DECIMAL(18,2)),0) as jcsl,isnull(CAST(cpje AS DECIMAL(18,2)),0)+isnull(CAST(rkje AS DECIMAL(18,2)),0)-isnull(CAST(ckje AS DECIMAL(18,2)),0) as jcje from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cpsl,link_qc.cpje,rk.rksl,rk.rkje from(select cp.cpid,cp.cpname,cp.cplb,qc.cpsl,qc.cpje from(select cpid,cpname,cplb from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,sum(CAST(cpsl AS DECIMAL(18,2))) as cpsl,sum(CAST(cpsj AS DECIMAL(18,2))*CAST(cpsl AS DECIMAL(18,2))) as cpje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb) as link_qc left join (select sp_dm,cpname,cplb,sum(CAST(cpsl AS DECIMAL(18,2))) as rksl,sum(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as rkje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '入库' and gs_name = '"+ gongsi +"' and shijian between '" + start_date + "' and '" + stop_date + "' group by sp_dm,cpname,cplb) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname and rk.cplb = link_qc.cplb) as link_rk left join (select sp_dm,cpname,cplb,sum(CAST(cpsl AS DECIMAL(18,2))) as cksl,sum(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as ckje from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '出库' and gs_name = '"+ gongsi +"' and shijian between '" + start_date + "' and '" + stop_date + "' group by sp_dm,cpname,cplb) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb) as jxc left join(select sp_dm,lei_bie,[name],bianyuan,mark1 from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name = '"+ gongsi +"') as bian_yuan on jxc.cpid = bian_yuan.sp_dm and jxc.cpname = bian_yuan.[name] and jxc.cplb = bian_yuan.lei_bie where cpid like '%" + product_number + "%'"
+        },
+        success(res) {
+          for(var i=0;i<res.result.recordset.length;i++){
+            if(res.result.recordset[i].mark1 != null){
+              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+            }
+          }
+          var all = []
+          all = res.result.recordset;
+          var szary = []
+          var inserti = 0
+          console.log(all)
+          for(var i = 0; i < all.length; i++){
+            szary.push({
+              mark1:all[i].mark1,
+              name:all[i].cpname,
+              sp_dm:all[i].cpid,
+              cplb:all[i].cplb,
+              cpsl:all[i].jcsl,
+              cpsj:all[i].jcje,
+              qcsl:all[i].qcsl,
+              qcje:all[i].qcje,
+              rksl:all[i].rksl,
+              rkje:all[i].rkje,
+              cksl:all[i].cksl,
+              ckje:all[i].ckje,
+              bianyuan:all[i].bianyuan,
+            })
+          }
+  
+          that.setData({
+            szzhi: szary
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+      
+    }
+
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -445,24 +713,52 @@ Page({
       content: '是否删除？',
       success: function(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
-            },
-            success(res) {
-              // that.setData({
-              //   szzhi: res.result
-              // }
-              // )
-              console.log
-              // console.log(that.data.szzhi)
-            },
-            fail(res) {
-              console.log("失败", res)
 
-            }
-          });
+          if(app.globalData.shujuku==0){
+
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "DELETE * FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+            
+          }
+
+
           // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
           //   success: console.log,
           //   fail: console.error,

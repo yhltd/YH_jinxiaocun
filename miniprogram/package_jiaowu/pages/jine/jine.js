@@ -46,6 +46,14 @@ Page({
         text: "账号管理",
         url: "../zhgl/zhgl"
       },
+      {
+        text: "考勤表",
+        url: "../kaoqinbiao/kaoqinbiao"
+      },
+      {
+        text: "权限",
+        url: "../quanxian/quanxian"
+      },
       
       // {
       //   text: "工作时间",

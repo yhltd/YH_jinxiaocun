@@ -47,20 +47,43 @@ Page({
     var type = _this.data.systemArray[e.detail.value];
     var gs_name = app.globalData.gongsi;
     console.log(type)
-    wx.cloud.callFunction({
-      name: 'sqlConnection',
-      data: {
-        sql: "select DISTINCT orderid from yh_jinxiaocun_mingxi where gs_name = '" + gs_name + "' and mxtype ='" + type + "'"
-      },
-      success: res => {
-        console.log(res.result)
-        _this.setData({
-          order_array : res.result,
-          out_in_type : type,
-          order_number: '选择单号',
-        })
-      }
-    })
+
+    if(app.globalData.shujuku==0){
+      wx.cloud.callFunction({
+        name: 'sqlConnection',
+        data: {
+          sql: "select DISTINCT orderid from yh_jinxiaocun_mingxi where gs_name = '" + gs_name + "' and mxtype ='" + type + "'"
+        },
+        success: res => {
+          console.log(res.result)
+          _this.setData({
+            order_array : res.result,
+            out_in_type : type,
+            order_number: '选择单号',
+          })
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select DISTINCT orderid from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '" + gs_name + "' and mxtype ='" + type + "'"
+        },
+        success: res => {
+          console.log(res.result)
+          _this.setData({
+            order_array : res.result.recordset,
+            out_in_type : type,
+            order_number: '选择单号',
+          })
+        }
+      })
+      
+    }
+
+   
   },
 
   choice_order : function(e){
@@ -69,22 +92,48 @@ Page({
     var gs_name = app.globalData.gongsi;
     var type = _this.data.out_in_type
     console.log(order_number.orderid)
-    wx.cloud.callFunction({
-      name: 'sqlConnection',
-      data: {
-        sql: "select ifnull(orderid,'') as orderid,ifnull(shou_h,'') as shou_h,ifnull(shijian,'') as shijian,ifnull(cpname,'') as cpname,ifnull(sp_dm,'') as sp_dm,ifnull(cplb,'') as cplb,ifnull(cpsl,0) as cpsl,ifnull(cpsj,0) as cpsj,convert(cpsl,float) * convert(cpsj,float) as cpzj from yh_jinxiaocun_mingxi where gs_name = '" + gs_name + "' and mxtype ='" + type + "' and orderid ='" + order_number.orderid + "'"
-      },
-      success: res => {
-        console.log(res.result)
-        _this.setData({
-          list : res.result,
-          order_number: order_number.orderid,
-        })
-        _this.getUserInfo(res.result)
-        _this.setCanvas()
 
-      }
-    })
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sqlConnection',
+        data: {
+          sql: "select ifnull(orderid,'') as orderid,ifnull(shou_h,'') as shou_h,ifnull(shijian,'') as shijian,ifnull(cpname,'') as cpname,ifnull(sp_dm,'') as sp_dm,ifnull(cplb,'') as cplb,ifnull(cpsl,0) as cpsl,ifnull(cpsj,0) as cpsj,convert(cpsl,float) * convert(cpsj,float) as cpzj from yh_jinxiaocun_mingxi where gs_name = '" + gs_name + "' and mxtype ='" + type + "' and orderid ='" + order_number.orderid + "'"
+        },
+        success: res => {
+          console.log(res.result)
+          _this.setData({
+            list : res.result,
+            order_number: order_number.orderid,
+          })
+          _this.getUserInfo(res.result)
+          _this.setCanvas()
+  
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select ISNULL(orderid,'') as orderid,ISNULL(shou_h,'') as shou_h,ISNULL(shijian,'') as shijian,ISNULL(cpname,'') as cpname,ISNULL(sp_dm,'') as sp_dm,ISNULL(cplb,'') as cplb,ISNULL(cpsl,0) as cpsl,ISNULL(cpsj,0) as cpsj,CAST(ISNULL(cpsl,0) AS DECIMAL(18,2)) * CAST(ISNULL(cpsj,0) AS DECIMAL(18,2)) as cpzj from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '" + gs_name + "' and mxtype ='" + type + "' and orderid ='" + order_number.orderid + "'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          _this.setData({
+            list : res.result.recordset,
+            order_number: order_number.orderid,
+          })
+          _this.getUserInfo(res.result.recordset)
+          _this.setCanvas()
+  
+        }
+      })
+      
+    }
+
+    
   },
 
   set_ble : function(){

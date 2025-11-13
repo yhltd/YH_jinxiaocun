@@ -17,7 +17,27 @@
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
               bindtap="{{item.columnName=='row_id'?'delete':'clickView'}}">
-          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+          
+          <view class="list_text">
+            <!-- 序号 -->
+            <block wx:if="{{item.columnName == 'rownum'}}">
+              {{i+1}}
+            </block>
+            <!-- 图片字段 -->
+            <block wx:elif="{{item.columnName === 'photo' || item.columnName === 'photo1' || item.columnName === 'photo2'}}">
+              <image wx:if="{{list_item[item.columnName]}}" 
+                     src="data:image/jpeg;base64,{{list_item[item.columnName]}}" 
+                     style="width: 50rpx; height: 50rpx;" 
+                     mode="aspectFit">
+              </image>
+              <text wx:else></text>
+            </block>
+            <!-- 其他字段 -->
+            <block wx:else>
+              {{list_item[item.columnName]}}
+            </block>
+          </view>
+          
         </view>
       </view>
     </block>
@@ -85,64 +105,79 @@
 <scroll-view scroll-y="true" class="choiceList" hidden="{{addTable}}">
   <form bindsubmit="add">
     <view class="dakuang">
-    <view class="xiaokuang">
-      
-   
-      <view class="lables">商品编码:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="product_bianhao"></input>
-    </view>
-    <view  class="xiaokuang">
-      
-   
-      <view class="lables">商品类别:</view>
-        <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type"></input>
-      </view>
-      <view  class="xiaokuang">
-        
-     
-      <view class="lables">商品名称:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{product_name}}" type="text" name="product_name"></input>
-    </view>
-    <view  class="xiaokuang">
-      
-    
-      <view class="lables">单位:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{unit}}" type="text" name="unit"></input>
-    </view>
-    <view  class="xiaokuang">
-      
-    
-      <view class="lables">单价:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{price}}" name="price"></input>
-    </view>
-    <view  class="xiaokuang">
-      
-    
-      <view  class="lables">成本:</view>
-      <input class="input_text_form" type="text" placeholder="{{}}" value="{{chengben}}" name="chengben"></input>
-    </view>
-    <view  class="xiaokuang">
-      
-   
-      <view  class="lables">商品规格:</view>
-        <input class="input_text_form" type="text" placeholder="{{}}" value="{{specifications}}" name="specifications"></input>
-      </view>
-      <view  class="xiaokuang">
-        
-     
-      <view  class="lables">保存方式:</view>
-        <input class="input_text_form" type="text" placeholder="{{}}" value="{{practice}}" name="practice"></input>
+      <view class="xiaokuang">
+        <view class="lables">商品编码:</view>
+        <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="product_bianhao"></input>
       </view>
       <view class="xiaokuang">
-        
-     
-      <view  class="lables">是否停用:</view>
-      <picker class="pick" bindchange="bindPickerChange1" value="{{index}}" range="{{tingyong_list}}">
-        <input class="input_text_form" value="{{window_tingyong}}" type="text" name="tingyong" disabled="disabled"></input>
-      </picker>
-    </view>
-      <!-- <view  class="lables">图片:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="photo"></input> -->
+        <view class="lables">商品类别:</view>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="type"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">商品名称:</view>
+        <input class="input_text_form" placeholder="{{}}" value="{{product_name}}" type="text" name="product_name"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">单位:</view>
+        <input class="input_text_form" placeholder="{{}}" value="{{unit}}" type="text" name="unit"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">单价:</view>
+        <input class="input_text_form" placeholder="{{}}" value="{{price}}" name="price"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">成本:</view>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{chengben}}" name="chengben"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">商品规格:</view>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{specifications}}" name="specifications"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">保存方式:</view>
+        <input class="input_text_form" type="text" placeholder="{{}}" value="{{practice}}" name="practice"></input>
+      </view>
+      
+      <!-- 新增详情字段 -->
+      <view class="xiaokuang">
+        <view class="lables">详情:</view>
+        <textarea class="input_text_form"  value="{{xiangqing}}" name="xiangqing"></textarea>
+      </view>
+      
+      <!-- 图片选择部分 -->
+      <view class="xiaokuang">
+        <view class="lables">图片1:</view>
+        <view class="image-upload-container">
+          <button class="image-upload-btn" bindtap="chooseImage1" type="button">选择图片</button>
+          <image wx:if="{{tempImage1}}" src="{{tempImage1}}" class="preview-image" mode="aspectFit"></image>
+          <input name="photo1" value="{{tempImage1}}" hidden />
+        </view>
+      </view>
+      
+      <view class="xiaokuang">
+        <view class="lables">图片2:</view>
+        <view class="image-upload-container">
+          <button class="image-upload-btn" bindtap="chooseImage2" type="button">选择图片</button>
+          <image wx:if="{{tempImage2}}" src="{{tempImage2}}" class="preview-image" mode="aspectFit"></image>
+          <input name="photo2" value="{{tempImage2}}" hidden />
+        </view>
+      </view>
+      
+      <view class="xiaokuang">
+        <view class="lables">图片3:</view>
+        <view class="image-upload-container">
+          <button class="image-upload-btn" bindtap="chooseImage3" type="button">选择图片</button>
+          <image wx:if="{{tempImage3}}" src="{{tempImage3}}" class="preview-image" mode="aspectFit"></image>
+          <input name="photo3" value="{{tempImage3}}" hidden />
+        </view>
+      </view>
+      
+      <view class="xiaokuang">
+        <view class="lables">是否停用:</view>
+        <picker class="pick" bindchange="bindPickerChange1" value="{{index}}" range="{{tingyong_list}}">
+          <input class="input_text_form" value="{{window_tingyong}}" type="text" name="tingyong" disabled="disabled"></input>
+        </picker>
+      </view>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
@@ -153,7 +188,6 @@
 
 <!--商品设置-->
 <!--- 详情 --->
-<!----------->
 <scroll-view scroll-y="true" class="choiceList" hidden="{{details}}">
   <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:83%">
     <view class="table">
@@ -174,10 +208,28 @@
                 data-value="{{list_item[item.columnName]}}" 
                 data-input_type="{{item.type}}"
                 data-isupd="{{item.isupd}}"
-                bindtap="{{item.columnName=='row_id'?'delete':'clickView2'}}"
-            >
+                bindtap="{{item.columnName=='row_id'?'delete':'clickView2'}}">
                 
-            <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+            <view class="list_text">
+              <!-- 序号 -->
+              <block wx:if="{{item.columnName == 'rownum'}}">
+                {{i+1}}
+              </block>
+              <!-- 图片字段 -->
+              <block wx:elif="{{item.columnName === 'photo' || item.columnName === 'photo1' || item.columnName === 'photo2'}}">
+                <image wx:if="{{list_item[item.columnName]}}" 
+                       src="data:image/jpeg;base64,{{list_item[item.columnName]}}" 
+                       style="width: 50rpx; height: 50rpx;" 
+                       mode="aspectFit">
+                </image>
+                <text wx:else></text>
+              </block>
+              <!-- 其他字段 -->
+              <block wx:else>
+                {{list_item[item.columnName]}}
+              </block>
+            </view>
+            
           </view>
         </view>
       </block>
@@ -191,7 +243,7 @@
 <!----详情---->
 <!--- 修改 --->
 <!----------->
-<view class="input_view" hidden="{{input_hid2}}">
+<!-- <view class="input_view" hidden="{{input_hid2}}">
   <form bindsubmit="changed2">
     <view>
       <picker class="pick" disabled = "{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
@@ -200,6 +252,48 @@
     </view>
     <view class="bt_view"> 
       <button class="bt_form" bindtap="xq_qx" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+</view> -->
+
+<view class="input_view" hidden="{{input_hid}}">
+  <form bindsubmit="changed">
+    <view>
+      <!-- 图片字段特殊处理 -->
+      <view wx:if="{{dataset_input.column === 'photo' || dataset_input.column === 'photo1' || dataset_input.column === 'photo2'}}">
+        <view class="lables">当前图片:</view>
+        <image wx:if="{{dataset_input.value}}" 
+               src="data:image/jpeg;base64,{{dataset_input.value}}" 
+               class="preview-image" 
+               mode="aspectFit"></image>
+        <text wx:else class="no-image-text">暂无图片</text>
+        
+        <view class="lables">选择新图片:</view>
+        <button class="image-upload-btn" bindtap="chooseImageForEdit" type="button">选择图片</button>
+        <image wx:if="{{tempEditImage}}" 
+               src="{{tempEditImage}}" 
+               class="preview-image" 
+               mode="aspectFit"></image>
+        <text wx:elif="{{tempEditImage === ''}}" class="no-image-text">未选择新图片</text>
+        
+        <input name="new" value="{{tempEditImage}}" hidden />
+      </view>
+      
+      <!-- 日期字段 -->
+      <view wx:elif="{{input_type === 'date'}}">
+        <picker class="pick" disabled="{{updatePicker}}" mode="date" value="{{date}}" data-column_name="new" bindchange="choiceDate">
+          <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{new}}" name="new" disabled="{{updatePicker ? '' : 'disabled'}}"></input>
+        </picker>
+      </view>
+      
+      <!-- 其他字段 -->
+      <view wx:else>
+        <input class="input_text_form" placeholder="{{dataset_input.value}}" value="{{new}}" type="{{input_type}}" name="new"></input>
+      </view>
+    </view>
+    <view class="bt_view"> 
+      <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>
       <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
     </view>
   </form>
@@ -247,6 +341,31 @@
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="specifications"></input>
       <view  class="lables">保存方式:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="practice"></input>
+
+      <view class="xiaokuang">
+        <view class="lables">详情:</view>
+        <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="xiangqing"></input>
+      </view>
+      <view class="xiaokuang">
+      <view class="lables">图片1:</view>
+      <button class="image-upload-btn" bindtap="chooseImage1" type="button">选择图片</button>
+      <image wx:if="{{tempImage1}}" src="{{tempImage1}}" class="preview-image" mode="aspectFit"></image>
+      <!-- 不需要隐藏的input，因为图片数据存储在tempImage1中 -->
+    </view>
+
+    <view class="xiaokuang">
+      <view class="lables">图片2:</view>
+      <button class="image-upload-btn" bindtap="chooseImage2" type="button">选择图片</button>
+      <image wx:if="{{tempImage2}}" src="{{tempImage2}}" class="preview-image" mode="aspectFit"></image>
+    </view>
+
+    <view class="xiaokuang">
+      <view class="lables">图片3:</view>
+      <button class="image-upload-btn" bindtap="chooseImage3" type="button">选择图片</button>
+      <image wx:if="{{tempImage3}}" src="{{tempImage3}}" class="preview-image" mode="aspectFit"></image>
+    </view>
+
+
       <view  class="lables">是否停用:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="digit" name="tingyong"></input>
       <view  class="lables">图片:</view>

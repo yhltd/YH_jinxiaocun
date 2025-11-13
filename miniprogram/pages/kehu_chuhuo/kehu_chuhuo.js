@@ -16,7 +16,10 @@ Page({
   onLoad: function(options) {
     var _this = this
     var that = this
-    var sql = "select shou_h from yh_jinxiaocun_mingxi where gs_name = '" + app.globalData.gongsi + "' group by shou_h"
+
+    if(app.globalData.shujuku==0){
+
+      var sql = "select shou_h from yh_jinxiaocun_mingxi where gs_name = '" + app.globalData.gongsi + "' group by shou_h"
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
@@ -36,6 +39,33 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var sql = "select shou_h from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '" + app.globalData.gongsi + "' group by shou_h"
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: sql
+      },
+      success(res) {
+        var customer_list = ['']
+        for(var i=0; i<res.result.recordset.length; i++){
+          customer_list.push(res.result.recordset[i].shou_h)
+        } 
+        console.log(customer_list)
+        that.setData({
+          customer_list: customer_list
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+      
+    }
+
+    
   },
 
   bindPickerChange: function(e){
@@ -74,20 +104,44 @@ Page({
     var gongsi = app.globalData.gongsi
     console.log(finduser)
     console.log(gongsi)
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "select shou_h,sp_dm,cpname,cplb,ifnull(sum(cpsl),0) as ruku_num,ifnull(sum(cpsj),0) as ruku_price from yh_jinxiaocun_mingxi where gs_name='"+ gongsi +"' group by shou_h,sp_dm,cpname,cplb having shou_h != '' order by shou_h"
-      },
-      success(res) {
-        that.setData({
-          szzhi: res.result
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select shou_h,sp_dm,cpname,cplb,ifnull(sum(cpsl),0) as ruku_num,ifnull(sum(cpsj),0) as ruku_price from yh_jinxiaocun_mingxi where gs_name='"+ gongsi +"' group by shou_h,sp_dm,cpname,cplb having shou_h != '' order by shou_h"
+        },
+        success(res) {
+          that.setData({
+            szzhi: res.result
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: "select shou_h,sp_dm,cpname,cplb,ISNULL(SUM(CAST(cpsl AS DECIMAL(18,2))),0) as ruku_num,ISNULL(SUM(CAST(cpsj AS DECIMAL(18,2))),0) as ruku_price from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name='"+ gongsi +"' group by shou_h,sp_dm,cpname,cplb having shou_h != '' order by shou_h"
+        },
+        success(res) {
+          that.setData({
+            szzhi: res.result.recordset
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+      
+    }
+
+    
     // db.collection("Yh_JinXiaoCun_mingxi").where({
     //   finduser: finduser,
     //   gongsi: gongsi
@@ -142,21 +196,45 @@ Page({
     })
     var gongsi = app.globalData.gongsi
     var kehu = _this.data.customer
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "select shou_h,sp_dm,cpname,cplb,ifnull(sum(cpsl),0) as ruku_num,ifnull(sum(cpsj),0) as ruku_price from yh_jinxiaocun_mingxi where gs_name='"+ gongsi +"'and shou_h like '%" + kehu + "%' group by shou_h,sp_dm,cpname,cplb having shou_h != '' order by shou_h"
-      },
-      success(res) {
-        console.log(res.result)
-        that.setData({
-          szzhi: res.result
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select shou_h,sp_dm,cpname,cplb,ifnull(sum(cpsl),0) as ruku_num,ifnull(sum(cpsj),0) as ruku_price from yh_jinxiaocun_mingxi where gs_name='"+ gongsi +"'and shou_h like '%" + kehu + "%' group by shou_h,sp_dm,cpname,cplb having shou_h != '' order by shou_h"
+        },
+        success(res) {
+          console.log(res.result)
+          that.setData({
+            szzhi: res.result
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: "select shou_h,sp_dm,cpname,cplb,ISNULL(SUM(CAST(cpsl AS DECIMAL(18,2))),0) as ruku_num,ISNULL(SUM(CAST(cpsj AS DECIMAL(18,2))),0) as ruku_price from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name='"+ gongsi +"' and shou_h like '%" + kehu + "%' group by shou_h,sp_dm,cpname,cplb having shou_h != '' order by shou_h"
+        },
+        success(res) {
+          console.log(res.result.recordset)
+          that.setData({
+            szzhi: res.result.recordset
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+      
+    }
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -218,24 +296,52 @@ Page({
       content: '是否删除？',
       success: function(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
-            },
-            success(res) {
-              // that.setData({
-              //   szzhi: res.result
-              // }
-              // )
-              console.log
-              // console.log(that.data.szzhi)
-            },
-            fail(res) {
-              console.log("失败", res)
 
-            }
-          });
+          if(app.globalData.shujuku==0){
+
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "DELETE FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+            
+          }
+
+          
           // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
           //   success: console.log,
           //   fail: console.error,

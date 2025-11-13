@@ -27,6 +27,10 @@ Page({
     startY: 0,        // 开始Y坐标
     member_zhanghao:'',
     member_xingming:'',
+    fullscreen_hid: true, // 控制全屏弹窗显示隐藏
+    selectedProduct: {}, // 选中的商品信息
+    imageList: [], // 存储图片列表
+    currentImageIndex: 0, // 当前轮播图索引
   },
 
   bindPickerChange1: function(e) {
@@ -407,15 +411,56 @@ Page({
       data: {
         sql: sql2
       },
+      // success: res => {
+      //   console.log("select-success", res)
+      //   var list = res.result
+      //   for(var i=0; i<list.length; i++){
+      //     list[i].price_look = list[i].price.split(",")[0]
+      //   }
+      //   _this.setData({
+      //     product_list:list
+      //   })
+      // },
       success: res => {
         console.log("select-success", res)
         var list = res.result
-        for(var i=0; i<list.length; i++){
-          list[i].price_look = list[i].price.split(",")[0]
-        }
+        
+        // 处理图片数据
+        const processedList = list.map(item => {
+          let photo = item.photo;
+          
+          // 强制处理：无论什么情况都确保有前缀
+          if (photo && photo.trim() !== '') {
+            // 如果已经是完整格式，保持不变
+            if (photo.startsWith('data:image/')) {
+              // 已经是完整格式
+            } else {
+              // 添加前缀
+              photo = 'data:image/jpeg;base64,' + photo;
+            }
+          } else {
+            photo = ''; // 确保空值
+          }
+          
+          return {
+            ...item,
+            photo: photo,
+            price_look: item.price ? item.price.split(",")[0] : ''
+          };
+        });
+        
+        // 强制设置数据
         _this.setData({
-          product_list:list
-        })
+          product_list: [] // 先清空
+        }, () => {
+          // 再设置新数据
+          setTimeout(() => {
+            _this.setData({
+              product_list: processedList
+            });
+            console.log('数据已强制刷新');
+          }, 100);
+        });
       },
       fail: res=> {
         console.log("select-fail",res)
@@ -700,5 +745,149 @@ Page({
         current
       })
     }
-  }
+  },
+   // 打开全屏弹窗
+   openFullscreenPopup: function(e) {
+    const index = e.currentTarget.dataset.index;
+    const product = this.data.product_list[index];
+    const productName = product.product_name;
+    
+    this.setData({
+      fullscreen_hid: false,
+      selectedProduct: product,
+      imageList: [],
+      currentImageIndex: 0
+    });
+    
+    this.getProductDetail(productName);
+  },
+
+  getProductDetail: function(productName) {
+    const _this = this;
+    
+    wx.showLoading({
+      title: '加载中...',
+    });
+    
+    let sql = "SELECT * FROM product WHERE product_name = '" + productName + "'";
+    
+    wx.cloud.callFunction({
+      name: 'sqlserver_xinyongka',
+      data: {
+        sql: sql
+      },
+      success: res => {
+        wx.hideLoading();
+        console.log('商品详情请求成功:', res);
+        
+        if (res.result && res.result.length > 0) {
+          const productDetail = res.result[0];
+          
+          // 处理图片数据
+          const imageList = _this.processProductImages(productDetail);
+          
+          _this.setData({
+            selectedProduct: productDetail,
+            imageList: imageList,
+            currentImageIndex: 0
+          });
+          
+          wx.showToast({
+            title: '加载成功',
+            icon: 'success',
+            duration: 1000
+          });
+        }
+      },
+      fail: err => {
+        wx.hideLoading();
+        console.error('商品详情请求失败:', err);
+      }
+    });
+  },
+  processProductImages: function(productDetail) {
+    const imageList = [];
+    
+    // 检查 photo 字段
+    if (productDetail.photo && productDetail.photo.trim() !== '') {
+      const photoUrl = productDetail.photo.includes('base64,') 
+        ? productDetail.photo 
+        : 'data:image/jpeg;base64,' + productDetail.photo;
+      imageList.push(photoUrl);
+    }
+    
+    // 检查 photo1 字段
+    if (productDetail.photo1 && productDetail.photo1.trim() !== '') {
+      const photo1Url = productDetail.photo1.includes('base64,') 
+        ? productDetail.photo1 
+        : 'data:image/jpeg;base64,' + productDetail.photo1;
+      imageList.push(photo1Url);
+    }
+    
+    // 检查 photo2 字段
+    if (productDetail.photo2 && productDetail.photo2.trim() !== '') {
+      const photo2Url = productDetail.photo2.includes('base64,') 
+        ? productDetail.photo2 
+        : 'data:image/jpeg;base64,' + productDetail.photo2;
+      imageList.push(photo2Url);
+    }
+    
+    console.log('处理后的图片列表:', {
+      count: imageList.length,
+      images: imageList.map((img, index) => `图片${index + 1}: ${img.substring(0, 50)}...`)
+    });
+    
+    return imageList;
+  },
+
+  // 轮播图切换事件
+  onImageSwiperChange: function(e) {
+    this.setData({
+      currentImageIndex: e.detail.current
+    });
+  },
+
+  // 手动切换图片
+  switchImage: function(e) {
+    const index = e.currentTarget.dataset.index;
+    this.setData({
+      currentImageIndex: index
+    });
+  },
+
+
+  // 关闭全屏弹窗
+  closeFullscreenPopup: function() {
+    this.setData({
+      fullscreen_hid: true,
+      selectedProduct: {},
+      imageList: [],
+      currentImageIndex: 0
+    });
+  },
+
+  // 从全屏弹窗打开规格选择
+  openPopupFromFullscreen: function() {
+    // 先关闭全屏弹窗
+    this.setData({
+      fullscreen_hid: true
+    });
+    
+    // 延迟一下再打开规格弹窗，避免冲突
+    setTimeout(() => {
+      // 这里需要根据selectedProduct找到对应的index
+      const productList = this.data.product_list;
+      const selectedIndex = productList.findIndex(item => 
+        item.product_name === this.data.selectedProduct.product_name
+      );
+      
+      if (selectedIndex !== -1) {
+        this.openPopup({ currentTarget: { dataset: { index: selectedIndex } } });
+      }
+    }, 300);
+  },
+  stopPropagation: function(e) {
+    // 空函数，只是为了阻止事件冒泡
+  },
+
 })

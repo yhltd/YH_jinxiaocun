@@ -68,21 +68,46 @@ Page({
       content: '确定删除么？',
       success(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: 'sqlConnection',
-            data: {
-              sql: "delete from yh_jinxiaocun_qichushu where _id = '" + _id + "'"
-            },
-            success: res => {
-              if (res.result.affectedRows > 0) {
-                wx.showToast({
-                  title: '删除成功',
-                  icon: 'success'
-                })
-                _this.init();
+
+          if(app.globalData.shujuku==0){
+
+            wx.cloud.callFunction({
+              name: 'sqlConnection',
+              data: {
+                sql: "delete from yh_jinxiaocun_qichushu where _id = '" + _id + "'"
+              },
+              success: res => {
+                if (res.result.affectedRows > 0) {
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success'
+                  })
+                  _this.init();
+                }
               }
-            }
-          })
+            })
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: 'sqlServer_117',
+              data: {
+                query: "delete from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where _id = '" + _id + "'"
+              },
+              success: res => {
+                if (res.result.recordset.affectedRows > 0) {
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success'
+                  })
+                  _this.init();
+                }
+              }
+            })
+            
+          }
+
+          
         } else if (res.cancel) {
           return;
         }
@@ -116,23 +141,49 @@ Page({
     var _this = this;
     var zh_name = app.globalData.finduser;
     var gs_name = app.globalData.gongsi;
-    wx.cloud.callFunction({
-      name: 'sqlConnection',
-      data: {
-        sql: "select * from yh_jinxiaocun_qichushu where gs_name = '" + gs_name + "' and cpname like '%" + _this.data.product_name + "%'"
-      },
-      success: res => {
-        var sum = 0;
-        for (let i = 0; i < res.result.length; i++) {
-          sum += res.result[i].cpsl * res.result[i].cpsj
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sqlConnection',
+        data: {
+          sql: "select * from yh_jinxiaocun_qichushu where gs_name = '" + gs_name + "' and cpname like '%" + _this.data.product_name + "%'"
+        },
+        success: res => {
+          var sum = 0;
+          for (let i = 0; i < res.result.length; i++) {
+            sum += res.result[i].cpsl * res.result[i].cpsj
+          }
+          console.log(res.result)
+          _this.setData({
+            szzhi: res.result,
+            rkSum: sum
+          })
         }
-        console.log(res.result)
-        _this.setData({
-          szzhi: res.result,
-          rkSum: sum
-        })
-      }
-    })
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '" + gs_name + "' and cpname like '%" + _this.data.product_name + "%'"
+        },
+        success: res => {
+          var sum = 0;
+          for (let i = 0; i < res.result.recordset.length; i++) {
+            sum += res.result.recordset[i].cpsl * res.result.recordset[i].cpsj
+          }
+          console.log(res.result.recordset)
+          _this.setData({
+            szzhi: res.result.recordset,
+            rkSum: sum
+          })
+        }
+      })
+      
+    }
+   
   },
   /**
    * 生命周期函数--监听页面显示

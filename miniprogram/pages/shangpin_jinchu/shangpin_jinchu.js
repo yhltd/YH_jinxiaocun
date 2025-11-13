@@ -16,7 +16,10 @@ Page({
   onLoad: function(options) {
     var _this = this
     var that = this
-    var sql = "select cpname from yh_jinxiaocun_mingxi where gs_name ='" + app.globalData.gongsi + "' group by cpname"
+
+    if(app.globalData.shujuku==0){
+
+      var sql = "select cpname from yh_jinxiaocun_mingxi where gs_name ='" + app.globalData.gongsi + "' group by cpname"
     console.log(sql)
     wx.cloud.callFunction({
       name: "sqlConnection",
@@ -36,6 +39,33 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var sql = "select cpname from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name ='" + app.globalData.gongsi + "' group by cpname"
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: { 
+        query: sql
+      },
+      success(res) {
+        var product_list = ['']
+        for(var i=0; i<res.result.recordset.length; i++){
+          product_list.push(res.result.recordset[i].cpname)
+        }
+        that.setData({
+          product_list: product_list
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+      
+    }
+
+    
   },
 
   bindPickerChange: function(e){
@@ -74,7 +104,10 @@ Page({
       icon: 'loading',
       duration: 1000
     })
-    var gongsi = app.globalData.gongsi
+
+    if(app.globalData.shujuku==0){
+
+      var gongsi = app.globalData.gongsi
     var product_name = _this.data.product_name
     var sql = "select mx.sp_dm,mx.cpname,mx.cplb,ifnull(rk.cpsl,0) as ruku_num,ifnull(rk.cp_price,0) as ruku_price,ifnull(ck.cpsl,0) as chuku_num,ifnull(ck.cp_price,0) as chuku_price from (select sp_dm,cpname,cplb from yh_jinxiaocun_mingxi where gs_name ='" + gongsi + "' group by sp_dm,cpname,cplb) as mx left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '" + gongsi + "' group by sp_dm) as rk on mx.sp_dm=rk.sp_dm left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '" + gongsi + "' group by sp_dm) as ck on ck.sp_dm=rk.sp_dm"
 
@@ -96,6 +129,35 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var gongsi = app.globalData.gongsi
+    var product_name = _this.data.product_name
+    var sql = "select mx.sp_dm,mx.cpname,mx.cplb,ISNULL(rk.cpsl,0) as ruku_num,ISNULL(rk.cp_price,0) as ruku_price,ISNULL(ck.cpsl,0) as chuku_num,ISNULL(ck.cp_price,0) as chuku_price from (select sp_dm,cpname,cplb from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name ='" + gongsi + "' group by sp_dm,cpname,cplb) as mx left join (select sp_dm,SUM(CAST(cpsl AS DECIMAL(18,2))) as cpsl,SUM(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as cp_price from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '入库' and gs_name = '" + gongsi + "' group by sp_dm) as rk on mx.sp_dm=rk.sp_dm left join (select sp_dm,SUM(CAST(cpsl AS DECIMAL(18,2))) as cpsl,SUM(CAST(cpsl AS DECIMAL(18,2))*CAST(cpsj AS DECIMAL(18,2))) as cp_price from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where mxtype = '出库' and gs_name = '" + gongsi + "' group by sp_dm) as ck on ck.sp_dm=mx.sp_dm"
+
+    if(product_name != '' && product_name != undefined){
+      sql = sql + " where cpname = '" + product_name + "'"
+    }
+
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: sql
+      },
+      success(res) {
+        that.setData({
+          szzhi: res.result.recordset
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+      
+    }
+
+    
   },
 
   goto_print: function(){
@@ -166,24 +228,52 @@ Page({
       content: '是否删除？',
       success: function(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
-            },
-            success(res) {
-              // that.setData({
-              //   szzhi: res.result
-              // }
-              // )
-              console.log
-              // console.log(that.data.szzhi)
-            },
-            fail(res) {
-              console.log("失败", res)
 
-            }
-          });
+          if(app.globalData.shujuku==0){
+
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "DELETE FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+            
+          }
+
+          
           // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
           //   success: console.log,
           //   fail: console.error,

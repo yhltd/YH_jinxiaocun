@@ -128,37 +128,78 @@ Page({
     console.log(_this.data.dlm)
     console.log(_this.data.xm)
     console.log(_this.data.dh)
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select *,case when ifnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user2 from teacher where UserName like '%" + e[0] + "%' and RealName like '%" + e[1] + "%' and Phone like '%" + e[2] + "%' and Company='"+user+"'"
-      },
-      success: res => {
-        console.log(res.result)
-        var list = res.result
-        for(var i=0; i<list.length; i++){
-          if(list[i].UseType == null){
-            list[i].UseType = ""
-          }
-        }
-        _this.setData({
-          list: list
-        })
-        console.log(list)
 
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+        data: {
+          sql: "select *,case when ifnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user2 from teacher where UserName like '%" + e[0] + "%' and RealName like '%" + e[1] + "%' and Phone like '%" + e[2] + "%' and Company='"+user+"'"
+        },
+        success: res => {
+          console.log(res.result)
+          var list = res.result
+          for(var i=0; i<list.length; i++){
+            if(list[i].UseType == null){
+              list[i].UseType = ""
+            }
+          }
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+  
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select *,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user2 from xueshengguanlixitong_excel.dbo.teacher where UserName like '%" + e[0] + "%' and RealName like '%" + e[1] + "%' and Phone like '%" + e[2] + "%' and Company='" + user + "'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          var list = res.result.recordset
+          for(var i=0; i<list.length; i++){
+            if(list[i].UseType == null){
+              list[i].UseType = ""
+            }
+          }
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+  
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+    
   },
   getExcel : function(){ 
     var _this = this;
@@ -305,55 +346,114 @@ Page({
     })
     console.log(userInfo.ID)
     console.log(userInfo.Company)
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='用户管理'"
-      },
-      success: res => {
-        console.log(res.result)
-        var list = res.result
-        var zeng = 0
-        var shan = 0
-        var gai = 0
-        var cha = 0
-        console.log(list)
-        if(list.length > 0){
-          zeng = list[0].add
-          shan = list[0].del
-          gai = list[0].upd
-          cha = list[0].sel
-        }
-        
-        _this.setData({
-          quanxian_zeng:zeng,
-          quanxian_shan:shan,
-          quanxian_gai:gai,
-          quanxian_cha:cha,
-        })
-        if(cha == '√'){
-          var e = ['','','']
-          _this.tableShow(e)
-        }else{
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+        data: {
+          sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='用户管理'"
+        },
+        success: res => {
+          console.log(res.result)
+          var list = res.result
+          var zeng = 0
+          var shan = 0
+          var gai = 0
+          var cha = 0
+          console.log(list)
+          if(list.length > 0){
+            zeng = list[0].add
+            shan = list[0].del
+            gai = list[0].upd
+            cha = list[0].sel
+          }
+          
+          _this.setData({
+            quanxian_zeng:zeng,
+            quanxian_shan:shan,
+            quanxian_gai:gai,
+            quanxian_cha:cha,
+          })
+          if(cha == '√'){
+            var e = ['','','']
+            _this.tableShow(e)
+          }else{
+            wx.showToast({
+              title: '无查询权限！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
           wx.showToast({
-            title: '无查询权限！',
+            title: '请求失败！',
             icon: 'none',
             duration: 3000
           })
+          console.log("请求失败！")
         }
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from xueshengguanlixitong_excel.dbo.power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='用户管理'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          var list = res.result.recordset
+          var zeng = 0
+          var shan = 0
+          var gai = 0
+          var cha = 0
+          console.log(list)
+          if(list.length > 0){
+            zeng = list[0].add
+            shan = list[0].del
+            gai = list[0].upd
+            cha = list[0].sel
+          }
+          
+          _this.setData({
+            quanxian_zeng:zeng,
+            quanxian_shan:shan,
+            quanxian_gai:gai,
+            quanxian_cha:cha,
+          })
+          if(cha == '√'){
+            var e = ['','','']
+            _this.tableShow(e)
+          }else{
+            wx.showToast({
+              title: '无查询权限！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+   
 
 
   },
@@ -419,7 +519,10 @@ Page({
 
     if(userNum != undefined && userNum != null){
       if(userNum != ""){
-        var sql = "select count(id) as id from teacher where Company ='" + _this.data.userInfo.Company + "'"
+
+        if(app.globalData.shujuku==0){
+
+          var sql = "select count(id) as id from teacher where Company ='" + _this.data.userInfo.Company + "'"
         wx.cloud.callFunction({
           name: 'sql_jiaowu',
           data: {
@@ -461,6 +564,56 @@ Page({
             console.log("请求失败！")
           }
         })
+
+        }else if(app.globalData.shujuku == 1){
+
+          sql = "select count(id) as id from xueshengguanlixitong_excel.dbo.teacher where Company ='" + _this.data.userInfo.Company + "'"
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: sql
+          },
+          success: res => {
+            console.log(res.result.recordset[0].id)
+            console.log(userNum)
+            if(res.result.recordset[0].id * 1 >= userNum * 1){
+              wx.showToast({
+                title: '已有账号数量过多，请删除无用账号后再试！',
+                icon: 'none'
+              })
+            }else{
+              _this.setData({
+                tjShow: true,
+                dlm: "",
+                mm: "",
+                xm: "",
+                yhlb: "",
+                nl: "",
+                dh:"",
+                jtzz:"",
+                sfzh:"",
+                xl:"",
+                zt:"",
+              })
+            }
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none',
+              duration: 3000
+            })
+            console.log("请求失败！")
+          }
+        })
+          
+        }
+
+
+        
       }else{
         _this.setData({
           tjShow: true,
@@ -527,43 +680,91 @@ Page({
     console.log(_this.data.xl)
     console.log(_this.data.zt)
     if (_this.data.dlm != "" && _this.data.mm != "" && _this.data.xm != "" && _this.data.dh != "") {
-      wx.cloud.callFunction({
-        name: 'sql_jiaowu',
-        data: {
-          sql: "insert into teacher(UserName,Password,RealName,UseType,Age,Phone,Home,photo,Education,state,Company) values('" + _this.data.dlm + "','" + _this.data.mm + "','" + _this.data.xm + "','" + _this.data.yhlb + "','" + _this.data.nl + "','" + _this.data.dh +"','" + _this.data.jtzz +"','" + _this.data.sfzh +"','" + _this.data.xl +"','" + _this.data.zt +"','"+user+"')"
-        },
-        success: res => {
-          _this.setData({
-            dlm: "",
-            mm: "",
-            xm: "",
-            yhlb: "",
-            nl: "",
-            dh:"",
-            jtzz:"",
-            sfzh:"",
-            xl:"",
-            zt:"",
-          })
-          _this.qxShow()
-          var e = ['','','']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+
+
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: "insert into teacher(UserName,Password,RealName,UseType,Age,Phone,Home,photo,Education,state,Company) values('" + _this.data.dlm + "','" + _this.data.mm + "','" + _this.data.xm + "','" + _this.data.yhlb + "','" + _this.data.nl + "','" + _this.data.dh +"','" + _this.data.jtzz +"','" + _this.data.sfzh +"','" + _this.data.xl +"','" + _this.data.zt +"','"+user+"')"
+          },
+          success: res => {
+            _this.setData({
+              dlm: "",
+              mm: "",
+              xm: "",
+              yhlb: "",
+              nl: "",
+              dh:"",
+              jtzz:"",
+              sfzh:"",
+              xl:"",
+              zt:"",
+            })
+            _this.qxShow()
+            var e = ['','','']
+            _this.tableShow(e)
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "insert into xueshengguanlixitong_excel.dbo.teacher(UserName,Password,RealName,UseType,Age,Phone,Home,photo,Education,state,Company) values('" + _this.data.dlm + "','" + _this.data.mm + "','" + _this.data.xm + "','" + _this.data.yhlb + "','" + _this.data.nl + "','" + _this.data.dh + "','" + _this.data.jtzz + "','" + _this.data.sfzh + "','" + _this.data.xl + "','" + _this.data.zt + "','" + user + "')"
+          },
+          success: res => {
+            _this.setData({
+              dlm: "",
+              mm: "",
+              xm: "",
+              yhlb: "",
+              nl: "",
+              dh:"",
+              jtzz:"",
+              sfzh:"",
+              xl:"",
+              zt:"",
+            })
+            _this.qxShow()
+            var e = ['','','']
+            _this.tableShow(e)
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
+      }
+
+      
     } else {
       wx.showToast({
         title: '信息输入不全！',
@@ -614,7 +815,10 @@ Page({
                           //获取到你的openid
                           console.log("====openID=======");
                           console.log(_this.data.wxOpenId);
-                          var sql = "update teacher set wechart_user = '" + _this.data.wxOpenId + "' where ID=" +  list[index].ID
+
+                          if(app.globalData.shujuku==0){
+
+                            var sql = "update teacher set wechart_user = '" + _this.data.wxOpenId + "' where ID=" +  list[index].ID
                           console.log(sql)
                           wx.cloud.callFunction({
                             name: 'sql_jiaowu',
@@ -631,6 +835,31 @@ Page({
                               _this.tableShow(e)
                             }
                           })
+
+                          }else if(app.globalData.shujuku == 1){
+
+                            var sql = "update xueshengguanlixitong_excel.dbo.teacher set wechart_user = '" + _this.data.wxOpenId + "' where ID=" + list[index].ID
+                          console.log(sql)
+                          wx.cloud.callFunction({
+                            name: 'sqlServer_117',
+                            data:{
+                              query : sql
+                            },
+                            success(res){
+                              console.log(res)
+                              wx.showToast({
+                                title: '绑定成功',
+                                icon:"none"
+                              })
+                              var e = ['', '','']
+                              _this.tableShow(e)
+                            }
+                          })
+                            
+                          }
+
+
+                          
                       }
                   })
               }
@@ -666,7 +895,11 @@ Page({
       content: '是否解除此账号的微信绑定？',
       success: function(res) {
         if (res.confirm) {
-          var sql = "update teacher set wechart_user = '' where id=" +  list[index].ID
+
+
+          if(app.globalData.shujuku==0){
+
+            var sql = "update teacher set wechart_user = '' where id=" +  list[index].ID
           console.log(sql)
           wx.cloud.callFunction({
             name: 'sql_jiaowu',
@@ -683,6 +916,30 @@ Page({
               _this.tableShow(e)
             }
           })
+
+          }else if(app.globalData.shujuku == 1){
+
+            var sql = "update xueshengguanlixitong_excel.dbo.teacher set wechart_user = '' where id=" + list[index].ID
+          console.log(sql)
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data:{
+              query : sql
+            },
+            success(res){
+              console.log(res)
+              wx.showToast({
+                title: '解绑成功',
+                icon:"none"
+              })
+              var e = ['', '','']
+              _this.tableShow(e)
+            }
+          })
+            
+          }
+
+          
         }
       }
     })
@@ -692,44 +949,92 @@ Page({
     var _this = this
     let user = app.globalData.gongsi;
     if (_this.data.dlm != "" && _this.data.mm != "" && _this.data.xm != "" && _this.data.dh != "") {
-      wx.cloud.callFunction({
-        name: 'sql_jiaowu',
-        data: {
-          sql: "update teacher set UserName='" + _this.data.dlm + "',Password='" + _this.data.mm + "',RealName='" + _this.data.xm + "',UseType='" + _this.data.yhlb + " ',Age='" + _this.data.nl + " ',Phone='" + _this.data.dh + " ',Home='" + _this.data.jtzz + " ',photo='" + _this.data.sfzh + " ',Education='" + _this.data.xl + " ',state='" + _this.data.zt + " ' where ID='" + _this.data.id +"'"
-        },
-        success: res => {
-          _this.setData({
-            dlm: "",
-            mm: "",
-            xm: "",
-            yhlb: "",
-            nl: "",
-            dh:"",
-            jtzz:"",
-            sfzh:"",
-            xl:"",
-            zt:"",
-          })
-          _this.qxShow()
-          var e = ['', '','']
-          _this.tableShow(e)
 
-          wx.showToast({
-            title: '修改成功！',
-            icon: 'none'
-          })  
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: "update teacher set UserName='" + _this.data.dlm + "',Password='" + _this.data.mm + "',RealName='" + _this.data.xm + "',UseType='" + _this.data.yhlb + " ',Age='" + _this.data.nl + " ',Phone='" + _this.data.dh + " ',Home='" + _this.data.jtzz + " ',photo='" + _this.data.sfzh + " ',Education='" + _this.data.xl + " ',state='" + _this.data.zt + " ' where ID='" + _this.data.id +"'"
+          },
+          success: res => {
+            _this.setData({
+              dlm: "",
+              mm: "",
+              xm: "",
+              yhlb: "",
+              nl: "",
+              dh:"",
+              jtzz:"",
+              sfzh:"",
+              xl:"",
+              zt:"",
+            })
+            _this.qxShow()
+            var e = ['', '','']
+            _this.tableShow(e)
+  
+            wx.showToast({
+              title: '修改成功！',
+              icon: 'none'
+            })  
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "update xueshengguanlixitong_excel.dbo.teacher set UserName='" + _this.data.dlm + "',Password='" + _this.data.mm + "',RealName='" + _this.data.xm + "',UseType='" + _this.data.yhlb + "',Age='" + _this.data.nl + "',Phone='" + _this.data.dh + "',Home='" + _this.data.jtzz + "',photo='" + _this.data.sfzh + "',Education='" + _this.data.xl + "',state='" + _this.data.zt + "' where ID=" + _this.data.id
+          },
+          success: res => {
+            _this.setData({
+              dlm: "",
+              mm: "",
+              xm: "",
+              yhlb: "",
+              nl: "",
+              dh:"",
+              jtzz:"",
+              sfzh:"",
+              xl:"",
+              zt:"",
+            })
+            _this.qxShow()
+            var e = ['', '','']
+            _this.tableShow(e)
+  
+            wx.showToast({
+              title: '修改成功！',
+              icon: 'none'
+            })  
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
+      }
+
+      
     } else {
       wx.showToast({
         title: '信息输入不全！',
@@ -748,6 +1053,8 @@ Page({
       })
       return;
     }
+
+    if(app.globalData.shujuku==0){
 
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
@@ -786,6 +1093,50 @@ Page({
           console.log("请求失败！")
         }
       })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "delete from xueshengguanlixitong_excel.dbo.teacher where ID='" + _this.data.id + "'"
+        },
+        success: res => {
+          _this.setData({
+            dlm: "",
+            mm: "",
+            xm: "",
+            yhlb: "",
+            nl: "",
+            dh:"",
+            jtzz:"",
+            sfzh:"",
+            xl:"",
+            zt:"",
+          })
+          _this.qxShow()
+          var e = ['', '','']
+          _this.tableShow(e)
+          wx.showToast({
+            title: '删除成功！',
+            icon: 'none'
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+      
   },
 
   entering:function(){

@@ -59,33 +59,70 @@ Page({
     var gongsi = app.globalData.gongsi
 
     const db = wx.cloud.database();
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "select *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
-      },
-      success: res=> {
-        console.log(res.result)
-        for(var i=0;i<res.result.length;i++){
-          var imgData = QR.drawImg(res.result[i].sp_dm, {
-            typeNumber: 4,
-            errorCorrectLevel: 'M',
-            size: 500
-         })
-         res.result[i].qrcode = imgData
-          if(res.result[i].mark1 != null){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "select *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
+        },
+        success: res=> {
+          console.log(res.result)
+          for(var i=0;i<res.result.length;i++){
+            var imgData = QR.drawImg(res.result[i].sp_dm, {
+              typeNumber: 4,
+              errorCorrectLevel: 'M',
+              size: 500
+           })
+           res.result[i].qrcode = imgData
+            if(res.result[i].mark1 != null){
+              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+            }
           }
+          console.log(res.result)
+          that.setData({
+            all: res.result,
+          })
+        },
+        fail: res=> {
+          console.log("失败", res)
         }
-        console.log(res.result)
-        that.setData({
-          all: res.result,
-        })
-      },
-      fail: res=> {
-        console.log("失败", res)
-      }
-    });
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: "select *,0 as isSelect,'' as checkbox from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name = '" + gongsi + "'"
+        },
+        success: res=> {
+          console.log(res.result)
+          for(var i=0;i<res.result.recordset.length;i++){
+            var imgData = QR.drawImg(res.result.recordset[i].sp_dm, {
+              typeNumber: 4,
+              errorCorrectLevel: 'M',
+              size: 500
+           })
+           res.result.recordset[i].qrcode = imgData
+            if(res.result.recordset[i].mark1 != null){
+              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+            }
+          }
+          console.log(res.result)
+          that.setData({
+            all: res.result.recordset,
+          })
+        },
+        fail: res=> {
+          console.log("失败", res)
+        }
+      });
+      
+    }
+
+    
   },
 
   /**
@@ -160,22 +197,48 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT ,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
-        },
-        success(res) {
-          that.setData({
-            all: res.result
-          })
-          console.log(that.data.szzhi)
-        },
-        fail(res) {
-          console.log("失败", res)
 
-        }
-      });
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: "sqlConnection",
+          data: {
+            sql: "SELECT *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'"
+          },
+          success(res) {
+            that.setData({
+              all: res.result
+            })
+            console.log(that.data.szzhi)
+          },
+          fail(res) {
+            console.log("失败", res)
+  
+          }
+        });
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: "sqlServer_117",
+          data: {
+            query: "select *,0 as isSelect,'' as checkbox from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name = '" + gongsi + "'"
+          },
+          success(res) {
+            that.setData({
+              all: res.result.recordset
+            })
+            console.log(that.data.szzhi)
+          },
+          fail(res) {
+            console.log("失败", res)
+  
+          }
+        });
+        
+      }
+
+      
       // db.collection("Yh_JinXiaoCun_mingxi").where({
       //   finduser: finduser,
       //   gongsi: gongsi,
@@ -194,22 +257,48 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
-        },
-        success(res) {
-          that.setData({
-            all: res.result
-          })
-          console.log(that.data.all)
-        },
-        fail(res) {
-          console.log("失败", res)
 
-        }
-      });
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: "sqlConnection",
+          data: {
+            sql: "SELECT *,0 as isSelect,'' as checkbox from yh_jinxiaocun_jichuziliao where gs_name = '" + gongsi + "'and name like '%" + e.detail.value + "%'"
+          },
+          success(res) {
+            that.setData({
+              all: res.result
+            })
+            console.log(that.data.all)
+          },
+          fail(res) {
+            console.log("失败", res)
+  
+          }
+        });
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: "sqlServer_117",
+          data: {
+            query: "select *,0 as isSelect,'' as checkbox from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
+          },
+          success(res) {
+            that.setData({
+              all: res.result.recordset
+            })
+            console.log(that.data.all)
+          },
+          fail(res) {
+            console.log("失败", res)
+  
+          }
+        });
+        
+      }
+
+      
     }
   },
 
@@ -228,29 +317,62 @@ Page({
       content: '是否删除？',
       success: function(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "delete from Yh_JinXiaoCun_jichuziliao where sp_dm = '" + that.data.all[id].sp_dm + "'"
-            },
-            success(res) {
-              console.log("成功", res)
-              wx.showToast({
-                title: '删除成功',
-                icon:'none',
-              })
-              that.init();
-              // that.setData({
-              //     all: res.data,
 
-              //   })
-              // szZhi = 
-            },
-            fail(res) {
-              console.log("失败", res)
+          if(app.globalData.shujuku==0){
 
-            }
-          });
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "delete from Yh_JinXiaoCun_jichuziliao where sp_dm = '" + that.data.all[id].sp_dm + "'"
+              },
+              success(res) {
+                console.log("成功", res)
+                wx.showToast({
+                  title: '删除成功',
+                  icon:'none',
+                })
+                that.init();
+                // that.setData({
+                //     all: res.data,
+  
+                //   })
+                // szZhi = 
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "delete from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where sp_dm = '" + that.data.all[id].sp_dm + "'"
+              },
+              success(res) {
+                console.log("成功", res)
+                wx.showToast({
+                  title: '删除成功',
+                  icon:'none',
+                })
+                that.init();
+                // that.setData({
+                //     all: res.data,
+  
+                //   })
+                // szZhi = 
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+            
+          }
+
+          
           // db.collection("Yh_JinXiaoCun_chanpin").doc(that.data.all[id]._id).remove({
           //   success: console.log,
           //   fail: console.error,

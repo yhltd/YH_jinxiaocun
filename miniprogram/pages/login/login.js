@@ -141,7 +141,6 @@ var login = function(that,info) {
       name: "sqlConnection",
       data: {
         sql: "select _id,AdminIS,Btype,Createdate,_openid,gongsi,jigoudaima,name,password,mi_bao,C_id,wechart_user from yh_jinxiaocun_user where gongsi = '" + that.data.gongsi + "' and `password` = '" + that.data.pwd + "' and `name` ='" + that.data.name + "'"
-       
       },
       success(res) {
         console.log("成功", res)
@@ -168,6 +167,7 @@ var login = function(that,info) {
             app.globalData.adminis = adminis,
             app.globalData.gongsi = gongsi
             app.globalData.userNum = that.data.userNum;
+            app.globalData.shujuku = 0,
           console.log("密码对")
           //登录状态写入缓存
           wx.setStorage({
@@ -183,12 +183,73 @@ var login = function(that,info) {
             url: '../shouye/shouye'
           })
         } else {
-          console.log("密码错误")
-          wx.showToast({
-            title: '密码错误',
-            image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
-            mask: true,
-            duration: 1000
+          wx.cloud.callFunction({
+            name: "sqlServer_117",
+            data: {
+              query: "select _id,AdminIS,Btype,Createdate,_openid,gongsi,jigoudaima,name,password,mi_bao,C_id,wechart_user from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_user_mssql where gongsi = '" + that.data.gongsi + "' and [password] = '" + that.data.pwd + "' and [name] = '" + that.data.name + "'"
+            },
+            success(res) {
+              console.log("成功", res.result.recordset)
+      
+              var recordset = res.result.recordset || [];
+
+            if (recordset && recordset.length > 0) {
+              // 遍历所有记录，删除touxiang字段
+              recordset.forEach(function(row) {
+                delete row.touxiang;
+              });
+              console.log("处理后数据（已删除touxiang字段）: ", recordset);
+            }
+
+            if (recordset.length > 0) {
+              listAll.push(recordset)
+              gongsi = listAll[0][0].gongsi,
+                finduser = listAll[0][0].name,
+                passwod = listAll[0][0].password,
+
+                adminis = listAll[0][0].AdminIS,
+                // openid = listAll[0]._openid,          
+                // app.globalData.openid = openid,
+                app.globalData.finduser = finduser,
+                app.globalData.passwod = passwod,
+                app.globalData.adminis = adminis,
+                app.globalData.gongsi = gongsi
+                app.globalData.userNum = that.data.userNum;
+                app.globalData.shujuku = 1,
+              console.log("密码对")
+                //登录状态写入缓存
+                wx.setStorage({
+                  key: "IsLogin",
+                  data: true
+                })
+                if(that.data.jizhu_panduan){
+                  that.remember_user(info.inputName,info.inputPwd)
+                }else{
+                  that.remove_user()
+                }
+                wx.switchTab({
+                  url: '../shouye/shouye'
+                })
+              } else {
+                console.log("密码错误")
+                wx.showToast({
+                  title: '密码错误',
+                  image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
+                  mask: true,
+                  duration: 1000
+                })
+              }
+              wx.hideNavigationBarLoading(); //隐藏加载
+              wx.stopPullDownRefresh();
+            },
+            fail(res) {
+              console.log("失败", res)
+            },
+            complete : function(){
+              that.setData({
+                lock : true
+              })
+            }
           })
         }
         wx.hideNavigationBarLoading(); //隐藏加载
@@ -222,7 +283,10 @@ var login = function(that,info) {
           console.log("处理后数据（已删除touxiang字段）: ", res.result);
         }
 
+ 
+
         if (res.result.length > 0) {
+          
           var userInfo = res.result[0]
           console.log(userInfo)
           if(that.data.jizhu_panduan){
@@ -234,13 +298,48 @@ var login = function(that,info) {
             url: '../../package_jiaowu/pages/shows/shows?userInfo='+JSON.stringify(userInfo)
           })
           app.globalData.userNum = that.data.userNum;
+          app.globalData.shujuku = 0;
         } else {
-          console.log("密码错误")
-          wx.showToast({
-            title: '密码错误',
-            image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
-            mask: true,
-            duration: 1000
+          wx.cloud.callFunction({
+            name: "sqlServer_117",
+            data: {
+              query: "select ID,UserName,Password,RealName,UseType,Age,Phone,Home,photo,Education,Company,state,wechart_user from xueshengguanlixitong_excel.dbo.teacher where Company = '" + that.data.gongsi + "' and [Password] = '" + that.data.pwd + "' and [UserName] = '" + that.data.name + "'"
+            },
+            success(res) {
+              console.log("成功", res)
+              if (res.result.recordset.length > 0) {
+                var userInfo = res.result.recordset[0]
+                console.log(userInfo)
+                if(that.data.jizhu_panduan){
+                  that.remember_user(info.inputName,info.inputPwd)
+                }else{
+                  that.remove_user()
+                }
+                wx.navigateTo({
+                  url: '../../package_jiaowu/pages/shows/shows?userInfo='+JSON.stringify(userInfo)
+                })
+                app.globalData.userNum = that.data.userNum;
+                app.globalData.shujuku = 1;
+              } else {
+                console.log("密码错误")
+                wx.showToast({
+                  title: '密码错误',
+                  image: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/icon-no.png",
+                  mask: true,
+                  duration: 1000
+                })
+              }
+              wx.hideNavigationBarLoading(); //隐藏加载
+              wx.stopPullDownRefresh();
+            },
+            fail(res) {
+              console.log("失败", res)
+            },
+            complete : function(){
+              that.setData({
+                lock : true
+              })
+            }
           })
         }
         wx.hideNavigationBarLoading(); //隐藏加载
@@ -1165,6 +1264,7 @@ Page({
       mask : 'true'
     })
     var _this = this;
+
     wx.cloud.callFunction({
       name: arr[0],
       data: {
@@ -1366,6 +1466,42 @@ Page({
         gongsi : "选择公司"
       })
     }
+    // if(system=="云合未来进销存系统"){
+    //   _this.setData({
+    //     system,
+    //   })
+    //   wx.showLoading({
+    //     title: '获取公司信息中',
+    //     mask : 'true'
+    //   })
+    //   var _this = this;
+    //   wx.cloud.callFunction({
+    //     name: "sqlConnection",
+    //     data: {
+    //       sql: "select gongsi from yh_jinxiaocun_user GROUP BY gongsi"
+    //     },
+    //     success: res => {
+    //       console.log(res);
+    //       var list = []
+    //       for(var i=0;i<res.result.length;i++){
+    //         list.push(res.result[i].gongsi)
+    //       }
+    //       _this.setData({
+    //         pickerArray : list
+    //       })
+    //       wx.hideLoading({
+    //         success: (res) => {},
+    //       })
+    //       return;
+    //     },
+    //     err: res => {
+    //       console.log("错误!", res)
+    //     },
+    //     fail:res=>{
+    //       console.log(res)
+    //     }
+    //   })
+    // }
     if(system=="云合未来进销存系统"){
       _this.setData({
         system,
@@ -1375,33 +1511,116 @@ Page({
         mask : 'true'
       })
       var _this = this;
+      
+      // 第一个请求
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
           sql: "select gongsi from yh_jinxiaocun_user GROUP BY gongsi"
         },
         success: res => {
-          console.log(res);
-          var list = []
+          console.log("第一个请求结果:", res);
+          var list1 = []
           for(var i=0;i<res.result.length;i++){
-            list.push(res.result[i].gongsi)
+            list1.push(res.result[i].gongsi)
           }
-          _this.setData({
-            pickerArray : list
+          
+          // 第二个请求
+          wx.cloud.callFunction({
+            name: "sqlServer_117", // 如果第二个请求使用不同的云函数，请修改这里
+            data: {
+              query: "select gongsi from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_user_mssql GROUP BY gongsi" // 修改为您的第二个SQL查询
+            },
+            success: res2 => {
+              console.log("第二个请求结果:", res2.result.recordset);
+              var list2 = []
+              for(var i=0;i<res2.result.recordset.length;i++){
+                list2.push(res2.result.recordset[i].gongsi) // 根据实际字段名修改
+              }
+              
+              // 合并两个数组并去重
+              var combinedList = [...new Set([...list1, ...list2])];
+              
+              _this.setData({
+                pickerArray : combinedList
+              })
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            },
+            err: res2 => {
+              console.log("第二个请求错误!", res2)
+              // 如果第二个请求失败，只使用第一个请求的结果
+              _this.setData({
+                pickerArray : list1
+              })
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            },
+            fail: res2 => {
+              console.log("第二个请求失败", res2)
+              // 如果第二个请求失败，只使用第一个请求的结果
+              _this.setData({
+                pickerArray : list1
+              })
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            }
           })
+        },
+        err: res => {
+          console.log("第一个请求错误!", res)
           wx.hideLoading({
             success: (res) => {},
           })
-          return;
         },
-        err: res => {
-          console.log("错误!", res)
-        },
-        fail:res=>{
-          console.log(res)
+        fail: res => {
+          console.log("第一个请求失败", res)
+          wx.hideLoading({
+            success: (res) => {},
+          })
         }
       })
-    }if(system=="云合教务管理系统"){
+    }
+    // if(system=="云合教务管理系统"){
+    //   _this.setData({
+    //     system,
+    //   })
+    //   wx.showLoading({
+    //     title: '获取公司信息中',
+    //     mask : 'true'
+    //   })
+    //   var _this = this;
+    //   wx.cloud.callFunction({
+    //     name: "sql_jiaowu",
+    //     data: {
+    //       sql: "select Company from teacher GROUP BY Company"
+    //     },
+    //     success: res => {
+    //       console.log(res);
+    //       var list = []
+    //       for(var i=0;i<res.result.length;i++){
+    //         list.push(res.result[i].Company)
+    //       }
+    //       _this.setData({
+    //         pickerArray : list
+    //       })
+    //       wx.hideLoading({
+    //         success: (res) => {},
+    //       })
+    //       return;
+    //     },
+    //     err: res => {
+    //       console.log("错误!", res)
+    //     },
+    //     fail:res=>{
+    //       console.log(res)
+    //     }
+    //   })
+    // }
+    if(system=="云合教务管理系统"){
       _this.setData({
         system,
       })
@@ -1410,30 +1629,76 @@ Page({
         mask : 'true'
       })
       var _this = this;
+      
+      // 第一个请求
       wx.cloud.callFunction({
         name: "sql_jiaowu",
         data: {
           sql: "select Company from teacher GROUP BY Company"
         },
         success: res => {
-          console.log(res);
-          var list = []
+          console.log("第一个请求结果:", res);
+          var list1 = []
           for(var i=0;i<res.result.length;i++){
-            list.push(res.result[i].Company)
+            list1.push(res.result[i].Company)
           }
-          _this.setData({
-            pickerArray : list
+          
+          // 第二个请求
+          wx.cloud.callFunction({
+            name: "sqlServer_117", // 如果第二个请求使用不同的云函数，请修改这里
+            data: {
+              query: "select Company from xueshengguanlixitong_excel.dbo.teacher GROUP BY Company"
+            },
+            success: res2 => {
+              console.log("第二个请求结果:", res2.result.recordset);
+              var list2 = []
+              for(var i=0;i<res2.result.recordset.length;i++){
+                list2.push(res2.result.recordset[i].Company) 
+              }
+              
+              // 合并两个数组并去重
+              var combinedList = [...new Set([...list1, ...list2])];
+              
+              _this.setData({
+                pickerArray : combinedList
+              })
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            },
+            err: res2 => {
+              console.log("第二个请求错误!", res2)
+              // 如果第二个请求失败，只使用第一个请求的结果
+              _this.setData({
+                pickerArray : list1
+              })
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            },
+            fail: res2 => {
+              console.log("第二个请求失败", res2)
+              // 如果第二个请求失败，只使用第一个请求的结果
+              _this.setData({
+                pickerArray : list1
+              })
+              wx.hideLoading({
+                success: (res) => {},
+              })
+            }
           })
+        },
+        err: res => {
+          console.log("第一个请求错误!", res)
           wx.hideLoading({
             success: (res) => {},
           })
-          return;
         },
-        err: res => {
-          console.log("错误!", res)
-        },
-        fail:res=>{
-          console.log(res)
+        fail: res => {
+          console.log("第一个请求失败", res)
+          wx.hideLoading({
+            success: (res) => {},
+          })
         }
       })
     }
@@ -1690,6 +1955,27 @@ Page({
     console.log('公司名称:', companyName)
     console.log('系统名称:', systemName)
 
+    if(systemName=="云合分权编辑系统"){
+      systemName="分权编辑系统"
+    }
+    if(systemName=="云合未来进销存系统"){
+      systemName="云合未来进销存系统"
+    }
+    if(systemName=="云合人事管理系统"){
+      systemName="云合人事管理系统"
+    }
+    if(systemName=="云合排产管理系统"){
+      systemName="云合排产管理系统"
+    }
+    if(systemName=="云合未来财务系统"){
+      systemName="云合未来财务系统"
+    }
+    if(systemName=="云合教务管理系统"){
+      systemName="教务管理系统"
+    }
+    if(systemName=="云合智慧门店收银系统"){
+      systemName="云合智慧门店收银系统"
+    }
     
     wx.cloud.callFunction({
       name: 'sqlServer_117',
@@ -1704,10 +1990,21 @@ Page({
           
   
           // 处理beizhu2（图片数据）
-
+          if (firstItem.beizhu2 && this.isValidBase64Image(firstItem.beizhu2)) {
             this.processBeizhu2(firstItem.beizhu2);
-
-            this.processBeizhu3(firstItem.beizhu3);
+        } else {
+            this.setData({
+                logoImage: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/companyLogo.png"
+            });
+        }
+        if(firstItem.beizhu3 && firstItem.beizhu3.trim() !== ""){
+          this.processBeizhu3(firstItem.beizhu3);
+        }else{
+          this.setData({
+            pageTitle: "欢迎使用云合一体化系统"
+          });
+        }
+            
           
         } else {
           console.log('未查询到相关数据')

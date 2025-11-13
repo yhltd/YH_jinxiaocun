@@ -112,35 +112,70 @@ Page({
     }else{
       stop_date = "2100-12-31 23:59:59"
     }
-    console.log("SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT '"+page+"', 5;" )
 
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT "+page+", 5" 
-      },
-      success(res) {
-        for(var i=0;i<res.result.length;i++){
-          if(res.result[i].mark1 != null){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT "+page+", 5" 
+        },
+        success(res) {
+          for(var i=0;i<res.result.length;i++){
+            if(res.result[i].mark1 != null){
+              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+            }
           }
+          console.log(res.result)
+          _this.setData({
+            szzhi: res.result,
+           
+            // start_date:'',
+            // stop_date:'',
+            // order_number:'',
+          })
+          console.log(_this.data.szzhi)
+        },
+        fail(res) {
+          console.log(res.result)
+          console.log("失败", res)
+  
         }
-        console.log(res.result)
-        _this.setData({
-          szzhi: res.result,
-         
-          // start_date:'',
-          // stop_date:'',
-          // order_number:'',
-        })
-        console.log(_this.data.szzhi)
-      },
-      fail(res) {
-        console.log(res.result)
-        console.log("失败", res)
+      });
 
-      }
-    });
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: "SELECT * FROM (SELECT m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%') as t WHERE RowNum BETWEEN " + (page * 5 + 1) + " AND " + (page * 5 + 5) + ""
+        },
+        success(res) {
+          for(var i=0;i<res.result.recordset.length;i++){
+            if(res.result.recordset[i].mark1 != null){
+              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+            }
+          }
+          console.log(res.result.recordset)
+          _this.setData({
+            szzhi: res.result.recordset,
+           
+            // start_date:'',
+            // stop_date:'',
+            // order_number:'',
+          })
+          console.log(_this.data.szzhi)
+        },
+        fail(res) {
+          console.log(res.result.recordset)
+          console.log("失败", res)
+  
+        }
+      });
+      
+    }
+
+   
   },
  up:function(){
    var _this=this
@@ -286,21 +321,46 @@ Page({
       content: '是否删除？',
       success: function(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "DELETE FROM yh_jinxiaocun_mingxi where _id = '" + uid + "'"
-            },
-            success: res=> {
-              wx.showToast({
-                title: '删除成功',
-              })
-              that.onLoad()
-            },
-            fail: res=> {
-              console.log("失败", res)
-            }
-          });
+
+          if(app.globalData.shujuku==0){
+
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "DELETE FROM yh_jinxiaocun_mingxi where _id = '" + uid + "'"
+              },
+              success: res=> {
+                wx.showToast({
+                  title: '删除成功',
+                })
+                that.onLoad()
+              },
+              fail: res=> {
+                console.log("失败", res)
+              }
+            });
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "DELETE FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where _id = '" + uid + "'"
+              },
+              success: res=> {
+                wx.showToast({
+                  title: '删除成功',
+                })
+                that.onLoad()
+              },
+              fail: res=> {
+                console.log("失败", res)
+              }
+            });
+            
+          }
+
+
         } else if (res.cancel) {
 
           return false;

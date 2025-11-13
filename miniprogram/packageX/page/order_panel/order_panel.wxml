@@ -27,7 +27,7 @@
   </view>
   </scroll-view>
   <scroll-view class="menu-list" scroll-y show-scrollbar="{{ false }}" enhanced>
-    <view class="list">
+    <!-- <view class="list">
       
        <block wx:for="{{product_list}}">
         <view class="menu-item">
@@ -49,7 +49,23 @@
         </view>
        </block>
     
+    </view> -->
+    <view class="list">
+  <block wx:for="{{product_list}}">
+    <view class="menu-item" bindtap="openFullscreenPopup" data-index="{{index}}">
+      <image class="item-photo" src="{{item.photo}}" mode=""/> 
+      <view class="youce">
+        <view class="item_details" data-name="{{item.product_name}}">
+          <view class="item-name">{{item.product_name}}</view>
+        </view>
+        <view class="price-btn">
+          <view class="item-price">{{item.price_look}}</view>
+          <button class="item-chooseGG" bindtap="stopPropagation" catchtap="openPopup" data-index="{{index}}">规格</button>
+        </view>
+      </view>
     </view>
+  </block>
+</view>
   </scroll-view>
 </view>
 
@@ -157,6 +173,78 @@
     <view class="right-btn" bindtap="order_insert">立即结账</view>
   </view>
 </scroll-view>
+
+<!-- 商品详情全屏弹窗 -->
+<!-- 商品详情全屏弹窗 -->
+<view class="fullscreen-popup" hidden="{{fullscreen_hid}}">
+  <view class="fullscreen-content">
+    <view class="close-btn" bindtap="closeFullscreenPopup">×</view>
+    
+    <!-- 图片显示区域 -->
+    <view class="fullscreen-image-container">
+      <!-- 多张图片时显示轮播图 -->
+      <view wx:if="{{imageList.length > 1}}">
+        <swiper 
+          class="image-swiper" 
+          indicator-dots="{{true}}" 
+          indicator-color="rgba(255,255,255,0.5)" 
+          indicator-active-color="#ffffff"
+          autoplay="{{false}}"
+          current="{{currentImageIndex}}"
+          bindchange="onImageSwiperChange"
+        >
+          <block wx:for="{{imageList}}" wx:key="index">
+            <swiper-item>
+              <image class="swiper-image" src="{{item}}" mode="aspectFit"></image>
+            </swiper-item>
+          </block>
+        </swiper>
+        
+        <!-- 缩略图指示器 -->
+        <view class="thumbnail-indicator">
+          <block wx:for="{{imageList}}" wx:key="index">
+            <view 
+              class="thumbnail-item {{currentImageIndex == index ? 'active' : ''}}" 
+              bindtap="switchImage" 
+              data-index="{{index}}"
+            >
+              <image class="thumbnail-image" src="{{item}}" mode="aspectFill"></image>
+            </view>
+          </block>
+        </view>
+      </view>
+      
+      <!-- 只有一张图片时直接显示 -->
+      <view wx:elif="{{imageList.length == 1}}">
+        <image class="single-image" src="{{imageList[0]}}" mode="aspectFit"></image>
+      </view>
+      
+      <!-- 没有图片时显示占位图 -->
+      <view wx:else class="no-image">
+        <text class="no-image-text">暂无图片</text>
+      </view>
+    </view>
+    
+    <!-- 商品信息区域 -->
+    <view class="fullscreen-info">
+      <view class="fullscreen-name">{{selectedProduct.product_name}}</view>
+      <view class="fullscreen-price">{{selectedProduct.price_look}}</view>
+      <view class="fullscreen-type">类别: {{selectedProduct.type}}</view>
+      <view class="fullscreen-specifications">规格: {{selectedProduct.specifications}}</view>
+      <view class="fullscreen-practice">保存方式: {{selectedProduct.practice}}</view>
+      <view class="fullscreen-xiangqing">详情: {{selectedProduct.xiangqing}}</view>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="fullscreen-btns">
+      <button class="fullscreen-close-btn" bindtap="closeFullscreenPopup">关闭</button>
+      <button class="fullscreen-order-btn" bindtap="openPopupFromFullscreen">选择规格</button>
+    </view>
+  </view>
+</view>
+
+<!-- 全屏弹窗遮罩 -->
+<view class="fullscreen-mask" hidden="{{fullscreen_hid}}" bindtap="closeFullscreenPopup"></view>
 
 <!-- 会员选择弹窗 -->
 <scroll-view scroll-y class="member" hidden="{{member_hid}}">

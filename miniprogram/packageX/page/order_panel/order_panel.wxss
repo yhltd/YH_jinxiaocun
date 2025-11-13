@@ -521,3 +521,211 @@
   display: flex;
   height: 200rpx;
 }
+
+
+
+
+/* 全屏弹窗样式 */
+.fullscreen-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.fullscreen-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9998;
+}
+
+.fullscreen-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+  position: relative;
+}
+
+/* 关闭按钮 */
+.close-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  z-index: 10;
+}
+
+/* 商品图片区域 */
+.fullscreen-image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+}
+
+.fullscreen-image {
+  width: 500rpx;
+  height: 500rpx;
+  border-radius: 20rpx;
+}
+
+/* 商品信息区域 */
+.fullscreen-info {
+  padding: 30rpx;
+  background: #f8f8f8;
+  border-radius: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.fullscreen-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #333;
+}
+
+.fullscreen-price {
+  font-size: 32rpx;
+  color: #f77c12;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.fullscreen-type,
+.fullscreen-specifications,
+.fullscreen-practice,
+.fullscreen-xiangqing {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+  line-height: 1.5;
+}
+
+/* 操作按钮 */
+.fullscreen-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.fullscreen-close-btn,
+.fullscreen-order-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullscreen-close-btn {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.fullscreen-order-btn {
+  background: #f77c12;
+  color: white;
+}
+
+/* 轮播图样式 */
+.image-swiper {
+  width: 100%;
+  height: 500rpx;
+  margin-bottom: 30rpx;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+
+/* 缩略图指示器 */
+.thumbnail-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.thumbnail-item {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+  border: 3rpx solid transparent;
+  transition: all 0.3s;
+}
+
+.thumbnail-item.active {
+  border-color: #e64340;
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 单张图片样式 */
+.single-image {
+  width: 500rpx;
+  height: 500rpx;
+  border-radius: 20rpx;
+}
+
+/* 无图片占位样式 */
+.no-image {
+  width: 500rpx;
+  height: 500rpx;
+  background: #f8f8f8;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-image-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 图片计数指示器 */
+.image-counter {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+/* 图片显示区域容器 */
+.fullscreen-image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40rpx;
+}

@@ -260,7 +260,10 @@ zongjia_refresh:function(){
               console.log(_this.data.shangpin_list)
               var panduan = false
               var qr_order_dm = res.result
-              var sql = "select * from yh_jinxiaocun_mingxi where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
+
+              if(app.globalData.shujuku==0){
+
+                var sql = "select * from yh_jinxiaocun_mingxi where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
               wx.cloud.callFunction({
                 name: "sqlConnection",
                 data: {
@@ -308,6 +311,61 @@ zongjia_refresh:function(){
                   console.log("失败", res)
                 }
               });
+
+              }else if(app.globalData.shujuku == 1){
+
+                var sql = "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where orderid = '" + qr_order_dm + "' and gs_name = '" + app.globalData.gongsi + "'"
+              wx.cloud.callFunction({
+                name: "sqlServer_117",
+                data: {
+                  query: sql
+                },
+                success(res) {
+                  console.log(res.result.recordset)
+                  var order_list = res.result.recordset
+                  for(var i=0; i<order_list.length; i++){
+                    var this_sp_dm = order_list[i].sp_dm
+                    panduan = false
+                    for(var j=0; j<_this.data.szzhi.length; j++){
+                      if(this_sp_dm = _this.data.szzhi[j].sp_dm){
+                        panduan = true
+                        var szsl = _this.data.szsl
+                        szsl[i] = (szsl[i] * 1) + 1
+                        _this.setData({
+                          szsl
+                        })
+                        break;
+                      }
+                    }
+                    if(panduan == false){
+                      for(var j=0; j<_this.data.shangpin_list.length; j++){
+                        if(_this.data.shangpin_list[j].sp_dm == this_sp_dm){
+                          var szzhi = _this.data.szzhi
+                          var szsl = _this.data.szsl
+                          var szje = _this.data.szje
+                          szzhi.push(_this.data.shangpin_list[j])
+                          szsl.push(1)
+                          szje.push(0)
+                          _this.setData({
+                            szzhi,
+                            szsl,
+                            szje
+                          })
+                          break;
+                        }
+                      }
+                    }
+                  }
+                  _this.zongjia_refresh()
+                },
+                fail(res) {
+                  console.log("失败", res)
+                }
+              });
+                
+              }
+
+              
             },
             fail: (res) => {
             wx.showToast({
@@ -528,25 +586,53 @@ zongjia_refresh:function(){
             })
           } else {
             for (var i = 0; i < szzhi.length; i++) {
-              wx.cloud.callFunction({
-                name: "sqlConnection",
-                data: {
-                  // sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + app.globalData.finduser + "','" + that.data.khname + "','" + today + "','" + szzhi[i]._id + "','" + szzhi[i].value0 + "','" + szzhi[i].value1 + "','" + szzhi[i].value3 + "','" + szsl[i] + "','出库','" + that.data.ddh+"')"
-                  sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "')"
-                  // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
-                },
-                success(res) {
-                  console.log("成功", res)
-                  // that.setData({
-                  //   all: res.result[id][0].beizhu
-                  // })
 
-                },
-                fail(res) {
-                  console.log("失败", res)
+              if(app.globalData.shujuku==0){
 
-                }
-              });
+                wx.cloud.callFunction({
+                  name: "sqlConnection",
+                  data: {
+                    // sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + app.globalData.finduser + "','" + that.data.khname + "','" + today + "','" + szzhi[i]._id + "','" + szzhi[i].value0 + "','" + szzhi[i].value1 + "','" + szzhi[i].value3 + "','" + szsl[i] + "','出库','" + that.data.ddh+"')"
+                    sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "')"
+                    // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
+                  },
+                  success(res) {
+                    console.log("成功", res)
+                    // that.setData({
+                    //   all: res.result[id][0].beizhu
+                    // })
+  
+                  },
+                  fail(res) {
+                    console.log("失败", res)
+  
+                  }
+                });
+
+              }else if(app.globalData.shujuku == 1){
+
+                wx.cloud.callFunction({
+                  name: "sqlServer_117",
+                  data: {
+                    // sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + app.globalData.finduser + "','" + that.data.khname + "','" + today + "','" + szzhi[i]._id + "','" + szzhi[i].value0 + "','" + szzhi[i].value1 + "','" + szzhi[i].value3 + "','" + szsl[i] + "','出库','" + that.data.ddh+"')"
+                    sql: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "')"
+                    // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
+                  },
+                  success(res) {
+                    console.log("成功", res)
+                    // that.setData({
+                    //   all: res.result[id][0].beizhu
+                    // })
+  
+                  },
+                  fail(res) {
+                    console.log("失败", res)
+  
+                  }
+                });
+                
+              }
+
               // db.collection('Yh_JinXiaoCun_mingxi').add({
               //   data: {
               //     today:today,

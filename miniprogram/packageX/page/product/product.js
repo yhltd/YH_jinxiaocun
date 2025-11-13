@@ -24,6 +24,11 @@ Page({
     shows: false, //控制下拉列表的显示隐藏，false隐藏、true显示
     type: [], //下拉列表的数据
     indexs: 0, //选择的下拉列 表下标,
+    tempImage1: "", // 临时存储图片1的base64
+    tempImage2: "", // 临时存储图片2的base64
+    tempImage3: "", // 临时存储图片3的base64
+    tempEditImage: "", // 临时存储编辑时的图片
+    isImageField: false, 
     getDate: function () {
       var myDate = new Date();
       var year = myDate.getFullYear();
@@ -74,6 +79,10 @@ Page({
             { text: "成本", width: "250rpx", columnName: "chengben", type: "text", isupd: true},
             { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
             { text: "保存方式", width: "300rpx", columnName: "practice", type: "text", isupd: true },
+            { text: "详情", width: "300rpx", columnName: "xiangqing", type: "text", isupd: true},
+            { text: "图片1", width: "200rpx", columnName: "photo", type: "text", isupd: true},
+            { text: "图片2", width: "200rpx", columnName: "photo1", type: "text", isupd: true },
+            { text: "图片3", width: "200rpx", columnName: "photo2", type: "text", isupd: true },
             { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true},
             ],
 
@@ -85,6 +94,10 @@ Page({
               { text: "成本", width: "200rpx", columnName: "chengben", type: "number", isupd: true },
               { text: "商品规格", width: "200rpx", columnName: "specifications", type: "text", isupd: true },
               { text: "保存方式", width: "200rpx", columnName: "practice", type: "text", isupd: true },
+              { text: "详情", width: "300rpx", columnName: "xiangqing", type: "text", isupd: true},
+              { text: "图片1", width: "200rpx", columnName: "photo", type: "text", isupd: true},
+              { text: "图片2", width: "200rpx", columnName: "photo1", type: "text", isupd: true },
+              { text: "图片3", width: "200rpx", columnName: "photo2", type: "text", isupd: true },
               { text: "是否停用", width: "200rpx", columnName: "tingyong", type: "text", isupd: true }
               
               ],
@@ -110,48 +123,148 @@ Page({
     })
   },
 
+  // clickView: function(e) {
+  //   var _this = this;
+  //   var dataset_input = e.currentTarget.dataset;
+  //   console.log(dataset_input)
+  //   if (!dataset_input.isupd) {
+  //     return;
+  //   }
+  //   if (dataset_input.input_type=="date") {
+  //     _this.setData({
+  //       updatePicker: false,
+  //       empty: dataset_input.value
+  //     })
+  //   }else{
+  //     _this.setData({
+  //       updatePicker: true,
+  //       updateInput: false,
+  //       empty: dataset_input.value
+  //     })
+  //   }
+  //   if (dataset_input.column =="rownum") {
+  //     _this.setData({
+  //       dataset_input,
+  //       handle: false,
+  //       mask_hid: false,
+  //     })
+  //   }else{
+    
+  //   _this.setData({
+  //     dataset_input,
+  //     input_hid: false,
+  //     mask_hid: false,
+  //     input_type: e.currentTarget.dataset.input_type
+  //   })
+  //   }
+  // },
   clickView: function(e) {
     var _this = this;
     var dataset_input = e.currentTarget.dataset;
     console.log(dataset_input)
+    
     if (!dataset_input.isupd) {
       return;
     }
-    if (dataset_input.input_type=="date") {
+    
+    // 判断是否为图片字段
+    const isImageField = dataset_input.column === 'photo' || 
+                        dataset_input.column === 'photo1' || 
+                        dataset_input.column === 'photo2';
+    
+    if (dataset_input.input_type == "date") {
       _this.setData({
         updatePicker: false,
         empty: dataset_input.value
       })
-    }else{
+    } else {
       _this.setData({
         updatePicker: true,
         updateInput: false,
         empty: dataset_input.value
       })
     }
-    if (dataset_input.column =="rownum") {
+    
+    if (dataset_input.column == "rownum") {
       _this.setData({
         dataset_input,
         handle: false,
         mask_hid: false,
       })
-    }else{
-    
-    _this.setData({
-      dataset_input,
-      input_hid: false,
-      mask_hid: false,
-      input_type: e.currentTarget.dataset.input_type
-    })
+    } else if (isImageField) {
+      // 图片字段特殊处理
+      _this.setData({
+        dataset_input,
+        input_hid: false,
+        mask_hid: false,
+        input_type: 'image',
+        tempEditImage: "" // 初始化临时图片
+      })
+    } else {
+      _this.setData({
+        dataset_input,
+        input_hid: false,
+        mask_hid: false,
+        input_type: e.currentTarget.dataset.input_type
+      })
     }
   },
+  
+
+  // clickView2: function (e) {
+  //   var _this = this;
+  //   var dataset_input = e.currentTarget.dataset;
+  //   if (!dataset_input.isupd) {
+  //     return;
+  //   }
+  //   if (dataset_input.column == "did") {
+  //     _this.setData({
+  //       dataset_input,
+  //       input_hid2: true,
+  //       handle2: false,
+  //       mask_hid: false,
+  //     })
+  //   } else {
+  //     if (_this.data.sheetqx2.Upd == "1" && dataset_input.column == "date_time") {
+  //     _this.setData({
+  //       dataset_input,
+  //       updatePicker: false,
+  //       input_hid2: false,
+  //       handle2: true,
+  //       mask_hid: false,
+  //       input_type: e.currentTarget.dataset.input_type
+  //     })
+  //     } else if (_this.data.sheetqx2.Upd == "1" && dataset_input.column != "date_time"){
+  //       _this.setData({
+  //         dataset_input,
+  //         updatePicker: true,
+  //         input_hid2: false,
+  //         handle2: true,
+  //         mask_hid: false,
+  //         input_type: e.currentTarget.dataset.input_type
+  //       })
+  //     }else{
+  //       wx.showToast({
+  //         title: '无权限',
+  //         icon: 'none',
+  //       })
+  //     }
+  //   }
+  // },
 
   clickView2: function (e) {
     var _this = this;
     var dataset_input = e.currentTarget.dataset;
+    
     if (!dataset_input.isupd) {
       return;
     }
+    
+    // 判断是否为图片字段
+    const isImageField = dataset_input.column === 'photo' || 
+                        dataset_input.column === 'photo1' || 
+                        dataset_input.column === 'photo2';
+    
     if (dataset_input.column == "did") {
       _this.setData({
         dataset_input,
@@ -160,25 +273,16 @@ Page({
         mask_hid: false,
       })
     } else {
-      if (_this.data.sheetqx2.Upd == "1" && dataset_input.column == "date_time") {
-      _this.setData({
-        dataset_input,
-        updatePicker: false,
-        input_hid2: false,
-        handle2: true,
-        mask_hid: false,
-        input_type: e.currentTarget.dataset.input_type
-      })
-      } else if (_this.data.sheetqx2.Upd == "1" && dataset_input.column != "date_time"){
+      if (_this.data.sheetqx2.Upd == "1") {
         _this.setData({
           dataset_input,
-          updatePicker: true,
+          updatePicker: dataset_input.input_type === 'date',
           input_hid2: false,
           handle2: true,
           mask_hid: false,
-          input_type: e.currentTarget.dataset.input_type
+          tempEditImage: "" // 初始化临时图片
         })
-      }else{
+      } else {
         wx.showToast({
           title: '无权限',
           icon: 'none',
@@ -187,13 +291,50 @@ Page({
     }
   },
 
-
+  chooseImageForEdit: function() {
+    var _this = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera'],
+      success: function(res) {
+        var tempFilePaths = res.tempFilePaths;
+        
+        // 将图片转换为base64（带前缀）
+        wx.getFileSystemManager().readFile({
+          filePath: tempFilePaths[0],
+          encoding: 'base64',
+          success: res => {
+            _this.setData({
+              tempEditImage: 'data:image/jpeg;base64,' + res.data
+            });
+            wx.showToast({
+              title: '图片选择成功',
+              icon: 'success'
+            });
+          },
+          fail: err => {
+            wx.showToast({
+              title: '图片转换失败',
+              icon: 'none'
+            });
+          }
+        });
+      },
+      fail: function(err) {
+        console.log('选择图片失败', err);
+      }
+    });
+  },
+  
+  
 
   xq_qx: function () {
     var _this = this;
     _this.setData({
       input_hid2: true,
       handle2: true,
+      tempEditImage: "" // 清空临时图片
     })
   },
 
@@ -314,102 +455,229 @@ Page({
     }
   },
 
+  // changed: function (e) {
+  //   var _this = this;
+  //   var dataset = _this.data.dataset_input;
+  //   var index = dataset.index;
+  //   var id = _this.data.list[index].id
+  //   var column = dataset.column;
+  //   var value = dataset.value;
+  //   var new_value = e.detail.value.new;
+  //   if (!dataset.isupd) {
+  //     return;
+  //   }
+  //   if (new_value != "" ){
+  //     var sql = "update product set " + column + " = '" + new_value + "' where id = '" + _this.data.list[index].id + "';"
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_xinyongka',
+  //     data: {
+  //       sql: sql
+  //     },
+  //     success: res => {
+  //       wx.showToast({
+  //         title: "修改成功",
+  //         icon: "none"
+  //       })
+  //       _this.setData({
+  //         input_hid: false,
+  //         mask_hid: false,
+  //         input_type: e.currentTarget.dataset.input_type,
+  //         ["list[" + index + "]." + column]: new_value,
+  //         new: ""
+  //       })
+  //       _this.hid_view()
+  //     },
+  //     err: res => {
+  //       wx.showToast({
+  //         title: "错误",
+  //         icon: "none"
+  //       })
+  //     }
+  //   })
+  //     }else{
+  //     wx.showToast({
+  //       title: "不能为空！",
+  //       icon: "none"
+  //     })
+  //     }
+  // },
   changed: function (e) {
     var _this = this;
     var dataset = _this.data.dataset_input;
     var index = dataset.index;
     var id = _this.data.list[index].id
     var column = dataset.column;
-    var value = dataset.value;
-    var new_value = e.detail.value.new;
+    
+    // 判断是否为图片字段
+    const isImageField = column === 'photo' || column === 'photo1' || column === 'photo2';
+    
+    var new_value;
+    
+    if (isImageField) {
+      // 图片字段：使用临时图片数据，并移除前缀只存储纯base64
+      new_value = _this.data.tempEditImage ? _this.data.tempEditImage.replace('data:image/jpeg;base64,', '') : '';
+    } else {
+      // 其他字段：使用表单数据
+      new_value = e.detail.value.new;
+    }
+    
     if (!dataset.isupd) {
       return;
     }
+    
     if (new_value != "" ){
-      var sql = "update product set " + column + " = '" + new_value + "' where id = '" + _this.data.list[index].id + "';"
-    wx.cloud.callFunction({
-      name: 'sqlserver_xinyongka',
-      data: {
-        sql: sql
-      },
-      success: res => {
-        wx.showToast({
-          title: "修改成功",
-          icon: "none"
-        })
-        _this.setData({
-          input_hid: false,
-          mask_hid: false,
-          input_type: e.currentTarget.dataset.input_type,
-          ["list[" + index + "]." + column]: new_value,
-          new: ""
-        })
-        _this.hid_view()
-      },
-      err: res => {
-        wx.showToast({
-          title: "错误",
-          icon: "none"
-        })
-      }
-    })
-      }else{
+      var sql = "update product set " + column + " = '" + new_value + "' where id = '" + id + "';"
+      wx.cloud.callFunction({
+        name: 'sqlserver_xinyongka',
+        data: {
+          sql: sql
+        },
+        success: res => {
+          wx.showToast({
+            title: "修改成功",
+            icon: "success"
+          })
+          _this.setData({
+            input_hid: false,
+            mask_hid: false,
+            ["list[" + index + "]." + column]: isImageField ? new_value : new_value,
+            new: "",
+            tempEditImage: "" // 清空临时图片
+          })
+          _this.hid_view()
+        },
+        err: res => {
+          wx.showToast({
+            title: "错误",
+            icon: "none"
+          })
+        }
+      })
+    } else {
       wx.showToast({
         title: "不能为空！",
         icon: "none"
       })
-      }
+    }
   },
 
 
 
 
 
+  // changed2: function (e) {
+  //   var _this = this;
+  //   var dataset = _this.data.dataset_input;
+  //   var id = dataset.id;
+  //   var column = dataset.column;
+  //   var value = dataset.value;
+  //   var index = dataset.index;
+  //   var new_value = e.detail.value.new;
+  //   if (!dataset.isupd) {
+  //     return;
+  //   }
+  //   if (new_value!=""){
+  //   var sql = "update day_trading set " + column + " = '" + new_value + "' where did = '" + _this.data.list2[index].did + "';"
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_xinyongka',
+  //     data: {
+  //       sql: sql
+  //     },
+  //     success: res => {
+  //       wx.showToast({
+  //         title: "修改成功",
+  //         icon: "none"
+  //       })
+  //       _this.setData({
+  //         input_hid: false,
+  //         mask_hid: false,
+  //         input_type: e.currentTarget.dataset.input_type,
+  //         ["list2[" + index + "]." + column]: new_value
+  //       })
+  //       _this.hid_view()
+  //     },
+  //     err: res => {
+  //       wx.showToast({
+  //         title: "错误",
+  //         icon: "none"
+  //       })
+  //     }
+  //   })
+  //   }else{
+  //     wx.showToast({
+  //       title: "不能为空！",
+  //       icon: "none"
+  //     })
+  //   }
+  // },
+ 
   changed2: function (e) {
     var _this = this;
     var dataset = _this.data.dataset_input;
-    var id = dataset.id;
     var column = dataset.column;
-    var value = dataset.value;
     var index = dataset.index;
-    var new_value = e.detail.value.new;
+    
+    // 判断是否为图片字段
+    const isImageField = column === 'photo' || column === 'photo1' || column === 'photo2' || column === 'photo3';
+    
+    var new_value;
+    
+    if (isImageField) {
+      // 图片字段：使用临时图片数据，并移除前缀只存储纯base64
+      new_value = _this.data.tempEditImage ? _this.data.tempEditImage.replace('data:image/jpeg;base64,', '') : '';
+    } else {
+      // 其他字段：使用表单数据
+      new_value = e.detail.value.new;
+    }
+    
     if (!dataset.isupd) {
       return;
     }
-    if (new_value!=""){
-    var sql = "update day_trading set " + column + " = '" + new_value + "' where did = '" + _this.data.list2[index].did + "';"
-    wx.cloud.callFunction({
-      name: 'sqlserver_xinyongka',
-      data: {
-        sql: sql
-      },
-      success: res => {
-        wx.showToast({
-          title: "修改成功",
-          icon: "none"
-        })
-        _this.setData({
-          input_hid: false,
-          mask_hid: false,
-          input_type: e.currentTarget.dataset.input_type,
-          ["list2[" + index + "]." + column]: new_value
-        })
-        _this.hid_view()
-      },
-      err: res => {
-        wx.showToast({
-          title: "错误",
-          icon: "none"
-        })
-      }
-    })
-    }else{
+    
+    if (new_value !== "" && new_value !== undefined) {
+      var sql = "update day_trading set " + column + " = '" + new_value + "' where did = '" + _this.data.list2[index].did + "';"
+      
+      wx.cloud.callFunction({
+        name: 'sqlserver_xinyongka',
+        data: {
+          sql: sql
+        },
+        success: res => {
+          wx.showToast({
+            title: "修改成功",
+            icon: "success"
+          })
+          _this.setData({
+            input_hid2: true,
+            mask_hid: true,
+            ["list2[" + index + "]." + column]: isImageField ? new_value : new_value, // 存储纯base64
+            tempEditImage: "" // 清空临时图片
+          })
+        },
+        fail: res => {
+          wx.showToast({
+            title: "修改失败",
+            icon: "none"
+          })
+        }
+      })
+    } else {
       wx.showToast({
         title: "不能为空！",
         icon: "none"
       })
     }
   },
+  
+  // 图片加载错误处理
+  onImageError: function(e) {
+    console.log('图片加载失败:', e);
+    wx.showToast({
+      title: '图片加载失败',
+      icon: 'none'
+    });
+  },
+  
 
   choiceDate: function(e){
     //e.preventDefault(); 
@@ -493,46 +761,133 @@ Page({
     })
   },
 
+  // add: function(e) {
+  //   var _this = this;
+  
+  //   if (e.detail.value.product_bianhao !="" && e.detail.value.type != "" && e.detail.value.product_name != "" && e.detail.value.unit != "" && e.detail.value.price != "" && e.detail.value.chengben != "" && e.detail.value.specifications != "" && e.detail.value.practice != "" && e.detail.value.tingyong != "" ){
+  //   let sql = "insert into product(company,product_bianhao,type,product_name,unit,price,chengben,specifications,practice,tingyong) values('" + _this.data.company + "','" +
+  //     e.detail.value.product_bianhao + "','" + e.detail.value.type + "','" + e.detail.value.product_name + "','" +
+  //     e.detail.value.unit + "','" + e.detail.value.price + "','" + e.detail.value.chengben + "','" + e.detail.value.specifications + "','" + e.detail.value.practice + "','" + e.detail.value.tingyong + "')"
+  //     console.log(sql)
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_xinyongka',
+  //     data: {
+  //       sql: sql
+  //     },
+  //     success: res => {
+  //       wx.showToast({
+  //         title: "添加成功！",
+  //         icon: "none"
+  //       })
+  //       _this.init();
+  //       _this.setData({
+  //         addTable: true,
+  //         mask_hid: true,
+  //         empty:"",
+  //         zdr:"",
+  //         hkr:""
+  //       })
+  //     },
+  //     error: res => {
+  //       console.log(res)
+  //     },
+  //     fail: res => {
+  //       console.log(res)
+  //     }
+  //   })
+  //   }else{
+  //     wx.showToast({
+  //       title: "前六项不能为空！",
+  //       icon:"none"
+  //     })
+  //   }
+  // },
+
   add: function(e) {
     var _this = this;
-  
+    
     if (e.detail.value.product_bianhao !="" && e.detail.value.type != "" && e.detail.value.product_name != "" && e.detail.value.unit != "" && e.detail.value.price != "" && e.detail.value.chengben != "" && e.detail.value.specifications != "" && e.detail.value.practice != "" && e.detail.value.tingyong != "" ){
-    let sql = "insert into product(company,product_bianhao,type,product_name,unit,price,chengben,specifications,practice,tingyong) values('" + _this.data.company + "','" +
-      e.detail.value.product_bianhao + "','" + e.detail.value.type + "','" + e.detail.value.product_name + "','" +
-      e.detail.value.unit + "','" + e.detail.value.price + "','" + e.detail.value.chengben + "','" + e.detail.value.specifications + "','" + e.detail.value.practice + "','" + e.detail.value.tingyong + "')"
-      console.log(sql)
-    wx.cloud.callFunction({
-      name: 'sqlserver_xinyongka',
-      data: {
-        sql: sql
-      },
-      success: res => {
-        wx.showToast({
-          title: "添加成功！",
-          icon: "none"
-        })
-        _this.init();
-        _this.setData({
-          addTable: true,
-          mask_hid: true,
-          empty:"",
-          zdr:"",
-          hkr:""
-        })
-      },
-      error: res => {
-        console.log(res)
-      },
-      fail: res => {
-        console.log(res)
-      }
-    })
-    }else{
+      
+      // 修正字段映射
+      let sql = "insert into product(company,product_bianhao,type,product_name,unit,price,chengben,specifications,practice,xiangqing,photo,photo1,photo2,tingyong) values('" + _this.data.company + "','" +
+        e.detail.value.product_bianhao + "','" + e.detail.value.type + "','" + e.detail.value.product_name + "','" +
+        e.detail.value.unit + "','" + e.detail.value.price + "','" + e.detail.value.chengben + "','" + 
+        e.detail.value.specifications + "','" + e.detail.value.practice + "','" + 
+        (e.detail.value.xiangqing || '') + "','" + 
+        (_this.data.tempImage1 ? _this.data.tempImage1.replace('data:image/jpeg;base64,', '') : '') + "','" +  // photo
+        (_this.data.tempImage2 ? _this.data.tempImage2.replace('data:image/jpeg;base64,', '') : '') + "','" +  // photo1
+        (_this.data.tempImage3 ? _this.data.tempImage3.replace('data:image/jpeg;base64,', '') : '') + "','" +  // photo2
+        e.detail.value.tingyong + "')"
+      
+      console.log('执行的SQL:', sql)
+      
+      wx.cloud.callFunction({
+        name: 'sqlserver_xinyongka',
+        data: {
+          sql: sql
+        },
+        success: res => {
+          console.log('云函数完整返回:', res);
+          
+          if (res.result && (res.result.affectedRows > 0 || res.result.insertId > 0)) {
+            wx.showToast({
+              title: "添加成功！",
+              icon: "success",
+              duration: 2000
+            });
+            
+            setTimeout(() => {
+              _this.init();
+              _this.setData({
+                addTable: true,
+                mask_hid: true,
+                empty: "",
+                tempImage1: "",
+                tempImage2: "",
+                tempImage3: "",
+                window_tingyong: ""
+              });
+            }, 1500);
+            
+          } else {
+            wx.showToast({
+              title: "添加失败，未影响数据行",
+              icon: "none"
+            });
+          }
+        },
+        error: res => {
+          console.log('error:', res);
+          wx.showToast({
+            title: "添加失败",
+            icon: "none"
+          });
+        },
+        fail: err => {
+          console.log('fail:', err);
+          wx.showToast({
+            title: "网络错误",
+            icon: "none"
+          });
+        }
+      });
+    } else {
       wx.showToast({
         title: "前六项不能为空！",
-        icon:"none"
-      })
+        icon: "none"
+      });
     }
+  },
+
+  // 在关闭表单时清空临时图片数据
+  inquire_QX: function() {
+    var _this = this;
+    _this.setData({
+      tempImage1: "",
+      tempImage2: "",
+      tempImage3: ""
+    })
+    _this.hid_view();
   },
 
 
@@ -581,6 +936,28 @@ Page({
 
 
 
+  // init: function() {
+  //   var _this = this;
+  //   let sql = "select * from product where product_name like '%" + _this.data.product_name + "%' and type like '%" + _this.data.type + "%' and company='"+ _this.data.company +"'"
+  //   console.log(sql)
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_xinyongka',
+  //     data: {
+  //       sql: sql
+  //     },
+  //     success: res => {
+  //       console.log("select-success", res)
+  //       _this.setData({
+  //         list: res.result,
+  //         product_name: "",
+  //         type: "",
+  //       })
+  //     },
+  //     fail: res=> {
+  //       console.log("select-fail",res)
+  //     }
+  //   })
+  // },
   init: function() {
     var _this = this;
     let sql = "select * from product where product_name like '%" + _this.data.product_name + "%' and type like '%" + _this.data.type + "%' and company='"+ _this.data.company +"'"
@@ -592,8 +969,28 @@ Page({
       },
       success: res => {
         console.log("select-success", res)
+  
+        // 处理图片数据
+        const processedList = res.result.map(item => {
+          // 清理 base64 前缀，只保留纯 base64 数据
+          const processPhoto = (photo) => {
+            if (!photo) return photo;
+            if (photo.includes('base64,')) {
+              return photo.split('base64,')[1];
+            }
+            return photo;
+          };
+  
+          return {
+            ...item,
+            photo: processPhoto(item.photo),
+            photo1: processPhoto(item.photo1),
+            photo2: processPhoto(item.photo2)
+          };
+        });
+  
         _this.setData({
-          list: res.result,
+          list: processedList,  // 使用处理后的数据
           product_name: "",
           type: "",
         })
@@ -871,5 +1268,105 @@ Page({
    */
   onShareAppMessage: function() {
 
-  }
+  },
+chooseImage1: function() { this.chooseImage('tempImage1'); },
+chooseImage2: function() { this.chooseImage('tempImage2'); },
+chooseImage3: function() { this.chooseImage('tempImage3'); },
+
+// 修复压缩版本
+chooseImage: function(imageKey) {
+  const _this = this;
+  wx.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['album', 'camera'],
+    success: res => {
+      const tempFilePath = res.tempFilePaths[0];
+      
+      // 先检查文件大小
+      wx.getFileInfo({
+        filePath: tempFilePath,
+        success: fileInfo => {
+          console.log('原图大小:', fileInfo.size);
+          
+          if (fileInfo.size > 2 * 1024 * 1024) {
+            wx.showToast({ 
+              title: '图片需小于2MB', 
+              icon: 'none' 
+            });
+            return;
+          }
+          
+          // 如果图片小于500KB，直接使用；否则压缩
+          if (fileInfo.size < 500 * 1024) {
+            _this.convertToBase64(tempFilePath, imageKey);
+          } else {
+            _this.compressImage(tempFilePath, imageKey);
+          }
+        },
+        fail: err => {
+          console.error('获取文件信息失败:', err);
+          _this.convertToBase64(tempFilePath, imageKey);
+        }
+      });
+    }
+  });
+},
+
+// 转换为base64
+convertToBase64: function(filePath, imageKey) {
+  const _this = this;
+  wx.getFileSystemManager().readFile({
+    filePath: filePath,
+    encoding: 'base64',
+    success: res => {
+      const base64Data = res.data;
+      console.log('base64数据长度:', base64Data.length);
+      
+      _this.setData({ 
+        [imageKey]: 'data:image/jpeg;base64,' + base64Data 
+      });
+      wx.showToast({ 
+        title: '图片选择成功', 
+        icon: 'success' 
+      });
+    },
+    fail: err => {
+      console.error('转换为base64失败:', err);
+      wx.showToast({ 
+        title: '图片处理失败', 
+        icon: 'none' 
+      });
+    }
+  });
+},
+
+// 图片压缩方法
+compressImage: function(filePath, imageKey) {
+  const _this = this;
+  wx.compressImage({
+    src: filePath,
+    quality: 60, // 降低压缩质量
+    success: compressRes => {
+      console.log('压缩成功:', compressRes.tempFilePath);
+      
+      // 获取压缩后文件大小
+      wx.getFileInfo({
+        filePath: compressRes.tempFilePath,
+        success: fileInfo => {
+          console.log('压缩后大小:', fileInfo.size);
+          _this.convertToBase64(compressRes.tempFilePath, imageKey);
+        },
+        fail: () => {
+          _this.convertToBase64(compressRes.tempFilePath, imageKey);
+        }
+      });
+    },
+    fail: err => {
+      console.error('压缩失败:', err);
+      // 压缩失败时使用原图
+      _this.convertToBase64(filePath, imageKey);
+    }
+  });
+}
 })

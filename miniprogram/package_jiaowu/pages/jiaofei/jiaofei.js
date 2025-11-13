@@ -92,35 +92,74 @@ Page({
   tableShow: function (e) {
     var _this = this
     let user = _this.data.userInfo.Company;
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select * from payment where Company = '" + user + "' and ksdate >='" + e[0] + "'and ksdate <='" + e[1] + "' and realname like '%" + e[2] + "%'"
-      },
-      success: res => {
-        console.log(res.result)
-        var list = res.result
-        for(var i=0; i<list.length; i++){
-          list[i].ksdate = list[i].ksdate.split("T")[0]
-        }
-        _this.setData({
-          list: list
-        })
-        console.log(list)
 
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+        data: {
+          sql: "select * from payment where Company = '" + user + "' and ksdate >='" + e[0] + "'and ksdate <='" + e[1] + "' and realname like '%" + e[2] + "%'"
+        },
+        success: res => {
+          console.log(res.result)
+          var list = res.result
+          for(var i=0; i<list.length; i++){
+            list[i].ksdate = list[i].ksdate.split("T")[0]
+          }
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+  
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from xueshengguanlixitong_excel.dbo.payment where Company = '" + user + "' and ksdate >= '" + e[0] + "' and ksdate <= '" + e[1] + "' and realname like '%" + e[2] + "%'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          var list =res.result.recordset
+          for(var i=0; i<list.length; i++){
+            list[i].ksdate = list[i].ksdate.split("T")[0]
+          }
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+  
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+    
   },
   getExcel : function(){ 
     var _this = this;
@@ -246,86 +285,177 @@ Page({
     _this.setData({
       userInfo:userInfo
     })
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu', 
-      data: {
-        sql: "select paiment from shezhi where Company = '" + userInfo.Company + "' GROUP BY paiment "
-      },
-      success: res => {
-        var list = res.result
-        console.log(list[0].paiment)
-        var paiment = [] 
-        for(var i=0; i<list.length; i++){
-          if(list[i].paiment != '' && list[i].paiment != null && list[i].paiment != undefined){
-            paiment.push(list[i].paiment)
-            console.log(list[i].teacher)
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu', 
+        data: {
+          sql: "select paiment from shezhi where Company = '" + userInfo.Company + "' GROUP BY paiment "
+        },
+        success: res => {
+          var list = res.result
+          console.log(list[0].paiment)
+          var paiment = [] 
+          for(var i=0; i<list.length; i++){
+            if(list[i].paiment != '' && list[i].paiment != null && list[i].paiment != undefined){
+              paiment.push(list[i].paiment)
+              console.log(list[i].teacher)
+            }
           }
-        }
-        _this.setData({
-          tpaiment_list:paiment,
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
-  
-   
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='缴费记录'"
-      },
-      success: res => {
-        console.log(res.result)
-        var list = res.result
-        var zeng = 0
-        var shan = 0
-        var gai = 0
-        var cha = 0
-        if(list.length > 0){
-          zeng = list[0].add
-          shan = list[0].del
-          gai = list[0].upd
-          cha = list[0].sel
-        }
-        _this.setData({
-          quanxian_zeng:zeng,
-          quanxian_shan:shan,
-          quanxian_gai:gai,
-          quanxian_cha:cha,
-        })
-        if(cha == '√'){
-          var e = ['1900-01-01', '2100-12-31','']
-          _this.tableShow(e)
-        }else{
+          _this.setData({
+            tpaiment_list:paiment,
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
           wx.showToast({
-            title: '无查询权限！',
+            title: '请求失败！',
             icon: 'none',
             duration: 3000
           })
+          console.log("请求失败！")
         }
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+      })
+
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+        data: {
+          sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='缴费记录'"
+        },
+        success: res => {
+          console.log(res.result)
+          var list = res.result
+          var zeng = 0
+          var shan = 0
+          var gai = 0
+          var cha = 0
+          if(list.length > 0){
+            zeng = list[0].add
+            shan = list[0].del
+            gai = list[0].upd
+            cha = list[0].sel
+          }
+          _this.setData({
+            quanxian_zeng:zeng,
+            quanxian_shan:shan,
+            quanxian_gai:gai,
+            quanxian_cha:cha,
+          })
+          if(cha == '√'){
+            var e = ['1900-01-01', '2100-12-31','']
+            _this.tableShow(e)
+          }else{
+            wx.showToast({
+              title: '无查询权限！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+      wx.cloud.callFunction({
+        name: 'sqlServer_117', 
+        data: {
+          query: "select paiment from xueshengguanlixitong_excel.dbo.shezhi where Company = '" + userInfo.Company + "' GROUP BY paiment"
+        },
+        success: res => {
+          var list = res.result.recordset
+          console.log(list[0].paiment)
+          var paiment = [] 
+          for(var i=0; i<list.length; i++){
+            if(list[i].paiment != '' && list[i].paiment != null && list[i].paiment != undefined){
+              paiment.push(list[i].paiment)
+              console.log(list[i].teacher)
+            }
+          }
+          _this.setData({
+            tpaiment_list:paiment,
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from xueshengguanlixitong_excel.dbo.power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='缴费记录'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          var list = res.result.recordset
+          var zeng = 0
+          var shan = 0
+          var gai = 0
+          var cha = 0
+          if(list.length > 0){
+            zeng = list[0].add
+            shan = list[0].del
+            gai = list[0].upd
+            cha = list[0].sel
+          }
+          _this.setData({
+            quanxian_zeng:zeng,
+            quanxian_shan:shan,
+            quanxian_gai:gai,
+            quanxian_cha:cha,
+          })
+          if(cha == '√'){
+            var e = ['1900-01-01', '2100-12-31','']
+            _this.tableShow(e)
+          }else{
+            wx.showToast({
+              title: '无查询权限！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+    
+  
+   
+   
 
 
   },
@@ -419,40 +549,83 @@ Page({
     console.log(_this.data.sfr)
     console.log(_this.data.bz)
     if (_this.data.xsxm != "" && _this.data.rq != ""  ) {
-      wx.cloud.callFunction({
-        name: 'sql_jiaowu',
-        data: {
-          sql: "insert into payment(ksdate,realname,paid,money,paiment,keeper,remark,Company) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.djje + "','" + _this.data.xfje + "','" + _this.data.jffs + "','" + _this.data.sfr +"','" + _this.data.bz  +"','"+user+"')"
-        },
-        success: res => {
-          _this.setData({
-            rq: "",
-            xsxm: "",
-            djje: "",
-            xfje: "",
-            jffs: "",
-            sfr:"",
-            bz:"",
-          })
-          _this.qxShow()
-          var e = ['1900-01-01', '2100-12-31','']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: "insert into payment(ksdate,realname,paid,money,paiment,keeper,remark,Company) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.djje + "','" + _this.data.xfje + "','" + _this.data.jffs + "','" + _this.data.sfr +"','" + _this.data.bz  +"','"+user+"')"
+          },
+          success: res => {
+            _this.setData({
+              rq: "",
+              xsxm: "",
+              djje: "",
+              xfje: "",
+              jffs: "",
+              sfr:"",
+              bz:"",
+            })
+            _this.qxShow()
+            var e = ['1900-01-01', '2100-12-31','']
+            _this.tableShow(e)
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+
+      }else if(app.globalData.shujuku == 1){
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "insert into xueshengguanlixitong_excel.dbo.payment(ksdate,realname,paid,money,paiment,keeper,remark,Company) values('" + _this.data.rq + "','" + _this.data.xsxm + "','" + _this.data.djje + "','" + _this.data.xfje + "','" + _this.data.jffs + "','" + _this.data.sfr + "','" + _this.data.bz + "','" + user + "')"
+          },
+          success: res => {
+            _this.setData({
+              rq: "",
+              xsxm: "",
+              djje: "",
+              xfje: "",
+              jffs: "",
+              sfr:"",
+              bz:"",
+            })
+            _this.qxShow()
+            var e = ['1900-01-01', '2100-12-31','']
+            _this.tableShow(e)
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
+      }
+
+      
     } else {
       wx.showToast({
         title: '信息输入不全！',
@@ -497,41 +670,86 @@ Page({
     var _this = this
     let user = app.globalData.gongsi;
     if (_this.data.xsxm != "" && _this.data.rq != "" ) {
-      wx.cloud.callFunction({
-        name: 'sql_jiaowu',
-        data: {
-          sql: "update payment set ksdate='" + _this.data.rq + "',realname='" + _this.data.xsxm + "',paid='" + _this.data.djje + "',money='" + _this.data.xfje + "',paiment='" + _this.data.jffs + "',keeper='" + _this.data.sfr + "',remark='" + _this.data.bz + "' where id='" + _this.data.id + "'"
-        },
-        success: res => {
-          _this.setData({
-            rq: "",
-            xsxm: "",
-            djje: "",
-            xfje: "",
-            jffs: "",
-            sfr:"",
-            bz:"",
-          })
-          _this.qxShow()
-          var e = ['1900-01-01', '2100-12-31','']
-          _this.tableShow(e)
 
-          wx.showToast({
-            title: '修改成功！',
-            icon: 'none'
-          })  
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: "update payment set ksdate='" + _this.data.rq + "',realname='" + _this.data.xsxm + "',paid='" + _this.data.djje + "',money='" + _this.data.xfje + "',paiment='" + _this.data.jffs + "',keeper='" + _this.data.sfr + "',remark='" + _this.data.bz + "' where id='" + _this.data.id + "'"
+          },
+          success: res => {
+            _this.setData({
+              rq: "",
+              xsxm: "",
+              djje: "",
+              xfje: "",
+              jffs: "",
+              sfr:"",
+              bz:"",
+            })
+            _this.qxShow()
+            var e = ['1900-01-01', '2100-12-31','']
+            _this.tableShow(e)
+  
+            wx.showToast({
+              title: '修改成功！',
+              icon: 'none'
+            })  
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "update xueshengguanlixitong_excel.dbo.payment set ksdate='" + _this.data.rq + "',realname='" + _this.data.xsxm + "',paid='" + _this.data.djje + "',money='" + _this.data.xfje + "',paiment='" + _this.data.jffs + "',keeper='" + _this.data.sfr + "',remark='" + _this.data.bz + "' where id=" + _this.data.id
+          },
+          success: res => {
+            _this.setData({
+              rq: "",
+              xsxm: "",
+              djje: "",
+              xfje: "",
+              jffs: "",
+              sfr:"",
+              bz:"",
+            })
+            _this.qxShow()
+            var e = ['1900-01-01', '2100-12-31','']
+            _this.tableShow(e)
+  
+            wx.showToast({
+              title: '修改成功！',
+              icon: 'none'
+            })  
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
+      }
+
+      
     } else {
       wx.showToast({
         title: '信息输入不全！',
@@ -550,6 +768,9 @@ Page({
       })
       return;
     }
+
+
+    if(app.globalData.shujuku==0){
 
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
@@ -585,6 +806,47 @@ Page({
           console.log("请求失败！")
         }
       })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "delete from xueshengguanlixitong_excel.dbo.payment where id='" + _this.data.id + "'"
+        },
+        success: res => {
+          _this.setData({
+            rq: "",
+            xsxm: "",
+            djje: "",
+            xfje: "",
+            jffs: "",
+            sfr:"",
+            bz:"",
+          })
+          _this.qxShow()
+          var e = ['1900-01-01', '2100-12-31','']
+          _this.tableShow(e)
+          wx.showToast({
+            title: '删除成功！',
+            icon: 'none'
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+      
   },
 
   entering:function(){

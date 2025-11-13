@@ -69,21 +69,46 @@ Page({
       content: '确定删除么？',
       success(res) {
         if (res.confirm) {
-          wx.cloud.callFunction({
-            name: 'sqlConnection',
-            data: {
-              sql: "delete from yh_jinxiaocun_zhengli where id = '" + id + "'"
-            },
-            success: res => {
-              if (res.result.affectedRows > 0) {
-                wx.showToast({
-                  title: '删除成功',
-                  icon: 'success'
-                })
-                _this.init();
+
+          if(app.globalData.shujuku==0){
+
+            wx.cloud.callFunction({
+              name: 'sqlConnection',
+              data: {
+                sql: "delete from yh_jinxiaocun_zhengli where id = '" + id + "'"
+              },
+              success: res => {
+                if (res.result.affectedRows > 0) {
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success'
+                  })
+                  _this.init();
+                }
               }
-            }
-          })
+            })
+
+          }else if(app.globalData.shujuku == 1){
+
+            wx.cloud.callFunction({
+              name: 'sqlServer_117',
+              data: {
+                query: "delete from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql where id = '" + id + "'"
+              },
+              success: res => {
+                if (res.result.recordset.affectedRows > 0) {
+                  wx.showToast({
+                    title: '删除成功',
+                    icon: 'success'
+                  })
+                  _this.init();
+                }
+              }
+            })
+            
+          }
+
+          
         } else if (res.cancel) {
           return;
         }
@@ -111,17 +136,38 @@ Page({
     var _this = this;
     var zh_name = app.globalData.finduser;
     var gs_name = app.globalData.gongsi;
-    wx.cloud.callFunction({
-      name: 'sqlConnection',
-      data: {
-        sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gs_name + "'"
-      },
-      success: res => {
-        _this.setData({
-          szzhi: res.result,
-        })
-      }
-    })
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sqlConnection',
+        data: {
+          sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gs_name + "'"
+        },
+        success: res => {
+          _this.setData({
+            szzhi: res.result,
+          })
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql where gs_name = '" + gs_name + "'"
+        },
+        success: res => {
+          _this.setData({
+            szzhi:res.result.recordset,
+          })
+        }
+      })
+      
+    }
+
+    
   },
 
 
@@ -133,42 +179,91 @@ Page({
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "'"
-        },
-        success(res) {
-          that.setData({
-            szzhi: res.result
-          })
-          console.log(that.data.szzhi)
-        },
-        fail(res) {
-          console.log("失败", res)
 
-        }
-      });
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: "sqlConnection",
+          data: {
+            sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "'"
+          },
+          success(res) {
+            that.setData({
+              szzhi: res.result
+            })
+            console.log(that.data.szzhi)
+          },
+          fail(res) {
+            console.log("失败", res)
+  
+          }
+        });
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: "sqlServer_117",
+          data: {
+            query: "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql where gs_name = '" + gongsi + "'"
+          },
+          success(res) {
+            that.setData({
+              szzhi: res.result.recordset
+            })
+            console.log(that.data.szzhi)
+          },
+          fail(res) {
+            console.log("失败", res)
+  
+          }
+        });
+        
+      }
+
+      
     } else {
       var that = this
       const db = wx.cloud.database()
       var app = getApp();
       var finduser = app.globalData.finduser
       var gongsi = app.globalData.gongsi
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
-        },
-        success(res) {
-          that.setData({
-            szzhi: res.result
-          })
-        },
-        fail(res) {
-          console.log("失败", res)
-        }
-      });
+
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: "sqlConnection",
+          data: {
+            sql: "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
+          },
+          success(res) {
+            that.setData({
+              szzhi: res.result
+            })
+          },
+          fail(res) {
+            console.log("失败", res)
+          }
+        });
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: "sqlServer_117",
+          data: {
+            query: "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql where gs_name = '" + gongsi + "' and name like '%" + e.detail.value + "%'"
+          },
+          success(res) {
+            that.setData({
+              szzhi: res.result.recordset
+            })
+          },
+          fail(res) {
+            console.log("失败", res)
+          }
+        });
+        
+      }
+    
     }
   },
 

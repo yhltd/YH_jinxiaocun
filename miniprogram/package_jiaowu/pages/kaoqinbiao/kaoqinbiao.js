@@ -106,31 +106,64 @@ Page({
     var _this = this
     let user = _this.data.userInfo.Company;
     console.log('公司名',user)
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select * from kaoqin where company ='"+user+"' and s_name like '%" + e[0] + "%'"
-      },
-      success: res => {
-        console.log(res.result)
-        var list = res.result
-        _this.setData({
-          list: list
-        })
-        console.log(list)
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+        data: {
+          sql: "select * from kaoqin where company ='"+user+"' and s_name like '%" + e[0] + "%'"
+        },
+        success: res => {
+          console.log(res.result)
+          var list = res.result
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+
+    }else if(app.globalData.shujuku == 1){
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from xueshengguanlixitong_excel.dbo.kaoqin where company ='" + user + "' and s_name like '%" + e[0] + "%'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          var list = res.result.recordset
+          _this.setData({
+            list: list
+          })
+          console.log(list)
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+    }
+
+    
   },
   bindPickerChange2: function(e) {
     var _this = this
@@ -152,53 +185,108 @@ Page({
       userInfo:userInfo
     })
 
-    wx.cloud.callFunction({
-      name: 'sql_jiaowu',
-      data: {
-        sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='考勤表'"
-      },
-      success: res => {
-        console.log(res.result)
-        var list = res.result
-        var zeng = 0
-        var shan = 0
-        var gai = 0
-        var cha = 0
-        if(list.length > 0){
-          zeng = list[0].add
-          shan = list[0].del
-          gai = list[0].upd
-          cha = list[0].sel
-        }
-        _this.setData({
-          quanxian_zeng:zeng,
-          quanxian_shan:shan,
-          quanxian_gai:gai,
-          quanxian_cha:cha,
-        })
-        if(cha == '√'){
-          var e = ['']
-          _this.tableShow(e)
-        }else{
+    if(app.globalData.shujuku==0){
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+        data: {
+          sql: "select * from power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='考勤表'"
+        },
+        success: res => {
+          console.log(res.result)
+          var list = res.result
+          var zeng = 0
+          var shan = 0
+          var gai = 0
+          var cha = 0
+          if(list.length > 0){
+            zeng = list[0].add
+            shan = list[0].del
+            gai = list[0].upd
+            cha = list[0].sel
+          }
+          _this.setData({
+            quanxian_zeng:zeng,
+            quanxian_shan:shan,
+            quanxian_gai:gai,
+            quanxian_cha:cha,
+          })
+          if(cha == '√'){
+            var e = ['']
+            _this.tableShow(e)
+          }else{
+            wx.showToast({
+              title: '无查询权限！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
           wx.showToast({
-            title: '无查询权限！',
+            title: '请求失败！',
             icon: 'none',
             duration: 3000
           })
+          console.log("请求失败！")
         }
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none',
-          duration: 3000
-        })
-        console.log("请求失败！")
-      }
-    })
+      })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from xueshengguanlixitong_excel.dbo.power where Company = '" + userInfo.Company + "' and t_id = " + userInfo.ID + " and view_name ='考勤表'"
+        },
+        success: res => {
+          console.log(res.result.recordset)
+          var list = res.result.recordset
+          var zeng = 0
+          var shan = 0
+          var gai = 0
+          var cha = 0
+          if(list.length > 0){
+            zeng = list[0].add
+            shan = list[0].del
+            gai = list[0].upd
+            cha = list[0].sel
+          }
+          _this.setData({
+            quanxian_zeng:zeng,
+            quanxian_shan:shan,
+            quanxian_gai:gai,
+            quanxian_cha:cha,
+          })
+          if(cha == '√'){
+            var e = ['']
+            _this.tableShow(e)
+          }else{
+            wx.showToast({
+              title: '无查询权限！',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none',
+            duration: 3000
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+    
 
     
   },
@@ -309,37 +397,78 @@ Page({
     console.log(_this.data.sanshi)
     console.log(_this.data.sanshiyi)
     if (_this.data.xm != "" && _this.data.nian != ""  && _this.data.yue != "") {
-      wx.cloud.callFunction({
-        name: 'sql_jiaowu',
-        data: {
-          sql: "insert into kaoqin(s_name,nian,yue,ri1,ri2,ri3,ri4,ri5,ri6,ri7,ri8,ri9,ri10,ri11,ri12,ri13,ri14,ri15,ri16,ri17,ri18,ri19,ri20,ri21,ri22,ri23,ri24,ri25,ri26,ri27,ri28,ri29,ri30,ri31,company) values('" + _this.data.xm + "','" + _this.data.nian + "','" + _this.data.yue + "','" + _this.data.yi + "','" + _this.data.er + "','" + _this.data.san +"','" + _this.data.si  +"','" + _this.data.wu + "','" + _this.data.liu + "','" + _this.data.qi + "','" + _this.data.ba + "','" + _this.data.jiu + "','" + _this.data.shi +"','" + _this.data.shiyi  +"','" + _this.data.shier + "','" + _this.data.shisan + "','" + _this.data.shisi + "','" + _this.data.shiwu + "','" + _this.data.shiliu + "','" + _this.data.shiqi +"','" + _this.data.shiba  +"','" + _this.data.shijiu + "','" + _this.data.ershi + "','" + _this.data.ershiyi + "','" + _this.data.ershier + "','" + _this.data.ershisan + "','" + _this.data.ershisi +"','" + _this.data.ershiwu  +"','" + _this.data.ershiliu + "','" + _this.data.ershiqi + "','" + _this.data.ershiba + "','" + _this.data.ershijiu + "','" + _this.data.sanshi + "','" + _this.data.sanshiyi +"','"+user+"')"
-        },
-        success: res => {
-          _this.setData({
-           xm: "",nian: "",yue: "",yi: "",er: "",san:"",si:"",wu: "",liu: "",qi: "",ba: "",
-            jiu: "",shi:"",shiyi:"",shier: "",shisan: "",shisi: "",shiwu: "",shiliu: "",shiqi:"",
-            shiba:"",shijiu: "",ershi: "",ershiyi: "",ershier: "",ershisan: "",ershisi:"",ershiwu:"",
-            ershiliu: "",ershiqi: "",ershiba:"",ershijiu:"",sanshi:"",sanshiyi:"",
-          })
-          _this.qxShow()
-          var e = ['']
-          _this.tableShow(e)
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none'
-          })
-          console.log("请求失败！")
-        }
-      })
+
+      if(app.globalData.shujuku==0){
+
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: "insert into kaoqin(s_name,nian,yue,ri1,ri2,ri3,ri4,ri5,ri6,ri7,ri8,ri9,ri10,ri11,ri12,ri13,ri14,ri15,ri16,ri17,ri18,ri19,ri20,ri21,ri22,ri23,ri24,ri25,ri26,ri27,ri28,ri29,ri30,ri31,company) values('" + _this.data.xm + "','" + _this.data.nian + "','" + _this.data.yue + "','" + _this.data.yi + "','" + _this.data.er + "','" + _this.data.san +"','" + _this.data.si  +"','" + _this.data.wu + "','" + _this.data.liu + "','" + _this.data.qi + "','" + _this.data.ba + "','" + _this.data.jiu + "','" + _this.data.shi +"','" + _this.data.shiyi  +"','" + _this.data.shier + "','" + _this.data.shisan + "','" + _this.data.shisi + "','" + _this.data.shiwu + "','" + _this.data.shiliu + "','" + _this.data.shiqi +"','" + _this.data.shiba  +"','" + _this.data.shijiu + "','" + _this.data.ershi + "','" + _this.data.ershiyi + "','" + _this.data.ershier + "','" + _this.data.ershisan + "','" + _this.data.ershisi +"','" + _this.data.ershiwu  +"','" + _this.data.ershiliu + "','" + _this.data.ershiqi + "','" + _this.data.ershiba + "','" + _this.data.ershijiu + "','" + _this.data.sanshi + "','" + _this.data.sanshiyi +"','"+user+"')"
+          },
+          success: res => {
+            _this.setData({
+             xm: "",nian: "",yue: "",yi: "",er: "",san:"",si:"",wu: "",liu: "",qi: "",ba: "",
+              jiu: "",shi:"",shiyi:"",shier: "",shisan: "",shisi: "",shiwu: "",shiliu: "",shiqi:"",
+              shiba:"",shijiu: "",ershi: "",ershiyi: "",ershier: "",ershisan: "",ershisi:"",ershiwu:"",
+              ershiliu: "",ershiqi: "",ershiba:"",ershijiu:"",sanshi:"",sanshiyi:"",
+            })
+            _this.qxShow()
+            var e = ['']
+            _this.tableShow(e)
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+
+      }else if(app.globalData.shujuku == 1){
+
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "insert into xueshengguanlixitong_excel.dbo.kaoqin(s_name,nian,yue,ri1,ri2,ri3,ri4,ri5,ri6,ri7,ri8,ri9,ri10,ri11,ri12,ri13,ri14,ri15,ri16,ri17,ri18,ri19,ri20,ri21,ri22,ri23,ri24,ri25,ri26,ri27,ri28,ri29,ri30,ri31,company) values('" + _this.data.xm + "','" + _this.data.nian + "','" + _this.data.yue + "','" + _this.data.yi + "','" + _this.data.er + "','" + _this.data.san + "','" + _this.data.si + "','" + _this.data.wu + "','" + _this.data.liu + "','" + _this.data.qi + "','" + _this.data.ba + "','" + _this.data.jiu + "','" + _this.data.shi + "','" + _this.data.shiyi + "','" + _this.data.shier + "','" + _this.data.shisan + "','" + _this.data.shisi + "','" + _this.data.shiwu + "','" + _this.data.shiliu + "','" + _this.data.shiqi + "','" + _this.data.shiba + "','" + _this.data.shijiu + "','" + _this.data.ershi + "','" + _this.data.ershiyi + "','" + _this.data.ershier + "','" + _this.data.ershisan + "','" + _this.data.ershisi + "','" + _this.data.ershiwu + "','" + _this.data.ershiliu + "','" + _this.data.ershiqi + "','" + _this.data.ershiba + "','" + _this.data.ershijiu + "','" + _this.data.sanshi + "','" + _this.data.sanshiyi + "','" + user + "')"
+          },
+          success: res => {
+            _this.setData({
+             xm: "",nian: "",yue: "",yi: "",er: "",san:"",si:"",wu: "",liu: "",qi: "",ba: "",
+              jiu: "",shi:"",shiyi:"",shier: "",shisan: "",shisi: "",shiwu: "",shiliu: "",shiqi:"",
+              shiba:"",shijiu: "",ershi: "",ershiyi: "",ershier: "",ershisan: "",ershisi:"",ershiwu:"",
+              ershiliu: "",ershiqi: "",ershiba:"",ershijiu:"",sanshi:"",sanshiyi:"",
+            })
+            _this.qxShow()
+            var e = ['']
+            _this.tableShow(e)
+            wx.showToast({
+              title: '添加成功！',
+              icon: 'none'
+            })
+          },
+          err: res => {
+            console.log("错误!")
+          },
+          fail: res => {
+            wx.showToast({
+              title: '请求失败！',
+              icon: 'none'
+            })
+            console.log("请求失败！")
+          }
+        })
+        
+      }
+
+      
     } else {
       wx.showToast({
         title: '信息输入不全！',
@@ -423,30 +552,63 @@ Page({
       ["list["+index+"]."+column] : new_value_input,
       empty : ""
     })
-    wx.cloud.callFunction({
-       name: 'sql_jiaowu',
-        data: {
-          sql: "update kaoqin set "+column+" = '"+new_value_input+"' where id='"+_this.data.id+"'"
-        },
-      success : res=>{
-        _this.setData({
-          initHidView : false,
-        })
-        console.log('id',_this.data.id)
-        wx.showToast({
-          title: "修改成功",
-          icon : "none"
-        })
-        var e = ['']
-        _this.tableShow(e)
-      },
-      err : res =>{
-        wx.showToast({
-          title: "错误",
-          icon : "none"
-        })
-      }
-    })
+
+
+    if(app.globalData.shujuku==0){
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+         data: {
+           sql: "update kaoqin set "+column+" = '"+new_value_input+"' where id='"+_this.data.id+"'"
+         },
+       success : res=>{
+         _this.setData({
+           initHidView : false,
+         })
+         console.log('id',_this.data.id)
+         wx.showToast({
+           title: "修改成功",
+           icon : "none"
+         })
+         var e = ['']
+         _this.tableShow(e)
+       },
+       err : res =>{
+         wx.showToast({
+           title: "错误",
+           icon : "none"
+         })
+       }
+     })
+
+    }else if(app.globalData.shujuku == 1){
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+         data: {
+          query: "update xueshengguanlixitong_excel.dbo.kaoqin set " + column + " = '" + new_value_input + "' where id=" + _this.data.id
+         },
+       success : res=>{
+         _this.setData({
+           initHidView : false,
+         })
+         console.log('id',_this.data.id)
+         wx.showToast({
+           title: "修改成功",
+           icon : "none"
+         })
+         var e = ['']
+         _this.tableShow(e)
+       },
+       err : res =>{
+         wx.showToast({
+           title: "错误",
+           icon : "none"
+         })
+       }
+     })
+      
+    }
+
+    
   },
 
   save_piliang: function(e){
@@ -471,31 +633,66 @@ Page({
       ["list["+index+"]."+column] : new_value_input,
       empty : ""
     })
-    wx.cloud.callFunction({
-       name: 'sql_jiaowu',
-        data: {
-          sql: "update kaoqin set ri1= '"+new_value_input+"',ri2= '"+new_value_input+"',ri3= '"+new_value_input+"',ri4= '"+new_value_input+"',ri5= '"+new_value_input+"',ri6= '"+new_value_input+"',ri7= '"+new_value_input+"',ri8= '"+new_value_input+"',ri9= '"+new_value_input+"',ri10= '"+new_value_input+"',ri11= '"+new_value_input+"',ri12= '"+new_value_input+"',ri13= '"+new_value_input+"',ri14= '"+new_value_input+"',ri15= '"+new_value_input+"',ri16= '"+new_value_input+"',ri17= '"+new_value_input+"',ri18= '"+new_value_input+"',ri19= '"+new_value_input+"',ri20= '"+new_value_input+"',ri21= '"+new_value_input+"',ri22= '"+new_value_input+"',ri23= '"+new_value_input+"',ri24= '"+new_value_input+"',ri25= '"+new_value_input+"',ri26= '"+new_value_input+"',ri27= '"+new_value_input+"',ri28= '"+new_value_input+"',ri29= '"+new_value_input+"',ri30= '"+new_value_input+"',ri31= '"+new_value_input+"' where id='"+_this.data.id+"'"
-        },
-      success : res=>{
-        console.log(res)
-        _this.setData({
-          initHidView : false,
-        })
-        console.log('id',_this.data.id)
-        wx.showToast({
-          title: "修改成功",
-          icon : "none"
-        })
-        var e = ['']
-        _this.tableShow(e)
-      },
-      err : res =>{
-        wx.showToast({
-          title: "错误",
-          icon : "none"
-        })
-      }
-    })
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: 'sql_jiaowu',
+         data: {
+           sql: "update kaoqin set ri1= '"+new_value_input+"',ri2= '"+new_value_input+"',ri3= '"+new_value_input+"',ri4= '"+new_value_input+"',ri5= '"+new_value_input+"',ri6= '"+new_value_input+"',ri7= '"+new_value_input+"',ri8= '"+new_value_input+"',ri9= '"+new_value_input+"',ri10= '"+new_value_input+"',ri11= '"+new_value_input+"',ri12= '"+new_value_input+"',ri13= '"+new_value_input+"',ri14= '"+new_value_input+"',ri15= '"+new_value_input+"',ri16= '"+new_value_input+"',ri17= '"+new_value_input+"',ri18= '"+new_value_input+"',ri19= '"+new_value_input+"',ri20= '"+new_value_input+"',ri21= '"+new_value_input+"',ri22= '"+new_value_input+"',ri23= '"+new_value_input+"',ri24= '"+new_value_input+"',ri25= '"+new_value_input+"',ri26= '"+new_value_input+"',ri27= '"+new_value_input+"',ri28= '"+new_value_input+"',ri29= '"+new_value_input+"',ri30= '"+new_value_input+"',ri31= '"+new_value_input+"' where id='"+_this.data.id+"'"
+         },
+       success : res=>{
+         console.log(res)
+         _this.setData({
+           initHidView : false,
+         })
+         console.log('id',_this.data.id)
+         wx.showToast({
+           title: "修改成功",
+           icon : "none"
+         })
+         var e = ['']
+         _this.tableShow(e)
+       },
+       err : res =>{
+         wx.showToast({
+           title: "错误",
+           icon : "none"
+         })
+       }
+     })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+         data: {
+          query: "update xueshengguanlixitong_excel.dbo.kaoqin set ri1='" + new_value_input + "',ri2='" + new_value_input + "',ri3='" + new_value_input + "',ri4='" + new_value_input + "',ri5='" + new_value_input + "',ri6='" + new_value_input + "',ri7='" + new_value_input + "',ri8='" + new_value_input + "',ri9='" + new_value_input + "',ri10='" + new_value_input + "',ri11='" + new_value_input + "',ri12='" + new_value_input + "',ri13='" + new_value_input + "',ri14='" + new_value_input + "',ri15='" + new_value_input + "',ri16='" + new_value_input + "',ri17='" + new_value_input + "',ri18='" + new_value_input + "',ri19='" + new_value_input + "',ri20='" + new_value_input + "',ri21='" + new_value_input + "',ri22='" + new_value_input + "',ri23='" + new_value_input + "',ri24='" + new_value_input + "',ri25='" + new_value_input + "',ri26='" + new_value_input + "',ri27='" + new_value_input + "',ri28='" + new_value_input + "',ri29='" + new_value_input + "',ri30='" + new_value_input + "',ri31='" + new_value_input + "' where id=" + _this.data.id
+         },
+       success : res=>{
+         console.log(res)
+         _this.setData({
+           initHidView : false,
+         })
+         console.log('id',_this.data.id)
+         wx.showToast({
+           title: "修改成功",
+           icon : "none"
+         })
+         var e = ['']
+         _this.tableShow(e)
+       },
+       err : res =>{
+         wx.showToast({
+           title: "错误",
+           icon : "none"
+         })
+       }
+     })
+      
+    }
+
+   
   },
 
 
@@ -598,6 +795,8 @@ Page({
       return;
     }
 
+    if(app.globalData.shujuku==0){
+
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
@@ -630,6 +829,45 @@ Page({
           console.log("请求失败！")
         }
       })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "delete from xueshengguanlixitong_excel.dbo.kaoqin where id='" + _this.data.id + "'"
+        },
+        success: res => {
+          _this.setData({
+            xm: "",nian: "",yue: "",yi: "",er: "",san:"",si:"",wu: "",liu: "",qi: "",ba: "",
+            jiu: "",shi:"",shiyi:"",shier: "",shisan: "",shisi: "",shiwu: "",shiliu: "",shiqi:"",
+            shiba:"",shijiu: "",ershi: "",ershiyi: "",ershier: "",ershisan: "",ershisi:"",ershiwu:"",
+            ershiliu: "",ershiqi: "",ershiba:"",ershijiu:"",sanshi:"",sanshiyi:"",
+          })
+          _this.qxShow()
+          _this.hid_view()
+          var e = ['']
+          _this.tableShow(e)
+          wx.showToast({
+            title: '删除成功！',
+            icon: 'none'
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+
+     
   },
 
   entering:function(){
