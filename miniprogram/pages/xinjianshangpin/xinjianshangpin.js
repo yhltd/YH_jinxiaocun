@@ -46,24 +46,52 @@ Page({
     if (options.query != null) {
       console.log(options.query)
     }
-    var sql = "select sp_dm from yh_jinxiaocun_jichuziliao where gs_name ='" + app.globalData.gongsi + "'"
-    console.log(sql)
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: sql
-      },
-      success(res) {
-        console.log("商品列表", res.result)
-        _this.setData({
-          product_id:res.result
-        })
-        // 在返回结果中会包含新创建的记录的 _id
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+
+    if(app.globalData.shujuku==0){
+
+      var sql = "select sp_dm from yh_jinxiaocun_jichuziliao where gs_name ='" + app.globalData.gongsi + "'"
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: sql
+        },
+        success(res) {
+          console.log("商品列表", res.result)
+          _this.setData({
+            product_id:res.result
+          })
+          // 在返回结果中会包含新创建的记录的 _id
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var sql = "select sp_dm from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql where gs_name ='" + app.globalData.gongsi + "'"
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: sql
+        },
+        success(res) {
+          console.log("商品列表", res.result.recordset)
+          _this.setData({
+            product_id:res.result.recordset
+          })
+          // 在返回结果中会包含新创建的记录的 _id
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+      
+    }
+
+   
   },
 
   /**
@@ -230,25 +258,55 @@ Page({
         return;
       }
     }
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "insert yh_jinxiaocun_jichuziliao (sp_dm,`name`,lei_bie,dan_wei,zh_name,gs_name,mark1) values('" + value0 + "','" + value1 + "','" + value4 + "','" + value2 + "','" + finduser + "','" + gongsi + "','" + bigImg + "')"
-      },
-      success(res) {
-        console.log("成功", res)
-        // 在返回结果中会包含新创建的记录的 _id
-        wx.showToast({
-          title: '新建成功',
-          'icon': 'none',
-          duration: 3000
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
 
-      }
-    });
+
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "insert yh_jinxiaocun_jichuziliao (sp_dm,`name`,lei_bie,dan_wei,zh_name,gs_name,mark1) values('" + value0 + "','" + value1 + "','" + value4 + "','" + value2 + "','" + finduser + "','" + gongsi + "','" + bigImg + "')"
+        },
+        success(res) {
+          console.log("成功", res)
+          // 在返回结果中会包含新创建的记录的 _id
+          wx.showToast({
+            title: '新建成功',
+            'icon': 'none',
+            duration: 3000
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+  
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql (sp_dm,[name],lei_bie,dan_wei,zh_name,gs_name,mark1) values('" + value0 + "','" + value1 + "','" + value4 + "','" + value2 + "','" + finduser + "','" + gongsi + "','" + bigImg + "')"
+        },
+        success(res) {
+          console.log("成功", res)
+          // 在返回结果中会包含新创建的记录的 _id
+          wx.showToast({
+            title: '新建成功',
+            'icon': 'none',
+            duration: 3000
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+  
+        }
+      });
+      
+    }
+
+    
     // db.collection('Yh_JinXiaoCun_chanpin').add({
 
     //   data: {

@@ -284,9 +284,9 @@ button{
   font-size: 40rpx;
   margin-left: 90rpx;
   margin-top: 5%;
-  color: white;
+  /* color: white; */
   font-weight: bold;
-  width: 140rpx;
+  /* width: 140rpx; */
 }
 
 .xiaokuang{

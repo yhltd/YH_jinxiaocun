@@ -100,6 +100,7 @@ Page({
             sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "'"
           },
           success(res) {
+            console.log("成功", res)
             that.setData({
               all: res.result
             })
@@ -119,6 +120,7 @@ Page({
             query: "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jinhuofang_mssql where gongsi = '" + gongsi + "'"
           },
           success(res) {
+            console.log("成功", res)
             that.setData({
               all: res.result.recordset
             })
@@ -148,6 +150,7 @@ Page({
             sql: "select * from yh_jinxiaocun_jinhuofang where gongsi = '" + gongsi + "' and beizhu like '%" + e.detail.value + "%'"
           },
           success(res) {
+            console.log("成功", res)
             that.setData({
               all: res.result
             })
@@ -166,6 +169,7 @@ Page({
             query: "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jinhuofang_mssql where gongsi = '" + gongsi + "' and beizhu like '%" + e.detail.value + "%'"
           },
           success(res) {
+            console.log("成功", res)
             that.setData({
               all:res.result.recordset
             })
@@ -332,11 +336,11 @@ Page({
             });
 
           }else if(app.globalData.shujuku == 1){
-
+console.log("bianhao",id)
             wx.cloud.callFunction({
               name: "sqlServer_117",
               data: {
-                sql: "delete fromyh_jinxiaocun_excel.dbo.yh_jinxiaocun_jinhuofang_mssql where _id = '" + id + "'"
+                query: "delete from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jinhuofang_mssql where _id = '" + id + "'"
               },
               success(res) {
                 console.log("成功", res)

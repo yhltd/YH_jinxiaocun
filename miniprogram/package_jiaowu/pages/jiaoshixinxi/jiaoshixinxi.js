@@ -608,7 +608,7 @@ Page({
     }
   },
 
-  clickView:function(e){
+  clickView: function(e){
     var _this = this
     if(_this.data.quanxian_gai != '√'){
       wx.showToast({
@@ -617,24 +617,71 @@ Page({
       })
       return;
     }
+    
+    var item = _this.data.list[e.currentTarget.dataset.index];
+    
+    // 格式化日期字段
+    var birthday = item.birthday ? _this.formatDate(item.birthday) : '';
+    var rz_riqi = item.rz_riqi ? _this.formatDate(item.rz_riqi) : '';
+    
     _this.setData({
-      jsxm: _this.data.list[e.currentTarget.dataset.index].t_name, 
-      xb: _this.data.list[e.currentTarget.dataset.index].sex,
-      sfzhm: _this.data.list[e.currentTarget.dataset.index].id_code,
-      mz: _this.data.list[e.currentTarget.dataset.index].minzu,
-      sr: _this.data.list[e.currentTarget.dataset.index].birthday,
-      zw: _this.data.list[e.currentTarget.dataset.index].post,
-      xl: _this.data.list[e.currentTarget.dataset.index].education, 
-      lxdh: _this.data.list[e.currentTarget.dataset.index].phone,
-      rzrq: _this.data.list[e.currentTarget.dataset.index].rz_riqi,
-      zzzt: _this.data.list[e.currentTarget.dataset.index].state,
-      sbqk: _this.data.list[e.currentTarget.dataset.index].shebao,
-      dz: _this.data.list[e.currentTarget.dataset.index].address,
-      
-      id: _this.data.list[e.currentTarget.dataset.index].id,
-      xgShow:true,
+      jsxm: item.t_name, 
+      xb: item.sex,
+      sfzhm: item.id_code,
+      mz: item.minzu,
+      sr: birthday,  // 使用格式化后的日期
+      zw: item.post,
+      xl: item.education, 
+      lxdh: item.phone,
+      rzrq: rz_riqi,  // 使用格式化后的日期
+      zzzt: item.state,
+      sbqk: item.shebao,
+      dz: item.address,
+      id: item.id,
+      xgShow: true,
     })
   },
+  
+  // 添加日期格式化函数
+  formatDate: function(dateString) {
+    if (!dateString) return '';
+    
+    // 如果是DateTime对象，转换为YYYY-MM-DD格式
+    var date = new Date(dateString);
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+    
+    return year + '-' + month + '-' + day;
+  },
+
+  // clickView:function(e){
+  //   var _this = this
+  //   if(_this.data.quanxian_gai != '√'){
+  //     wx.showToast({
+  //       title: '无修改权限！',
+  //       icon: 'none'
+  //     })
+  //     return;
+  //   }
+  //   _this.setData({
+  //     jsxm: _this.data.list[e.currentTarget.dataset.index].t_name, 
+  //     xb: _this.data.list[e.currentTarget.dataset.index].sex,
+  //     sfzhm: _this.data.list[e.currentTarget.dataset.index].id_code,
+  //     mz: _this.data.list[e.currentTarget.dataset.index].minzu,
+  //     sr: _this.data.list[e.currentTarget.dataset.index].birthday,
+  //     zw: _this.data.list[e.currentTarget.dataset.index].post,
+  //     xl: _this.data.list[e.currentTarget.dataset.index].education, 
+  //     lxdh: _this.data.list[e.currentTarget.dataset.index].phone,
+  //     rzrq: _this.data.list[e.currentTarget.dataset.index].rz_riqi,
+  //     zzzt: _this.data.list[e.currentTarget.dataset.index].state,
+  //     sbqk: _this.data.list[e.currentTarget.dataset.index].shebao,
+  //     dz: _this.data.list[e.currentTarget.dataset.index].address,
+      
+  //     id: _this.data.list[e.currentTarget.dataset.index].id,
+  //     xgShow:true,
+  //   })
+  // },
 
   upd1:function(){
     var _this = this

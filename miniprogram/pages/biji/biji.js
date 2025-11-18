@@ -96,12 +96,17 @@ Page({
                 query: "delete from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql where id = '" + id + "'"
               },
               success: res => {
-                if (res.result.recordset.affectedRows > 0) {
+                if (res.result && (res.result.rowsAffected > 0 || res.result.affectedRows > 0)) {
                   wx.showToast({
                     title: '删除成功',
                     icon: 'success'
                   })
                   _this.init();
+                } else {
+                  wx.showToast({
+                    title: '删除失败或记录不存在',
+                    icon: 'none'
+                  })
                 }
               }
             })

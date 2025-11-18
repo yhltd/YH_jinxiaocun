@@ -1918,6 +1918,12 @@ Page({
         // 检查是否两个值都有了，然后发送请求
         if (companyName && systemName && companyName !== '选择公司' && systemName !== '选择系统') {
           that.queryUserPermissions(companyName, systemName);
+        }else{
+          this.setData({
+            logoImage: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/companyLogo.png",
+            pageTitle: "欢迎使用云合一体化系统"
+        });
+
         }
       }
     })
@@ -1990,16 +1996,20 @@ Page({
           
   
           // 处理beizhu2（图片数据）
-          if (firstItem.beizhu2 && this.isValidBase64Image(firstItem.beizhu2)) {
+          if (firstItem.beizhu2 ) {
+            console.log("beizhu2成功调用")
             this.processBeizhu2(firstItem.beizhu2);
         } else {
+          console.log("beizhu2没成功调用")
             this.setData({
                 logoImage: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/companyLogo.png"
             });
         }
         if(firstItem.beizhu3 && firstItem.beizhu3.trim() !== ""){
+          console.log("beizhu3成功调用")
           this.processBeizhu3(firstItem.beizhu3);
         }else{
+          console.log("beizhu3没成功调用")
           this.setData({
             pageTitle: "欢迎使用云合一体化系统"
           });

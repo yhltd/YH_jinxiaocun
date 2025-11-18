@@ -3,7 +3,16 @@
 <view class="hidden_kh" hidden="{{backhidden}}"></view>
 <view class="dqy_bj">
   <view class="dq_y">客户资料</view> 
-<input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索客户名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+<!-- <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索客户名称" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input> -->
+<input class='bk_ss' 
+       type="text" 
+       confirm-type="search" 
+       style="color:#f8f8f8;text-align:center;" 
+       bindblur='xixi' 
+       value="" 
+       bindconfirm="xixi" 
+       placeholder="搜索客户名称" 
+       placeholder-style="color:#f8f8f8;text-align:center;z-index: 0" />
 <button class="button_css" bindtap="use_book">使用说明</button>
 
 <!-- <view class="ke_bt">客户配置:</view> -->

@@ -91,13 +91,22 @@ Page({
     var _this = this
     let user = _this.data.userInfo.Company;
     let namee = _this.data.userInfo;
+    console.log("传过来的参数",e)
 
     if(app.globalData.shujuku==0){
+
+      let sql = "select p.id,t_id,view_name,`add`,del,upd,sel,RealName as s_name from power as p left jointeacher as t on p.t_id=t.ID where p.company ='" + user + "'"
+
+      // 如果e有值且不是空字符串，就添加view_name条件
+      if (e && e !== '' && e.length >=2) {
+        sql += " and p.view_name ='" + e + "'"
+      }
 
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "select p.id,t_id,view_name,`add`,del,upd,sel,RealName as s_name from power as p left join teacher as t on p.t_id=t.ID  where p.company ='"+user+"'"
+          // sql: "select p.id,t_id,view_name,`add`,del,upd,sel,RealName as s_name from power as p left join teacher as t on p.t_id=t.ID  where p.company ='"+user+"'"
+          sql:sql
         },
         success: res => {
           console.log(res.result)
@@ -123,10 +132,18 @@ Page({
 
     }else if(app.globalData.shujuku == 1){
 
+      // let sql = "select p.id,t_id,view_name,[add],del,upd,sel,RealName as s_name from xueshengguanlixitong_excel.dbo.power as p left join xueshengguanlixitong_excel.dbo.teacher as t on p.t_id=t.ID where p.company ='" + user + "'"
+      let sql = "select p.id,t_id,view_name,[add],del,upd,sel,RealName as s_name from xueshengguanlixitong_excel.dbo.power as p left join xueshengguanlixitong_excel.dbo.teacher as t on p.t_id=t.ID where p.company ='" + user + "'"
+
+      if (e && e !== '' && e.length >=2) {
+        sql += " and p.view_name ='" + e + "'"
+      }
+
+      console.log("执行的SQL:", sql)
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select p.id,t_id,view_name,[add],del,upd,sel,RealName as s_name from xueshengguanlixitong_excel.dbo.power as p left join xueshengguanlixitong_excel.dbo.teacher as t on p.t_id=t.ID where p.company ='" + user + "'"
+          query: sql
         },
         success: res => {
           console.log(res.result.recordset)
@@ -772,9 +789,14 @@ Page({
     })
   },
   sel1:function(){
+    // var _this = this
+    // var e = [_this.data.ymmc]
+    // _this.tableShow(e)
+    // _this.qxShow()
     var _this = this
-    var e = [_this.data.ymmc]
-    _this.tableShow(e)
+    // 确保传递的是字符串，不是数组
+    var condition = _this.data.ymmc
+    _this.tableShow(condition)  // 直接传递字符串
     _this.qxShow()
   },
 

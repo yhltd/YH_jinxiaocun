@@ -75,31 +75,66 @@ Page({
     var gongsi = app.globalData.gongsi
     var fun = that.data.fun;
     var ssql = ""
-    if(fun == 'update'){
-      ssql = "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "' and id ='" + this.data.id + "'"
-    }else{
-      ssql=""
-    }
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: ssql
-      },
-      success(res) {
-        console.log(res.result)
-        that.setData({
-          all: res.result,
-          value0:res.result[0].sp_dm,
-          value1:res.result[0].name,
-          value2:res.result[0].lei_bie,
-          value3:res.result[0].dan_wei,
-          value4:res.result[0].beizhu,
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
+
+    if(app.globalData.shujuku==0){
+
+      if(fun == 'update'){
+        ssql = "select * from yh_jinxiaocun_zhengli where gs_name = '" + gongsi + "' and id ='" + this.data.id + "'"
+      }else{
+        ssql=""
       }
-    });
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: ssql
+        },
+        success(res) {
+          console.log(res.result)
+          that.setData({
+            all: res.result,
+            value0:res.result[0].sp_dm,
+            value1:res.result[0].name,
+            value2:res.result[0].lei_bie,
+            value3:res.result[0].dan_wei,
+            value4:res.result[0].beizhu,
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      if(fun == 'update'){
+        ssql = "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql where gs_name = '" + gongsi + "' and id ='" + this.data.id + "'"
+      }else{
+        ssql=""
+      }
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: ssql
+        },
+        success(res) {
+          console.log(res.result)
+          that.setData({
+            all: res.result.recordset,
+            value0:res.result.recordset[0].sp_dm,
+            value1:res.result.recordset[0].name,
+            value2:res.result.recordset[0].lei_bie,
+            value3:res.result.recordset[0].dan_wei,
+            value4:res.result.recordset[0].beizhu,
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+      
+    }
+
+    
   },
 
   /**
@@ -165,7 +200,9 @@ Page({
       })
       return;
     }
-    var ssql = ""
+
+    if(app.globalData.shujuku==0){
+      var ssql = ""
     if(fun == 'update'){
       ssql = "update yh_jinxiaocun_zhengli set sp_dm ='" + value0 + "',`name` = '" + value1 + "',lei_bie ='" + value2 + "',dan_wei ='" + value3 + "',beizhu ='" + value4 + "' where id =" + id;
     }else{
@@ -192,5 +229,39 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var ssql = ""
+    if(fun == 'update'){
+      ssql = "update yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql set sp_dm ='" + value0 + "',[name] = '" + value1 + "',lei_bie ='" + value2 + "',dan_wei ='" + value3 + "',beizhu ='" + value4 + "' where id =" + id;
+    }else{
+      ssql = "insert into yh_jinxiaocun_excel.dbo.yh_jinxiaocun_zhengli_mssql(sp_dm,name,lei_bie,dan_wei,beizhu,gs_name) values('"+ value0 + "','"+ value1 + "','" + value2 + "','" + value3 + "','" + value4 + "','" + gongsi +"')"
+    }
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: ssql
+      },
+      success(res) {
+        console.log("成功", res)
+        // 在返回结果中会包含新创建的记录的 _id
+        wx.showToast({
+          title: '修改成功',
+          'icon': 'none',
+          duration: 3000
+        })
+        wx.navigateBack({
+          // delta: 1 
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+      
+    }
+
+    
   }
 })

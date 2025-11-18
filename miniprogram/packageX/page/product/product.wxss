@@ -383,9 +383,3 @@ button{
   margin-left: 60rpx;
 }
 
-.lables {
-  font-size: 30rpx;
-  margin: 20rpx 0 10rpx 0;
-  color: #333;
-}
-

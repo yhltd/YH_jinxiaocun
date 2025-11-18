@@ -447,7 +447,13 @@ sel_show:function(){
     var _this = this
     var that = this
     var department_name = e.detail.value.input_department_name
-    var sql="select id,isnull(department_name,'') as department_name,isnull(view_name,'') as view_name,isnull(ins,'') as ins,isnull(del,'') as del,isnull(upd,'') as upd,isnull(sel,'') as sel from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' and department_name ='" + department_name + "'"
+    console.log("查询弹窗数据",department_name)
+    if(department_name){
+      var sql="select id,isnull(department_name,'') as department_name,isnull(view_name,'') as view_name,isnull(ins,'') as ins,isnull(del,'') as del,isnull(upd,'') as upd,isnull(sel,'') as sel from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "' and department_name ='" + department_name + "'"
+    }else{
+      var sql="select id,isnull(department_name,'') as department_name,isnull(view_name,'') as view_name,isnull(ins,'') as ins,isnull(del,'') as del,isnull(upd,'') as upd,isnull(sel,'') as sel from baitaoquanxian_department WHERE company = '" + that.data.gongsi + "'"
+    }
+    
     console.log(sql)
     wx.cloud.callFunction({
       name: 'sqlServer_117',

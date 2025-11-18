@@ -62,7 +62,7 @@ page {
 .th {
   display: flex;
   flex-direction: column;
-  width: 140rpx;
+  width: 150rpx;
   height: 90rpx;
   background: linear-gradient(135deg, 
     rgba(15, 27, 53, 0.9) 0%, 
@@ -146,7 +146,7 @@ page {
 .td {
   display: flex;
   flex-direction: column;
-  width: 140rpx;
+  width: 150rpx;
   /* height: 90rpx; */
   height: 60rpx;
   background: #f0fff0;

@@ -417,9 +417,10 @@
 .cart_list_item{
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  padding: 5rpx 15rpx;
+    padding: 5rpx 15rpx;
   text-align: center;
+  width: 90%;
+  margin-left: 7%;
   /* background-color: #ffffffed; */
   border-radius: 25rpx;
   color: white;

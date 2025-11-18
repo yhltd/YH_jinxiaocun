@@ -21,6 +21,8 @@ Page({
     sheetqx1:[],
     sheetqx2:[],
     empty: "",
+    queryName: "", // 专门用于查询姓名的数据
+    queryPhone: "", // 专门用于查询电话的数据
     shows: false, //控制下拉列表的显示隐藏，false隐藏、true显示
     type: [], //下拉列表的数据
     indexs: 0, //选择的下拉列 表下标,
@@ -276,11 +278,14 @@ Page({
 
   inquire: function() {
     var _this = this;
+    // 每次打开查询窗口时重置表单
+    _this.resetQueryForm();
     _this.setData({
       frmStudfind: false,
       mask_hid: false,
-    })
+    });
   },
+  
 
 
   entering: function() {
@@ -318,27 +323,23 @@ Page({
       addTable2: true,
       input_hid2: true,
       handle2: true,
-      handle3:true,
-      empty:"",
-      zdr:"",
-      hkr:""
-    })
+      handle3: true,
+    });
+    // 重置查询表单
+    _this.resetQueryForm();
   },
 
   save: function(e) {
     var _this = this;
     _this.setData({
-      name: e.detail.value.name,
-      phone: e.detail.value.phone,
-    })
+      name: e.detail.value.name || "",
+      phone: e.detail.value.phone || "",
+    });
     _this.init();
     _this.setData({
       frmStudfind: true,
       mask_hid: true,
-      empty:"",
-      zdr:"",
-      hkr:""
-    })
+    });
   },
 
   add: function(e) {
@@ -623,7 +624,18 @@ Page({
     })
   },
 
-
+// 重置查询表单
+resetQueryForm: function() {
+  var _this = this;
+  _this.setData({
+    queryName: "",
+    queryPhone: ""
+  });
+  // wx.showToast({
+  //   // title: '已重置',
+  //   icon: 'success'
+  // });
+},
 
 
 

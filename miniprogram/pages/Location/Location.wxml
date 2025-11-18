@@ -4,7 +4,16 @@
 <view class="hidden_kh" hidden="{{backhidden}}"></view>
 <view class="dqy_bj">
 <view class="dq_y">进货方</view>
-<input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索进货方" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+<!-- <input class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" bindblur='' value="" bindconfirm="xixi" placeholder="搜索进货方" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input> -->
+<input class='bk_ss' 
+         type="text" 
+         confirm-type="search" 
+         style="color:#f8f8f8;text-align:center;" 
+         bindblur='xixi' 
+         bindconfirm="xixi" 
+         value="" 
+         placeholder="搜索进货方" 
+         placeholder-style="color:#f8f8f8;text-align:center;z-index: 0" />
 <!-- <view class="biao_tou">进货方配置</view>  -->
 <button class="button_css" bindtap="use_book">使用说明</button>
 </view>

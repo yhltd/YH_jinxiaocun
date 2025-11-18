@@ -95,20 +95,28 @@
     <input bindinput="onInput" data-column="sfzhm" class="input_text_form" value="{{sfzhm}}" type="text" name="sfzhm" ></input>
     <view class="lables">民族</view>
     <input bindinput="onInput" data-column="mz" class="input_text_form" value="{{mz}}" type="text" name="mz" ></input>
-    <view class="lables">生日</view>
+    <!-- <view class="lables">生日</view>
     <picker class="pick" mode="sr" value="{{sr}}" data-column_name="sr" bindchange="choiceDate">
       <input bindinput="onInput" data-column="sr" class="input_text_form"  value="{{rq}}" type="date" name="sr" disabled="disabled"></input>
-    </picker>
+    </picker> -->
+    <view class="lables">生日</view>
+  <picker class="pick" mode="date" value="{{sr}}" data-column_name="sr" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="sr" class="input_text_form" value="{{sr}}" type="text" name="sr" disabled="disabled"></input>
+  </picker>
     <view class="lables">职位</view>
     <input bindinput="onInput" data-column="zw" class="input_text_form" value="{{zw}}" type="text" name="zw" ></input>
     <view class="lables">学历</view>
     <input bindinput="onInput" data-column="xl" class="input_text_form" value="{{xl}}" type="text" name="xl" ></input>
     <view class="lables">联系电话</view>
     <input bindinput="onInput" data-column="lxdh" class="input_text_form" value="{{lxdh}}" type="number" name="lxdh" ></input>
-    <view class="lables">入职日期</view>
+    <!-- <view class="lables">入职日期</view>
     <picker class="pick" mode="rzrq" value="{{rzrq}}" data-column_name="rzrq" bindchange="choiceDate">
       <input bindinput="onInput" data-column="rzrq" class="input_text_form"  value="{{rq}}" type="date" name="rzrq" disabled="disabled"></input>
-    </picker>
+    </picker> -->
+    <view class="lables">入职日期</view>
+  <picker class="pick" mode="date" value="{{rzrq}}" data-column_name="rzrq" bindchange="choiceDate">
+    <input bindinput="onInput" data-column="rzrq" class="input_text_form" value="{{rzrq}}" type="text" name="rzrq" disabled="disabled"></input>
+  </picker>
     <view class="lables">在职状态</view>
     <input bindinput="onInput" data-column="zzzt" class="input_text_form" value="{{zzzt}}" type="text" name="zzzt" ></input>
     <view class="lables">社保情况</view>

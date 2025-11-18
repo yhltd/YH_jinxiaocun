@@ -31,22 +31,17 @@
 
 <!--会员管理-->
 <!--- 查询 --->
-<!----------->
 <view class="choiceList1" hidden="{{frmStudfind}}">
   <form bindsubmit="save">
     <view class="dakuang">
-    <view class="xiaokuang">
-      
-    
-      <view class="lables">会员姓名:</view>
-      <input class="input_text_form"  value="{{empty}}" type="text" name="name"></input>
-    </view>
-    <view class="xiaokuang">
-      
-    
-      <view class="lables">会员电话:</view>
-      <input class="input_text_form" type="text" placeholder="{{}}" value="{{type}}" name="phone"></input>
-    </view>
+      <view class="xiaokuang">
+        <view class="lables">会员姓名:</view>
+        <input class="input_text_form" value="{{queryName}}" type="text" name="name" placeholder="请输入会员姓名"></input>
+      </view>
+      <view class="xiaokuang">
+        <view class="lables">会员电话:</view>
+        <input class="input_text_form" value="{{queryPhone}}" type="text" name="phone" placeholder="请输入会员电话"></input>
+      </view>
     </view>
     <view class="bt_view">
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

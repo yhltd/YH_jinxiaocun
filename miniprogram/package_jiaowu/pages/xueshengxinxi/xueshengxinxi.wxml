@@ -132,10 +132,15 @@
     
     <view class="lables">学生姓名</view>
     <input bindinput="onInput" data-column="xsxm" class="input_text_form" value="{{xsxm}}" type="text" name="xsxm" ></input>
-    <view class="lables">教师姓名</view>
+    <!-- <view class="lables">教师姓名</view>
     <input bindinput="onInput" data-column="jsxm" class="input_text_form"  value="{{jsxm}}" type="text" name="jsxm"></input>
     <view class="lables">培训课程</view>
-    <input bindinput="onInput" data-column="pxkc" class="input_text_form" value="{{pxkc}}" type="text" name="pxkc" ></input>
+    <input bindinput="onInput" data-column="pxkc" class="input_text_form" value="{{pxkc}}" type="text" name="pxkc" ></input> -->
+    <view class="lables">教师姓名</view>
+    <input bindinput="onInput" data-column="zrjs" class="input_text_form" value="{{zrjs}}" type="text" name="zrjs"></input>
+    
+    <view class="lables">培训课程</view>
+    <input bindinput="onInput" data-column="ckpx" class="input_text_form" value="{{ckpx}}" type="text" name="ckpx"></input>
     
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>

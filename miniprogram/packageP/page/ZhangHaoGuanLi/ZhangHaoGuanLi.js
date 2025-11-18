@@ -371,6 +371,8 @@ Page({
     var _this = this
     var list = _this.data.list
     var index = e.currentTarget.dataset.index
+    console.log("数据index",index)
+    console.log("数据list",list)
     wx.showModal({
       title: '提示',
       content: '是否解除此账号的微信绑定？',
