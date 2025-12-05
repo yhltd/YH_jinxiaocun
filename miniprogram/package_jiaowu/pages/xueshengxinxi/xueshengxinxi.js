@@ -1062,7 +1062,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "delete from student where ID='" + _this.data.id + "'"
+          query: "delete from xueshengguanlixitong_excel.dbo.student where ID='" + _this.data.id + "'"
         },
         success: res => {
           _this.setData({

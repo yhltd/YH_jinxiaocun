@@ -320,7 +320,7 @@
   </checkbox-group>
 
 </view>
-    <view class="bottom_view" style="height:10%">
+    <view class="bottom_view" >
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add2">确定</button>
   </view>

@@ -48,7 +48,8 @@
     <input bindinput="onInput" data-column="xingming" class="input_text_form" value="{{xingming}}" type="text" name="xingming" ></input>
     <view class="lables">部门</view>
     <input bindinput="onInput" data-column="bumen" class="input_text_form"  value="{{bumen}}" type="text" name="bumen"></input>
-  <view class="bottom_view" style="height:10%">
+ <!-- 查询弹窗修改 -->
+  <view class="bottom_view" >
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="cxShow3">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>

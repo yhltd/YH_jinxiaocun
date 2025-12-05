@@ -32,6 +32,7 @@ page {
   color: white;
 }
 .optionView{
+  color: white;
   width: 92%;
   border: 1rpx solid #4876ff;
   text-align: center;

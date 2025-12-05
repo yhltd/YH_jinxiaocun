@@ -15,9 +15,9 @@ button{
   display: inline-flex;
   flex-direction: column;
 }
-
+/* 弹窗内表格修改 */
 .sv_list{
-  width: auto;
+  /* width: auto; */   
   white-space: nowrap;
   margin-top: 0px;
   height: 86%;
@@ -226,12 +226,12 @@ button{
 /*
   bottom_view
 */
-.bottom_view{
+/* .bottom_view{
   height: 10%;
   align-items: center;
   display: flex;
   bottom: 2%;
-}
+} */
 .bottom_view2{
   display: flex;
   bottom: 2%;
@@ -338,7 +338,7 @@ button{
 
 
 .bottom_view{
-  height: 10%;
+  /* height: 10%; */
   align-items: center;
   display: flex;
   bottom: 2%;

@@ -228,7 +228,8 @@
     <input bindinput="onInput" data-column="product_name" class="input_text_form" value="{{product_name}}" type="product_name" name="code" ></input>
     <view class="lables1">订单号</view>
     <input bindinput="onInput" data-column="order_id" class="input_text_form" value="{{order_id}}" type="text" name="order_id"></input>
-  <view class="bottom_view" style="height:10%">
+  <!-- 查询弹窗修改 -->
+  <view class="bottom_view" >
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
   </view>

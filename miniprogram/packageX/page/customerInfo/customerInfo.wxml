@@ -236,7 +236,7 @@
     <view class="table">
       <view class='table_header'>
         <block class="title" wx:for="{{title2}}">
-          <view class="title_text" style="background-color: white;width:{{item.width}};{{item.text=='编号'?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          <view class="title_text" style="width:{{item.width}};{{item.text=='编号'?'position:sticky;background:#ff7905;left:0;z-index:5':''}}">{{item.text}}</view>
         </block>
       </view>
       <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">

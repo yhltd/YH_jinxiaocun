@@ -27,12 +27,12 @@
         <input class='maskWindowInput' maxlength='100' placeholder='请输入待查询姓名' bindinput='maskWindowInput'></input>
         <view bindtap="close" style="margin: 15rpx 0;">
           <view class="select-wrap">
-            <select id="select" options="{{options01}}" key="Id" text="Name" bind:change="change01"></select>
+            <select style="color: #1cb7a9;" id="select" options="{{options01}}" key="Id" text="Name" bind:change="change01"></select>
           </view>
         </view>
         <view bindtap="close" style="margin: 15rpx 0;">
           <view class="select-wrap">
-            <select id="select" options="{{options02}}" key="Id" text="Name" bind:change="change02"></select>
+            <select style="color: #1cb7a9;" id="select" options="{{options02}}" key="Id" text="Name" bind:change="change02"></select>
           </view>
         </view>
         <view style="height:200rpx"></view>

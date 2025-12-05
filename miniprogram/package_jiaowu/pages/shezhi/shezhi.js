@@ -556,8 +556,54 @@ Page({
       })
     }
   },
+  // del1:function(){
+  //   var _this = this
+  //   if(_this.data.quanxian_shan != '√'){
+  //     wx.showToast({
+  //       title: '无删除权限！',
+  //       icon: 'none',
+  //       duration: 3000
+  //     })
+  //     return;
+  //   }
+  //     wx.cloud.callFunction({
+  //       name: 'sql_jiaowu',
+  //       data: {
+  //         sql: "delete from shezhi where id='" + _this.data.id + "'"
+  //       },
+  //       success: res => {
+  //         _this.setData({
+  //           kclb: "",
+  //           zrjs: "",
+  //           ztsd: "",
+  //           jffs: "",
+  //           srfs: "",
+  //           zcfl:"",
+  //         })
+  //         _this.qxShow()
+  //         var e = ['', '','']
+  //         _this.tableShow(e)
+  //         wx.showToast({
+  //           title: '删除成功！',
+  //           icon: 'none'
+  //         })
+  //       },
+  //       err: res => {
+  //         console.log("错误!")
+  //       },
+  //       fail: res => {
+  //         wx.showToast({
+  //           title: '请求失败！',
+  //           icon: 'none'
+  //         })
+  //         console.log("请求失败！")
+  //       }
+  //     })
+  // },
+
   del1:function(){
     var _this = this
+
     if(_this.data.quanxian_shan != '√'){
       wx.showToast({
         title: '无删除权限！',
@@ -566,6 +612,10 @@ Page({
       })
       return;
     }
+
+
+    if(app.globalData.shujuku==0){
+
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
@@ -573,15 +623,15 @@ Page({
         },
         success: res => {
           _this.setData({
-            kclb: "",
-            zrjs: "",
-            ztsd: "",
-            jffs: "",
-            srfs: "",
-            zcfl:"",
-          })
+                      kclb: "",
+                      zrjs: "",
+                      ztsd: "",
+                      jffs: "",
+                      srfs: "",
+                      zcfl:"",
+                    })
           _this.qxShow()
-          var e = ['', '','']
+          var e = ['']
           _this.tableShow(e)
           wx.showToast({
             title: '删除成功！',
@@ -599,6 +649,45 @@ Page({
           console.log("请求失败！")
         }
       })
+
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "delete from xueshengguanlixitong_excel.dbo.shezhi where id='" + _this.data.id + "'"
+        },
+        success: res => {
+          _this.setData({
+                      kclb: "",
+                      zrjs: "",
+                      ztsd: "",
+                      jffs: "",
+                      srfs: "",
+                      zcfl:"",
+                    })
+          _this.qxShow()
+          var e = ['']
+          _this.tableShow(e)
+          wx.showToast({
+            title: '删除成功！',
+            icon: 'none'
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+      
+    }
+      
   },
 
   entering:function(){

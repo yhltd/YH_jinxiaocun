@@ -246,12 +246,12 @@ button {
 /*
   bottom_view
 */
-.bottom_view {
+/* .bottom_view {
   height: 10%;
   align-items: center;
   display: flex;
   bottom: 2%;
-}
+} */
 
 .bottom_view3 {
   align-items: center;
@@ -427,7 +427,7 @@ button {
 
 
 .bottom_view{
-  height: 10%;
+  /* height: 10%; */
   align-items: center;
   display: flex;
   bottom: 2%;
