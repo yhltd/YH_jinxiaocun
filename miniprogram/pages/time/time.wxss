@@ -20,16 +20,29 @@ page {
 
 .Xzkhtext {
   color: #ffffff;
-  margin-left: 22rpx;
+  margin-left: 4%;
 }
 .xzkhWwb{
-  padding: 2%;
+  padding: 2% 0;
   font-size: 40rpx;
   font-weight: bold;
   border-radius: 40rpx;
   display: flex;
   justify-content: center;
   margin-bottom: 10rpx;
+  position: relative;
+}
+
+.xzkhWwb2{
+  padding: 2% 0;
+  font-size: 40rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10rpx;
+  position: relative;
+  margin-top: 35rpx;
 }
 .xzkhA {
   height: 100%;
@@ -62,7 +75,7 @@ page {
 .main {
   position: absolute;
   width: 100%;
-  margin-top: 42%;
+  margin-top: 50%;
   display: block;
   z-index: -9;
   margin-bottom: 20%;
@@ -175,7 +188,7 @@ page {
   width: 100%;
   font-size: 77%;
   flex-direction: column;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 
 .ss-text {
@@ -191,7 +204,8 @@ page {
   background: linear-gradient(135deg, #9885ff, #4c51f7, #bea3ff);
   background-size: 200% 200%;
   animation: gradientFlow 15s ease infinite;
-  padding: 10%;
+  padding: 10% 0;
+  height: 220rpx;
 }
 
 @keyframes gradientFlow {
@@ -210,13 +224,29 @@ page {
   border: 1px solid #1c60a3;
   border-radius: 29rpx;
   width: 390rpx;
-  height: 50rpx;
+    height: 55rpx;
+  
+    box-sizing: border-box;
   position: absolute;
   left: 46.3%;
   font-size: 40rpx;
   top: 5.5%;
   color: #f8f8f8;
   background-color: #ffffff3d;
+}
+.bk_ss3 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 390rpx;
+    height: 55rpx;
+   
+    box-sizing: border-box;
+  position: absolute;
+  left: 46.3%;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
+  color: #f8f8f8;
+  
 }
 /* 
 .zg {
@@ -250,6 +280,15 @@ page {
   position: absolute;
   font-size: 40rpx;
   top: 4;
+  left: 6%;
+  color: white;
+}
+
+.dq_y2 {
+  font-weight: bold;
+  position: absolute;
+  font-size: 40rpx;
+ 
   left: 6%;
   color: white;
 }
@@ -402,7 +441,7 @@ page {
   color: red;
 }
 
-picker{
+.pick{
   left: 39.5%;
     top: 5;
     position: absolute;
@@ -414,6 +453,19 @@ picker{
     border-radius: 29rpx;
     padding-left: 76rpx;
     box-sizing: border-box;
+}
+.pick2{
+  left: 39.5%;
+  top: 5;
+ 
+  width: 390rpx;
+  height: 55rpx;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  padding-left: 76rpx;
+  box-sizing: border-box;
 }
 
 .riqi{

@@ -1,0 +1,64 @@
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="input_view">
+      <view class="input_text">人名</view>
+      <input name="renming" placeholder="请输入人名" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">时间</view>
+      <picker mode="date" value="{{date}}" bindchange="bindDateChange">
+        <input name="shijian" placeholder="请输入时间" value="{{shijian}}"></input>
+      </picker>
+    </view>
+    <!-- <view class="input_view">
+      <view class="input_text">提成</view>
+      <input name="ticheng" placeholder="请输入提成" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">销售数量</view>
+      <input name="xiaoshoushuliang" placeholder="请输入销售数量" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">销售金额</view>
+      <input name="xiaoshoujine" placeholder="请输入销收金额" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">产品成本</view>
+      <input name="chanpinchengben" placeholder="请输入产品成本" type="number" value="{{empty}}"></input>
+    </view> -->
+    <view class="input_view">
+      <view class="input_text">银行账户</view>
+      <input name="yinhangzhanghu" placeholder="请输入银行账户" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">扣款</view>
+      <input name="koukuan" placeholder="请输入扣款" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">工资</view>
+      <input name="gongzi" placeholder="请输入工资" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">已付</view>
+      <input name="yifu" placeholder="请输入已付" type="number" value="{{empty}}"></input>
+    </view>
+    <!-- <view class="input_view">
+      <view class="input_text">未付</view>
+      <input name="weifu" placeholder="请输入未付" type="number" value="{{empty}}"></input>
+    </view> -->
+    <view class="input_view">
+      <view class="input_text">备注</view>
+      <input name="beizhu" placeholder="请输入备注" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="bottom">
+      <button class="bt" form-type="reset" data-type="reset">重置</button>
+      <button class="bt" form-type="submit" data-type="submit">保存</button>
+      <button class="bt" form-type="submit" data-type="submitAndReset">保存并重置</button>
+    </view>
+  </form>
+</view>
+
+
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>

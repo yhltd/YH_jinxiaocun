@@ -41,6 +41,10 @@ Page({
         txet: "金额",
         index: 6,
         fun : 'cpsj'
+      },{
+        txet: "仓库",
+        index: 7,
+        fun : 'cangku'
       },
       
     ],
@@ -331,6 +335,11 @@ Page({
     }else{
       var value6 = that.data.value6
     }
+    if (that.data.value7 == undefined) {
+      var value7 = that.data.all[0].cangku
+    }else{
+      var value7 = that.data.value7
+    }
     
     var gongsi = app.globalData.gongsi;
     var ssql = "";
@@ -339,7 +348,7 @@ Page({
     if(app.globalData.shujuku==0){
 
       if(fun == 'qichu'){
-        ssql = "update yh_jinxiaocun_qichushu set cpid ='" + value0 + "',`cpname` = '" + value1 + "',cplb ='" + value4 + "',cpsl ='" + value5 + "',cpsj ='" + value6 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
+        ssql = "update yh_jinxiaocun_qichushu set cpid ='" + value0 + "',`cpname` = '" + value1 + "',cplb ='" + value4 + "',cpsl ='" + value5 + "',cpsj ='" + value6 + "',cangku ='" + value7 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
       }else{
         ssql = "update yh_jinxiaocun_jichuziliao set sp_dm ='" + value0 + "',`name` = '" + value1 + "',lei_bie ='" + value4 + "',dan_wei = '" + value2 + "',gs_name='" + gongsi + "',mark1='" + bigImg + "' where id =" + id
       }
@@ -369,7 +378,7 @@ Page({
     }else if(app.globalData.shujuku == 1){
 
       if(fun == 'qichu'){
-        ssql = "update yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql set cpid ='" + value0 + "',[cpname] = '" + value1 + "',cplb ='" + value4 + "',cpsl ='" + value5 + "',cpsj ='" + value6 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
+        ssql = "update yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql set cpid ='" + value0 + "',cpname = '" + value1 + "',cplb ='" + value4 + "',cpsl ='" + value5 + "',cpsj ='" + value6 + "',cangku ='" + value7 + "',gs_name='" + gongsi + "',mark1 = '"+bigImg+"' where _id =" + id;
       }else{
         ssql = "update yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql set sp_dm ='" + value0 + "',[name] = '" + value1 + "',lei_bie ='" + value4 + "',dan_wei = '" + value2 + "',gs_name='" + gongsi + "',mark1='" + bigImg + "' where id =" + id
       }

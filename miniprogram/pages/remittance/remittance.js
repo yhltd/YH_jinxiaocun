@@ -32,6 +32,7 @@ Page({
     sjkj: "",
     ddh: "",
     shangpin_list: [],
+    cangku: ""
   },
 
   /**
@@ -97,6 +98,13 @@ Page({
       jghide: true,
       jghide: "none",
       backhidden: true
+    })
+  },
+
+  cangku_input: function(e) {
+    var that = this
+    that.setData({
+      cangku: e.detail.value
     })
   },
 
@@ -519,6 +527,12 @@ zongjia_refresh:function(){
         title: '提示',
         content: '请选择客户',
       })
+    }else if (that.data.cangku == undefined) {
+      console.log(that.data.cangku)
+      wx.showModal({
+        title: '提示',
+        content: '请输入出库仓库',
+      })
     }else if (that.data.ddh == "") {
       console.log(that.data.ddh)
       wx.showModal({
@@ -579,6 +593,14 @@ zongjia_refresh:function(){
             content: '请输入订单号',
           })
         } else {
+          if (that.data.cangku == "") {
+            console.log(that.data.ddh)
+            wx.showModal({
+              title: '提示',
+              content: '请输入出库仓库',
+            })
+          } 
+        else {
           if (szzhi.length == 0) {
             wx.showModal({
               title: '提示',
@@ -593,7 +615,7 @@ zongjia_refresh:function(){
                   name: "sqlConnection",
                   data: {
                     // sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + app.globalData.finduser + "','" + that.data.khname + "','" + today + "','" + szzhi[i]._id + "','" + szzhi[i].value0 + "','" + szzhi[i].value1 + "','" + szzhi[i].value3 + "','" + szsl[i] + "','出库','" + that.data.ddh+"')"
-                    sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "')"
+                    sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid,cangku)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "','" +that.data.cangku+ "')"
                     // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
                   },
                   success(res) {
@@ -615,7 +637,7 @@ zongjia_refresh:function(){
                   name: "sqlServer_117",
                   data: {
                     // sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + app.globalData.finduser + "','" + that.data.khname + "','" + today + "','" + szzhi[i]._id + "','" + szzhi[i].value0 + "','" + szzhi[i].value1 + "','" + szzhi[i].value3 + "','" + szsl[i] + "','出库','" + that.data.ddh+"')"
-                    sql: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "')"
+                    sql: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid,cangku)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "','" +that.data.cangku+ "')"
                     // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
                   },
                   success(res) {
@@ -660,6 +682,7 @@ zongjia_refresh:function(){
           }
         }
       }
+    }
     }
   },
   xuanzekehu: function(e) {

@@ -1,0 +1,48 @@
+.myuser {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 280rpx;
+  background-color: #fff;
+  box-shadow: 0 10rpx 10rpx #f2f2f2;
+}
+
+.myform {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.myview {
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+}
+
+.mytext {
+  min-width: 20%
+}
+
+.myinput {
+  width: 550rpx;
+  height: 70rpx;
+  border: 1rpx solid #f2f2f2;
+  border-radius: 10rpx;
+  line-height: 70rpx;
+  padding-left: 20rpx;
+  font-size: 94%;  
+}
+
+.mybtn {
+  width: 150rpx;
+  background-color: #1296DB;
+  height: 70rpx;
+  color: #fff;
+  box-shadow: 0 0 10rpx;
+  line-height: 70rpx;
+  font-size: 99%;
+  font-weight: bold;  
+}

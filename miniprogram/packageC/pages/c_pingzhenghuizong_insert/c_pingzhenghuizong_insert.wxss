@@ -157,7 +157,7 @@ radio{
   color: white;
   width: 17%;
   float: left;
-  font-size: 35rpx;
+  font-size: 30rpx;
   margin-left: 2.5%;
   margin-top: 2.5%;
   height: 70%;
@@ -168,7 +168,7 @@ radio{
   color: white;
   width: 17%;
   float: left;
-  font-size: 35rpx;
+  font-size: 30rpx;
   margin-left: 2.5%;
   margin-top: 2.5%
 }

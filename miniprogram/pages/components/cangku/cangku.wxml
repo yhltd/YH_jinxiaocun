@@ -1,0 +1,12 @@
+<view class="myuser" style="display: {{show ? 'block' : 'none'}}">
+	<form bindsubmit="save">
+		<view class="myview" style="margin-top: 8%;">
+			<view class="mytext">仓库</view>
+			<input class="myinput" value="{{cangku}}" name="cangku"></input>
+		</view>
+    <view class="myview">
+      <button class="mybtn" form-type="submit">保存</button>
+      <button class="mybtn" bindtap="back">取消</button>
+    </view>
+	</form>
+</view>

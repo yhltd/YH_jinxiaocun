@@ -118,7 +118,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlConnection",
         data: {
-          sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT "+page+", 5" 
+          sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '出库' OR mxtype = '入库') LIMIT "+page+", 5"
         },
         success(res) {
           for(var i=0;i<res.result.length;i++){

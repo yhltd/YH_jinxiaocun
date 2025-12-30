@@ -40,7 +40,7 @@ input{
   width: 92%;
   height: 100rpx;
   line-height: 86rpx;
-  border-bottom: 2px solid #E6E6E6;
+  border: 2px solid #E6E6E6;
   margin: auto;
   border-radius: 15rpx;
   font-size: 33rpx;
@@ -216,3 +216,13 @@ radio{
   transition: all 0.3s ease-in-out;
 }
 
+/* 在对应的WXSS文件中添加 */
+.calculate-btn {
+  margin-left: 10rpx;
+  background-color: #009688;
+  color: white;
+  font-size: 24rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 6rpx;
+}

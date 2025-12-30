@@ -63,8 +63,11 @@ Page({
           {id:8,text:"利润",url:"../../packageC/pages/c_mingxizhang_shou/c_mingxizhang_shou"},
           {id:9,text:"应收报表",url:"../../packageC/pages/c_yingshoubaobiao/c_yingshoubaobiao"},
           {id:10,text:"应付报表",url:"../../packageC/pages/c_yingfubaobiao/c_yingfubaobiao"},
-          {id:11,text:"使用说明",url:""},
-          {id:12,text:"数据空间",url:"../../packageC/pages/c_shujukongjian/c_shujukongjian"},
+          {id:11,text:"工资明细",url:"../../packageC/pages/c_gongzimingxi/c_gongzimingxi"},
+          {id:12,text:"项目配置",url:"../../packageC/pages/c_ysyfpeizhi/c_ysyfpeizhi"},
+          {id:12,text:"统计看板",url:"../../packageC/pages/c_tongji/c_tongji"},
+          {id:13,text:"使用说明",url:""},
+          {id:14,text:"数据空间",url:"../../packageC/pages/c_shujukongjian/c_shujukongjian"},
         ],
         src:"cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jijiancaiwu-bg.png",
         listHid : false,
@@ -580,6 +583,50 @@ Page({
           wx.navigateTo({
             url: '../../packageC/pages/c_wode/c_wode' +"?userInfo="+JSON.stringify(_this.data.userInfo)
           })
+        }
+        if(_this.data.names[itemindex].list[index].text=="项目配置"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_ysyfpeizhi/c_ysyfpeizhi' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+
+        if(_this.data.names[itemindex].list[index].text=="统计看板"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_tongji/c_tongji' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
+        }
+
+        if(_this.data.names[itemindex].list[index].text=="工资明细"){
+          console.log(list)
+          // if(list.jjzz_select == '是'){
+            wx.navigateTo({
+              url: '../../packageC/pages/c_gongzimingxi/c_gongzimingxi' +"?userInfo="+JSON.stringify(_this.data.userInfo)
+            })
+          // }else{
+          //   wx.showToast({
+          //     title: '无此模块查询权限',
+          //     icon: "none",
+          //     duration: 1000
+          //   })
+          // }
         }
       },
       err: res => {

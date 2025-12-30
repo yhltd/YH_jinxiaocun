@@ -89,87 +89,158 @@ Page({
   },
 
 
-  getAccounting : function(){
+  getAccounting: function() {
     wx.showLoading({
-      title : '加载中',
-      mask : 'true'
+        title: '加载中',
+        mask: 'true'
     })
     var _this = this;
     var userInfo = _this.data.userInfo;
 
     _this.setData({
-      dangqian:"getAccounting"
+        dangqian: "getAccounting"
     })
-    console.log(_this.data.dangqian)
+    
     wx.cloud.callFunction({
-      name: 'sqlServer_cw',
-      data: {
-        query: "select sum(a.load) as sum_load,sum(a.borrowed) as sum_borrowed from(select code,load,borrowed,LEFT(code,1) as class from Accounting where company = '"+_this.data.userInfo.company+"') as a GROUP BY a.class;"
-      },
-      success: res => {
-        var accounting = res.result.recordset
-        var options = {
-          title : {
-            show : false
-          },
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
+        name: 'sqlServer_cw',
+        data: {
+            query: "select sum(a.load) as sum_load,sum(a.borrowed) as sum_borrowed from(select code,load,borrowed,LEFT(code,1) as class from Accounting where company = '" + _this.data.userInfo.company + "') as a GROUP BY a.class;"
+        },
+        success: res => {
+            var accounting = res.result.recordset
+            
+            // 计算净额
+            var netValues = []; // 净额（借方-贷方）
+            
+            for (let i = 0; i < accounting.length; i++) {
+                var load = accounting[i].sum_load || 0;
+                var borrowed = accounting[i].sum_borrowed || 0;
+                var net = load - borrowed; // 净额 = 借方 - 贷方
+                netValues.push(net);
             }
-          },
-          grid: {},
-          xAxis: [{
-            type: "category",
-            data: ["资产类","负债类","权益类","成本类","损益类",],
-            axisTick: {
-              alignWithLabel: true
+            
+            var options = {
+                title: {
+                    show: false
+                },
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "cross"
+                    }
+                },
+              
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: "category",
+                    data: ["资产类", "负债类", "权益类", "成本类", "损益类"],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }],
+                yAxis: [
+                    {
+                        type: "value",
+                        name: '金额',
+                        position: 'left',
+                        splitNumber: 8,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    {
+                        type: "value",
+                        name: '净额',
+                        position: 'right',
+                        splitNumber: 8,
+                        axisLabel: {
+                            formatter: '{value}'
+                        },
+                        // 可选：根据净额数据范围调整右侧Y轴
+                        min: function(value) {
+                            return Math.floor(value.min * 1.1); // 增加10%余量
+                        },
+                        max: function(value) {
+                            return Math.ceil(value.max * 1.1); // 增加10%余量
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: "年初借金",
+                        type: "bar",
+                        yAxisIndex: 0, // 使用左侧Y轴
+                        label: {
+                            show: true,
+                            position: "top",
+                            formatter: '{c}'
+                        },
+                        itemStyle: {
+                            color: "#00CC99"
+                        },
+                        data: []
+                    },
+                    {
+                        name: "年初贷金",
+                        type: "bar",
+                        yAxisIndex: 0, // 使用左侧Y轴
+                        label: {
+                            show: true,
+                            position: "top",
+                            formatter: '{c}'
+                        },
+                        itemStyle: {
+                            color: "#003399"
+                        },
+                        data: []
+                    },
+                    {
+                        name: "净额",
+                        type: "line",
+                        yAxisIndex: 1, // 使用右侧Y轴
+                        symbol: 'circle',
+                        symbolSize: 8,
+                        lineStyle: {
+                            width: 3,
+                            type: 'solid'
+                        },
+                        itemStyle: {
+                            color: "#FF6B6B"
+                        },
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: function(params) {
+                                var value = params.value;
+                                return (value >= 0 ? '+' : '') + value.toLocaleString();
+                            }
+                        },
+                        data: netValues
+                    }
+                ]
             }
-          }],
-          yAxis: [{
-            type: "value",
-            splitNumber : "8"
-          }],
-          series: [{
-            name: "年初借金",
-            type: "bar",
-            label : {
-              show : "true",
-              position : "top"
-            },
-            itemStyle : {
-              color : "#00CC99"
-            },
-            data: []
-          },{
-            name: "年初贷金",
-            type: "bar",
-            label : {
-              show : "true",
-              position : "top"
-            },
-            itemStyle : {
-              color : "#003399"
-            },
-            data: []
-          }]
+            
+            // 填充柱状图数据
+            for (let i = 0; i < accounting.length; i++) {
+                options.series[0].data.push(accounting[i].sum_load || 0);
+                options.series[1].data.push(accounting[i].sum_borrowed || 0);
+            }
+            
+            _this.updChart(options);
+            _this.updOthers(0);
+            wx.hideLoading();
+        },
+        err: res => {
+            console.log("错误!");
+            wx.hideLoading();
         }
-        for(let i=0;i<accounting.length;i++){
-          options.series[0].data.push(accounting[i].sum_load)
-          options.series[1].data.push(accounting[i].sum_borrowed)
-        }
-        _this.updChart(options)
-        _this.updOthers(0)
-        wx.hideLoading({
-          success: (res) => {},
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      }
     })
-  },
-
+},
   getSummary : function(){
     wx.showLoading({
       title : '加载中',
@@ -284,193 +355,320 @@ Page({
     })
   },
 
-  getAccountingBalance : function(){
+  getAccountingBalance: function(){
     wx.showLoading({
-      title : '加载中',
-      mask : 'true'
+        title: '加载中',
+        mask: 'true'
     })
     var _this = this;
     var userInfo = _this.data.userInfo;
 
     _this.setData({
-      dangqian:"getAccountingBalance"
+        dangqian: "getAccountingBalance"
     })
 
     wx.cloud.callFunction({
-      name: 'sqlServer_cw',
-      data: {
-        query: "SELECT sum(a.load) +ISNULL(sum(v.money), 0) as sum_load,sum(a.borrowed) as sum_borrowed from Accounting as a LEFT JOIN VoucherSummary as v on v.code = a.code where a.company = '"+userInfo.company+"' GROUP BY left(a.code,1)"
-      },
-      success: res => {
-        var balance = res.result.recordset
-        var options = {
-          title : {
-            show : false
-          },
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
+        name: 'sqlServer_cw',
+        data: {
+            query: "SELECT sum(a.load) +ISNULL(sum(v.money), 0) as sum_load,sum(a.borrowed) as sum_borrowed from Accounting as a LEFT JOIN VoucherSummary as v on v.code = a.code where a.company = '"+userInfo.company+"' GROUP BY left(a.code,1)"
+        },
+        success: res => {
+            var balance = res.result.recordset
+            
+            // 计算净额（借方-贷方）
+            var netValues = [];
+            for(var i = 0; i < balance.length; i++) {
+                var load = balance[i].sum_load || 0;
+                var borrowed = balance[i].sum_borrowed || 0;
+                var net = load - borrowed; // 净额 = 借方 - 贷方
+                netValues.push(net);
             }
-          },
-          grid: {},
-          xAxis: [{
-            type: "category",
-            data: ["资产类","负债类","权益类","成本类","损益类"],
-            axisTick: {
-              alignWithLabel: true
+            
+            var options = {
+                title: {
+                    show: false
+                },
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "cross" // 改为cross可以同时显示柱状图和折线图的提示
+                    }
+                },
+              
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [{
+                    type: "category",
+                    data: ["资产类","负债类","权益类","成本类","损益类"],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }],
+                yAxis: [
+                    {
+                        type: "value",
+                        name: '金额',
+                        splitNumber: 8,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    {
+                        type: "value",
+                        name: '净额',
+                        splitNumber: 8,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: "贷方",
+                        type: "bar",
+                        label: {
+                            show: true,
+                            position: "top",
+                            formatter: '{c}'
+                        },
+                        itemStyle: {
+                            color: "#00CC99"
+                        },
+                        data: []
+                    },
+                    {
+                        name: "借方",
+                        type: "bar",
+                        label: {
+                            show: true,
+                            position: "top",
+                            formatter: '{c}'
+                        },
+                        itemStyle: {
+                            color: "#003399"
+                        },
+                        data: []
+                    },
+                    {
+                        name: "净额",
+                        type: "line",
+                        yAxisIndex: 1, // 使用第二个Y轴
+                        symbol: 'circle',
+                        symbolSize: 8,
+                        lineStyle: {
+                            width: 3,
+                            type: 'solid' // 可以改为'dashed'获得虚线效果
+                        },
+                        itemStyle: {
+                            color: "#FF6B6B" // 红色折线
+                        },
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: function(params) {
+                                var value = params.value;
+                                return (value >= 0 ? '+' : '') + value.toLocaleString();
+                            }
+                        },
+                        data: netValues
+                    }
+                ]
             }
-          }],
-          yAxis: [{
-            type: "value",
-            splitNumber : "8"
-          }],
-          series: [{
-            name: "贷方",
-            type: "bar",
-            label : {
-              show : "true",
-              position : "top"
-            },
-            itemStyle : {
-              color : "#00CC99"
-            },
-            data: []
-          },{
-            name: "借方",
-            type: "bar",
-            label : {
-              show : "true",
-              position : "top"
-            },
-            itemStyle : {
-              color : "#003399"
-            },
-            data: []
-          }]
+            
+            for(var i = 0; i < balance.length; i++) {
+                options.series[0].data.push(balance[i].sum_load || 0);
+                options.series[1].data.push(balance[i].sum_borrowed || 0);
+            }
+            
+            _this.updChart(options);
+            _this.updOthers(2);
+            wx.hideLoading();
+        },
+        err: res => {
+            console.log("错误!");
+            wx.hideLoading();
         }
-        for(var i=0;i<balance.length;i++){
-          options.series[0].data.push(balance[i].sum_load)
-          options.series[1].data.push(balance[i].sum_borrowed)
-        }
-        _this.updChart(options)
-        _this.updOthers(2)
-        wx.hideLoading({
-          success: (res) => {},
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      }
     })
-  },
+},
 
-  getLiabilities : function(){
-    wx.showLoading({
-      title : '加载中',
-      mask : 'true'
-    })
-    var _this = this;
-    var userInfo = _this.data.userInfo;
-    var start_date = ""
-    console.log(_this.data.riqi1)
-    if (_this.data.riqi1 == ""){
+getLiabilities: function(){
+  wx.showLoading({
+      title: '加载中',
+      mask: 'true'
+  })
+  var _this = this;
+  var userInfo = _this.data.userInfo;
+  var start_date = ""
+  console.log(_this.data.riqi1)
+  if (_this.data.riqi1 == ""){
       start_date = new Date()
       console.log(start_date)
       var this_year = start_date.getFullYear()
       console.log(this_year)
-    }else{
+  } else {
       this_year = _this.data.riqi1.substring(0,4)
       console.log(this_year)
-    }
-    _this.setData({
-      dangqian:"getLiabilities"
-    })
+  }
+  _this.setData({
+      dangqian: "getLiabilities"
+  })
 
-    wx.cloud.callFunction({
+  wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,sum(load-borrowed) as start_year,sum([load]-borrowed+ISNULL(v.money, 0)) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 1 and a.company = '"+userInfo.company+"' and year(v.voucherDate) = " + this_year + " GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,sum(borrowed-load) as start_year,sum(borrowed-[load]+ISNULL(v.money, 0)) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 2 and a.company = '"+userInfo.company+"' and year(v.voucherDate) = " + this_year + " GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,sum(borrowed-load) as start_year,sum(borrowed-[load]+ISNULL(v.money, 0)) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 3 and a.company = '"+userInfo.company+"' and year(v.voucherDate) = " + this_year + " GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;"
+          query: "select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,sum(load-borrowed) as start_year,sum([load]-borrowed+ISNULL(v.money, 0)) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 1 and a.company = '"+userInfo.company+"' and year(v.voucherDate) = " + this_year + " GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,sum(borrowed-load) as start_year,sum(borrowed-[load]+ISNULL(v.money, 0)) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 2 and a.company = '"+userInfo.company+"' and year(v.voucherDate) = " + this_year + " GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;select sum(a.start_year) as sum_start,sum(a.end_year) as sum_end from (select v.company,sum(borrowed-load) as start_year,sum(borrowed-[load]+ISNULL(v.money, 0)) as end_year from Accounting as a left join VoucherSummary as v on a.code = v.code WHERE left(a.code,1) = 3 and a.company = '"+userInfo.company+"' and year(v.voucherDate) = " + this_year + " GROUP BY a.code,a.name,v.company) as a where a.company = '"+userInfo.company+"' or a.company is null;"
       },
       success: res => {
-        var liabilities = res.result.recordsets
-        console.log(liabilities)
-        if(liabilities == undefined){
-          liabilities = [[{
-              sum_start:0,
-              sum_end:0
-          }],[{
-            sum_start:0,
-            sum_end:0
-          }],[{
-            sum_start:0,
-            sum_end:0
-          }]]
-        }
-        var options = {
-          title : {
-            show : false
-          },
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "shadow"
-            }
-          },
-          grid: {},
-          xAxis: [{
-            type: "category",
-            data: ["资产类","负债类","权益类"],
-            axisTick: {
-              alignWithLabel: true
-            }
-          }],
-          yAxis: [{
-            type: "value",
-            splitNumber : "8"
-          }],
-          series: [{
-            name: "年初",
-            type: "bar",
-            label : {
-              show : "true",
-              position : "top"
-            },
-            itemStyle : {
-              color : "#00CC99"
-            },
-            data: []
-          },{
-            name: "年末",
-            type: "bar",
-            label : {
-              show : "true",
-              position : "top"
-            },
-            itemStyle : {
-              color : "#003399"
-            },
-            data: []
-          }]
-        }
+          var liabilities = res.result.recordsets
+          console.log(liabilities)
+          if(liabilities == undefined){
+              liabilities = [[{
+                  sum_start: 0,
+                  sum_end: 0
+              }],[{
+                  sum_start: 0,
+                  sum_end: 0
+              }],[{
+                  sum_start: 0,
+                  sum_end: 0
+              }]]
+          }
+          
+          // 计算增长额（年末-年初）
+          var growthValues = [];
+          for(var i = 0; i < liabilities.length; i++) {
+              var start = liabilities[i][0].sum_start || 0;
+              var end = liabilities[i][0].sum_end || 0;
+              var growth = end - start; // 增长额 = 年末 - 年初
+              growthValues.push(growth);
+          }
+          
+          var options = {
+              title: {
+                  show: false
+              },
+              tooltip: {
+                  trigger: "axis",
+                  axisPointer: {
+                      type: "cross"
+                  }
+              },
+           
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              xAxis: [{
+                  type: "category",
+                  data: ["资产类", "负债类", "权益类"],
+                  axisTick: {
+                      alignWithLabel: true
+                  }
+              }],
+              yAxis: [
+                  {
+                      type: "value",
+                      name: '金额',
+                      position: 'left',
+                      splitNumber: 8,
+                      axisLabel: {
+                          formatter: '{value}'
+                      }
+                  },
+                  {
+                      type: "value",
+                      name: '增长额',
+                      position: 'right',
+                      splitNumber: 8,
+                      axisLabel: {
+                          formatter: '{value}'
+                      },
+                      // 可选：根据增长额数据范围调整右侧Y轴
+                      min: function(value) {
+                          return Math.floor(value.min * 1.1); // 增加10%余量
+                      },
+                      max: function(value) {
+                          return Math.ceil(value.max * 1.1); // 增加10%余量
+                      }
+                  }
+              ],
+              series: [
+                  {
+                      name: "年初",
+                      type: "bar",
+                      yAxisIndex: 0, // 使用左侧Y轴
+                      label: {
+                          show: true,
+                          position: "top",
+                          formatter: '{c}'
+                      },
+                      itemStyle: {
+                          color: "#00CC99"
+                      },
+                      data: []
+                  },
+                  {
+                      name: "年末",
+                      type: "bar",
+                      yAxisIndex: 0, // 使用左侧Y轴
+                      label: {
+                          show: true,
+                          position: "top",
+                          formatter: '{c}'
+                      },
+                      itemStyle: {
+                          color: "#003399"
+                      },
+                      data: []
+                  },
+                  {
+                      name: "增长额",
+                      type: "line",
+                      yAxisIndex: 1, // 使用右侧Y轴
+                      symbol: 'circle',
+                      symbolSize: 8,
+                      lineStyle: {
+                          width: 3,
+                          type: 'solid'
+                      },
+                      itemStyle: {
+                          color: "#FF6B6B"
+                      },
+                      label: {
+                          show: true,
+                          position: 'top',
+                          formatter: function(params) {
+                              var value = params.value;
+                              return (value >= 0 ? '+' : '') + value.toLocaleString();
+                          }
+                      },
+                      data: growthValues
+                  }
+              ]
+          }
 
-        for(var i=0;i<liabilities.length;i++){
-            console.log(liabilities)
-            options.series[0].data.push(liabilities[i][0].sum_start)
-            options.series[1].data.push(liabilities[i][0].sum_end)
-        }
-        _this.updChart(options)
-        _this.updOthers(3)
-        wx.hideLoading({
-          success: (res) => {},
-        })
-        
+          for(var i = 0; i < liabilities.length; i++) {
+              console.log(liabilities)
+              options.series[0].data.push(liabilities[i][0].sum_start || 0);
+              options.series[1].data.push(liabilities[i][0].sum_end || 0);
+          }
+          
+          _this.updChart(options);
+          _this.updOthers(3);
+          wx.hideLoading();
       },
       err: res => {
-        console.log("错误!")
+          console.log("错误!");
+          wx.hideLoading();
       }
-    })
-  },
+  });
+},
 
   getProfit : function(){
     wx.showLoading({

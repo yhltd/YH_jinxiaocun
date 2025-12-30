@@ -234,7 +234,7 @@ Page({
           }
         }
         _this.setData({
-          this_list,
+          list: this_list,
         })
       },
       err: res => {

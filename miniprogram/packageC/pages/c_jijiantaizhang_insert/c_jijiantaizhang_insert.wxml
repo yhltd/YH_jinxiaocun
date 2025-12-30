@@ -2,9 +2,9 @@
   <form bindsubmit="save" bindreset="reset">
     <view class="code_input_view" bindtap="showGetCode" name="accounting" value="">{{accounting}}</view>
     <view class="input_view">
-      <view class="input_text">项目名称</view>
-      <input name="project" placeholder="请输入项目名称" value="{{empty}}"></input>
-    </view>
+  <view class="input_text">项目名称</view>
+  <input name="project" placeholder="请输入项目名称" value="{{project}}" bindinput="bindProjectInput"></input>
+</view>
     <view class="input_view">
       <view class="input_text">日期</view>
       <picker mode="date" value="{{date}}" bindchange="bindDateChange">
@@ -18,24 +18,42 @@
       </picker>
     </view>
     <view class="input_view">
+      <view class="input_text">币种</view>
+      <picker bindchange="bindPickerChange2" value="{{index}}" range="{{bizhong_list}}">
+        <input name="bizhong" placeholder="请输入币种" value="{{bizhong}}" disabled="false"></input>
+      </picker>
+    </view>
+    <view class="input_view" style="height: 220rpx;">
       <view class="input_text">应收</view>
-      <input name="receivable" placeholder="请输入应收" type="number" value="{{empty}}"></input>
+      <input name="receivable" placeholder="请输入应收" type="number" value="{{receivable}}" bindinput="bindReceivableInput"></input>
+      <button class="calculate-btn" size="mini" bindtap="calculateReceivable">应收计算</button>
     </view>
     <view class="input_view">
       <view class="input_text">实收</view>
-      <input name="receipts" placeholder="请输入实收" type="number" value="{{empty}}"></input>
+      <input name="receipts" placeholder="请输入实收" type="number" value="{{receipts}}" bindinput="bindshishouInput"></input>
     </view>
-    <view class="input_view">
+    <view class="input_view" style="height: 220rpx;">
       <view class="input_text">应付</view>
-      <input name="cope" placeholder="请输入应付" type="number" value="{{empty}}"></input>
+      <input name="cope" placeholder="请输入应付" type="number" value="{{cope}}" bindinput="bindyingfuInput"></input>
+      <button class="calculate-btn" size="mini" bindtap="calculatePayable">应付计算</button>
     </view>
     <view class="input_view">
       <view class="input_text">实付</view>
-      <input name="payment" placeholder="请输入实付" type="number" value="{{empty}}"></input>
+      <input name="payment" placeholder="请输入实付" type="number" value="{{payment}}" bindinput="bindshifuInput"></input>
     </view>
+    <!-- 修改纳税金额和已交税金额部分 -->
+<view class="input_view" style="height: 220rpx;">
+  <view class="input_text">纳税金额</view>
+  <input name="tax_amount" placeholder="请输入纳税金额" type="number" value="{{tax_amount}}"></input>
+  <button class="calculate-btn" size="mini" bindtap="calculateTax">纳税计算</button>
+</view>
+<view class="input_view">
+  <view class="input_text">已交税金额</view>
+  <input name="paid_tax" placeholder="请输入已交税金额" type="number" value="{{paid_tax}}"></input>
+</view>
     <view class="input_view">
       <view class="input_text">摘要</view>
-      <input name="zhaiyao" placeholder="请输入摘要" type="text" value="{{empty}}"></input>
+      <input name="zhaiyao" placeholder="请输入摘要" type="text" value="{{zhaiyao}}"></input>
     </view>
     <view class="bottom">
       <button class="bt" form-type="reset" data-type="reset">重置</button>

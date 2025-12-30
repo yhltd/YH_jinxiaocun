@@ -1,0 +1,114 @@
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true">
+  <view class="table">
+    <view class='table_header'>
+      <block class="title" wx:for="{{titil}}">
+        <view class="title_text" style="width:{{item.width}};{{item.text=='序号'?'position:sticky;background:#8e97a9;left:0':''}}">{{item.text}}</view>
+      </block>
+    </view> 
+    <block class="list_row">
+      <view class="table_main" wx:for="{{list}}" wx:for-item="list_item" wx:key="id">
+        <view class="list_view" style="width:100rpx;position:sticky;background-color: white;left:0">
+          <view wx:if="{{!isDelete}}" class="list_text">{{list_item.ROW_ID}}</view>
+          <view wx:if="{{isDelete}}">
+            <checkbox-group bindchange="choice_checkBox_delete" data-id="{{list_item.id}}">
+              <checkbox style="width: 62rpx;margin-bottom: 8rpx;" value="{{list_item.id}}" color="#282B33"/>
+            </checkbox-group>
+          </view>
+        </view>
+        <view class="list_view" style="width:300rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="renming" data-value="{{list_item.renming}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.renming}}</view>
+        </view>
+        <view class="list_view" style="width:300rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="shijian" data-value="{{list_item.shijian}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.shijian}}</view>
+        </view>
+        <!-- <view class="list_view" style="width:300rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="ticheng" data-value="{{list_item.ticheng}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.ticheng}}</view>
+        </view>
+        <view class="list_view" style="width:300rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="xiaoshoushuliang" data-value="{{list_item.xiaoshoushuliang}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.xiaoshoushuliang}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="xiaoshoujine" data-value="{{list_item.xiaoshoujine}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.xiaoshoujine}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="chanpinchengben" data-value="{{list_item.chanpinchengben}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.chanpinchengben}}</view>
+        </view> -->
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="yinhangzhanghu" data-value="{{list_item.yinhangzhanghu}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.yinhangzhanghu}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="koukuan" data-value="{{list_item.koukuan}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.koukuan}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="gongzi" data-value="{{list_item.gongzi}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.gongzi}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="yifu" data-value="{{list_item.yifu}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.yifu}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx">
+          <view class="list_text">{{list_item.weifu}}</view>
+        </view>
+        <view class="list_view" style="width:200rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="beizhu" data-value="{{list_item.beizhu}}" bindtap="clickView" data-input_type="text">
+          <view class="list_text">{{list_item.beizhu}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<view class="input_view" animation="{{animationData_input}}" hidden="{{initHidView?initHidView:''}}">
+  <form bindsubmit="save">
+    <view>
+      <view class="input_message">修改内容</view>
+      <input class="input_text_form" placeholder="{{value_input}}" value="{{empty}}" type="{{input_type}}" name="new"></input>
+    </view>
+    <view class="bt_view">  
+      <button class="bt_form" bindtap="hid_view" hover-class="bt_form_hover">取消</button>
+      <button class="bt_form" form-type="submit" hover-class="bt_form_hover">确定</button>
+    </view>
+  </form>
+
+</view>
+
+<view class="bottom_view">
+  <view>
+    <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
+    <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
+    <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
+  </view>
+  <view class="backSelect" wx:if="{{isDelete}}" bindtap="backDelete">
+    <image class="backSelect_image" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/pakageC_image/backSelect1.jpg"></image>
+  </view>
+  <button class="moreDo" bindtap="{{isDelete?'delete':'moreDo'}}">{{isDelete?'删除':'更多操作'}}</button>
+</view>
+
+<view class="moreDo_view" animation="{{animationData_moreDo_view}}" hidden="{{initHidView?'true':''}}">
+  <button class="moreDo_view_bt" bindtap="bindDelete">删除明细</button>
+  <button class="moreDo_view_bt" bindtap="insert">新增明细</button>
+  <button class="moreDo_view_bt" bindtap="chaxun_show">查询</button>
+  <button class="moreDo_view_bt" bindtap="use_book">使用说明</button>
+</view>
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>
+
+<view class="mask" bindtap="chaxun_quxiao" hidden="{{chaxun_hidden}}">
+</view>
+
+<view class="select_view_box" animation="{{animationData_select_view}}" hidden="{{chaxun_hidden}}">
+  <form bindsubmit="select">
+    <view class="option">
+      <input class="option_text" value="{{renming}}" bindinput="input" placeholder="请输入人名" name="renming"/>
+      <picker class="date-picker" mode="date"  bindchange="showChoiceMonth1">
+        <input class="option_text" value="{{start_date}}" bindinput="input" placeholder="请输入开始日期" name="start_date" disabled='disabled'/>
+      </picker>
+      <picker class="date-picker" mode="date"  bindchange="showChoiceMonth2">
+        <input class="option_text" value="{{stop_date}}" bindinput="input" placeholder="请输入结束日期" name="stop_date" disabled='disabled'/>
+      </picker>
+    </view>
+    <view class="moreDo_bt_view" >
+      <button class="moreDo_bt" bindtap="chaxun_quxiao">返回</button>
+      <button class="moreDo_bt" form-type="submit">查询</button>
+    </view>
+  </form>
+</view>

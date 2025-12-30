@@ -1,0 +1,73 @@
+<!--pages/jxc_kuncundiaobo/jxc_kuncundiaobo.wxml-->
+<!-- <import src="/pages/template/tabber.wxml" /> -->
+<import src="/pages/template/ruku_upd.wxml" />
+<view class='main' style="padding-bottom: 100px;">
+  <view class='list' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}">
+    <view class='shangpin' bindtap='srJg' data-id="{{i}}">
+      <image class="shangpin-img" src="{{szzhi[i].mark1}}"></image>
+      <view class="shangpin-text" data-id="{{i}}">
+        <view class="shangpinpm">商品名称： {{szzhi[i].name}}</view>
+        <view class="shangpinpm">商品代码：{{szzhi[i].sp_dm}}</view>
+        <view class="shangpinpm">类别：{{szzhi[i].lei_bie}}</view>
+        <view class="shangpinpm">单位：{{szzhi[i].dan_wei}}</view>
+      </view>
+    </view>
+    <view class='shangpin-jin' data-id="{{i}}">
+      <view class='shangpin-input'>数量：{{szsl[i]}}</view>
+      <view class='shangpin-input'>价格：{{szje[i]}}</view>
+      <view class='shangpin-input'>仓库：{{szck[i]}}</view>
+    </view>
+  </view>
+</view>
+<view class='header' style="height:155rpx">
+  <view class='dq_y'>输入调拨单号：</view>
+  <view class='pm'></view>
+  <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <view class='zg'>
+  <view class='xzkh'>
+    <view class='xzkhWwb'>
+      <!-- <text style="color: white;"  hidden='{{hideen1}}'>进货方：{{all}}</text>
+      <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text>
+      <text class='xzkhA' bindtap='xuanzejinhuofang'>选择</text> -->
+      <view class='dq_y'>选择目标仓库： </view>
+        <picker class="pick2"   value="{{wareHouse}}" data-column_name="wareHouse" range="{{warehouseOptions}}"   bindchange="choicewareHouse">
+    <input  class="tui-picker-detail" type="text" data-column="wareHouse" value="{{wareHouse}}" name="wareHouse" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请选择仓库" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <!-- </picker>
+       <picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
+    
+    <view class="tui-picker-detail">
+      <text decode="true">&nbsp;&nbsp;</text>{{date}}
+    </view>
+  </picker> -->
+     
+    </view>
+    <view class="xsp" bindtap='xuanshangpin'>
+      <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png" class="jiahao"></image>
+      <text class='xsp-text'>选商品</text>
+    </view>
+  </view>
+</view>
+</view>
+
+<view class="tui-picker-content">
+  <view class="riqi">请选择调拨日期：</view>
+  <picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
+    
+    <view class="tui-picker-detail">
+      <text decode="true">&nbsp;&nbsp;</text>{{date}}
+    </view>
+  </picker>
+</view>
+
+<template is="ruku_upd" data="{{jghide,cpid,cpsl,cpjg,szzhi}}" />
+<!-- <template is="tabbar" data="{{tabbar,rkSum,rkck}}" /> -->
+<view  class="tab-bar" hidden="{{hiddenName}}"  style=" {{tabBar.position=='top'? 'top: 0' : 'bottom: 0'}}; {{tabBar.borderStyle? (tabBar.position=='top'? 'border-bottom: solid 0px '+tabBar.borderStyle + ';' : 'border-top: solid 1px '+tabBar.borderStyle + ';') : ''}}"> 
+
+<view class='tabber'> 
+<view class='jiage'>　金额：{{rkSum}}</view>
+<view class='queren' bindtap='querenRk'>确认调拨</view>
+
+</view>
+</view>
+<image class='jiahao1' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qrcode.png' bindtap='qrcode'> </image>

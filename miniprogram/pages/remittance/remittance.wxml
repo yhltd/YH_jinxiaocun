@@ -10,7 +10,14 @@
 
 <view class="XzkhMain">
 	<view class='xzkh'>
-		<view class='xzkhWwb'>
+    <view class='xzkhWwb'>
+    <text  class="dq_y2">请输入出库仓库：</text>
+    <!-- <picker class="pick2"   value="{{wareHouse}}" data-column_name="wareHouse" range="{{warehouseOptions}}"   bindchange="choicewareHouse"> -->
+      <input class='bk_ss3' type="text" style="color:#f8f8f8;text-align:center;" bindinput='cangku_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <!-- </picker> -->
+</view>
+
+		<view class='xzkhWwb2'>
 			<text style="color: white;"  class="xzkhtt" hidden="{{hidden1}}">客户:{{khname}}</text>
 			<text class="Xzkhtext" hidden="{{hidden2}}">请选择客户</text>
 			<text class='xzkhA' bindtap='xuanzekehu'>选择</text>

@@ -37,6 +37,7 @@ Page({
     sjkj: "",
     ddh: "",
     shangpin_list: [],
+    cangku: ""
   },
   bindDateChange: function(e) {
     var that = this
@@ -119,6 +120,12 @@ Page({
       ddh: e.detail.value
     })
 
+  },
+  cangku_input: function(e) {
+    var that = this
+    that.setData({
+      cangku: e.detail.value
+    })
   },
 
   /**
@@ -481,6 +488,14 @@ tjjg: function(e) {
             content: '请输入订单号',
           })
         } else {
+          if (that.data.cangku == "") {
+            console.log(that.data.ddh)
+            wx.showModal({
+              title: '提示',
+              content: '请输入入库仓库',
+            })
+          }
+        else {
             wx.setStorageSync('type', '1');
             wx.navigateTo({
               url: '/pages/shangpinxuanze/shangpinxuanze',
@@ -489,6 +504,7 @@ tjjg: function(e) {
         }
       }
     }
+  }
   },
 
   querenRk: function() {
@@ -515,6 +531,14 @@ tjjg: function(e) {
             content: '请输入订单号',
           })
         } else {
+          if (that.data.cangku == "") {
+            console.log(that.data.cangku)
+            wx.showModal({
+              title: '提示',
+              content: '请输入入库仓库',
+            })
+          }
+         else {
           if (cpxinxi.length == 0) {
             wx.showModal({
               title: '提示',
@@ -535,6 +559,7 @@ console.log(date)
             var today = `${y}-${mon}-${d} ${h}:${m}:${s}`;
             console.log(today)
             var ddh = that.data.ddh;
+            var cangku = that.data.cangku;
             const db = wx.cloud.database();
             pd = 0
             var finduser = app.globalData.finduser
@@ -548,7 +573,7 @@ console.log(date)
                 wx.cloud.callFunction({
                   name: "sqlConnection",
                   data: {
-                    sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "')"
+                    sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid,cangku)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "','" + cangku  + "')"
                     
                   },
                   success(res) {
@@ -619,7 +644,7 @@ console.log(date)
                 wx.cloud.callFunction({
                   name: "sqlServer_117",
                   data: {
-                    query: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "')"
+                    query: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql (gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid,cangku)values('" + gongsi + "','" + finduser + "','" + that.data.all + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','入库','" + ddh + "','" + cangku  + "')"
                     
                   },
                   success(res) {
@@ -718,6 +743,7 @@ console.log(date)
           }
         }
       }
+    }
     }
   },
   xuanzejinhuofang: function() {

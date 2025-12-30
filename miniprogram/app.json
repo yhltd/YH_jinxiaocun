@@ -43,7 +43,23 @@
     "pages/chooseLib/chooseLib",
     "pages/openapi/openapi",
     "pages/frmadmindetails/frmadmindetails",
-    "pages/frmadminsysm/frmadminsysm"
+    "pages/frmadminsysm/frmadminsysm",
+    "pages/jxc_kuncundiaobo/jxc_kuncundiaobo",
+    "pages/jxc_diaobotongji/jxc_diaobotongji",
+    "pages/jxc_kucunpandian/jxc_kucunpandian",
+    "pages/jxc_yuejiecun/jxc_yuejiecun",
+    "pages/jxc_kucunjiya/jxc_kucunjiya",
+    "pages/jxc_cangkupeizhi/jxc_cangkupeizhi",
+    "pages/components/cangku/cangku",
+    "pages/jxc_caigou/jxc_caigou",
+    "pages/jxc_caigoutuihuo/jxc_caigoutuihuo",
+    "pages/jxc_xiaoshoutuihuo/jxc_xiaoshoutuihuo",
+    "pages/caigoutuihuo_update/caigoutuihuo_update",
+    "pages/jxc_caigouweiruku/jxc_caigouweiruku",
+    "pages/caigouweiruku_update/caigouweiruku_update",
+    "pages/jxc_xiaoshoutuihuotongji/jxc_xiaoshoutuihuotongji",
+    "pages/jxc_caigoutuihuotongji/jxc_caigoutuihuotongji",
+    "pages/jxc_jinchumingxitongji/jxc_jinchumingxitongji"
   ],
   "requiredPrivateInfos": [
     "getLocation",
@@ -107,7 +123,12 @@
         "pages/c_mingxizhang_fu/c_mingxizhang_fu",
         "pages/c_lirun/c_lirun",
         "pages/c_yingfubaobiao/c_yingfubaobiao",
-        "pages/c_yingshoubaobiao/c_yingshoubaobiao"
+        "pages/c_yingshoubaobiao/c_yingshoubaobiao",
+        "pages/c_gongzimingxi/c_gongzimingxi",
+        "pages/c_gongzimingxi_insert/c_gongzimingxi_insert",
+        "pages/c_ysyfpeizhi/c_ysyfpeizhi",
+        "pages/c_ysyfpeizhi_insert/c_ysyfpeizhi_insert",
+        "pages/c_tongji/c_tongji"
       ]
     },
     {

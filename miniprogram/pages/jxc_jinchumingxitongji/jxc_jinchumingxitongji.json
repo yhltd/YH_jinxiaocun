@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "ec-canvas" : "../components/ec-canvas/ec-canvas"
+  },
+  "navigationBarBackgroundColor" : "#393D49",
+  "navigationBarTitleText" : "进出明细统计"
+
+}

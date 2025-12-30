@@ -9,7 +9,12 @@
   <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
     <input class='bk_ss2' type="text" bindinput="onInput" data-column="stop_date" value="{{stop_date}}" name="stop_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入结束日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
   </picker>
-  <input class='bk_ss3' type="text" bindinput="onInput" data-column="product_number" value="{{product_number}}" name="product_number"  style="color:#f8f8f8;text-align:center;" placeholder="请输入商品代码" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <picker class="pick"   value="{{wareHouse}}" data-column_name="wareHouse" range="{{warehouseOptions}}"   bindchange="choicewareHouse">
+    <input class='bk_ss3' type="text" data-column="wareHouse" value="{{wareHouse}}" name="wareHouse" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请选择仓库" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+ 
+
+  <input class='bk_ss4' type="text" bindinput="onInput" data-column="product_number" value="{{product_number}}" name="product_number"  style="color:#f8f8f8;text-align:center;" placeholder="请输入商品代码" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
   <button class="button_css" bindtap="use_book">使用说明</button>
   <button class="button_css2" bindtap="sel1">查询</button>
   <button class="button_css3" bindtap="getExcel">导出</button>
@@ -20,8 +25,10 @@
     <view class='shangpin'>
       <image class="shangpin-img" src="{{szzhi[i].mark1}}" mode="widthFix"></image>
       <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].name}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].cplb}}</text>
+      <text class="shangpin-zhouzhuan">库存周转率：{{szzhi[i].zzl}}%\n仓库：{{szzhi[i].cangku}}</text>
     </view>
     <view class='shangpin-jin' data-id="{{i}}">
+    
       <view class='shangpin-input' style="margin-right: 10px;">
         <text class="Hs">数量：</text>{{szzhi[i].cpsl}}</view>
       <view class='shangpin-input'>

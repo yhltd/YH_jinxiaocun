@@ -31,10 +31,10 @@ padding: 8px;
 
 }
 .shangpin-jin{
-  display: flex;
+  display: grid;
   position: absolute;
-  left: 55%;
-  margin-top: 3%;
+  left: 62%;
+  margin-top: 8px;
   font-size: 110%;
   color: white;
 

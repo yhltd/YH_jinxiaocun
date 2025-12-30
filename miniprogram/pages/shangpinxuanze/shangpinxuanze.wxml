@@ -14,7 +14,7 @@
     <view class="shangpinline" bindtap='srJg' data-id="{{i}}" data-dm="{{all[i].sp_dm}}">
       <view class='shangpin' data-id="{{i}}">
         <image src='{{all[i].mark1}}' class='shangpin-image' data-id="{{i}}" mode="widthFix"> </image>
-        <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}} </text>
+        <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{all[i].name}}</text>\n类别：{{all[i].lei_bie}}\n单位：{{all[i].dan_wei}}\n仓库：{{ck[i]}}</text>
       </view>
       <view class='shangpin-jin'>
         <text class="sp_dm" data-id="{{i}}">商品代码:{{all[i].sp_dm}}</text>

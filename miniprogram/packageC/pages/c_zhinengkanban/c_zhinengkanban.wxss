@@ -87,5 +87,66 @@ page{
   z-index:10;
 }
 page{
-  background: linear-gradient(135deg, #717171 0%, #737171 100%);
+  background: #adadad;
 }
+
+
+/* .chart-container {
+  position: fixed;
+  top: 60rpx;
+  left: 0;
+  right: 0;
+  bottom: 15%;
+  z-index: 10;
+}
+
+
+#mychart-dom-bar {
+  width: 100%;
+  height: 100%;
+}
+
+
+.input_text_form {
+  border: 5rpx solid #E6E6E6;
+  margin: auto;
+  width: 80%;
+  height: 64rpx;
+  align-items: center;
+  margin-top: 5%;
+  border-radius: 19rpx;
+  padding-left: 3%;
+  margin-bottom:5%;
+  position: absolute;
+  background: white;
+  z-index: 15;
+}
+
+
+.lables {
+  position: absolute;
+  color: white;
+  z-index: 15;
+}
+
+
+.moreDo {
+  background-color: #39b15b;
+  color: #E6E6E6;
+  height: 75rpx;
+  font-size: 90%;
+  line-height: 35rpx;
+  z-index: 15;
+}
+
+
+.other_view {
+  position: fixed;
+  width: 100%;
+  height: 20%; 
+  bottom: 0%;
+  z-index: 20;
+  background-color: white;
+  border-radius: 10rpx 10rpx 0 0;
+  box-shadow: 0 -3rpx 10rpx black;
+} */

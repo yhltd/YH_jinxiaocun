@@ -31,6 +31,31 @@ Page({
         dbName : "invoice_type",
         width:"402rpx",
         arr : []
+      },{
+        dbTable : "shuilvPeizhi",
+        dbName : "shuilv",
+        width:"402rpx",
+        arr : []
+      },{
+        dbTable : "shuilvPeizhi",
+        dbName : "linjiezhi",
+        width:"402rpx",
+        arr : []
+      },{
+        dbTable : "waibiPeizhi",
+        dbName : "huilv",
+        width:"402rpx",
+        arr : []
+      },{
+        dbTable : "waibiPeizhi",
+        dbName : "bizhong",
+        width:"402rpx",
+        arr : []
+      },{
+        dbTable : "YinhangPeizhi",
+        dbName : "yinhang",
+        width:"402rpx",
+        arr : []
       }
     ],
     titil : [
@@ -38,6 +63,11 @@ Page({
       {text:"科目",width:"400rpx"},
       {text:"客户/供应商/往来单位",width:"400rpx"},
       {text:"发票种类",width:"400rpx"},
+      {text:"税率",width:"400rpx"},
+      {text:"临界值",width:"400rpx"},
+      {text:"汇率",width:"400rpx"},
+      {text:"币种",width:"400rpx"},
+      // {text:"银行信息",width:"400rpx"},
     ],
 
     dataset_input : [],
@@ -63,7 +93,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select * from AccountingPeizhi where company = '"+userInfo.company+"';select * from KehuPeizhi where company = '"+userInfo.company+"';select * from InvoicePeizhi where company = '"+userInfo.company+"'"
+        query: "select * from AccountingPeizhi where company = '"+userInfo.company+"';select * from KehuPeizhi where company = '"+userInfo.company+"';select * from InvoicePeizhi where company = '"+userInfo.company+"';select * from shuilvPeizhi where company = '"+userInfo.company+"';select * from waibiPeizhi where company = '"+userInfo.company+"'"
       },
       success: res => {
         console.log(res.result.recordsets)
@@ -95,24 +125,54 @@ Page({
     var newList = _this.data.list
     var length = 0
     var index = 0
-    for(var i=0;i<list.length;i++){
-      
+    
+    // 处理前三个表的数据
+    for(var i=0; i<3; i++){
       newList[i+1].arr = list[i]
-
-      if(list[i].length>length){
+      if(list[i].length > length){
         length = list[i].length
         index = i
       }
     }
+    
+    // 处理 shuilvPeizhi 表的数据（第4个查询结果）
+    var shuilvData = list[3]
+    
+    if(shuilvData && shuilvData.length > 0){
+      // 将完整数据同时赋给两个列（税率和临界值）
+      newList[4].arr = JSON.parse(JSON.stringify(shuilvData))  // 税率列
+      newList[5].arr = JSON.parse(JSON.stringify(shuilvData))  // 临界值列
+      
+      if(shuilvData.length > length){
+        length = shuilvData.length
+        index = 3
+      }
+    }
+
+     // 处理 shuilvPeizhi 表的数据（第4个查询结果）
+     var waibiData = list[4]
+    
+     if(waibiData && waibiData.length > 0){
+       // 将完整数据同时赋给两个列（税率和临界值）
+       newList[6].arr = JSON.parse(JSON.stringify(waibiData))  // 税率列
+       newList[7].arr = JSON.parse(JSON.stringify(waibiData))  // 临界值列
+       
+       if(waibiData.length > length){
+         length = waibiData.length
+         index = 4
+       }
+     }
+    
+    // 更新序号列
     var data_list = []
-    for(var x=0;x<list[index].length;x++){
+    for(var x=0; x<length; x++){
       data_list.push({"id":x+1,"ROW_ID":x+1})
     }
     newList[0].arr = data_list
-
+  
     return newList
   },
-
+  
   clickView : function(e){
     var _this = this;
     var dataset = e.currentTarget.dataset
@@ -287,6 +347,7 @@ Page({
                   icon : "none"
                 })
                 _this.arrangeList()
+                _this.init();
                 updSpace.del(dataset.dbtable,1)
               },
               err : res =>{

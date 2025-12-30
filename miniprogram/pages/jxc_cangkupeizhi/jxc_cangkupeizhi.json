@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cangku": "../components/cangku/cangku"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

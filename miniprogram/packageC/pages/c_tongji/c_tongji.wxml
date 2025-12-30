@@ -1,0 +1,65 @@
+<!-- 横屏专用布局 -->
+<view style="height: 100vh; width: 100vw; display: flex; flex-direction: column;">
+  <!-- 图表区域 - 占满剩余空间 -->
+  <view wx:if="{{showChart}}" style="flex: 1; width: 100%; position: relative; height: 110%;">
+    <ec-canvas 
+      id="mychart-dom-bar" 
+      canvas-id="mychart-bar" 
+      ec="{{ec}}"
+      style="width: 100%; height: 100%;"
+    ></ec-canvas>
+  </view>
+  
+  <!-- 卡片区域 - 占满整个页面 -->
+  <scroll-view 
+    wx:if="{{!showChart}}"
+    style="height: 75vh; width: 100vw;" 
+    scroll-y="true"
+    enhanced="true"
+    show-scrollbar="false"
+  >
+    <view style="min-height: 100vh; padding: 0 30rpx 100rpx; display: flex; flex-direction: column; justify-content: flex-start;">
+      <!-- 第一行：总利润和总成本卡片 -->
+      <view style="display: flex; gap: 30rpx; margin-bottom: 30rpx; margin-top: 40rpx;">
+        <!-- 总利润卡片 -->
+        <view style="flex: 1; background: linear-gradient(135deg, #00CC99, #00AA77); border-radius: 20rpx; padding: 40rpx; color: white; box-shadow: 0 8rpx 25rpx rgba(0, 204, 153, 0.2);">
+          <view style="font-size: 32rpx; opacity: 0.9; margin-bottom: 20rpx;">总利润</view>
+          <view style="font-size: 60rpx; font-weight: bold; margin-bottom: 15rpx;">{{totalProfit}}</view>
+          <view style="font-size: 28rpx; opacity: 0.8;">单位：元</view>
+        </view>
+        
+        <!-- 总成本卡片 -->
+        <view style="flex: 1; background: linear-gradient(135deg, #003399, #001F66); border-radius: 20rpx; padding: 40rpx; color: white; box-shadow: 0 8rpx 25rpx rgba(0, 51, 153, 0.2);">
+          <view style="font-size: 32rpx; opacity: 0.9; margin-bottom: 20rpx;">总成本</view>
+          <view style="font-size: 60rpx; font-weight: bold; margin-bottom: 15rpx;">{{totalCost}}</view>
+          <view style="font-size: 28rpx; opacity: 0.8;">单位：元</view>
+        </view>
+      </view>
+      
+      <!-- 利润率卡片 -->
+      <view style="background: linear-gradient(135deg, #FF6B6B, #FF4D4D); border-radius: 20rpx; padding: 40rpx; color: white; box-shadow: 0 8rpx 25rpx rgba(255, 107, 107, 0.2); margin-bottom: 40rpx;">
+        <view style="font-size: 32rpx; opacity: 0.9; margin-bottom: 20rpx;">整体利润率</view>
+        <view style="font-size: 60rpx; font-weight: bold; margin-bottom: 15rpx;">
+          {{totalProfitRate >= 999 ? '∞%' : totalProfitRate <= -999 ? '-∞%' : totalProfitRate + '%'}}
+        </view>
+        <view style="font-size: 28rpx; opacity: 0.8;">利润 ÷ 成本 × 100%</view>
+      </view>
+      
+      <!-- 数据更新时间 -->
+      <view style="text-align: center; color: #fff; font-size: 28rpx; margin-top: 20rpx;">
+        数据更新时间: {{currentDate}}
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 切换按钮 - 固定在右下角 -->
+  <view style="position: fixed; bottom: 10rpx; right: 40rpx; z-index: 1000;">
+    <button 
+      size="mini" 
+      bindtap="toggleChart"
+      style="background: linear-gradient(135deg, #003399, #001F66); color: white; border: none; border-radius: 50rpx; padding: 15rpx 35rpx; font-size: 16rpx; box-shadow: 0 4rpx 15rpx rgba(0, 51, 153, 0.3);"
+    >
+      {{showChart ? '📊 查看数据' : '📈 查看图表'}}
+    </button>
+  </view>
+</view>

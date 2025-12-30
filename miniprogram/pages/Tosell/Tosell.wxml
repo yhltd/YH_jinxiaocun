@@ -21,7 +21,8 @@
       <text class="red">{{szzhi[i].mxtype}}</text> </text>
       <view class="Hs1">
         时间：
-        <text class="red">{{szzhi[i].time}}</text>
+        <text class="red">{{szzhi[i].time}}\n</text>
+        <text >仓库：{{szzhi[i].cangku}}</text>
       </view>
       <checkbox data-hang="{{i}}" value="{{szzhi[i].orderid}}" checked="{{szzhi[i].checkbox}}" style="margin-left: 10px;margin-top: 20px;zoom: 1.5;"></checkbox>
     </view>

@@ -1,10 +1,12 @@
 // pages/shangpinxuanze/shangpinxuanze.js
 var jg = ""
 var sl = ""
+var ck = ""
 var dtid
 var cpid
 var cpjg = []
 var cpsl = []
+var cangku = []
 var szZhi = []
 var zongjia
 var all = []
@@ -17,6 +19,7 @@ Page({
     jghide: "none",
     sl: [],
     jg: [],
+    ck: [],
     backhidden: true,
     rkck: "选择商品",
     fun : "",
@@ -33,6 +36,7 @@ Page({
       rkSum: 0,
       sl: [],
       jg: [],
+      ck: [],
       fun : options.fun
     })
     all = []
@@ -42,7 +46,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE WHEN mxtype IN ('入库', '调拨入库', '盘盈入库') THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
       },
       success(res) {
         console.log("成功", res)
@@ -95,11 +99,13 @@ Page({
 
     cpsl = []
     cpjg = []
+    cangku = []
     var that = this
     that.setData({
       rkSum: 0,
       sl: [],
-      jg: []
+      jg: [],
+      ck: []
     })
     var finduser = app.globalData.finduser
     var gongsi = app.globalData.gongsi
@@ -108,7 +114,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
-        sql: "select *,0 as isSelect,IFNULL((select sum(CASE mxtype WHEN '入库' THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
+        sql: "select *,0 as isSelect,IFNULL((select sum(CASE WHEN mxtype IN ('入库', '调拨入库', '盘盈入库') THEN cpsl ELSE (cpsl*-1) END) as cpsl from yh_jinxiaocun_mingxi where cpname = j.name and gs_name = '"+gongsi+"'),0) as allSL from yh_jinxiaocun_jichuziliao as j where gs_name = '"+gongsi+"'"
       },
       success(res) {
         for(var i=0;i<res.result.length;i++){
@@ -210,6 +216,7 @@ Page({
     var that = this
     sl = ""
     jg = ""
+    ck = ""
     dtid = e.currentTarget.dataset.id
     if(that.data.fun=='qichu'){
       var dm = e.currentTarget.dataset.dm
@@ -222,6 +229,7 @@ Page({
       cpid: dtid,
       cpsl: cpsl,
       cpjg: cpjg,
+      cangku:cangku,
       backhidden: false
     })
   },
@@ -242,6 +250,9 @@ Page({
   cunjg: function(e) {
     jg = e.detail.value
   },
+  cunck: function(e) {
+    ck= e.detail.value
+  },
   tjjg: function(e) {
     var that = this
     that.setData({
@@ -260,6 +271,7 @@ Page({
       }
       cpsl[dtid] = sl
       cpjg[dtid] = jg
+      cangku[dtid] = ck
       zongjia = 0
       for(let idx=0;idx < cpsl.length ;idx++){
         if(cpsl[idx] != '' && cpsl[idx] != undefined && cpjg[idx] != '' && cpjg[idx] != undefined){
@@ -279,6 +291,7 @@ Page({
       if (cpjg[i] == null) {
         cpjg[i] = ""
         cpsl[i] = ""
+        cangku[i] = ""
       }
     }
     that.setData({
@@ -286,6 +299,7 @@ Page({
       cpid: dtid,
       sl: cpsl,
       jg: cpjg,
+      ck:cangku,
       rkSum: zongjia
     })
     if(that.data.fun=='qichu'){
@@ -312,6 +326,7 @@ Page({
     var sli = 0
     var sl = []
     var jg = []
+    var ck = []
     var zhi = []
     var type = wx.getStorageSync('type');
     if(_this.data.fun!='qichu' ){
@@ -328,6 +343,7 @@ Page({
           }
           sl[sli] = cpsl[i]
           jg[sli] = cpjg[i]
+          ck[sli] = cangku[i]
           zhi[sli] = szZhi[i]
           sli = sli + 1
         }
@@ -342,9 +358,11 @@ Page({
         wx.setStorageSync('rkall', zhi);
         wx.setStorageSync('szsl', sl);
         wx.setStorageSync('szje', jg);
+        wx.setStorageSync('szck', ck);
         wx.setStorageSync('cpsum', zongjia);
         cpjg = []
         cpsl = []
+        cangku = []
         //返回上一页
         wx.navigateBack();
       }
@@ -355,7 +373,7 @@ Page({
       for(let i=0;i<szZhi.length;i++){
         for(let j=0;j<dms.length;j++){
           if(szZhi[i].sp_dm==dms[j]){
-            ssql +="INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian,mark1)values('" + szZhi[i].sp_dm + "','" + szZhi[i].lei_bie + "','" + szZhi[i].name + "','" + cpjg[i] + "','" + cpsl[i] + "','" + app.globalData.finduser + "','" + app.globalData.gongsi + "','" + new Date()+"','"+szZhi[i].mark1+"');"
+            ssql +="INSERT yh_jinxiaocun_qichushu (cpid,cplb,cpname,cpsj,cpsl,zh_name,gs_name,shijian,mark1,cangku)values('" + szZhi[i].sp_dm + "','" + szZhi[i].lei_bie + "','" + szZhi[i].name + "','" + cpjg[i] + "','" + cpsl[i] + "','" + app.globalData.finduser + "','" + app.globalData.gongsi + "','" + new Date()+"','"+szZhi[i].mark1+ "','" +cangku[i]+"');"
             break;
           }
         }

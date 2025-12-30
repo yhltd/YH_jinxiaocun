@@ -18,6 +18,10 @@
 				<text class="text_css1">数量:</text>
 				<input type="number" class='input-srjg1' name="num" style="border: 1px solid  #DCDCDC;border-radius:18rpx; " bindblur='cunsl' value="{{cpsl[cpid]}}"></input>
 			</view>
+      <view class="Xzcangku" style="display: flex">
+				<text class="text_css3">仓库:</text>
+				<input type="text" class='input-srjg3' name="cangku" style="border: 1px solid  #DCDCDC;border-radius:18rpx; " bindblur='cunck' value="{{cangku[cpid]}}"></input>
+			</view>
 			<button class='ti_jiao' form-type="submit">提交</button>
 		</form>
 

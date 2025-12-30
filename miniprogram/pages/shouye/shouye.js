@@ -78,6 +78,80 @@ Page({
         index: 11,
         lianjie: "../../packageJ/page/out_in_print/out_in_print"
       },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "调拨统计",
+        index: 12,
+        lianjie: "../jxc_diaobotongji/jxc_diaobotongji"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "库存盘点",
+        index: 13,
+        lianjie: "../jxc_kucunpandian/jxc_kucunpandian"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "库存调拨",
+        index: 14,
+        lianjie: "../jxc_kuncundiaobo/jxc_kuncundiaobo"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "期末统计",
+        index: 15,
+        lianjie: "../jxc_yuejiecun/jxc_yuejiecun"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "库存积压统计",
+        index: 16,
+        lianjie: "../jxc_kucunjiya/jxc_kucunjiya"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "仓库配置",
+        index: 17,
+        lianjie: "../jxc_cangkupeizhi/jxc_cangkupeizhi"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "采购",
+        index: 18,
+        lianjie: "../jxc_caigou/jxc_caigou"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "采购退货",
+        index: 19,
+        lianjie: "../jxc_caigoutuihuo/jxc_caigoutuihuo"
+      },
+      {
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "销售退货",
+        index: 20,
+        lianjie: "../jxc_xiaoshoutuihuo/jxc_xiaoshoutuihuo"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "采购未入库",
+        index: 21,
+        lianjie: "../jxc_caigouweiruku/jxc_caigouweiruku"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "销售退货统计",
+        index: 22,
+        lianjie: "../jxc_xiaoshoutuihuotongji/jxc_xiaoshoutuihuotongji"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "采购退货统计",
+        index: 23,
+        lianjie: "../jxc_caigoutuihuotongji/jxc_caigoutuihuotongji"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dayin_1.png",
+        text: "进出明细统计",
+        index: 24,
+        lianjie: "../jxc_jinchumingxitongji/jxc_jinchumingxitongji"
+      },
       // {
         
       //   url: "../../images/anQun_03.jpg",

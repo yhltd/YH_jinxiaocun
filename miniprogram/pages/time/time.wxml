@@ -18,17 +18,27 @@
     </view>
   </view>
 </view>
-<view class='header' style="height:155rpx">
+<view class='header' >
   <view class='dq_y'>输入入库订单号：</view>
   <view class='pm'></view>
   <input class='bk_ss' type="text" style="color:#f8f8f8;text-align:center;" bindinput='ddh_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
   <view class='zg'>
   <view class='xzkh'>
+
     <view class='xzkhWwb'>
+    <text  class="dq_y2">请输入入库仓库：</text>
+    <!-- <picker class="pick2"   value="{{wareHouse}}" data-column_name="wareHouse" range="{{warehouseOptions}}"   bindchange="choicewareHouse"> -->
+      <input class='bk_ss3' type="text" style="color:#f8f8f8;text-align:center;" bindinput='cangku_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <!-- </picker> -->
+</view>
+
+
+    <view class='xzkhWwb2'>
       <text style="color: white;"  hidden='{{hideen1}}'>进货方：{{all}}</text>
       <text hidden='{{hideen2}}' class="Xzkhtext">请选择进货方</text>
       <text class='xzkhA' bindtap='xuanzejinhuofang'>选择</text>
     </view>
+   
     <view class="xsp" bindtap='xuanshangpin'>
       <image src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jiahao.png" class="jiahao"></image>
       <text class='xsp-text'>选商品</text>
@@ -39,7 +49,7 @@
 
 <view class="tui-picker-content">
   <view class="riqi">请选择入库日期：</view>
-  <picker mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
+  <picker class="pick" mode="date" value="{{date}}" start="2000-01-01" end="2030-12-31" bindchange="bindDateChange">
     
     <view class="tui-picker-detail">
       <text decode="true">&nbsp;&nbsp;</text>{{date}}

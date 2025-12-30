@@ -1,0 +1,33 @@
+<view class="all">
+  <form bindsubmit="save" bindreset="reset">
+    <view class="input_view">
+      <view class="input_text">应收/应付</view>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{ysyf_list}}">
+        <input name="ysyf" placeholder="请选择应收/应付" value="{{ysyf}}" disabled="false"></input>
+      </picker>
+    </view>
+  
+    <view class="input_view">
+      <view class="input_text">项目名称</view>
+      <input name="xiangmumingcheng" placeholder="请输入项目名称" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">类别</view>
+      <input name="ysyfkemu" placeholder="请输入类别" type="text" value="{{empty}}"></input>
+    </view>
+    <view class="input_view">
+      <view class="input_text">金额</view>
+      <input name="jine" placeholder="请输入金额" type="number" value="{{empty}}"></input>
+    </view>
+    <view class="bottom">
+      <button class="bt" form-type="reset" data-type="reset">重置</button>
+      <button class="bt" form-type="submit" data-type="submit">保存</button>
+      <button class="bt" form-type="submit" data-type="submitAndReset">保存并重置</button>
+    </view>
+  </form>
+</view>
+
+
+
+<view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">
+</view>

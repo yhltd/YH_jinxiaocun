@@ -1,0 +1,415 @@
+/* pages/remittance/remittance.wxss */
+page {
+  background-color: #F0F8FF;
+}
+
+.list {
+  display: flex;
+  border-bottom: 1rpx solid #f2f2f2;
+  padding: 16rpx;
+  background: linear-gradient(135deg, #4d68b7ed 0%,#9b91f1fc 50%, #4e74caeb 100%);
+  border-radius: 50rpx;
+
+}
+
+.header {
+   /*----------*/
+   background: linear-gradient(135deg, #9885ff, #4c51f7, #bea3ff);
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+  padding: 10% 0;
+  height: 220rpx;
+}
+
+@keyframes flow {
+  0% {
+      background-position: 0% 50%;
+  }
+  100% {
+      background-position: 400% 50%;
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.bk_ss {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 390rpx;
+  height: 55rpx;
+  
+  box-sizing: border-box;
+  position: absolute;
+  left: 46.3%;
+  font-size: 40rpx;
+  top: 9.3%;
+  color: #f8f8f8;
+  background-color: #ffffff3d;
+
+}
+
+.bk_ss3 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 390rpx;
+    height: 55rpx;
+   
+    box-sizing: border-box;
+  position: absolute;
+  left: 46.3%;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
+  color: #f8f8f8;
+  
+}
+
+.xzkhA {
+  height: 100%;
+  color: #000000;
+  margin-left: 20rpx;
+}
+
+.Xzkhtext {
+  color: #ffffff;
+  margin-left: 22rpx;
+
+
+}
+
+.jia {
+  width: 30px;
+  height: 30px;
+
+}
+
+.xsp-text {
+  color: #ffffff;
+  font-size:40rpx
+}
+
+
+
+.xsp {
+  display: flex;
+  height: 80rpx;
+  border-radius: 50rpx;
+  align-items: center;
+  justify-content: center;
+}
+
+.xzkhWwb{
+  padding: 2% 0;
+  font-size: 40rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10rpx;
+  position: relative;
+}
+
+.xzkhWwb2 {
+  padding: 2% 0;
+  font-size: 40rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 35rpx;
+}
+
+.xzkh {
+  display: flex;
+  width: 100%;
+  font-size: 77%;
+  flex-direction: column;
+  position: absolute;
+  top: 13%;
+}
+
+.shangpin {
+  display: flex;
+  padding-top: 15rpx;
+}
+
+.shangpin-input{
+  color: white;
+  font-size: 90%;
+  overflow: hidden;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
+  width: 220rpx;
+  margin-top: 5rpx;
+  border-radius: 15rpx;
+}
+
+.shangpin-jin {
+  display: flex;
+  font-size: 130%;
+  flex-direction: column;
+  width: 200rpx;
+  padding: 12rpx 0;
+}
+
+.main {
+  position: absolute;
+  width: 100%;
+  z-index: -9;
+  display: block;
+  margin-bottom: 21%;
+}
+
+.shangpin-text {
+  font-size: 110%;
+}
+
+.shangpin-img {
+  display: flex;
+  border: 1px solid black;
+  margin-top: 20rpx;
+  width: 160rpx;
+  height: 160rpx;
+  margin-right: 10rpx;
+}
+
+.shangpinpm {
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 350rpx;
+
+  margin-top: 5rpx;
+  border-radius: 15rpx;
+}
+
+.tui-picker-content {
+  margin-left: 35rpx;
+  position: absolute;
+  top: 4%;
+  display: flex;
+  border-radius: 20rpx;
+  font-size: 38rpx;
+  color: #ffffff;
+  font-weight: bold;
+  /* background: #ffffff69; */
+  width: 800rpx;
+}
+
+.dq_y {
+  font-weight: bold;
+  position: absolute;
+  font-size: 40rpx;
+  top: 9.3%;
+  left: 6%;
+  color: white;
+
+}
+
+.dq_y2 {
+  font-weight: bold;
+  position: absolute;
+  font-size: 40rpx;
+ 
+  left: 6%;
+  color: white;
+}
+
+.dqy_bj {
+
+  background-color: #1e90ff;
+  height: 51rpx;
+
+}
+
+
+.jiahao1 {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  position: fixed;
+  bottom: 150rpx;
+  right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+
+.test {
+  background-color: #f8f8f8;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 57.5%;
+  z-index: 31;
+}
+
+.guan_bi {
+  position: absolute;
+  left: 89%;
+  bottom: 95%;
+  font-size: 66%;
+  z-index: 4;
+  background-color: #393D49;
+  color: #fff;
+}
+.Mymain{
+  position: fixed;
+  width: 100%;
+  height: 86%;
+  overflow-y: scroll;
+}
+
+.tp_guanbi {
+  background-repeat: no-repeat;
+  height: 80rpx;
+  width: 80rpx;
+  /* transform: rotate(45deg); */
+  z-index: 5;
+}
+
+.Xzshuliang {
+  position: absolute;
+  top: 16%;
+}
+
+.Xzjiage {
+  position: absolute;
+  top: 25%;
+}
+
+.ti_jiao {
+  position: absolute;
+  top: 34%;
+  left: 21%;
+  background-color: #1c9ef1;
+  width: 55%;
+  font-size: 68%;
+  color: #f8f8f8;
+}
+
+.tp_css {
+  width: 130rpx;
+  height: 130rpx;
+  position: absolute;
+  left: 5%;
+  top: 2%;
+  z-index: 2;
+}
+
+.input-srjg {
+  position: fixed;
+  left: 28%;
+  bottom: 11%;
+}
+
+.input-srjg1 {
+  position: fixed;
+  left: 28%;
+  bottom: 20.5%;
+}
+
+.text_css {
+  position: fixed;
+  left: 6%;
+  font-size: 75%;
+  bottom: 12.5%;
+  color: #7c7e7d;
+}
+
+.text_css1 {
+  position: fixed;
+  left: 6%;
+  font-size: 75%;
+  bottom: 21.5%;
+  color: #7c7e7d;
+}
+
+.text_name {
+  position: absolute;
+  left: 35%;
+  top: 3%;
+}
+
+.hidden_css {
+  width: 100%;
+  height: 59%;
+  background-color: black;
+  z-index: 1;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.huise_bian {
+  width: 100%;
+  height: 0.2%;
+  background-color: #dddfde;
+  position: absolute;
+  bottom: 85%;
+}
+
+.xu_xian {
+  position: absolute;
+  width: 100%;
+  border: 0.5px dashed #dddfde;
+  bottom: 75.5%;
+}
+
+/* .bk_tp{
+   background-color: #fd88d7;
+  width: 140rpx;
+  height: 140rpx;
+  position: absolute;
+  left: 4.5%;
+  top: 1.5%; 
+} */
+
+.jg_text {
+  position: absolute;
+  left: 1.5%;
+  /* top: 1.5%; */
+}
+
+.sp_dm {
+  font-size: 90%;
+  color: red;
+}
+
+picker{
+  left: 39.5%;
+    top: 5;
+    position: absolute;
+    width: 390rpx;
+    height: 55rpx;
+    font-size: 40rpx;
+    background-color: #ffffff3d;
+    border: 1px solid #1c60a3;
+    border-radius: 29rpx;
+    padding-left: 76rpx;
+    box-sizing: border-box;
+}
+
+.riqi{
+  font-size: 40rpx;
+  position: absolute;
+  top: 2;
+  left: 1.5%; 
+}
+
+ page{
+  height:100%;
+  background:url(https://7968-yhltd-hsxl2-1259412419.tcb.qcloud.la/images/ruku_bg.png?sign=844d3b8e7e6c389539bd0b36c892057c&t=1757644878);
+}

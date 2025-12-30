@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "ec-canvas" : "../components/ec-canvas/ec-canvas"
+  },
+  "navigationBarBackgroundColor" : "#393D49",
+  "navigationBarTitleText" : "采购退货统计"
+}

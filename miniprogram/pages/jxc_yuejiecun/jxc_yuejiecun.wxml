@@ -1,0 +1,31 @@
+<!--pages/jxc_yuejiecun/jxc_yuejiecun.wxml-->
+<import src="/pages/template/xiugai.wxml" />
+<template is="xiugai" data="{{xiugai,hidden1,szzh,cpsljg}}" />
+
+<view class='header'>
+  <!-- <view class="dq_y">查询</view> -->
+  <view class='pm'></view> 
+  <picker bindchange="bindPickerChange" value="{{index}}" data-column_name="product_name" range="{{product_list}}">
+    <input bindinput="onInput" data-column="wareHouse" value="{{wareHouse}}" name="wareHouse" disabled="disabled" class='bk_ss' type="text" confirm-type="search" style="color:#f8f8f8;text-align:center;" placeholder="搜索仓库名称" placeholder-style="color:#f8f8f8;:text-align:center;z-index: 0"></input>
+  </picker>
+  <picker class="pick" mode="date"   fields="month"  value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+    <input class='bk_ss2' type="text" bindinput="onInput" data-column="start_date" value="{{start_date}}" name="start_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入开始日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <picker class="pick" mode="date" fields="month" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+    <input class='bk_ss3' type="text" bindinput="onInput" data-column="stop_date" value="{{stop_date}}" name="stop_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入结束日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <button class="button_css" bindtap="goto_print">打印</button>
+  <button class="button_css2" bindtap="sel1">查询</button>
+</view>
+<view class='main'>
+  <!-- <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="shanchu" bindtap='xiugai'> -->
+   <view class='list_ps2' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{i}}" bindlongpress="" bindtap=''>
+    <view class='shangpin'>
+
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm"></text>时间：{{szzhi[i].month}}\n仓库：{{szzhi[i].cangku}}\n库存数量：{{szzhi[i].kucun_num}}</text>
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm"></text>入库数量：{{szzhi[i].ruku_num}}\n入库金额：{{szzhi[i].ruku_price}}\n库存金额：{{szzhi[i].kucun_price}}</text>
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm"></text>出库数量：{{szzhi[i].chuku_num}}\n出库金额：{{szzhi[i].chuku_price}}</text>
+    </view>
+    
+  </view>
+</view>

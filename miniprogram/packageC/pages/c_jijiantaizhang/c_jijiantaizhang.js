@@ -30,6 +30,9 @@ Page({
       {text:"实付 ",width:"170rpx"},
       {text:"未付",width:"170rpx"},
       {text:"科目",width:"250rpx"},
+      {text:"纳税金额",width:"250rpx"},
+      {text:"已交税金额",width:"250rpx"},
+      {text:"未交税金额",width:"250rpx"},
       {text:"摘要",width:"250rpx"},
     ],
 
@@ -63,7 +66,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_cw',
       data: {
-        query: "select id,kehu,zhaiyao,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
+        query: "select id,kehu,zhaiyao,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,nashuijine,yijiaoshuijine,(a.nashuijine-a.yijiaoshuijine) as weijiaoshuijine,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1)
       },
       success: res => {
         var list = res.result.recordset
@@ -555,7 +558,7 @@ Page({
     var pageNum = _this.data.pageNum;
     var countPage = _this.data.countPage;
 
-    var sql = "select id,kehu,zhaiyao,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1) + " and project like '%" + xiangmumingcheng + "%' and insert_date >= '" + start_date + " 00:00:00.000' and insert_date <= '" + stop_date + " 23:59:59.000';"
+    var sql = "select id,kehu,zhaiyao,company,project,receivable,receipts,cope,payment,accounting,isnull(convert(VARCHAR,CONVERT(date,insert_date)),'') as insert_date,ROW_ID,nashuijine,yijiaoshuijine,(a.nashuijine-a.yijiaoshuijine) as weijiaoshuijine,(a.receivable-a.receipts) as notget1,(a.cope-a.payment) as notget2 from (select *,row_number() over(order by id) as ROW_ID from SimpleData where company = '"+_this.data.userInfo.company+"') as a where  a.ROW_ID > "+(pageNum-1)*countPage+" and a.ROW_ID < "+(pageNum*countPage+1) + " and project like '%" + xiangmumingcheng + "%' and insert_date >= '" + start_date + " 00:00:00.000' and insert_date <= '" + stop_date + " 23:59:59.000';"
 
     console.log(sql)
 

@@ -17,8 +17,8 @@ page {
    background: linear-gradient(135deg, #9885ff, #4c51f7, #bea3ff);
   background-size: 200% 200%;
   animation: gradientFlow 15s ease infinite;
-  padding: 10%;
-  height: 155rpx;
+  padding: 10% 0;
+  height: 220rpx;
 }
 
 @keyframes flow {
@@ -46,7 +46,9 @@ page {
   border: 1px solid #1c60a3;
   border-radius: 29rpx;
   width: 390rpx;
-  height: 50rpx;
+  height: 55rpx;
+  
+  box-sizing: border-box;
   position: absolute;
   left: 46.3%;
   font-size: 40rpx;
@@ -54,6 +56,21 @@ page {
   color: #f8f8f8;
   background-color: #ffffff3d;
 
+}
+
+.bk_ss3 {
+  border: 1px solid #1c60a3;
+  border-radius: 29rpx;
+  width: 390rpx;
+    height: 55rpx;
+   
+    box-sizing: border-box;
+  position: absolute;
+  left: 46.3%;
+  font-size: 40rpx;
+  background-color: #ffffff3d;
+  color: #f8f8f8;
+  
 }
 
 .xzkhA {
@@ -80,8 +97,7 @@ page {
   font-size:40rpx
 }
 
-.qxz {
-}
+
 
 .xsp {
   display: flex;
@@ -91,13 +107,26 @@ page {
   justify-content: center;
 }
 
-.xzkhWwb {
- 
+.xzkhWwb{
+  padding: 2% 0;
   font-size: 40rpx;
   font-weight: bold;
   border-radius: 40rpx;
   display: flex;
   justify-content: center;
+  margin-bottom: 10rpx;
+  position: relative;
+}
+
+.xzkhWwb2 {
+  padding: 2% 0;
+  font-size: 40rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 35rpx;
 }
 
 .xzkh {
@@ -106,7 +135,7 @@ page {
   font-size: 77%;
   flex-direction: column;
   position: absolute;
-  top: 15%;
+  top: 13%;
 }
 
 .shangpin {
@@ -186,6 +215,15 @@ page {
   left: 6%;
   color: white;
 
+}
+
+.dq_y2 {
+  font-weight: bold;
+  position: absolute;
+  font-size: 40rpx;
+ 
+  left: 6%;
+  color: white;
 }
 
 .dqy_bj {

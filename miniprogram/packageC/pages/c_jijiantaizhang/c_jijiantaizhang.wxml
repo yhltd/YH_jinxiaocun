@@ -45,6 +45,15 @@
         <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="accounting" data-value="{{list_item.accounting}}" bindtap="clickView" data-input_type="text">
           <view class="list_text">{{list_item.accounting}}</view>
         </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="nashuijine" data-value="{{list_item.nashuijine}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.nashuijine}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="yijiaoshuijine" data-value="{{list_item.yijiaoshuijine}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.yijiaoshuijine}}</view>
+        </view>
+        <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="weijiaoshuijine" data-value="{{list_item.weijiaoshuijine}}" bindtap="clickView" data-input_type="number">
+          <view class="list_text">{{list_item.weijiaoshuijine}}</view>
+        </view>
         <view class="list_view" style="width:250rpx" data-index="{{index}}" data-id="{{list_item.id}}" data-column="zhaiyao" data-value="{{list_item.zhaiyao}}" bindtap="clickView" data-input_type="text">
           <view class="list_text">{{list_item.zhaiyao}}</view>
         </view>

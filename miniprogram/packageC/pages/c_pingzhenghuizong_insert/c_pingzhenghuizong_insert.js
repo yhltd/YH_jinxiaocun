@@ -245,7 +245,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_cw',
         data: {
-          query: "insert into VoucherSummary(word,no,abstract,code,department,expenditure,note,man,money,company,voucherDate,real) values('"+form.word+"','"+form.no+"','"+form.abstract+"','"+_this.data.code+"','"+department+"','"+form.expenditure+"','"+form.note+"','"+man+"','"+money+"','"+_this.data.userInfo.company+"','"+_this.getDate()+"','"+form.real+"')"
+          query: "insert into VoucherSummary(word,no,abstract,code,department,expenditure,note,man,money,company,voucherDate,real) values('"+form.word+"','"+form.no+"','"+form.abstract+"','"+_this.data.code+"','"+department+"','"+form.expenditure+"','"+form.note+"','"+""+"','"+money+"','"+_this.data.userInfo.company+"','"+_this.getDate()+"','"+form.real+"')"
         },
         success: res => {
           wx.hideLoading({

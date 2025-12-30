@@ -1,0 +1,19 @@
+<view class="lables" style="width: 80rpx; height: 34rpx; display: block; box-sizing: border-box; left: 40rpx; top: 13rpx; position: absolute">开始时间:</view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi1" bindchange="choiceDate">
+  <input bindinput="onInput2" data-column="riqi1" class="input_text_form" value="{{riqi1}}" type="date" name="riqi1" disabled="disabled" style="position: absolute; left: 114rpx; top: -31rpx; width: 180rpx; height: 32rpx; display: flex; box-sizing: border-box"></input>
+  </picker>
+  <view class="lables" style="width: 80rpx; height: 34rpx; display: block; box-sizing: border-box; left: 335rpx; top: 13rpx; position: absolute">结束时间:</view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="riqi2" bindchange="choiceDate">
+  <input bindinput="onInput2" data-column="riqi2" class="input_text_form" value="{{riqi2}}" type="date" name="riqi2" disabled="disabled" style="position: absolute; left: 414rpx; top: -31rpx; width: 180rpx; height: 32rpx; display: flex; box-sizing: border-box"></input>
+  </picker>
+  <view><button class="moreDo" bindtap="date_cha" style="position: absolute; left: 620rpx; top: 6rpx; width: 110rpx; height: 34rpx; display: block; box-sizing: border-box">查询</button></view>
+<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ec}}">
+</ec-canvas>
+
+<view class="other_view">
+  <scroll-view class="sv" scroll-x="true">
+    <view class="sv_item{{others[0]==1?'_hover':''}}" bindtap="getAccounting">退货趋势分析</view>
+    <view class="sv_item{{others[1]==1?'_hover':''}}" bindtap="getSummary">退货排行对比</view>
+    <view class="sv_item{{others[2]==1?'_hover':''}}" bindtap="getAccountingBalance">退货分布比例</view>
+  </scroll-view>
+</view>

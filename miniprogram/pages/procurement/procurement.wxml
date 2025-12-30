@@ -15,6 +15,7 @@
        <view class='shangpin-jin'  data-id="{{i}}" >
             <view class='shangpin-input'  >数量：{{item.cpsl}}</view>
             <view class='shangpin-input'>价格：{{item.cpsj}}</view>  
+            <view class='shangpin-input'>仓库：{{item.cangku}}</view> 
         </view>
   </view>
 </scroll-view>

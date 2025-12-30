@@ -1,0 +1,46 @@
+<view class='header' style="width: 750rpx; height: 130px; display: block; box-sizing: border-box;">
+  <view class='pm'></view>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="start_date" bindchange="choiceDate">
+    <input class='bk_ss' type="text" bindinput="onInput" data-column="start_date" value="{{start_date}}" name="start_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入开始日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <picker class="pick" mode="date" value="{{date}}" data-column_name="stop_date" bindchange="choiceDate">
+    <input class='bk_ss2' type="text" bindinput="onInput" data-column="stop_date" value="{{stop_date}}" name="stop_date" disabled="disabled" style="color:#f8f8f8;text-align:center;" placeholder="请输入结束日期" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  </picker>
+  <input class='bk_ss3' type="text" bindinput="onInput" data-column="order_number" value="{{order_number}}" name="order_number"  style="color:#f8f8f8;text-align:center;" placeholder="请输入订单号" placeholder-style="color:#f8f8f8;text-align:center;z-index: 0"></input>
+  <button class="button_css" bindtap="use_book">使用说明</button>
+  <button class="button_css2" bindtap="sel11">查询</button>
+  <button class="button_css3" bindtap="getExcel">导出</button>
+ 
+</view>
+
+<view class=' main'>
+  <view class='list_ps' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{szzhi[i].id}}"  data-uid="{{szzhi[i].id}}" bindlongpress="shanchu" bindtap='upd'>
+    <view class='shangpin'>
+      <image class="shangpin-img" src="{{szzhi[i].mark1}}" mode="widthFix"></image>
+      <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n商品代码：{{szzhi[i].sp_dm}}\n类别：{{szzhi[i].cplb}}\n单号：{{szzhi[i].orderid}}\n客户/进货方:{{szzhi[i].shou_h}}\n明细类别：
+      <text class="red">{{szzhi[i].mxtype}}</text> </text>
+      <view class="Hs1">
+        时间：
+        <text class="red">{{szzhi[i].time}}\n</text>
+        <text >仓库：{{szzhi[i].cangku}}</text>
+      </view>
+      <checkbox data-hang="{{i}}" value="{{szzhi[i].orderid}}" checked="{{szzhi[i].checkbox}}" style="margin-left: 10px;margin-top: 20px;zoom: 1.5;"></checkbox>
+    </view>
+    <view class='shangpin-jin' data-id="{{i}}">
+      <view class='shangpin-input'>
+        <text class="Hs">数量：</text>{{szzhi[i].cpsl}}</view>
+      <view class='shangpin-input'>
+        <text class="Hs">金额：</text>{{szzhi[i].cpsj * szzhi[i].cpsl}}
+        </view>
+    </view>
+    
+  </view>
+
+</view>
+
+<image class='jiahao2' src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/print_btn.png' bindtap='print_out'> </image>
+<view class="bottom_view">
+	<button class="bt_bottom" bindtap="up" >上一页</button>
+  <span class="bt_bottom1" >{{page}}</span>
+  <button class="bt_bottom" bindtap="down" >下一页</button>
+</view>
