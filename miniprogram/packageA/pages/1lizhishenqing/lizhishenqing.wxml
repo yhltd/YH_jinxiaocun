@@ -1,0 +1,196 @@
+<view class="container">
+  <!-- 标题 -->
+  <view class="header">
+    <text class="title">离职申请表</text>
+    <text class="subtitle">请填写以下信息提交离职申请</text>
+  </view>
+
+  <!-- 申请表单 -->
+  <form bindsubmit="submitForm" style="width: 90%;">
+    <view class="form-card">
+      
+      <!-- 部门 -->
+      <view class="form-item">
+        <text class="label">部门</text>
+        <view class="input-container">
+          <input 
+            name="bumen" 
+            type="text" 
+            placeholder="请输入部门名称" 
+            value="{{formData.bumen}}"
+            bindinput="onInputChange"
+            data-field="bumen"
+            class="input"
+          />
+        </view>
+      </view>
+
+      <!-- 姓名 -->
+      <view class="form-item">
+        <text class="label">姓名</text>
+        <view class="input-container">
+          <input 
+            name="xingming" 
+            type="text" 
+            placeholder="请输入姓名" 
+            value="{{formData.xingming}}"
+            bindinput="onInputChange"
+            data-field="xingming"
+            class="input"
+          />
+        </view>
+      </view>
+
+      <!-- 提交日期（只读） -->
+      <view class="form-item">
+        <text class="label">提交日期</text>
+        <view class="input-container readonly">
+          <input 
+            name="tijiaoriqi" 
+            type="text" 
+            value="{{formData.tijiaoriqi}}"
+            disabled
+            class="input"
+          />
+          <text class="hint">系统自动生成</text>
+        </view>
+      </view>
+
+      <!-- 申请原因 -->
+      <view class="form-item">
+        <text class="label">申请原因</text>
+        <view class="textarea-container">
+          <textarea 
+            name="shenqingyuanyin" 
+            placeholder="请详细说明离职原因..." 
+            value="{{formData.shenqingyuanyin}}"
+            bindinput="onInputChange"
+            data-field="shenqingyuanyin"
+            class="textarea"
+            maxlength="500"
+          />
+          <view class="word-count">{{formData.shenqingyuanyin.length || 0}}/500</view>
+        </view>
+      </view>
+
+      <!-- 审批结果（只读，默认为"待审批"） -->
+      <view class="form-item">
+        <text class="label">审批结果</text>
+        <view class="input-container readonly">
+          <input 
+            name="shenpijieguo" 
+            type="text" 
+            value="{{formData.shenpijieguo}}"
+            disabled
+            class="input"
+          />
+          <text class="hint">提交后由领导审批</text>
+        </view>
+      </view>
+
+      <!-- 审批原因（只读） -->
+      <view class="form-item">
+        <text class="label">审批原因</text>
+        <view class="textarea-container readonly">
+          <textarea 
+            name="shenpiyuanyin" 
+            placeholder="审批通过后由领导填写" 
+            disabled
+            value="{{formData.shenpiyuanyin}}"
+            class="textarea"
+          />
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="button-container">
+      <button 
+        form-type="submit" 
+        class="submit-btn" 
+        hover-class="submit-btn-hover"
+        disabled="{{isSubmitting}}"
+      >
+        {{isSubmitting ? '提交中...' : '提交申请'}}
+      </button>
+      
+      <button 
+        class="reset-btn" 
+        bindtap="resetForm"
+        hover-class="reset-btn-hover"
+      >
+        重置表单
+      </button>
+    </view>
+  </form>
+
+  <!-- 历史记录查看 -->
+<view class="history-section" wx:if="{{showHistory}}">
+  <view class="history-header">
+    <view>
+      <text class="history-title">历史申请记录</text>
+      <view class="filter-info">
+        <text class="filter-item">{{formData.bumen || ''}}</text>
+        <text class="filter-item">{{formData.xingming || ''}}</text>
+      </view>
+    </view>
+    <text class="history-count">共{{historyList.length}}条记录</text>
+  </view>
+  
+  <view class="history-list">
+    <block wx:for="{{historyList}}" wx:key="index">
+      <view class="history-item" bindtap="viewDetail" data-index="{{index}}">
+        <view class="item-header">
+          <text class="item-name">{{item.xingming}}</text>
+          <text class="item-department">{{item.bumen}}</text>
+          <view class="item-status" style="background-color: {{item.shenpijieguo === '通过' ? '#07c160' : (item.shenpijieguo === '驳回' ? '#ff4444' : '#ff976a')}}">
+            <text style="color: white;">{{item.shenpijieguo}}</text>
+          </view>
+        </view>
+        <view class="item-content">
+          <text class="item-date">{{item.tijiaoriqi}}</text>
+          <text class="item-reason" wx:if="{{item.shenqingyuanyin}}">{{item.shenqingyuanyin.length > 30 ? item.shenqingyuanyin.substring(0, 30) + '...' : item.shenqingyuanyin}}</text>
+        </view>
+        <view class="item-arrow">›</view>
+      </view>
+    </block>
+    
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{hasMore}}" bindtap="loadMoreHistory">
+      <text>{{loadingHistory ? '加载中...' : '点击加载更多'}}</text>
+    </view>
+    
+    <view class="no-more" wx:if="{{!hasMore && historyList.length > 0}}">
+      <text>没有更多记录了</text>
+    </view>
+    
+    <view class="no-data" wx:if="{{historyList.length === 0 && !loadingHistory}}">
+      <text>暂无申请记录</text>
+    </view>
+  </view>
+</view>
+
+<!-- 查看历史记录按钮 -->
+<view class="button-container" style="margin-top: 20px;">
+  <button 
+    class="history-btn"
+    bindtap="toggleHistory"
+    hover-class="history-btn-hover"
+  >
+    {{showHistory ? '隐藏历史记录' : '查看历史记录'}}
+  </button>
+</view>
+
+  <!-- 填写提示 -->
+  <view class="tips-card">
+    <text class="tips-title">填写说明：</text>
+    <view class="tips-content">
+      <text>1. 请务必如实填写所有必填信息</text>
+      <text>2. 提交日期由系统自动生成，不可修改</text>
+      <text>3. 提交后请等待上级领导审批</text>
+      <text>4. 审批结果和审批原因将由领导填写</text>
+      <text>5. 如有疑问，请联系人力资源部门</text>
+    </view>
+  </view>
+</view>

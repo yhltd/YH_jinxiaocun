@@ -1,0 +1,105 @@
+<tui-datetime id="tui-dateTime-ctx" type="{{type}}" startYear="{{startYear}}" endYear="{{endYear}}" cancelColor="{{cancelColor}}" color="{{color}}" setDateTime="{{setDateTime}}" bindconfirm="change"></tui-datetime>
+
+
+<!--可输入遮罩层-->
+<tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
+  <view bindsubmit="edit_cell" style="text-align: center;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改</view>
+    <form bindsubmit="edit_cell">
+      <input name="value" type="{{input_type}}" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" value="{{edit_old}}"/>
+      <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
+    </form>
+  </view>
+</tui-modal>
+
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <!-- 表头改为三列 -->
+    <view class='table_header'>
+      <view class="th" style="width: 100rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">序号</text>
+        </view>
+      </view>
+      <view class="th">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">身份</text>
+        </view>
+      </view>
+      <view class="th">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">薪资类型</text>
+        </view>
+      </view>
+    </view>
+
+    <!--内容行：只绑定 shenfen 和 xinzileixing 两个字段 -->
+    <block wx:for="{{list}}" wx:key="id" wx:for-index="idx">
+      <view class='table_main'>
+        <!-- 序号列：绑定删除事件 -->
+        <view class='td' style='width:100rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_delete" 
+                data-dbid="{{item.id}}" 
+                data-id="{{idx+1}}">
+            {{idx+1}}
+          </view>
+        </view>
+        
+        <!-- 身份列：绑定编辑事件 -->
+        <view class='td'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.shenfen || ''}}" 
+                data-doinb='shenfen'>
+            {{item.shenfen || ''}}
+          </view>
+        </view>
+        
+        <!-- 薪资类型列：绑定编辑事件 -->
+        <view class='td'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.xinzileixing || ''}}" 
+                data-doinb='xinzileixing'>
+            {{item.xinzileixing || ''}}
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+<!--操作栏-->
+
+<view style="height:20rpx;"></view>
+
+<!--底部操作区-->
+<view class="down">
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <view style="width:5%"></view>
+    <button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view style="height:20rpx"></view>
+
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+  
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="showM">添加一行</button>
+    <view style="width:5%"></view>
+    
+  </view>
+</view>
+

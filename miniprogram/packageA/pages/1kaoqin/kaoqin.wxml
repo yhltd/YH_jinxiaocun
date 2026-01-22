@@ -34,8 +34,8 @@
 
 <!--日期选择按钮及遮罩-->
 <view>
-  <button class="btn_yearmonth " hover-class="btn_yearmonth-hover" bindtap="show1">▷ ▷ ▷ 开始时间选择：{{title_year1}}年{{title_month1}}月 ◁ ◁ ◁</button>
-  <button class="btn_yearmonth " hover-class="btn_yearmonth-hover" bindtap="show2">▷ ▷ ▷ 结束时间选择：{{title_year2}}年{{title_month2}}月 ◁ ◁ ◁</button>
+  <button class="btn_yearmonth " hover-class="btn_yearmonth-hover" bindtap="show1">▷ ▷开始时间选择：{{title_year1}}年{{title_month1}}月◁ ◁</button>
+  <button class="btn_yearmonth " hover-class="btn_yearmonth-hover" bindtap="show2">▷ ▷结束时间选择：{{title_year2}}年{{title_month2}}月◁ ◁</button>
 </view>
 
 <tui-datetime id="tui-dateTime-ctx" type="{{type}}" startYear="{{startYear}}" endYear="{{endYear}}" cancelColor="{{cancelColor}}" color="{{color}}" setDateTime="{{setDateTime}}" bindconfirm="change"></tui-datetime>

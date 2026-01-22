@@ -1,0 +1,402 @@
+<tui-datetime id="tui-dateTime-ctx" type="{{type}}" startYear="{{startYear}}" endYear="{{endYear}}" cancelColor="{{cancelColor}}" color="{{color}}" setDateTime="{{setDateTime}}" bindconfirm="change"></tui-datetime>
+
+<!-- 文件上传弹窗 -->
+<tui-modal show="{{showUploadModal}}" bind:cancel="hideUploadModal" custom="{{true}}" fadein="{{true}}">
+  <view style="text-align: center; padding: 40rpx;">
+    <view style="font-size: 36rpx; font-weight: bold; margin-bottom: 40rpx;">上传文件</view>
+    
+    <!-- 文件名称输入 -->
+    <view style="margin-bottom: 30rpx;">
+      <view style="text-align: left; font-size: 28rpx; margin-bottom: 10rpx; color: #666;">文件名称</view>
+      <input 
+        placeholder="请输入文件名称" 
+        value="{{fileName}}"
+        bindinput="onFileNameInput"
+        style="border: 1rpx solid #e6e6e6; border-radius: 10rpx; padding: 20rpx; font-size: 28rpx;"
+      />
+    </view>
+    
+    <!-- 订单号输入 -->
+    <!-- <view style="margin-bottom: 30rpx;">
+      <view style="text-align: left; font-size: 28rpx; margin-bottom: 10rpx; color: #666;">订单号</view>
+      <input 
+        placeholder="请输入订单号" 
+        value="{{orderNumber}}"
+        bindinput="onOrderNumberInput"
+        style="border: 1rpx solid #e6e6e6; border-radius: 10rpx; padding: 20rpx; font-size: 28rpx;"
+      />
+    </view> -->
+    
+    <!-- 文件选择 -->
+    <view style="margin-bottom: 30rpx;">
+      <view style="text-align: left; font-size: 28rpx; margin-bottom: 10rpx; color: #666;">选择文件</view>
+      <view style="display: flex; justify-content: space-between;">
+        <button 
+          bindtap="chooseImage"
+          style="width: 48%; font-size: 28rpx;"
+          size="mini"
+        >
+          选择图片
+        </button>
+        <button 
+          bindtap="chooseFile"
+          style="width: 48%; font-size: 28rpx;"
+          size="mini"
+        >
+          选择文档
+        </button>
+      </view>
+      
+      <!-- 已选文件列表 -->
+      <view wx:if="{{selectedFiles.length > 0}}" style="margin-top: 20rpx;">
+        <view style="font-size: 26rpx; color: #666; margin-bottom: 10rpx;">
+          已选择 {{selectedFiles.length}} 个文件
+        </view>
+        <scroll-view scroll-y style="max-height: 200rpx; border: 1rpx solid #eee; border-radius: 10rpx; padding: 10rpx;">
+          <view wx:for="{{selectedFiles}}" wx:key="index" style="font-size: 24rpx; color: #333; padding: 5rpx 0;">
+            {{index + 1}}. {{item.name}} ({{Math.round(item.size/1024)}}KB)
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    
+    <!-- 上传进度 -->
+    <view wx:if="{{uploading}}" style="margin-bottom: 30rpx;">
+      <view style="font-size: 28rpx; color: #666; margin-bottom: 10rpx;">
+        上传进度: {{uploadProgress}}%
+      </view>
+      <progress 
+        percent="{{uploadProgress}}" 
+        show-info 
+        stroke-width="6"
+        color="#5677fc"
+      />
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view style="display: flex; justify-content: space-between; margin-top: 40rpx;">
+      <button 
+        bindtap="hideUploadModal"
+        style="width: 48%; background: #f5f5f5; color: #666;"
+        hover-class="btn-hover"
+        disabled="{{uploading}}"
+      >
+        取消
+      </button>
+      <button 
+        bindtap="uploadFile"
+        style="width: 48%; background: #5677fc; color: white;"
+        hover-class="btn-hover"
+        disabled="{{uploading || selectedFiles.length === 0}}"
+      >
+        {{uploading ? '上传中...' : '上传'}}
+      </button>
+    </view>
+  </view>
+</tui-modal>
+
+<!-- 文件查看弹窗 -->
+<tui-modal show="{{showFileViewModal}}" bind:cancel="hideFileViewModal" custom="{{true}}" fadein="{{true}}" width="90%">
+  <view style="text-align: center; max-height: 80vh; overflow-y: auto;">
+    <view style="font-size: 36rpx; font-weight: bold; margin-bottom: 30rpx;">文件列表</view>
+    
+    <!-- 文件列表 -->
+    <view wx:if="{{currentFileList && currentFileList.length > 0}}">
+      <view wx:for="{{currentFileList}}" wx:key="index" style="margin-bottom: 20rpx; padding: 20rpx; border: 1rpx solid #e6e6e6; border-radius: 10rpx;">
+        <view style="display: flex; align-items: center; justify-content: space-between;">
+          <view style="flex: 1; text-align: left;">
+            <view style="font-size: 28rpx; color: #333; margin-bottom: 5rpx; word-break: break-all;">
+              {{index + 1}}. {{item.split('/').pop()}}
+            </view>
+            <view style="font-size: 24rpx; color: #666;">
+              {{item}}
+            </view>
+          </view>
+          <view style="display: flex; flex-direction: column;">
+            <!-- 预览按钮 -->
+            <button 
+              bindtap="previewFile" 
+              data-url="{{item}}"
+              style="font-size: 24rpx; padding: 10rpx 15rpx; margin-bottom: 10rpx; background: #5677fc; color: white;"
+              size="mini"
+            >
+              预览
+            </button>
+            <!-- 删除按钮 -->
+            <button 
+              bindtap="deleteFile" 
+              data-url="{{item}}"
+              data-id="{{currentRecordId}}"
+              style="font-size: 24rpx; padding: 10rpx 15rpx; background: #ff4444; color: white;"
+              size="mini"
+            >
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view wx:else style="padding: 60rpx 0; color: #999; font-size: 28rpx;">
+      暂无文件
+    </view>
+    
+    <button 
+      bindtap="hideFileViewModal"
+      style="margin-top: 40rpx; width: 100%; background: #5677fc; color: white;"
+      hover-class="btn-hover"
+    >
+      关闭
+    </button>
+  </view>
+</tui-modal>
+
+<!-- 修改遮罩层，添加状态选择器 -->
+<tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
+  <view bindsubmit="edit_cell" style="text-align: center;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">
+      {{modalTitle || '修改'}}
+    </view>
+    <form bindsubmit="edit_cell">
+      <!-- 如果是状态字段，显示选择器 -->
+      <block wx:if="{{isStatusField}}">
+        <picker 
+          name="value" 
+          mode="selector" 
+          range="{{statusOptions}}" 
+          range-key="label" 
+          value="{{statusIndex}}" 
+          bindchange="onStatusChange"
+          style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;">
+          <view style="text-align: left; color: {{statusIndex >= 0 ? '#333' : '#999'}}">
+            {{statusIndex >= 0 ? statusOptions[statusIndex].label : '请选择状态'}}
+          </view>
+        </picker>
+      </block>
+      <!-- 其他字段显示输入框 -->
+      <block wx:else>
+        <input 
+          name="value" 
+          type="{{input_type}}" 
+          placeholder="{{edit_old}}" 
+          style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" 
+          value="{{edit_old}}"/>
+      </block>
+      
+      <button 
+        form-type="submit" 
+        style="width:75%" 
+        class="btn-primary" 
+        hover-class="btn-hover" 
+        type="small">
+        提交
+      </button>
+    </form>
+  </view>
+</tui-modal>
+
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <!-- 表头改为7列 -->
+    <view class='table_header'>
+      <view class="th" style="width: 80rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">序号</text>
+        </view>
+      </view>
+      <view class="th" style="width: 240rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">投历人名</text>
+        </view>
+      </view>
+      <view class="th" style="width: 160rpx">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">学历</text>
+        </view>
+      </view>
+      <view class="th" style="width: 240rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">目标岗位</text>
+        </view>
+      </view>
+      <view class="th" style="width: 240rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">提交时间</text>
+        </view>
+      </view>
+      <view class="th" style="width: 160rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">文件</text>
+        </view>
+      </view>
+      <view class="th" style="width: 300rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">备注</text>
+        </view>
+      </view>
+      <view class="th" style="width: 160rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">状态</text>
+        </view>
+      </view>
+    </view>
+
+    <!--内容行：绑定所有7个字段 -->
+    <block wx:for="{{list}}" wx:key="id" wx:for-index="idx">
+      <view class='table_main'>
+        <!-- 序号列：绑定删除事件 -->
+        <view class='td' style='width:80rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_delete" 
+                data-dbid="{{item.id}}" 
+                data-id="{{idx+1}}">
+            {{idx+1}}
+          </view>
+        </view>
+        
+        <!-- 投历人名列 -->
+        <view class='td' style='width:240rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.touliren || ''}}" 
+                data-doinb='touliren'>
+            {{item.touliren || ''}}
+          </view>
+        </view>
+        
+        <!-- 学历列 -->
+        <view class='td' style='width:160rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.xueli || ''}}" 
+                data-doinb='xueli'>
+            {{item.xueli || ''}}
+          </view>
+        </view>
+        
+        <!-- 目标岗位列 -->
+        <view class='td' style='width:240rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.mubiaogangwei || ''}}" 
+                data-doinb='mubiaogangwei'>
+            {{item.mubiaogangwei || ''}}
+          </view>
+        </view>
+        
+        <!-- 提交时间列 -->
+        <view class='td' style='width:240rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.tijiaoshijian || ''}}" 
+                data-doinb='tijiaoshijian'>
+            {{item.tijiaoshijian || ''}}
+          </view>
+        </view>
+        
+        <!-- 文件列 -->
+        <view class='td' style='width:160rpx;'>
+          <view class="cell_label centerclass">
+            <!-- 如果wenjian字段为空或空字符串，显示上传按钮 -->
+            <block wx:if="{{!item.wenjian || item.wenjian.trim() === ''}}">
+              <button 
+                class="upload-btn" 
+                bindtap="showUploadModalFunc" 
+                data-id="{{item.id}}" 
+                data-name="{{item.touliren || ''}}"
+                size="mini"
+                style="background: #4CAF50; color: white; font-size: 20rpx; padding: 5rpx 10rpx;"
+              >
+                上传
+              </button>
+            </block>
+            
+            <!-- 如果wenjian字段有值，显示查看按钮 -->
+            <block wx:else>
+              <button 
+                class="view-btn" 
+                bindtap="viewFiles" 
+                data-id="{{item.id}}" 
+                data-name="{{item.touliren || ''}}"
+                size="mini"
+                style="background: #2196F3; color: white; font-size: 20rpx; padding: 5rpx 10rpx;"
+              >
+                查看
+              </button>
+
+              <button 
+                class="upload-btn" 
+                bindtap="showUploadModalFunc" 
+                data-id="{{item.id}}" 
+                data-name="{{item.touliren || ''}}"
+                size="mini"
+                style="background: #4CAF50; color: white; font-size: 20rpx; padding: 5rpx 10rpx;"
+              >
+                上传
+              </button>
+            </block>
+          </view>
+        </view>
+        
+        <!-- 备注列 -->
+        <view class='td' style='width:300rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.beizhu || ''}}" 
+                data-doinb='beizhu'>
+            {{item.beizhu || ''}}
+          </view>
+        </view>
+        
+        <!-- 状态列 -->
+        <view class='td' style='width:160rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_edit" 
+                data-id='{{item.id}}' 
+                data-type="text" 
+                data-x="{{item.zhuangtai || ''}}" 
+                data-doinb='zhuangtai'>
+            {{item.zhuangtai || ''}}
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+<!--操作栏-->
+
+<view style="height:20rpx;"></view>
+
+<!--底部操作区-->
+<view class="down">
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <view style="width:5%"></view>
+    <button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view style="height:20rpx"></view>
+
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="showM">添加一行</button>
+    <view style="width:5%"></view>
+  </view>
+</view>

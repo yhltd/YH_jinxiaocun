@@ -1,0 +1,304 @@
+<view class="container">
+  <!-- 标题区域 -->
+  <view class="header">
+    <text class="title">动态统计图表</text>
+    <text class="subtitle">基于配置字段生成可视化图表</text>
+  </view>
+
+  <!-- 图表配置列表 -->
+  <view class="config-list" wx:if="{{chartConfigs.length > 0}}">
+    <view class="config-list-header">
+      <text class="config-list-title">已保存的图表配置</text>
+      <button class="add-btn" bindtap="showChartModal" data-index="-1">
+        <text>+ 新建图表</text>
+      </button>
+    </view>
+    
+    <scroll-view scroll-y style="height: 300rpx;">
+      <block wx:for="{{chartConfigs}}" wx:key="id" wx:for-index="idx">
+        <view class="config-item {{currentChart === idx ? 'active' : ''}}" 
+              bindtap="showChart" data-index="{{idx}}">
+          <view class="config-info">
+            <text class="config-name">{{item.name}}</text>
+            <text class="config-type">{{item.config && item.config.type === 'bar' ? '柱状图' : 
+                                        item.config && item.config.type === 'line' ? '折线图' : 
+                                        item.config && item.config.type === 'pie' ? '饼图' : 
+                                        item.config && item.config.type === 'radar' ? '雷达图' : '未知类型'}}</text>
+          </view>
+          <view class="config-actions">
+            <!-- <button class="edit-btn" bindtap="showChartModal" data-index="{{idx}}" 
+                    catchtap="stopPropagation">编辑</button> -->
+                    <button class="delete-btn" catchtap="deleteChartConfig" data-id="{{item.id}}" 
+                  data-index="{{idx}}">删除</button>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+
+  <!-- 图表显示区域 -->
+  <view class="chart-area" wx:if="{{currentChart !== null && chartConfigs[currentChart]}}">
+    <view class="chart-header">
+      <text class="chart-title">{{chartConfigs[currentChart].name}}</text>
+      <view class="chart-actions">
+        <button class="refresh-btn" bindtap="refreshChart">刷新</button>
+        <button class="export-btn" bindtap="exportChartImage">导出</button>
+      </view>
+    </view>
+    
+    <!-- 图表容器 -->
+    <view class="chart-container">
+      <!-- Canvas 图表容器 -->
+      <view class="canvas-auto-container" wx:if="{{chartData.xAxisData && chartData.xAxisData.length > 0}}">
+  <scroll-view 
+    scroll-x 
+    class="canvas-auto-scroll"
+    enhanced="{{true}}"
+    show-scrollbar="{{true}}"
+    bounces="{{true}}"
+    wx:if="{{needHorizontalScroll}}"
+  >
+    <canvas 
+      canvas-id="chartCanvas" 
+      style="width: {{canvasWidth}}rpx; height: {{canvasHeight}}rpx;"
+    ></canvas>
+  </scroll-view>
+  
+  <canvas 
+    wx:else
+    canvas-id="chartCanvas" 
+    style="width: 100%; height: 500rpx;"
+  ></canvas>
+</view>
+      
+      <!-- 图表信息显示 -->
+      <view class="chart-preview" wx:if="{{chartData.xAxisData && chartData.xAxisData.length > 0}}">
+        <view class="preview-info">
+          <text>图表类型: {{chartConfigs[currentChart].config && 
+                           chartConfigs[currentChart].config.type === 'bar' ? '柱状图' : 
+                           chartConfigs[currentChart].config && chartConfigs[currentChart].config.type === 'line' ? '折线图' : 
+                           chartConfigs[currentChart].config && chartConfigs[currentChart].config.type === 'pie' ? '饼图' : 
+                           chartConfigs[currentChart].config && chartConfigs[currentChart].config.type === 'radar' ? '雷达图' : '未知类型'}}</text>
+          <text>数据条数: {{chartData.xAxisData.length}}</text>
+          <text>数据系列: {{chartData.seriesNames.join(', ')}}</text>
+        </view>
+        
+        <!-- 简单的文本图表预览 -->
+        <view class="text-chart">
+          <view class="text-chart-header">
+            <text class="text-chart-title">数据详情（前10条）</text>
+          </view>
+          <scroll-view scroll-x style="width: 100%;">
+            <view class="text-chart-row header-row">
+              <text class="text-chart-cell" style="min-width: 120rpx;">X轴</text>
+              <block wx:for="{{chartData.seriesNames}}" wx:key="index">
+                <text class="text-chart-cell" style="min-width: 150rpx;">{{item}}</text>
+              </block>
+            </view>
+            <block wx:for="{{chartData.xAxisData}}" wx:key="index" wx:for-item="xValue" wx:for-index="rowIndex">
+              <view class="text-chart-row" wx:if="{{rowIndex < 10}}">
+                <text class="text-chart-cell" style="min-width: 120rpx;">{{xValue}}</text>
+                <block wx:for="{{chartData.seriesData}}" wx:key="seriesIndex" wx:for-index="seriesIndex">
+                  <text class="text-chart-cell" style="min-width: 150rpx;">{{item.data[rowIndex]}}</text>
+                </block>
+              </view>
+            </block>
+          </scroll-view>
+        </view>
+      </view>
+      
+      <view class="no-chart-data" wx:else>
+        <text>暂无图表数据或数据为空</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tips-card" wx:if="{{currentChart === null}}">
+    <!-- <text class="tips-title">使用说明：</text>
+    <view class="tips-content">
+      <text>1. 点击"新建图表"按钮创建图表配置</text>
+      <text>2. 选择X轴和Y轴数据字段</text>
+      <text>3. 配置图表类型和显示选项</text>
+      <text>4. 保存后点击配置项查看图表</text>
+      <text>5. 支持柱状图、折线图、饼图和雷达图</text>
+    </view> -->
+    
+    <!-- <view style="margin-top: 30rpx;">
+      <button class="create-btn" bindtap="showChartModal" data-index="-1">
+        开始创建图表
+      </button>
+    </view> -->
+  </view>
+
+  <!-- 图表配置模态框 -->
+  <tui-modal show="{{showChartModal}}" bind:cancel="hideChartModal" custom="{{true}}" fadein="{{true}}" 
+             width="95%" height="85%">
+    <view style="text-align: center; padding: 40rpx;">
+      <view style="padding-bottom: 20rpx; font-size: 34rpx;">
+        {{editingIndex >= 0 ? '编辑图表' : '新建图表'}}
+      </view>
+      
+      <scroll-view style="height: 800rpx; margin-bottom: 30rpx;" scroll-y>
+        <!-- 图表名称 -->
+        <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">图表名称:</text>
+          <input 
+            type="text" 
+            value="{{configForm.name}}" 
+            placeholder="请输入图表名称" 
+            style="width: 100%; border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+            bindinput="onNameInput"
+          />
+        </view>
+        
+        <!-- 图表类型 -->
+        <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">图表类型:</text>
+          <picker 
+            bindchange="onTypeChange"
+            value="{{currentTypeIndex}}"
+            range="{{chartTypes}}"
+            range-key="name"
+            style="border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+          >
+            <view style="color: {{configForm.type ? '#333' : '#999'}};">
+              {{configForm.type === 'bar' ? '柱状图' : 
+                configForm.type === 'line' ? '折线图' : 
+                configForm.type === 'pie' ? '饼图' : 
+                configForm.type === 'radar' ? '雷达图' : '请选择图表类型'}}
+            </view>
+          </picker>
+        </view>
+        
+        <!-- X轴字段选择 -->
+        <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">
+            X轴字段（分类轴）:
+          </text>
+          <picker 
+            bindchange="onXAxisChange"
+            value="{{configForm.xAxisField}}"
+            range="{{dynamicTitles}}"
+            range-key="text"
+            style="border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+          >
+            <view style="color: {{configForm.xAxisField >= 0 ? '#333' : '#999'}};">
+              {{configForm.xAxisField >= 0 ? dynamicTitles[configForm.xAxisField].text : '请选择X轴字段'}}
+            </view>
+          </picker>
+        </view>
+        
+        <!-- Y轴字段选择（单个） -->
+        <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">
+            Y轴字段（数值轴，单字段）:
+          </text>
+          <picker 
+            bindchange="onYAxisChange"
+            value="{{configForm.yAxisField}}"
+            range="{{dynamicTitles}}"
+            range-key="text"
+            style="border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+          >
+            <view style="color: {{configForm.yAxisField >= 0 ? '#333' : '#999'}};">
+              {{configForm.yAxisField >= 0 ? dynamicTitles[configForm.yAxisField].text : '请选择Y轴字段'}}
+            </view>
+          </picker>
+        </view>
+        
+        <!-- Y轴字段选择（多个） -->
+        <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">
+            Y轴字段:
+          </text>
+          
+          <!-- <view style="margin-bottom: 15rpx;">
+            <button class="add-field-btn" bindtap="addYAxisField">
+              + 添加字段
+            </button>
+          </view> -->
+          
+          <block wx:for="{{configForm.yAxisFields}}" wx:key="index">
+            <view style="display: flex; align-items: center; margin-bottom: 15rpx;">
+              <picker 
+                bindchange="onYAxisFieldsChange"
+                data-index="{{index}}"
+                value="{{item}}"
+                range="{{dynamicTitles}}"
+                range-key="text"
+                style="flex: 1; border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+              >
+                <view style="color: {{item >= 0 ? '#333' : '#999'}};">
+                  {{item >= 0 ? dynamicTitles[item].text : '请选择字段'}}
+                </view>
+              </picker>
+              <button 
+                type="warn" 
+                size="mini" 
+                data-index="{{index}}"
+                bindtap="removeYAxisField"
+                style="margin-left: 15rpx;"
+              >
+                删除
+              </button>
+            </view>
+          </block>
+        </view>
+        
+        <!-- 图表标题 -->
+        <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">图表标题:</text>
+          <input 
+            type="text" 
+            value="{{configForm.chartTitle}}" 
+            placeholder="请输入图表标题（可选）" 
+            style="width: 100%; border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+            bindinput="onTitleInput"
+          />
+        </view>
+        
+        <!-- 显示选项 -->
+        <!-- <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+          <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">显示选项:</text>
+          
+          <view style="display: flex; align-items: center; margin-bottom: 15rpx;">
+            <text style="font-size: 26rpx; color: #666; flex: 1;">显示图例:</text>
+            <switch checked="{{configForm.showLegend}}" bindchange="toggleLegend" />
+          </view>
+          
+          <view style="display: flex; align-items: center;">
+            <text style="font-size: 26rpx; color: #666; flex: 1;">显示网格:</text>
+            <switch checked="{{configForm.showGrid}}" bindchange="toggleGrid" />
+          </view>
+        </view> -->
+        
+        <!-- 预览信息 -->
+        <view style="margin-bottom: 30rpx; padding: 20rpx; background-color: #f9f9f9; border-radius: 8rpx;">
+          <text style="font-size: 26rpx; color: #333; display: block; margin-bottom: 10rpx;">配置预览:</text>
+          <text style="font-size: 24rpx; color: #666; display: block;">
+            图表类型: {{configForm.type === 'bar' ? '柱状图' : 
+                       configForm.type === 'line' ? '折线图' : 
+                       configForm.type === 'pie' ? '饼图' : 
+                       configForm.type === 'radar' ? '雷达图' : '未选择'}}
+          </text>
+          <text style="font-size: 24rpx; color: #666; display: block;">
+            X轴: {{configForm.xAxisField >= 0 ? dynamicTitles[configForm.xAxisField].text : '未选择'}}
+          </text>
+          <text style="font-size: 24rpx; color: #666; display: block;">
+            Y轴字段数: {{(configForm.yAxisField >= 0 ? 1 : 0) + configForm.yAxisFields.length}}
+          </text>
+        </view>
+      </scroll-view>
+      
+      <view style="display: flex; justify-content: space-between;">
+        <button bindtap="hideChartModal" style="width: 40%; background-color: #f0f0f0; color: #333;">
+          取消
+        </button>
+        <button bindtap="saveChartConfig" style="width: 50%;" class="btn-primary">
+          保存配置
+        </button>
+      </view>
+    </view>
+  </tui-modal>
+</view>

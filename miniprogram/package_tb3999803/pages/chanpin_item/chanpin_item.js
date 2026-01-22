@@ -443,6 +443,7 @@ Page({
     })
   },
 
+  
   del1: function () {
     var _this = this
     var userInfo = _this.data.userInfo

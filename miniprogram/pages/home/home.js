@@ -96,6 +96,66 @@ Page({
         index: 14,
         hid : true,
         lianjie: "../../packageA/pages/gerenzhongxin/gerenzhongxin"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "工作安排日期",
+        index: 15,
+        hid : true,
+        lianjie: "../../packageA/pages/1gongzuoshijian/gongzuoshijian"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "签到",
+        index: 16,
+        hid : true,
+        lianjie: "../../packageA/pages/1qiandao/qiandao"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "请假审批",
+        index: 17,
+        hid : true,
+        lianjie: "../../packageA/pages/1qingjiashenpi/qingjiashenpi"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "动态工资明细",
+        index: 18,
+        hid : true,
+        lianjie: "../../packageA/pages/1dongtaigzmingxi/dongtaigzmingxi"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "简历管理",
+        index: 19,
+        hid : true,
+        lianjie: "../../packageA/pages/1jianliguanli/jianliguanli"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "简历审批",
+        index: 20,
+        hid : true,
+        lianjie: "../../packageA/pages/1jianlishenpi/jianlishenpi"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "面试管理",
+        index: 20,
+        hid : true,
+        lianjie: "../../packageA/pages/1mianshiguanli/mianshiguanli"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "离职审批",
+        index: 21,
+        hid : true,
+        lianjie: "../../packageA/pages/1lizhishenpi/lizhishenpi"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "离职申请",
+        index: 21,
+        hid : true,
+        lianjie: "../../packageA/pages/1lizhishenqing/lizhishenqing"
+      },{
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        text: "统计图",
+        index: 21,
+        hid : true,
+        lianjie: "../../packageA/pages/1statistics/statistics"
       }
     ]
   },

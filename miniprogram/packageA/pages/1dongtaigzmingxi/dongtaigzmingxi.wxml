@@ -1,0 +1,309 @@
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <!-- 表头：序号 + 动态标题 -->
+    <view class='table_header'>
+      <!-- 序号列 -->
+      <view class="th" style="width: 100rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">序号</text>
+        </view>
+      </view>
+      
+      <!-- 动态标题列 -->
+      <block wx:for="{{dynamicTitles}}" wx:key="index">
+        <view class="th">
+          <view class="cell_label_header centerclass">
+            <text style="font-weight:bold;">{{item.text}}</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 内容行 -->
+    <block wx:for="{{list}}" wx:key="id" wx:for-index="rowIndex">
+      <view class='table_main'>
+        <!-- 序号列：绑定删除事件 -->
+        <view class='td' style='width:100rpx;'>
+          <view class="cell_label centerclass" 
+                bindtap="click_delete" 
+                data-dbid="{{item.id}}" 
+                data-id="{{rowIndex+1}}">
+            {{rowIndex+1}}
+          </view>
+        </view>
+        
+        <!-- 动态列：绑定编辑事件 -->
+        <block wx:for="{{dynamicTitles}}" wx:key="columnIndex" wx:for-index="columnIndex" wx:for-item="column">
+          <view class='td'>
+            <view class="cell_label centerclass" 
+                  bindtap="click_edit" 
+                  data-id='{{item.id}}' 
+                  data-type="text" 
+                  data-x="{{item['col_' + column.columnIndex] || ''}}" 
+                  data-doinb="{{column.columnIndex}}">
+              {{item['col_' + column.columnIndex] || ''}}
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!-- 编辑模态框 -->
+<tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
+  <view bindsubmit="edit_cell" style="text-align: center;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改</view>
+    <form bindsubmit="edit_cell">
+      <input name="value" type="{{input_type}}" placeholder="{{edit_old}}" 
+             style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" 
+             value="{{edit_old}}"/>
+      <button form-type="submit" bindtap="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">
+        提交
+      </button>
+    </form>
+  </view>
+</tui-modal>
+
+<!-- 设置标题的模态框 -->
+<tui-modal show="{{showTitleModal}}" bind:cancel="hideTitleModal" custom="{{true}}" fadein="{{true}}" 
+           width="90%" height="70%">
+  <view style="text-align: center; padding: 40rpx;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">配置标题字段</view>
+    <view style="font-size: 26rpx; color: #666; margin-bottom: 30rpx;">
+      每行输入一个字段名称
+    </view>
+    
+    <scroll-view style="height: 400rpx; margin-bottom: 30rpx;" scroll-y>
+      <!-- 显示现有的字段 -->
+      <block wx:for="{{titleFields}}" wx:key="index">
+        <view style="display: flex; align-items: center; margin-bottom: 20rpx; padding: 0 20rpx;">
+          <view style="flex: 1; text-align: left;"></view>
+          <input 
+            type="text" 
+            data-index="{{index}}" 
+            value="{{item}}" 
+            placeholder="请输入字段名" 
+            style="flex: 3; border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+            bindinput="onTitleFieldInput"
+          />
+          <button 
+            type="warn" 
+            size="mini" 
+            data-index="{{index}}" 
+            bindtap="removeTitleField"
+            style="margin-left: 20rpx;"
+            wx:if="{{index >= 0}}"
+          >删除</button>
+        </view>
+      </block>
+    </scroll-view>
+    
+    <view style="display: flex; justify-content: center; margin-bottom: 30rpx;">
+      <button class="btn-primary" bindtap="addTitleField" 
+              style="width: 50%; font-size: 26rpx; height: 60rpx; line-height: 18px;">
+        添加字段
+      </button>
+    </view>
+    
+    <view style="display: flex; justify-content: space-between;">
+      <button bindtap="hideTitleModal" style="width: 40%; background-color: #f0f0f0; color: #333;">
+        取消
+      </button>
+      <button bindtap="saveTitle" style="width: 50%;" class="btn-primary">
+        保存配置
+      </button>
+    </view>
+  </view>
+</tui-modal>
+
+<!-- 公式配置模态框 -->
+<tui-modal show="{{showFormulaModal}}" bind:cancel="hideFormulaModal" custom="{{true}}" fadein="{{true}}" 
+           width="90%" height="70%">
+  <view style="text-align: center; padding: 40rpx;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">配置计算公式</view>
+    
+    <scroll-view style="height: 500rpx; margin-bottom: 30rpx;" scroll-y>
+      <!-- 目标字段选择 -->
+      <view style="margin-bottom: 30rpx; text-align: left; padding: 0 20rpx;">
+        <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">目标字段（注意字段先后顺序；先设置基础计算公式）:</text>
+        <picker 
+          bindchange="onTargetFieldChange"
+          value="{{formulaTargetIndex}}"
+          range="{{dynamicTitles}}"
+          range-key="text"
+          style="border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx;"
+        >
+          <view style="color: {{formulaTargetField ? '#333' : '#999'}};">
+            {{formulaTargetField || '请选择目标字段'}}
+          </view>
+        </picker>
+        <view style="font-size: 24rpx; color: #666; margin-top: 10rpx;">
+          当前选择：{{formulaTargetField}}
+        </view>
+      </view>
+      
+      <!-- 公式配置区域 -->
+      <view style="text-align: left; padding: 0 20rpx;">
+        <text style="font-size: 28rpx; color: #333; display: block; margin-bottom: 15rpx;">计算公式（使用字段名称和运算符）:</text>
+        
+        <!-- 运算符按钮 -->
+        <view style="display: flex; flex-wrap: wrap; gap: 15rpx; margin-bottom: 20rpx;">
+          <button type="primary" size="mini" bindtap="insertOperator" data-operator="+">+</button>
+          <button type="primary" size="mini" bindtap="insertOperator" data-operator="-">-</button>
+          <button type="primary" size="mini" bindtap="insertOperator" data-operator="*">×</button>
+          <button type="primary" size="mini" bindtap="insertOperator" data-operator="/">÷</button>
+          <button type="primary" size="mini" bindtap="insertOperator" data-operator="(">(</button>
+          <button type="primary" size="mini" bindtap="insertOperator" data-operator=")">)</button>
+        </view>
+        
+        <!-- 公式输入框 -->
+        <input 
+          type="text" 
+          value="{{formulaExpression}}" 
+          placeholder="例如：字段1 + 字段2 * 字段3" 
+          style="width: 100%; border: 1rpx solid #e6e6e6; padding: 15rpx; font-size: 28rpx; margin-bottom: 15rpx;"
+          bindinput="onFormulaInput"
+        />
+        
+        <!-- 可用字段列表 -->
+        <view style="margin-bottom: 15rpx;">
+          <text style="font-size: 26rpx; color: #666;">可用字段：</text>
+          <view style="display: flex; flex-wrap: wrap; gap: 10rpx; margin-top: 10rpx;">
+            <block wx:for="{{dynamicTitles}}" wx:key="index">
+              <button 
+                type="default" 
+                size="mini" 
+                bindtap="insertField" 
+                data-index="{{index}}"
+                data-text="{{item.text}}"
+                style="font-size: 24rpx;"
+              >
+                {{item.text}}
+              </button>
+            </block>
+          </view>
+        </view>
+        
+        <!-- 公式预览 -->
+        <view style="margin-bottom: 20rpx; padding: 15rpx; background-color: #f9f9f9; border-radius: 8rpx;">
+          <text style="font-size: 26rpx; color: #333;">公式预览：</text>
+          <text style="font-size: 26rpx; color: #e64340; margin-left: 10rpx;">{{formulaExpression || '暂无公式'}}</text>
+        </view>
+        
+        <!-- 现有公式列表 -->
+        <view wx:if="{{formulaList.length > 0}}">
+          <text style="font-size: 26rpx; color: #666; display: block; margin-bottom: 10rpx;">已保存的公式：</text>
+          <block wx:for="{{formulaList}}" wx:key="index">
+            <view style="padding: 15rpx; border: 1rpx solid #e6e6e6; border-radius: 8rpx; margin-bottom: 10rpx; background-color: #f5f5f5;">
+              <text style="font-size: 26rpx; color: #333; display: block; margin-bottom: 5rpx;">
+                <text style="font-weight: bold;">{{item.zhuziduan}} = </text>{{item.gongshi}}
+              </text>
+              <view style="display: flex; justify-content: flex-end; margin-top: 10rpx;">
+                <button type="warn" size="mini" bindtap="deleteFormula" data-id="{{item.id}}">删除</button>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </scroll-view>
+    
+    <view style="display: flex; justify-content: space-between;">
+      <button bindtap="hideFormulaModal" style="width: 40%; background-color: #f0f0f0; color: #333;">
+        取消
+      </button>
+      <button bindtap="saveFormula" style="width: 50%;" class="btn-primary">
+        保存公式
+      </button>
+    </view>
+  </view>
+</tui-modal>
+
+<!--底部操作区-->
+<view class="down">
+  <!-- <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <view style="width:5%"></view>
+    <button class="pageButton_page" hover-class="pageButton_page-hover">{{page}}/{{maxpagenumber}}</button>
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <view style="width:5%"></view>
+  </view> -->
+
+  <view style="height:20rpx"></view>
+
+  <!-- 操作说明弹窗 -->
+<view class="guide-modal" wx:if="{{showGuide}}">
+  <!-- 遮罩层 -->
+  <view class="modal-mask" bindtap="hideGuide"></view>
+  
+  <!-- 弹窗内容 -->
+  <view class="modal-content">
+    <!-- 标题栏 -->
+    <view class="modal-header">
+      <text class="modal-title">操作说明</text>
+      <view class="modal-close" bindtap="hideGuide">
+        <text class="close-text">×</text>
+      </view>
+    </view>
+    
+    <!-- 内容区 -->
+    <scroll-view class="modal-body" scroll-y>
+      <text class="guide-text">
+        操作步骤说明：
+       1.页面中点击配置标题按钮，在弹窗中配置需要列内容；
+       2.点击公式配置按钮，目标字段内容为计算结果赋值字段；
+       3.在计算公式中选择已有的计算符，选择下方遍历字段或手动输入数字生成对应计算公式；
+       4.在已保存公式中可以删除配置好的内容；
+        注意事项：
+       1.在配置标题中删除字段时需要先接触该字段设计公式内容；
+       2.公式设计建议从基础字段到高级字段顺序设置；
+       3.涉及到计算的内容要输入数值内容；
+      </text>
+    </scroll-view>
+  </view>
+</view>
+
+  <view style="display: flex;justify-content: space-around;margin-bottom: 2px;">
+ <!-- 在底部操作区添加设置标题按钮 -->
+  <view >
+    <view style="width:5%"></view>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="showTitleModal">配置标题</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view >
+  <view style="width:5%"></view>
+  <view style="width:10%"></view>
+  <button class="btn-primary" hover-class="btn-hover" bindtap="showFormulaModal">公式配置</button>
+  <view style="width:5%"></view>
+</view>
+
+</view>
+<view style="display: flex;justify-content: space-around;">
+ <!-- 在底部操作区添加设置标题按钮 -->
+
+
+<view >
+    <view style="width:5%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="gotoStatistics">统计图表</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view>
+    <view style="width:5%"></view>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="showM">添加一行</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view >
+    <view style="width:5%"></view>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="showGuide">操作说明</button>
+    <view style="width:5%"></view>
+  </view>
+</view>
+</view>

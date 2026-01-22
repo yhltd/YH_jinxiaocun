@@ -1,0 +1,930 @@
+.container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+}
+
+/* 日历头部 */
+.calendar-header {
+  background: white;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-btn {
+  font-size: 40rpx;
+  color: #1890ff;
+  font-weight: bold;
+  padding: 10rpx 30rpx;
+}
+
+.current-month {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.week-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.week-day {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  padding: 10rpx 0;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4rpx;
+  background: white;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12rpx;
+  position: relative;
+  padding: 10rpx;
+}
+
+.current-month {
+  color: #333;
+}
+
+.other-month {
+  color: #ccc;
+}
+
+.today {
+  background: #e6f7ff;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.selected {
+  background: #1890ff;
+  color: white;
+}
+
+.has-schedule {
+  background: #f6ffed;
+  border: 2rpx solid #52c41a;
+}
+
+.day-text {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.schedule-dot {
+  position: absolute;
+  bottom: 8rpx;
+  width: 12rpx;
+  height: 12rpx;
+  background: #52c41a;
+  border-radius: 50%;
+}
+
+.schedule-count {
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+  background: #ff4d4f;
+  color: white;
+  font-size: 20rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 选中日期 */
+.selected-dates {
+  background: white;
+  border-radius: 20rpx;
+  margin: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  width: 90%;
+  overflow-x: auto; 
+}
+
+.label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.dates-scroll {
+  white-space: nowrap;
+}
+
+.date-tag {
+  display: inline-block;
+  background: #e6f7ff;
+  color: #1890ff;
+  padding: 10rpx 20rpx;
+  border-radius: 30rpx;
+  margin-right: 20rpx;
+  font-size: 26rpx;
+}
+
+/* 时间设置面板 */
+.time-panel {
+  background: white;
+  border-radius: 20rpx;
+  margin: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  width: 90%;
+}
+
+.panel-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+
+.form-label {
+  display: block;
+  font-size: 30rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  border: 2rpx solid #d9d9d9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: #fafafa;
+}
+
+.picker-text {
+  border: 2rpx solid #d9d9d9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: #fafafa;
+}
+
+.break-time-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.time-picker {
+  flex: 1;
+  border: 2rpx solid #d9d9d9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+  background: #fafafa;
+}
+
+.time-separator {
+  margin: 0 20rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+.color-picker {
+  display: flex;
+  gap: 20rpx;
+}
+
+.color-option {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  border: 4rpx solid transparent;
+  transition: transform 0.3s;
+}
+
+.color-option.selected {
+  transform: scale(1.2);
+  border-color: #333;
+}
+
+.form-textarea {
+  border: 2rpx solid #d9d9d9;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333;
+  background: #fafafa;
+  min-height: 120rpx;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 40rpx;
+  margin-top: 60rpx;
+}
+
+.btn-cancel, .btn-save {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.btn-cancel {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-save {
+  background: #1890ff;
+  color: white;
+}
+
+/* 工作安排列表 */
+.schedule-list {
+  background: white;
+  border-radius: 20rpx;
+  margin: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  width: 90%;
+}
+
+.section-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.schedule-item {
+  background: #fafafa;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  position: relative;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.schedule-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.schedule-time {
+  font-size: 26rpx;
+  color: #1890ff;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.schedule-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.schedule-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.schedule-repeat {
+  background: #f0f0f0;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.btn-delete {
+  background: #ff4d4f;
+  color: white;
+  border-radius: 20rpx;
+  padding: 0 20rpx;
+  font-size: 24rpx;
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 20rpx;
+  display: flex;
+  gap: 20rpx;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.btn-export, .btn-add {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.btn-export {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-add {
+  background: #1890ff;
+  color: white;
+}
+
+/* 已选日期横向滚动条样式 */
+.dates-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10rpx 0;
+}
+
+.date-tag {
+  display: inline-block;
+  background: #e6f7ff;
+  border: 1rpx solid #91d5ff;
+  border-radius: 20rpx;
+  padding: 8rpx 20rpx;
+  margin-right: 10rpx;
+  font-size: 24rpx;
+  color: #1890ff;
+  flex-shrink: 0;
+}
+
+/* 工作安排列表横向滚动 */
+.schedule-details {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10rpx 0;
+}
+
+.schedule-date, .schedule-break {
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+/* 选中的日期横向滚动 */
+.selected-dates {
+  background: #fafafa;
+  padding: 20rpx;
+  margin: 20rpx;
+  border-radius: 10rpx;
+  border: 1rpx solid #f0f0f0;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #666;
+  margin-right: 10rpx;
+}
+
+/* 日期范围选择弹窗样式 */
+.date-range-modal {
+  padding: 40rpx;
+  background-color: #fff;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.options-title {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.option-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
+  margin-bottom: 15rpx;
+}
+
+.option-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 10rpx;
+}
+
+/* 节假日配置样式 */
+.holiday-config {
+  margin: 30rpx 0;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+}
+
+.config-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.config-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.btn-mini {
+  margin: 0;
+  line-height: 1;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.holiday-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding: 15rpx;
+  background-color: #fff;
+  border-radius: 8rpx;
+}
+
+.holiday-date {
+  flex: 1;
+  font-size: 28rpx;
+  color: #1890ff;
+  padding: 10rpx 15rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 6rpx;
+  margin-right: 15rpx;
+}
+
+.holiday-name {
+  flex: 2;
+  font-size: 28rpx;
+  padding: 10rpx 15rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 6rpx;
+  margin-right: 15rpx;
+}
+
+.btn-delete-mini {
+  margin: 0;
+  line-height: 1;
+  padding: 10rpx 15rpx;
+  font-size: 24rpx;
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+
+.preview-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.preview-dates {
+  background-color: #f5f5f5;
+  padding: 20rpx;
+  border-radius: 8rpx;
+}
+
+.preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.preview-date-tag {
+  font-size: 24rpx;
+  color: #666;
+  padding: 8rpx 16rpx;
+  background-color: #e6f7ff;
+  border: 1rpx solid #91d5ff;
+  border-radius: 20rpx;
+}
+
+.preview-more {
+  font-size: 24rpx;
+  color: #999;
+  align-self: center;
+}
+
+/* 弹窗操作按钮 */
+.modal-actions {
+  display: flex;
+  gap: 30rpx;
+}
+
+.btn-modal-cancel,
+.btn-modal-confirm {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+}
+
+.btn-modal-cancel {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.btn-modal-confirm {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+/* 底部按钮样式 */
+.bottom-bar {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eee;
+}
+
+.btn-range {
+  background-color: #52c41a;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+.btn-export {
+  flex: 1;
+  background-color: #faad14;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+.btn-add {
+  flex: 1;
+  background-color: #1890ff;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .option-group {
+    flex-direction: column;
+  }
+  
+  .holiday-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .holiday-date,
+  .holiday-name {
+    margin-right: 0;
+    margin-bottom: 10rpx;
+  }
+  
+  .btn-delete-mini {
+    align-self: flex-end;
+  }
+}
+
+/* 日历编辑弹窗样式 */
+.calendar-edit-modal {
+  padding: 30rpx;
+  background-color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.selected-count {
+  font-size: 28rpx;
+  color: #1890ff;
+  background-color: #e6f7ff;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+
+.edit-calendar-nav .nav-btn {
+  font-size: 40rpx;
+  color: #1890ff;
+  padding: 0 30rpx;
+  cursor: pointer;
+}
+
+.edit-calendar-nav .current-month {
+  font-size: 34rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 编辑日历网格 */
+.edit-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2rpx;
+  background-color: #f0f0f0;
+  border: 1rpx solid #f0f0f0;
+  flex: 1;
+  min-height: 500rpx;
+}
+
+.edit-calendar-day {
+  background-color: #fff;
+  text-align: center;
+  position: relative;
+  min-height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-calendar-day.other-month {
+  background-color: #f9f9f9;
+}
+
+.edit-calendar-day.other-month .day-text {
+  color: #ccc;
+}
+
+.edit-calendar-day.selected {
+  background-color: #e6f7ff;
+  border: 2rpx solid #1890ff;
+}
+
+.edit-calendar-day.selected .day-text {
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.edit-calendar-day .day-text {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.edit-calendar-day .today-indicator {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  width: 12rpx;
+  height: 12rpx;
+  background-color: #f5222d;
+  border-radius: 50%;
+}
+
+/* 快速操作按钮 */
+.quick-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.btn-quick {
+  flex: 1;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 28rpx;
+}
+
+
+.selected-preview .preview-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  display: block;
+}
+
+.selected-dates-scroll {
+  background-color: #f9f9f9;
+  padding: 20rpx;
+  border-radius: 8rpx;
+}
+
+.selected-dates-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.selected-date-tag {
+  font-size: 26rpx;
+  color: #666;
+  padding: 8rpx 16rpx;
+  background-color: #f0f0f0;
+  border: 1rpx solid #ddd;
+  border-radius: 20rpx;
+}
+
+.empty-tip {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+  width: 100%;
+  padding: 20rpx;
+}
+
+/* 修改底部按钮样式 */
+.bottom-bar {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #eee;
+}
+
+.btn-range {
+  background-color: #52c41a;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 12px;
+}
+
+.btn-export {
+  flex: 1;
+  background-color: #faad14;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+.btn-add {
+  flex: 1;
+  background-color: #1890ff;
+  color: #fff;
+  border-radius: 8rpx;
+}
+
+/* 修改工作安排列表中的样式 */
+.schedule-date {
+  color: #1890ff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 28rpx;
+}
+
+.schedule-date:hover {
+  color: #40a9ff;
+}
+
+/* 时间编辑弹窗样式 */
+.time-edit-modal {
+  padding: 40rpx;
+  background-color: #fff;
+}
+
+.time-edit-modal .modal-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.time-edit-modal .current-time {
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  margin: 30rpx 0;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+
+.form-label {
+  font-size: 30rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
+.picker-text {
+  font-size: 30rpx;
+  color: #1890ff;
+  padding: 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  text-align: center;
+}
+
+/* 午休时间组 */
+.break-time-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.time-picker {
+  flex: 1;
+  font-size: 30rpx;
+  color: #1890ff;
+  padding: 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  text-align: center;
+}
+
+.time-separator {
+  font-size: 28rpx;
+  color: #666;
+  margin: 0 20rpx;
+}
+
+/* 工作安排列表中的可点击样式 */
+.schedule-time {
+  color: #1890ff;
+  cursor: pointer;
+  font-size: 26rpx;
+}
+
+.schedule-time:hover {
+  text-decoration: underline;
+}
+
+.schedule-break {
+  color: #1890ff;
+  cursor: pointer;
+  font-size: 26rpx;
+}
+
+.schedule-break:hover {
+  text-decoration: underline;
+}
+

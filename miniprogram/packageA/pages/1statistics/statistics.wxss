@@ -1,0 +1,603 @@
+/* pages/statistics/statistics.wxss */
+.container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+}
+
+.config-list {
+  background: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+  width: 90%;
+}
+
+.config-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.config-list-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  height: auto;
+  line-height: normal;
+}
+
+.config-item {
+  padding: 25rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  transition: all 0.3s;
+}
+
+.config-item.active {
+  border-color: #764ba2;
+  background-color: rgba(118, 75, 162, 0.05);
+}
+
+.config-info {
+  flex: 1;
+}
+
+.config-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.config-type {
+  font-size: 24rpx;
+  color: #666;
+  background: #f0f0f0;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  display: inline-block;
+}
+
+.config-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+.edit-btn {
+  background: #1890ff;
+  color: white;
+  border-radius: 15rpx;
+  font-size: 22rpx;
+  padding: 8rpx 15rpx;
+  height: auto;
+  line-height: normal;
+}
+
+.delete-btn {
+  background: #ff4d4f;
+  color: white;
+  border-radius: 15rpx;
+  font-size: 22rpx;
+  padding: 8rpx 15rpx;
+  height: auto;
+  line-height: normal;
+}
+
+.chart-area {
+  background: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.chart-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.chart-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+.refresh-btn {
+  background: #2fc25b;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  height: auto;
+  line-height: normal;
+}
+
+.export-btn {
+  background: #8543e0;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  height: auto;
+  line-height: normal;
+}
+
+.chart-container {
+  min-height: 400rpx;
+  background: #fafafa;
+  border-radius: 8rpx;
+  padding: 30rpx;
+}
+
+.chart-preview {
+  background: white;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  border: 1rpx solid #e8e8e8;
+}
+
+.preview-info {
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.preview-info text {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.text-chart {
+  background: #f9f9f9;
+  border-radius: 8rpx;
+  padding: 20rpx;
+}
+
+.text-chart-header {
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.text-chart-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.text-chart-row {
+  display: flex;
+  border-bottom: 1rpx solid #e0e0e0;
+  padding: 15rpx 0;
+}
+
+.text-chart-row.header-row {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.text-chart-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 26rpx;
+  color: #333;
+  padding: 0 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.no-chart-data {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.tips-card {
+  background: white;
+  border-radius: 12rpx;
+  padding: 40rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.08);
+}
+
+.tips-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 25rpx;
+}
+
+.tips-content {
+  margin-bottom: 30rpx;
+}
+
+.tips-content text {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+  padding-left: 20rpx;
+  position: relative;
+}
+
+.tips-content text::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #764ba2;
+}
+
+.create-btn {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  border-radius: 25rpx;
+  font-size: 30rpx;
+  padding: 25rpx;
+  width: 100%;
+}
+
+.add-field-btn {
+  background: #1890ff;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  height: auto;
+  line-height: normal;
+  width: 200rpx;
+}
+
+/* 模态框按钮样式 */
+.btn-primary {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  border-radius: 25rpx;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* pages/statistics/statistics.wxss */
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 图表容器样式 */
+.chart-container {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-top: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+/* Canvas 容器样式 */
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  background-color: #fafafa;
+}
+
+/* 文本预览区域样式 */
+.chart-preview {
+  margin-top: 40rpx;
+  border-top: 1rpx solid #f0f0f0;
+  padding-top: 30rpx;
+}
+
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  margin-bottom: 30rpx;
+}
+
+.preview-info text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 文本表格样式 */
+.text-chart {
+  margin-top: 20rpx;
+}
+
+.text-chart-header {
+  margin-bottom: 20rpx;
+}
+
+.text-chart-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.text-chart-row {
+  display: flex;
+  border-bottom: 1rpx solid #f0f0f0;
+  padding: 15rpx 0;
+}
+
+.header-row {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.text-chart-cell {
+  font-size: 24rpx;
+  color: #666;
+  padding: 0 10rpx;
+  text-align: center;
+}
+
+.no-chart-data {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 图表显示区域样式 */
+.chart-area {
+  background-color: white;
+  border-radius: 16rpx;
+  margin: 40rpx;
+  box-shadow: 0 10rpx 40rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-height: 600rpx;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 40rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background-color: #fafafa;
+}
+
+.chart-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.chart-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.refresh-btn,
+.export-btn {
+  padding: 15rpx 30rpx;
+  font-size: 26rpx;
+  border-radius: 8rpx;
+  background-color: #764ba2;
+  color: white;
+  border: none;
+}
+
+.refresh-btn:active,
+.export-btn:active {
+  background-color: #5a3b7c;
+  transform: scale(0.98);
+}
+
+/* 图表滚动容器 */
+.chart-scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-anchor: auto;
+}
+
+.chart-container {
+  padding: 40rpx;
+}
+
+/* Canvas 容器 */
+.canvas-container {
+  width: 100%;
+  min-height: 500rpx;
+  margin-bottom: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 12rpx;
+  padding: 30rpx 20rpx;
+  box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 预览信息 */
+.preview-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  background-color: #f9f9f9;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  margin-bottom: 40rpx;
+  border-left: 4rpx solid #764ba2;
+}
+
+.preview-info text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 文本图表 */
+.text-chart {
+  background-color: white;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  border: 1rpx solid #f0f0f0;
+  box-shadow: 0 5rpx 15rpx rgba(0, 0, 0, 0.03);
+}
+
+.text-chart-header {
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.text-chart-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.text-chart-row {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  transition: background-color 0.3s;
+}
+
+.text-chart-row:hover {
+  background-color: #f9f9f9;
+}
+
+.header-row {
+  background-color: #764ba2;
+  color: white;
+  border-radius: 8rpx 8rpx 0 0;
+}
+
+.text-chart-cell {
+  padding: 20rpx 15rpx;
+  border-bottom: 1rpx solid #eee;
+  border-right: 1rpx solid #eee;
+  text-align: center;
+  min-width: 150rpx;
+  flex-shrink: 0;
+  font-size: 24rpx;
+  word-break: break-all;
+}
+
+.header-row .text-chart-cell {
+  border-bottom: none;
+  border-right: 1rpx solid rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+}
+
+.header-row .text-chart-cell:last-child {
+  border-right: none;
+}
+
+.text-chart-row:last-child .text-chart-cell {
+  border-bottom: none;
+}
+
+.no-chart-data {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  font-size: 28rpx;
+  color: #999;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  border: 1rpx dashed #ddd;
+}
+
+/* 底部提示 */
+.chart-bottom-tips {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 24rpx;
+  border-top: 1rpx solid #f0f0f0;
+  margin-top: 20rpx;
+  background-color: #fafafa;
+  border-radius: 0 0 12rpx 12rpx;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 750rpx) {
+  .chart-area {
+    margin: 20rpx;
+    border-radius: 12rpx;
+  }
+  
+  .chart-header {
+    padding: 25rpx 30rpx;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20rpx;
+  }
+  
+  .chart-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .chart-container {
+    padding: 30rpx 20rpx;
+  }
+  
+  .canvas-container {
+    padding: 20rpx 10rpx;
+  }
+  
+  .text-chart-cell {
+    min-width: 120rpx;
+    padding: 15rpx 10rpx;
+    font-size: 22rpx;
+  }
+}

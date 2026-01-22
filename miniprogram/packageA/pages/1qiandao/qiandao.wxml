@@ -1,0 +1,274 @@
+<view class="container">
+  <!-- 用户信息输入 -->
+  <view class="input-section">
+    <view class="form-group">
+      <text class="form-label">部门</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入部门名称" 
+        value="{{department}}" 
+        bindinput="onDepartmentInput"
+      />
+    </view>
+    
+    <view class="form-group">
+      <text class="form-label">姓名</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入您的姓名" 
+        value="{{userName}}" 
+        bindinput="onUserNameInput"
+      />
+    </view>
+    
+    <button 
+      class="btn-save-userinfo" 
+      bindtap="saveUserInfo"
+      hover-class="btn-hover"
+    >
+      保存个人信息
+    </button>
+  </view>
+
+  <!-- 清空当天签到数据 -->
+<!-- <view class="debug-section">
+  <view class="debug-buttons">
+    <button 
+      class="btn-debug" 
+      size="mini" 
+      bindtap="clearTodayData"
+      hover-class="btn-hover"
+    >
+      清空今日数据
+    </button> 
+  </view>
+</view> -->
+
+  <!-- 当前时间显示 -->
+  <view class="time-display">
+    <text class="current-date">{{currentDate}}</text>
+    <text class="current-time">{{currentTime}}</text>
+  </view>
+
+  <!-- 打卡操作区域 -->
+  <view class="punch-section">
+    <view class="punch-buttons">
+      <!-- 签到按钮 -->
+      <button 
+        class="btn-punch {{signInDisabled ? 'disabled' : ''}}"
+        type="primary"
+        bindtap="signIn"
+        disabled="{{signInDisabled}}"
+        hover-class="btn-hover"
+      >
+        <text class="punch-icon">📝</text>
+        <text>签到</text>
+        <text wx:if="{{signInTime}}" class="punch-time">{{signInTime}}</text>
+      </button>
+      
+      <!-- 签退按钮 -->
+      <button 
+        class="btn-punch {{signOutDisabled ? 'disabled' : ''}}"
+        type="warn"
+        bindtap="signOut"
+        disabled="{{signOutDisabled}}"
+        hover-class="btn-hover"
+      >
+        <text class="punch-icon">✅</text>
+        <text>签退</text>
+        <text wx:if="{{signOutTime}}" class="punch-time">{{signOutTime}}</text>
+      </button>
+    </view>
+    
+  </view>
+
+  <!-- 打卡记录 -->
+  <view class="records-section">
+    <view class="section-header">
+      <text class="section-title">今日打卡记录</text>
+      <!-- <text class="refresh-btn" bindtap="refreshRecords">刷新</text> -->
+    </view>
+    
+    <view wx:if="{{todayRecords.length > 0}}" class="records-list">
+      <block wx:for="{{todayRecords}}" wx:key="index">
+        <view class="record-item">
+          <text class="record-type {{item.type === 'signIn' ? 'sign-in' : 'sign-out'}}">
+            {{item.type === 'signIn' ? '签到' : '签退'}}
+          </text>
+          <text class="record-time">{{item.time}}</text>
+          <text class="record-status {{item.isValid ? 'valid' : 'invalid'}}">
+            {{item.isValid ? '正常' : '异常'}}
+          </text>
+          <text class="record-message">{{item.message}}</text>
+        </view>
+      </block>
+    </view>
+    
+    <view wx:else class="empty-records">
+      <text>暂无打卡记录</text>
+    </view>
+  </view>
+
+  <!-- 工作安排信息 -->
+  <view wx:if="{{workSchedule}}" class="schedule-info">
+    <view class="section-header">
+      <text class="section-title">今日工作安排</text>
+    </view>
+    
+    <view class="schedule-detail">
+      <view class="schedule-row">
+        <text class="schedule-label">排班：</text>
+        <text class="schedule-value">{{workSchedule.schedule_title}}</text>
+      </view>
+      
+      <view class="schedule-row">
+        <text class="schedule-label">工作时间：</text>
+        <text class="schedule-value">{{workSchedule.gongzuoshijianks}} - {{workSchedule.gongzuoshijianjs}}</text>
+      </view>
+      
+      <view class="schedule-row">
+        <text class="schedule-label">午休时间：</text>
+        <text class="schedule-value">{{workSchedule.wuxiushijianks}} - {{workSchedule.wuxiushijianjs}}</text>
+      </view>
+      
+      <view class="schedule-row">
+        <text class="schedule-label">应到日期：</text>
+        <text class="schedule-value">{{workSchedule.work_days ? workSchedule.work_days.length : 0}}天</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 请假申请模块 -->
+<view class="leave-section">
+  <view class="section-header">
+    <text class="section-title">请假申请</text>
+    <button 
+      class="btn-leave-apply" 
+      size="mini" 
+      bindtap="showLeaveApplication"
+      hover-class="btn-hover"
+    >
+      申请请假
+    </button>
+  </view>
+  
+  <!-- 最近请假结果提示 -->
+  <view wx:if="{{latestLeaveResult}}" class="leave-result-toast">
+    <text>{{latestLeaveResult.message}}</text>
+  </view>
+  
+  <!-- 我的请假记录 -->
+  <view wx:if="{{myLeaveRecords.length > 0}}" class="leave-records">
+    <view class="leave-records-header">
+      <text class="leave-record-header-cell" style="width: 25%;">请假时间</text>
+      <text class="leave-record-header-cell" style="width: 20%;">天数</text>
+      <text class="leave-record-header-cell" style="width: 30%;">原因</text>
+      <text class="leave-record-header-cell" style="width: 20%;">状态</text>
+    </view>
+    
+    <view class="leave-records-list">
+      <block wx:for="{{myLeaveRecords}}" wx:key="id">
+        <view class="leave-record-item">
+          <text class="leave-record-cell" style="width: 25%;">
+            <text>{{item.qsqingjiashijian}}</text>
+            <text>{{item.jzqingjiashijan}}</text>
+          </text>
+          <text class="leave-record-cell" style="width: 20%;">{{item.daysCount || 0}}天</text>
+          <text class="leave-record-cell" style="width: 30%;">{{item.qingjiayuanyin || '--'}}</text>
+          <text class="leave-record-cell" style="width: 20%; color: {{item.statusColor}};">
+            {{item.zhuangtai || '待审批'}}
+          </text>
+        </view>
+      </block>
+    </view>
+  </view>
+  
+  <view wx:else class="empty-leave-records">
+    <text>暂无请假记录</text>
+  </view>
+</view>
+
+<!-- 请假申请弹窗 -->
+<view wx:if="{{leaveApplication.visible}}" class="modal-overlay">
+  <view class="modal-container">
+    <view class="modal-header">
+      <text class="modal-title">请假申请</text>
+      <text class="modal-close" bindtap="hideLeaveApplication">×</text>
+    </view>
+    
+    <view class="modal-content">
+      <view class="form-group">
+        <text class="form-label">请假开始日期</text>
+        <picker 
+          mode="date" 
+          value="{{leaveApplication.startDate}}" 
+          bindchange="onLeaveStartDateChange"
+        >
+          <view class="picker-input">
+            {{leaveApplication.startDate || '请选择开始日期'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">请假结束日期</text>
+        <picker 
+          mode="date" 
+          value="{{leaveApplication.endDate}}" 
+          bindchange="onLeaveEndDateChange"
+        >
+          <view class="picker-input">
+            {{leaveApplication.endDate || '请选择结束日期'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">请假原因</text>
+        <textarea 
+          class="textarea-input" 
+          placeholder="请输入请假原因"
+          value="{{leaveApplication.reason}}"
+          bindinput="onLeaveReasonInput"
+          maxlength="500"
+          auto-height
+        />
+      </view>
+      
+      <view class="form-group">
+        <text class="form-label">申请信息</text>
+        <view class="info-display">
+          <text>申请人：{{userName}}</text>
+          <text>部门：{{department}}</text>
+          <text>公司：{{companyName}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="modal-footer">
+      <button 
+        class="btn-modal btn-modal-cancel" 
+        bindtap="hideLeaveApplication"
+        hover-class="btn-hover"
+      >
+        取消
+      </button>
+      <button 
+        class="btn-modal btn-modal-submit" 
+        type="primary" 
+        bindtap="submitLeaveApplication"
+        loading="{{leaveApplication.submitting}}"
+        disabled="{{leaveApplication.submitting}}"
+        hover-class="btn-hover"
+      >
+        {{leaveApplication.submitting ? '提交中...' : '提交申请'}}
+      </button>
+    </view>
+  </view>
+</view>
+
+  <!-- 消息提示 -->
+  <view wx:if="{{message}}" class="message-toast {{message.type}}">
+    <text>{{message.text}}</text>
+  </view>
+</view>

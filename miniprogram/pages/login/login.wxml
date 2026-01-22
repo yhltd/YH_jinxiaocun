@@ -1,5 +1,8 @@
 <view class="top-bgimage" style="height: 100%;display: grid;">
-<view bindtap="goyh" style="color:black;font-size: 32rpx;padding-left: 10dp;">版本号：5.1.0.67k</view>
+<view bindtap="goyh" style="color:black;font-size: 32rpx;padding-left: 10dp;display: flex;justify-content: space-between;padding: 0 5px;">
+  <text>点击探索云合完整世界</text>
+  <text>版本号：5.1.0.68k</text>
+</view>
   <!-- <image class="top-bgimage" src="../../images/bgimage.jpg"></image> -->
   <view class="container">
     <div class="rotating-mask"></div>

@@ -93,7 +93,18 @@
         "pages/1baopan_shenpi_edit/baopan_shenpi_edit",
         "pages/1baopan_shenpi/baopan_shenpi",
         "pages/1shengri_tixing/shengri_tixing",
-        "pages/gerenzhongxin/gerenzhongxin"
+        "pages/gerenzhongxin/gerenzhongxin",
+        "pages/1gongzuoshijian/gongzuoshijian",
+        "pages/1shenfenpeizhi/shenfenpeizhi",
+        "pages/1qiandao/qiandao",
+        "pages/1qingjiashenpi/qingjiashenpi",
+        "pages/1dongtaigzmingxi/dongtaigzmingxi",
+        "pages/1jianliguanli/jianliguanli",
+        "pages/1jianlishenpi/jianlishenpi",
+        "pages/1mianshiguanli/mianshiguanli",
+        "pages/1lizhishenpi/lizhishenpi",
+        "pages/1lizhishenqing/lizhishenqing",
+        "pages/1statistics/statistics"
       ]
     },
     {

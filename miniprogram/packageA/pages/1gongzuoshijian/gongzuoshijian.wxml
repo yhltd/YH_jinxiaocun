@@ -1,0 +1,391 @@
+<view class="container">
+  <!-- 日历头部 -->
+  <view class="calendar-header">
+    <view class="calendar-nav">
+      <text class="nav-btn" bindtap="prevMonth">‹</text>
+      <text class="current-month">{{currentYear}}年{{currentMonth}}月</text>
+      <text class="nav-btn" bindtap="nextMonth">›</text>
+    </view>
+    <view class="week-header">
+      <text class="week-day">一</text>
+      <text class="week-day">二</text>
+      <text class="week-day">三</text>
+      <text class="week-day">四</text>
+      <text class="week-day">五</text>
+      <text class="week-day">六</text>
+      <text class="week-day">日</text>
+    </view>
+  </view>
+
+  <!-- 日历网格 -->
+  <view class="calendar-grid">
+    <block wx:for="{{calendarDays}}" wx:key="index">
+      <view 
+        class="calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isToday ? 'today' : ''}} {{item.isSelected ? 'selected' : ''}} {{item.hasSchedule ? 'has-schedule' : ''}}"
+        bindtap="selectDate"
+        data-index="{{index}}"
+        data-datestr="{{item.dateStr}}"
+      >
+        <text class="day-text">{{item.day}}</text>
+        <text wx:if="{{item.hasSchedule}}" class="schedule-dot"></text>
+        <text wx:if="{{item.scheduleCount > 1}}" class="schedule-count">{{item.scheduleCount}}</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 选中的日期 -->
+  <view wx:if="{{selectedDates.length > 0}}" class="selected-dates">
+    <text class="label">已选日期：</text>
+    <scroll-view scroll-x class="dates-scroll">
+      <block wx:for="{{selectedDates}}" wx:key="index">
+        <text class="date-tag">{{item}}</text>
+      </block>
+    </scroll-view>
+  </view>
+
+  <!-- 时间设置面板 -->
+  <view wx:if="{{showTimePicker}}" class="time-panel">
+    <view class="panel-title">工作时间设置</view>
+    
+    <!-- 部门 -->
+    <view class="form-group">
+      <text class="form-label">部门</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入部门" 
+        value="{{scheduleTitle}}" 
+        bindinput="onScheduleTitleInput"
+      />
+    </view>
+
+    <!-- 时间范围 -->
+    <view class="form-group">
+      <text class="form-label">工作时间</text>
+      <picker 
+        mode="multiSelector" 
+        range="{{timeRanges}}" 
+        value="{{timeIndex}}" 
+        bindchange="onTimeChange"
+      >
+        <view class="picker-text">{{startTime}} - {{endTime}}</view>
+      </picker>
+    </view>
+
+    <!-- 午休时间 -->
+    <view class="form-group">
+      <text class="form-label">午休时间</text>
+      <view class="break-time-group">
+        <picker 
+          mode="time" 
+          value="{{breakStart}}" 
+          bindchange="onBreakChange"
+          data-field="breakStart"
+        >
+          <view class="time-picker">{{breakStart}}</view>
+        </picker>
+        <text class="time-separator">至</text>
+        <picker 
+          mode="time" 
+          value="{{breakEnd}}" 
+          bindchange="onBreakChange"
+          data-field="breakEnd"
+        >
+          <view class="time-picker">{{breakEnd}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="btn-cancel" bindtap="resetForm">取消</button>
+      <button class="btn-save" type="primary" bindtap="saveSchedule">保存安排</button>
+    </view>
+  </view>
+
+  <!-- 时间编辑弹窗 -->
+<tui-modal 
+  show="{{showTimeEditModal}}" 
+  bind:cancel="hideTimeEditModal" 
+  custom="{{true}}" 
+  fadein="{{true}}"
+  width="90%"
+>
+  <view class="time-edit-modal">
+    <view class="modal-title">
+      {{timeEditField === 'gongzuoshijian' ? '编辑工作时间' : '编辑午休时间'}}
+    </view>
+    
+    <!-- 工作时间编辑（使用多列选择器） -->
+    <view wx:if="{{timeEditField === 'gongzuoshijian'}}" class="form-group">
+      <text class="form-label">工作时间</text>
+      <picker 
+        mode="multiSelector" 
+        range="{{editTimeRanges}}" 
+        value="{{editTimeIndex}}" 
+        bindchange="onEditTimeChange"
+      >
+        <view class="picker-text">{{timeEditStart}} - {{timeEditEnd}}</view>
+      </picker>
+    </view>
+    
+    <!-- 午休时间编辑（使用两个独立的时间选择器） -->
+    <view wx:if="{{timeEditField === 'wuxiushijian'}}" class="form-group">
+      <text class="form-label">午休时间</text>
+      <view class="break-time-group">
+        <picker 
+          mode="time" 
+          value="{{timeEditStart}}" 
+          bindchange="onEditBreakChange"
+          data-field="breakStart"
+        >
+          <view class="time-picker">{{timeEditStart}}</view>
+        </picker>
+        <text class="time-separator">至</text>
+        <picker 
+          mode="time" 
+          value="{{timeEditEnd}}" 
+          bindchange="onEditBreakChange"
+          data-field="breakEnd"
+        >
+          <view class="time-picker">{{timeEditEnd}}</view>
+        </picker>
+      </view>
+    </view>
+    
+    <!-- 当前时间显示 -->
+    <view class="current-time">
+      <text>当前时间：{{timeEditStart}} - {{timeEditEnd}}</text>
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view class="modal-actions">
+      <button class="btn-modal-cancel" bindtap="hideTimeEditModal">取消</button>
+      <button class="btn-modal-save" type="primary" bindtap="saveTimeEdit">保存修改</button>
+    </view>
+  </view>
+</tui-modal>
+
+  <!-- 工作安排列表 -->
+<view class="schedule-list">
+  <view class="section-title">工作安排列表</view>
+  <block wx:for="{{scheduleList}}" wx:key="id">
+    <view class="schedule-item" style="border-left: 6rpx solid {{item.schedule_color}};">
+      <view class="schedule-header">
+        <text class="schedule-title">{{item.schedule_title}}</text>
+        <!-- 修改：工作时间变为可点击编辑 -->
+        <text class="schedule-time" bindtap="editSchedule" data-schedule="{{item}}" data-field="gongzuoshijian">
+          {{item.gongzuoshijianks}} - {{item.gongzuoshijianjs}}
+        </text>
+      </view>
+      
+      <view class="schedule-details">
+        <!-- 修改：日期编辑 -->
+        <text class="schedule-date" bindtap="editSchedule" data-schedule="{{item}}" data-field="work_days">
+          📅 点击编辑日期（{{item.work_days && item.work_days.length ? item.work_days.length : 0}}天）
+        </text>
+        <!-- 修改：午休时间变为可点击编辑 -->
+        <text class="schedule-break" bindtap="editSchedule" data-schedule="{{item}}" data-field="wuxiushijian">
+          午休：{{item.wuxiushijianks}} - {{item.wuxiushijianjs}}
+        </text>
+      </view>
+      
+      <view class="schedule-footer">
+        <text class="schedule-repeat">{{getRepeatLabel(item.repeat_type)}}</text>
+        <button class="btn-delete" size="mini" bindtap="deleteSchedule" data-id="{{item.id}}">删除</button>
+      </view>
+    </view>
+  </block>
+</view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <button class="btn-range" bindtap="showDateRangeModal">日期范围选择</button>
+    <button class="btn-export" bindtap="exportExcel">导出Excel</button>
+    <button class="btn-add" type="primary" bindtap="toggleTimePicker">
+      {{showTimePicker ? '收起设置' : '新建安排'}}
+    </button>
+  </view>
+
+  <!-- 日期范围选择弹窗 -->
+  <tui-modal 
+    show="{{showDateRangeModal}}" 
+    bind:cancel="hideDateRangeModal" 
+    custom="{{true}}" 
+    fadein="{{true}}"
+    width="90%"
+  >
+    <view class="date-range-modal">
+      <view class="modal-title">选择日期范围</view>
+      
+      <!-- 起始日期 -->
+      <view class="form-group">
+        <text class="form-label">起始日期</text>
+        <picker 
+          mode="date" 
+          value="{{rangeStartDate}}" 
+          bindchange="onRangeStartChange"
+        >
+          <view class="picker-text">{{rangeStartDate}}</view>
+        </picker>
+      </view>
+      
+      <!-- 截止日期 -->
+      <view class="form-group">
+        <text class="form-label">截止日期</text>
+        <picker 
+          mode="date" 
+          value="{{rangeEndDate}}" 
+          bindchange="onRangeEndChange"
+        >
+          <view class="picker-text">{{rangeEndDate}}</view>
+        </picker>
+      </view>
+      
+      <!-- 日期筛选选项 -->
+      <view class="filter-options">
+        <text class="options-title">日期筛选：</text>
+        <view class="option-group">
+          <radio-group bindchange="onFilterOptionChange">
+            <view class="option-item">
+              <radio value="all" checked="{{filterOption === 'all'}}" color="#1890ff" />
+              <text class="option-label">全选</text>
+            </view>
+            <view class="option-item">
+              <radio value="excludeSat" checked="{{filterOption === 'excludeSat'}}" color="#1890ff" />
+              <text class="option-label">排除周六</text>
+            </view>
+            <view class="option-item">
+              <radio value="excludeSun" checked="{{filterOption === 'excludeSun'}}" color="#1890ff" />
+              <text class="option-label">排除周日</text>
+            </view>
+            <view class="option-item">
+              <radio value="weekends" checked="{{filterOption === 'weekends'}}" color="#1890ff" />
+              <text class="option-label">仅双休日</text>
+            </view>
+            <view class="option-item">
+              <radio value="weekdays" checked="{{filterOption === 'weekdays'}}" color="#1890ff" />
+              <text class="option-label">仅工作日</text>
+            </view>
+          </radio-group>
+        </view>
+      </view>
+      
+      <!-- 预览区域 -->
+      <view class="preview-section">
+        <text class="preview-title">预览（共 {{filteredDates.length}} 天）：</text>
+        <scroll-view scroll-y class="preview-dates" style="max-height: 200rpx;">
+          <view class="preview-grid">
+            <block wx:for="{{filteredDates}}" wx:for-item="date" wx:key="index">
+              <text class="preview-date-tag">{{date}}</text>
+            </block>
+            <text wx:if="{{filteredDates.length > 30}}" class="preview-more">...等{{filteredDates.length}}天</text>
+          </view>
+        </scroll-view>
+      </view>
+      
+      <!-- 操作按钮 -->
+      <view class="modal-actions">
+        <button class="btn-modal-cancel" bindtap="hideDateRangeModal">取消</button>
+        <button class="btn-modal-confirm" type="primary" bindtap="applyDateRange">确定</button>
+      </view>
+    </view>
+  </tui-modal>
+
+  <!-- 日历编辑弹窗 -->
+  <tui-modal 
+    show="{{showCalendarEditModal}}" 
+    bind:cancel="hideCalendarEditModal" 
+    custom="{{true}}" 
+    fadein="{{true}}"
+    width="90%"
+    height="80%"
+  >
+    <view class="calendar-edit-modal">
+      <view class="modal-header">
+        <text class="modal-title">编辑工作日期 - {{editScheduleData ? editScheduleData.schedule_title : ''}}</text>
+        <text class="selected-count">已选：{{editSelectedDates.length}}天</text>
+      </view>
+      
+      <!-- 编辑日历导航 -->
+      <view class="calendar-nav edit-calendar-nav">
+        <text class="nav-btn" bindtap="prevEditMonth">‹</text>
+        <text class="current-month">{{editCalendarYear}}年{{editCalendarMonth}}月</text>
+        <text class="nav-btn" bindtap="nextEditMonth">›</text>
+      </view>
+      
+      <!-- 编辑日历星期头部 -->
+      <view class="week-header">
+        <text class="week-day">一</text>
+        <text class="week-day">二</text>
+        <text class="week-day">三</text>
+        <text class="week-day">四</text>
+        <text class="week-day">五</text>
+        <text class="week-day">六</text>
+        <text class="week-day">日</text>
+      </view>
+      
+      <!-- 编辑日历网格 -->
+      <view class="edit-calendar-grid">
+        <block wx:for="{{editCalendarDays}}" wx:key="index">
+          <view 
+            class="edit-calendar-day {{item.isCurrentMonth ? 'current-month' : 'other-month'}} {{item.isSelected ? 'selected' : ''}}"
+            bindtap="selectEditDate"
+            data-index="{{index}}"
+            data-datestr="{{item.dateStr}}"
+          >
+            <text class="day-text">{{item.day}}</text>
+          </view>
+        </block>
+      </view>
+      
+      <!-- 快速操作按钮 -->
+      <view class="quick-actions">
+        <button class="btn-quick" size="mini" bindtap="selectAllInEditCalendar">全选本月</button>
+        <button class="btn-quick" size="mini" bindtap="clearAllInEditCalendar">清空选择</button>
+      </view>
+      
+      <!-- 已选日期预览 -->
+      <view class="selected-preview">
+        <text class="preview-title">已选日期：</text>
+        <scroll-view scroll-y class="selected-dates-scroll" style="max-height: 150rpx;">
+          <view class="selected-dates-grid">
+            <block wx:for="{{editSelectedDates}}" wx:key="index">
+              <text class="selected-date-tag">{{item}}</text>
+            </block>
+            <text wx:if="{{editSelectedDates.length === 0}}" class="empty-tip">暂无选择日期</text>
+          </view>
+        </scroll-view>
+      </view>
+      
+      <!-- 操作按钮 -->
+      <view class="modal-actions">
+        <button class="btn-modal-cancel" bindtap="hideCalendarEditModal">取消</button>
+        <button class="btn-modal-save" type="primary" bindtap="saveCalendarEdit">保存修改</button>
+      </view>
+    </view>
+  </tui-modal>
+
+  <!-- 编辑弹窗 -->
+  <tui-modal show="{{showEditModal}}" bind:cancel="hideEditModal" custom="{{true}}" fadein="{{true}}">
+    <view style="text-align: center; padding: 40rpx;">
+      <view style="padding-bottom: 30rpx; font-size: 34rpx; color: #333;">修改内容</view>
+      <form bindsubmit="saveEdit">
+        <input 
+          name="value" 
+          type="text" 
+          placeholder="{{editData[editField]}}"
+          style="margin: 30rpx 40rpx; border-bottom: 1rpx solid #e6e6e6; padding-bottom: 20rpx; font-size: 32rpx;"
+          value="{{editData[editField]}}"
+        />
+        <button 
+          form-type="submit" 
+          style="width:75%; margin-top: 30rpx;" 
+          class="btn-primary" 
+          hover-class="btn-hover"
+        >
+          提交修改
+        </button>
+      </form>
+    </view>
+  </tui-modal>
+</view>

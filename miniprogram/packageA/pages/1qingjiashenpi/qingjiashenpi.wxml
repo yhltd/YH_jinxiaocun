@@ -1,0 +1,196 @@
+<tui-datetime id="tui-dateTime-ctx" type="{{type}}" startYear="{{startYear}}" endYear="{{endYear}}" cancelColor="{{cancelColor}}" color="{{color}}" setDateTime="{{setDateTime}}" bindconfirm="change"></tui-datetime>
+
+<!--可输入遮罩层-->
+<tui-modal show="{{modal9}}" bind:cancel="hide9" custom="{{true}}" fadein="{{true}}">
+  <view bindsubmit="edit_cell" style="text-align: center;">
+    <view style="padding-bottom: 20rpx; font-size: 34rpx;">修改</view>
+    <form bindsubmit="edit_cell">
+      <input name="value" type="{{input_type}}" placeholder="{{edit_old}}" style="margin: 30rpx 40rpx;border-bottom: 1rpx solid #e6e6e6;padding-bottom: 20rpx;font-size: 32rpx;" value="{{edit_old}}"/>
+      <button form-type="submit" bindtap="hide9" bind:click="hide9" style="width:75%" class="btn-primary" hover-class="btn-hover" type="small">提交</button>
+    </form>
+  </view>
+</tui-modal>
+
+<!--标题栏-->
+<scroll-view scroll-x="true" scroll-y="true" class='scrollClass'>
+  <view class='table'>
+    <!-- 表头改为8列，对应请假审批表的8个字段 -->
+    <view class='table_header'>
+      <view class="th" style="width: 100rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">序号</text>
+        </view>
+      </view>
+      <view class="th" style="width: 220rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">部门</text>
+        </view>
+      </view>
+      <view class="th" style="width: 220rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">员工名称</text>
+        </view>
+      </view>
+      <view class="th" style="width: 300rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">申请时间</text>
+        </view>
+      </view>
+      <view class="th" style="width: 300rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">起始请假日期</text>
+        </view>
+      </view>
+      <view class="th" style="width: 300rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">截止请假日期</text>
+        </view>
+      </view>
+      <view class="th" style="width: 400rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">请假原因</text>
+        </view>
+      </view>
+      <view class="th" style="width: 240rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">审批状态</text>
+        </view>
+      </view>
+      <view class="th" style="width: 400rpx;">
+        <view class="cell_label_header centerclass">
+          <text style="font-weight:bold;">审批原因</text>
+        </view>
+      </view>
+    </view>
+
+    <!--内容行：绑定请假审批表的8个字段 -->
+  <block wx:for="{{list}}" wx:key="id" wx:for-index="idx">
+    <view class='table_main'>
+      <!-- 序号列 -->
+      <view class='td' style='width:100rpx;'>
+        <view class="cell_label centerclass" 
+              bindtap="click_delete" 
+              data-dbid="{{item.id}}" 
+              data-id="{{idx+1}}">
+          {{idx+1}}
+        </view>
+      </view>
+      
+      <!-- 部门列 -->
+      <view class='td' style='width:220rpx;'>
+        <view class="cell_label centerclass" 
+              bindtap="click_edit" 
+              data-id='{{item.id}}' 
+              data-type="text" 
+              data-x="{{item.bumen || ''}}" 
+              data-doinb='bumen'>
+          {{item.bumen || ''}}
+        </view>
+      </view>
+      
+      <!-- 员工名称列 -->
+      <view class='td' style='width:220rpx;'>
+        <view class="cell_label centerclass" 
+              bindtap="click_edit" 
+              data-id='{{item.id}}' 
+              data-type="text" 
+              data-x="{{item.xingming || ''}}" 
+              data-doinb='xingming'>
+          {{item.xingming || ''}}
+        </view>
+      </view>
+      
+      <!-- 申请时间列（日期字段） -->
+<view class='td' style='width:300rpx;'>
+  <view class="cell_label centerclass" 
+        bindtap="showDatePicker" 
+        data-id='{{item.id}}' 
+        data-field="tijiaoshijian" 
+        data-value="{{item.tijiaoshijian || ''}}">
+    {{item.tijiaoshijian || ''}}
+  </view>
+</view>
+
+<!-- 起始请假日期列（日期字段） -->
+<view class='td' style='width:300rpx;'>
+  <view class="cell_label centerclass" 
+        bindtap="showDatePicker" 
+        data-id='{{item.id}}' 
+        data-field="qsqingjiashijian" 
+        data-value="{{item.qsqingjiashijian || ''}}">
+    {{item.qsqingjiashijian || ''}}
+  </view>
+</view>
+
+<!-- 截止请假日期列（日期字段） -->
+<view class='td' style='width:300rpx;'>
+  <view class="cell_label centerclass" 
+        bindtap="showDatePicker" 
+        data-id='{{item.id}}' 
+        data-field="jzqingjiashijan" 
+        data-value="{{item.jzqingjiashijan || ''}}">
+    {{item.jzqingjiashijan || ''}}
+  </view>
+</view>
+      
+      <!-- 请假原因列 -->
+      <view class='td' style='width:400rpx;'>
+        <view class="cell_label centerclass" 
+              bindtap="click_edit" 
+              data-id='{{item.id}}' 
+              data-type="text" 
+              data-x="{{item.qingjiayuanyin || ''}}" 
+              data-doinb='qingjiayuanyin'>
+          {{item.qingjiayuanyin || ''}}
+        </view>
+      </view>
+      
+      <!-- 审批状态列 -->
+      <view class='td' style='width:240rpx;'>
+        <view class="cell_label centerclass" 
+              bindtap="showStatusPickerDirect" 
+              data-id='{{item.id}}' 
+              data-field="zhuangtai" 
+              data-value="{{item.zhuangtai || '待审批'}}">
+          {{item.zhuangtai || '待审批'}}
+        </view>
+      </view>
+      
+      <!-- 审批原因列 -->
+      <view class='td' style='width:400rpx;'>
+        <view class="cell_label centerclass" 
+              bindtap="click_edit" 
+              data-id='{{item.id}}' 
+              data-type="text" 
+              data-x="{{item.shenpiyuanyin || ''}}" 
+              data-doinb='shenpiyuanyin'>
+          {{item.shenpiyuanyin || ''}}
+        </view>
+      </view>
+    </view>
+  </block>
+  </view>
+</scroll-view>
+
+<!--底部操作区-->
+<view class="down">
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="lastpage">上一页</button>
+    <view style="width:5%"></view>
+    <button class="pageButton_page" hover-class="pageButton_page-hover" bindtap="">{{page}}/{{maxpagenumber}} </button>
+    <view style="width:5%"></view>
+    <button class="pageButton" hover-class="pageButton-hover" bindtap="nextpage">下一页</button>
+    <view style="width:5%"></view>
+  </view>
+
+  <view style="height:20rpx"></view>
+
+  <view style="display: inline-flex; flex-direction: row;">
+    <view style="width:5%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="getExcel">导出Excel</button>
+    <view style="width:10%"></view>
+    <button class="btn-primary" hover-class="btn-hover" bindtap="showM">添加请假记录</button>
+    <view style="width:5%"></view>
+  </view>
+</view>

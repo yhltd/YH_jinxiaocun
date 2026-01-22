@@ -1,0 +1,524 @@
+/* packageA/pages/1qiandao/qiandao.wxss *//* pages/punch/punch.wxss */
+.container {
+  padding: 30rpx;
+  background: linear-gradient(180deg, #f5f7fa 0%, #e4e8f0 100%);
+  min-height: 100vh;
+}
+
+/* 输入区域 */
+.input-section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+  width: 90%;
+}
+
+.form-group {
+  margin-bottom: 40rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 20rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  height: 80rpx;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+}
+
+.btn-save-userinfo {
+  background: #1890ff;
+  color: white;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  margin-top: 20rpx;
+}
+
+/* 时间显示 */
+.time-display {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  text-align: center;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+  width: 90%;
+}
+
+.current-date {
+  display: block;
+  font-size: 40rpx;
+  color: #1890ff;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.current-time {
+  display: block;
+  font-size: 56rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 打卡区域 */
+.punch-section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+  width: 90%;
+}
+
+.punch-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-punch {
+  flex: 1;
+  border-radius: 20rpx;
+  font-size: 36rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15rpx;
+  position: relative;
+}
+
+.btn-punch.disabled {
+  opacity: 0.5;
+}
+
+.punch-icon {
+  font-size: 48rpx;
+}
+
+.punch-time {
+  font-size: 24rpx;
+  margin-top: 8rpx;
+  opacity: 0.9;
+}
+
+.today-status {
+  text-align: center;
+  padding-top: 20rpx;
+  border-top: 2rpx solid #f0f0f0;
+}
+
+.status-title {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.status-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 20rpx;
+}
+
+.status-text.green {
+  color: #52c41a;
+}
+
+.status-text.orange {
+  color: #fa8c16;
+}
+
+.status-text.red {
+  color: #f5222d;
+}
+
+/* 记录区域 */
+.records-section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+  width: 90%;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 34rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.refresh-btn {
+  font-size: 28rpx;
+  color: #1890ff;
+}
+
+.records-list {
+  margin-top: 20rpx;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-type {
+  width: 120rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.record-type.sign-in {
+  color: #1890ff;
+}
+
+.record-type.sign-out {
+  color: #52c41a;
+}
+
+.record-time {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.record-status {
+  width: 100rpx;
+  font-size: 26rpx;
+  text-align: center;
+  padding: 6rpx 12rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.record-status.valid {
+  color: #52c41a;
+}
+
+.record-status.invalid {
+  color: #fa541c;
+}
+
+.record-message {
+  flex: 2;
+  font-size: 26rpx;
+  color: #666;
+  text-align: right;
+}
+
+.empty-records {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 工作安排信息 */
+.schedule-info {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+  width: 90%;
+}
+
+.schedule-detail {
+  background: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-top: 20rpx;
+}
+
+.schedule-row {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.schedule-row:last-child {
+  margin-bottom: 0;
+}
+
+.schedule-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.schedule-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 统计信息 */
+.stats-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.stats-card {
+  flex: 1;
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  margin: 0 10rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+}
+
+.stats-number {
+  display: block;
+  font-size: 48rpx;
+  color: #1890ff;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.stats-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 消息提示 */
+.message-toast {
+  position: fixed;
+  top: 100rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  z-index: 9999;
+  max-width: 80%;
+  text-align: center;
+  animation: fadeInDown 0.3s;
+}
+
+.message-toast.success {
+  background: #f6ffed;
+  color: #52c41a;
+  border: 1rpx solid #b7eb8f;
+}
+
+.message-toast.error {
+  background: #fff2e8;
+  color: #fa541c;
+  border: 1rpx solid #ffbb96;
+}
+
+.message-toast.info {
+  background: #e6f7ff;
+  color: #1890ff;
+  border: 1rpx solid #91d5ff;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* 按钮悬停效果 */
+.btn-hover {
+  opacity: 0.8;
+}
+
+/* 请假申请模块样式 */
+.leave-section {
+  background: white;
+  border-radius: 10rpx;
+  margin: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+  width: 90%;
+}
+
+.btn-leave-apply {
+  background: #5677fc;
+  color: white;
+  border: none;
+  font-size: 24rpx;
+  line-height: 40rpx;
+}
+
+.leave-result-toast {
+  background: #e6f7ff;
+  border: 1rpx solid #91d5ff;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin: 20rpx 0;
+  font-size: 24rpx;
+  color: #0066cc;
+}
+
+.leave-records {
+  margin-top: 20rpx;
+}
+
+.leave-records-header {
+  display: flex;
+  background: #f5f5f5;
+  border-radius: 6rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.leave-record-header-cell {
+  text-align: center;
+}
+
+.leave-record-item {
+  display: flex;
+  border-bottom: 1rpx solid #eee;
+  padding: 15rpx;
+  font-size: 24rpx;
+  align-items: center;
+}
+
+.leave-record-cell {
+  text-align: center;
+  word-break: break-all;
+}
+
+.empty-leave-records {
+  text-align: center;
+  color: #999;
+  padding: 40rpx 0;
+  font-size: 26rpx;
+}
+
+/* 请假申请弹窗样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: white;
+  border-radius: 16rpx;
+  width: 80%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.modal-close {
+  font-size: 40rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-content {
+  flex: 1;
+  padding: 30rpx;
+  overflow-y: auto;
+}
+
+.picker-input {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.textarea-input {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  min-height: 120rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.info-display {
+  background: #f9f9f9;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.info-display text {
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #eee;
+}
+
+.btn-modal {
+  flex: 1;
+  border: none;
+  border-radius: 0;
+  font-size: 28rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.btn-modal-cancel {
+  background: white;
+  color: #666;
+  border-right: 1rpx solid #eee;
+}
+
+.btn-modal-submit {
+  background: #5677fc;
+  color: white;
+}
