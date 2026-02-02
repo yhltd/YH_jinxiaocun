@@ -128,9 +128,9 @@ Page({
             if(list[i].paid != '' && list[i].paid != null){
               zhichu_sum = zhichu_sum + list[i].paid * 1
             }
-            if(list[i].msort == '学费'){
+            if(list[i].msort && list[i].msort.includes('学费')){
               xuefei_sum = xuefei_sum + list[i].money * 1
-            }
+          }
           }
           jieyu = shouru_sum - zhichu_sum
           var huizong_list = [shouru_sum,zhichu_sum,xuefei_sum,jieyu]

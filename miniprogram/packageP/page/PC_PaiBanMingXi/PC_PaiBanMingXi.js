@@ -387,7 +387,7 @@ Page({
       bumen:"",
     })
     wx.showToast({
-      title: '查询完成！',
+      title: '查询成功！',
       icon: 'none',
       duration: 3000
     })

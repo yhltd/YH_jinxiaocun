@@ -210,22 +210,70 @@ Page({
     })
   },
 
+  // bindDateChange1: function(e) {
+  //   console.log('picker发送选择改变，携带值为', e.detail.value)
+  //   this.setData({
+  //     start_date: e.detail.value
+  //   })
+  //   console.log(this.data.start_date)
+  // },
+
+  // bindDateChange2: function(e) {
+  //   console.log('picker发送选择改变，携带值为', e.detail.value)
+  //   this.setData({
+  //     stop_date: e.detail.value
+  //   })
+  //   console.log(this.data.stop_date)
+  // },
   bindDateChange1: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    var dateValue = e.detail.value;
+    // 将 yyyy-mm-dd 转换为 yyyy/mm/dd
+    // dateValue = dateValue.replace(/-/g, '/');
+    
+    // 从data中获取stop_date
+    var stop_date = this.data.stop_date;
+    
+    // 验证开始日期不能大于结束日期
+    if (stop_date && dateValue > stop_date) {
+      wx.showToast({
+        title: '开始日期不能大于结束日期',
+        icon: 'none',
+        duration: 2000
+      })
+      return; // 不设置日期
+    }
+    
     this.setData({
-      start_date: e.detail.value
+      start_date: dateValue
     })
-    console.log(this.data.start_date)
+    console.log('转换后开始日期:', this.data.start_date)
   },
-
+  
   bindDateChange2: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    var dateValue = e.detail.value;
+    // 将 yyyy-mm-dd 转换为 yyyy/mm/dd
+    // dateValue = dateValue.replace(/-/g, '/');
+    
+    // 从data中获取start_date
+    var start_date = this.data.start_date;
+    
+    // 验证结束日期不能小于开始日期
+    if (start_date && dateValue < start_date) {
+      wx.showToast({
+        title: '结束日期不能小于开始日期',
+        icon: 'none',
+        duration: 2000
+      })
+      return; // 不设置日期
+    }
+    
     this.setData({
-      stop_date: e.detail.value
+      stop_date: dateValue
     })
-    console.log(this.data.stop_date)
+    console.log('转换后结束日期:', this.data.stop_date)
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -320,52 +368,147 @@ Page({
   },
 
   //点击确定按钮之后的事件
-  maskWindowOk: function (e) {
-    var that = this
-    var index = that.data.selectIndex;
-    var input = that.data.maskWindowInputValue;
-    console.log(input)
-    var start_date = that.data.start_date
-    var stop_date = that.data.stop_date
-    if(start_date == ''){
-      //start_date = '1900-01-01'
-      start_date = '1900/01/01'
-    }
-    if(stop_date == ''){
-      // stop_date = '2100-12-31'
-      stop_date = '2100/12/31'
-    }
-    console.log(start_date)
-    console.log(stop_date)
-    start_date = start_date.replace(/-/g, '/');
-    stop_date =stop_date.replace(/-/g, '/');
-    var sql = "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+that.data.companyName+"' and BC != '' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
-    console.log(sql)
-    if (index == 0) {
-      //按姓名查询
-      wx.cloud.callFunction({
-        name: "sqlServer_117",
-        data: {
-          query: sql
-        },
-        success: res => {
-          console.log("日期查询成功！", res.result)
-          that.setData({
-            list: res.result.recordset,
-            isSearch : true
-          })
-          that.dismissMaskWindow();
-        },
-        err: res => {
-          console.log("错误!", res)
-        },
-        complete: () => {
+  // maskWindowOk: function (e) {
+  //   var that = this
+  //   var index = that.data.selectIndex;
+  //   var input = that.data.maskWindowInputValue;
+  //   console.log(input)
+  //   var start_date = that.data.start_date
+  //   var stop_date = that.data.stop_date
+  //   if(start_date == ''){
+  //     //start_date = '1900-01-01'
+  //     start_date = '1900/01/01'
+  //   }
+  //   if(stop_date == ''){
+  //     // stop_date = '2100-12-31'
+  //     stop_date = '2100/12/31'
+  //   }
+  //   console.log(start_date)
+  //   console.log(stop_date)
+  //   start_date = start_date.replace(/-/g, '/');
+  //   stop_date =stop_date.replace(/-/g, '/');
+  //   var sql = "select top 100 id,B,BC,AY,M,CONVERT(float,isnull(AJ,0)) + convert(float,isnull(AK,0)) + convert(float,isnull(AL,0)) + convert(float,isnull(AM,0)) + convert(float,isnull(AN,0)) + convert(float,isnull(AO,0)) as geren,CONVERT(float,isnull(Z,0)) + convert(float,isnull(AA,0)) + convert(float,isnull(AB,0)) + convert(float,isnull(AC,0)) + convert(float,isnull(AD,0)) + convert(float,isnull(AE,0)) + convert(float,isnull(AF,0)) as qiye from gongzi_gongzimingxi where BD = '"+that.data.companyName+"' and BC >='" + start_date + "' and BC <='" + stop_date + "'"
+  //   console.log(sql)
+  //   if (index == 0) {
+  //     //按姓名查询
+  //     wx.cloud.callFunction({
+  //       name: "sqlServer_117",
+  //       data: {
+  //         query: sql
+  //       },
+  //       success: res => {
+  //         console.log("日期查询成功！", res.result)
+  //         that.setData({
+  //           list: res.result.recordset,
+  //           isSearch : true
+  //         })
+  //         that.dismissMaskWindow();
+  //       },
+  //       err: res => {
+  //         console.log("错误!", res)
+  //       },
+  //       complete: () => {
 
-        }
+  //       }
+  //     })
+  //   }
+  // },
+//------------------------新0130
+maskWindowOk: function (e) {
+  var that = this
+  var index = that.data.selectIndex;
+  var input = that.data.maskWindowInputValue;
+  console.log(input)
+  var start_date = that.data.start_date
+  var stop_date = that.data.stop_date
+  
+  // 验证日期逻辑
+  if (start_date && stop_date) {
+    if (start_date > stop_date) {
+      wx.showToast({
+        title: '开始日期不能大于结束日期',
+        icon: 'none',
+        duration: 2000
       })
+      return;
     }
-  },
-
+  }
+  
+  console.log("原始查询日期范围:", start_date, "到", stop_date)
+  
+  // 构建查询SQL
+  var sql = "SELECT TOP 100 id, B, BC, AY, M, "
+  sql += "CASE WHEN ISNUMERIC(AJ) = 1 THEN CAST(AJ AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AK) = 1 THEN CAST(AK AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AL) = 1 THEN CAST(AL AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AM) = 1 THEN CAST(AM AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AN) = 1 THEN CAST(AN AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AO) = 1 THEN CAST(AO AS FLOAT) ELSE 0 END AS geren, "
+  sql += "CASE WHEN ISNUMERIC(Z) = 1 THEN CAST(Z AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AA) = 1 THEN CAST(AA AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AB) = 1 THEN CAST(AB AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AC) = 1 THEN CAST(AC AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AD) = 1 THEN CAST(AD AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AE) = 1 THEN CAST(AE AS FLOAT) ELSE 0 END "
+  sql += "+ CASE WHEN ISNUMERIC(AF) = 1 THEN CAST(AF AS FLOAT) ELSE 0 END AS qiye "
+  sql += "FROM gongzi_gongzimingxi "
+  sql += "WHERE BD = '" + that.data.companyName + "' "
+  
+  // 关键修改：处理日期比较
+  if (start_date && stop_date) {
+    // 两个日期都有
+    sql += "AND CONVERT(date, LEFT(BC, 10)) >= '" + start_date + "' "
+    sql += "AND CONVERT(date, LEFT(BC, 10)) <= '" + stop_date + "'"
+  } else if (start_date) {
+    // 只有开始日期
+    sql += "AND CONVERT(date, LEFT(BC, 10)) >= '" + start_date + "'"
+  } else if (stop_date) {
+    // 只有结束日期
+    sql += "AND CONVERT(date, LEFT(BC, 10)) <= '" + stop_date + "'"
+  }
+  
+  console.log("查询SQL:", sql)
+  
+  if (index == 0) {
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: sql
+      },
+      success: res => {
+        console.log("日期查询成功！", res.result)
+        console.log("查询到记录数:", res.result.recordset.length)
+        
+        // 显示前几条记录用于调试
+        if (res.result.recordset.length > 0) {
+          for (var i = 0; i < Math.min(3, res.result.recordset.length); i++) {
+            console.log("第" + (i+1) + "条记录BC字段:", res.result.recordset[i].BC)
+          }
+        } else {
+          wx.showToast({
+            title: '该日期范围内无数据',
+            icon: 'none'
+          })
+        }
+        
+        that.setData({
+          list: res.result.recordset,
+          isSearch: true,
+          page: 1,
+          IsLastPage: res.result.recordset.length < 100
+        })
+        that.dismissMaskWindow();
+      },
+      err: res => {
+        console.log("错误!", res)
+        wx.showToast({
+          title: '查询失败',
+          icon: 'none'
+        })
+      }
+    })
+  }
+},
   maskWindowCancel: function (e) {
     this.dismissMaskWindow();
   },

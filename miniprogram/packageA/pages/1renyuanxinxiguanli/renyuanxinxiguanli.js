@@ -255,36 +255,81 @@ Page({
   时间:2020/5/20
 
    */
+  // onDel(e) {
+  //   let id = e.currentTarget.dataset.id
+  //   let _this = this;
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_117',
+  //     data: {
+  //       query: "delete from gongzi_renyuan where id = '" + id + "';delete from gongzi_renyuanManager where R_id = '"+id+"'"
+  //     },
+  //     success: res => {
+  //       console.log('操作成功')
+  //       let list = _this.data.list;
+  //       if(list==null || list==""){
+  //         _this.lastpage();
+  //         _this.setData({
+  //           maxpagenumber : maxpagenumber-1,
+  //           IsLastPage : true
+  //         })
+  //       }else{
+  //         _this.baochi();
+  //       }
+  //       wx.showToast({
+  //         title: '删除编号为' + id + "号的员工",
+  //         icon: 'none'
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     }
+  //   })
+  // },
   onDel(e) {
     let id = e.currentTarget.dataset.id
     let _this = this;
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "delete from gongzi_renyuan where id = '" + id + "';delete from gongzi_renyuanManager where R_id = '"+id+"'"
-      },
-      success: res => {
-        console.log('操作成功')
-        let list = _this.data.list;
-        if(list==null || list==""){
-          _this.lastpage();
-          _this.setData({
-            maxpagenumber : maxpagenumber-1,
-            IsLastPage : true
+    // 增加弹窗确认提示
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除该员工信息吗？',
+      confirmText: '删除',
+      confirmColor: '#FA5151',
+      cancelText: '取消',
+      success: function(res) {
+        if (res.confirm) {
+          // 用户点击删除，执行原删除逻辑
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data: {
+              query: "delete from gongzi_renyuan where id = '" + id + "';delete from gongzi_renyuanManager where R_id = '" + id + "'"
+            },
+            success: res => {
+              console.log('操作成功')
+              let list = _this.data.list;
+              if (list == null || list == "") {
+                _this.lastpage();
+                _this.setData({
+                  maxpagenumber: _this.data.maxpagenumber - 1,
+                  IsLastPage: true
+                })
+              } else {
+                _this.baochi();
+              }
+              wx.showToast({
+                title: '删除编号为' + id + "号的员工",
+                icon: 'none'
+              })
+            },
+            err: res => {
+              console.log("错误!")
+            }
           })
-        }else{
-          _this.baochi();
         }
-        wx.showToast({
-          title: '删除编号为' + id + "号的员工",
-          icon: 'none'
-        })
-      },
-      err: res => {
-        console.log("错误!")
       }
     })
   },
+
+
   onUpdate(e) {
     var that=this;
     let id = e.currentTarget.dataset.id

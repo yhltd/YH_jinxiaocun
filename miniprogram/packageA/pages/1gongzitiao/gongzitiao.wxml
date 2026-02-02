@@ -232,7 +232,7 @@
 </scroll-view>
 
 <view class="bottom_view">
-  <button class="bt_bottom btn-primary" bindtap="getExcel">打印</button>
+  <button class="bt_bottom btn-primary" bindtap="getExcel">导出excel</button>
   <button class="bt_bottom btn-primary" bindtap="selAgain">查询</button>
 </view>
 

@@ -251,6 +251,11 @@ Page({
         })
         _this.addMK()
         _this.module_info_show('')
+        wx.showToast({
+          title: '删除成功！',
+          icon: 'none',
+          duration: 2000
+        })
       },
       err: res => {
         console.log("错误!")
@@ -351,6 +356,11 @@ Page({
                   empty: ""
                 })
                 _this.addMK()
+                wx.showToast({
+                  title: '添加成功！',
+                  icon: 'none',
+                  duration: 2000
+                })
               },
               err: res => {
                 console.log("错误!")
@@ -404,6 +414,11 @@ Page({
             tjShow: false
           })
           _this.module_info_show('')
+          wx.showToast({
+            title: '添加成功！',
+            icon: 'none',
+            duration: 2000
+          })
           wx.hideLoading({
 
           })
@@ -456,6 +471,13 @@ Page({
     var _this = this
     var moduleName = _this.data.moduleName
     _this.module_info_show(moduleName)
+    setTimeout(() => {
+      wx.showToast({
+        title: '查询成功！',
+        icon: 'none',
+        duration: 2000
+      })
+    }, 500)
     var _this = this
     _this.setData({
       cxShow: false,
@@ -520,6 +542,11 @@ Page({
           xgShow: false
         })
         _this.module_info_show('')
+        wx.showToast({
+          title: '删除成功！',
+          icon: 'none',
+          duration: 2000
+        })
         wx.hideLoading({
 
         })
@@ -562,6 +589,11 @@ Page({
           xgShow: false
         })
         _this.module_info_show('')
+        wx.showToast({
+          title: '修改成功！',
+          icon: 'none',
+          duration: 2000
+        })
         wx.hideLoading({
 
         })

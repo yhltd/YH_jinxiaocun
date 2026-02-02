@@ -37,12 +37,17 @@
 </view>
 
 <view class="bottom_view">
-  <view>
+  <!-- 左侧翻页按钮 -->
+  <view class="left-btns">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="switchpage" data-index="-1">{{'<<'}}</button>
     <view class="page_bottom" bindtap="show_updPageCount">{{pageNum}}/{{pageCount}}</view>
     <button class="bt_bottom" bindtap="switchpage" data-index="+1">{{'>>'}}</button>
   </view>
-  <button class="moreDo" bindtap="moreDo">更多操作</button>
+  <!-- 右侧操作按钮 -->
+  <view class="right-btns">
+    <button class="moreDo-btn" bindtap="refreshAll">刷新</button>
+    <button class="moreDo-btn" bindtap="moreDo">更多操作</button>
+  </view>
 </view>
 
 <view class="mask" wx:if="{{hid_view}}" bindtap="{{hid_view?'hid_view':''}}" hidden="{{initHidView?'true':''}}">

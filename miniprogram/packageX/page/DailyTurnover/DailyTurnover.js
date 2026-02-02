@@ -105,6 +105,24 @@ Page({
 
   save: function (e) {
     var _this = this;
+     // 获取表单值
+  var riqi1 = e.detail.value.riqi1;
+  var riqi2 = e.detail.value.riqi2;
+  
+  // 检查日期是否合法
+  if (riqi1 && riqi2) {
+    var startDate = new Date(riqi1);
+    var endDate = new Date(riqi2);
+    
+    if (startDate > endDate) {
+      wx.showToast({
+        title: '起始日期不能大于结束日期',
+        icon: 'none',
+        duration: 2000
+      });
+      return; // 停止执行
+    }
+  }
     _this.setData({
       riqi1: e.detail.value.riqi1,
       riqi2: e.detail.value.riqi2,

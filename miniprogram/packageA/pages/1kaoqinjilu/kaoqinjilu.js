@@ -288,6 +288,15 @@ Page({
 
   bindDateChange1: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+     // 验证开始日期不能大于结束日期
+  if (this.data.stop_date && dateValue > this.data.stop_date) {
+    wx.showToast({
+      title: '开始日期不能大于结束日期',
+      icon: 'none',
+      duration: 2000
+    })
+    return; // 不设置日期
+  }
     this.setData({
       start_date: e.detail.value
     })
@@ -296,6 +305,15 @@ Page({
 
   bindDateChange2: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+     // 验证开始日期不能大于结束日期
+  if (this.data.stop_date && dateValue > this.data.stop_date) {
+    wx.showToast({
+      title: '开始日期不能大于结束日期',
+      icon: 'none',
+      duration: 2000
+    })
+    return; // 不设置日期
+  }
     this.setData({
       stop_date: e.detail.value
     })
@@ -308,7 +326,17 @@ Page({
     var index = that.data.selectIndex;
     var input = that.data.maskWindowInputValue;
     console.log(input)
-    
+     // 再次验证日期逻辑
+  if (that.data.start_date && that.data.stop_date) {
+    if (that.data.start_date > that.data.stop_date) {
+      wx.showToast({
+        title: '开始日期不能大于结束日期',
+        icon: 'none',
+        duration: 2000
+      })
+      return; // 停止执行查询
+    }
+  }
     if (index == 0) {
       //按姓名查询
       var start_date = that.data.start_date

@@ -272,7 +272,20 @@ Page({
         wx.showToast({
           title: "修改成功",
           icon: "none"
-        })
+        });
+        
+        // 更新会员积分
+        if (column === 'hyzh' || column === 'ssje') { // 如果修改了会员账号或实收金额
+          var oldHyzh = _this.data.list[index].hyzh;
+          var newHyzh = column === 'hyzh' ? new_value : oldHyzh;
+          
+          if (newHyzh) {
+            _this.updateMemberPoints({
+              hyzh: newHyzh,
+              company: _this.data.company
+            });
+          }
+        }
         _this.setData({
           input_hid: false,
           mask_hid: false,
@@ -416,6 +429,31 @@ Page({
 
   save: function(e) {
     var _this = this;
+    //-----新0130
+      // 获取表单值
+  var formData = {
+    ddh: e.detail.value.ddh,
+    syy: e.detail.value.syy,
+    hyxm: e.detail.value.hyxm,
+    start_date: e.detail.value.start_date,
+    end_date: e.detail.value.end_date
+  };
+  
+  // 检查日期是否合法
+  if (formData.start_date && formData.end_date) {
+    var startDate = new Date(formData.start_date);
+    var endDate = new Date(formData.end_date);
+    
+    if (startDate > endDate) {
+      wx.showToast({
+        title: '起始日期不能大于结束日期',
+        icon: 'none',
+        duration: 2000
+      });
+      return; // 停止执行
+    }
+  }
+  //-----------新0130
     _this.setData({
       ddh: e.detail.value.ddh,
       syy: e.detail.value.syy,
@@ -480,8 +518,17 @@ Page({
         wx.showToast({
           title: "添加成功！",
           icon: "none"
-        })
-        _this.init()
+        });
+        
+        // 更新会员积分
+        if (e.detail.value.hyzh) {
+          _this.updateMemberPoints({
+            hyzh: e.detail.value.hyzh,
+            company: _this.data.company
+          });
+        }
+        
+        _this.init();
       },
       error: res => {
         console.log(res)

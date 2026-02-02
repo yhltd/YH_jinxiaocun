@@ -116,6 +116,8 @@
           <view class="product_item">
             <view  class="wenzi">商品单价</view>
             <input class="input_text_form"  value="{{window_price}}" type="text" name="window_price" disabled="disabled"></input>
+            <view wx:if="{{member_discount < 1 && window_price}}" class="discount-hint">会员价: {{member_discounted_price}}
+</view>
           </view>
         </view>
         
@@ -148,7 +150,20 @@
       <view class="jiesuan-wenzi">会员姓名</view>
       <input class="input_text_form2"  value="{{member_xingming}}" type="text" name="product_type" bindtap="chooseMember"></input>
     </view>
-    
+    <!-- //----新0202 -->
+    <view wx:if="{{member_discount < 1}}" class="discount-info">
+  <view class="discount-row">
+    <text class="discount-label">会员等级:</text>
+    <text class="discount-value">{{member_level}}</text>
+    <text class="separator"> | </text>
+    <text class="discount-label">折扣:</text>
+    <text class="discount-value">{{discount_display}}折</text>
+    <text class="separator"> | </text>
+    <text class="discount-label">节省:</text>
+    <text class="discount-value">¥{{discount_saved}}</text>
+  </view>
+</view>
+
       <view class="table_title">
         <view class="table_item table_name">序号</view>
         <view class="table_item table_guige">商品名称</view>
@@ -166,6 +181,20 @@
       </block>
     </scroll-view>
     
+<!-- //---新0202 -->
+<view class="price-summary">
+  <view class="price-row">
+    <view wx:if="{{member_discount < 1}}" class="price-item">
+      <text class="price-label">原价总计:</text>
+      <text class="price-value original-price">¥{{original_price_sum}}</text>
+    </view>
+    <view class="price-item">
+      <text class="price-label">实付金额:</text>
+      <text class="price-value final-price">¥{{price_sum}}</text>
+    </view>
+  </view>
+</view>
+
   </view>
   <view class="row-btn">
     <view class="cancel-btn" bindtap="closejiesuan2">取消</view>

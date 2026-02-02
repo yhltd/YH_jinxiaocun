@@ -38,10 +38,12 @@ Page({
             { text: "密码",width: "200rpx",columnName: "password",type: "text",isupd: true},
             { text: "姓名", width: "200rpx", columnName: "name", type: "text", isupd: true},
             { text: "性别", width: "400rpx", columnName: "gender", type: "text", isupd: true},
+            { text: "会员等级", width: "200rpx", columnName: "level", type: "text", isupd: true}, // 新增
+            { text: "积分", width: "150rpx", columnName: "points", type: "digit", isupd: true}, // 积分移动到等级后面
             { text: "账号状态", width: "250rpx", columnName: "state", type: "date", isupd: true},
             { text: "电话号", width: "250rpx", columnName: "phone", type: "date", isupd: true},
             { text: "生日", width: "200rpx", columnName: "birthday", type: "digit", isupd: true},
-            { text: "积分", width: "200rpx", columnName: "points", type: "digit", isupd: true},
+
             ],
 
     title2: [{ text: "序号", width: "100rpx", columnName: "rownum", type: "digit",isupd: true},
@@ -49,10 +51,12 @@ Page({
             { text: "密码",width: "200rpx",columnName: "password",type: "text",isupd: true},
             { text: "姓名", width: "200rpx", columnName: "name", type: "text", isupd: true},
             { text: "性别", width: "400rpx", columnName: "gender", type: "text", isupd: true},
+            { text: "会员等级", width: "200rpx", columnName: "level", type: "text", isupd: true}, // 新增
+            { text: "积分", width: "150rpx", columnName: "points", type: "digit", isupd: true}, // 积分移动到等级后面
             { text: "账号状态", width: "250rpx", columnName: "state", type: "date", isupd: true},
             { text: "电话号", width: "250rpx", columnName: "phone", type: "date", isupd: true},
             { text: "生日", width: "200rpx", columnName: "birthday", type: "digit", isupd: true},
-            { text: "积分", width: "200rpx", columnName: "points", type: "digit", isupd: true},
+
             ],
     input_hid: true,
     frmStudfind: true,
@@ -418,30 +422,366 @@ Page({
 
 
 
-  init: function() {
-    var _this = this;
-    let sql = "select * from member_info where name like '%" + _this.data.name + "%' and phone like '%" + _this.data.phone + "%' and company='"+ _this.data.company +"'"
-    console.log(sql)
-    wx.cloud.callFunction({
-      name: 'sqlserver_xinyongka',
-      data: {
-        sql: sql
-      },
-      success: res => {
-        console.log("select-success", res)
-        _this.setData({
-          list: res.result,
-          name: "",
-          phone: "",
-        })
-      },
-      fail: res=> {
-        console.log("select-fail",res)
-      }
-    })
-  },
+  // init: function() {
+  //   var _this = this;
+  //   let sql = "select * from member_info where name like '%" + _this.data.name + "%' and phone like '%" + _this.data.phone + "%' and company='"+ _this.data.company +"'"
+  //   console.log(sql)
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_xinyongka',
+  //     data: {
+  //       sql: sql
+  //     },
+  //     success: res => {
+  //       console.log("select-success", res)
+  //       _this.setData({
+  //         list: res.result,
+  //         name: "",
+  //         phone: "",
+  //       })
+  //     },
+  //     fail: res=> {
+  //       console.log("select-fail",res)
+  //     }
+  //   })
+  // },
+//------新0130
+// init: function() {
+//   var _this = this;
+  
+//   // 首先获取会员等级数据
+//   let sql_level = "select * from member_jibie where company='" + _this.data.company + "' order by menkan asc"; // 按门槛升序排序
+  
+//   wx.cloud.callFunction({
+//     name: 'sqlserver_xinyongka',
+//     data: {
+//       sql: sql_level
+//     },
+//     success: res_level => {
+//       console.log("会员等级数据:", res_level.result);
+//       var levelList = res_level.result || [];
+      
+//       // 然后获取会员数据
+//       let sql_member = "select * from member_info where name like '%" + _this.data.name + "%' and phone like '%" + _this.data.phone + "%' and company='"+ _this.data.company +"'";
+//       console.log(sql_member);
+      
+//       wx.cloud.callFunction({
+//         name: 'sqlserver_xinyongka',
+//         data: {
+//           sql: sql_member
+//         },
+//         // success: res_member => {
+//         //   console.log("会员数据:", res_member.result);
+          
+//         //   // 处理数据，根据积分自动计算会员等级
+//         //   var memberList = res_member.result || [];
+//         //   memberList = memberList.map(item => {
+//         //     var points = parseFloat(item.points) || 0;
+//         //     var memberLevel = "无等级"; // 默认等级
+            
+//         //     // 遍历等级列表，找到积分对应的等级
+//         //     for (let i = 0; i < levelList.length; i++) {
+//         //       var minPoints = parseFloat(levelList[i].menkan) || 0;
+              
+//         //       // 如果积分达到这个等级的门槛
+//         //       if (points >= minPoints) {
+//         //         memberLevel = levelList[i].jibie;
+//         //       } else {
+//         //         // 如果积分达不到下一个等级，就保持当前等级
+//         //         break;
+//         //       }
+//         //     }
+            
+//         //     return {
+//         //       ...item,
+//         //       level: memberLevel // 添加自动计算的等级字段
+//         //     };
+//         //   });
+          
+//         //   _this.setData({
+//         //     list: memberList,
+//         //     name: "",
+//         //     phone: "",
+//         //   });
+//         // },
+//         //---新0130
+//         success: res_member => {
+//           console.log("会员数据:", res_member.result);
+          
+//           // 处理数据，根据积分自动计算会员等级
+//           var memberList = res_member.result || [];
+//           memberList = memberList.map(item => {
+//             var points = parseFloat(item.points) || 0;
+//             var memberLevel = "无等级"; // 默认等级
+            
+//             // 如果有等级数据
+//             if (levelList.length > 0) {
+//               // 按门槛升序排序
+//               levelList.sort((a, b) => (parseFloat(a.menkan) || 0) - (parseFloat(b.menkan) || 0));
+              
+//               // 倒序遍历，找到第一个积分达到的门槛
+//               for (let i = levelList.length - 1; i >= 0; i--) {
+//                 var minPoints = parseFloat(levelList[i].menkan) || 0;
+                
+//                 // 如果积分达到这个等级的门槛
+//                 if (points >= minPoints) {
+//                   memberLevel = levelList[i].jibie;
+//                   break; // 找到符合条件的最高等级就退出
+//                 }
+//               }
+              
+//               // 如果积分连最低等级都没达到
+//               var lowestPoints = parseFloat(levelList[0].menkan) || 0;
+//               if (points < lowestPoints) {
+//                 memberLevel = "无等级";
+//               }
+//             }
+            
+//             return {
+//               ...item,
+//               level: memberLevel // 添加自动计算的等级字段
+//             };
+//           });
+          
+//           _this.setData({
+//             list: memberList,
+//             name: "",
+//             phone: "",
+//           });
+//         },
+//         fail: res=> {
+//           console.log("select-fail",res);
+//         }
+//       });
+//     },
+//     fail: err => {
+//       console.log("获取会员等级失败:", err);
+//     }
+//   });
+// },
+///----新0130
+init: function() {
+  var _this = this;
+  
+  // 首先获取会员等级数据
+  let sql_level = "select * from member_jibie where company='" + _this.data.company + "' order by menkan asc";
+  
+  wx.cloud.callFunction({
+    name: 'sqlserver_xinyongka',
+    data: {
+      sql: sql_level
+    },
+    success: res_level => {
+      console.log("会员等级数据:", res_level.result);
+      var levelList = res_level.result || [];
+      
+      // 先获取所有会员的订单实收金额总和
+      let sql_orders_sum = `
+        select hyzh, sum(heji.ssje) as total_ssje 
+        from orders as ord 
+        left join (
+          select ddid, company, sum(convert(zhdj,float) * convert(gs,float)) as ssje 
+          from orders_details 
+          group by ddid
+        ) as heji on ord.ddh = heji.ddid and ord.company = heji.company 
+        where ord.company = '${_this.data.company}' 
+          and hyzh != '' 
+          and heji.ssje is not null
+        group by hyzh
+      `;
+      
+      console.log("查询订单总金额SQL:", sql_orders_sum);
+      
+      wx.cloud.callFunction({
+        name: 'sqlserver_xinyongka',
+        data: {
+          sql: sql_orders_sum
+        },
+        success: res_orders => {
+          console.log("会员订单总金额:", res_orders.result);
+          
+          // 创建会员订单金额映射
+          var orderAmountMap = {};
+          var memberUpdatePromises = []; // 用于存储更新积分的Promise
+          
+          res_orders.result.forEach(item => {
+            if (item.hyzh && item.total_ssje !== null) {
+              var totalSpent = parseFloat(item.total_ssje) || 0;
+              orderAmountMap[item.hyzh] = totalSpent;
+              
+              // 立即更新数据库中会员的积分
+              var updateSql = `
+                UPDATE member_info 
+                SET points = ${Math.round(totalSpent)} 
+                WHERE username = '${item.hyzh}' 
+                  AND company = '${_this.data.company}'
+              `;
+              
+              console.log("更新会员积分SQL:", updateSql);
+              
+              // 执行更新
+              memberUpdatePromises.push(
+                new Promise((resolve, reject) => {
+                  wx.cloud.callFunction({
+                    name: 'sqlserver_xinyongka',
+                    data: { sql: updateSql },
+                    success: resolve,
+                    fail: reject
+                  });
+                })
+              );
+            }
+          });
+          
+          // 等待所有更新完成
+          Promise.all(memberUpdatePromises)
+            .then(() => {
+              console.log("所有会员积分更新完成");
+            })
+            .catch(err => {
+              console.error("部分会员积分更新失败:", err);
+            })
+            .finally(() => {
+              // 然后获取会员数据（积分已更新）
+              _this.loadMemberData(levelList, orderAmountMap);
+            });
+        },
+        fail: err => {
+          console.log("查询订单金额失败:", err);
+          // 如果查询失败，只加载会员数据
+          _this.loadMemberData(levelList, {});
+        }
+      });
+    },
+    fail: err => {
+      console.log("获取会员等级失败:", err);
+    }
+  });
+},
 
+// 提取加载会员数据的函数
+loadMemberData: function(levelList, orderAmountMap) {
+  var _this = this;
+  
+  let sql_member = "select * from member_info where name like '%" + _this.data.name + "%' and phone like '%" + _this.data.phone + "%' and company='"+ _this.data.company +"'";
+  console.log("查询会员SQL:", sql_member);
+  
+  wx.cloud.callFunction({
+    name: 'sqlserver_xinyongka',
+    data: {
+      sql: sql_member
+    },
+    success: res_member => {
+      console.log("会员数据:", res_member.result);
+      
+      // 处理数据，根据订单实收金额计算积分和等级
+      var memberList = res_member.result || [];
+      memberList = memberList.map(item => {
+        var username = item.username || "";
+        var totalSpent = orderAmountMap[username] || 0; // 该会员的总消费金额
+        
+        // 将消费金额作为积分（四舍五入取整）
+        var points = Math.round(totalSpent); 
+        
+        var memberLevel = "无等级"; // 默认等级
+        
+        // 根据消费金额（积分）判断等级
+        if (levelList.length > 0) {
+          // 按门槛升序排序
+          levelList.sort((a, b) => (parseFloat(a.menkan) || 0) - (parseFloat(b.menkan) || 0));
+          
+          // 倒序遍历，找到第一个消费金额达到的门槛
+          for (let i = levelList.length - 1; i >= 0; i--) {
+            var minPoints = parseFloat(levelList[i].menkan) || 0;
+            
+            // 如果消费金额达到这个等级的门槛
+            if (totalSpent >= minPoints) {
+              memberLevel = levelList[i].jibie;
+              break; // 找到符合条件的最高等级就退出
+            }
+          }
+          
+          // 如果消费金额连最低等级都没达到
+          var lowestPoints = parseFloat(levelList[0].menkan) || 0;
+          if (totalSpent < lowestPoints) {
+            memberLevel = "无等级";
+          }
+        }
+        
+        return {
+          ...item,
+          points: points, // 积分
+          level: memberLevel, // 等级
+          total_spent: totalSpent // 总消费金额
+        };
+      });
+      
+      _this.setData({
+        list: memberList,
+        name: "",
+        phone: "",
+      });
+    },
+    fail: res => {
+      console.log("select-fail", res);
+    }
+  });
+},
 
+// 添加一个备用函数，如果查询订单失败时使用
+loadMembersWithOriginalLogic: function(levelList) {
+  var _this = this;
+  
+  let sql_member = "select * from member_info where name like '%" + _this.data.name + "%' and phone like '%" + _this.data.phone + "%' and company='"+ _this.data.company +"'";
+  
+  wx.cloud.callFunction({
+    name: 'sqlserver_xinyongka',
+    data: {
+      sql: sql_member
+    },
+    success: res_member => {
+      console.log("会员数据:", res_member.result);
+      
+      var memberList = res_member.result || [];
+      memberList = memberList.map(item => {
+        var points = parseFloat(item.points) || 0;
+        var memberLevel = "无等级";
+        
+        // 使用原始积分数值计算等级
+        if (levelList.length > 0) {
+          levelList.sort((a, b) => (parseFloat(a.menkan) || 0) - (parseFloat(b.menkan) || 0));
+          
+          for (let i = levelList.length - 1; i >= 0; i--) {
+            var minPoints = parseFloat(levelList[i].menkan) || 0;
+            
+            if (points >= minPoints) {
+              memberLevel = levelList[i].jibie;
+              break;
+            }
+          }
+          
+          var lowestPoints = parseFloat(levelList[0].menkan) || 0;
+          if (points < lowestPoints) {
+            memberLevel = "无等级";
+          }
+        }
+        
+        return {
+          ...item,
+          level: memberLevel
+        };
+      });
+      
+      _this.setData({
+        list: memberList,
+        name: "",
+        phone: "",
+      });
+    },
+    fail: res => {
+      console.log("select-fail", res);
+    }
+  });
+},
 
 
 
@@ -503,10 +843,11 @@ Page({
     { text: "账号", width: "250rpx", columnName: "username", type: "text", isupd: true },
     { text: "密码", width: "200rpx", columnName: "password", type: "text", isupd: true },
     { text: "性别", width: "400rpx", columnName: "gender", type: "text", isupd: true },
+    { text: "会员等级", width: "200rpx", columnName: "level", type: "text", isupd: true }, // 新增
+    { text: "积分", width: "150rpx", columnName: "points", type: "digit", isupd: true }, // 积分位置调整
     { text: "账号状态", width: "200rpx", columnName: "state", type: "text", isupd: true },
     { text: "电话号", width: "200rpx", columnName: "phone", type: "date", isupd: true },
     { text: "生日", width: "200rpx", columnName: "birthday", type: "date", isupd: true },
-    { text: "积分", width: "200rpx", columnName: "points", type: "digit", isupd: true },
     
     ]
     var cloudList = {
@@ -570,10 +911,11 @@ Page({
       { text: "密码",width: "200rpx",columnName: "password",type: "text",isupd: true},
       { text: "姓名", width: "200rpx", columnName: "name", type: "text", isupd: true},
       { text: "性别", width: "400rpx", columnName: "gender", type: "text", isupd: true},
+      { text: "会员等级", width: "200rpx", columnName: "level", type: "text", isupd: true}, // 新增
+    { text: "积分", width: "150rpx", columnName: "points", type: "number", isupd: true}, // 积分位置调整
       { text: "帐号状态", width: "250rpx", columnName: "state", type: "date", isupd: true},
       { text: "电话号", width: "250rpx", columnName: "phone", type: "date", isupd: true},
       { text: "生日", width: "200rpx", columnName: "birthday", type: "digit", isupd: true},
-      { text: "积分", width: "200rpx", columnName: "points", type: "digit", isupd: true},
     ]
     var cloudList = {
       name: '会员管理',

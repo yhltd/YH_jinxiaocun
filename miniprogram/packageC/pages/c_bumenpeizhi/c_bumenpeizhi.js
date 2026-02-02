@@ -543,5 +543,36 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  /**
+ * 刷新按钮点击事件 - 显示全部信息
+ */
+refreshAll: function() {
+  var _this = this;
+  
+  // 重置查询条件
+  _this.setData({
+    bumenmingcheng: "",
+    pageNum: 1, // 重置到第一页
+    chaxun_hidden: true // 隐藏查询窗口
+  });
+  
+  // 关闭所有打开的视图
+  _this.hid_view();
+  
+  // 显示加载提示
+  wx.showLoading({
+    title: '刷新中',
+    mask: true
+  });
+  
+  // 调用初始化方法显示全部数据
+  _this.init();
+  
+  wx.showToast({
+    title: '已显示全部信息',
+    icon: 'success',
+    duration: 1500
+  });
+},
 })

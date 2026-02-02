@@ -576,131 +576,498 @@ Page({
       })
   },
 
+  // sel1: function(e) {
+  //   var that = this
+  //   const db = wx.cloud.database()
+  //   var app = getApp();
+  //   wx.showToast({
+  //     title: '正在搜索',
+  //     icon: 'loading',
+  //     duration: 1000
+  //   })
+  //   var finduser = app.globalData.finduser
+  //   var gongsi = app.globalData.gongsi
+  //   var start_date = that.data.start_date
+  //   var stop_date = that.data.stop_date
+  //   var wareHouse = that.data.wareHouse
+  //   console.log(wareHouse)
+  //   var product_number = that.data.product_number
+  //   console.log("商品代码", product_number)
+  //   if (start_date != ''){
+  //     start_date = start_date + " 00:00:00"
+  //   }else{
+  //     start_date = "1900-01-01 00:00:00"
+  //   }
+  //   if (stop_date != ''){
+  //     stop_date = stop_date + " 23:59:59"
+  //   }else{
+  //     stop_date = "2100-12-31 23:59:59"
+  //   }
+
+  //   if(app.globalData.shujuku==0){
+
+  //     wx.cloud.callFunction({
+  //       name: "sqlConnection",
+  //       data: {
+  //        sql:"SELECT cpid, cpname, cplb, cangku, SUM(qcsl) as qcsl, SUM(qcje) as qcje, SUM(rksl) as rksl, SUM(rkje) as rkje, SUM(cksl) as cksl, SUM(ckje) as ckje, SUM(jcsl) as jcsl, SUM(jcje) as jcje, ifnull(bian_yuan.bianyuan,'') as bianyuan, mark1, CASE WHEN SUM(qcje + jcje) / 2 != 0 THEN ROUND((SUM(ckje) / (SUM(qcje + jcje) / 2)) * 100, 2) ELSE 0 END as zzl FROM ( SELECT ifnull(link_rk.cpid,'') as cpid, ifnull(link_rk.cpname,'') as cpname, ifnull(link_rk.cplb,'') as cplb, ifnull(link_rk.cangku,'') as cangku, ifnull(link_rk.cpsl,0) as qcsl, ifnull(link_rk.cpje,0) as qcje, ifnull(link_rk.rksl,0) as rksl, ifnull(link_rk.rkje,0) as rkje, ifnull(ck.cksl,0) as cksl, ifnull(ck.ckje,0) as ckje, ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl, ifnull(cpje,0)+ifnull(rkje,0)-ifnull(ckje,0) as jcje FROM ( SELECT link_qc.cpid, link_qc.cpname, link_qc.cplb, link_qc.cangku, link_qc.cpsl, link_qc.cpje, rk.rksl, rk.rkje FROM ( SELECT cp.cpid, cp.cpname, cp.cplb, cp.cangku, qc.cpsl, qc.cpje FROM ( SELECT cpid, cpname, cplb, cangku FROM yh_jinxiaocun_qichushu WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' UNION SELECT sp_dm, cpname, cplb, cangku FROM yh_jinxiaocun_mingxi WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' ) as cp LEFT JOIN ( SELECT cpid, cpname, cplb, cangku, SUM(cpsl) as cpsl, SUM(cpsj*cpsl) as cpje FROM yh_jinxiaocun_qichushu WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku ) as qc ON cp.cpid = qc.cpid AND cp.cpname = qc.cpname AND cp.cplb = qc.cplb AND cp.cangku = qc.cangku ) as link_qc LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as rksl, SUM(cpsl*cpsj) as rkje FROM yh_jinxiaocun_mingxi WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as rk ON rk.sp_dm = link_qc.cpid AND rk.cpname = link_qc.cpname AND rk.cplb = link_qc.cplb AND rk.cangku = link_qc.cangku ) as link_rk LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as cksl, SUM(cpsl*cpsj) as ckje FROM yh_jinxiaocun_mingxi WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as ck ON ck.sp_dm = link_rk.cpid AND ck.cpname = link_rk.cpname AND ck.cplb = link_rk.cplb AND ck.cangku = link_rk.cangku ) as jxc LEFT JOIN ( SELECT sp_dm, lei_bie, `name`, bianyuan, mark1 FROM yh_jinxiaocun_jichuziliao WHERE gs_name = '"+ gongsi +"' ) as bian_yuan ON jxc.cpid = bian_yuan.sp_dm AND jxc.cpname = bian_yuan.`name` AND jxc.cplb = bian_yuan.lei_bie WHERE cpid LIKE '%" + product_number + "%' AND jxc.cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku, bianyuan, mark1"
+  //       },
+  //       success(res) {
+  //         for(var i=0;i<res.result.length;i++){
+  //           if(res.result[i].mark1 != null){
+  //             res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+  //           }
+  //         }
+  //         var all = []
+  //         all = res.result;
+  //         var szary = []
+  //         var inserti = 0
+  //         console.log(all)
+  //         for(var i = 0; i < all.length; i++){
+  //           szary.push({
+  //             mark1:all[i].mark1,
+  //             name:all[i].cpname,
+  //             sp_dm:all[i].cpid,
+  //             cplb:all[i].cplb,
+  //             cpsl:all[i].jcsl,
+  //             cpsj:all[i].jcje,
+  //             qcsl:all[i].qcsl,
+  //             qcje:all[i].qcje,
+  //             rksl:all[i].rksl,
+  //             rkje:all[i].rkje,
+  //             cksl:all[i].cksl,
+  //             ckje:all[i].ckje,
+  //             bianyuan:all[i].bianyuan,
+  //             zzl:all[i].zzl,
+  //             cangku:all[i].cangku
+  //           })
+  //         }
+  
+  //         that.setData({
+  //           szzhi: szary
+  //         })
+  //       },
+  //       fail(res) {
+  //         console.log("失败", res)
+  //       }
+  //     });
+
+  //   }else if(app.globalData.shujuku == 1){
+
+  //     wx.cloud.callFunction({
+  //       name: "sqlServer_117",
+  //       data: {
+  //         query:"SELECT cpid, cpname, cplb, cangku, SUM(qcsl) as qcsl, SUM(qcje) as qcje, SUM(rksl) as rksl, SUM(rkje) as rkje, SUM(cksl) as cksl, SUM(ckje) as ckje, SUM(jcsl) as jcsl, SUM(jcje) as jcje, ISNULL(bian_yuan.bianyuan,'') as bianyuan, mark1, CASE WHEN SUM(qcje + jcje) / 2 != 0 THEN ROUND((SUM(ckje) / (SUM(qcje + jcje) / 2)) * 100, 2) ELSE 0 END as zzl FROM ( SELECT ISNULL(link_rk.cpid,'') as cpid, ISNULL(link_rk.cpname,'') as cpname, ISNULL(link_rk.cplb,'') as cplb, ISNULL(link_rk.cangku,'') as cangku, ISNULL(link_rk.cpsl,0) as qcsl, ISNULL(link_rk.cpje,0) as qcje, ISNULL(link_rk.rksl,0) as rksl, ISNULL(link_rk.rkje,0) as rkje, ISNULL(ck.cksl,0) as cksl, ISNULL(ck.ckje,0) as ckje, ISNULL(cpsl,0)+ISNULL(rksl,0)-ISNULL(cksl,0) as jcsl, ISNULL(cpje,0)+ISNULL(rkje,0)-ISNULL(ckje,0) as jcje FROM ( SELECT link_qc.cpid, link_qc.cpname, link_qc.cplb, link_qc.cangku, link_qc.cpsl, link_qc.cpje, rk.rksl, rk.rkje FROM ( SELECT cp.cpid, cp.cpname, cp.cplb, cp.cangku, qc.cpsl, qc.cpje FROM ( SELECT cpid, cpname, cplb, cangku FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' UNION SELECT sp_dm, cpname, cplb, cangku FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' ) as cp LEFT JOIN ( SELECT cpid, cpname, cplb, cangku, SUM(cpsl) as cpsl, SUM(cpsj*cpsl) as cpje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku ) as qc ON cp.cpid = qc.cpid AND cp.cpname = qc.cpname AND cp.cplb = qc.cplb AND cp.cangku = qc.cangku ) as link_qc LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as rksl, SUM(cpsl*cpsj) as rkje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as rk ON rk.sp_dm = link_qc.cpid AND rk.cpname = link_qc.cpname AND rk.cplb = link_qc.cplb AND rk.cangku = link_qc.cangku ) as link_rk LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as cksl, SUM(cpsl*cpsj) as ckje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as ck ON ck.sp_dm = link_rk.cpid AND ck.cpname = link_rk.cpname AND ck.cplb = link_rk.cplb AND ck.cangku = link_rk.cangku ) as jxc LEFT JOIN ( SELECT sp_dm, lei_bie, name, bianyuan, mark1 FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql WHERE gs_name = '"+ gongsi +"' ) as bian_yuan ON jxc.cpid = bian_yuan.sp_dm AND jxc.cpname = bian_yuan.name AND jxc.cplb = bian_yuan.lei_bie WHERE cpid LIKE '%" + product_number + "%' AND jxc.cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku, bianyuan, mark1"
+  //       },
+  //       success(res) {
+  //         for(var i=0;i<res.result.recordset.length;i++){
+  //           if(res.result.recordset[i].mark1 != null){
+  //             res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+  //           }
+  //         }
+  //         var all = []
+  //         all = res.result.recordset;
+  //         var szary = []
+  //         var inserti = 0
+  //         console.log(all)
+  //         for(var i = 0; i < all.length; i++){
+  //           szary.push({
+  //             mark1:all[i].mark1,
+  //             name:all[i].cpname,
+  //             sp_dm:all[i].cpid,
+  //             cplb:all[i].cplb,
+  //             cpsl:all[i].jcsl,
+  //             cpsj:all[i].jcje,
+  //             qcsl:all[i].qcsl,
+  //             qcje:all[i].qcje,
+  //             rksl:all[i].rksl,
+  //             rkje:all[i].rkje,
+  //             cksl:all[i].cksl,
+  //             ckje:all[i].ckje,
+  //             bianyuan:all[i].bianyuan,
+  //             zzl:all[i].zzl,
+  //             cangku:all[i].cangku
+  //           })
+  //         }
+  
+  //         that.setData({
+  //           szzhi: szary
+  //         })
+  //       },
+  //       fail(res) {
+  //         console.log("失败", res)
+  //       }
+  //     });
+      
+  //   }
+
+    
+  // },
+  //-----新0129
   sel1: function(e) {
     var that = this
     const db = wx.cloud.database()
     var app = getApp();
+    
     wx.showToast({
       title: '正在搜索',
       icon: 'loading',
       duration: 1000
     })
-    var finduser = app.globalData.finduser
+    
     var gongsi = app.globalData.gongsi
     var start_date = that.data.start_date
     var stop_date = that.data.stop_date
-    var wareHouse = that.data.wareHouse
-    console.log(wareHouse)
-    var product_number = that.data.product_number
-    console.log("商品代码", product_number)
-    if (start_date != ''){
+    var wareHouse = that.data.wareHouse || ''
+    var product_number = that.data.product_number || ''
+      // 新增：验证日期是否合法
+  if (start_date && stop_date) {
+    // 将日期字符串转换为Date对象进行比较
+    var startDateObj = new Date(start_date);
+    var stopDateObj = new Date(stop_date);
+    
+    if (startDateObj > stopDateObj) {
+      wx.showToast({
+        title: '起始时间不能大于结束时间',
+        icon: 'none',
+        duration: 2000
+      });
+      return; // 停止执行查询
+    }
+  }
+  
+  wx.showToast({
+    title: '正在搜索',
+    icon: 'loading',
+    duration: 1000
+  })
+    console.log("查询参数:", {
+      start_date: start_date,
+      stop_date: stop_date,
+      wareHouse: wareHouse,
+      product_number: product_number,
+      gongsi: gongsi
+    })
+    
+    // 处理日期范围
+    if (start_date != '') {
       start_date = start_date + " 00:00:00"
-    }else{
+    } else {
       start_date = "1900-01-01 00:00:00"
     }
-    if (stop_date != ''){
+    if (stop_date != '') {
       stop_date = stop_date + " 23:59:59"
-    }else{
+    } else {
       stop_date = "2100-12-31 23:59:59"
     }
-
-    if(app.globalData.shujuku==0){
-
+    
+    
+    if(app.globalData.shujuku == 0) {
+      // MySQL版本 - 修复字符串拼接
+      var sql = `
+        SELECT 
+          IFNULL(c.cpid, '') as cpid,
+          IFNULL(c.cpname, '') as cpname,
+          IFNULL(c.cplb, '') as cplb,
+          IFNULL(c.cangku, '') as cangku,
+          IFNULL(qc.qcsl, 0) as qcsl,
+          IFNULL(qc.qcje, 0) as qcje,
+          IFNULL(rk.rksl, 0) as rksl,
+          IFNULL(rk.rkje, 0) as rkje,
+          IFNULL(ck.cksl, 0) as cksl,
+          IFNULL(ck.ckje, 0) as ckje,
+          IFNULL(qc.qcsl, 0) + IFNULL(rk.rksl, 0) - IFNULL(ck.cksl, 0) as jcsl,
+          IFNULL(qc.qcje, 0) + IFNULL(rk.rkje, 0) - IFNULL(ck.ckje, 0) as jcje,
+          IFNULL(jz.bianyuan, '') as bianyuan,
+          jz.mark1,
+          CASE 
+            WHEN (IFNULL(qc.qcje, 0) + IFNULL(qc.qcje, 0) + IFNULL(rk.rkje, 0) - IFNULL(ck.ckje, 0)) / 2 != 0 
+            THEN ROUND((IFNULL(ck.ckje, 0) / ((IFNULL(qc.qcje, 0) + IFNULL(qc.qcje, 0) + IFNULL(rk.rkje, 0) - IFNULL(ck.ckje, 0)) / 2)) * 100, 2) 
+            ELSE 0 
+          END as zzl
+        FROM (
+          SELECT cpid, cpname, cplb, cangku 
+          FROM yh_jinxiaocun_qichushu 
+          WHERE gs_name = '` + gongsi + `' 
+            AND cangku LIKE '%` + wareHouse + `%'
+          UNION 
+          SELECT sp_dm, cpname, cplb, cangku 
+          FROM yh_jinxiaocun_mingxi 
+          WHERE gs_name = '` + gongsi + `' 
+            AND cangku LIKE '%` + wareHouse + `%'
+        ) as c
+        LEFT JOIN (
+          SELECT cpid, cpname, cplb, cangku, 
+                 SUM(cpsl) as qcsl, 
+                 SUM(cpsl * cpsj) as qcje 
+          FROM yh_jinxiaocun_qichushu 
+          WHERE gs_name = '` + gongsi + `' 
+            AND cangku LIKE '%` + wareHouse + `%'
+          GROUP BY cpid, cpname, cplb, cangku
+        ) as qc ON c.cpid = qc.cpid 
+          AND c.cpname = qc.cpname 
+          AND c.cplb = qc.cplb 
+          AND c.cangku = qc.cangku
+        LEFT JOIN (
+          SELECT sp_dm, cpname, cplb, cangku, 
+                 SUM(cpsl) as rksl, 
+                 SUM(cpsl * cpsj) as rkje 
+          FROM yh_jinxiaocun_mingxi 
+          WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') 
+            AND gs_name = '` + gongsi + `' 
+            AND shijian BETWEEN '` + start_date + `' AND '` + stop_date + `'
+            AND cangku LIKE '%` + wareHouse + `%'
+          GROUP BY sp_dm, cpname, cplb, cangku
+        ) as rk ON c.cpid = rk.sp_dm 
+          AND c.cpname = rk.cpname 
+          AND c.cplb = rk.cplb 
+          AND c.cangku = rk.cangku
+        LEFT JOIN (
+          SELECT sp_dm, cpname, cplb, cangku, 
+                 SUM(cpsl) as cksl, 
+                 SUM(cpsl * cpsj) as ckje 
+          FROM yh_jinxiaocun_mingxi 
+          WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') 
+            AND gs_name = '` + gongsi + `' 
+            AND shijian BETWEEN '` + start_date + `' AND '` + stop_date + `'
+            AND cangku LIKE '%` + wareHouse + `%'
+          GROUP BY sp_dm, cpname, cplb, cangku
+        ) as ck ON c.cpid = ck.sp_dm 
+          AND c.cpname = ck.cpname 
+          AND c.cplb = ck.cplb 
+          AND c.cangku = ck.cangku
+        LEFT JOIN (
+          SELECT sp_dm, lei_bie, name, bianyuan, mark1 
+          FROM yh_jinxiaocun_jichuziliao 
+          WHERE gs_name = '` + gongsi + `'
+        ) as jz ON c.cpid = jz.sp_dm 
+          AND c.cpname = jz.name 
+          AND c.cplb = jz.lei_bie
+        WHERE c.cpid LIKE '%` + product_number + `%'
+          AND c.cangku LIKE '%` + wareHouse + `%'
+        ORDER BY c.cpid
+      `;
+      
+      console.log("MySQL SQL:", sql);
+      
       wx.cloud.callFunction({
         name: "sqlConnection",
-        data: {
-         sql:"SELECT cpid, cpname, cplb, cangku, SUM(qcsl) as qcsl, SUM(qcje) as qcje, SUM(rksl) as rksl, SUM(rkje) as rkje, SUM(cksl) as cksl, SUM(ckje) as ckje, SUM(jcsl) as jcsl, SUM(jcje) as jcje, ifnull(bian_yuan.bianyuan,'') as bianyuan, mark1, CASE WHEN SUM(qcje + jcje) / 2 != 0 THEN ROUND((SUM(ckje) / (SUM(qcje + jcje) / 2)) * 100, 2) ELSE 0 END as zzl FROM ( SELECT ifnull(link_rk.cpid,'') as cpid, ifnull(link_rk.cpname,'') as cpname, ifnull(link_rk.cplb,'') as cplb, ifnull(link_rk.cangku,'') as cangku, ifnull(link_rk.cpsl,0) as qcsl, ifnull(link_rk.cpje,0) as qcje, ifnull(link_rk.rksl,0) as rksl, ifnull(link_rk.rkje,0) as rkje, ifnull(ck.cksl,0) as cksl, ifnull(ck.ckje,0) as ckje, ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl, ifnull(cpje,0)+ifnull(rkje,0)-ifnull(ckje,0) as jcje FROM ( SELECT link_qc.cpid, link_qc.cpname, link_qc.cplb, link_qc.cangku, link_qc.cpsl, link_qc.cpje, rk.rksl, rk.rkje FROM ( SELECT cp.cpid, cp.cpname, cp.cplb, cp.cangku, qc.cpsl, qc.cpje FROM ( SELECT cpid, cpname, cplb, cangku FROM yh_jinxiaocun_qichushu WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' UNION SELECT sp_dm, cpname, cplb, cangku FROM yh_jinxiaocun_mingxi WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' ) as cp LEFT JOIN ( SELECT cpid, cpname, cplb, cangku, SUM(cpsl) as cpsl, SUM(cpsj*cpsl) as cpje FROM yh_jinxiaocun_qichushu WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku ) as qc ON cp.cpid = qc.cpid AND cp.cpname = qc.cpname AND cp.cplb = qc.cplb AND cp.cangku = qc.cangku ) as link_qc LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as rksl, SUM(cpsl*cpsj) as rkje FROM yh_jinxiaocun_mingxi WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as rk ON rk.sp_dm = link_qc.cpid AND rk.cpname = link_qc.cpname AND rk.cplb = link_qc.cplb AND rk.cangku = link_qc.cangku ) as link_rk LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as cksl, SUM(cpsl*cpsj) as ckje FROM yh_jinxiaocun_mingxi WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as ck ON ck.sp_dm = link_rk.cpid AND ck.cpname = link_rk.cpname AND ck.cplb = link_rk.cplb AND ck.cangku = link_rk.cangku ) as jxc LEFT JOIN ( SELECT sp_dm, lei_bie, `name`, bianyuan, mark1 FROM yh_jinxiaocun_jichuziliao WHERE gs_name = '"+ gongsi +"' ) as bian_yuan ON jxc.cpid = bian_yuan.sp_dm AND jxc.cpname = bian_yuan.`name` AND jxc.cplb = bian_yuan.lei_bie WHERE cpid LIKE '%" + product_number + "%' AND jxc.cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku, bianyuan, mark1"
-        },
+        data: { sql: sql },
         success(res) {
-          for(var i=0;i<res.result.length;i++){
-            if(res.result[i].mark1 != null){
-              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          console.log("查询结果:", res.result)
+          if(res.result && res.result.length > 0) {
+            for(var i=0; i<res.result.length; i++){
+              if(res.result[i].mark1 != null){
+                res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+              }
             }
-          }
-          var all = []
-          all = res.result;
-          var szary = []
-          var inserti = 0
-          console.log(all)
-          for(var i = 0; i < all.length; i++){
-            szary.push({
-              mark1:all[i].mark1,
-              name:all[i].cpname,
-              sp_dm:all[i].cpid,
-              cplb:all[i].cplb,
-              cpsl:all[i].jcsl,
-              cpsj:all[i].jcje,
-              qcsl:all[i].qcsl,
-              qcje:all[i].qcje,
-              rksl:all[i].rksl,
-              rkje:all[i].rkje,
-              cksl:all[i].cksl,
-              ckje:all[i].ckje,
-              bianyuan:all[i].bianyuan,
-              zzl:all[i].zzl,
-              cangku:all[i].cangku
+            
+            var all = res.result;
+            var szary = []
+            
+            for(var i = 0; i < all.length; i++){
+              szary.push({
+                mark1: all[i].mark1,
+                name: all[i].cpname,
+                sp_dm: all[i].cpid,
+                cplb: all[i].cplb,
+                cpsl: all[i].jcsl,
+                cpsj: all[i].jcje,
+                qcsl: all[i].qcsl,
+                qcje: all[i].qcje,
+                rksl: all[i].rksl,
+                rkje: all[i].rkje,
+                cksl: all[i].cksl,
+                ckje: all[i].ckje,
+                bianyuan: all[i].bianyuan,
+                zzl: all[i].zzl,
+                cangku: all[i].cangku
+              })
+            }
+            
+            that.setData({
+              szzhi: szary
+            })
+            
+            wx.showToast({
+              title: `查询到${szary.length}条数据`,
+              icon: 'success',
+              duration: 1500
+            })
+          } else {
+            that.setData({
+              szzhi: []
+            })
+            
+            wx.showToast({
+              title: '未查询到数据',
+              icon: 'none',
+              duration: 1500
             })
           }
-  
-          that.setData({
-            szzhi: szary
-          })
         },
         fail(res) {
-          console.log("失败", res)
+          console.log("查询失败", res)
+          wx.showToast({
+            title: '查询失败',
+            icon: 'error',
+            duration: 2000
+          })
         }
       });
-
-    }else if(app.globalData.shujuku == 1){
-
+    } else if(app.globalData.shujuku == 1) {
+      // SQL Server版本 - 修复字符串拼接
+      var query = `
+        SELECT 
+          ISNULL(c.cpid, '') as cpid,
+          ISNULL(c.cpname, '') as cpname,
+          ISNULL(c.cplb, '') as cplb,
+          ISNULL(c.cangku, '') as cangku,
+          ISNULL(qc.qcsl, 0) as qcsl,
+          ISNULL(qc.qcje, 0) as qcje,
+          ISNULL(rk.rksl, 0) as rksl,
+          ISNULL(rk.rkje, 0) as rkje,
+          ISNULL(ck.cksl, 0) as cksl,
+          ISNULL(ck.ckje, 0) as ckje,
+          ISNULL(qc.qcsl, 0) + ISNULL(rk.rksl, 0) - ISNULL(ck.cksl, 0) as jcsl,
+          ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0) as jcje,
+          ISNULL(jz.bianyuan, '') as bianyuan,
+          jz.mark1,
+          CASE 
+            WHEN (ISNULL(qc.qcje, 0) + ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0)) / 2 != 0 
+            THEN ROUND((ISNULL(ck.ckje, 0) / ((ISNULL(qc.qcje, 0) + ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0)) / 2)) * 100, 2) 
+            ELSE 0 
+          END as zzl
+        FROM (
+          SELECT cpid, cpname, cplb, cangku 
+          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql 
+          WHERE gs_name = '` + gongsi + `' 
+            AND cangku LIKE '%` + wareHouse + `%'
+          UNION 
+          SELECT sp_dm, cpname, cplb, cangku 
+          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
+          WHERE gs_name = '` + gongsi + `' 
+            AND cangku LIKE '%` + wareHouse + `%'
+        ) as c
+        LEFT JOIN (
+          SELECT cpid, cpname, cplb, cangku, 
+                 SUM(cpsl) as qcsl, 
+                 SUM(cpsl * cpsj) as qcje 
+          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql 
+          WHERE gs_name = '` + gongsi + `' 
+            AND cangku LIKE '%` + wareHouse + `%'
+          GROUP BY cpid, cpname, cplb, cangku
+        ) as qc ON c.cpid = qc.cpid 
+          AND c.cpname = qc.cpname 
+          AND c.cplb = qc.cplb 
+          AND c.cangku = qc.cangku
+        LEFT JOIN (
+          SELECT sp_dm, cpname, cplb, cangku, 
+                 SUM(cpsl) as rksl, 
+                 SUM(cpsl * cpsj) as rkje 
+          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
+          WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') 
+            AND gs_name = '` + gongsi + `' 
+            AND shijian BETWEEN '` + start_date + `' AND '` + stop_date + `'
+            AND cangku LIKE '%` + wareHouse + `%'
+          GROUP BY sp_dm, cpname, cplb, cangku
+        ) as rk ON c.cpid = rk.sp_dm 
+          AND c.cpname = rk.cpname 
+          AND c.cplb = rk.cplb 
+          AND c.cangku = rk.cangku
+        LEFT JOIN (
+          SELECT sp_dm, cpname, cplb, cangku, 
+                 SUM(cpsl) as cksl, 
+                 SUM(cpsl * cpsj) as ckje 
+          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
+          WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') 
+            AND gs_name = '` + gongsi + `' 
+            AND shijian BETWEEN '` + start_date + `' AND '` + stop_date + `'
+            AND cangku LIKE '%` + wareHouse + `%'
+          GROUP BY sp_dm, cpname, cplb, cangku
+        ) as ck ON c.cpid = ck.sp_dm 
+          AND c.cpname = ck.cpname 
+          AND c.cplb = ck.cplb 
+          AND c.cangku = ck.cangku
+        LEFT JOIN (
+          SELECT sp_dm, lei_bie, name, bianyuan, mark1 
+          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql 
+          WHERE gs_name = '` + gongsi + `'
+        ) as jz ON c.cpid = jz.sp_dm 
+          AND c.cpname = jz.name 
+          AND c.cplb = jz.lei_bie
+        WHERE c.cpid LIKE '%` + product_number + `%'
+          AND c.cangku LIKE '%` + wareHouse + `%'
+        ORDER BY c.cpid
+      `;
+      
+      console.log("SQL Server Query:", query);
+      
       wx.cloud.callFunction({
         name: "sqlServer_117",
-        data: {
-          query:"SELECT cpid, cpname, cplb, cangku, SUM(qcsl) as qcsl, SUM(qcje) as qcje, SUM(rksl) as rksl, SUM(rkje) as rkje, SUM(cksl) as cksl, SUM(ckje) as ckje, SUM(jcsl) as jcsl, SUM(jcje) as jcje, ISNULL(bian_yuan.bianyuan,'') as bianyuan, mark1, CASE WHEN SUM(qcje + jcje) / 2 != 0 THEN ROUND((SUM(ckje) / (SUM(qcje + jcje) / 2)) * 100, 2) ELSE 0 END as zzl FROM ( SELECT ISNULL(link_rk.cpid,'') as cpid, ISNULL(link_rk.cpname,'') as cpname, ISNULL(link_rk.cplb,'') as cplb, ISNULL(link_rk.cangku,'') as cangku, ISNULL(link_rk.cpsl,0) as qcsl, ISNULL(link_rk.cpje,0) as qcje, ISNULL(link_rk.rksl,0) as rksl, ISNULL(link_rk.rkje,0) as rkje, ISNULL(ck.cksl,0) as cksl, ISNULL(ck.ckje,0) as ckje, ISNULL(cpsl,0)+ISNULL(rksl,0)-ISNULL(cksl,0) as jcsl, ISNULL(cpje,0)+ISNULL(rkje,0)-ISNULL(ckje,0) as jcje FROM ( SELECT link_qc.cpid, link_qc.cpname, link_qc.cplb, link_qc.cangku, link_qc.cpsl, link_qc.cpje, rk.rksl, rk.rkje FROM ( SELECT cp.cpid, cp.cpname, cp.cplb, cp.cangku, qc.cpsl, qc.cpje FROM ( SELECT cpid, cpname, cplb, cangku FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' UNION SELECT sp_dm, cpname, cplb, cangku FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' ) as cp LEFT JOIN ( SELECT cpid, cpname, cplb, cangku, SUM(cpsl) as cpsl, SUM(cpsj*cpsl) as cpje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql WHERE gs_name = '"+ gongsi +"' AND cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku ) as qc ON cp.cpid = qc.cpid AND cp.cpname = qc.cpname AND cp.cplb = qc.cplb AND cp.cangku = qc.cangku ) as link_qc LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as rksl, SUM(cpsl*cpsj) as rkje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as rk ON rk.sp_dm = link_qc.cpid AND rk.cpname = link_qc.cpname AND rk.cplb = link_qc.cplb AND rk.cangku = link_qc.cangku ) as link_rk LEFT JOIN ( SELECT sp_dm, cpname, cplb, cangku, SUM(cpsl) as cksl, SUM(cpsl*cpsj) as ckje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') AND gs_name = '"+ gongsi +"' AND shijian BETWEEN '" + start_date + "' AND '" + stop_date + "' AND cangku LIKE '%" + wareHouse + "%' GROUP BY sp_dm, cpname, cplb, cangku ) as ck ON ck.sp_dm = link_rk.cpid AND ck.cpname = link_rk.cpname AND ck.cplb = link_rk.cplb AND ck.cangku = link_rk.cangku ) as jxc LEFT JOIN ( SELECT sp_dm, lei_bie, name, bianyuan, mark1 FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql WHERE gs_name = '"+ gongsi +"' ) as bian_yuan ON jxc.cpid = bian_yuan.sp_dm AND jxc.cpname = bian_yuan.name AND jxc.cplb = bian_yuan.lei_bie WHERE cpid LIKE '%" + product_number + "%' AND jxc.cangku LIKE '%" + wareHouse + "%' GROUP BY cpid, cpname, cplb, cangku, bianyuan, mark1"
-        },
+        data: { query: query },
         success(res) {
-          for(var i=0;i<res.result.recordset.length;i++){
-            if(res.result.recordset[i].mark1 != null){
-              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+          console.log("查询结果:", res.result)
+          if(res.result && res.result.recordset && res.result.recordset.length > 0) {
+            for(var i=0; i<res.result.recordset.length; i++){
+              if(res.result.recordset[i].mark1 != null){
+                res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+              }
             }
-          }
-          var all = []
-          all = res.result.recordset;
-          var szary = []
-          var inserti = 0
-          console.log(all)
-          for(var i = 0; i < all.length; i++){
-            szary.push({
-              mark1:all[i].mark1,
-              name:all[i].cpname,
-              sp_dm:all[i].cpid,
-              cplb:all[i].cplb,
-              cpsl:all[i].jcsl,
-              cpsj:all[i].jcje,
-              qcsl:all[i].qcsl,
-              qcje:all[i].qcje,
-              rksl:all[i].rksl,
-              rkje:all[i].rkje,
-              cksl:all[i].cksl,
-              ckje:all[i].ckje,
-              bianyuan:all[i].bianyuan,
-              zzl:all[i].zzl,
-              cangku:all[i].cangku
+            
+            var all = res.result.recordset;
+            var szary = []
+            
+            for(var i = 0; i < all.length; i++){
+              szary.push({
+                mark1: all[i].mark1,
+                name: all[i].cpname,
+                sp_dm: all[i].cpid,
+                cplb: all[i].cplb,
+                cpsl: all[i].jcsl,
+                cpsj: all[i].jcje,
+                qcsl: all[i].qcsl,
+                qcje: all[i].qcje,
+                rksl: all[i].rksl,
+                rkje: all[i].rkje,
+                cksl: all[i].cksl,
+                ckje: all[i].ckje,
+                bianyuan: all[i].bianyuan,
+                zzl: all[i].zzl,
+                cangku: all[i].cangku
+              })
+            }
+            
+            that.setData({
+              szzhi: szary
+            })
+            
+            wx.showToast({
+              title: `查询到${szary.length}条数据`,
+              icon: 'success',
+              duration: 1500
+            })
+          } else {
+            that.setData({
+              szzhi: []
+            })
+            
+            wx.showToast({
+              title: '未查询到数据',
+              icon: 'none',
+              duration: 1500
             })
           }
-  
-          that.setData({
-            szzhi: szary
-          })
         },
         fail(res) {
-          console.log("失败", res)
+          console.log("查询失败", res)
+          wx.showToast({
+            title: '查询失败',
+            icon: 'error',
+            duration: 2000
+          })
         }
       });
-      
     }
-
-    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

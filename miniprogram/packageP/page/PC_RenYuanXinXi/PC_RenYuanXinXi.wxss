@@ -329,7 +329,7 @@ button{
 }
 
 .bt_bottom{
-  width: 33%;
+  width: 23%;
   background: linear-gradient(135deg, #5a7592 0%, #3a4a6c 100%) !important;
   color: #ffffff !important;
   border: 1rpx solid rgba(255, 255, 255, 0.2) !important;

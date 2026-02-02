@@ -714,10 +714,10 @@ Page({
     { text: "已还款", width: "200rpx", columnName: "repayment", type: "text", isupd: true },
     { text: "商户", width: "400rpx", columnName: "commercial_tenant", type: "text", isupd: true },
     { text: "刷卡额", width: "200rpx", columnName: "swipe", type: "text", isupd: true },
-    { text: "费率", width: "200rpx", columnName: "rate", type: "date", isupd: true },
+    { text: "费率", width: "200rpx", columnName: "rate", type: "number", isupd: true },
     { text: "到账金额", width: "200rpx", columnName: "arrival_amount", type: "date", isupd: true },
-{ text: "基础手续费", width: "200rpx", columnName: "basics_service_charge", type: "digit", isupd: true },
-{ text: "其他手续费", width: "200rpx", columnName: "other_service_charge", type: "digit", isupd: true },
+{ text: "基础手续费", width: "200rpx", columnName: "basics_service_charge", type: "number", isupd: true },
+{ text: "其他手续费", width: "200rpx", columnName: "other_service_charge", type: "number", isupd: true },
     
     ]
     var cloudList = {

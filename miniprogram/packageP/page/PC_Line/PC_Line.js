@@ -56,6 +56,13 @@ Page({
           month_list: month_list
         })
         _this.line_refresh()
+        setTimeout(() => {
+          wx.showToast({
+            title: '查询成功！',
+            icon: 'none',
+            duration: 2000
+          })
+        }, 500)
       },
       err: res => {
         console.log("错误!")

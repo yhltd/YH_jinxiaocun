@@ -919,6 +919,11 @@ Page({
       cxShow: false,
       modal: "",
     })
+    wx.showToast({
+      title: '查询成功！',
+      icon: 'none',
+      duration: 3000
+    })
   },
   // 按照单号查询
   sel2: function () {

@@ -191,7 +191,7 @@
       <view class="lables">消费额度门槛:</view>
       <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="menkan"></input>
       <view class="lables">折扣比例:</view>
-      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="text" name="bili"></input>
+      <input class="input_text_form" placeholder="{{}}" value="{{empty}}" type="number" name="bili"></input>
     </view>
     <view class="bt_view">  
       <button class="bt_form" bindtap="inquire_QX" hover-class="bt_form_hover">取消</button>

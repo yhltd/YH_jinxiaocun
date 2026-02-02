@@ -456,7 +456,7 @@ Page({
       }
     } else {
       wx.showToast({
-        title: '物料不能为空！',
+        title: '表格中物料的数量不能为空！',
         icon: 'none'
       })
     }
@@ -584,6 +584,13 @@ Page({
     var e = [_this.data.order_id, _this.data.product_name]
     _this.tableShow(e)
     _this.qxShow()
+    setTimeout(() => {
+      wx.showToast({
+        title: '查询成功！',
+        icon: 'none',
+        duration: 2000
+      })
+    }, 500)
   },
 
   wlShow: function () {

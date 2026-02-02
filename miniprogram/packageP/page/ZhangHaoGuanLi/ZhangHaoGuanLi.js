@@ -299,74 +299,157 @@ Page({
     })
   },
 
-  clickView:function(e){
-    var _this = this
-    if(e.currentTarget.dataset.column == "wechart_user2"){
-      var list = _this.data.list
-      var index = e.currentTarget.dataset.index
-      wx.showModal({
-        title: '提示',
-        content: '是否使用当前微信绑定此账号？',
-        success: function(res) {
-          if (res.confirm) {
-            var this_id = wx.getStorageSync('openid')
-            console.log(this_id)
-            wx.login({
-              success: (res) => {
-                  console.log(res);
-                  _this.setData({
-                      wxCode: res.code,
-                  })
-                  let m_code = _this.data.wxCode; // 获取code
-                  let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ;
-                  let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3;
-                  console.log("m_code:" + m_code);
-                  let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
-                  wx.request({
-                      url: url,
-                      success: (res) => {
-                          console.log(res);
-                          _this.setData({
-                              wxOpenId: res.data.openid
-                          })
-                          //获取到你的openid
-                          console.log("====openID=======");
-                          console.log(_this.data.wxOpenId);
-                          var sql = "update user_info set wechart_user = '" + _this.data.wxOpenId + "' where id=" +  list[index].id
-                          console.log(sql)
-                          wx.cloud.callFunction({
-                            name: 'sqlServer_PC',
-                            data:{
-                              query : sql
-                            },
-                            success(res){
-                              console.log(res)
-                              wx.showToast({
-                                title: '绑定成功',
-                                icon:"none"
-                              })
-                              var e = ['']
-                              _this.tableShow(e)
-                            }
-                          })
-                      }
-                  })
-              }
-          })
-          }
+  // clickView:function(e){
+  //   var _this = this
+  //   if(e.currentTarget.dataset.column == "wechart_user2"){
+  //     var list = _this.data.list
+  //     var index = e.currentTarget.dataset.index
+  //     wx.showModal({
+  //       title: '提示',
+  //       content: '是否使用当前微信绑定此账号？',
+  //       success: function(res) {
+  //         if (res.confirm) {
+  //           var this_id = wx.getStorageSync('openid')
+  //           console.log(this_id)
+  //           wx.login({
+  //             success: (res) => {
+  //                 console.log(res);
+  //                 _this.setData({
+  //                     wxCode: res.code,
+  //                 })
+  //                 let m_code = _this.data.wxCode; // 获取code
+  //                 let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ;
+  //                 let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3;
+  //                 console.log("m_code:" + m_code);
+  //                 let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+  //                 wx.request({
+  //                     url: url,
+  //                     success: (res) => {
+  //                         console.log(res);
+  //                         _this.setData({
+  //                             wxOpenId: res.data.openid
+  //                         })
+  //                         //获取到你的openid
+  //                         console.log("====openID=======");
+  //                         console.log(_this.data.wxOpenId);
+  //                         var sql = "update user_info set wechart_user = '" + _this.data.wxOpenId + "' where id=" +  list[index].id
+  //                         console.log(sql)
+  //                         wx.cloud.callFunction({
+  //                           name: 'sqlServer_PC',
+  //                           data:{
+  //                             query : sql
+  //                           },
+  //                           success(res){
+  //                             console.log(res)
+  //                             wx.showToast({
+  //                               title: '绑定成功',
+  //                               icon:"none"
+  //                             })
+  //                             var e = ['']
+  //                             _this.tableShow(e)
+  //                           }
+  //                         })
+  //                     }
+  //                 })
+  //             }
+  //         })
+  //         }
+  //       }
+  //     })
+  //   }else{
+  //     _this.setData({
+  //       zh: _this.data.list[e.currentTarget.dataset.index].user_code, 
+  //       mm: _this.data.list[e.currentTarget.dataset.index].password,
+  //       bm: _this.data.list[e.currentTarget.dataset.index].department_name,
+  //       id: _this.data.list[e.currentTarget.dataset.index].id,
+  //       xgShow:true,
+  //     })
+  //   }
+  // },
+//----新0130
+clickView:function(e){
+  var _this = this
+  if(e.currentTarget.dataset.column == "wechart_user2"){
+    var list = _this.data.list
+    var index = e.currentTarget.dataset.index
+    wx.showModal({
+      title: '提示',
+      content: '是否使用当前微信绑定此账号？',
+      success: function(res) {
+        if (res.confirm) {
+          var this_id = wx.getStorageSync('openid')
+          console.log(this_id)
+          wx.login({
+            success: (res) => {
+                console.log(res);
+                _this.setData({
+                    wxCode: res.code,
+                })
+                let m_code = _this.data.wxCode; // 获取code
+                let m_AppId = app.globalData.this_id1 + app.globalData.this_id2 + app.globalData.this_id3 ;
+                let m_mi =  app.globalData.sec_dd1 + app.globalData.sec_dd2 + app.globalData.sec_dd3;
+                console.log("m_code:" + m_code);
+                let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + m_AppId + "&secret=" + m_mi + "&js_code=" + m_code + "&grant_type=authorization_code";
+                wx.request({
+                    url: url,
+                    success: (res) => {
+                        console.log(res);
+                        _this.setData({
+                            wxOpenId: res.data.openid
+                        })
+                        //获取到你的openid
+                        console.log("====openID=======");
+                        console.log(_this.data.wxOpenId);
+                        var sql = "update user_info set wechart_user = '" + _this.data.wxOpenId + "' where id=" +  list[index].id
+                        console.log(sql)
+                        wx.cloud.callFunction({
+                          name: 'sqlServer_PC',
+                          data:{
+                            query : sql
+                          },
+                          success(res){
+                            console.log(res)
+                            wx.showToast({
+                              title: '绑定成功',
+                              icon:"none"
+                            })
+                            var e = ['']
+                            _this.tableShow(e)
+                          }
+                        })
+                    }
+                })
+            }
+        })
         }
-      })
-    }else{
+      }
+    })
+  }else{
+    var list = _this.data.list
+    var index = e.currentTarget.dataset.index
+    var currentState = list[index].state // 获取当前状态
+    
+    // 找到状态在数组中的索引
+    var stateIndex = _this.data.zhuangtai_list.indexOf(currentState)
+    if (stateIndex === -1) stateIndex = 0 // 如果找不到，默认第一个
+    
+    _this.setData({
+      zh: list[index].user_code, 
+      mm: list[index].password,
+      bm: list[index].department_name,
+      id: list[index].id,
+      zt: currentState, // 设置状态值
+      xgShow:true,
+    })
+    
+    // 设置picker的默认选中项（如果需要）
+    setTimeout(() => {
       _this.setData({
-        zh: _this.data.list[e.currentTarget.dataset.index].user_code, 
-        mm: _this.data.list[e.currentTarget.dataset.index].password,
-        bm: _this.data.list[e.currentTarget.dataset.index].department_name,
-        id: _this.data.list[e.currentTarget.dataset.index].id,
-        xgShow:true,
+        'pickerIndex': stateIndex
       })
-    }
-  },
-
+    }, 100)
+  }
+},
   jiebang:function(e){
     var _this = this
     var list = _this.data.list
@@ -457,6 +540,14 @@ Page({
     var e = [_this.data.zh]
     _this.tableShow(e)
     _this.qxShow()
+      //----新0130
+      setTimeout(() => {
+        wx.showToast({
+          title: '查询成功！',
+          icon: 'none',
+          duration: 2000
+        })
+      }, 500)
   },
 
   /**

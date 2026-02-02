@@ -1031,6 +1031,13 @@ Page({
       list: new_list,
     })
     _this.qxShow()
+    setTimeout(() => {
+      wx.showToast({
+        title: '查询成功！',
+        icon: 'none',
+        duration: 2000
+      })
+    }, 500)
   },
 
   // 根据日期查询每日生产计划

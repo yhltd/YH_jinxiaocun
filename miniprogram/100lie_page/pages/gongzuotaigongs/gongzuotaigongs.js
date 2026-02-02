@@ -136,68 +136,192 @@ Page({
    
   },
 
-  add1: function () {
-    var _this = this
-    let user = _this.data.userInfo.Company;
-    if(_this.data.thiscolumn == "" || _this.data.gongshi == ""){
-      wx.showToast({
-        title: '信息填写不全',
-        icon :'none',
-      })
-      return;
-    }
-    var this_gongshi = _this.data.gongshi
-    var lie = ""
-    for(var i=0; i<this_gongshi.length;i++){
-      var this_str = this_gongshi.substring(i,i+1)
-      var this_asc = this_gongshi.charCodeAt(i)
-      console.log(this_asc)
-      if((this_asc >= 65 && this_asc <= 90) || (this_asc >= 97 && this_asc <= 122)){
-        lie = lie + this_str
-      }else{
-        if(_this.data.thiscolumn.toUpperCase() == lie.toUpperCase()){
-          wx.showToast({
-            title: '设置公式的列不能包含本身',
-            icon :'none',
-          })
-          return;
-        }
-        lie = ""
-      }
-    }
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "insert into baitaoquanxian_jisuan(thiscolumn,gongshi,Company) values('" + _this.data.thiscolumn + "','" + _this.data.gongshi + "','"+ _this.data.userInfo.B +"')"
-      },
-      success: res => {
-        _this.setData({
-          rq: "",
-          thiscolumn: "",
-          gongshi: "",
-        })
-        _this.qxShow()
+  // add1: function () {
+  //   var _this = this
+  //   let user = _this.data.userInfo.Company;
+  //   if(_this.data.thiscolumn == "" || _this.data.gongshi == ""){
+  //     wx.showToast({
+  //       title: '信息填写不全',
+  //       icon :'none',
+  //     })
+  //     return;
+  //   }
+  //   var this_gongshi = _this.data.gongshi
+  //   var lie = ""
+  //   for(var i=0; i<this_gongshi.length;i++){
+  //     var this_str = this_gongshi.substring(i,i+1)
+  //     var this_asc = this_gongshi.charCodeAt(i)
+  //     console.log(this_asc)
+  //     if((this_asc >= 65 && this_asc <= 90) || (this_asc >= 97 && this_asc <= 122)){
+  //       lie = lie + this_str
+  //     }else{
+  //       if(_this.data.thiscolumn.toUpperCase() == lie.toUpperCase()){
+  //         wx.showToast({
+  //           title: '设置公式的列不能包含本身',
+  //           icon :'none',
+  //         })
+  //         return;
+  //       }
+  //       lie = ""
+  //     }
+  //   }
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_117',
+  //     data: {
+  //       query: "insert into baitaoquanxian_jisuan(thiscolumn,gongshi,Company) values('" + _this.data.thiscolumn + "','" + _this.data.gongshi + "','"+ _this.data.userInfo.B +"')"
+  //     },
+  //     success: res => {
+  //       _this.setData({
+  //         rq: "",
+  //         thiscolumn: "",
+  //         gongshi: "",
+  //       })
+  //       _this.qxShow()
        
-        _this.tableShow()
-        wx.showToast({
-          title: '添加成功！',
-          icon: 'none'
-        })
-      },
-      err: res => {
-        console.log("错误!")
-      },
-      fail: res => {
-        wx.showToast({
-          title: '请求失败！',
-          icon: 'none'
-        })
-        console.log("请求失败！")
-      }
-    })
+  //       _this.tableShow()
+  //       wx.showToast({
+  //         title: '添加成功！',
+  //         icon: 'none'
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none'
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
     
-  },
-
+  // },
+//-------新0130
+add1: function () {
+  var _this = this
+  let user = _this.data.userInfo.Company;
+  if(_this.data.thiscolumn == "" || _this.data.gongshi == ""){
+    wx.showToast({
+      title: '信息填写不全',
+      icon :'none',
+    })
+    return;
+  }
+  
+  // 首先检查是否已存在相同的列
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data: {
+      query: "SELECT COUNT(*) as count FROM baitaoquanxian_jisuan WHERE thiscolumn = '" + _this.data.thiscolumn + "' AND Company = '" + _this.data.userInfo.B + "'"
+    },
+    success: res => {
+      var count = res.result.recordset[0].count;
+      
+      if (count > 0) {
+        // 已存在相同的列
+        wx.showModal({
+          title: '提示',
+          content: '页面已有该列"' + _this.data.thiscolumn + '"的公式，是否前往修改？',
+          confirmText: '前往修改',
+          cancelText: '取消',
+          success: function(res) {
+            if (res.confirm) {
+              // 用户确认前往修改，查找该列的ID并设置到编辑状态
+              wx.cloud.callFunction({
+                name: 'sqlServer_117',
+                data: {
+                  query: "SELECT id FROM baitaoquanxian_jisuan WHERE thiscolumn = '" + _this.data.thiscolumn + "' AND Company = '" + _this.data.userInfo.B + "'"
+                },
+                success: res => {
+                  if (res.result.recordset.length > 0) {
+                    _this.setData({
+                      id: res.result.recordset[0].id,
+                      xgShow: true, // 显示修改弹窗
+                      tjShow: false // 隐藏添加弹窗
+                    })
+                    
+                    // 获取该列的公式信息并填充到表单
+                    wx.cloud.callFunction({
+                      name: 'sqlServer_117',
+                      data: {
+                        query: "SELECT gongshi FROM baitaoquanxian_jisuan WHERE id = '" + _this.data.id + "'"
+                      },
+                      success: res => {
+                        if (res.result.recordset.length > 0) {
+                          _this.setData({
+                            gongshi: res.result.recordset[0].gongshi
+                          })
+                        }
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          }
+        })
+        return;
+      }
+      
+      // 继续原来的验证逻辑
+      var this_gongshi = _this.data.gongshi
+      var lie = ""
+      for(var i=0; i<this_gongshi.length;i++){
+        var this_str = this_gongshi.substring(i,i+1)
+        var this_asc = this_gongshi.charCodeAt(i)
+        console.log(this_asc)
+        if((this_asc >= 65 && this_asc <= 90) || (this_asc >= 97 && this_asc <= 122)){
+          lie = lie + this_str
+        }else{
+          if(_this.data.thiscolumn.toUpperCase() == lie.toUpperCase()){
+            wx.showToast({
+              title: '设置公式的列不能包含本身',
+              icon :'none',
+            })
+            return;
+          }
+          lie = ""
+        }
+      }
+      
+      // 执行添加操作
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "insert into baitaoquanxian_jisuan(thiscolumn,gongshi,Company) values('" + _this.data.thiscolumn + "','" + _this.data.gongshi + "','"+ _this.data.userInfo.B +"')"
+        },
+        success: res => {
+          _this.setData({
+            rq: "",
+            thiscolumn: "",
+            gongshi: "",
+          })
+          _this.qxShow()
+         
+          _this.tableShow()
+          wx.showToast({
+            title: '添加成功！',
+            icon: 'none'
+          })
+        },
+        err: res => {
+          console.log("错误!")
+        },
+        fail: res => {
+          wx.showToast({
+            title: '请求失败！',
+            icon: 'none'
+          })
+          console.log("请求失败！")
+        }
+      })
+    },
+    err: res => {
+      console.log("检查重复列错误!")
+    }
+  })
+},
 
   upd1:function(){
     var _this = this

@@ -64,6 +64,11 @@ Page({
     var e = [_this.data.name,_this.data.banci]
     _this.tableShow(e)
     _this.qxShow()
+    wx.showToast({
+      title: '查询成功！',
+      icon: 'none',
+      duration: 2000
+    })
   },
 
   goto_yanshi: function(){
@@ -159,11 +164,7 @@ Page({
           name:'',
           banci:'',
         })
-        wx.showToast({
-          title: '查询成功！',
-          icon: 'none',
-          duration: 3000
-        })
+
         // console.log(list)
       },
       err: res => {

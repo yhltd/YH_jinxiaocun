@@ -90,93 +90,256 @@ Page({
     that.sel1()
   },
   sel11:function(){
+    var _this = this;
+    var startDate = _this.data.start_date;
+    var stopDate = _this.data.stop_date;
+    
+    // 验证日期逻辑
+    if (startDate && stopDate) {
+      // 将日期字符串转换为Date对象进行比较
+      var start = new Date(startDate);
+      var stop = new Date(stopDate);
+      
+      if (start > stop) {
+        wx.showToast({
+          title: '起始时间不能大于结束时间',
+          icon: 'none',
+          duration: 2000
+        });
+        return; // 停止执行查询
+      }
+    }
     this.setData({
       page:1
     })
     this.sel1()
   },
-  sel1:function(){
-    var _this = this
-    var gongsi = app.globalData.gongsi
-    var start_date = _this.data.start_date
-    var stop_date = _this.data.stop_date
-    var order_number = _this.data.order_number
-    var page = _this.data.page-1
-    if (start_date != ''){
-      start_date = start_date + " 00:00:00"
-    }else{
-      start_date = "1900-01-01 00:00:00"
-    }
-    if (stop_date != ''){
-      stop_date = stop_date + " 23:59:59"
-    }else{
-      stop_date = "2100-12-31 23:59:59"
-    }
-
-    if(app.globalData.shujuku==0){
-
-      wx.cloud.callFunction({
-        name: "sqlConnection",
-        data: {
-          sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '出库' OR mxtype = '入库') LIMIT "+page+", 5"
-        },
-        success(res) {
-          for(var i=0;i<res.result.length;i++){
-            if(res.result[i].mark1 != null){
-              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
-            }
-          }
-          console.log(res.result)
-          _this.setData({
-            szzhi: res.result,
-           
-            // start_date:'',
-            // stop_date:'',
-            // order_number:'',
-          })
-          console.log(_this.data.szzhi)
-        },
-        fail(res) {
-          console.log(res.result)
-          console.log("失败", res)
+//   sel1:function(){
+//     var _this = this
+//     var gongsi = app.globalData.gongsi
+//     var start_date = _this.data.start_date
+//     var stop_date = _this.data.stop_date
+//     var order_number = _this.data.order_number
+//     // var page = _this.data.page-1
+//     // 修改这里：正确的分页计算
+//   var page = (_this.data.page - 1) * 5;
+//       // 再次验证日期（安全起见）
+//   if (start_date && stop_date) {
+//     var start = new Date(start_date);
+//     var stop = new Date(stop_date);
+    
+//     if (start > stop) {
+//       wx.showToast({
+//         title: '起始时间不能大于结束时间',
+//         icon: 'none',
+//         duration: 2000
+//       });
+//       return; // 停止执行查询
+//     }
+//   }
   
-        }
-      });
+//     if (start_date != ''){
+//       start_date = start_date + " 00:00:00"
+//     }else{
+//       start_date = "1900-01-01 00:00:00"
+//     }
+//     if (stop_date != ''){
+//       stop_date = stop_date + " 23:59:59"
+//     }else{
+//       stop_date = "2100-12-31 23:59:59"
+//     }
+// //-----新0129
+// if(app.globalData.shujuku==0){
+//   wx.cloud.callFunction({
+//     name: "sqlConnection",
+//     data: {
+//       sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '出库' OR mxtype = '入库') LIMIT " + page + ", 5"  // 使用修正后的page
+//     },
+//     // if(app.globalData.shujuku==0){
 
-    }else if(app.globalData.shujuku == 1){
-
-      wx.cloud.callFunction({
-        name: "sqlServer_117",
-        data: {
-          query: "SELECT * FROM (SELECT m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%') as t WHERE RowNum BETWEEN " + (page * 5 + 1) + " AND " + (page * 5 + 5) + ""
-        },
-        success(res) {
-          for(var i=0;i<res.result.recordset.length;i++){
-            if(res.result.recordset[i].mark1 != null){
-              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
-            }
-          }
-          console.log(res.result.recordset)
-          _this.setData({
-            szzhi: res.result.recordset,
+//     //   wx.cloud.callFunction({
+//     //     name: "sqlConnection",
+//     //     data: {
+//     //       sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '出库' OR mxtype = '入库') LIMIT "+page+", 5"
+//     //     },
+//         success(res) {
+//           for(var i=0;i<res.result.length;i++){
+//             if(res.result[i].mark1 != null){
+//               res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+//             }
+//           }
+//           console.log(res.result)
+//           _this.setData({
+//             szzhi: res.result,
            
-            // start_date:'',
-            // stop_date:'',
-            // order_number:'',
-          })
-          console.log(_this.data.szzhi)
-        },
-        fail(res) {
-          console.log(res.result.recordset)
-          console.log("失败", res)
+//             // start_date:'',
+//             // stop_date:'',
+//             // order_number:'',
+//           })
+//           console.log(_this.data.szzhi)
+//         },
+//         fail(res) {
+//           console.log(res.result)
+//           console.log("失败", res)
   
-        }
-      });
+//         }
+//       });
+//       //------新0129
+//     } else if(app.globalData.shujuku == 1){
+//       wx.cloud.callFunction({
+//         name: "sqlServer_117",
+//         data: {
+//           query: "SELECT * FROM (SELECT m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%') as t WHERE RowNum BETWEEN " + (page + 1) + " AND " + (page + 5) + ""  // 使用修正后的page
+//         },
+//     // }else if(app.globalData.shujuku == 1){
+
+//     //   wx.cloud.callFunction({
+//     //     name: "sqlServer_117",
+//     //     data: {
+//     //       query: "SELECT * FROM (SELECT m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%') as t WHERE RowNum BETWEEN " + (page * 5 + 1) + " AND " + (page * 5 + 5) + ""
+//     //     },
+//         success(res) {
+//           for(var i=0;i<res.result.recordset.length;i++){
+//             if(res.result.recordset[i].mark1 != null){
+//               res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+//             }
+//           }
+//           console.log(res.result.recordset)
+//           _this.setData({
+//             szzhi: res.result.recordset,
+           
+//             // start_date:'',
+//             // stop_date:'',
+//             // order_number:'',
+//           })
+//           console.log(_this.data.szzhi)
+//         },
+//         fail(res) {
+//           console.log(res.result.recordset)
+//           console.log("失败", res)
+  
+//         }
+//       });
       
-    }
+//     }
 
    
-  },
+//   },
+sel1:function(){
+  var _this = this
+  var gongsi = app.globalData.gongsi
+  var start_date = _this.data.start_date
+  var stop_date = _this.data.stop_date
+  var order_number = _this.data.order_number
+  
+  // 修改这里：正确的分页计算
+  var page = (_this.data.page - 1) * 5;
+  
+  // 再次验证日期（安全起见）
+  if (start_date && stop_date) {
+    var start = new Date(start_date);
+    var stop = new Date(stop_date);
+    
+    if (start > stop) {
+      wx.showToast({
+        title: '起始时间不能大于结束时间',
+        icon: 'none',
+        duration: 2000
+      });
+      return; // 停止执行查询
+    }
+  }
+  
+  if (start_date != ''){
+    start_date = start_date + " 00:00:00"
+  }else{
+    start_date = "1900-01-01 00:00:00"
+  }
+  if (stop_date != ''){
+    stop_date = stop_date + " 23:59:59"
+  }else{
+    stop_date = "2100-12-31 23:59:59"
+  }
+
+  if(app.globalData.shujuku==0){
+    wx.cloud.callFunction({
+      name: "sqlConnection",
+      data: {
+        sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '出库' OR mxtype = '入库') LIMIT " + page + ", 5"
+      },
+      success(res) {
+        for(var i=0;i<res.result.length;i++){
+          if(res.result[i].mark1 != null){
+            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+          }
+        }
+        console.log(res.result)
+        _this.setData({
+          szzhi: res.result,
+        })
+        console.log(_this.data.szzhi)
+        
+        // 添加最后一页判断 - 简单版
+        if (res.result.length === 0 && _this.data.page > 1) {
+          wx.showToast({
+            title: '已经是最后一页',
+            icon: 'none',
+            duration: 1500
+          })
+          // 回退页码
+          _this.setData({
+            page: _this.data.page - 1
+          }, function() {
+            // 页码回退后，重新查询上一页数据
+            _this.sel1();
+          })
+          return; // 重要：停止执行后面的代码
+        }
+      },
+      fail(res) {
+        console.log(res.result)
+        console.log("失败", res)
+      }
+    }); // 这里缺少了这行
+
+  } else if(app.globalData.shujuku == 1){
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: "SELECT * FROM (SELECT m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%') as t WHERE RowNum BETWEEN " + (page + 1) + " AND " + (page + 5) + ""
+      },
+      success(res) {
+        for(var i=0;i<res.result.recordset.length;i++){
+          if(res.result.recordset[i].mark1 != null){
+            res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+          }
+        }
+        console.log(res.result.recordset)
+        _this.setData({
+          szzhi: res.result.recordset,
+        })
+        console.log(_this.data.szzhi)
+        
+        // 添加最后一页判断 - 简单版
+        if (res.result.recordset.length === 0 && _this.data.page > 1) {
+          wx.showToast({
+            title: '已经是最后一页',
+            icon: 'none',
+            duration: 1500
+          })
+          // 回退页码
+          _this.setData({
+            page: _this.data.page - 1
+          })
+        }
+      },
+      fail(res) {
+        console.log(res.result.recordset)
+        console.log("失败", res)
+      }
+    });
+  }
+},
  up:function(){
    var _this=this
    var page = _this.data.page
@@ -194,22 +357,36 @@ Page({
  
    _this.sel1()
  },
- down:function(){
- var _this=this
- var page = _this.data.page
-  page=page+1
-  if(page<1){
-   wx.showToast({
-     title: '已经是第一页',
-     icon: 'none'
-   })
-   return;
-  }
-  _this.setData({
-    page:page
-  })
+//  down:function(){
+//  var _this=this
+//  var page = _this.data.page
+//   page=page+1
+//   if(page<1){
+//    wx.showToast({
+//      title: '已经是第一页',
+//      icon: 'none'
+//    })
+//    return;
+//   }
+//   _this.setData({
+//     page:page
+//   })
 
-  _this.sel1()
+//   _this.sel1()
+// }
+//-------新0129
+down: function() {
+  var _this = this
+  var page = _this.data.page
+  page = page + 1
+  
+  // 先请求数据，再根据返回结果判断
+  _this.setData({
+    page: page,
+  })
+  
+  // 直接调用sel1函数进行查询
+  _this.sel1();
 },
 
   print_out:function(){

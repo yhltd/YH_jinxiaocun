@@ -405,6 +405,11 @@ Page({
     var e = [_this.data.ddh,_this.data.mk,_this.data.riqi1,_this.data.riqi2]
     _this.tableShow(e)
     _this.qxShow()
+    wx.showToast({
+      title: '查询成功！',
+      icon: 'none',
+      duration: 3000
+    })
   },
 
   /**

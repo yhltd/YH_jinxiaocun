@@ -63,7 +63,6 @@ Page({
         }
       ]
     }
-    var options = 
     _this.updChart(options)
 
   },

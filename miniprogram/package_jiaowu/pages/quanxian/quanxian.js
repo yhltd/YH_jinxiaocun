@@ -95,7 +95,7 @@ Page({
 
     if(app.globalData.shujuku==0){
 
-      let sql = "select p.id,t_id,view_name,`add`,del,upd,sel,RealName as s_name from power as p left jointeacher as t on p.t_id=t.ID where p.company ='" + user + "'"
+      let sql = "select p.id,t_id,view_name,`add`,del,upd,sel,RealName as s_name from power as p left join teacher as t on p.t_id=t.ID where p.company ='" + user + "'"
 
       // 如果e有值且不是空字符串，就添加view_name条件
       if (e && e !== '' && e.length >=2) {

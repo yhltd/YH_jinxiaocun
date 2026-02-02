@@ -327,6 +327,13 @@ Page({
     var e = [_this.data.department_name,_this.data.view_name]
     _this.tableShow(e)
     _this.qxShow()
+    setTimeout(() => {
+      wx.showToast({
+        title: '查询成功！',
+        icon: 'none',
+        duration: 2000
+      })
+    }, 500)
   },
 
   // 修改事件
@@ -462,6 +469,11 @@ Page({
             icon: 'none',
             duration: 3000
           })
+               // 延迟刷新数据，确保数据已保存
+        setTimeout(() => {
+          var e = ['','']
+          _this.tableShow(e)
+        }, 500)
           wx.hideLoading({
 
           })

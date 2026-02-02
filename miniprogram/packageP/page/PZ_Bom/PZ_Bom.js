@@ -327,6 +327,28 @@ tableShow: function (e) {
 
 
       // ------------------------------------
+        // 验证 size 字段是否为有效数字---新0130
+    var dxValue = _this.data.dx || '';
+    var sizeNumber = 0;
+    var isValidNumber = true;
+    
+    // 检查是否是有效的数字
+    if (dxValue.trim() !== '') {
+      // 尝试转换为数字
+      sizeNumber = parseFloat(dxValue);
+      
+      // 检查转换结果
+      if (isNaN(sizeNumber)) {
+        wx.showToast({
+          title: '大小必须是数字！',
+          icon: 'none',
+          duration: 3000
+        });
+        isValidNumber = false;
+        return; // 停止执行
+      }
+      }
+      //------------------新0130结束
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
@@ -352,6 +374,12 @@ tableShow: function (e) {
           title: '添加成功！',
           icon: 'none'
         })
+        //------新0130
+        setTimeout(() => {
+          // 使用空条件重新查询，显示所有数据
+          var e = ['', '', '']
+          _this.tableShow(e)
+        }, 500)
         wx.hideLoading({
 
         })
@@ -496,6 +524,14 @@ tableShow: function (e) {
     var e = [_this.data.code, _this.data.name, _this.data.type]
     _this.tableShow(e)
     _this.qxShow()
+    //----新0130
+    setTimeout(() => {
+      wx.showToast({
+        title: '查询成功！',
+        icon: 'none',
+        duration: 2000
+      })
+    }, 500)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

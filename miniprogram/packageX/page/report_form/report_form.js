@@ -94,14 +94,38 @@ handle3 : true,
             console.log("select-success", res)
             var list2 = res.result
             var list = []
-            list.push({
-              hyzs:list2[0].huiyuan_sum,
-              xdhyrs:list2[1].huiyuan_sum,
-              ddzs:list2[2].huiyuan_sum,
-              xfje:list1[0].xfje,
-              ssje:list1[0].ssje,
-              yhje:list1[0].yhje
-            })
+            // list.push({
+            //   hyzs:list2[0].huiyuan_sum,
+            //   xdhyrs:list2[1].huiyuan_sum,
+            //   ddzs:list2[2].huiyuan_sum,
+            //   xfje:list1[0].xfje,
+            //   ssje:list1[0].ssje,
+            //   yhje:list1[0].yhje
+            // })
+            //-----------------新0130
+             // 修复判断逻辑，处理null值
+  if (list2 && list2.length >= 3) {
+    var hyzs = parseInt(list2[0].huiyuan_sum) || 0;
+    var xdhyrs = parseInt(list2[1].huiyuan_sum) || 0;
+    var ddzs = parseInt(list2[2].huiyuan_sum) || 0;
+    
+    // 处理可能的null值 - 这里需要访问 list1
+    var xfje = (list1 && list1[0] && list1[0].xfje !== null) ? parseFloat(list1[0].xfje) : 0;
+    var ssje = (list1 && list1[0] && list1[0].ssje !== null) ? parseFloat(list1[0].ssje) : 0;
+    var yhje = (list1 && list1[0] && list1[0].yhje !== null) ? parseFloat(list1[0].yhje) : 0;
+    
+    // 只有当有数据时才显示
+    if (hyzs > 0 || xdhyrs > 0 || ddzs > 0 || xfje > 0 || ssje > 0 || yhje > 0) {
+      list.push({
+        hyzs: hyzs,
+        xdhyrs: xdhyrs,
+        ddzs: ddzs,
+        xfje: xfje,
+        ssje: ssje,
+        yhje: yhje
+      })
+    }
+  }
             _this.setData({
               list: list,
               skr: "",
@@ -109,23 +133,44 @@ handle3 : true,
               ckr: "",
             })
 
-            new wxCharts({
-              canvasId: 'columnCanvas',
-              type: 'column',
-              categories: ['消费金额', '实收金额', '优惠金额'],
-              series: [{
-                  name: '点单收入情况汇总',
-                  data: [list[0].xfje, list[0].ssje, list[0].yhje]
-              }],
-              yAxis: {
-                  format: function (val) {
+            // new wxCharts({
+            //   canvasId: 'columnCanvas',
+            //   type: 'column',
+            //   categories: ['消费金额', '实收金额', '优惠金额'],
+            //   series: [{
+            //       name: '点单收入情况汇总',
+            //       data: [list[0].xfje, list[0].ssje, list[0].yhje]
+            //   }],
+            //   yAxis: {
+            //       format: function (val) {
+            //           return val;
+            //       },
+            //   },
+            //   width: 400,
+            //   height: 200
+            // });
+            if (list.length > 0 && list[0].xfje >= 0 && list[0].ssje >= 0 && list[0].yhje >= 0) {
+              try {
+                new wxCharts({
+                  canvasId: 'columnCanvas',
+                  type: 'column',
+                  categories: ['消费金额', '实收金额', '优惠金额'],
+                  series: [{
+                    name: '点单收入情况汇总',
+                    data: [list[0].xfje, list[0].ssje, list[0].yhje]
+                  }],
+                  yAxis: {
+                    format: function (val) {
                       return val;
+                    },
                   },
-              },
-              width: 400,
-              height: 200
-            });
-
+                  width: 400,
+                  height: 200
+                });
+              } catch (error) {
+                console.log("图表生成失败:", error);
+              }
+            }
           },
           fail: res => {
             console.log("select-fail", res)
@@ -146,8 +191,10 @@ handle3 : true,
     _this.setData({
       riqi1:"1900-01-01",
       riqi2: "2300-12-31",
-    })
-    _this.init();
+    }, function() {
+      // 添加回调函数，确保init在setData完成后执行
+      _this.init();
+    });
   },
 
 
@@ -166,15 +213,37 @@ handle3 : true,
 
   save: function (e) {
     var _this = this;
+      // 获取表单值
+  var riqi1 = e.detail.value.riqi1;
+  var riqi2 = e.detail.value.riqi2;
+  
+  // 检查日期是否合法
+  if (riqi1 && riqi2) {
+    var startDate = new Date(riqi1);
+    var endDate = new Date(riqi2);
+    
+    if (startDate > endDate) {
+      wx.showToast({
+        title: '起始日期不能大于结束日期',
+        icon: 'none',
+        duration: 2000
+      });
+      return; // 停止执行
+    }}
     _this.setData({
       riqi1: e.detail.value.riqi1,
       riqi2: e.detail.value.riqi2,
-    })
-    _this.init();
-    _this.setData({
-      frmStudfind: true,
-      mask_hid: true,
-    })
+    },
+    function() {
+      // 在setData完成后调用init
+      _this.init();
+      
+      // 关闭查询窗口
+      _this.setData({
+        frmStudfind: true,
+        mask_hid: true,
+      });
+    });
   },
 
   inquire: function () {
@@ -325,5 +394,38 @@ handle3 : true,
    */
   onShareAppMessage: function () {
 
+  },
+  //---------新0130
+  generateChart: function(data) {
+    var _this = this;
+    
+    // 确保数据是数字
+    var xfje = parseFloat(data.xfje) || 0;
+    var ssje = parseFloat(data.ssje) || 0;
+    var yhje = parseFloat(data.yhje) || 0;
+    
+    // 只有在有数据时才生成图表
+    if (xfje > 0 || ssje > 0 || yhje > 0) {
+      try {
+        new wxCharts({
+          canvasId: 'columnCanvas',
+          type: 'column',
+          categories: ['消费金额', '实收金额', '优惠金额'],
+          series: [{
+            name: '点单收入情况汇总',
+            data: [xfje, ssje, yhje]
+          }],
+          yAxis: {
+            format: function (val) {
+              return val.toFixed(2);
+            },
+          },
+          width: 400,
+          height: 200
+        });
+      } catch (error) {
+        console.log("图表生成失败:", error);
+      }
+    }
   }
 })

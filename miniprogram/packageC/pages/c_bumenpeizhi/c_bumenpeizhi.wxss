@@ -319,6 +319,83 @@ button{
 }
 .moreDo_bt{
   width: 24%;
-  background-color: #282B33;
+  background-color: #2c2626;
   color: white;
+}
+/*---新0129*/
+/* 底部布局调整 */
+.bottom_view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120rpx;
+  padding: 0 20rpx;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+/* 左侧翻页按钮组 */
+.left-btns {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+/* 右侧操作按钮组 */
+.right-btns {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+/* 操作按钮样式 */
+.moreDo-btn {
+  min-width: 160rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 35rpx;
+  font-size: 28rpx;
+  color: #E6E6E6;
+  background-color: #4a5a7a;
+  border: none;
+  padding: 0 20rpx;
+  white-space: nowrap;
+}
+
+.moreDo-btn:active {
+  opacity: 0.9;
+}
+
+/* 调整翻页按钮样式保持一致性 */
+.bt_bottom {
+  width: 80rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: #E6E6E6;
+  background-color: #4a5a7a;
+  border: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 0 !important;
+  margin-top: 0 !important;
+}
+
+.page_bottom {
+  width: 100rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  background-color: #4a5a7a;
+  color: #E6E6E6;
+  font-size: 28rpx;
+  margin-left: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* 移除原 moreDo 样式的影响 */
+.moreDo {
+  display: none;
 }
