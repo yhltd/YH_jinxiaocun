@@ -1,6 +1,45 @@
-var toArrayBuffer = require('to-array-buffer');
+// 自定义 toArrayBuffer 实现
+const toArrayBuffer = function(data) {
+  if (data instanceof ArrayBuffer) {
+    return data;
+  }
+  if (Array.isArray(data)) {
+    // 数字数组 [27, 97, 49] 转为 ArrayBuffer
+    return new Uint8Array(data).buffer;
+  }
+  if (typeof data === 'string') {
+    // 字符串转 ArrayBuffer
+    const encoder = new TextEncoder();
+    return encoder.encode(data).buffer;
+  }
+  return data;
+};
+
+// 自定义 Buffer 实现
+const Buffer = {
+  from: function(data, encoding) {
+    console.log('Buffer.from 被调用，data类型:', typeof data, 'encoding:', encoding);
+    
+    if (Array.isArray(data)) {
+      // 处理打印指令数组 [27, 97, 49, ...]
+      return new Uint8Array(data).buffer;
+    }
+    
+    if (typeof data === 'string') {
+      // 简化处理，不真正实现GBK编码
+      const encoder = new TextEncoder();
+      return encoder.encode(data).buffer;
+    }
+    
+    return data;
+  }
+};
+
+
+// var toArrayBuffer = require('to-array-buffer');
 var Promisify = require('../utils/utils.js')
-var Buffer = require('/buffer').Buffer;
+// var Buffer = require('/buffer').Buffer;
+// const Buffer = require('buffer').Buffer;
 const app = getApp();
 import QR from './weapp-qrcode-base64.js'
 var wxbarcode = require('../utils/index.js');
@@ -622,12 +661,28 @@ Page({
     return data;
   },
 
+  // printInfo: function (device, arr, callback) {
+  //   let tthis = this;
+  //   if (arr.length > 0) {
+  //     tthis.sendStr(device, arr[0], function (success) {
+  //       arr.shift();
+  //       tthis.printInfo(device, arr, callback);
+  //     }, function (error) {
+  //       console.log(error);
+  //     });
+  //   } else {
+  //     callback ? callback() : '';
+  //   }
+  //   _this.setData({
+  //     mask_hid: false
+  //   })
+  // },
   printInfo: function (device, arr, callback) {
-    let tthis = this;
+    let _this = this; // 使用 _this
     if (arr.length > 0) {
-      tthis.sendStr(device, arr[0], function (success) {
+      _this.sendStr(device, arr[0], function (success) {
         arr.shift();
-        tthis.printInfo(device, arr, callback);
+        _this.printInfo(device, arr, callback);
       }, function (error) {
         console.log(error);
       });
@@ -685,6 +740,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var _this = this;
     if (app.globalData.z_option_BLE.deviceId != "") {
       wx.showToast({
         title: '正在连接',

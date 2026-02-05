@@ -1,5 +1,43 @@
-var toArrayBuffer = require('to-array-buffer');
-var Buffer = require('/buffer').Buffer;
+// var toArrayBuffer = require('to-array-buffer');
+// // var Buffer = require('/buffer').Buffer;
+// const Buffer = require('buffer').Buffer;
+// const app = getApp();
+const toArrayBuffer = function(data) {
+  if (data instanceof ArrayBuffer) {
+    return data;
+  }
+  if (Array.isArray(data)) {
+    // 数字数组 [27, 97, 49] 转为 ArrayBuffer
+    return new Uint8Array(data).buffer;
+  }
+  if (typeof data === 'string') {
+    // 字符串转 ArrayBuffer
+    const encoder = new TextEncoder();
+    return encoder.encode(data).buffer;
+  }
+  return data;
+};
+
+// 自定义 Buffer 实现（避免npm包依赖）
+const Buffer = {
+  from: function(data, encoding) {
+    console.log('Buffer.from 被调用，data类型:', typeof data, 'encoding:', encoding);
+    
+    if (Array.isArray(data)) {
+      // 处理打印指令数组 [27, 97, 49, ...]
+      return new Uint8Array(data).buffer;
+    }
+    
+    if (typeof data === 'string') {
+      // 简化处理，不真正实现GBK编码
+      const encoder = new TextEncoder();
+      return encoder.encode(data).buffer;
+    }
+    
+    return data;
+  }
+};
+
 const app = getApp();
 Page({
 
@@ -510,7 +548,8 @@ Page({
           },500)
         }
         wx.showToast({
-          title : errMsgs[res.errCode],
+          // title : errMsgs[res.errCode],
+          title :  _this.data.errMsgs[res.errCode],
           icon : "none",
           duration : 2000
         })
@@ -689,19 +728,32 @@ Page({
 		return data;
   },
   
+  // printInfo: function(device, arr, callback) {
+	// 	let tthis = this;
+	// 	if (arr.length > 0) {
+	// 		tthis.sendStr(device, arr[0], function(success) {
+	// 			arr.shift();
+	// 			tthis.printInfo(device, arr, callback);
+	// 		}, function(error) {
+	// 			console.log(error);
+	// 		});
+	// 	} else {
+	// 		callback ? callback() : '';
+	// 	}
+  // },
   printInfo: function(device, arr, callback) {
-		let tthis = this;
-		if (arr.length > 0) {
-			tthis.sendStr(device, arr[0], function(success) {
-				arr.shift();
-				tthis.printInfo(device, arr, callback);
-			}, function(error) {
-				console.log(error);
-			});
-		} else {
-			callback ? callback() : '';
-		}
-	},
+    let _this = this; 
+    if (arr.length > 0) {
+      _this.sendStr(device, arr[0], function(success) {
+        arr.shift();
+        _this.printInfo(device, arr, callback); 
+      }, function(error) {
+        console.log(error);
+      });
+    } else {
+      callback ? callback() : '';
+    }
+  },
 
 	//发送数据
 	sendStr: function(device, bufferstr, success, fail) {
@@ -739,14 +791,25 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
+  // onShow: function () {
+  //   if(app.globalData.z_option_BLE.deviceId!=""){
+  //     wx.showToast({
+  //       title: '正在连接',
+  //       icon : 'none',
+  //       duration : 2000
+  //     })
+  //     _this.createOldBLE();
+  //   }
+  // },
   onShow: function () {
+    var _this = this; // ✅ 添加这行
     if(app.globalData.z_option_BLE.deviceId!=""){
       wx.showToast({
         title: '正在连接',
         icon : 'none',
         duration : 2000
       })
-      _this.createOldBLE();
+      _this.createOldBLE(); // ✅ _this 已定义
     }
   },
 
