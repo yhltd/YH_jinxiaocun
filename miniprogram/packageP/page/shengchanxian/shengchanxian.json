@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "van-popup": "../../components/popup/index",
+    "van-dialog": "../../components/dialog/index"
+  },
+  "navigationBarBackgroundColor": "#393D49",
+  "navigationBarTitleText": "生产线管理",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

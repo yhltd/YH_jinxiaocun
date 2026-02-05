@@ -95,6 +95,34 @@
   </view>
 </scroll-view>
   </view>
+  <view class="bottom_view" style="height:30%; margin-top: 10rpx;">
+    <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
+      <view class="table">
+      <view class='table_header'>
+        <block class="title" wx:for="{{title3}}">
+          <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+        </block>
+      </view>
+      <block class="list_row" wx:for="{{list3}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+        <view class="table_main">
+          <view wx:for="{{title3}}" 
+                wx:for-item="item" 
+                wx:key="item" 
+                class="list_view" 
+                style="width:{{item.width}}" data-index="{{i}}" 
+                data-column="{{item.columnName}}" 
+                data-id="{{list_item.id}}" 
+                data-value="{{list_item[item.columnName]}}" 
+                data-input_type="{{item.type}}"
+                data-isupd="{{item.isupd}}"
+                bindtap="clickViewProcess">
+            <view class="list_text">{{list_item[item.columnName]}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    </scroll-view>
+  </view>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1">添加</button>
@@ -147,34 +175,66 @@
 <!------------------------->
 <van-popup bind:click-overlay="xgShow" show="{{ wlxgShow }}" position="bottom" custom-style="height: 100%;" >
 
-  <view class="bottom_view2" style="height:90%">
+  <!-- 物料表格 -->
+  <view class="bottom_view2" style="height:45%">
     <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:100%">
-  <view class="table">
-    <view class='table_header'>
-      <block class="title" wx:for="{{title2}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
-      </block>
-    </view>
-    <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
-      <view class="table_main">
-        <view wx:for="{{title2}}" 
-              wx:for-item="item" 
-              wx:key="item" 
-              class="list_view" 
-              style="width:{{item.width}}" data-index="{{i}}" 
-              data-column="{{item.columnName}}" 
-              data-id="{{item.id}}" 
-              data-count="{{item.count}}" 
-              data-value="{{list_item[item.columnName]}}" 
-              data-input_type="{{item.type}}"
-              data-isupd="{{item.isupd}}"
-              bindtap="clickView3">
-          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+      <view class="table">
+        <view class='table_header'>
+          <block class="title" wx:for="{{title2}}">
+            <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          </block>
         </view>
+        <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+          <view class="table_main">
+            <view wx:for="{{title2}}" 
+                  wx:for-item="item" 
+                  wx:key="item" 
+                  class="list_view" 
+                  style="width:{{item.width}}" data-index="{{i}}" 
+                  data-column="{{item.columnName}}" 
+                  data-id="{{item.id}}" 
+                  data-count="{{item.count}}" 
+                  data-value="{{list_item[item.columnName]}}" 
+                  data-input_type="{{item.type}}"
+                  data-isupd="{{item.isupd}}"
+                  bindtap="clickView3">
+              <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+            </view>
+          </view>
+        </block>
       </view>
-    </block>
+    </scroll-view>
   </view>
-</scroll-view>
+  
+  <!-- 工序表格 -->
+  <view class="bottom_view2" style="height:45%; margin-top: 10rpx;">
+
+    <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
+      <view class="table">
+        <view class='table_header'>
+          <block class="title" wx:for="{{title3}}">
+            <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          </block>
+        </view>
+        <block class="list_row" wx:for="{{list3}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+          <view class="table_main">
+            <view wx:for="{{title3}}" 
+                  wx:for-item="item" 
+                  wx:key="item" 
+                  class="list_view" 
+                  style="width:{{item.width}}" data-index="{{i}}" 
+                  data-column="{{item.columnName}}" 
+                  data-id="{{list_item.id}}" 
+                  data-value="{{list_item[item.columnName]}}" 
+                  data-input_type="{{item.type}}"
+                  data-isupd="{{item.isupd}}"
+                  bindtap="clickViewProcess">
+              <view class="list_text">{{list_item[item.columnName]}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
   </view>
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
@@ -186,35 +246,67 @@
 <!---------物料添加--------->
 <!------------------------->
 <van-popup bind:click-overlay="xgShow" show="{{ wltjShow }}" position="bottom" custom-style="height: 100%;" >
-  <view class="bottom_view2" style="height:90%">
+    <!-- 物料表格 -->
+    <view class="bottom_view2" style="height:45%">
     <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:100%">
-  <view class="table">
-    <view class='table_header'>
-      <block class="title" wx:for="{{title2}}">
-        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
-      </block>
-    </view>
-    <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
-      <view class="table_main">
-        <view wx:for="{{title2}}" 
-              wx:for-item="item" 
-              wx:key="item" 
-              class="list_view" 
-              style="width:{{item.width}}" data-index="{{i}}" 
-              data-column="{{item.columnName}}" 
-              data-id="{{item.id}}" 
-              data-count="{{item.count}}" 
-              data-value="{{list_item[item.columnName]}}" 
-              data-input_type="{{item.type}}"
-              data-isupd="{{item.isupd}}"
-              bindtap="clickView2">
-          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+      <view class="table">
+        <view class='table_header'>
+          <block class="title" wx:for="{{title2}}">
+            <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          </block>
         </view>
+        <block class="list_row" wx:for="{{list2}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+          <view class="table_main">
+            <view wx:for="{{title2}}" 
+                  wx:for-item="item" 
+                  wx:key="item" 
+                  class="list_view" 
+                  style="width:{{item.width}}" data-index="{{i}}" 
+                  data-column="{{item.columnName}}" 
+                  data-id="{{item.id}}" 
+                  data-count="{{item.count}}" 
+                  data-value="{{list_item[item.columnName]}}" 
+                  data-input_type="{{item.type}}"
+                  data-isupd="{{item.isupd}}"
+                  bindtap="clickView2">
+              <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+            </view>
+          </view>
+        </block>
       </view>
-    </block>
+    </scroll-view>
   </view>
-</scroll-view>
+  
+  <!-- 可添加工序表格 -->
+  <view class="bottom_view2" style="height:45%; margin-top: 10rpx;">
+    <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:85%">
+      <view class="table">
+        <view class='table_header'>
+          <block class="title" wx:for="{{title3}}">
+            <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+          </block>
+        </view>
+        <block class="list_row" wx:for="{{list3}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+          <view class="table_main">
+            <view wx:for="{{title3}}" 
+                  wx:for-item="item" 
+                  wx:key="item" 
+                  class="list_view" 
+                  style="width:{{item.width}}" data-index="{{i}}" 
+                  data-column="{{item.columnName}}" 
+                  data-id="{{list_item.id}}" 
+                  data-value="{{list_item[item.columnName]}}" 
+                  data-input_type="{{item.type}}"
+                  data-isupd="{{item.isupd}}"
+                  bindtap="clickViewProcess">
+              <view class="list_text">{{list_item[item.columnName]}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
   </view>
+  
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow2">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="wltj" disabled="{{isdis!=1}}">添加</button>
@@ -256,4 +348,19 @@
   show-cancel-button="true" 
   bind:confirm="sure1"
 >
+</van-dialog>
+<!--------------------->
+<!----添加工序工时弹窗---->
+<!--------------------->
+<van-dialog
+  use-slot
+  title="预估工时"
+  show="{{ addWindow2 }}"
+  bind:close="onCloseProcess" 
+  closeOnClickOverlay="true"
+  show-confirm-button="true" 
+  show-cancel-button="true" 
+  bind:confirm="sureProcess"
+>
+  <input bindinput="onInputProcess" class="input_text_form2" value="{{empty2}}" type="digit" name="estimated_time" placeholder="请输入预估工时"></input>
 </van-dialog>

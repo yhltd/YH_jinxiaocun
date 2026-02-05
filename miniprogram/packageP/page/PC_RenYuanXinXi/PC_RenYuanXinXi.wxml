@@ -1,3 +1,4 @@
+
 <!--packageP/page/PC_RenYuanXinXi/PC_RenYuanXinXi.wxml-->
 <scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
   <view class="table">
@@ -18,7 +19,9 @@
               data-input_type="{{item.type}}"
               data-isupd="{{item.isupd}}"
               bindtap="clickView">
-          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+              <view class="list_text">
+  {{item.columnName == 'rownum' ? i+1 : (list_item[item.columnName] || '')}}
+</view>
         </view>
       </view>
     </block>
@@ -28,11 +31,17 @@
 <!------------------------->
 <!---------查询弹窗--------->
 <!------------------------->
-<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 40%;" >
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;" >
 	<view class="lables">姓名</view>
     <input bindinput="onInput3" data-column="name" class="input_text_form" value="{{name}}" type="text" name="name" ></input>
     <view class="lables">班次</view>
     <input bindinput="onInput3" data-column="banci" class="input_text_form"  value="{{banci}}" type="text" name="banci"></input>
+    <!-- 新增查询条件 -->
+    <view class="lables">生产线</view>
+    <input bindinput="onInput3" data-column="scx_search" class="input_text_form" value="{{scx_search}}" type="text" name="scx_search"></input>
+    <view class="lables">工序</view>
+    <input bindinput="onInput3" data-column="gx_search" class="input_text_form" value="{{gx_search}}" type="text" name="gx_search"></input>
+    
   <!-- 查询弹窗修改 -->
   <view class="bottom_view" >
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
@@ -67,6 +76,12 @@
     <input bindinput="onInput3" data-column="idcard" class="input_text_form" value="{{idcard}}" type="idcard" name="idcard"></input>
     <view class="lables" >部门</view>
     <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm" bindtap="selBM" disabled="true"></input>
+    <!-- 新增字段 -->
+    <view class="lables">生产线</view>
+    <input bindinput="onInput3" data-column="scx" class="input_text_form" value="{{scx}}" type="text" name="scx" ></input>
+    <view class="lables">工序</view>
+    <input bindinput="onInput3" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx" ></input>
+    
     <view class="lables">班次(此班次只作为记录)</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" style="margin-bottom: 30%;" value="{{bc}}" type="text" name="bc"></input>
   <view class="bottom_view" style="height:10%">
@@ -87,6 +102,12 @@
     <input bindinput="onInput3" data-column="idcard" class="input_text_form" value="{{idcard}}" type="idcard" name="idcard"></input>
     <view class="lables">部门</view>
     <input bindinput="onInput3" data-column="bm" class="input_text_form" value="{{bm}}" type="text" name="bm" bindtap="selBM" disabled="true"></input>
+    <!-- 新增字段 -->
+    <view class="lables">生产线</view>
+    <input bindinput="onInput3" data-column="scx" class="input_text_form" value="{{scx}}" type="text" name="scx" placeholder="请填写所属生产线"></input>
+    <view class="lables">工序</view>
+    <input bindinput="onInput3" data-column="gx" class="input_text_form" value="{{gx}}" type="text" name="gx" placeholder="请填写负责工序"></input>
+    
     <view class="lables">班次(此班次只作为记录)</view>
     <input bindinput="onInput3" data-column="bc" class="input_text_form" style="margin-bottom: 30%;" value="{{bc}}" type="text" name="bc"></input>
   <view class="bottom_view" style="height:10%">

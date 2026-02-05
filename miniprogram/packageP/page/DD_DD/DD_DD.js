@@ -89,6 +89,37 @@ Page({
         isupd: true
       }
     ],
+    title3: [{
+      text: "工序名称",
+      width: "200rpx",
+      columnName: "process_name",
+      type: "text",
+      isupd: false
+    },
+    {
+      text: "效率/时",
+      width: "200rpx",
+      columnName: "efficiency",
+      type: "digit",
+      isupd: false
+    },
+    {
+      text: "预估工时",
+      width: "200rpx",
+      columnName: "estimated_time",
+      type: "digit",
+      isupd: true
+    }
+  ],
+  
+  // 工序列表数据
+  list3: [],
+  
+  // 其他新增字段
+  code_id2: "",
+  empty2: "",
+  index2: "",
+  addWindow2: false,
     product_name: "",
     order_id: "",
     ddh: "",
@@ -323,7 +354,8 @@ Page({
       gg: "",
       xdrq: "",
       xdsl: "",
-      sfcd: ""
+      sfcd: "",
+      list3: [] // 清空工序列表
     })
   },
   qxShow2: function () {
@@ -340,7 +372,129 @@ Page({
       cd: ""
     })
     _this.wlShow()
+    _this.loadProcessData()
   },
+  // add1: function () {
+  //   var _this = this
+  //   let user = app.globalData.gongsi;
+  //   var x = 0
+  //   for (var i = 0; i < (_this.data.list2.length); i++) {
+  //     if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
+  //       x = x + 1
+  //     }
+  //   }
+  //   if (x > 0) {
+  //     if (_this.data.ddh != "" && _this.data.cpbm != "" && _this.data.cpmc != "" && _this.data.xdrq != "" && _this.data.xdsl != "") {
+  //       wx.cloud.callFunction({
+  //         name: 'sqlServer_PC',
+  //         data: {
+  //           query: "select count(order_id) as nameCount from order_info where company='" + user + "' and order_id='" + _this.data.ddh + "'"
+  //         },
+  //         success: res => {
+  //           if (res.result.recordsets[0][0].nameCount == 0) {
+  //             wx.cloud.callFunction({
+  //               name: 'sqlServer_PC',
+  //               data: {
+  //                 query: "insert into order_info(order_id,code,product_name,norms, set_date,set_num,company) output inserted.ID values('" + _this.data.ddh + "','" + _this.data.cpbm + "','" + _this.data.cpmc + "','" + _this.data.gg + "','" + _this.data.xdrq + "','" + _this.data.xdsl + "','" + user + "')"
+  //               },
+  //               success: res => {
+  //                 var id = res.result.recordset[0].ID
+  //                 _this.setData({
+  //                   product_name: "",
+  //                   order_id: "",
+  //                   ddh: "",
+  //                   cpbm: "",
+  //                   cpmc: "",
+  //                   gg: "",
+  //                   xdrq: "",
+  //                   xdsl: "",
+  //                   sfcd: "",
+  //                 })
+  //                 var y = 0
+  //                 var sql = "insert into order_bom(order_id,bom_id,use_num) values"
+  //                 for (var i = 0; i < (_this.data.list2.length); i++) {
+  //                   if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
+  //                     sql = sql + "('" + id + "','" + _this.data.list2[i].id + "','" + _this.data.list2[i].count + "'),"
+  //                     y = y + 1
+  //                   }
+  //                 }
+  //                 if (y > 0) {
+  //                   sql = sql.substr(0, sql.length - 1)
+  //                   wx.cloud.callFunction({
+  //                     name: 'sqlServer_PC',
+  //                     data: {
+  //                       query: sql
+  //                     },
+  //                     success: res => {
+  //                       wx.showToast({
+  //                         title: '添加成功！',
+  //                         icon: 'none',
+  //                         duration: 3000
+  //                       })
+  //                     },
+  //                     err: res => {
+  //                       console.log("错误!")
+  //                     },
+  //                     fail: res => {
+  //                       wx.showToast({
+  //                         title: '请求失败！',
+  //                         icon: 'none',
+  //                         duration: 3000
+  //                       })
+  //                       console.log("请求失败！")
+  //                     }
+  //                   })
+  //                 }
+  //                 _this.qxShow()
+  //                 var e = ['', '', '']
+  //                 _this.tableShow(e)
+  //               },
+  //               err: res => {
+  //                 console.log("错误!")
+  //               },
+  //               fail: res => {
+  //                 wx.showToast({
+  //                   title: '请求失败！',
+  //                   icon: 'none',
+  //                   duration: 3000
+  //                 })
+  //                 console.log("请求失败！")
+  //               }
+  //             })
+  //           } else {
+  //             wx.showToast({
+  //               title: '该单号已存在！',
+  //               icon: 'none'
+  //             })
+  //           }
+  //         },
+  //         err: res => {
+  //           console.log("错误!")
+  //         },
+  //         fail: res => {
+  //           wx.showToast({
+  //             title: '请求失败！',
+  //             icon: 'none',
+  //             duration: 3000
+  //           })
+  //           console.log("请求失败！")
+  //         }
+  //       })
+  //     } else {
+  //       wx.showToast({
+  //         title: '物料编码、物料名称、类别不能为空！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //     }
+  //   } else {
+  //     wx.showToast({
+  //       title: '表格中物料的数量不能为空！',
+  //       icon: 'none'
+  //     })
+  //   }
+  // },
+  //---新0203
   add1: function () {
     var _this = this
     let user = app.globalData.gongsi;
@@ -377,6 +531,8 @@ Page({
                     xdsl: "",
                     sfcd: "",
                   })
+                  
+                  // 1. 保存物料信息
                   var y = 0
                   var sql = "insert into order_bom(order_id,bom_id,use_num) values"
                   for (var i = 0; i < (_this.data.list2.length); i++) {
@@ -385,6 +541,24 @@ Page({
                       y = y + 1
                     }
                   }
+                  
+                  // 2. 保存工序信息
+                  var z = 0
+                  var processSql = "insert into order_gongxu(order_id,module_id,module_num) values"
+                  for (var j = 0; j < (_this.data.list3.length); j++) {
+                    if (_this.data.list3[j].estimated_time && _this.data.list3[j].estimated_time != "") {
+                      // 根据工序名称查找module_info表中的parent_id作为module_id
+                      var processName = _this.data.list3[j].process_name
+                      var estimatedTime = _this.data.list3[j].estimated_time
+                      
+                      // 这里需要先查询module_info表获取id
+                      // 由于云函数限制，我们可以分批处理
+                      processSql = processSql + "('" + id + "',(select top 1 parent_id from module_info where name='" + processName + "' and company='" + user + "'),'" + estimatedTime + "'),"
+                      z = z + 1
+                    }
+                  }
+                  
+                  // 执行物料保存
                   if (y > 0) {
                     sql = sql.substr(0, sql.length - 1)
                     wx.cloud.callFunction({
@@ -393,11 +567,39 @@ Page({
                         query: sql
                       },
                       success: res => {
-                        wx.showToast({
-                          title: '添加成功！',
-                          icon: 'none',
-                          duration: 3000
-                        })
+                        // 物料保存成功后保存工序
+                        if (z > 0) {
+                          processSql = processSql.substr(0, processSql.length - 1)
+                          wx.cloud.callFunction({
+                            name: 'sqlServer_PC',
+                            data: {
+                              query: processSql
+                            },
+                            success: res => {
+                              wx.showToast({
+                                title: '添加成功！',
+                                icon: 'none',
+                                duration: 3000
+                              })
+                            },
+                            err: res => {
+                              console.log("工序保存错误!")
+                            },
+                            fail: res => {
+                              wx.showToast({
+                                title: '工序保存失败！',
+                                icon: 'none',
+                                duration: 3000
+                              })
+                            }
+                          })
+                        } else {
+                          wx.showToast({
+                            title: '添加成功！',
+                            icon: 'none',
+                            duration: 3000
+                          })
+                        }
                       },
                       err: res => {
                         console.log("错误!")
@@ -412,6 +614,7 @@ Page({
                       }
                     })
                   }
+                  
                   _this.qxShow()
                   var e = ['', '', '']
                   _this.tableShow(e)
@@ -461,6 +664,7 @@ Page({
       })
     }
   },
+
   clickView: function (e) {
     var _this = this
     _this.setData({
@@ -530,12 +734,57 @@ Page({
       })
     }
   },
+  // del1: function () {
+  //   var _this = this
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_PC',
+  //     data: {
+  //       query: "delete from order_info where id='" + _this.data.id + "';delete from order_bom where order_id='" + _this.data.id + "'"
+  //     },
+  //     success: res => {
+  //       _this.setData({
+  //         product_name: "",
+  //         order_id: "",
+  //         ddh: "",
+  //         cpbm: "",
+  //         cpmc: "",
+  //         gg: "",
+  //         xdrq: "",
+  //         xdsl: "",
+  //         sfcd: "",
+  //       })
+  //       _this.qxShow()
+  //       var e = ['', '', '']
+  //       _this.tableShow(e)
+  //       wx.showToast({
+  //         title: '删除成功！',
+  //         icon: 'none'
+  //       })
+  //       wx.hideLoading({
+
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
+  //----新0203
   del1: function () {
     var _this = this
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "delete from order_info where id='" + _this.data.id + "';delete from order_bom where order_id='" + _this.data.id + "'"
+        // 同时删除订单、物料和工序信息
+        query: "delete from order_info where id='" + _this.data.id + "';delete from order_bom where order_id='" + _this.data.id + "';delete from order_gongxu where order_id='" + _this.data.id + "'"
       },
       success: res => {
         _this.setData({
@@ -557,7 +806,7 @@ Page({
           icon: 'none'
         })
         wx.hideLoading({
-
+  
         })
       },
       err: res => {
@@ -669,6 +918,34 @@ Page({
       xgShow: true
     })
   },
+  // xgWuLiao: function () {
+  //   var _this = this
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_PC',
+  //     data: {
+  //       query: "select b.id,i.code,i.name,i.norms,b.use_num as count from bom_info as i ,order_bom as b where b.bom_id=i.id and order_id='" + _this.data.id + "'"
+  //     },
+  //     success: res => {
+  //       var list = res.result.recordset
+  //       _this.setData({
+  //         list2: list,
+  //         wlxgShow: true
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
+  //----新0203
   xgWuLiao: function () {
     var _this = this
     wx.cloud.callFunction({
@@ -682,6 +959,9 @@ Page({
           list2: list,
           wlxgShow: true
         })
+        
+        // 同时加载工序信息
+        _this.loadOrderProcessData()
       },
       err: res => {
         console.log("错误!")
@@ -693,6 +973,29 @@ Page({
           duration: 3000
         })
         console.log("请求失败！")
+      }
+    })
+  },
+  
+  // 添加加载订单工序数据的方法
+  loadOrderProcessData: function() {
+    var _this = this
+    let user = app.globalData.gongsi;
+    
+    // 查询订单关联的工序信息
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select m.name as process_name, m.num as efficiency, g.module_num as estimated_time, g.id as gongxu_id from order_gongxu g inner join module_info m on g.module_id = m.parent_id where g.order_id='" + _this.data.id + "' and m.company='" + user + "'"
+      },
+      success: res => {
+        var processList = res.result.recordset
+        _this.setData({
+          list3: processList
+        })
+      },
+      err: res => {
+        console.log("工序查询错误!")
       }
     })
   },
@@ -719,18 +1022,91 @@ Page({
       })
     }
   },
+  // upd2: function () {
+  //   var _this = this
+  //   var x = 0
+  //   var sql = ""
+  //   let user = app.globalData.gongsi;
+  //   for (var i = 0; i < _this.data.list2.length; i++) {
+  //     if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
+  //       sql = sql + "update order_bom set use_num='" + _this.data.list2[i].count + "' where id='" + _this.data.list2[i].id + "'"
+  //     } else {
+  //       x = x + 1
+  //     }
+  //   }
+  //   if (x > 0) {
+  //     wx.showToast({
+  //       title: '物料数量不能修改为空！',
+  //       icon: 'none',
+  //       duration: 3000
+  //     })
+  //   } else {
+  //     wx.cloud.callFunction({
+  //       name: 'sqlServer_PC',
+  //       data: {
+  //         query: sql
+  //       },
+  //       success: res => {
+  //         _this.setData({
+  //           order_id: "",
+  //           ddh: "",
+  //           cpbm: "",
+  //           cpmc: "",
+  //           gg: "",
+  //           xdrq: "",
+  //           xdsl: "",
+  //         })
+  //         _this.qxShow()
+  //         _this.setData({
+  //           handle: true
+  //         })
+  //         var e = ['', '', '']
+  //         _this.tableShow(e)
+  //         wx.showToast({
+  //           title: '修改成功！',
+  //           icon: 'none',
+  //           duration: 3000
+  //         })
+  //         wx.hideLoading({
+
+  //         })
+  //       },
+  //       err: res => {
+  //         console.log("错误!")
+  //       },
+  //       fail: res => {
+  //         wx.showToast({
+  //           title: '请求失败！',
+  //           icon: 'none',
+  //           duration: 3000
+  //         })
+  //         console.log("请求失败！")
+  //       }
+  //     })
+  //   }
+  // },
   upd2: function () {
     var _this = this
     var x = 0
     var sql = ""
     let user = app.globalData.gongsi;
+    
+    // 1. 更新物料信息
     for (var i = 0; i < _this.data.list2.length; i++) {
       if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
-        sql = sql + "update order_bom set use_num='" + _this.data.list2[i].count + "' where id='" + _this.data.list2[i].id + "'"
+        sql = sql + "update order_bom set use_num='" + _this.data.list2[i].count + "' where id='" + _this.data.list2[i].id + "';"
       } else {
         x = x + 1
       }
     }
+    
+    // 2. 更新工序信息
+    for (var j = 0; j < _this.data.list3.length; j++) {
+      if (_this.data.list3[j].estimated_time && _this.data.list3[j].estimated_time != "") {
+        sql = sql + "update order_gongxu set module_num='" + _this.data.list3[j].estimated_time + "' where id='" + (_this.data.list3[j].gongxu_id || '') + "';"
+      }
+    }
+    
     if (x > 0) {
       wx.showToast({
         title: '物料数量不能修改为空！',
@@ -765,7 +1141,7 @@ Page({
             duration: 3000
           })
           wx.hideLoading({
-
+  
           })
         },
         err: res => {
@@ -782,9 +1158,40 @@ Page({
       })
     }
   },
+  // add2: function () {
+  //   var _this = this
+  //   let user = app.globalData.gongsi;
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_PC',
+  //     data: {
+  //       query: "select id,code,name,norms,'' as [count] from bom_info where company = '" + user + "' and id not in (select bom_id from order_bom where order_id = '" + _this.data.id + "' )"
+  //     },
+  //     success: res => {
+  //       var list = res.result.recordset
+  //       _this.setData({
+  //         list2: list,
+  //         wltjShow: true
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
+  //---新0203
   add2: function () {
     var _this = this
     let user = app.globalData.gongsi;
+    
+    // 先加载可添加的物料
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
@@ -792,9 +1199,20 @@ Page({
       },
       success: res => {
         var list = res.result.recordset
-        _this.setData({
-          list2: list,
-          wltjShow: true
+        
+        // 同时加载可添加工序
+        wx.cloud.callFunction({
+          name: 'sqlServer_PC',
+          data: {
+            query: "select m.name as process_name, m.num as efficiency, m.parent_id as module_id, '' as estimated_time from module_info m where m.company='" + user + "' and m.parent_id not in (select module_id from order_gongxu where order_id='" + _this.data.id + "')"
+          },
+          success: res2 => {
+            _this.setData({
+              list2: list,
+              list3: res2.result.recordset,
+              wltjShow: true
+            })
+          }
         })
       },
       err: res => {
@@ -810,19 +1228,75 @@ Page({
       }
     })
   },
+
+  // wltj: function () {
+  //   var _this = this
+  //   let user = app.globalData.gongsi;
+  //   var y = 0
+  //   var sql = "insert into order_bom(order_id,bom_id,use_num) values"
+  //   for (var i = 0; i < (_this.data.list2.length); i++) {
+  //     if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
+  //       sql = sql + "('" + _this.data.id + "','" + _this.data.list2[i].id + "','" + _this.data.list2[i].count + "'),"
+  //       y = y + 1
+  //     }
+  //   }
+  //   if (y > 0) {
+  //     sql = sql.substr(0, sql.length - 1)
+  //     wx.cloud.callFunction({
+  //       name: 'sqlServer_PC',
+  //       data: {
+  //         query: sql
+  //       },
+  //       success: res => {
+  //         _this.setData({
+  //           wltjShow: false,
+  //         })
+  //         _this.xgWuLiao()
+  //         wx.showToast({
+  //           title: '添加成功！',
+  //           icon: 'none',
+  //           duration: 3000
+  //         })
+  //       },
+  //       err: res => {
+  //         console.log("错误!")
+  //       },
+  //       fail: res => {
+  //         wx.showToast({
+  //           title: '请求失败！',
+  //           icon: 'none',
+  //           duration: 3000
+  //         })
+  //         console.log("请求失败！")
+  //       }
+  //     })
+  //   }
+  // },
+  //----新0203
   wltj: function () {
     var _this = this
     let user = app.globalData.gongsi;
     var y = 0
-    var sql = "insert into order_bom(order_id,bom_id,use_num) values"
+    var z = 0
+    var sql = ""
+    
+    // 添加物料
     for (var i = 0; i < (_this.data.list2.length); i++) {
       if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
-        sql = sql + "('" + _this.data.id + "','" + _this.data.list2[i].id + "','" + _this.data.list2[i].count + "'),"
+        sql = sql + "insert into order_bom(order_id,bom_id,use_num) values('" + _this.data.id + "','" + _this.data.list2[i].id + "','" + _this.data.list2[i].count + "');"
         y = y + 1
       }
     }
-    if (y > 0) {
-      sql = sql.substr(0, sql.length - 1)
+    
+    // 添加工序
+    for (var j = 0; j < (_this.data.list3.length); j++) {
+      if (_this.data.list3[j].estimated_time && _this.data.list3[j].estimated_time != "") {
+        sql = sql + "insert into order_gongxu(order_id,module_id,module_num) values('" + _this.data.id + "','" + _this.data.list3[j].module_id + "','" + _this.data.list3[j].estimated_time + "');"
+        z = z + 1
+      }
+    }
+    
+    if (y > 0 || z > 0) {
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
@@ -853,6 +1327,7 @@ Page({
       })
     }
   },
+
   sure1: function () {
     var _this = this
     let user = app.globalData.gongsi;
@@ -937,8 +1412,111 @@ Page({
       }
     })
   },
+//----新0202
+// 在合适的位置添加以下方法
+// loadProcessData: function() {
+//   var _this = this
+//   let user = app.globalData.gongsi;
+  
+//   // 从模块单位表中获取工序数据
+//   wx.cloud.callFunction({
+//     name: 'sqlServer_PC',
+//     data: {
+//       query: "select name as process_name, num as efficiency, '' as estimated_time from module_info where company='" + user + "'"
+//     },
+//     success: res => {
+//       var list = res.result.recordset
+//       _this.setData({
+//         list3: list
+//       })
+//     },
+//     err: res => {
+//       console.log("错误!")
+//     },
+//     fail: res => {
+//       wx.showToast({
+//         title: '请求失败！',
+//         icon: 'none',
+//         duration: 3000
+//       })
+//       console.log("请求失败！")
+//     }
+//   })
+// },
+loadProcessData: function() {
+  var _this = this
+  let user = app.globalData.gongsi;
+  
+  // 从模块单位表中获取工序数据，同时获取parent_id作为module_id
+  wx.cloud.callFunction({
+    name: 'sqlServer_PC',
+    data: {
+      query: "select name as process_name, num as efficiency, parent_id as module_id, '' as estimated_time from module_info where company='" + user + "'"
+    },
+    success: res => {
+      var list = res.result.recordset
+      _this.setData({
+        list3: list
+      })
+    },
+    err: res => {
+      console.log("错误!")
+    },
+    fail: res => {
+      wx.showToast({
+        title: '请求失败！',
+        icon: 'none',
+        duration: 3000
+      })
+      console.log("请求失败！")
+    }
+  })
+},
+// 添加工序点击事件
+clickViewProcess: function(e) {
+  var _this = this
+  var column = e.currentTarget.dataset.column
+  var index = e.currentTarget.dataset.index
+  
+  // 只有预估工时可以编辑
+  if ("estimated_time" == column) {
+    var empty = _this.data.list3[index].estimated_time || ""
+    _this.setData({
+      code_id2: _this.data.list3[index].id,
+      addWindow2: true,
+      empty2: empty,
+      index2: index
+    })
+  }
+},
 
+// 添加工序输入处理
+onInputProcess: function(e) {
+  var _this = this
+  let empty = e.detail.value
+  _this.setData({
+    empty2: empty
+  })
+},
 
+// 确认添加工序
+sureProcess: function() {
+  var _this = this
+  var list = _this.data.list3
+  list[_this.data.index2].estimated_time = _this.data.empty2
+  _this.setData({
+    list3: list,
+    addWindow2: false
+  })
+},
+
+// 关闭工序弹窗
+onCloseProcess: function() {
+  var _this = this
+  _this.setData({
+    addWindow2: false
+  })
+},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

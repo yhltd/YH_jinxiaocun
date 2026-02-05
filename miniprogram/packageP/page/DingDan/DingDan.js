@@ -7,7 +7,8 @@ Page({
   data: {
     active: 1,
     showList: [{text: "订单",url: "../DD_DD/DD_DD"}],
-    showList2:[{text: "部门",url: "../BuMen/BuMen"}]
+    showList2:[{text: "部门",url: "../BuMen/BuMen"}],
+    showList3:[{text: "生产线",url: "../shengchanxian/shengchanxian"}]
   },
 
   /**
@@ -64,7 +65,15 @@ Page({
         url: url 
         }) 
   },
-
+  goto1: function (e) {
+    var _this = this;
+    var index = e.currentTarget.dataset.index;
+    var url = _this.data.showList3[index].url
+    var text = _this.data.showList3[index].text
+      wx.navigateTo({
+        url: url 
+        }) 
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

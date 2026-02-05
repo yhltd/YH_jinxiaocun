@@ -1,0 +1,137 @@
+<!-- 生产线管理页面 -->
+<scroll-view class="sv_list" scroll-x="true" scroll-y="true" style="height:88%">
+  <view class="table">
+    <!-- 第二行：表格列标题 -->
+    <view class='table_header'>
+      <block class="title" wx:for="{{tableTitle}}" wx:key="index">
+        <view class="title_text" style="width:{{item.width}};{{item.text==''?'position:sticky;left:0;z-index:5':''}}">{{item.text}}</view>
+      </block>
+    </view>
+    
+    <!-- 表格内容 -->
+    <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
+      <view class="table_main">
+        <view wx:for="{{tableTitle}}" 
+              wx:for-item="item" 
+              wx:key="index" 
+              class="list_view" 
+              style="width:{{item.width}}" 
+              data-index="{{i}}" 
+              data-column="{{item.columnName}}" 
+              data-value="{{item.columnName=='rownum'?i+1:list_item[item.columnName]}}" 
+              data-input_type="{{item.type}}"
+              data-isupd="{{item.isupd}}"
+              bindtap="clickView">
+          <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 无数据提示 -->
+    <view wx:if="{{list.length == 0}}" style="text-align: center; padding: 100rpx; color: #999;">
+      <text>暂无生产线数据</text>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- ================= 底部操作按钮 ================= -->
+<view class="bottom_view" style="height: 10%; left: 0rpx;">
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="addMK" disabled="{{isdis!=1}}">新增</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="inquire" disabled="{{isdischa!=1}}">查询</button>
+  <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="goBack">返回</button>
+</view>
+
+<!-- ================= 新增弹窗 ================= -->
+<van-popup bind:click-overlay="qxShow" show="{{ tjShow }}" position="bottom" custom-style="height: 60%;">
+  <view style="height: 100%; display: flex; flex-direction: column;">
+    <scroll-view style="flex: 1;" scroll-y="true">
+      <view style="padding: 40rpx;">
+        <view class="lables">生产线名称</view>
+        <input bindinput="onFormInput" data-field="mingcheng" class="input_text_form" value="{{formData.mingcheng}}" type="text" />
+        
+        <view class="lables">工序</view>
+        <input bindinput="onFormInput" data-field="gongxu" class="input_text_form" value="{{formData.gongxu}}" type="text" />
+        
+        <view class="lables">效率</view>
+        <input bindinput="onFormInput" data-field="xiaolv" class="input_text_form di-bottom" value="{{formData.xiaolv}}" type="text" placeholder="可选填" />
+      </view>
+    </scroll-view>
+    
+    <view class="bottom_view">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="add1" disabled="{{isdis!=1}}">添加</button>
+    </view>
+  </view>
+</van-popup>
+
+<!-- ================= 修改弹窗 ================= -->
+<van-popup bind:click-overlay="qxShow" show="{{ xgShow }}" position="bottom" custom-style="height: 60%;">
+  <view style="height: 100%; display: flex; flex-direction: column;">
+    <scroll-view style="flex: 1;" scroll-y="true">
+      <view style="padding: 40rpx;">
+        <view class="lables">生产线名称</view>
+        <input bindinput="onFormInput" data-field="mingcheng" class="input_text_form" value="{{formData.mingcheng}}" type="text" />
+        
+        <view class="lables">工序</view>
+        <input bindinput="onFormInput" data-field="gongxu" class="input_text_form" value="{{formData.gongxu}}" type="text" />
+        
+        <view class="lables">效率</view>
+        <input bindinput="onFormInput" data-field="xiaolv" class="input_text_form di-bottom" value="{{formData.xiaolv}}" type="text" placeholder="可选填" />
+      </view>
+    </scroll-view>
+    
+    <view class="bottom_view">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="del1" disabled="{{isdisshan!=1}}">删除</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="upd1" disabled="{{isdisgai!=1}}">修改</button>
+    </view>
+  </view>
+</van-popup>
+
+<!-- ================= 查询弹窗 ================= -->
+<van-popup bind:click-overlay="qxShow" show="{{ cxShow }}" position="bottom" custom-style="height: 60%;">
+  <view style="height: 100%; display: flex; flex-direction: column;">
+    <scroll-view style="flex: 1;" scroll-y="true">
+      <view style="padding: 40rpx;">
+        <view class="lables1">生产线名称</view>
+        <input bindinput="onInput" data-column="mingcheng" class="input_text_form" value="{{mingcheng}}" type="text" placeholder="输入名称查询" />
+        
+        <view class="lables1">工序</view>
+        <input bindinput="onInput" data-column="gongxu" class="input_text_form" value="{{gongxu}}" type="text" placeholder="输入工序查询" />
+        
+        <view class="lables1">效率</view>
+        <input bindinput="onInput" data-column="xiaolv" class="input_text_form di-bottom" value="{{xiaolv}}" type="text" placeholder="输入效率查询" />
+      </view>
+    </scroll-view>
+    
+    <view class="bottom_view">
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
+      <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+    </view>
+  </view>
+</van-popup>
+
+<!-- ================= 删除确认弹窗 ================= -->
+<van-dialog
+  use-slot
+  title="确认删除"
+  show="{{ delWindow1 }}"
+  bind:close="qxShow"
+  closeOnClickOverlay="true"
+  show-confirm-button="true"
+  show-cancel-button="true"
+  bind:confirm="sure1"
+>
+  <view style="padding: 40rpx; text-align: center;">
+    <text>确定要删除这条生产线吗？</text>
+    <text style="display: block; color: #999; font-size: 26rpx; margin-top: 20rpx;">删除后数据将无法恢复</text>
+  </view>
+</van-dialog>
+
+<!-- ================= 修改订单浮窗 ================= -->
+<view class="input_view" hidden="{{handle}}">
+  <button class="bt_form" bindtap="xgDingDan" hover-class="bt_form_hover" disabled="{{isdisgai!=1}}">修改生产线</button>
+</view>
+
+<!-- ================= 点击背景隐藏浮窗 ================= -->
+<view class="mask" bindtap="hid_view" hidden="{{handle}}"></view>

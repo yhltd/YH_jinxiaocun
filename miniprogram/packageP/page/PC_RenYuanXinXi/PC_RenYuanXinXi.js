@@ -11,6 +11,8 @@ Page({
     idcard:"",
     bm:"",
     bc:"",
+    scx:"",     // 新增：生产线
+    gx:"",      // 新增：工序
     id:"",
     list:[],
     listBUMEN: [],
@@ -19,6 +21,8 @@ Page({
     { text: "电话", width: "250rpx", columnName: "phone_number", type: "text", isupd: true },
     { text: "身份证号", width: "300rpx", columnName: "id_number", type: "text", isupd: true },
     { text: "部门名称", width: "200rpx", columnName: "department_name", type: "text", isupd: true },
+    { text: "生产线", width: "200rpx", columnName: "shengchanxian", type: "text", isupd: true }, // 新增
+    { text: "工序", width: "200rpx", columnName: "gongxu", type: "text", isupd: true },           // 新增
     { text: "班次", width: "200rpx", columnName: "banci", type: "text", isupd: true },
   ],
   tjShow: false,
@@ -33,6 +37,8 @@ Page({
   isdisshan:'',
   name:'',
   banci:'',
+  scx_search:"",  // 新增：生产线查询
+  gx_search:"",   // 新增：工序查询
   },
 
   /**
@@ -61,7 +67,7 @@ Page({
     var _this = this
     console.log(_this.data.name)
     console.log(_this.data.banci)
-    var e = [_this.data.name,_this.data.banci]
+    var e = [_this.data.name, _this.data.banci] 
     _this.tableShow(e)
     _this.qxShow()
     wx.showToast({
@@ -148,24 +154,138 @@ Page({
     }
   },
 
-  tableShow:function(e){
-    var _this = this
-    let user = app.globalData.gongsi;
-    console.log("select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'")
+  // tableShow:function(e){
+  //   var _this = this
+  //   let user = app.globalData.gongsi;
+  //   console.log("select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'")
+  //   wx.cloud.callFunction({
+  //     name: 'sqlServer_PC',
+  //     data: {
+  //       query: "select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'"
+  //     },
+  //     success: res => {
+  //       var list = res.result.recordset
+  //       _this.setData({
+  //         list: list,
+  //         name:'',
+  //         banci:'',
+  //       })
+
+  //       // console.log(list)
+  //     },
+  //     err: res => {
+  //       console.log("错误!")
+  //     },
+  //     fail: res => {
+  //       wx.showToast({
+  //         title: '请求失败！',
+  //         icon: 'none',
+  //         duration: 3000
+  //       })
+  //       console.log("请求失败！")
+  //     }
+  //   })
+  // },
+//-------------新0202
+tableShow:function(e){
+  var _this = this
+  let user = app.globalData.gongsi;
+  // 恢复原来的查询条件，只按姓名和班次查询
+  console.log("select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'")
+  wx.cloud.callFunction({
+    name: 'sqlServer_PC',
+    data: {
+      query: "select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'"
+    },
+    success: res => {
+      var list = res.result.recordset
+      _this.setData({
+        list: list,
+        name:'',
+        banci:'',
+      })
+    },
+    err: res => {
+      console.log("错误!")
+    },
+    fail: res => {
+      wx.showToast({
+        title: '请求失败！',
+        icon: 'none',
+        duration: 3000
+      })
+      console.log("请求失败！")
+    }
+  })
+},
+
+     onInput3: function (e) {
+     var _this = this
+     let column = e.currentTarget.dataset.column
+     _this.setData({
+       [column]: e.detail.value
+     })
+   },
+
+  // add1:function(){
+  //   var _this=this
+  //   let user = app.globalData.gongsi;
+  //   if (_this.data.xm != "" ){
+      
+  //     wx.cloud.callFunction({
+  //       name: 'sqlServer_PC',
+  //       data: {
+  //         query: "insert into paibanbiao_renyuan (staff_name,phone_number,id_number,department_name,banci,company) values ('" +_this.data.xm + "','"+ _this.data.dh + "','"+ _this.data.idcard + "','" + _this.data.bm + "','" + _this.data.bc+ "','" + user + "')"
+  //       },
+  //       success: res => {
+  //         wx.showToast({
+  //           title: '添加成功！',
+  //           icon: 'none'
+  //         })
+  //         var e = ['', '']
+  //         _this.qxShow()
+  //         _this.tableShow(e)
+  //       },
+  //       err: res => {
+  //         console.log("错误!")
+  //       },
+  //       fail: res => {
+  //         wx.showToast({
+  //           title: '请求失败！',
+  //           icon: 'none',
+  //           duration: 3000
+  //         })
+  //         console.log("请求失败！")
+  //       }
+  //     })
+     
+  //   }else{
+  //     wx.showToast({
+  //       title: '姓名不能为空！',
+  //       icon: 'none'
+  //     })
+  //   }
+  // },
+//-----新0202
+add1:function(){
+  var _this=this
+  let user = app.globalData.gongsi;
+  if (_this.data.xm != "" ){
+    
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select * from paibanbiao_renyuan where company='" + user + "' and staff_name like '%" + e[0] + "%' and banci like '%"+ e[1] +"%'"
+        // 修改SQL语句，添加生产线和工序字段
+        query: "insert into paibanbiao_renyuan (staff_name,phone_number,id_number,department_name,shengchanxian,gongxu,banci,company) values ('" +_this.data.xm + "','"+ _this.data.dh + "','"+ _this.data.idcard + "','" + _this.data.bm + "','" + _this.data.scx + "','" + _this.data.gx + "','" + _this.data.bc+ "','" + user + "')"
       },
       success: res => {
-        var list = res.result.recordset
-        _this.setData({
-          list: list,
-          name:'',
-          banci:'',
+        wx.showToast({
+          title: '添加成功！',
+          icon: 'none'
         })
-
-        // console.log(list)
+        var e = ['', '']  // 改为4个参数
+        _this.qxShow()
+        _this.tableShow(e)
       },
       err: res => {
         console.log("错误!")
@@ -179,55 +299,14 @@ Page({
         console.log("请求失败！")
       }
     })
-  },
-
-     onInput3: function (e) {
-     var _this = this
-     let column = e.currentTarget.dataset.column
-     _this.setData({
-       [column]: e.detail.value
-     })
-   },
-
-  add1:function(){
-    var _this=this
-    let user = app.globalData.gongsi;
-    if (_this.data.xm != "" ){
-      
-      wx.cloud.callFunction({
-        name: 'sqlServer_PC',
-        data: {
-          query: "insert into paibanbiao_renyuan (staff_name,phone_number,id_number,department_name,banci,company) values ('" +_this.data.xm + "','"+ _this.data.dh + "','"+ _this.data.idcard + "','" + _this.data.bm + "','" + _this.data.bc+ "','" + user + "')"
-        },
-        success: res => {
-          wx.showToast({
-            title: '添加成功！',
-            icon: 'none'
-          })
-          var e = ['', '']
-          _this.qxShow()
-          _this.tableShow(e)
-        },
-        err: res => {
-          console.log("错误!")
-        },
-        fail: res => {
-          wx.showToast({
-            title: '请求失败！',
-            icon: 'none',
-            duration: 3000
-          })
-          console.log("请求失败！")
-        }
-      })
-     
-    }else{
-      wx.showToast({
-        title: '姓名不能为空！',
-        icon: 'none'
-      })
-    }
-  },
+   
+  }else{
+    wx.showToast({
+      title: '姓名不能为空！',
+      icon: 'none'
+    })
+  }
+},
 
   upd1: function () {
     var _this = this
@@ -235,7 +314,8 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
-          query: "update paibanbiao_renyuan set staff_name='" + _this.data.xm + "',phone_number='" + _this.data.dh + "',id_number='" + _this.data.idcard + "',department_name='" + _this.data.bm + "', banci='" + _this.data.bc + "' where id='" + _this.data.id +"'"
+          // 添加生产线和工序字段到UPDATE语句
+          query: "update paibanbiao_renyuan set staff_name='" + _this.data.xm + "',phone_number='" + _this.data.dh + "',id_number='" + _this.data.idcard + "',department_name='" + _this.data.bm + "', shengchanxian='" + (_this.data.scx || '') + "', gongxu='" + (_this.data.gx || '') + "', banci='" + _this.data.bc + "' where id='" + _this.data.id +"'"
         },
         success: res => {
           _this.setData({
@@ -243,6 +323,8 @@ Page({
             dh: "",
             idcard: "",
             bm: "",
+            scx: "",  // 新增
+            gx: "",   // 新增
             bc: "",
           })
           _this.qxShow()
@@ -282,6 +364,8 @@ Page({
       dh:"",
       idcard:"",
       bm:"",
+      scx:"",  // 新增
+      gx:"",   // 新增
       bc:"",
       id:""
     })
@@ -294,6 +378,8 @@ Page({
       dh: _this.data.list[e.currentTarget.dataset.index].phone_number,
       idcard: _this.data.list[e.currentTarget.dataset.index].id_number,
       bm: _this.data.list[e.currentTarget.dataset.index].department_name,
+      scx: _this.data.list[e.currentTarget.dataset.index].shengchanxian,
+      gx: _this.data.list[e.currentTarget.dataset.index].gongxu, 
       bc: _this.data.list[e.currentTarget.dataset.index].banci,
       id: _this.data.list[e.currentTarget.dataset.index].id,
       handle:false,
