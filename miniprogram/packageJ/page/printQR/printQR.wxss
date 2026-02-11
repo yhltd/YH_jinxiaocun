@@ -11,6 +11,7 @@ button{
   margin:auto;
   border: 1rpx solid #F2F2F2;
   margin-top: 20rpx;
+  background-color: #FFFFFF !important; /* 添加这一行 */
 }
 .blueListView{
   margin-bottom: 80rpx;

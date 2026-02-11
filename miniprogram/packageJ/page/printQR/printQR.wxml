@@ -16,7 +16,7 @@
 </view>
 
 <scroll-view class="temp_day_box" scroll-x bindscroll='scrollCanvas'>
-  <image mode="widthFix" style="width: 100% !important;height: 100% !important;" src="{{this_photo}}"></image>
+  <image mode="widthFix" style="width: 100% !important;height: 100% !important; background-color: #FFFFFF;" src="{{this_photo}}"></image>
   <view class="canvas_height" style='transform: translateX(-{{canvasLen}}px);'>
     <canvas class="canvas" canvas-id="outCanvas" hidden="{{!mask_hid}}" style="width:{{width_user}}px;height:{{height_user}}px;"></canvas>
   </view>
