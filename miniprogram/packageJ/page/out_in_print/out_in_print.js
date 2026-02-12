@@ -1207,7 +1207,26 @@ Page({
         let arr = _this.convert4to1(res.data);
         let data = _this.convert8to1(arr);
         //局中，传入点阵位图，初始化打印机，走纸30行
-        const cmds = [].concat([27, 97, 49],[29, 118, 48, 0, widths.width/8%256, widths.width/8/256, height%256, height/256], data, [27, 64],[27, 100, 30]);
+        // var heightMM = height / 300 * 25.4;        // 像素 → 毫米
+        // var feedLines = Math.ceil(heightMM / 4.233) + 2;
+
+        var dpi = 300;     
+        var inchToMm = 25.4;  
+        var lineHeightMm = 4.233; 
+
+        // 第1步：像素 → 英寸
+        var heightInch = height / dpi;  
+
+        // 第2步：英寸 → 毫米
+        var heightMm = heightInch * inchToMm;  
+
+        // 第3步：毫米 → 行数
+        var feedLines = heightMm / lineHeightMm;  
+
+        // 第4步：向上取整 + 边距
+        var feedLines = Math.ceil(5.44)
+
+        const cmds = [].concat([27, 97, 49],[29, 118, 48, 0, widths.width/8%256, widths.width/8/256, height%256, height/256], data, [27, 64],[27, 100, feedLines]);
         const buffer = toArrayBuffer(Buffer.from(cmds, 'gbk'));
         let arrPrint = [];
         for (let i = 0; i < buffer.byteLength; i = i + 20) {
