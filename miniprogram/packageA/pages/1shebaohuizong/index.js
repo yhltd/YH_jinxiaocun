@@ -722,13 +722,25 @@ choice : function(e){
   maskWindowOk : function(){
     var that = this;
     var input = that.data.selected.Name;
-   var sql="SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having C = '"+input+"' and BD = '"+that.data.companyName+"'"
+   var sql="SELECT TOP 100 C AS department, " +
+   "SUM(CASE WHEN ISNUMERIC(Z) = 1 THEN CAST(Z AS float) ELSE 0 END) AS Z, " +
+   "SUM(CASE WHEN ISNUMERIC(AJ) = 1 THEN CAST(AJ AS float) ELSE 0 END) AS AJ, " +
+   "SUM(CASE WHEN ISNUMERIC(Z) = 1 AND ISNUMERIC(AJ) = 1 THEN CAST(Z AS float) + CAST(AJ AS float) ELSE 0 END) AS COUNT1, " +
+   "SUM(CASE WHEN ISNUMERIC(AA) = 1 THEN CAST(AA AS float) ELSE 0 END) AS AA, " +
+   "SUM(CASE WHEN ISNUMERIC(AK) = 1 THEN CAST(AK AS float) ELSE 0 END) AS AK, " +
+   "SUM(CASE WHEN ISNUMERIC(AA) = 1 AND ISNUMERIC(AK) = 1 THEN CAST(AA AS float) + CAST(AK AS float) ELSE 0 END) AS COUNT2, " +
+   "SUM(CASE WHEN ISNUMERIC(AC) = 1 THEN CAST(AC AS float) ELSE 0 END) AS AC, " +
+   "SUM(CASE WHEN ISNUMERIC(AD) = 1 THEN CAST(AD AS float) ELSE 0 END) AS AD, " +
+   "SUM(CASE WHEN ISNUMERIC(Z) = 1 AND ISNUMERIC(AA) = 1 AND ISNUMERIC(AC) = 1 AND ISNUMERIC(AD) = 1 THEN CAST(Z AS float) + CAST(AA AS float) + CAST(AC AS float) + CAST(AD AS float) ELSE 0 END) AS COUNT3, " +
+   "SUM(CASE WHEN ISNUMERIC(AJ) = 1 AND ISNUMERIC(AK) = 1 THEN CAST(AJ AS float) + CAST(AK AS float) ELSE 0 END) AS COUNT4 " +
+   "FROM gongzi_gongzimingxi " +
+   "GROUP BY C, BD " +
+   "HAVING C = '" + input + "' AND BD = '" + that.data.companyName + "'";
     console.log(sql)
     wx.cloud.callFunction({
       name: "sqlServer_117",
       data: {
-        // query: "SELECT top 100 C as department,sum(cast(Z as int))as Z,sum(cast(AJ as int))as AJ,SUM(cast(Z as int)+cast(AJ AS INT))AS COUNT1, SUM(CAST(AA AS INT))AS AA,SUM(CAST(AK AS INT))AS AK,SUM(CAST(AA AS INT) + CAST(AK AS INT))AS COUNT2,SUM(CAST(AC AS INT))AS AC,SUM(CAST(AD AS INT))AS AD,SUM(CAST(Z AS INT)+CAST(AA AS INT)+CAST(AC AS INT)+CAST(AD AS INT))AS COUNT3,SUM(CAST(AJ AS INT)+CAST(AK AS INT))AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD having C like '%"+input+"%' and BD = '"+that.data.companyName+"'"
-        query:"SELECT TOP 100 C AS department,SUM(CASE WHEN ISNUMERIC(Z) = 1 THEN CAST(Z AS int) ELSE 0 END) AS Z,SUM(CASE WHEN ISNUMERIC(AJ) = 1 THEN CAST(AJ AS int) ELSE 0 END) AS AJ,SUM(CASE WHEN ISNUMERIC(Z) = 1 AND ISNUMERIC(AJ) = 1 THEN CAST(Z AS int) + CAST(AJ AS int) ELSE 0 END) AS COUNT1,SUM(CASE WHEN ISNUMERIC(AA) = 1 THEN CAST(AA AS int) ELSE 0 END) AS AA,SUM(CASE WHEN ISNUMERIC(AK) = 1 THEN CAST(AK AS int) ELSE 0 END) AS AK,SUM(CASE WHEN ISNUMERIC(AA) = 1 AND ISNUMERIC(AK) = 1 THEN CAST(AA AS int) + CAST(AK AS int) ELSE 0 END) AS COUNT2,SUM(CASE WHEN ISNUMERIC(AC) = 1 THEN CAST(AC AS int) ELSE 0 END) AS AC,SUM(CASE WHEN ISNUMERIC(AD) = 1 THEN CAST(AD AS int) ELSE 0 END) AS AD,SUM(CASE WHEN ISNUMERIC(Z) = 1 AND ISNUMERIC(AA) = 1 AND ISNUMERIC(AC) = 1 AND ISNUMERIC(AD) = 1 THEN CAST(Z AS int) + CAST(AA AS int) + CAST(AC AS int) + CAST(AD AS int) ELSE 0 END) AS COUNT3,SUM(CASE WHEN ISNUMERIC(AJ) = 1 AND ISNUMERIC(AK) = 1 THEN CAST(AJ AS int) + CAST(AK AS int) ELSE 0 END) AS COUNT4 FROM gongzi_gongzimingxi GROUP BY C,BD HAVING C = '"+input+"' AND BD = '"+that.data.companyName+"'"
+        query:sql
       },
     
       success: res => {

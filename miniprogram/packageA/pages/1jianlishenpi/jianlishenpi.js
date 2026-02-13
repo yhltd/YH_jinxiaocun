@@ -391,7 +391,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "insert into gongzi_jianliguanli (gongsi, tijiaoshijian, zhuangtai) values('"+that.data.companyName+"', CONVERT(varchar(10), GETDATE(), 120), '')"
+        query: "insert into gongzi_jianliguanli (gongsi, tijiaoshijian, zhuangtai) values('"+that.data.companyName+"', CONVERT(varchar(10), GETDATE(), 120), '待处理')"
       },
       success: res => {
         console.log("插入成功!!!!!!")
@@ -1334,8 +1334,10 @@ chooseImage: function() {
       });
       
       // 刷新页面数据
-      that.baochi();
-    }, 1000);
+      setTimeout(() => {
+        that.baochi();
+    }, 1500);
+}, 1000);
   },
 
   // 保存文件信息到数据库

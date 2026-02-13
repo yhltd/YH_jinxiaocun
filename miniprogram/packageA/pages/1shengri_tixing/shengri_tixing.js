@@ -111,12 +111,216 @@ Page({
     })
     var this_date = getNowDate()
     var this_month = this_date.split("-")[1]
+    this_month = this_month.padStart(2, '0')
     var e = ['/'+ this_month +'/']
     _this.tableShow(e)
   },
-  tableShow:function(e){
+  // tableShow:function(e){
+
+  //   var _this = this
+  //   var sql = "select B,Q from gongzi_renyuan where L like '"+_this.data.companyName+"%' and Q like '%" + e[0] + "%'"
+  //   wx.cloud.callFunction({
+  //     name: "sqlServer_117",
+  //     data: {
+  //       query: sql
+  //     },
+  //     success: res => {
+  //       console.log(res.result.recordset)
+  //       var birthday_list = res.result.recordset
+  //       var now_date = getNowDate()
+  //       var this_start_date = now_date.split("-")[0] + e[0] + '1'
+  //       var this_stop_date = new Date(this_start_date) 
+  //       var this_start_week = new Date(this_start_date).getDay();
+  //       this_stop_date = getCurrentMonthLast(this_stop_date)
+  //       this_stop_date = getThisDate(this_stop_date)
+  //       var this_stop_day = this_stop_date.split("/")[2] * 1
+  //       console.log(this_start_date)
+  //       console.log(this_stop_date)
+  //       console.log(this_start_week)
+  //       var end_array = []
+
+  //       var title1 = ''
+  //       var title2 = ''
+  //       var title3 = ''
+  //       var title4 = ''
+  //       var title5 = ''
+  //       var title6 = ''
+  //       var title7 = ''
+  //       var list1 = ''
+  //       var list2 = ''
+  //       var list3 = ''
+  //       var list4 = ''
+  //       var list5 = ''
+  //       var list6 = ''
+  //       var list7 = ''
+
+  //       for(var i=1; i<= this_stop_day; i++){
+          
+  //         if(this_start_week == 0){
+  //           title1 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list1 == ''){
+  //                 list1 = birthday_list[j].B
+  //               }else{
+  //                 list1 = list1 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }else if(this_start_week == 1){
+  //           title2 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list2 == ''){
+  //                 list2 = birthday_list[j].B
+  //               }else{
+  //                 list2 = list2 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }else if(this_start_week == 2){
+  //           title3 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list3 == ''){
+  //                 list3 = birthday_list[j].B
+  //               }else{
+  //                 list3 = list3 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }else if(this_start_week == 3){
+  //           title4 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list4 == ''){
+  //                 list4 = birthday_list[j].B
+  //               }else{
+  //                 list4 = list4 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }else if(this_start_week == 4){
+  //           title5 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list5 == ''){
+  //                 list5 = birthday_list[j].B
+  //               }else{
+  //                 list5 = list5 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }else if(this_start_week == 5){
+  //           title6 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list6 == ''){
+  //                 list6 = birthday_list[j].B
+  //               }else{
+  //                 list6 = list6 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }else if(this_start_week == 6){
+  //           title7 = i
+  //           for(var j=0; j<birthday_list.length; j++){
+  //             if(birthday_list[j].Q.split("/")[2] * 1 == i){
+  //               if(list7 == ''){
+  //                 list7 = birthday_list[j].B
+  //               }else{
+  //                 list7 = list7 + "," + birthday_list[j].B
+  //               }
+  //             }
+  //           }
+  //           this_start_week = this_start_week + 1
+  //         }
+
+  //         if(this_start_week == 7){
+  //           end_array.push({
+  //             A:title1,
+  //             B:title2,
+  //             C:title3,
+  //             D:title4,
+  //             E:title5,
+  //             F:title6,
+  //             G:title7,
+  //           })
+  //           end_array.push({
+  //             A:list1,
+  //             B:list2,
+  //             C:list3,
+  //             D:list4,
+  //             E:list5,
+  //             F:list6,
+  //             G:list7,
+  //           })
+  //           this_start_week = 0
+  //           var title1 = ''
+  //           var title2 = ''
+  //           var title3 = ''
+  //           var title4 = ''
+  //           var title5 = ''
+  //           var title6 = ''
+  //           var title7 = ''
+  //           var list1 = ''
+  //           var list2 = ''
+  //           var list3 = ''
+  //           var list4 = ''
+  //           var list5 = ''
+  //           var list6 = ''
+  //           var list7 = ''
+  //         }
+  //       }
+  //       if(this_start_week != 0){
+  //         end_array.push({
+  //           A:title1,
+  //           B:title2,
+  //           C:title3,
+  //           D:title4,
+  //           E:title5,
+  //           F:title6,
+  //           G:title7,
+  //         })
+  //         end_array.push({
+  //           A:list1,
+  //           B:list2,
+  //           C:list3,
+  //           D:list4,
+  //           E:list5,
+  //           F:list6,
+  //           G:list7,
+  //         })
+  //       }
+  //       console.log(end_array)
+  //       _this.setData({
+  //         list:end_array
+  //       })
+  //     },
+  //     err: res => {
+  //       console.log("错误!", res)
+  //     }
+  //   })
+
+  // },
+  tableShow: function(e) {
     var _this = this
-    var sql = "select B,Q from gongzi_renyuan where L like '"+_this.data.companyName+"%' and Q like '%" + e[0] + "%'"
+    var month = e[0].replace(/\//g, '')  // '02'
+    
+    // ✅ 修复1：不用反斜杠，用加号拼接
+    var sql = "select B, Q from gongzi_renyuan " +
+              "where L like '" + _this.data.companyName + "%' " +
+              "and (Q like '%/" + month + "/%' " +
+              "or Q like '%/" + month + "-%' " +
+              "or Q like '%-" + month + "-%' " +
+              "or Q like '%-" + month + "/%')"
+    
     wx.cloud.callFunction({
       name: "sqlServer_117",
       data: {
@@ -125,187 +329,162 @@ Page({
       success: res => {
         console.log(res.result.recordset)
         var birthday_list = res.result.recordset
+        
+        // 1. 统一处理生日日期
+        for (var i = 0; i < birthday_list.length; i++) {
+          var qStr = birthday_list[i].Q
+          var qDate = new Date(qStr.replace(/\//g, '-'))
+          birthday_list[i].day = qDate.getDate()
+        }
+        
         var now_date = getNowDate()
-        var this_start_date = now_date.split("-")[0] + e[0] + '1'
-        var this_stop_date = new Date(this_start_date) 
-        var this_start_week = new Date(this_start_date).getDay();
+        
+        // 2. 生成当月第一天
+        var this_start_date = now_date.substring(0, 4) + '-' + month + '-01'
+        var this_stop_date = new Date(this_start_date)
+        var this_start_week = new Date(this_start_date).getDay()
+        
+        // 3. 获取当月最后一天
         this_stop_date = getCurrentMonthLast(this_stop_date)
         this_stop_date = getThisDate(this_stop_date)
-        var this_stop_day = this_stop_date.split("/")[2] * 1
+        
+        // 4. ✅ 修复2：用 indexOf 代替 includes
+        var this_stop_day = 0
+        if (this_stop_date.indexOf('/') > -1) {
+          this_stop_day = parseInt(this_stop_date.split('/')[2])
+        } else {
+          this_stop_day = parseInt(this_stop_date.split('-')[2])
+        }
+        
         console.log(this_start_date)
         console.log(this_stop_date)
         console.log(this_start_week)
+        
         var end_array = []
-
-        var title1 = ''
-        var title2 = ''
-        var title3 = ''
-        var title4 = ''
-        var title5 = ''
-        var title6 = ''
-        var title7 = ''
-        var list1 = ''
-        var list2 = ''
-        var list3 = ''
-        var list4 = ''
-        var list5 = ''
-        var list6 = ''
-        var list7 = ''
-
-        for(var i=1; i<= this_stop_day; i++){
-          
-          if(this_start_week == 0){
+        var title1 = '', title2 = '', title3 = '', title4 = '', title5 = '', title6 = '', title7 = ''
+        var list1 = '', list2 = '', list3 = '', list4 = '', list5 = '', list6 = '', list7 = ''
+  
+        for(var i = 1; i <= this_stop_day; i++) {
+          if(this_start_week == 0) {
             title1 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list1 == ''){
-                  list1 = birthday_list[j].B
-                }else{
-                  list1 = list1 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list1 == '') list1 = birthday_list[j].B
+                else list1 = list1 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
-          }else if(this_start_week == 1){
+            this_start_week = 1
+          } else if(this_start_week == 1) {
             title2 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list2 == ''){
-                  list2 = birthday_list[j].B
-                }else{
-                  list2 = list2 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list2 == '') list2 = birthday_list[j].B
+                else list2 = list2 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
-          }else if(this_start_week == 2){
+            this_start_week = 2
+          } else if(this_start_week == 2) {
             title3 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list3 == ''){
-                  list3 = birthday_list[j].B
-                }else{
-                  list3 = list3 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list3 == '') list3 = birthday_list[j].B
+                else list3 = list3 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
-          }else if(this_start_week == 3){
+            this_start_week = 3
+          } else if(this_start_week == 3) {
             title4 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list4 == ''){
-                  list4 = birthday_list[j].B
-                }else{
-                  list4 = list4 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list4 == '') list4 = birthday_list[j].B
+                else list4 = list4 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
-          }else if(this_start_week == 4){
+            this_start_week = 4
+          } else if(this_start_week == 4) {
             title5 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list5 == ''){
-                  list5 = birthday_list[j].B
-                }else{
-                  list5 = list5 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list5 == '') list5 = birthday_list[j].B
+                else list5 = list5 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
-          }else if(this_start_week == 5){
+            this_start_week = 5
+          } else if(this_start_week == 5) {
             title6 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list6 == ''){
-                  list6 = birthday_list[j].B
-                }else{
-                  list6 = list6 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list6 == '') list6 = birthday_list[j].B
+                else list6 = list6 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
-          }else if(this_start_week == 6){
+            this_start_week = 6
+          } else if(this_start_week == 6) {
             title7 = i
-            for(var j=0; j<birthday_list.length; j++){
-              if(birthday_list[j].Q.split("/")[2] * 1 == i){
-                if(list7 == ''){
-                  list7 = birthday_list[j].B
-                }else{
-                  list7 = list7 + "," + birthday_list[j].B
-                }
+            for(var j = 0; j < birthday_list.length; j++) {
+              if(birthday_list[j].day == i) {
+                if(list7 == '') list7 = birthday_list[j].B
+                else list7 = list7 + "," + birthday_list[j].B
               }
             }
-            this_start_week = this_start_week + 1
+            this_start_week = 7
           }
-
-          if(this_start_week == 7){
+  
+          if(this_start_week == 7) {
             end_array.push({
-              A:title1,
-              B:title2,
-              C:title3,
-              D:title4,
-              E:title5,
-              F:title6,
-              G:title7,
+              A: title1 || '',
+              B: title2 || '',
+              C: title3 || '',
+              D: title4 || '',
+              E: title5 || '',
+              F: title6 || '',
+              G: title7 || ''
             })
             end_array.push({
-              A:list1,
-              B:list2,
-              C:list3,
-              D:list4,
-              E:list5,
-              F:list6,
-              G:list7,
+              A: list1 || '',
+              B: list2 || '',
+              C: list3 || '',
+              D: list4 || '',
+              E: list5 || '',
+              F: list6 || '',
+              G: list7 || ''
             })
             this_start_week = 0
-            var title1 = ''
-            var title2 = ''
-            var title3 = ''
-            var title4 = ''
-            var title5 = ''
-            var title6 = ''
-            var title7 = ''
-            var list1 = ''
-            var list2 = ''
-            var list3 = ''
-            var list4 = ''
-            var list5 = ''
-            var list6 = ''
-            var list7 = ''
+            title1 = ''; title2 = ''; title3 = ''; title4 = ''; title5 = ''; title6 = ''; title7 = ''
+            list1 = ''; list2 = ''; list3 = ''; list4 = ''; list5 = ''; list6 = ''; list7 = ''
           }
         }
-        if(this_start_week != 0){
+        
+        if(this_start_week != 0) {
           end_array.push({
-            A:title1,
-            B:title2,
-            C:title3,
-            D:title4,
-            E:title5,
-            F:title6,
-            G:title7,
+            A: title1 || '',
+            B: title2 || '',
+            C: title3 || '',
+            D: title4 || '',
+            E: title5 || '',
+            F: title6 || '',
+            G: title7 || ''
           })
           end_array.push({
-            A:list1,
-            B:list2,
-            C:list3,
-            D:list4,
-            E:list5,
-            F:list6,
-            G:list7,
+            A: list1 || '',
+            B: list2 || '',
+            C: list3 || '',
+            D: list4 || '',
+            E: list5 || '',
+            F: list6 || '',
+            G: list7 || ''
           })
         }
+        
         console.log(end_array)
         _this.setData({
-          list:end_array
+          list: end_array
         })
       },
       err: res => {
         console.log("错误!", res)
       }
     })
-
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -715,6 +894,8 @@ function getNowDate() {
   var sign1 = "-";
   var sign2 = ":";
   var year = date.getFullYear() // 年
+  var month = (date.getMonth() + 1).toString().padStart(2, '0');  // ✅ 补零
+  var day = date.getDate().toString().padStart(2, '0');          // ✅ 补零
   var month = date.getMonth() + 1; // 月
   var day  = date.getDate(); // 日
   var hour = date.getHours(); // 时
