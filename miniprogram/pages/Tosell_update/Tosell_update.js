@@ -101,34 +101,71 @@ Page({
     var gongsi = app.globalData.gongsi
     var fun = that.data.fun;
     var ssql = ""
-    if(fun == 'update'){
-      ssql = "select * from yh_jinxiaocun_mingxi where gs_name = '" + gongsi + "' and _id ='" + that.data.id + "'"
-    }else{
-      ssql=""
-    }
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: ssql
-      },
-      success(res) {
-        console.log(res.result)
-        that.setData({
-          all: res.result,
-          value0:res.result[0].orderid,
-          value1:res.result[0].sp_dm,
-          value2:res.result[0].cpname,
-          value3:res.result[0].cplb,
-          value4:res.result[0].cpsj,
-          value5:res.result[0].cpsl,
-          value6:res.result[0].mxtype,
-          value7:res.result[0].shou_h,
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
+
+    if(app.globalData.shujuku==0){
+
+      if(fun == 'update'){
+        ssql = "select * from yh_jinxiaocun_mingxi where gs_name = '" + gongsi + "' and _id ='" + that.data.id + "'"
+      }else{
+        ssql=""
       }
-    });
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: ssql
+        },
+        success(res) {
+          console.log(res.result)
+          that.setData({
+            all: res.result,
+            value0:res.result[0].orderid,
+            value1:res.result[0].sp_dm,
+            value2:res.result[0].cpname,
+            value3:res.result[0].cplb,
+            value4:res.result[0].cpsj,
+            value5:res.result[0].cpsl,
+            value6:res.result[0].mxtype,
+            value7:res.result[0].shou_h,
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      if(fun == 'update'){
+        ssql = "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '" + gongsi + "' and _id = '" + that.data.id + "'"
+      }else{
+        ssql=""
+      }
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: ssql
+        },
+        success(res) {
+          console.log(res.result.recordset)
+          that.setData({
+            all: res.result.recordset,
+            value0:res.result.recordset[0].orderid,
+            value1:res.result.recordset[0].sp_dm,
+            value2:res.result.recordset[0].cpname,
+            value3:res.result.recordset[0].cplb,
+            value4:res.result.recordset[0].cpsj,
+            value5:res.result.recordset[0].cpsl,
+            value6:res.result.recordset[0].mxtype,
+            value7:res.result.recordset[0].shou_h,
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+          
+    }
+    
   },
 
   /**
@@ -192,28 +229,60 @@ Page({
     var value7 = that.data.value7
     var ssql = ""
 
-    ssql = "update yh_jinxiaocun_mingxi set orderid ='" + value0 + "',`sp_dm` = '" + value1 + "',cpname ='" + value2 + "',cplb ='" + value3 + "',cpsj ='" + value4 + "',cpsl='" + value5 + "',mxtype='" + value6 + "',shou_h='" + value7 + "' where _id =" + id;
+    if(app.globalData.shujuku==0){
 
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: ssql
-      },
-      success(res) {
-        console.log("成功", res)
-        // 在返回结果中会包含新创建的记录的 _id
-        wx.showToast({
-          title: '修改成功',
-          'icon': 'none',
-          duration: 3000
-        })
-        wx.navigateBack({
-          // delta: 1 
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+      ssql = "update yh_jinxiaocun_mingxi set orderid ='" + value0 + "',`sp_dm` = '" + value1 + "',cpname ='" + value2 + "',cplb ='" + value3 + "',cpsj ='" + value4 + "',cpsl='" + value5 + "',mxtype='" + value6 + "',shou_h='" + value7 + "' where _id =" + id;
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: ssql
+        },
+        success(res) {
+          console.log("成功", res)
+          // 在返回结果中会包含新创建的记录的 _id
+          wx.showToast({
+            title: '修改成功',
+            'icon': 'none',
+            duration: 3000
+          })
+          wx.navigateBack({
+            // delta: 1 
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      ssql = "update yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql set orderid ='" + value0 + "', sp_dm = '" + value1 + "', cpname ='" + value2 + "', cplb ='" + value3 + "', cpsj ='" + value4 + "', cpsl='" + value5 + "', mxtype='" + value6 + "', shou_h='" + value7 + "' where _id = " + id
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: ssql
+        },
+        success(res) {
+          console.log("成功", res)
+          // 在返回结果中会包含新创建的记录的 _id
+          wx.showToast({
+            title: '修改成功',
+            'icon': 'none',
+            duration: 3000
+          })
+          wx.navigateBack({
+            // delta: 1 
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+          
+    }
+
+   
   }
 })

@@ -120,37 +120,77 @@ Page({
     var gongsi = app.globalData.gongsi
     var fun = that.data.fun;
     var ssql = ""
-    if(fun == 'update'){
-      ssql = "select * from yh_jinxiaocun_tuihuomingxi where gs_name = '" + gongsi + "' and id ='" + that.data.id + "'"
-    }else{
-      ssql=""
-    }
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: ssql
-      },
-      success(res) {
-        console.log(res.result)
-        if(res.result && res.result.length > 0){
-          that.setData({
-            all: res.result,
-            value0:res.result[0].orderid,
-            value1:res.result[0].sp_dm,
-            value2:res.result[0].cpname,
-            value3:res.result[0].cplb,
-            value4:res.result[0].cpsj,
-            value5:res.result[0].cpsl,
-            value6:res.result[0].mxtype,
-            value7:res.result[0].shou_h,
-            value8:res.result[0].cangku,
-          })
-        }
-      },
-      fail(res) {
-        console.log("失败", res)
+
+    if(app.globalData.shujuku==0){
+
+      if(fun == 'update'){
+        ssql = "select * from yh_jinxiaocun_tuihuomingxi where gs_name = '" + gongsi + "' and id ='" + that.data.id + "'"
+      }else{
+        ssql=""
       }
-    });
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: ssql
+        },
+        success(res) {
+          console.log(res.result)
+          if(res.result && res.result.length > 0){
+            that.setData({
+              all: res.result,
+              value0:res.result[0].orderid,
+              value1:res.result[0].sp_dm,
+              value2:res.result[0].cpname,
+              value3:res.result[0].cplb,
+              value4:res.result[0].cpsj,
+              value5:res.result[0].cpsl,
+              value6:res.result[0].mxtype,
+              value7:res.result[0].shou_h,
+              value8:res.result[0].cangku,
+            })
+          }
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      if(fun == 'update'){
+        ssql = "select * from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_tuihuomingxi_mssql where gs_name = '" + gongsi + "' and id ='" + that.data.id + "'"
+      }else{
+        ssql=""
+      }
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+          query: ssql
+        },
+        success(res) {
+          console.log(res.result.recordset)
+          if(res.result && res.result.recordset.length > 0){
+            that.setData({
+              all: res.result.recordset,
+              value0:res.result.recordset[0].orderid,
+              value1:res.result.recordset[0].sp_dm,
+              value2:res.result.recordset[0].cpname,
+              value3:res.result.recordset[0].cplb,
+              value4:res.result.recordset[0].cpsj,
+              value5:res.result.recordset[0].cpsl,
+              value6:res.result.recordset[0].mxtype,
+              value7:res.result.recordset[0].shou_h,
+              value8:res.result.recordset[0].cangku,
+            })
+          }
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+          
+    }
+    
   },
 
   /**

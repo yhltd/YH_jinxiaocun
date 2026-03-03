@@ -18,28 +18,59 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var _this = this
-    var that = this
-    var sql = "select cangku from yh_jinxiaocun_mingxi where gs_name ='" + app.globalData.gongsi + "' group by cangku"
-    console.log(sql)
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: { 
-        sql: sql
-      },
-      success(res) {
-        var product_list = ['']
-        for(var i=0; i<res.result.length; i++){
-          product_list.push(res.result[i].cangku)
+
+    if(app.globalData.shujuku==0){
+
+      var _this = this
+      var that = this
+      var sql = "select cangku from yh_jinxiaocun_mingxi where gs_name ='" + app.globalData.gongsi + "' group by cangku"
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: { 
+          sql: sql
+        },
+        success(res) {
+          var product_list = ['']
+          for(var i=0; i<res.result.length; i++){
+            product_list.push(res.result[i].cangku)
+          }
+          that.setData({
+            product_list: product_list
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
         }
-        that.setData({
-          product_list: product_list
-        })
-      },
-      fail(res) {
-        console.log("失败", res)
-      }
-    });
+      });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var _this = this
+      var that = this
+      var sql = "select cangku from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name ='" + app.globalData.gongsi + "' group by cangku"
+      console.log(sql)
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: { 
+          query: sql
+        },
+        success(res) {
+          var product_list = ['']
+          for(var i=0; i<res.result.recordset.length; i++){
+            product_list.push(res.result.recordset[i].cangku)
+          }
+          that.setData({
+            product_list: product_list
+          })
+        },
+        fail(res) {
+          console.log("失败", res)
+        }
+      });
+          
+    }
+   
   },
   choiceDate: function (e) {
     this.setData({
@@ -97,7 +128,10 @@ Page({
     }else{
       stop_date = "2100-12"
     }
- var sql = "SELECT temp.cangku, temp.month, temp.ruku_num, temp.ruku_price, temp.chuku_num, temp.chuku_price, (COALESCE(qc.qcsl, 0) + temp.cumulative_ruku_num - temp.cumulative_chuku_num) as kucun_num, (COALESCE(qc.qcje, 0) + temp.cumulative_ruku_price - temp.cumulative_chuku_price) as kucun_price FROM (SELECT t1.cangku, DATE_FORMAT(t1.shijian, '%Y-%m') as month, SUM(CASE WHEN t1.mxtype = '入库' OR t1.mxtype = '调拨入库' OR t1.mxtype = '盘盈入库' THEN t1.cpsl ELSE 0 END) as ruku_num, SUM(CASE WHEN t1.mxtype = '入库' OR t1.mxtype = '调拨入库' OR t1.mxtype = '盘盈入库' THEN t1.cpsl*t1.cpsj ELSE 0 END) as ruku_price, SUM(CASE WHEN t1.mxtype = '出库' OR t1.mxtype = '调拨出库' OR t1.mxtype = '盘亏出库' THEN t1.cpsl ELSE 0 END) as chuku_num, SUM(CASE WHEN t1.mxtype = '出库' OR t1.mxtype = '调拨出库' OR t1.mxtype = '盘亏出库' THEN t1.cpsl*t1.cpsj ELSE 0 END) as chuku_price, (SELECT IFNULL(SUM(t2.cpsl), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '入库' OR t2.mxtype = '调拨入库' OR t2.mxtype = '盘盈入库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_ruku_num, (SELECT IFNULL(SUM(t2.cpsl*t2.cpsj), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '入库' OR t2.mxtype = '调拨入库' OR t2.mxtype = '盘盈入库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_ruku_price, (SELECT IFNULL(SUM(t2.cpsl), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '出库' OR t2.mxtype = '调拨出库' OR t2.mxtype = '盘亏出库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_chuku_num, (SELECT IFNULL(SUM(t2.cpsl*t2.cpsj), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '出库' OR t2.mxtype = '调拨出库' OR t2.mxtype = '盘亏出库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_chuku_price FROM yh_jinxiaocun_mingxi as t1 WHERE t1.gs_name = '" + gongsi + "'" + (wareHouse ? " AND (t1.cangku = '" + wareHouse + "' OR (t1.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + " GROUP BY t1.cangku, DATE_FORMAT(t1.shijian, '%Y-%m')) as temp LEFT JOIN (SELECT cangku, SUM(cpsl) as qcsl, SUM(cpsl*cpsj) as qcje FROM yh_jinxiaocun_qichushu WHERE gs_name = '" + gongsi + "'" + (wareHouse ? " AND (cangku = '" + wareHouse + "' OR (cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + " GROUP BY cangku) as qc ON (temp.cangku = qc.cangku OR (temp.cangku IS NULL AND qc.cangku IS NULL)) WHERE temp.month BETWEEN '" + start_date + "' AND '" + stop_date + "' ORDER BY temp.cangku, temp.month"
+
+    if(app.globalData.shujuku==0){
+
+      var sql = "SELECT temp.cangku, temp.month, temp.ruku_num, temp.ruku_price, temp.chuku_num, temp.chuku_price, (COALESCE(qc.qcsl, 0) + temp.cumulative_ruku_num - temp.cumulative_chuku_num) as kucun_num, (COALESCE(qc.qcje, 0) + temp.cumulative_ruku_price - temp.cumulative_chuku_price) as kucun_price FROM (SELECT t1.cangku, DATE_FORMAT(t1.shijian, '%Y-%m') as month, SUM(CASE WHEN t1.mxtype = '入库' OR t1.mxtype = '调拨入库' OR t1.mxtype = '盘盈入库' THEN t1.cpsl ELSE 0 END) as ruku_num, SUM(CASE WHEN t1.mxtype = '入库' OR t1.mxtype = '调拨入库' OR t1.mxtype = '盘盈入库' THEN t1.cpsl*t1.cpsj ELSE 0 END) as ruku_price, SUM(CASE WHEN t1.mxtype = '出库' OR t1.mxtype = '调拨出库' OR t1.mxtype = '盘亏出库' THEN t1.cpsl ELSE 0 END) as chuku_num, SUM(CASE WHEN t1.mxtype = '出库' OR t1.mxtype = '调拨出库' OR t1.mxtype = '盘亏出库' THEN t1.cpsl*t1.cpsj ELSE 0 END) as chuku_price, (SELECT IFNULL(SUM(t2.cpsl), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '入库' OR t2.mxtype = '调拨入库' OR t2.mxtype = '盘盈入库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_ruku_num, (SELECT IFNULL(SUM(t2.cpsl*t2.cpsj), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '入库' OR t2.mxtype = '调拨入库' OR t2.mxtype = '盘盈入库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_ruku_price, (SELECT IFNULL(SUM(t2.cpsl), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '出库' OR t2.mxtype = '调拨出库' OR t2.mxtype = '盘亏出库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_chuku_num, (SELECT IFNULL(SUM(t2.cpsl*t2.cpsj), 0) FROM yh_jinxiaocun_mingxi as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND (t2.mxtype = '出库' OR t2.mxtype = '调拨出库' OR t2.mxtype = '盘亏出库') AND DATE_FORMAT(t2.shijian, '%Y-%m') <= DATE_FORMAT(t1.shijian, '%Y-%m')" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_chuku_price FROM yh_jinxiaocun_mingxi as t1 WHERE t1.gs_name = '" + gongsi + "'" + (wareHouse ? " AND (t1.cangku = '" + wareHouse + "' OR (t1.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + " GROUP BY t1.cangku, DATE_FORMAT(t1.shijian, '%Y-%m')) as temp LEFT JOIN (SELECT cangku, SUM(cpsl) as qcsl, SUM(cpsl*cpsj) as qcje FROM yh_jinxiaocun_qichushu WHERE gs_name = '" + gongsi + "'" + (wareHouse ? " AND (cangku = '" + wareHouse + "' OR (cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + " GROUP BY cangku) as qc ON (temp.cangku = qc.cangku OR (temp.cangku IS NULL AND qc.cangku IS NULL)) WHERE temp.month BETWEEN '" + start_date + "' AND '" + stop_date + "' ORDER BY temp.cangku, temp.month"
    wx.cloud.callFunction({
       name: "sqlConnection",
       data: {
@@ -113,6 +147,29 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var sql = "SELECT temp.cangku, temp.month, temp.ruku_num, temp.ruku_price, temp.chuku_num, temp.chuku_price, (ISNULL(CAST(qc.qcsl AS DECIMAL(18,2)), 0) + temp.cumulative_ruku_num - temp.cumulative_chuku_num) as kucun_num, (ISNULL(CAST(qc.qcje AS DECIMAL(18,2)), 0) + temp.cumulative_ruku_price - temp.cumulative_chuku_price) as kucun_price FROM (SELECT t1.cangku, CONVERT(varchar(7), t1.shijian, 120) as month, SUM(CASE WHEN t1.mxtype IN ('入库', '调拨入库', '盘盈入库') THEN CAST(t1.cpsl AS DECIMAL(18,2)) ELSE 0 END) as ruku_num, SUM(CASE WHEN t1.mxtype IN ('入库', '调拨入库', '盘盈入库') THEN CAST(t1.cpsl AS DECIMAL(18,2)) * CAST(t1.cpsj AS DECIMAL(18,2)) ELSE 0 END) as ruku_price, SUM(CASE WHEN t1.mxtype IN ('出库', '调拨出库', '盘亏出库') THEN CAST(t1.cpsl AS DECIMAL(18,2)) ELSE 0 END) as chuku_num, SUM(CASE WHEN t1.mxtype IN ('出库', '调拨出库', '盘亏出库') THEN CAST(t1.cpsl AS DECIMAL(18,2)) * CAST(t1.cpsj AS DECIMAL(18,2)) ELSE 0 END) as chuku_price, (SELECT ISNULL(SUM(CAST(t2.cpsl AS DECIMAL(18,2))), 0) FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND t2.mxtype IN ('入库', '调拨入库', '盘盈入库') AND CONVERT(varchar(7), t2.shijian, 120) <= CONVERT(varchar(7), t1.shijian, 120)" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_ruku_num, (SELECT ISNULL(SUM(CAST(t2.cpsl AS DECIMAL(18,2)) * CAST(t2.cpsj AS DECIMAL(18,2))), 0) FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND t2.mxtype IN ('入库', '调拨入库', '盘盈入库') AND CONVERT(varchar(7), t2.shijian, 120) <= CONVERT(varchar(7), t1.shijian, 120)" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_ruku_price, (SELECT ISNULL(SUM(CAST(t2.cpsl AS DECIMAL(18,2))), 0) FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND t2.mxtype IN ('出库', '调拨出库', '盘亏出库') AND CONVERT(varchar(7), t2.shijian, 120) <= CONVERT(varchar(7), t1.shijian, 120)" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_chuku_num, (SELECT ISNULL(SUM(CAST(t2.cpsl AS DECIMAL(18,2)) * CAST(t2.cpsj AS DECIMAL(18,2))), 0) FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql as t2 WHERE t2.gs_name = '" + gongsi + "' AND (t2.cangku = t1.cangku OR (t2.cangku IS NULL AND t1.cangku IS NULL)) AND t2.mxtype IN ('出库', '调拨出库', '盘亏出库') AND CONVERT(varchar(7), t2.shijian, 120) <= CONVERT(varchar(7), t1.shijian, 120)" + (wareHouse ? " AND (t2.cangku = '" + wareHouse + "' OR (t2.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + ") as cumulative_chuku_price FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql as t1 WHERE t1.gs_name = '" + gongsi + "'" + (wareHouse ? " AND (t1.cangku = '" + wareHouse + "' OR (t1.cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + " GROUP BY t1.cangku, CONVERT(varchar(7), t1.shijian, 120)) as temp LEFT JOIN (SELECT cangku, ISNULL(SUM(CAST(cpsl AS DECIMAL(18,2))), 0) as qcsl, ISNULL(SUM(CAST(cpsl AS DECIMAL(18,2)) * CAST(cpsj AS DECIMAL(18,2))), 0) as qcje FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql WHERE gs_name = '" + gongsi + "'" + (wareHouse ? " AND (cangku = '" + wareHouse + "' OR (cangku IS NULL AND '" + wareHouse + "' IS NULL))" : "") + " GROUP BY cangku) as qc ON (temp.cangku = qc.cangku OR (temp.cangku IS NULL AND qc.cangku IS NULL)) WHERE temp.month BETWEEN '" + start_date + "' AND '" + stop_date + "' ORDER BY temp.cangku, temp.month"
+
+   wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: sql
+      },
+      success(res) {
+        that.setData({
+          szzhi: res.result.recordset
+        })
+        console.log("成功", res.result.recordset)
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+          
+    }
+ 
   },
 
   goto_print: function(){
@@ -178,42 +235,87 @@ Page({
     var id = e.currentTarget.dataset.id
     console.log(id)
     console.log(that.data.szzhi)
-    wx.showModal({
-      title: '提示',
-      content: '是否删除？',
-      success: function(res) {
-        if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
-            },
-            success(res) {
-              // that.setData({
-              //   szzhi: res.result
-              // }
-              // )
-              console.log
-              // console.log(that.data.szzhi)
-            },
-            fail(res) {
-              console.log("失败", res)
 
-            }
-          });
-          // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
-          //   success: console.log,
-          //   fail: console.error,
+    if(app.globalData.shujuku==0){
 
-          // })
-          that.onShow()
-        } else if (res.cancel) {
-
-          return false;
+      wx.showModal({
+        title: '提示',
+        content: '是否删除？',
+        success: function(res) {
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "DELETE * FROM yh_jinxiaocun_mingxi  where sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+            // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
+            //   success: console.log,
+            //   fail: console.error,
+  
+            // })
+            that.onShow()
+          } else if (res.cancel) {
+  
+            return false;
+          }
+  
         }
+      })
 
-      }
-    })
+    }else if(app.globalData.shujuku == 1){
+
+      wx.showModal({
+        title: '提示',
+        content: '是否删除？',
+        success: function(res) {
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "DELETE FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+              },
+              success(res) {
+                // that.setData({
+                //   szzhi: res.result
+                // }
+                // )
+                console.log
+                // console.log(that.data.szzhi)
+              },
+              fail(res) {
+                console.log("失败", res)
+  
+              }
+            });
+            // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
+            //   success: console.log,
+            //   fail: console.error,
+  
+            // })
+            that.onShow()
+          } else if (res.cancel) {
+  
+            return false;
+          }
+  
+        }
+      })
+          
+    }
+    
 
 
   },

@@ -95,6 +95,7 @@ Page({
     var stop_date = _this.data.riqi2 || "2100-12-31";
 
     // 根据数据库类型执行查询
+    console.log("app.globalData.shujuku",app.globalData.shujuku)
     if (app.globalData.shujuku == 0) {
       // MySQL数据库
       wx.cloud.callFunction({
@@ -110,6 +111,7 @@ Page({
             "ORDER BY shijian"
         },
         success: res => {
+          console.log("返回数据",res)
           _this.processAccountingData(res.result || []);
         },
         err: res => {
@@ -127,7 +129,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_cw",
         data: {
-          query: "SELECT shijian, SUM(cpsl) as total_cpsl " +
+          query: "SELECT shijian, SUM(CAST(cpsl AS DECIMAL(18,2))) as total_cpsl " +
             "FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql " +
             "WHERE mxtype IN ('入库', '出库', '调拨入库', '调拨出库', '盘亏出库', '盘盈入库') " +
             "AND shijian >= '" + start_date + "' " +
@@ -137,6 +139,7 @@ Page({
             "ORDER BY shijian"
         },
         success: res => {
+          console.log("返回数据",res)
           _this.processAccountingData(res.result.recordset || []);
         },
         err: res => {
@@ -428,6 +431,7 @@ Page({
             "ORDER BY total_cpsl DESC"
         },
         success: res => {
+          console.log("返回数据",res)
           _this.processSummaryData(res.result || []);
         },
         err: res => {
@@ -445,7 +449,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_cw",
         data: {
-          query: "SELECT cpname, SUM(cpsl) as total_cpsl " +
+          query: "SELECT cpname, SUM(CAST(cpsl AS DECIMAL(18,2))) as total_cpsl " +
             "FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql " +
             "WHERE mxtype IN ('入库', '出库', '调拨入库', '调拨出库', '盘亏出库', '盘盈入库') " +
             "AND shijian >= '" + start_date + "' " +
@@ -455,6 +459,7 @@ Page({
             "ORDER BY total_cpsl DESC"
         },
         success: res => {
+          console.log("返回数据",res)
           _this.processSummaryData(res.result.recordset || []);
         },
         err: res => {
@@ -639,6 +644,7 @@ Page({
             "ORDER BY total_cpsl DESC"
         },
         success: res => {
+          console.log("返回数据",res)
           _this.processAccountingBalanceData(res.result || []);
         },
         err: res => {
@@ -656,7 +662,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_cw",
         data: {
-          query: "SELECT cplb, SUM(cpsl) as total_cpsl " +
+          query: "SELECT cplb,SUM(CAST(cpsl AS DECIMAL(18,2))) as total_cpsl " +
             "FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql " +
             "WHERE mxtype IN ('入库', '出库', '调拨入库', '调拨出库', '盘亏出库', '盘盈入库') " +
             "AND shijian >= '" + start_date + "' " +
@@ -666,6 +672,7 @@ Page({
             "ORDER BY total_cpsl DESC"
         },
         success: res => {
+          console.log("返回数据",res)
           _this.processAccountingBalanceData(res.result.recordset || []);
         },
         err: res => {

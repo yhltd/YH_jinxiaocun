@@ -637,7 +637,7 @@ zongjia_refresh:function(){
                   name: "sqlServer_117",
                   data: {
                     // sql: "insert yh_jinxiaocun_mingxi(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid)values('" + gongsi + "','" + app.globalData.finduser + "','" + that.data.khname + "','" + today + "','" + szzhi[i]._id + "','" + szzhi[i].value0 + "','" + szzhi[i].value1 + "','" + szzhi[i].value3 + "','" + szsl[i] + "','出库','" + that.data.ddh+"')"
-                    sql: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid,cangku)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "','" +that.data.cangku+ "')"
+                    query: "insert yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql(gs_name,zh_name,shou_h,shijian,sp_dm,cpname,cpsj,cplb,cpsl,mxtype,orderid,cangku)values('" + gongsi + "','" + finduser + "','" + that.data.khname + "','" + today + "','" + cpxinxi[i].sp_dm + "','" + cpxinxi[i].name + "','" + jgxinxi[i] + "','" + cpxinxi[i].lei_bie + "','" + slxinxi[i] + "','出库','" + that.data.ddh + "','" +that.data.cangku+ "')"
                     // sql:"insert yh_jinxiaocun_mingxi(cpname)values('1122')"
                   },
                   success(res) {

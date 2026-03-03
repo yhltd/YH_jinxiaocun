@@ -73,12 +73,13 @@ page{
 }
 
 .lables{
+  font-size: 11px;
   position: absolute;
   color: white;
 }
 
 .moreDo{
-  
+  margin-top: 5px;
   background-color: #39b15b;
   color: #E6E6E6;
   height: 75rpx;

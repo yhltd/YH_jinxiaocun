@@ -641,6 +641,7 @@ console.log(date)
 
               }else if(app.globalData.shujuku == 1){
 
+                console.log("入库添加")
                 wx.cloud.callFunction({
                   name: "sqlServer_117",
                   data: {

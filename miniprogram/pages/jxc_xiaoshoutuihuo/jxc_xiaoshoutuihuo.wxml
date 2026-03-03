@@ -4,15 +4,15 @@
 <template is="ruku_upd" data="{{jghide,cpid,cpsl,cpjg,szzhi}}" />
 <view class="dqy_bj"></view>
 <view class='header'>
-	<view class="dq_y">输入订单号</view>
+	<view class="dq_y">输入订单号:</view>
 	<input class='bk_ss' type="text" style="color:#f8f8f8;text-align: center;" bindinput='ddh_input' value="" placeholder="" placeholder-style="color:#f8f8f8;text-align: center;z-index: 0"></input>
 </view>
 
 <view class="XzkhMain">
 	<view class='xzkh'>
     <view class='xzkhWwb'>
-      <text class="dq_y2">选择仓库：</text>
-      <picker class="pick2" value="{{cangkuIndex}}" range="{{cangkuOptions}}" bindchange="cangkuChange">
+      <text class="dq_y2">请选择仓库：</text>
+      <picker class="pick2" value="{{cangkuIndex}}" range="{{cangkuOptions}}" bindchange="cangkuChange" style="margin-left: 20px;">
         <view class="picker-text">
           {{cangkuIndex >= 0 && cangkuOptions.length > 0 ? cangkuOptions[cangkuIndex] : '请选择仓库'}}
         </view>

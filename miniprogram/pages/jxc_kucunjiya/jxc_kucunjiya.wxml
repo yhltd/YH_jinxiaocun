@@ -16,7 +16,7 @@
 </view>
 
 <view class=' main'>
-  <view class='list_ps' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{szzhi[i]._id}}"  data-uid="{{szzhi[i]._id}}"  bindtap='upd'>
+  <view class='list_ps' wx:for="{{szzhi}}" wx:key="" wx:for-index='i' data-id="{{szzhi[i]._id}}" data-uid="{{szzhi[i]._id}}">
     <view class='shangpin'>
       <image class="shangpin-img" src="{{szzhi[i].mark1}}" mode="widthFix"></image>
       <text class='shangpin-text' data-id="{{i}}"><text class="shangpinpm">{{szzhi[i].cpname}}</text>\n商品代码：{{szzhi[i].cpid}}\n类别：{{szzhi[i].cplb}}\n仓库:{{szzhi[i].cangku}}

@@ -75,10 +75,11 @@ page{
 .lables{
   position: absolute;
   color: white;
+  font-size: 11px;
 }
 
 .moreDo{
-  
+  margin-top: 5px;
   background-color: #39b15b;
   color: #E6E6E6;
   height: 75rpx;

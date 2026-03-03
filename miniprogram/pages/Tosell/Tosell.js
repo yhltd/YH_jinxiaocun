@@ -309,6 +309,7 @@ sel1:function(){
         query: "SELECT * FROM (SELECT m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%') as t WHERE RowNum BETWEEN " + (page + 1) + " AND " + (page + 5) + ""
       },
       success(res) {
+        console.log("返回数据",res)
         for(var i=0;i<res.result.recordset.length;i++){
           if(res.result.recordset[i].mark1 != null){
             res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
@@ -334,7 +335,6 @@ sel1:function(){
         }
       },
       fail(res) {
-        console.log(res.result.recordset)
         console.log("失败", res)
       }
     });

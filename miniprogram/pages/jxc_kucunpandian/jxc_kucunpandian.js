@@ -22,7 +22,10 @@ Page({
   onLoad: function(options) {
     var _this = this
     var that = this
-    var sql = `
+
+    if(app.globalData.shujuku==0){
+
+      var sql = `
       select 'product' as type, cpname as value from yh_jinxiaocun_mingxi where gs_name = '${app.globalData.gongsi}' group by cpname
       union all
       select 'warehouse' as type, cangku as value from yh_jinxiaocun_mingxi where gs_name = '${app.globalData.gongsi}' group by cangku
@@ -54,6 +57,46 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var sql = `
+      select 'product' as type, cpname as value from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '${app.globalData.gongsi}' group by cpname
+      union all
+      select 'warehouse' as type, cangku as value from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '${app.globalData.gongsi}' group by cangku
+    `
+    console.log(sql)
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: { 
+        query: sql
+      },
+      success(res) {
+        console.log("成功", res)
+        var product_list = ['']
+        var warehouseOptions = ['']
+        
+        for(var i = 0; i < res.result.recordset.length; i++){
+          if(res.result.recordset[i].type === 'product') {
+            product_list.push(res.result.recordset[i].value)
+          } else if(res.result.recordset[i].type === 'warehouse') {
+            warehouseOptions.push(res.result.recordset[i].value)
+          }
+        }
+        
+        that.setData({
+          product_list: product_list,
+          warehouseOptions: warehouseOptions
+        })
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+          
+    }
+
+   
   },
 
 
@@ -117,30 +160,9 @@ Page({
     var wareHouse = _this.data.wareHouse;
     var product_number = _this.data.product_number;
     console.log("商品代码", product_number)
-    // var sql = "select mx.sp_dm,mx.cpname,mx.cplb,ifnull(rk.cpsl,0) as ruku_num,ifnull(rk.cp_price,0) as ruku_price,ifnull(ck.cpsl,0) as chuku_num,ifnull(ck.cp_price,0) as chuku_price from (select sp_dm,cpname,cplb from yh_jinxiaocun_mingxi where gs_name ='" + gongsi + "' group by sp_dm,cpname,cplb) as mx left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '入库' and gs_name = '" + gongsi + "' group by sp_dm) as rk on mx.sp_dm=rk.sp_dm left join (select sp_dm,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where mxtype = '出库' and gs_name = '" + gongsi + "' group by sp_dm) as ck on ck.sp_dm=rk.sp_dm"
-// 构建动态条件
 
-    // if(product_name != '' && product_name != undefined){
-    //   sql = sql + " where cpname = '" + product_name + "'"
-    // }
-   
-    // if (app.globalData.shujuku == 0){
-    // }
-    // else if(app.globalData.shujuku == 1){
-    //   wx.cloud.callFunction({
-    //     name: 'sqlServer_117',
-    //     data:{
-    //       query : sql
-    //     },
-    //     success(res) {
-    //       that.setData({
-    //         szzhi: res.result.recordset
-    //       })
-    //     },
-    //     fail(res) {
-    //       console.log("失败", res)
-    //     }
-    //   });
+    if(app.globalData.shujuku==0){
+
       var conditions = [];
       var sql = "select mx.sp_dm,mx.cpname,mx.cplb,mx.cangku,ifnull(jc.jcsl,0) as ruku_num,ifnull(rk.cp_price,0) as ruku_price,ifnull(ck.cpsl,0) as chuku_num,ifnull(ck.cp_price,0) as chuku_price,ifnull(qc.cpsj,0) as qc_cpsj from (select sp_dm,cpname,cplb,cangku from yh_jinxiaocun_mingxi where gs_name ='" + gongsi + "' group by sp_dm,cpname,cplb,cangku) as mx left join (select sp_dm,cangku,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where (mxtype = '入库' or mxtype = '调拨入库' or mxtype = '盘盈入库') and gs_name = '" + gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cangku) as rk on mx.sp_dm=rk.sp_dm and mx.cangku=rk.cangku left join (select sp_dm,cangku,sum(cpsl) as cpsl,sum(cpsl*cpsj) as cp_price from yh_jinxiaocun_mingxi where (mxtype = '出库' or mxtype = '调拨出库' or mxtype = '盘亏出库') and gs_name = '" + gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cangku) as ck on ck.sp_dm=rk.sp_dm and ck.cangku=rk.cangku left join (select cpid,cpname,cplb,cangku,ifnull(cpsl,0)+ifnull(rksl,0)-ifnull(cksl,0) as jcsl from (select link_rk.cpid,link_rk.cpname,link_rk.cplb,link_rk.cangku,ifnull(link_rk.cpsl,0) as cpsl,ifnull(link_rk.rksl,0) as rksl,ifnull(ck.cksl,0) as cksl from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cangku,link_qc.cpsl,rk.rksl from(select cp.cpid,cp.cpname,cp.cplb,cp.cangku,qc.cpsl from(select cpid,cpname,cplb,cangku from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' union select sp_dm,cpname,cplb,cangku from yh_jinxiaocun_mingxi where gs_name = '"+ gongsi +"') as cp left join (select cpid,cplb,cpname,cangku,sum(cpsl) as cpsl from yh_jinxiaocun_qichushu where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb,cangku) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb and cp.cangku = qc.cangku) as link_qc left join (select sp_dm,cpname,cplb,cangku,sum(cpsl) as rksl from yh_jinxiaocun_mingxi where (mxtype = '入库' or mxtype = '调拨入库' or mxtype = '盘盈入库') and gs_name = '"+ gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cpname,cplb,cangku) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname and rk.cplb = link_qc.cplb and rk.cangku = link_qc.cangku) as link_rk left join (select sp_dm,cpname,cplb,cangku,sum(cpsl) as cksl from yh_jinxiaocun_mingxi where (mxtype = '出库' or mxtype = '调拨出库' or mxtype = '盘亏出库') and gs_name = '"+ gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cpname,cplb,cangku) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb and ck.cangku = link_rk.cangku) as jc_data) as jc on mx.sp_dm = jc.cpid and mx.cpname = jc.cpname and mx.cplb = jc.cplb and mx.cangku = jc.cangku left join (select cpid,cpname,cplb,cangku,cpsj from yh_jinxiaocun_qichushu where gs_name = '" + gongsi + "' group by cpid,cpname,cplb,cangku,cpsj) as qc on mx.sp_dm = qc.cpid and mx.cpname = qc.cpname and mx.cplb = qc.cplb and mx.cangku = qc.cangku"
       if (product_name != '' && product_name != undefined) {
@@ -178,6 +200,71 @@ Page({
         console.log("失败", res)
       }
     });
+
+    }else if(app.globalData.shujuku == 1){
+
+      var conditions = [];
+      var sql = "select mx.sp_dm,mx.cpname,mx.cplb,mx.cangku," +
+                "isnull(cast(jc.jcsl as decimal(18,2)),0) as ruku_num," +
+                "isnull(cast(rk.cp_price as decimal(18,2)),0) as ruku_price," +
+                "isnull(cast(ck.cpsl as decimal(18,2)),0) as chuku_num," +
+                "isnull(cast(ck.cp_price as decimal(18,2)),0) as chuku_price," +
+                "isnull(cast(qc.cpsj as decimal(18,2)),0) as qc_cpsj " +
+                "from (select sp_dm,cpname,cplb,cangku from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name ='" + gongsi + "' group by sp_dm,cpname,cplb,cangku) as mx " +
+                "left join (select sp_dm,cangku,sum(cast(cpsl as decimal(18,2))) as cpsl,sum(cast(cpsl as decimal(18,2)) * cast(cpsj as decimal(18,2))) as cp_price from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where (mxtype = '入库' or mxtype = '调拨入库' or mxtype = '盘盈入库') and gs_name = '" + gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cangku) as rk on mx.sp_dm=rk.sp_dm and mx.cangku=rk.cangku " +
+                "left join (select sp_dm,cangku,sum(cast(cpsl as decimal(18,2))) as cpsl,sum(cast(cpsl as decimal(18,2)) * cast(cpsj as decimal(18,2))) as cp_price from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where (mxtype = '出库' or mxtype = '调拨出库' or mxtype = '盘亏出库') and gs_name = '" + gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cangku) as ck on ck.sp_dm=rk.sp_dm and ck.cangku=rk.cangku " +
+                "left join (select cpid,cpname,cplb,cangku," +
+                "isnull(cast(cpsl as decimal(18,2)),0) + isnull(cast(rksl as decimal(18,2)),0) - isnull(cast(cksl as decimal(18,2)),0) as jcsl " +
+                "from (select link_rk.cpid,link_rk.cpname,link_rk.cplb,link_rk.cangku," +
+                "isnull(cast(link_rk.cpsl as decimal(18,2)),0) as cpsl," +
+                "isnull(cast(link_rk.rksl as decimal(18,2)),0) as rksl," +
+                "isnull(cast(ck.cksl as decimal(18,2)),0) as cksl " +
+                "from (select link_qc.cpid,link_qc.cpname,link_qc.cplb,link_qc.cangku,link_qc.cpsl,rk.rksl " +
+                "from(select cp.cpid,cp.cpname,cp.cplb,cp.cangku,qc.cpsl " +
+                "from(select cpid,cpname,cplb,cangku from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' " +
+                "union select sp_dm,cpname,cplb,cangku from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where gs_name = '"+ gongsi +"') as cp " +
+                "left join (select cpid,cplb,cpname,cangku,sum(cast(cpsl as decimal(18,2))) as cpsl from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '"+ gongsi +"' GROUP BY cpid,cpname,cplb,cangku) as qc on cp.cpid = qc.cpid and cp.cpname = qc.cpname and cp.cplb = qc.cplb and cp.cangku = qc.cangku) as link_qc " +
+                "left join (select sp_dm,cpname,cplb,cangku,sum(cast(cpsl as decimal(18,2))) as rksl from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where (mxtype = '入库' or mxtype = '调拨入库' or mxtype = '盘盈入库') and gs_name = '"+ gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cpname,cplb,cangku) as rk on rk.sp_dm = link_qc.cpid and rk.cpname = link_qc.cpname and rk.cplb = link_qc.cplb and rk.cangku = link_qc.cangku) as link_rk " +
+                "left join (select sp_dm,cpname,cplb,cangku,sum(cast(cpsl as decimal(18,2))) as cksl from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql where (mxtype = '出库' or mxtype = '调拨出库' or mxtype = '盘亏出库') and gs_name = '"+ gongsi + "'" + (stop_date ? " and shijian <= '" + stop_date + "'" : "") + " group by sp_dm,cpname,cplb,cangku) as ck on ck.sp_dm = link_rk.cpid and ck.cpname = link_rk.cpname and ck.cplb = link_rk.cplb and ck.cangku = link_rk.cangku) as jc_data) as jc on mx.sp_dm = jc.cpid and mx.cpname = jc.cpname and mx.cplb = jc.cplb and mx.cangku = jc.cangku " +
+                "left join (select cpid,cpname,cplb,cangku,cast(cpsj as decimal(18,2)) as cpsj from yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql where gs_name = '" + gongsi + "' group by cpid,cpname,cplb,cangku,cpsj) as qc on mx.sp_dm = qc.cpid and mx.cpname = qc.cpname and mx.cplb = qc.cplb and mx.cangku = qc.cangku";
+      
+      if (product_name != '' && product_name != undefined) {
+        conditions.push("mx.cpname = '" + product_name + "'");
+      }
+      
+      if (wareHouse != '' && wareHouse != undefined) {
+        conditions.push("mx.cangku = '" + wareHouse + "'");
+      }
+      
+      if (product_number != '' && product_number != undefined) {
+        conditions.push("mx.sp_dm like '%" + product_number + "%'");
+      }
+      
+      console.log("商品代码", product_number);
+      console.log("查询条件", conditions.length);
+      // 如果有条件，添加到 SQL
+      if (conditions.length > 0) {
+        sql = sql + " where " + conditions.join(" and ");
+      }
+    wx.cloud.callFunction({
+      name: "sqlServer_117",
+      data: {
+        query: sql
+      },
+      success(res) {
+        that.setData({
+          szzhi: res.result.recordset
+        })
+        console.log("成功", res.result.recordset)
+      },
+      fail(res) {
+        console.log("失败", res)
+      }
+    });
+          
+    }
+
+      
 },
 pankui_churuku: function(){
   var _this = this;
@@ -194,8 +281,11 @@ pankui_churuku: function(){
   wx.showLoading({
     title: '正在生成盘亏单据...',
   });
-  
-  var insertSql = "INSERT INTO yh_jinxiaocun_mingxi (orderid, shijian, cpname, sp_dm, cplb, cangku, cpsl, cpsj, mxtype, gs_name, zh_name) VALUES ";
+
+  if(app.globalData.shujuku==0){
+
+
+    var insertSql = "INSERT INTO yh_jinxiaocun_mingxi (orderid, shijian, cpname, sp_dm, cplb, cangku, cpsl, cpsj, mxtype, gs_name, zh_name) VALUES ";
   var values = [];
   
   var currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -267,6 +357,85 @@ pankui_churuku: function(){
       });
     }
   });
+
+  }else if(app.globalData.shujuku == 1){
+
+    var insertSql = "INSERT INTO yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql (orderid, shijian, cpname, sp_dm, cplb, cangku, cpsl, cpsj, mxtype, gs_name, zh_name) VALUES ";
+  var values = [];
+  
+  var currentTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  
+  for(var i = 0; i < pankuData.length; i++) {
+    var item = pankuData[i];
+    var mxtype = '';
+    var quantity = 0;
+    
+    // 根据盘亏数量正负确定单据类型
+    if (item.盘亏数量 > 0) {
+      mxtype = '盘亏出库';
+      quantity = Math.abs(item.盘亏数量);
+    } else if (item.盘亏数量 < 0) {
+      mxtype = '盘盈入库';
+      quantity = Math.abs(item.盘亏数量);
+    } else {
+      continue;
+    }
+    
+    // 生成单据号
+    var orderId = '';
+    if (mxtype === '盘亏出库') {
+      orderId = 'PKCK' + new Date().getTime() + '_' + i;
+    } else {
+      orderId = 'PYRK' + new Date().getTime() + '_' + i;
+    }
+    
+    // 修正SQL拼接错误
+    values.push("('" + orderId + "', '" + currentTime + "', '" + 
+                item.商品名称 + "', '" + item.商品代码 + "', '" + 
+                item.商品类别 + "', '" + item.所属仓库 + "', " + 
+                quantity + ", " + 
+                (item.单价 || 0) + ", '" + mxtype + "', '" + 
+                app.globalData.gongsi + "', '" + app.globalData.finduser + "')");
+  }
+  
+  if (values.length === 0) {
+    wx.hideLoading();
+    wx.showToast({
+      title: '没有有效的盘亏数据',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  insertSql += values.join(", ");
+  console.log('生成的SQL:', insertSql); // 调试用
+  
+  wx.cloud.callFunction({
+    name: "sqlServer_117",
+    data: { 
+      query: insertSql
+    },
+    success(res) {
+      wx.hideLoading();
+      console.log('盘亏单据生成成功:', res);
+      wx.showToast({
+        title: '盘亏单据生成成功',
+        icon: 'success'
+      });
+    },
+    fail(res) {
+      wx.hideLoading();
+      console.log("盘亏单据生成失败", res);
+      wx.showToast({
+        title: '盘亏单据生成失败',
+        icon: 'none'
+      });
+    }
+  });
+        
+  }
+  
+  
 },
   goto_print: function(){
     var _this = this;
@@ -339,7 +508,10 @@ pankui_churuku: function(){
 
   },
   shanchu: function(e) {
-    var that = this
+
+    if(app.globalData.shujuku==0){
+
+      var that = this
     const db = wx.cloud.database()
     var id = e.currentTarget.dataset.id
     console.log(id)
@@ -380,6 +552,53 @@ pankui_churuku: function(){
 
       }
     })
+
+    }else if(app.globalData.shujuku == 1){
+
+      var that = this
+    const db = wx.cloud.database()
+    var id = e.currentTarget.dataset.id
+    console.log(id)
+    console.log(that.data.szzhi)
+    wx.showModal({
+      title: '提示',
+      content: '是否删除？',
+      success: function(res) {
+        if (res.confirm) {
+          wx.cloud.callFunction({
+            name: "sqlServer_117",
+            data: {
+              query: "DELETE FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE sp_dm='" + that.data.szzhi[id].sp_dm + "'"
+            },
+            success(res) {
+              // that.setData({
+              //   szzhi: res.result
+              // }
+              // )
+              console.log
+              // console.log(that.data.szzhi)
+            },
+            fail(res) {
+              console.log("失败", res)
+
+            }
+          });
+          // db.collection("Yh_JinXiaoCun_mingxi").doc(that.data.szzhi[id]._id).remove({
+          //   success: console.log,
+          //   fail: console.error,
+
+          // })
+          that.onShow()
+        } else if (res.cancel) {
+
+          return false;
+        }
+
+      }
+    })
+          
+    }
+    
 
 
   },

@@ -112,36 +112,65 @@ Page({
     }else{
       stop_date = "2100-12-31 23:59:59"
     }
-    console.log("SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT '"+page+"', 5;" )
 
-    wx.cloud.callFunction({
-      name: "sqlConnection",
-      data: {
-        sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '调拨出库' OR mxtype = '调拨入库') ORDER BY orderid, mxtype DESC LIMIT "+page+", 5"
-        // sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1 FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'LIMIT "+page+", 5" 
-      },
-      success(res) {
-        for(var i=0;i<res.result.length;i++){
-          if(res.result[i].mark1 != null){
-            res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+    if(app.globalData.shujuku==0){
+
+      wx.cloud.callFunction({
+        name: "sqlConnection",
+        data: {
+          sql: "SELECT *, '' as checkbox, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d') as time, date_format(yh_jinxiaocun_mingxi.shijian, '%Y-%m-%d %H:%i:%s') as time2, yh_jinxiaocun_jichuziliao.mark1 as mark1, yh_jinxiaocun_mingxi.cangku as cangku FROM yh_jinxiaocun_mingxi LEFT JOIN yh_jinxiaocun_jichuziliao ON yh_jinxiaocun_mingxi.cpname =yh_jinxiaocun_jichuziliao.`name`WHERE yh_jinxiaocun_mingxi.gs_name = '" + gongsi + "'AND shijian >= '" + start_date + "'AND shijian <= '" + stop_date + "'AND orderid LIKE '%" + order_number + "%'AND (mxtype = '调拨出库' OR mxtype = '调拨入库') ORDER BY orderid, mxtype DESC LIMIT "+page+", 5"
+  
+        },
+        success(res) {
+          for(var i=0;i<res.result.length;i++){
+            if(res.result[i].mark1 != null){
+              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+            }
           }
+          console.log(res.result)
+          _this.setData({
+            szzhi: res.result,
+          })
+          console.log(_this.data.szzhi)
+        },
+        fail(res) {
+          console.log(res.result)
+          console.log("失败", res)
+  
         }
-        console.log(res.result)
-        _this.setData({
-          szzhi: res.result,
-         
-          // start_date:'',
-          // stop_date:'',
-          // order_number:'',
-        })
-        console.log(_this.data.szzhi)
-      },
-      fail(res) {
-        console.log(res.result)
-        console.log("失败", res)
+      });
 
-      }
-    });
+    }else if(app.globalData.shujuku == 1){
+
+      wx.cloud.callFunction({
+        name: "sqlServer_117",
+        data: {
+         query: "SELECT * FROM (SELECT yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql._id, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql._openid, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpid, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpjj, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cplb, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpname, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpsj, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpsl, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.finduser, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.gongsi, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.mxtype, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.orderid, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.sp_dm, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.shou_h, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.zh_name, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.gs_name, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cangku, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.shijian, '' as checkbox, CONVERT(varchar(10), yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.shijian, 120) as time, CONVERT(varchar(19), yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.shijian, 120) as time2, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql.mark1 as mark1, CAST(yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpsl AS DECIMAL(18,2)) as cpsl_decimal, CAST(yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpsj AS DECIMAL(18,2)) as cpsj_decimal, CAST(yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpsl AS DECIMAL(18,2)) * CAST(yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpsj AS DECIMAL(18,2)) as total_price, ROW_NUMBER() OVER (ORDER BY yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.orderid, yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.mxtype DESC) AS row_num FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql ON yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.cpname = yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql.name WHERE yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.gs_name = '" + gongsi + "' AND yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.shijian >= '" + start_date + "' AND yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.shijian <= '" + stop_date + "' AND yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.orderid LIKE '%" + order_number + "%' AND (yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.mxtype = '调拨出库' OR yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql.mxtype = '调拨入库')) AS t WHERE t.row_num BETWEEN " + (parseInt(page) + 1) + " AND " + (parseInt(page) + 5) + " ORDER BY t.orderid, t.mxtype DESC"
+  
+        },
+        success(res) {
+          console.log("返回数据",res)
+          for(var i=0;i<res.result.recordset.length;i++){
+            if(res.result.recordset[i].mark1 != null){
+              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+            }
+          }
+          console.log(res.result.recordset)
+          _this.setData({
+            szzhi: res.result.recordset,
+          })
+          console.log(_this.data.szzhi)
+        },
+        fail(res) {
+          console.log(res.result)
+          console.log("失败", res)
+  
+        }
+      });
+          
+    }
+
+    
   },
  up:function(){
    var _this=this
@@ -278,37 +307,77 @@ Page({
 
   },
   shanchu: function(e) {
-    var that = this
-    const db = wx.cloud.database()
-    var id = e.currentTarget.dataset.id
-    var uid = e.currentTarget.dataset.uid;
-    wx.showModal({
-      title: '提示',
-      content: '是否删除？',
-      success: function(res) {
-        if (res.confirm) {
-          wx.cloud.callFunction({
-            name: "sqlConnection",
-            data: {
-              sql: "DELETE FROM yh_jinxiaocun_mingxi where _id = '" + uid + "'"
-            },
-            success: res=> {
-              wx.showToast({
-                title: '删除成功',
-              })
-              that.onLoad()
-            },
-            fail: res=> {
-              console.log("失败", res)
-            }
-          });
-        } else if (res.cancel) {
 
-          return false;
+    if(app.globalData.shujuku==0){
+
+      var that = this
+      const db = wx.cloud.database()
+      var id = e.currentTarget.dataset.id
+      var uid = e.currentTarget.dataset.uid;
+      wx.showModal({
+        title: '提示',
+        content: '是否删除？',
+        success: function(res) {
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name: "sqlConnection",
+              data: {
+                sql: "DELETE FROM yh_jinxiaocun_mingxi where _id = '" + uid + "'"
+              },
+              success: res=> {
+                wx.showToast({
+                  title: '删除成功',
+                })
+                that.onLoad()
+              },
+              fail: res=> {
+                console.log("失败", res)
+              }
+            });
+          } else if (res.cancel) {
+  
+            return false;
+          }
+  
         }
+      })
 
-      }
-    })
+    }else if(app.globalData.shujuku == 1){
+
+      var that = this
+      const db = wx.cloud.database()
+      var id = e.currentTarget.dataset.id
+      var uid = e.currentTarget.dataset.uid;
+      wx.showModal({
+        title: '提示',
+        content: '是否删除？',
+        success: function(res) {
+          if (res.confirm) {
+            wx.cloud.callFunction({
+              name: "sqlServer_117",
+              data: {
+                query: "DELETE FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql WHERE _id = '" + uid + "'"
+              },
+              success: res=> {
+                wx.showToast({
+                  title: '删除成功',
+                })
+                that.onLoad()
+              },
+              fail: res=> {
+                console.log("失败", res)
+              }
+            });
+          } else if (res.cancel) {
+  
+            return false;
+          }
+  
+        }
+      })
+          
+    }
+   
 
 
   },

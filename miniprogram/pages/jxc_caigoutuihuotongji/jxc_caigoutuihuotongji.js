@@ -127,7 +127,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_cw",
         data: {
-          query: "SELECT shijian, SUM(cpsl) as total_cpsl " +
+          query: "SELECT shijian, SUM(CAST(cpsl AS DECIMAL(18,2))) as total_cpsl " +
             "FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_tuihuomingxi_mssql " +
             "WHERE mxtype = '采购退货' " +
             "AND shijian >= '" + start_date + "' " +
@@ -445,7 +445,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_cw",
         data: {
-          query: "SELECT cpname, SUM(cpsl) as total_cpsl " +
+          query: "SELECT cpname, SUM(CAST(cpsl AS DECIMAL(18,2))) as total_cpsl" +
             "FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_tuihuomingxi_mssql " +
             "WHERE mxtype = '采购退货' " +
             "AND shijian >= '" + start_date + "' " +
@@ -656,7 +656,7 @@ Page({
       wx.cloud.callFunction({
         name: "sqlServer_cw",
         data: {
-          query: "SELECT cplb, SUM(cpsl) as total_cpsl " +
+          query: "SELECT cplb, SUM(CAST(cpsl AS DECIMAL(18,2))) as total_cpsl " +
             "FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_tuihuomingxi_mssql " +
             "WHERE mxtype = '采购退货' " +
             "AND shijian >= '" + start_date + "' " +

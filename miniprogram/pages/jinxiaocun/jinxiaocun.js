@@ -917,88 +917,88 @@ Page({
     } else if(app.globalData.shujuku == 1) {
       // SQL Server版本 - 修复字符串拼接
       var query = `
-        SELECT 
-          ISNULL(c.cpid, '') as cpid,
-          ISNULL(c.cpname, '') as cpname,
-          ISNULL(c.cplb, '') as cplb,
-          ISNULL(c.cangku, '') as cangku,
-          ISNULL(qc.qcsl, 0) as qcsl,
-          ISNULL(qc.qcje, 0) as qcje,
-          ISNULL(rk.rksl, 0) as rksl,
-          ISNULL(rk.rkje, 0) as rkje,
-          ISNULL(ck.cksl, 0) as cksl,
-          ISNULL(ck.ckje, 0) as ckje,
-          ISNULL(qc.qcsl, 0) + ISNULL(rk.rksl, 0) - ISNULL(ck.cksl, 0) as jcsl,
-          ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0) as jcje,
-          ISNULL(jz.bianyuan, '') as bianyuan,
-          jz.mark1,
-          CASE 
-            WHEN (ISNULL(qc.qcje, 0) + ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0)) / 2 != 0 
-            THEN ROUND((ISNULL(ck.ckje, 0) / ((ISNULL(qc.qcje, 0) + ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0)) / 2)) * 100, 2) 
-            ELSE 0 
-          END as zzl
-        FROM (
-          SELECT cpid, cpname, cplb, cangku 
-          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql 
-          WHERE gs_name = '` + gongsi + `' 
-            AND cangku LIKE '%` + wareHouse + `%'
-          UNION 
-          SELECT sp_dm, cpname, cplb, cangku 
-          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
-          WHERE gs_name = '` + gongsi + `' 
-            AND cangku LIKE '%` + wareHouse + `%'
-        ) as c
-        LEFT JOIN (
-          SELECT cpid, cpname, cplb, cangku, 
-                 SUM(cpsl) as qcsl, 
-                 SUM(cpsl * cpsj) as qcje 
-          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql 
-          WHERE gs_name = '` + gongsi + `' 
-            AND cangku LIKE '%` + wareHouse + `%'
-          GROUP BY cpid, cpname, cplb, cangku
-        ) as qc ON c.cpid = qc.cpid 
-          AND c.cpname = qc.cpname 
-          AND c.cplb = qc.cplb 
-          AND c.cangku = qc.cangku
-        LEFT JOIN (
-          SELECT sp_dm, cpname, cplb, cangku, 
-                 SUM(cpsl) as rksl, 
-                 SUM(cpsl * cpsj) as rkje 
-          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
-          WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') 
-            AND gs_name = '` + gongsi + `' 
-            AND shijian BETWEEN '` + start_date + `' AND '` + stop_date + `'
-            AND cangku LIKE '%` + wareHouse + `%'
-          GROUP BY sp_dm, cpname, cplb, cangku
-        ) as rk ON c.cpid = rk.sp_dm 
-          AND c.cpname = rk.cpname 
-          AND c.cplb = rk.cplb 
-          AND c.cangku = rk.cangku
-        LEFT JOIN (
-          SELECT sp_dm, cpname, cplb, cangku, 
-                 SUM(cpsl) as cksl, 
-                 SUM(cpsl * cpsj) as ckje 
-          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
-          WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') 
-            AND gs_name = '` + gongsi + `' 
-            AND shijian BETWEEN '` + start_date + `' AND '` + stop_date + `'
-            AND cangku LIKE '%` + wareHouse + `%'
-          GROUP BY sp_dm, cpname, cplb, cangku
-        ) as ck ON c.cpid = ck.sp_dm 
-          AND c.cpname = ck.cpname 
-          AND c.cplb = ck.cplb 
-          AND c.cangku = ck.cangku
-        LEFT JOIN (
-          SELECT sp_dm, lei_bie, name, bianyuan, mark1 
-          FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql 
-          WHERE gs_name = '` + gongsi + `'
-        ) as jz ON c.cpid = jz.sp_dm 
-          AND c.cpname = jz.name 
-          AND c.cplb = jz.lei_bie
-        WHERE c.cpid LIKE '%` + product_number + `%'
-          AND c.cangku LIKE '%` + wareHouse + `%'
-        ORDER BY c.cpid
-      `;
+      SELECT 
+        ISNULL(c.cpid, '') as cpid,
+        ISNULL(c.cpname, '') as cpname,
+        ISNULL(c.cplb, '') as cplb,
+        ISNULL(c.cangku, '') as cangku,
+        ISNULL(qc.qcsl, 0) as qcsl,
+        ISNULL(qc.qcje, 0) as qcje,
+        ISNULL(rk.rksl, 0) as rksl,
+        ISNULL(rk.rkje, 0) as rkje,
+        ISNULL(ck.cksl, 0) as cksl,
+        ISNULL(ck.ckje, 0) as ckje,
+        ISNULL(qc.qcsl, 0) + ISNULL(rk.rksl, 0) - ISNULL(ck.cksl, 0) as jcsl,
+        ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0) as jcje,
+        ISNULL(jz.bianyuan, '') as bianyuan,
+        jz.mark1,
+        CASE 
+          WHEN (ISNULL(qc.qcje, 0) + ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0)) / 2 != 0 
+          THEN ROUND((ISNULL(ck.ckje, 0) / ((ISNULL(qc.qcje, 0) + ISNULL(qc.qcje, 0) + ISNULL(rk.rkje, 0) - ISNULL(ck.ckje, 0)) / 2.0)) * 100, 2) 
+          ELSE 0 
+        END as zzl
+      FROM (
+        SELECT cpid, cpname, cplb, cangku 
+        FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql 
+        WHERE gs_name = '${gongsi}' 
+          AND cangku LIKE '%${wareHouse}%'
+        UNION 
+        SELECT sp_dm as cpid, cpname, cplb, cangku 
+        FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
+        WHERE gs_name = '${gongsi}' 
+          AND cangku LIKE '%${wareHouse}%'
+      ) as c
+      LEFT JOIN (
+        SELECT cpid, cpname, cplb, cangku, 
+               SUM(CAST(cpsl AS DECIMAL(18,2))) as qcsl, 
+               SUM(CAST(cpsl AS DECIMAL(18,2)) * CAST(cpsj AS DECIMAL(18,2))) as qcje 
+        FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_qichushu_mssql 
+        WHERE gs_name = '${gongsi}' 
+          AND cangku LIKE '%${wareHouse}%'
+        GROUP BY cpid, cpname, cplb, cangku
+      ) as qc ON c.cpid = qc.cpid 
+        AND c.cpname = qc.cpname 
+        AND c.cplb = qc.cplb 
+        AND c.cangku = qc.cangku
+      LEFT JOIN (
+        SELECT sp_dm, cpname, cplb, cangku, 
+               SUM(CAST(cpsl AS DECIMAL(18,2))) as rksl, 
+               SUM(CAST(cpsl AS DECIMAL(18,2)) * CAST(cpsj AS DECIMAL(18,2))) as rkje 
+        FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
+        WHERE mxtype IN ('入库', '调拨入库', '盘盈入库') 
+          AND gs_name = '${gongsi}' 
+          AND shijian BETWEEN '${start_date}' AND '${stop_date}'
+          AND cangku LIKE '%${wareHouse}%'
+        GROUP BY sp_dm, cpname, cplb, cangku
+      ) as rk ON c.cpid = rk.sp_dm 
+        AND c.cpname = rk.cpname 
+        AND c.cplb = rk.cplb 
+        AND c.cangku = rk.cangku
+      LEFT JOIN (
+        SELECT sp_dm, cpname, cplb, cangku, 
+               SUM(CAST(cpsl AS DECIMAL(18,2))) as cksl, 
+               SUM(CAST(cpsl AS DECIMAL(18,2)) * CAST(cpsj AS DECIMAL(18,2))) as ckje 
+        FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_mingxi_mssql 
+        WHERE mxtype IN ('出库', '调拨出库', '盘亏出库') 
+          AND gs_name = '${gongsi}' 
+          AND shijian BETWEEN '${start_date}' AND '${stop_date}'
+          AND cangku LIKE '%${wareHouse}%'
+        GROUP BY sp_dm, cpname, cplb, cangku
+      ) as ck ON c.cpid = ck.sp_dm 
+        AND c.cpname = ck.cpname 
+        AND c.cplb = ck.cplb 
+        AND c.cangku = ck.cangku
+      LEFT JOIN (
+        SELECT sp_dm, lei_bie, name, bianyuan, mark1 
+        FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql 
+        WHERE gs_name = '${gongsi}' 
+      ) as jz ON c.cpid = jz.sp_dm 
+        AND c.cpname = jz.name 
+        AND c.cplb = jz.lei_bie
+      WHERE c.cpid LIKE '%${product_number}%'
+        AND c.cangku LIKE '%${wareHouse}%'
+      ORDER BY c.cpid
+    `;
       
       console.log("SQL Server Query:", query);
       
