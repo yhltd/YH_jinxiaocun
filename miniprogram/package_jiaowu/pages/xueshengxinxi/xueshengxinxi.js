@@ -111,8 +111,25 @@ Page({
       type: "text",
       isupd: true
     },
+    {
+      text: "文件",
+      width: "200rpx",
+      columnName: "wenjian",
+      type: "text",
+      isupd: false
+    }
   
     ],
+    showUploadModal: false,      // 上传弹窗显示状态
+    showFileViewModal: false,    // 文件查看弹窗显示状态
+    selectedFiles: [],           // 已选择的文件列表
+    currentRecordId: 0,          // 当前操作的记录ID
+    currentRecordName: '',       // 当前记录的学生姓名
+    fileName: '',                // 用户输入的文件名
+    uploading: false,            // 上传中状态
+    uploadProgress: 0,           // 上传进度
+    currentFileList: [],         // 当前查看的文件列表
+    currentFileName: '',         // 当前查看的文件名
     xingbie_list:['男','女'],
     xsxm: "",
     xb: "",
@@ -156,7 +173,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+_this.data.userInfo.Company+"' and realname=student.realname then paid+money else 0 end) from payment ) mall ,ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+_this.data.userInfo.Company+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost,(select SUM(case when Company='"+_this.data.userInfo.Company+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull((select SUM(case when Company='"+_this.data.userInfo.Company+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour,Allhour,Type FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
+          sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+_this.data.userInfo.Company+"' and realname=student.realname then paid+money else 0 end) from payment ) mall ,ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+_this.data.userInfo.Company+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost,(select SUM(case when Company='"+_this.data.userInfo.Company+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull((select SUM(case when Company='"+_this.data.userInfo.Company+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour,Allhour,Type,wenjian FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
         },
         success: res => {
           console.log(res.result)
@@ -185,44 +202,45 @@ Page({
 
     }else if(app.globalData.shujuku == 1){
       var sql = `
-      SELECT 
-          s.ID,
-          s.RealName,
-          s.Sex,
-          s.rgdate,
-          s.Course,
-          s.Teacher,
-          s.Classnum,
-          s.phone,
-          s.Fee,
-          ISNULL(p.total_paid, 0) as mall,
-          ISNULL(s.Fee, 0) - ISNULL(p.total_paid, 0) as Nocost,
-          ISNULL(k.used_keshi, 0) as nall,
-          ISNULL(s.Allhour, 0) - ISNULL(k.used_keshi, 0) as Nohour,
-          s.Allhour,
-          s.Type
-      FROM xueshengguanlixitong_excel.dbo.student s
-      LEFT JOIN (
-          SELECT 
-              realname,
-              SUM(CASE WHEN Company = '${_this.data.userInfo.Company}' THEN paid + money ELSE 0 END) as total_paid
-          FROM xueshengguanlixitong_excel.dbo.payment 
-          GROUP BY realname
-      ) p ON s.RealName = p.realname
-      LEFT JOIN (
-          SELECT 
-              student_name,
-              course,
-              SUM(CASE WHEN Company = '${_this.data.userInfo.Company}' THEN keshi ELSE 0 END) as used_keshi
-          FROM xueshengguanlixitong_excel.dbo.keshi_detail 
-          GROUP BY student_name, course
-      ) k ON s.RealName = k.student_name AND s.Course = k.course
-      WHERE s.RealName LIKE '%${e[0]}%' 
-          AND s.Teacher LIKE '%${e[1]}%' 
-          AND s.Course LIKE '%${e[2]}%' 
-          AND s.rgdate >= '${e[3]}' 
-          AND s.rgdate <= '${e[4]}'
-      `;
+SELECT 
+    s.ID,
+    s.RealName,
+    s.Sex,
+    s.rgdate,
+    s.Course,
+    s.Teacher,
+    s.Classnum,
+    s.phone,
+    s.Fee,
+    ISNULL(p.total_paid, 0) as mall,
+    ISNULL(s.Fee, 0) - ISNULL(p.total_paid, 0) as Nocost,
+    ISNULL(k.used_keshi, 0) as nall,
+    ISNULL(s.Allhour, 0) - ISNULL(k.used_keshi, 0) as Nohour,
+    s.Allhour,
+    s.Type,
+    s.wenjian
+FROM xueshengguanlixitong_excel.dbo.student s
+LEFT JOIN (
+    SELECT 
+        realname,
+        SUM(CASE WHEN Company = '${_this.data.userInfo.Company}' THEN paid + money ELSE 0 END) as total_paid
+    FROM xueshengguanlixitong_excel.dbo.payment 
+    GROUP BY realname
+) p ON s.RealName = p.realname
+LEFT JOIN (
+    SELECT 
+        student_name,
+        course,
+        SUM(CASE WHEN Company = '${_this.data.userInfo.Company}' THEN keshi ELSE 0 END) as used_keshi
+    FROM xueshengguanlixitong_excel.dbo.keshi_detail 
+    GROUP BY student_name, course
+) k ON s.RealName = k.student_name AND s.Course = k.course
+WHERE s.RealName LIKE '%${e[0]}%' 
+    AND s.Teacher LIKE '%${e[1]}%' 
+    AND s.Course LIKE '%${e[2]}%' 
+    AND s.rgdate >= '${e[3]}' 
+    AND s.rgdate <= '${e[4]}'
+`;
 
       wx.cloud.callFunction({
         name: 'sqlServer_117',
@@ -258,6 +276,457 @@ Page({
 
     
   },
+
+  // 显示上传弹窗
+showUploadModalFunc: function(e) {
+  var recordId = e.currentTarget.dataset.id || 0;
+  var recordName = e.currentTarget.dataset.name || '';
+  
+  this.setData({
+    showUploadModal: true,
+    selectedFiles: [],
+    currentRecordId: recordId,
+    currentRecordName: recordName,
+    fileName: '',
+    uploading: false,
+    uploadProgress: 0
+  });
+},
+
+// 隐藏上传弹窗
+hideUploadModal: function() {
+  this.setData({
+    showUploadModal: false,
+    uploading: false,
+    uploadProgress: 0,
+    selectedFiles: [],
+    fileName: ''
+  });
+},
+
+// 隐藏文件查看弹窗
+hideFileViewModal: function() {
+  this.setData({
+    showFileViewModal: false,
+    currentFileList: [],
+    currentFileName: '',
+    currentRecordId: 0
+  });
+},
+
+// 文件名输入监听
+onFileNameInput: function(e) {
+  this.setData({
+    fileName: e.detail.value
+  });
+},
+
+// 选择文档
+chooseFile: function() {
+  var that = this;
+  wx.chooseMessageFile({
+    count: 9,
+    type: 'file',
+    extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
+    success: function(res) {
+      var files = res.tempFiles.map(file => ({
+        path: file.path,
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }));
+      that.setData({ selectedFiles: files });
+    }
+  });
+},
+
+// 选择图片
+chooseImage: function() {
+  var that = this;
+  wx.chooseMedia({
+    count: 9,
+    mediaType: ['image'],
+    sourceType: ['album', 'camera'],
+    success: function(res) {
+      var files = res.tempFiles.map((file, index) => ({
+        path: file.tempFilePath,
+        name: `图片_${index + 1}.jpg`,
+        size: file.size,
+        type: 'image'
+      }));
+      that.setData({ selectedFiles: files });
+    }
+  });
+},
+
+// 上传文件
+uploadFile: function() {
+  var that = this;
+  
+  if (that.data.selectedFiles.length === 0) {
+    wx.showToast({ title: '请选择文件', icon: 'none' });
+    return;
+  }
+  
+  if (!that.data.currentRecordId) {
+    wx.showToast({ title: '请选择一条记录', icon: 'none' });
+    return;
+  }
+  
+  wx.showModal({
+    title: '确认上传',
+    content: `确定要上传 ${that.data.selectedFiles.length} 个文件吗？`,
+    success: function(res) {
+      if (res.confirm) {
+        that.startUpload();
+      }
+    }
+  });
+},
+
+// 开始上传
+startUpload: function() {
+  var that = this;
+  var uploadedFiles = [];
+  var totalFiles = that.data.selectedFiles.length;
+  var completedCount = 0;
+  
+  that.setData({ uploading: true, uploadProgress: 0 });
+  
+  var recordId = that.data.currentRecordId;
+  var recordName = that.data.currentRecordName || '未知';
+  var userFileName = that.data.fileName || '';
+  
+  function uploadNextFile(index) {
+    if (index >= totalFiles) {
+      that.handleUploadComplete(uploadedFiles);
+      return;
+    }
+    
+    var file = that.data.selectedFiles[index];
+    var fileExtension = file.name.split('.').pop().toLowerCase();
+    
+    // 构建文件名
+    var finalFileName = '';
+    if (userFileName && userFileName.trim() !== '') {
+      var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
+      if (baseName.includes('.')) baseName = baseName.split('.').slice(0, -1).join('.');
+      finalFileName = totalFiles === 1 
+        ? `${baseName}.${fileExtension}` 
+        : `${baseName}_${index + 1}.${fileExtension}`;
+    } else {
+      var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
+      finalFileName = totalFiles === 1 
+        ? `文件_${safeRecordName}.${fileExtension}` 
+        : `文件_${safeRecordName}_${index + 1}.${fileExtension}`;
+    }
+    
+    that.setData({ uploadProgress: Math.round((index / totalFiles) * 100) });
+    
+    wx.uploadFile({
+      url: 'https://yhocn.cn:9097/file/upload',
+      filePath: file.path,
+      name: 'file',
+      formData: {
+        name: finalFileName,
+        path: '/jiaowu/',
+        kongjian: '3',
+        fileType: fileExtension,
+        recordId: recordId,
+        recordName: recordName,
+        userFileName: userFileName
+      },
+      header: { 'Content-Type': 'multipart/form-data' },
+      success: function(uploadRes) {
+        completedCount++;
+        try {
+          var resData = JSON.parse(uploadRes.data);
+          if (resData.code === 200 || resData.success) {
+            var fileUrl = "http://yhocn.cn:9088/jiaowu/" + finalFileName;
+            uploadedFiles.push({
+              name: finalFileName,
+              url: fileUrl,
+              originalName: file.name,
+              userFileName: userFileName,
+              size: file.size,
+              type: fileExtension
+            });
+          }
+        } catch (e) {
+          console.error('解析响应失败:', e);
+        }
+        setTimeout(() => uploadNextFile(index + 1), 500);
+      },
+      fail: function(err) {
+        completedCount++;
+        console.error('上传失败:', err);
+        setTimeout(() => uploadNextFile(index + 1), 1000);
+      }
+    });
+  }
+  
+  uploadNextFile(0);
+},
+
+// 上传完成处理（修复异步问题）
+handleUploadComplete: function(uploadedFiles) {
+  var that = this;
+  
+  that.setData({ uploading: false, uploadProgress: 100 });
+  
+  if (uploadedFiles.length > 0) {
+    // 保存文件到数据库，保存成功后刷新页面
+    that.saveFilesToDatabase(uploadedFiles, function() {
+      setTimeout(() => {
+        that.hideUploadModal();
+        wx.showToast({
+          title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
+          icon: 'success',
+          duration: 3000
+        });
+        // 刷新列表
+        var e = [that.data.xsxm || '', that.data.zrjs || '', that.data.ckpx || '', that.data.riqi1 || '1900-01-01', that.data.riqi2 || '2100-12-31'];
+        that.tableShow(e);
+      }, 500);
+    });
+  } else {
+    // 没有文件上传成功
+    setTimeout(() => {
+      that.hideUploadModal();
+      wx.showToast({
+        title: '上传失败，请重试',
+        icon: 'none',
+        duration: 3000
+      });
+    }, 500);
+  }
+},
+
+// 保存文件信息到数据库（添加回调参数）
+saveFilesToDatabase: function(files, callback) {
+  var that = this;
+  var app = getApp();
+  
+  if (app.globalData.shujuku == 0) {
+    // MySQL版本
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select wenjian from student where ID = " + that.data.currentRecordId
+      },
+      success: res => {
+        var existingFiles = res.result[0]?.wenjian || '';
+        var existingArray = existingFiles ? existingFiles.split(',').map(f => f.trim()) : [];
+        var newFileUrls = files.map(file => file.url);
+        var allFileUrls = existingArray.concat(newFileUrls);
+        var fileUrlsString = allFileUrls.join(',');
+        
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: {
+            sql: "update student set wenjian = '" + fileUrlsString + "' where ID = " + that.data.currentRecordId
+          },
+          success: () => {
+            console.log('文件信息保存成功');
+            if (callback) callback();
+          },
+          fail: (err) => {
+            console.error('文件信息保存失败:', err);
+            if (callback) callback();
+          }
+        });
+      },
+      fail: (err) => {
+        console.error('查询文件信息失败:', err);
+        if (callback) callback();
+      }
+    });
+  } else if (app.globalData.shujuku == 1) {
+    // SQL Server版本
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select wenjian from xueshengguanlixitong_excel.dbo.student where ID = " + that.data.currentRecordId
+      },
+      success: res => {
+        var existingFiles = res.result.recordset[0]?.wenjian || '';
+        var existingArray = existingFiles ? existingFiles.split(',').map(f => f.trim()) : [];
+        var newFileUrls = files.map(file => file.url);
+        var allFileUrls = existingArray.concat(newFileUrls);
+        var fileUrlsString = allFileUrls.join(',');
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "update xueshengguanlixitong_excel.dbo.student set wenjian = '" + fileUrlsString + "' where ID = " + that.data.currentRecordId
+          },
+          success: () => {
+            console.log('文件信息保存成功');
+            if (callback) callback();
+          },
+          fail: (err) => {
+            console.error('文件信息保存失败:', err);
+            if (callback) callback();
+          }
+        });
+      },
+      fail: (err) => {
+        console.error('查询文件信息失败:', err);
+        if (callback) callback();
+      }
+    });
+  }
+},
+
+// 查看文件
+viewFiles: function(e) {
+  var that = this;
+  var recordId = e.currentTarget.dataset.id;
+  var app = getApp();
+  
+  if (app.globalData.shujuku == 0) {
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: {
+        sql: "select wenjian, RealName from student where ID = " + recordId
+      },
+      success: res => {
+        if (res.result.length > 0) {
+          var record = res.result[0];
+          var files = record.wenjian || '';
+          var fileList = files ? (files.includes(',') ? files.split(',').map(f => f.trim()) : [files]) : [];
+          
+          that.setData({
+            showFileViewModal: true,
+            currentFileList: fileList,
+            currentFileName: record.RealName || '',
+            currentRecordId: recordId
+          });
+        }
+      }
+    });
+  } else if (app.globalData.shujuku == 1) {
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select wenjian, RealName from xueshengguanlixitong_excel.dbo.student where ID = " + recordId
+      },
+      success: res => {
+        if (res.result.recordset.length > 0) {
+          var record = res.result.recordset[0];
+          var files = record.wenjian || '';
+          var fileList = files ? (files.includes(',') ? files.split(',').map(f => f.trim()) : [files]) : [];
+          
+          that.setData({
+            showFileViewModal: true,
+            currentFileList: fileList,
+            currentFileName: record.RealName || '',
+            currentRecordId: recordId
+          });
+        }
+      }
+    });
+  }
+},
+
+// 删除文件
+deleteFile: function(e) {
+  var that = this;
+  var fileUrl = e.currentTarget.dataset.url;
+  var recordId = e.currentTarget.dataset.id;
+  var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1).split('.')[0];
+  
+  wx.showModal({
+    title: '确认删除',
+    content: '确定要删除这个文件吗？',
+    success: function(res) {
+      if (res.confirm) {
+        wx.request({
+          url: 'https://yhocn.cn:9097/file/delete',
+          data: {
+            order_number: fileName,
+            path: '/jiaowu/'
+          },
+          success: function(res) {
+            if (res.data.code === 200 || res.data.success) {
+              that.removeFileFromDatabase(fileUrl, recordId);
+            }
+          }
+        });
+      }
+    }
+  });
+},
+
+// 从数据库移除文件记录
+removeFileFromDatabase: function(fileUrl, recordId) {
+  var that = this;
+  var app = getApp();
+  
+  if (app.globalData.shujuku == 0) {
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: { sql: "select wenjian from student where ID = " + recordId },
+      success: res => {
+        var currentFiles = res.result[0]?.wenjian || '';
+        var fileArray = currentFiles.split(',');
+        var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
+        var newFiles = newFileArray.join(',');
+        
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: { sql: "update student set wenjian = '" + newFiles + "' where ID = " + recordId },
+          success: () => {
+            // 刷新列表
+            var e = [that.data.xsxm || '', that.data.zrjs || '', that.data.ckpx || '', that.data.riqi1 || '1900-01-01', that.data.riqi2 || '2100-12-31'];
+            that.tableShow(e);
+            // 刷新查看弹窗
+            that.viewFiles({ currentTarget: { dataset: { id: recordId } } });
+          }
+        });
+      }
+    });
+  } else if (app.globalData.shujuku == 1) {
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: { query: "select wenjian from xueshengguanlixitong_excel.dbo.student where ID = " + recordId },
+      success: res => {
+        var currentFiles = res.result.recordset[0]?.wenjian || '';
+        var fileArray = currentFiles.split(',');
+        var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
+        var newFiles = newFileArray.join(',');
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: { query: "update xueshengguanlixitong_excel.dbo.student set wenjian = '" + newFiles + "' where ID = " + recordId },
+          success: () => {
+            // 刷新列表
+            var e = [that.data.xsxm || '', that.data.zrjs || '', that.data.ckpx || '', that.data.riqi1 || '1900-01-01', that.data.riqi2 || '2100-12-31'];
+            that.tableShow(e);
+            // 刷新查看弹窗
+            that.viewFiles({ currentTarget: { dataset: { id: recordId } } });
+          }
+        });
+      }
+    });
+  }
+},
+
+// 预览文件
+previewFile: function(e) {
+  var fileUrl = e.currentTarget.dataset.url;
+  var fileExtension = fileUrl.split('.').pop().toLowerCase();
+  var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+  
+  if (imageExtensions.includes(fileExtension)) {
+    wx.previewImage({ urls: [fileUrl], current: fileUrl });
+  } else {
+    wx.setClipboardData({
+      data: fileUrl,
+      success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
+    });
+  }
+},
   getExcel : function(){ 
     var _this = this;
     wx.showLoading({

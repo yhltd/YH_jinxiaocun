@@ -29,6 +29,30 @@ Page({
     tempImage3: "", // 临时存储图片3的base64
     tempEditImage: "", // 临时存储编辑时的图片
     isImageField: false, 
+    isDeletingImage: false,  
+
+      // 新增文件上传相关数据
+  showUploadModal: false,      // 上传弹窗显示状态
+  showFileViewModal: false,    // 文件查看弹窗显示状态
+  selectedFiles: [],           // 已选择的文件列表
+  currentRecordId: 0,          // 当前操作的记录ID
+  currentRecordName: '',       // 当前记录的商品名称
+  fileName: '',                // 用户输入的文件名
+  uploading: false,            // 上传中状态
+  uploadProgress: 0,           // 上传进度
+  currentFileList: [],         // 当前查看的文件列表
+  currentFileName: '',         // 当前查看的文件名
+  
+  // 临时存储图片字段名和索引
+  currentImageField: '',
+  currentImageIndex: 0,
+  
+  // 新增图片URL字段
+  tempImageUrl1: '',
+  tempImageUrl2: '',
+  tempImageUrl3: '',
+  tempEditImageUrl: '', // 编辑时临时存储图片URL
+    
     getDate: function () {
       var myDate = new Date();
       var year = myDate.getFullYear();
@@ -172,41 +196,31 @@ Page({
                         dataset_input.column === 'photo1' || 
                         dataset_input.column === 'photo2';
     
-    if (dataset_input.input_type == "date") {
-      _this.setData({
-        updatePicker: false,
-        empty: dataset_input.value
-      })
-    } else {
-      _this.setData({
-        updatePicker: true,
-        updateInput: false,
-        empty: dataset_input.value
-      })
-    }
-    
-    if (dataset_input.column == "rownum") {
-      _this.setData({
-        dataset_input,
-        handle: false,
-        mask_hid: false,
-      })
-    } else if (isImageField) {
-      // 图片字段特殊处理
+    // 对于图片字段，设置特殊处理
+    if (isImageField) {
       _this.setData({
         dataset_input,
         input_hid: false,
         mask_hid: false,
         input_type: 'image',
-        tempEditImage: "" // 初始化临时图片
-      })
+        tempEditImageUrl: '', // 清空临时图片
+        currentImageField: dataset_input.column, // 保存当前图片字段名
+        currentImageIndex: dataset_input.index // 保存当前索引
+      });
+    } else if (dataset_input.column == "rownum") {
+      _this.setData({
+        dataset_input,
+        handle: false,
+        mask_hid: false,
+      });
     } else {
       _this.setData({
         dataset_input,
         input_hid: false,
         mask_hid: false,
-        input_type: e.currentTarget.dataset.input_type
-      })
+        updatePicker: dataset_input.input_type !== 'date',
+        input_type: dataset_input.input_type
+      });
     }
   },
   
@@ -291,41 +305,41 @@ Page({
     }
   },
 
-  chooseImageForEdit: function() {
-    var _this = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function(res) {
-        var tempFilePaths = res.tempFilePaths;
+  // chooseImageForEdit: function() {
+  //   var _this = this;
+  //   wx.chooseImage({
+  //     count: 1,
+  //     sizeType: ['compressed'],
+  //     sourceType: ['album', 'camera'],
+  //     success: function(res) {
+  //       var tempFilePaths = res.tempFilePaths;
         
-        // 将图片转换为base64（带前缀）
-        wx.getFileSystemManager().readFile({
-          filePath: tempFilePaths[0],
-          encoding: 'base64',
-          success: res => {
-            _this.setData({
-              tempEditImage: 'data:image/jpeg;base64,' + res.data
-            });
-            wx.showToast({
-              title: '图片选择成功',
-              icon: 'success'
-            });
-          },
-          fail: err => {
-            wx.showToast({
-              title: '图片转换失败',
-              icon: 'none'
-            });
-          }
-        });
-      },
-      fail: function(err) {
-        console.log('选择图片失败', err);
-      }
-    });
-  },
+  //       // 将图片转换为base64（带前缀）
+  //       wx.getFileSystemManager().readFile({
+  //         filePath: tempFilePaths[0],
+  //         encoding: 'base64',
+  //         success: res => {
+  //           _this.setData({
+  //             tempEditImage: 'data:image/jpeg;base64,' + res.data
+  //           });
+  //           wx.showToast({
+  //             title: '图片选择成功',
+  //             icon: 'success'
+  //           });
+  //         },
+  //         fail: err => {
+  //           wx.showToast({
+  //             title: '图片转换失败',
+  //             icon: 'none'
+  //           });
+  //         }
+  //       });
+  //     },
+  //     fail: function(err) {
+  //       console.log('选择图片失败', err);
+  //     }
+  //   });
+  // },
   
   
 
@@ -501,6 +515,66 @@ Page({
   //     })
   //     }
   // },
+  // changed: function (e) {
+  //   var _this = this;
+  //   var dataset = _this.data.dataset_input;
+  //   var index = dataset.index;
+  //   var id = _this.data.list[index].id
+  //   var column = dataset.column;
+    
+  //   // 判断是否为图片字段
+  //   const isImageField = column === 'photo' || column === 'photo1' || column === 'photo2';
+    
+  //   var new_value;
+    
+  //   if (isImageField) {
+  //     // 图片字段：使用临时图片数据，并移除前缀只存储纯base64
+  //     new_value = _this.data.tempEditImage ? _this.data.tempEditImage.replace('data:image/jpeg;base64,', '') : '';
+  //   } else {
+  //     // 其他字段：使用表单数据
+  //     new_value = e.detail.value.new;
+  //   }
+    
+  //   if (!dataset.isupd) {
+  //     return;
+  //   }
+    
+  //   if (new_value != "" ){
+  //     var sql = "update product set " + column + " = '" + new_value + "' where id = '" + id + "';"
+  //     wx.cloud.callFunction({
+  //       name: 'sqlserver_xinyongka',
+  //       data: {
+  //         sql: sql
+  //       },
+  //       success: res => {
+  //         wx.showToast({
+  //           title: "修改成功",
+  //           icon: "success"
+  //         })
+  //         _this.setData({
+  //           input_hid: false,
+  //           mask_hid: false,
+  //           ["list[" + index + "]." + column]: isImageField ? new_value : new_value,
+  //           new: "",
+  //           tempEditImage: "" // 清空临时图片
+  //         })
+  //         _this.hid_view()
+  //       },
+  //       err: res => {
+  //         wx.showToast({
+  //           title: "错误",
+  //           icon: "none"
+  //         })
+  //       }
+  //     })
+  //   } else {
+  //     wx.showToast({
+  //       title: "不能为空！",
+  //       icon: "none"
+  //     })
+  //   }
+  // },
+
   changed: function (e) {
     var _this = this;
     var dataset = _this.data.dataset_input;
@@ -514,54 +588,63 @@ Page({
     var new_value;
     
     if (isImageField) {
-      // 图片字段：使用临时图片数据，并移除前缀只存储纯base64
-      new_value = _this.data.tempEditImage ? _this.data.tempEditImage.replace('data:image/jpeg;base64,', '') : '';
+      // 图片字段：使用临时图片URL，如果没有新图片则使用原值
+      new_value = _this.data.tempEditImageUrl || dataset.value;
     } else {
       // 其他字段：使用表单数据
       new_value = e.detail.value.new;
+      
+      // 如果新值为空，则使用原值
+      if (!new_value) {
+        new_value = dataset.value;
+      }
     }
     
     if (!dataset.isupd) {
       return;
     }
     
-    if (new_value != "" ){
-      var sql = "update product set " + column + " = '" + new_value + "' where id = '" + id + "';"
-      wx.cloud.callFunction({
-        name: 'sqlserver_xinyongka',
-        data: {
-          sql: sql
-        },
-        success: res => {
-          wx.showToast({
-            title: "修改成功",
-            icon: "success"
-          })
-          _this.setData({
-            input_hid: false,
-            mask_hid: false,
-            ["list[" + index + "]." + column]: isImageField ? new_value : new_value,
-            new: "",
-            tempEditImage: "" // 清空临时图片
-          })
-          _this.hid_view()
-        },
-        err: res => {
-          wx.showToast({
-            title: "错误",
-            icon: "none"
-          })
-        }
-      })
-    } else {
-      wx.showToast({
-        title: "不能为空！",
-        icon: "none"
-      })
-    }
+    // 显示加载中
+    wx.showLoading({
+      title: '保存中...',
+      mask: true
+    });
+    
+    var sql = "update product set " + column + " = '" + new_value + "' where id = '" + id + "';"
+    wx.cloud.callFunction({
+      name: 'sqlserver_xinyongka',
+      data: {
+        sql: sql
+      },
+      success: res => {
+        wx.hideLoading();
+        wx.showToast({
+          title: "修改成功",
+          icon: "success"
+        });
+        
+        // 更新本地数据
+        _this.setData({
+          ["list[" + index + "]." + column]: new_value,
+          tempEditImageUrl: "", // 清空临时图片
+          input_hid: true,
+          mask_hid: true,
+          isDeletingImage: false
+        });
+        
+        _this.hid_view();
+      },
+      fail: err => {
+        wx.hideLoading();
+        console.error('修改失败:', err);
+        wx.showToast({
+          title: "修改失败",
+          icon: "none"
+        });
+        _this.setData({ isDeletingImage: false });
+      }
+    });
   },
-
-
 
 
 
@@ -738,11 +821,17 @@ Page({
       addTable2: true,
       input_hid2: true,
       handle2: true,
-      handle3:true,
-      empty:"",
-      zdr:"",
-      hkr:""
-    })
+      handle3: true,
+      tempImageUrl1: "",
+      tempImageUrl2: "",
+      tempImageUrl3: "",
+      tempEditImageUrl: "",
+      currentImageField: "",
+      currentImageIndex: 0,
+      empty: "",
+      zdr: "",
+      hkr: ""
+    });
   },
 
   save: function(e) {
@@ -814,9 +903,9 @@ Page({
         e.detail.value.unit + "','" + e.detail.value.price + "','" + e.detail.value.chengben + "','" + 
         e.detail.value.specifications + "','" + e.detail.value.practice + "','" + 
         (e.detail.value.xiangqing || '') + "','" + 
-        (_this.data.tempImage1 ? _this.data.tempImage1.replace('data:image/jpeg;base64,', '') : '') + "','" +  // photo
-        (_this.data.tempImage2 ? _this.data.tempImage2.replace('data:image/jpeg;base64,', '') : '') + "','" +  // photo1
-        (_this.data.tempImage3 ? _this.data.tempImage3.replace('data:image/jpeg;base64,', '') : '') + "','" +  // photo2
+        (_this.data.tempImageUrl1 || '') + "','" +  // 改为 tempImageUrl1
+        (_this.data.tempImageUrl2 || '') + "','" +  // 改为 tempImageUrl2
+        (_this.data.tempImageUrl3 || '') + "','" +  // 改为 tempImageUrl3
         e.detail.value.tingyong + "')"
       
       console.log('执行的SQL:', sql)
@@ -878,6 +967,7 @@ Page({
       });
     }
   },
+  
 
   // 在关闭表单时清空临时图片数据
   inquire_QX: function() {
@@ -889,7 +979,83 @@ Page({
     })
     _this.hid_view();
   },
-
+  sanchu: function() {
+    var _this = this;
+    var id = _this.data.list[_this.data.dataset_input.index].id;
+    var item = _this.data.list[_this.data.dataset_input.index];
+    
+    wx.showModal({
+      title: "提示",
+      content: '确认删除吗？',
+      success: res => {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '删除中...',
+            mask: true
+          });
+          
+          // 先删除所有关联的图片
+          const imageFields = ['photo', 'photo1', 'photo2'];
+          const deletePromises = [];
+          
+          imageFields.forEach(field => {
+            const imageUrl = item[field];
+            if (imageUrl && imageUrl.includes('yhocn.cn:9088')) {
+              const fileNameMatch = imageUrl.match(/\/([^/]+)$/);
+              if (fileNameMatch && fileNameMatch[1]) {
+                const fileName = fileNameMatch[1].split('.')[0];
+                
+                const promise = new Promise((resolve) => {
+                  wx.request({
+                    url: 'https://yhocn.cn:9097/file/delete',
+                    method: 'POST',
+                    data: {
+                      order_number: fileName,
+                      path: '/mendian/'
+                    },
+                    complete: resolve
+                  });
+                });
+                deletePromises.push(promise);
+              }
+            }
+          });
+          
+          // 等待所有图片删除完成（或超时）
+          Promise.all(deletePromises).finally(() => {
+            // 删除数据库记录
+            var sql = "delete from product where id = '" + id + "';";
+            wx.cloud.callFunction({
+              name: 'sqlserver_xinyongka',
+              data: {
+                sql: sql
+              },
+              success: res => {
+                wx.hideLoading();
+                wx.showToast({
+                  title: "删除成功",
+                  icon: "success"
+                });
+                _this.setData({
+                  handle: true,
+                  mask_hid: true
+                });
+                _this.init();
+              },
+              fail: err => {
+                wx.hideLoading();
+                console.error('删除失败:', err);
+                wx.showToast({
+                  title: "删除失败",
+                  icon: "none"
+                });
+              }
+            });
+          });
+        }
+      }
+    });
+  },
 
   add2: function (e) {
     if (e.detail.value.yhje != "" && e.detail.value.sh != "" && e.detail.value.ske != "" && e.detail.value.fl != "" && e.detail.value.dzje != "" && e.detail.value.jcsxf != "" && e.detail.value.qtsxf != "" ){
@@ -958,6 +1124,48 @@ Page({
   //     }
   //   })
   // },
+  // init: function() {
+  //   var _this = this;
+  //   let sql = "select * from product where product_name like '%" + _this.data.product_name + "%' and type like '%" + _this.data.type + "%' and company='"+ _this.data.company +"'"
+  //   console.log(sql)
+  //   wx.cloud.callFunction({
+  //     name: 'sqlserver_xinyongka',
+  //     data: {
+  //       sql: sql
+  //     },
+  //     success: res => {
+  //       console.log("select-success", res)
+  
+  //       // 处理图片数据
+  //       const processedList = res.result.map(item => {
+  //         // 清理 base64 前缀，只保留纯 base64 数据
+  //         const processPhoto = (photo) => {
+  //           if (!photo) return photo;
+  //           if (photo.includes('base64,')) {
+  //             return photo.split('base64,')[1];
+  //           }
+  //           return photo;
+  //         };
+  
+  //         return {
+  //           ...item,
+  //           photo: processPhoto(item.photo),
+  //           photo1: processPhoto(item.photo1),
+  //           photo2: processPhoto(item.photo2)
+  //         };
+  //       });
+  
+  //       _this.setData({
+  //         list: processedList,  // 使用处理后的数据
+  //         product_name: "",
+  //         type: "",
+  //       })
+  //     },
+  //     fail: res=> {
+  //       console.log("select-fail",res)
+  //     }
+  //   })
+  // },
   init: function() {
     var _this = this;
     let sql = "select * from product where product_name like '%" + _this.data.product_name + "%' and type like '%" + _this.data.type + "%' and company='"+ _this.data.company +"'"
@@ -969,28 +1177,17 @@ Page({
       },
       success: res => {
         console.log("select-success", res)
-  
-        // 处理图片数据
+        
+        // 图片已经是URL，不需要额外处理
         const processedList = res.result.map(item => {
-          // 清理 base64 前缀，只保留纯 base64 数据
-          const processPhoto = (photo) => {
-            if (!photo) return photo;
-            if (photo.includes('base64,')) {
-              return photo.split('base64,')[1];
-            }
-            return photo;
-          };
-  
           return {
-            ...item,
-            photo: processPhoto(item.photo),
-            photo1: processPhoto(item.photo1),
-            photo2: processPhoto(item.photo2)
+            ...item
+            // 图片字段直接使用数据库中的URL
           };
         });
   
         _this.setData({
-          list: processedList,  // 使用处理后的数据
+          list: processedList,
           product_name: "",
           type: "",
         })
@@ -1269,9 +1466,316 @@ Page({
   onShareAppMessage: function() {
 
   },
-chooseImage1: function() { this.chooseImage('tempImage1'); },
-chooseImage2: function() { this.chooseImage('tempImage2'); },
-chooseImage3: function() { this.chooseImage('tempImage3'); },
+// chooseImage1: function() { this.chooseImage('tempImage1'); },
+// chooseImage2: function() { this.chooseImage('tempImage2'); },
+// chooseImage3: function() { this.chooseImage('tempImage3'); },
+
+chooseImage1: function() { this.chooseAndUploadImage('tempImageUrl1', 1); },
+chooseImage2: function() { this.chooseAndUploadImage('tempImageUrl2', 2); },
+chooseImage3: function() { this.chooseAndUploadImage('tempImageUrl3', 3); },
+
+// 新增：选择并上传图片
+chooseAndUploadImage: function(imageKey, imageIndex) {
+  const _this = this;
+  
+  wx.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['album', 'camera'],
+    success: res => {
+      const tempFilePath = res.tempFilePaths[0];
+      
+      wx.showLoading({
+        title: '上传中...',
+        mask: true
+      });
+      
+      // 生成文件名
+      const timestamp = new Date().getTime();
+      const random = Math.floor(Math.random() * 1000);
+      const fileExtension = tempFilePath.split('.').pop() || 'jpg';
+      const fileName = `${timestamp}_${random}.${fileExtension}`;
+      
+      // 上传文件
+      wx.uploadFile({
+        url: 'https://yhocn.cn:9097/file/upload',
+        filePath: tempFilePath,
+        name: 'file',
+        formData: {
+          name: fileName,
+          path: '/mendian/',
+          kongjian: '3',
+          fileType: fileExtension
+        },
+        header: { 'Content-Type': 'multipart/form-data' },
+        success: function(uploadRes) {
+          wx.hideLoading();
+          try {
+            var resData = JSON.parse(uploadRes.data);
+            if (resData.code === 200 || resData.success) {
+              var fileUrl = "http://yhocn.cn:9088/mendian/" + fileName;
+              
+              _this.setData({ 
+                [imageKey]: fileUrl 
+              });
+              
+              wx.showToast({ 
+                title: '上传成功', 
+                icon: 'success' 
+              });
+            } else {
+              wx.showToast({ 
+                title: '上传失败', 
+                icon: 'none' 
+              });
+            }
+          } catch (e) {
+            console.error('解析响应失败:', e);
+            wx.showToast({ 
+              title: '上传失败', 
+              icon: 'none' 
+            });
+          }
+        },
+        fail: function(err) {
+          wx.hideLoading();
+          console.error('上传失败:', err);
+          wx.showToast({ 
+            title: '上传失败', 
+            icon: 'none' 
+          });
+        }
+      });
+    },
+    fail: function(err) {
+      console.log('选择图片失败', err);
+    }
+  });
+},
+
+// 编辑时选择图片
+chooseImageForEdit: function() {
+  var _this = this;
+  
+  wx.chooseImage({
+    count: 1,
+    sizeType: ['compressed'],
+    sourceType: ['album', 'camera'],
+    success: function(res) {
+      const tempFilePath = res.tempFilePaths[0];
+      
+      wx.showLoading({
+        title: '上传中...',
+        mask: true
+      });
+      
+      // 获取当前旧图片URL
+      const oldImageUrl = _this.data.dataset_input.value;
+      
+      // 生成文件名
+      const timestamp = new Date().getTime();
+      const random = Math.floor(Math.random() * 1000);
+      const fileExtension = tempFilePath.split('.').pop() || 'jpg';
+      const fileName = `${timestamp}_${random}.${fileExtension}`;
+      
+      // 先删除旧图片（如果有）
+      const deleteOldImage = () => {
+        return new Promise((resolve) => {
+          if (oldImageUrl && oldImageUrl.includes('yhocn.cn:9088')) {
+            // 从URL中提取文件名
+            const fileNameMatch = oldImageUrl.match(/\/([^/]+)$/);
+            if (fileNameMatch && fileNameMatch[1]) {
+              const oldFileName = fileNameMatch[1].split('.')[0];
+              
+              wx.request({
+                url: 'https://yhocn.cn:9097/file/delete',
+                method: 'POST',
+                data: {
+                  order_number: oldFileName,
+                  path: '/mendian/'
+                },
+                success: (delRes) => {
+                  console.log('旧图片删除结果:', delRes.data);
+                  resolve();
+                },
+                fail: (err) => {
+                  console.error('删除旧图片失败:', err);
+                  resolve(); // 即使删除失败也继续上传
+                }
+              });
+            } else {
+              resolve();
+            }
+          } else {
+            resolve();
+          }
+        });
+      };
+      
+      // 删除旧图片后上传新图片
+      deleteOldImage().then(() => {
+        // 上传新文件
+        wx.uploadFile({
+          url: 'https://yhocn.cn:9097/file/upload',
+          filePath: tempFilePath,
+          name: 'file',
+          formData: {
+            name: fileName,
+            path: '/mendian/',
+            kongjian: '3',
+            fileType: fileExtension
+          },
+          header: { 'Content-Type': 'multipart/form-data' },
+          success: function(uploadRes) {
+            wx.hideLoading();
+            try {
+              var resData = JSON.parse(uploadRes.data);
+              if (resData.code === 200 || resData.success) {
+                var fileUrl = "http://yhocn.cn:9088/mendian/" + fileName;
+                
+                _this.setData({
+                  tempEditImageUrl: fileUrl
+                });
+                
+                wx.showToast({
+                  title: '上传成功',
+                  icon: 'success'
+                });
+              } else {
+                wx.showToast({
+                  title: '上传失败',
+                  icon: 'none'
+                });
+              }
+            } catch (e) {
+              console.error('解析响应失败:', e);
+              wx.showToast({
+                title: '上传失败',
+                icon: 'none'
+              });
+            }
+          },
+          fail: function(err) {
+            wx.hideLoading();
+            console.error('上传失败:', err);
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none'
+            });
+          }
+        });
+      });
+    },
+    fail: function(err) {
+      console.log('选择图片失败', err);
+    }
+  });
+},
+
+// 单独删除图片（不替换，只删除）
+deleteImageOnly: function() {
+  var _this = this;
+  var dataset = _this.data.dataset_input;
+  var index = dataset.index;
+  var id = _this.data.list[index].id;
+  var column = dataset.column;
+  var oldImageUrl = dataset.value;
+  
+  if (!oldImageUrl) {
+    wx.showToast({
+      title: '暂无图片可删除',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  wx.showModal({
+    title: '确认删除',
+    content: '确定要删除这张图片吗？',
+    success: function(res) {
+      if (res.confirm) {
+        wx.showLoading({
+          title: '删除中...',
+          mask: true
+        });
+        
+        _this.setData({ isDeletingImage: true });
+        
+        // 从URL中提取文件名
+        const fileNameMatch = oldImageUrl.match(/\/([^/]+)$/);
+        if (fileNameMatch && fileNameMatch[1]) {
+          const fileName = fileNameMatch[1].split('.')[0];
+          
+          // 先删除文件服务器上的图片
+          wx.request({
+            url: 'https://yhocn.cn:9097/file/delete',
+            method: 'POST',
+            data: {
+              order_number: fileName,
+              path: '/mendian/'
+            },
+            success: (delRes) => {
+              console.log('图片删除结果:', delRes.data);
+              
+              // 更新数据库，将图片字段置为空
+              var sql = "update product set " + column + " = '' where id = '" + id + "';"
+              
+              wx.cloud.callFunction({
+                name: 'sqlserver_xinyongka',
+                data: {
+                  sql: sql
+                },
+                success: res => {
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: "图片删除成功",
+                    icon: "success"
+                  });
+                  
+                  // 更新本地数据
+                  _this.setData({
+                    ["list[" + index + "]." + column]: '',
+                    input_hid: true,
+                    mask_hid: true,
+                    isDeletingImage: false,
+                    tempEditImageUrl: ''
+                  });
+                  
+                  _this.hid_view();
+                },
+                fail: err => {
+                  wx.hideLoading();
+                  console.error('数据库更新失败:', err);
+                  wx.showToast({
+                    title: "删除失败",
+                    icon: "none"
+                  });
+                  _this.setData({ isDeletingImage: false });
+                }
+              });
+            },
+            fail: (err) => {
+              wx.hideLoading();
+              console.error('删除文件失败:', err);
+              wx.showToast({
+                title: '文件删除失败',
+                icon: 'none'
+              });
+              _this.setData({ isDeletingImage: false });
+            }
+          });
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: '无效的图片地址',
+            icon: 'none'
+          });
+          _this.setData({ isDeletingImage: false });
+        }
+      }
+    }
+  });
+},
 
 // 修复压缩版本
 chooseImage: function(imageKey) {

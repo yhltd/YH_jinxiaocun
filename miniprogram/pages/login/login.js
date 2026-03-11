@@ -2122,6 +2122,22 @@ processBeizhu2: function(beizhu2) {
     })
   },  
 
+  // 跳转到用户步骤页面
+gotoUserStep: function() {
+  var _this = this;
+
+  // 方式2：如果不需要在小程序内打开，可以使用复制链接的方式
+  wx.setClipboardData({
+    data: 'http://yhocn.cn/chanpin7_shipin/excel_7product/7product/userstep/index.html',
+    success: function() {
+      wx.showToast({
+        title: '链接已复制',
+        icon: 'success'
+      });
+    }
+  });
+},
+
   /**
    * 生命周期函数--监听页面卸载
    */

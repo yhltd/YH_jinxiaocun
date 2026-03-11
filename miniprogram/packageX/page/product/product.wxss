@@ -124,7 +124,7 @@ button{
   position: fixed;
   width: 90%;
   height: auto;
-  top: 25%;
+  top: 3%;
   background-color: white;
   border-radius: 10rpx;
   box-shadow: 10rpx 10rpx 10rpx black;
@@ -383,3 +383,37 @@ button{
   margin-left: 60rpx;
 }
 
+/* 在页面的 wxss 文件中添加以下样式 */
+.image-upload-btn {
+  margin: 0;
+  line-height: 1.5;
+  border: none;
+  outline: none;
+}
+
+.image-upload-btn::after {
+  border: none;
+}
+
+.bt_form_delete {
+  margin: 0;
+  line-height: 1.5;
+  border: none;
+  outline: none;
+}
+
+.bt_form_delete::after {
+  border: none;
+}
+
+.preview-image {
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.no-image-text {
+  color: #999;
+  font-size: 24rpx;
+  text-align: center;
+  padding: 20rpx;
+}

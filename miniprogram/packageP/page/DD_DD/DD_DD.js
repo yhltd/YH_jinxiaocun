@@ -14,6 +14,15 @@ Page({
   wlxgShow: false,
   wltjShow: false,
   delWindow1: false,
+  showUploadModal: false,      // 上传弹窗显示状态
+  showFileViewModal: false,    // 文件查看弹窗显示状态
+  selectedFiles: [],           // 已选择的文件列表
+  currentRecordId: 0,          // 当前操作的记录ID
+  currentRecordName: '',       // 当前记录的名称
+  fileName: '',                // 用户输入的文件名
+  uploading: false,            // 上传中状态
+  uploadProgress: 0,           // 上传进度
+  currentFileList: [],         // 当前查看的文件列表
   data: {
     list: [],
     list2: [],
@@ -58,6 +67,13 @@ Page({
         columnName: "set_num",
         type: "text",
         isupd: true
+      },
+      {
+        text: "文件",
+        width: "200rpx",
+        columnName: "wenjian",
+        type: "file",
+        isupd: false
       }
     ],
     title2: [{
@@ -300,17 +316,18 @@ Page({
     })
   },
 
-  // //结束
+ 
   tableShow: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select id,order_id,code,product_name,norms,CONVERT(varchar(100), set_date, 23) as set_date,set_num from order_info where company='" + user + "' and order_id like '%" + e[0] + "%' and product_name like '%" + e[1] + "%'"
+        query: "select id,order_id,code,product_name,norms,CONVERT(varchar(100), set_date, 23) as set_date,set_num,wenjian from order_info where company='" + user + "' and order_id like '%" + e[0] + "%' and product_name like '%" + e[1] + "%'"
       },
       success: res => {
         var list = res.result.recordset
+        console.log("返回数据",list)
         _this.setData({
           list: list
         })
@@ -1471,6 +1488,419 @@ loadProcessData: function() {
       console.log("请求失败！")
     }
   })
+},
+
+// 文件名输入监听
+onFileNameInput: function(e) {
+  this.setData({
+    fileName: e.detail.value
+  });
+},
+
+// 显示上传模态框
+showUploadModalFunc: function(e) {
+  var recordId = e.currentTarget.dataset.id || 0;
+  var recordName = e.currentTarget.dataset.name || '';
+  
+  this.setData({
+    showUploadModal: true,
+    selectedFiles: [],
+    currentRecordId: recordId,
+    currentRecordName: recordName,
+    fileName: '',
+    uploading: false,
+    uploadProgress: 0
+  });
+},
+
+// 选择文档
+chooseFile: function() {
+  var that = this;
+  wx.chooseMessageFile({
+    count: 9,
+    type: 'file',
+    extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
+    success: function(res) {
+      var files = res.tempFiles.map(file => ({
+        path: file.path,
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }));
+      that.setData({ selectedFiles: files });
+    }
+  });
+},
+
+// 选择图片
+chooseImage: function() {
+  var that = this;
+  wx.chooseMedia({
+    count: 9,
+    mediaType: ['image'],
+    sourceType: ['album', 'camera'],
+    success: function(res) {
+      var files = res.tempFiles.map((file, index) => ({
+        path: file.tempFilePath,
+        name: `图片_${index + 1}.jpg`,
+        size: file.size,
+        type: 'image'
+      }));
+      that.setData({ selectedFiles: files });
+    }
+  });
+},
+
+// 上传文件
+uploadFile: function() {
+  var that = this;
+  
+  if (that.data.selectedFiles.length === 0) {
+    wx.showToast({ title: '请选择文件', icon: 'none' });
+    return;
+  }
+  
+  if (!that.data.currentRecordId) {
+    wx.showToast({ title: '请先选择一条记录', icon: 'none' });
+    return;
+  }
+  
+  wx.showModal({
+    title: '确认上传',
+    content: `确定为 "${that.data.currentRecordName}" 上传 ${that.data.selectedFiles.length} 个文件吗？`,
+    success: function(res) {
+      if (res.confirm) {
+        that.startUpload();
+      }
+    }
+  });
+},
+
+// 开始上传
+startUpload: function() {
+  var that = this;
+  var uploadedFiles = [];
+  var totalFiles = that.data.selectedFiles.length;
+  
+  that.setData({ uploading: true, uploadProgress: 0 });
+  
+  var recordId = that.data.currentRecordId;
+  var recordName = that.data.currentRecordName || '未知';
+  var userFileName = that.data.fileName || '';
+  
+  function uploadNextFile(index) {
+    if (index >= totalFiles) {
+      that.handleUploadComplete(uploadedFiles);
+      return;
+    }
+    
+    var file = that.data.selectedFiles[index];
+    var fileExtension = file.name.split('.').pop().toLowerCase();
+    
+    // 构建文件名
+    var timestamp = new Date().getTime();
+    var finalFileName = '';
+    if (userFileName && userFileName.trim() !== '') {
+      var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
+      finalFileName = totalFiles === 1 
+        ? `${baseName}_${timestamp}.${fileExtension}` 
+        : `${baseName}_${index + 1}_${timestamp}.${fileExtension}`;
+    } else {
+      var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
+      finalFileName = totalFiles === 1 
+        ? `${safeRecordName}_${timestamp}.${fileExtension}` 
+        : `${safeRecordName}_${index + 1}_${timestamp}.${fileExtension}`;
+    }
+    
+    that.setData({ uploadProgress: Math.round((index / totalFiles) * 100) });
+    
+    wx.uploadFile({
+      url: 'https://yhocn.cn:9097/file/upload',
+      filePath: file.path,
+      name: 'file',
+      formData: {
+        name: finalFileName,
+        path: '/paichan/',
+        kongjian: '3',
+        fileType: fileExtension,
+        recordId: recordId,
+        recordName: recordName
+      },
+      header: { 'Content-Type': 'multipart/form-data' },
+      success: function(uploadRes) {
+        try {
+          var resData = JSON.parse(uploadRes.data);
+          if (resData.code === 200 || resData.success) {
+            var fileUrl = "http://yhocn.cn:9088/paichan/" + finalFileName;
+            uploadedFiles.push({
+              name: finalFileName,
+              url: fileUrl,
+              originalName: file.name,
+              size: file.size,
+              type: fileExtension
+            });
+          }
+        } catch (e) {
+          console.error('解析响应失败:', e);
+        }
+        setTimeout(() => uploadNextFile(index + 1), 500);
+      },
+      fail: function(err) {
+        console.error('上传失败:', err);
+        setTimeout(() => uploadNextFile(index + 1), 1000);
+      }
+    });
+  }
+  
+  uploadNextFile(0);
+},
+
+// 上传完成处理
+handleUploadComplete: function(uploadedFiles) {
+  var that = this;
+  
+  if (uploadedFiles.length > 0) {
+    that.saveFilesToDatabase(uploadedFiles);
+  }
+  
+  that.setData({ uploading: false, uploadProgress: 100 });
+  
+  setTimeout(() => {
+    that.hideUploadModal();
+    wx.showToast({
+      title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
+      icon: 'success',
+      duration: 3000
+    });
+    // 刷新列表
+    var e = ['', '', ''];
+    that.tableShow(e);
+  }, 1000);
+},
+
+// 保存文件到数据库
+saveFilesToDatabase: function(files) {
+  var that = this;
+  
+  wx.cloud.callFunction({
+    name: 'sqlServer_PC',
+    data: {
+      query: "select wenjian from order_info where id = " + that.data.currentRecordId
+    },
+    success: res => {
+      var existingFiles = '';
+      if (res.result.recordset && res.result.recordset.length > 0) {
+        existingFiles = res.result.recordset[0]?.wenjian || '';
+      }
+      
+      // 处理现有文件
+      var existingArray = [];
+      if (existingFiles) {
+        if (existingFiles.includes(',')) {
+          existingArray = existingFiles.split(',').map(f => f.trim()).filter(f => f);
+        } else {
+          existingArray = [existingFiles.trim()];
+        }
+      }
+      
+      // 新文件URL
+      var newFileUrls = files.map(file => file.url);
+      
+      // 合并去重
+      var allFileUrls = [...new Set([...existingArray, ...newFileUrls])];
+      var fileUrlsString = allFileUrls.join(',');
+      
+      // 更新数据库
+      wx.cloud.callFunction({
+        name: 'sqlServer_PC',
+        data: {
+          query: "update order_info set wenjian = '" + fileUrlsString.replace(/'/g, "''") + "' where id = " + that.data.currentRecordId
+        },
+        success: () => {
+          console.log('文件记录更新成功');
+          var e = ['', '', ''];
+          that.tableShow(e);
+        },
+        fail: err => {
+          console.error('更新文件记录失败:', err);
+          wx.showToast({
+            title: '更新文件记录失败',
+            icon: 'none'
+          });
+        }
+      });
+    },
+    fail: err => {
+      console.error('查询现有文件失败:', err);
+    }
+  });
+},
+
+// 查看文件
+viewFiles: function(e) {
+  var that = this;
+  var recordId = e.currentTarget.dataset.id;
+  var recordName = e.currentTarget.dataset.name || '';
+  
+  wx.cloud.callFunction({
+    name: 'sqlServer_PC',
+    data: {
+      query: "select wenjian from order_info where id = " + recordId
+    },
+    success: res => {
+      if (res.result.recordset && res.result.recordset.length > 0) {
+        var record = res.result.recordset[0];
+        var files = record.wenjian || '';
+        // 处理文件列表
+        var fileList = [];
+        if (files) {
+          if (files.includes(',')) {
+            fileList = files.split(',').map(f => f.trim()).filter(f => f);
+          } else {
+            fileList = [files.trim()];
+          }
+        }
+        
+        that.setData({
+          showFileViewModal: true,
+          currentFileList: fileList,
+          currentFileName: recordName,
+          currentRecordId: recordId
+        });
+      }
+    },
+    fail: err => {
+      console.error('查询文件失败:', err);
+      wx.showToast({
+        title: '查询失败',
+        icon: 'none'
+      });
+    }
+  });
+},
+
+// 删除文件
+deleteFile: function(e) {
+  var that = this;
+  var fileUrl = e.currentTarget.dataset.url;
+  var recordId = e.currentTarget.dataset.id;
+  var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1).split('.')[0];
+  
+  wx.showModal({
+    title: '确认删除',
+    content: '确定要删除这个文件吗？',
+    success: function(res) {
+      if (res.confirm) {
+        wx.request({
+          url: 'https://yhocn.cn:9097/file/delete',
+          data: {
+            order_number: fileName,
+            path: '/paichan/'
+          },
+          success: function(res) {
+            if (res.data.code === 200 || res.data.success) {
+              that.removeFileFromDatabase(fileUrl, recordId);
+            }
+          },
+          fail: function(err) {
+            wx.showToast({
+              title: '文件服务器删除失败',
+              icon: 'none'
+            });
+          }
+        });
+      }
+    }
+  });
+},
+
+// 从数据库移除文件记录
+removeFileFromDatabase: function(fileUrl, recordId) {
+  var that = this;
+  
+  wx.cloud.callFunction({
+    name: 'sqlServer_PC',
+    data: { 
+      query: "select wenjian from order_info where id = " + recordId 
+    },
+    success: res => {
+      if (!res.result.recordset || res.result.recordset.length === 0) {
+        return;
+      }
+      
+      var currentFiles = res.result.recordset[0]?.wenjian || '';
+      var fileArray = [];
+      if (currentFiles) {
+        if (currentFiles.includes(',')) {
+          fileArray = currentFiles.split(',').map(f => f.trim()).filter(f => f);
+        } else {
+          fileArray = [currentFiles.trim()];
+        }
+      }
+      
+      // 移除要删除的文件
+      var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
+      var newFiles = newFileArray.join(',');
+      
+      wx.cloud.callFunction({
+        name: 'sqlServer_PC',
+        data: { 
+          query: "update order_info set wenjian = '" + newFiles.replace(/'/g, "''") + "' where id = " + recordId 
+        },
+        success: () => {
+          var e = ['', '', ''];
+          that.tableShow(e);
+          
+          // 重新加载文件列表
+          that.viewFiles({ currentTarget: { dataset: { id: recordId, name: that.data.currentFileName } } });
+        },
+        fail: err => {
+          console.error('更新文件记录失败:', err);
+          wx.showToast({
+            title: '删除失败',
+            icon: 'none'
+          });
+        }
+      });
+    }
+  });
+},
+
+// 预览文件
+previewFile: function(e) {
+  var fileUrl = e.currentTarget.dataset.url;
+  var fileExtension = fileUrl.split('.').pop().toLowerCase();
+  var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+  
+  if (imageExtensions.includes(fileExtension)) {
+    wx.previewImage({ urls: [fileUrl], current: fileUrl });
+  } else {
+    wx.setClipboardData({
+      data: fileUrl,
+      success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
+    });
+  }
+},
+
+// 隐藏上传模态框
+hideUploadModal: function() {
+  this.setData({
+    showUploadModal: false,
+    uploading: false,
+    uploadProgress: 0,
+    selectedFiles: [],
+    fileName: ''
+  });
+},
+
+// 隐藏文件查看模态框
+hideFileViewModal: function() {
+  this.setData({
+    showFileViewModal: false,
+    currentFileList: [],
+    currentFileName: '',
+    currentRecordId: 0
+  });
 },
 // 添加工序点击事件
 clickViewProcess: function(e) {

@@ -8,12 +8,58 @@
       </block>
     </view>
     <block class="list_row" wx:for="{{list}}" wx:for-item="list_item" wx:for-index="i" wx:key="id">
-      <view class="table_main">
-        <view wx:for="{{title}}" 
-              wx:for-item="item" 
-              wx:key="item" 
-              class="list_view" 
-              style="width:{{item.width}}" data-index="{{i}}" 
+  <view class="table_main">
+    <block wx:for="{{title}}" wx:for-item="item" wx:key="item">
+      <!-- 文件列特殊处理 -->
+      <block wx:if="{{item.columnName == 'wenjian'}}">
+        <view class="list_view" style="width:{{item.width}}; display: flex; align-items: center; justify-content: center;">
+          <view style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap;">
+            <!-- 如果wenjian字段为空或空字符串，显示上传按钮 -->
+            <block wx:if="{{!list_item.wenjian || list_item.wenjian === ''}}">
+              <button 
+                class="upload-btn" 
+                bindtap="showUploadModalFunc" 
+                data-id="{{list_item.ID}}" 
+                data-name="{{list_item.RealName || ''}}"
+                size="mini"
+                style="background: #4CAF50; color: white; font-size: 20rpx; padding: 5rpx 10rpx; line-height: 1.5; min-width: 80rpx; margin: 5rpx;"
+              >
+                上传
+              </button>
+            </block>
+            
+            <!-- 如果wenjian字段有值，显示查看按钮和上传按钮 -->
+            <block wx:else>
+              <button 
+                class="view-btn" 
+                bindtap="viewFiles" 
+                data-id="{{list_item.ID}}" 
+                data-name="{{list_item.RealName || ''}}"
+                size="mini"
+                style="background: #2196F3; color: white; font-size: 20rpx; padding: 5rpx 10rpx; line-height: 1.5; min-width: 80rpx; margin: 5rpx;"
+              >
+                查看
+              </button>
+              <!-- <button 
+                class="upload-btn" 
+                bindtap="showUploadModalFunc" 
+                data-id="{{list_item.ID}}" 
+                data-name="{{list_item.RealName || ''}}"
+                size="mini"
+                style="background: #4CAF50; color: white; font-size: 20rpx; padding: 5rpx 10rpx; line-height: 1.5; min-width: 80rpx; margin: 5rpx;"
+              >
+                上传
+              </button> -->
+            </block>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 其他列正常显示 -->
+      <block wx:else>
+        <view class="list_view" 
+              style="width:{{item.width}}" 
+              data-index="{{i}}" 
               data-column="{{item.columnName}}" 
               data-value="{{list_item[item.columnName]}}" 
               data-input_type="{{item.type}}"
@@ -21,8 +67,10 @@
               bindtap="clickView">
           <view class="list_text">{{item.columnName == 'rownum' ? i+1 : list_item[item.columnName]}}</view>
         </view>
-      </view>
+      </block>
     </block>
+  </view>
+</block>
   </view>
 </scroll-view>
 
@@ -145,5 +193,141 @@
   <view class="bottom_view" style="height:10%">
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="qxShow">取消</button>
     <button class="bt_bottom" hover-class="bt_bottom_hover" bindtap="sel1">查询</button>
+  </view>
+</van-popup>
+
+<!-- 文件上传弹窗 -->
+<van-popup show="{{ showUploadModal }}" bind:close="hideUploadModal" position="bottom" custom-style="height: 80%; background-color: white; border-radius: 20rpx 20rpx 0 0;">
+  <view style="text-align: center; padding: 40rpx; height: 100%; overflow-y: scroll;">
+    <view style="font-size: 36rpx; font-weight: bold; margin-bottom: 40rpx;">上传文件 - {{currentRecordName}}</view>
+    
+    <!-- 文件名称输入 -->
+    <view style="margin-bottom: 30rpx;">
+      <view style="text-align: left; font-size: 28rpx; margin-bottom: 10rpx; color: #666;">文件名称(可选)</view>
+      <input 
+        placeholder="请输入文件名称(不填则自动生成)" 
+        value="{{fileName}}"
+        bindinput="onFileNameInput"
+        style="border: 1rpx solid #e6e6e6; border-radius: 10rpx; padding: 20rpx; font-size: 28rpx;"
+      />
+    </view>
+    
+    <!-- 文件选择按钮 -->
+    <view style="margin-bottom: 30rpx;">
+      <view style="display: flex; justify-content: space-around; margin-bottom: 20rpx;">
+        <button 
+          bindtap="chooseImage"
+          style="width: 45%; background: #4CAF50; color: white; font-size: 28rpx;"
+          size="default"
+        >
+          选择图片
+        </button>
+        <button 
+          bindtap="chooseFile"
+          style="width: 45%; background: #2196F3; color: white; font-size: 28rpx;"
+          size="default"
+        >
+          选择文档
+        </button>
+      </view>
+      
+      <!-- 已选文件列表 -->
+      <view wx:if="{{selectedFiles.length > 0}}" style="margin-top: 20rpx; border: 1rpx solid #eee; border-radius: 10rpx; padding: 20rpx;">
+        <view style="font-size: 28rpx; color: #333; margin-bottom: 10rpx; font-weight: bold;">
+          已选择 {{selectedFiles.length}} 个文件
+        </view>
+        <scroll-view scroll-y style="max-height: 300rpx;">
+          <view wx:for="{{selectedFiles}}" wx:key="index" style="font-size: 24rpx; color: #666; padding: 10rpx 0; border-bottom: 1rpx solid #f0f0f0;">
+            {{index + 1}}. {{item.name}} ({{Math.round(item.size/1024)}}KB)
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    
+    <!-- 上传进度 -->
+    <view wx:if="{{uploading}}" style="margin-bottom: 30rpx;">
+      <view style="font-size: 28rpx; color: #666; margin-bottom: 10rpx;">
+        上传进度: {{uploadProgress}}%
+      </view>
+      <progress percent="{{uploadProgress}}" show-info stroke-width="6" color="#07c160" />
+    </view>
+    
+    <!-- 操作按钮 -->
+    <view style="display: flex; justify-content: space-between; margin-top: 40rpx; position: sticky; bottom: 0; background: white; padding: 20rpx 0;">
+      <button 
+        bindtap="hideUploadModal"
+        style="width: 45%; background: #f5f5f5; color: #666; font-size: 28rpx;"
+        disabled="{{uploading}}"
+      >
+        取消
+      </button>
+      <button 
+        bindtap="uploadFile"
+        style="width: 45%; background: #07c160; color: white; font-size: 28rpx;"
+        disabled="{{uploading || selectedFiles.length === 0}}"
+      >
+        {{uploading ? '上传中...' : '开始上传'}}
+      </button>
+    </view>
+  </view>
+</van-popup>
+
+<!-- 文件查看弹窗 -->
+<van-popup show="{{ showFileViewModal }}" bind:close="hideFileViewModal" position="bottom" custom-style="height: 80%; background-color: white; border-radius: 20rpx 20rpx 0 0;">
+  <view style="text-align: center; padding: 40rpx; height: 100%; overflow-y: scroll;">
+    <view style="font-size: 36rpx; font-weight: bold; margin-bottom: 30rpx;">文件列表 - {{currentFileName}}</view>
+    
+    <!-- 文件列表容器 -->
+    <scroll-view scroll-y style="height: 70%; margin-bottom: 30rpx;">
+      <view wx:if="{{currentFileList && currentFileList.length > 0}}">
+        <view wx:for="{{currentFileList}}" wx:key="index" wx:for-item="fileItem" style="margin-bottom: 20rpx; padding: 20rpx; border: 1rpx solid #e6e6e6; border-radius: 10rpx;">
+          <view style="display: flex; align-items: center; justify-content: space-between;">
+            <view style="flex: 1; text-align: left;">
+              <view style="font-size: 28rpx; color: #333; margin-bottom: 5rpx; word-break: break-all;">
+                {{index + 1}}. {{fileItem.split('/').pop()}}
+              </view>
+              <view style="font-size: 24rpx; color: #999; word-break: break-all;">
+                {{fileItem}}
+              </view>
+            </view>
+            <view style="display: flex; flex-direction: column; margin-left: 20rpx;">
+              <button 
+                bindtap="previewFile" 
+                data-url="{{fileItem}}"
+                style="font-size: 24rpx; padding: 10rpx 20rpx; margin-bottom: 10rpx; background: #07c160; color: white;"
+                size="mini"
+              >
+                预览
+              </button>
+              <button 
+                bindtap="deleteFile" 
+                data-url="{{fileItem}}"
+                data-id="{{currentRecordId}}"
+                style="font-size: 24rpx; padding: 10rpx 20rpx; background: #ff4444; color: white;"
+                size="mini"
+              >
+                删除
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:else style="display: flex; justify-content: center; align-items: center; height: 400rpx;">
+        <view style="padding: 60rpx 0; color: #999; font-size: 28rpx;">
+          暂无文件
+        </view>
+      </view>
+    </scroll-view>
+    
+    <!-- 关闭按钮 -->
+    <view style="margin-top: 30rpx; position: sticky; bottom: 0; background: white; padding: 20rpx 0;">
+      <button 
+        bindtap="hideFileViewModal"
+        style="width: 100%; background: #07c160; color: white; font-size: 28rpx;"
+      >
+        关闭
+      </button>
+    </view>
   </view>
 </van-popup>

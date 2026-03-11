@@ -5,7 +5,12 @@
     "van-action-sheet": "../../components/action-sheet/index",
     "van-radio": "../../components/radio/index",
     "van-radio-group": "../../components/radio-group/index",
-    "van-datetime-picker": "../../components/datetime-picker/index"
+    "van-datetime-picker": "../../components/datetime-picker/index",
+    "drawer": "../../../components/drawer/drawer",
+    "tui-modal": "../../../components/modal/modal",
+    "tui-button": "../../../components/extend/button/button",
+    "tui-datetime": "../../../components/dateTime/dateTime",
+    "tui-icon": "../../../components/icon/icon"
   },
   "navigationBarBackgroundColor": "#393D49",
   "navigationBarTitleText": "教师信息"

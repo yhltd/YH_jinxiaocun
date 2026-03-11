@@ -1,25 +1,51 @@
 <!--pages/xinjianshangpin/xinjianshangpin.wxml-->
-<view class='xinjianshangpin'> 新建商品</view>
+<view class='xinjianshangpin'>新建商品</view>
 <view style="height:6rpx"></view>
 
-
-<button class='shangchuan' bindtap='chooseImage'>
-    <image class="xz_tp" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tm_22.png"></image>
-  <text>选择图片</text>
-</button>
+<!-- 图片操作区域 -->
+<view style="padding: 20rpx; background-color: #f8f9fa; margin: 20rpx; border-radius: 16rpx;">
+  <view style="font-size: 32rpx; font-weight: bold; margin-bottom: 20rpx; color: #333;">商品图片</view>
+  
+  <!-- 图片预览 -->
+  <view style="text-align: center; margin-bottom: 30rpx;" wx:if="{{tempImageUrl || bigImg}}">
+    <image src="{{tempImageUrl || bigImg}}" 
+           style="width: 300rpx; height: 300rpx; border-radius: 16rpx; border: 2rpx solid #e0e0e0;" 
+           mode="aspectFit"
+           binderror="onImageError"></image>
+  </view>
+  
+  <!-- 图片操作按钮组 -->
+  <view style="display: flex; justify-content: space-around; margin-top: 20rpx;">
+    <!-- 上传按钮 -->
+    <button class='shangchuan' 
+            bindtap='chooseImage' 
+            disabled="{{uploading}}"
+            style="width: 45%; background: #4CAF50; color: white; border-radius: 50rpx; font-size: 28rpx; padding: 20rpx 0; margin: 0;">
+      <image class="xz_tp" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tm_22.png" style="width: 40rpx; height: 40rpx; vertical-align: middle; margin-right: 10rpx;"></image>
+      <text>{{uploading ? '上传中...' : '选择图片'}}</text>
+    </button>
+    
+    <!-- 删除按钮（有图片时才显示） -->
+    <button class='delete-btn' 
+            wx:if="{{tempImageUrl || bigImg}}"
+            bindtap='deleteImage' 
+            disabled="{{uploading}}"
+            style="width: 45%; background: #ff4444; color: white; border-radius: 50rpx; font-size: 28rpx; padding: 20rpx 0; margin: 0;">
+      <text>🗑️ 删除图片</text>
+    </button>
+  </view>
+</view>
 
 <view style="height:30rpx"></view>
-<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="" wx:for-item="item">
+
+<block data-index="{{item.index}}" wx:for="{{list}}" wx:key="index" wx:for-item="item">
   <view class='xinjian' wx:if="{{item.txet == '商品代码'}}"> {{item.txet}}:
-    <input type="txet" data-id="{{item.index}}" bindinput="input"></input>
+    <input type="text" data-id="{{item.index}}" bindinput="input" placeholder="请输入{{item.txet}}"></input>
   </view>
   <view class='xinjian' wx:else> {{item.txet}}:
-    <input type="txet" data-id="{{item.index}}" bindinput="input"></input>
+    <input type="text" data-id="{{item.index}}" bindinput="input" placeholder="请输入{{item.txet}}"></input>
   </view>
-
   <view class='divline'> </view>
-
-
 </block>
 
-<button class='querenxinjian' bindtap='querenxinjian'>确认新建</button>
+<button class='querenxinjian' bindtap='querenxinjian' disabled="{{uploading}}">确认新建</button>

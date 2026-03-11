@@ -1,23 +1,56 @@
-<view class='xinjianshangpin'> 修改商品信息</view>
+<view class='xinjianshangpin'>修改商品信息</view>
 <view style="height:6rpx"></view>
 
-
-<button class='shangchuan' bindtap='chooseImage'>
-  <image class="xz_tp" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tm_22.png"></image>
-  <text>选择图片</text>
-</button>
+<!-- 图片操作区域 -->
+<view style="padding: 20rpx; background-color: #f8f9fa; margin: 20rpx; border-radius: 16rpx;">
+  <view style="font-size: 32rpx; font-weight: bold; margin-bottom: 20rpx; color: #333;">商品图片</view>
+  
+  <!-- 当前图片显示 -->
+  <view style="text-align: center; margin-bottom: 30rpx;" wx:if="{{tempImageUrl || all[0].mark1}}">
+    <image src="{{tempImageUrl || all[0].mark1}}" 
+           style="width: 300rpx; height: 300rpx; border-radius: 16rpx; border: 2rpx solid #e0e0e0;" 
+           mode="aspectFit"
+           binderror="onImageError"></image>
+  </view>
+  
+  <!-- 图片操作按钮组 -->
+  <view style="display: flex; justify-content: space-around; margin-top: 20rpx;">
+    <!-- 上传按钮（带删除旧图片功能） -->
+    <button class='shangchuan' 
+            bindtap='chooseImage' 
+            disabled="{{uploading || isDeleting}}"
+            style="width: 45%; background: #4CAF50; color: white; border-radius: 50rpx; font-size: 28rpx; padding: 20rpx 0; margin: 0;">
+      <image class="xz_tp" src="cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tm_22.png" style="width: 40rpx; height: 40rpx; vertical-align: middle; margin-right: 10rpx;"></image>
+      <text>{{uploading ? '上传中...' : '选择并替换图片'}}</text>
+    </button>
+    
+    <!-- 单独删除按钮 -->
+    <button class='delete-btn' 
+            bindtap='deleteImage' 
+            disabled="{{uploading || isDeleting || !(tempImageUrl || all[0].mark1)}}"
+            style="width: 45%; background: #ff4444; color: white; border-radius: 50rpx; font-size: 28rpx; padding: 20rpx 0; margin: 0;">
+      <text>{{isDeleting ? '删除中...' : '🗑️ 删除图片'}}</text>
+    </button>
+  </view>
+  
+  <!-- 提示信息 -->
+  <view style="font-size: 24rpx; color: #ff9800; margin-top: 20rpx; text-align: center;">
+    ⚠️ 点击"选择并替换图片"将自动删除旧图片并上传新图片
+  </view>
+</view>
 
 <view style="height:30rpx"></view>
+
 <block data-index="{{item.index}}" wx:for="{{list}}" wx:key="i" wx:for-item="item">
- <!-- 添加仓库修改 -->
+  <!-- 添加仓库修改 -->
   <view class='xinjian' wx:if="{{fun=='qichu'?item.txet=='单位'?false:true:item.txet=='数量'?false:item.txet=='金额'?false:item.txet=='仓库'?false:true}}">{{item.txet}}:
     <input class="chanpin-input" type="text" data-id="{{item.index}}" bindinput="input" value="{{fun=='qichu'?all[0][item.fun]:all[0][item.name]}}"></input>
   </view>
   <view class='divline'> </view>
 </block>
+
 <view style="display: flex;justify-content: center; margin-top: 10px;margin-bottom: 10px;">
   <image class="qr_code" src="{{all[0].qrcode}}"></image>
 </view>
 
-
-<button class='querenxinjian' bindtap='querenxinjian'>确认修改</button>
+<button class='querenxinjian' bindtap='querenxinjian' disabled="{{uploading || isDeleting}}">确认修改</button>

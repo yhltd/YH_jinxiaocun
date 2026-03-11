@@ -1,5 +1,11 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "drawer": "../../../components/drawer/drawer",
+    "tui-modal": "../../../components/modal/modal",
+    "tui-button": "../../../components/extend/button/button",
+    "tui-datetime": "../../../components/dateTime/dateTime",
+    "tui-icon": "../../../components/icon/icon"
+  },
   "navigationBarTitleText": "人员管理",
   "navigationBarBackgroundColor": "#4e4d4d"
 }

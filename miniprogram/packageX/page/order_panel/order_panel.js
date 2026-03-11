@@ -506,7 +506,8 @@ bindPickerChange1: function(e) {
               // 已经是完整格式
             } else {
               // 添加前缀
-              photo = 'data:image/jpeg;base64,' + photo;
+              // photo = 'data:image/jpeg;base64,' + photo;
+              photo = photo;
             }
           } else {
             photo = ''; // 确保空值
@@ -1244,7 +1245,8 @@ executeOrderInsert: function() {
     if (productDetail.photo && productDetail.photo.trim() !== '') {
       const photoUrl = productDetail.photo.includes('base64,') 
         ? productDetail.photo 
-        : 'data:image/jpeg;base64,' + productDetail.photo;
+        // : 'data:image/jpeg;base64,' + productDetail.photo;
+        : productDetail.photo;
       imageList.push(photoUrl);
     }
     
@@ -1252,7 +1254,8 @@ executeOrderInsert: function() {
     if (productDetail.photo1 && productDetail.photo1.trim() !== '') {
       const photo1Url = productDetail.photo1.includes('base64,') 
         ? productDetail.photo1 
-        : 'data:image/jpeg;base64,' + productDetail.photo1;
+        // : 'data:image/jpeg;base64,' + productDetail.photo1;
+        : productDetail.photo1;
       imageList.push(photo1Url);
     }
     
@@ -1260,7 +1263,8 @@ executeOrderInsert: function() {
     if (productDetail.photo2 && productDetail.photo2.trim() !== '') {
       const photo2Url = productDetail.photo2.includes('base64,') 
         ? productDetail.photo2 
-        : 'data:image/jpeg;base64,' + productDetail.photo2;
+        // : 'data:image/jpeg;base64,' + productDetail.photo2;
+        : productDetail.photo2;
       imageList.push(photo2Url);
     }
     

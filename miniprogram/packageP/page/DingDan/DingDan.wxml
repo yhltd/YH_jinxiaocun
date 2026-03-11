@@ -26,6 +26,6 @@
   <van-tabbar-item icon="../../images/work.png">配置表</van-tabbar-item>
   <van-tabbar-item icon="../../images/dingdan.png" disabled="{{isdis!=1}}" >订单及部门</van-tabbar-item>
   <van-tabbar-item icon="../../images/paichan.png">排产及排班</van-tabbar-item>
-  <van-tabbar-item icon="../../images/caozuo-huizong.png">汇总</van-tabbar-item>
+  <!-- <van-tabbar-item icon="../../images/caozuo-huizong.png">汇总</van-tabbar-item> -->
   <van-tabbar-item icon="../../images/peizhi.png">我的</van-tabbar-item>
 </van-tabbar>

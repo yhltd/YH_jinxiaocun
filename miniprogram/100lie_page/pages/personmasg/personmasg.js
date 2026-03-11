@@ -17,6 +17,17 @@ Page({
     num: "",
     pwd: "",
     detname:'',
+    showUploadModal: false,      // 上传弹窗显示状态
+    showFileViewModal: false,    // 文件查看弹窗显示状态
+    selectedFiles: [],           // 已选择的文件列表
+    currentRecordId: 0,          // 当前操作的记录ID
+    currentRecordName: '',       // 当前记录的人员姓名
+    fileName: '',                // 用户输入的文件名
+    uploading: false,            // 上传中状态
+    uploadProgress: 0,           // 上传进度
+    
+    currentFileList: [],         // 当前查看的文件列表
+    currentFileName: '',         // 当前查看的文件名
     titil:[
       {text:'姓名'},
       {text:'账号'},
@@ -27,6 +38,7 @@ Page({
       {text:'电话号'},
       {text:'员工编号'},
       {text:'绑定微信'},
+      {text:'文件'},
     ],
     list:[],
     zhuangtai_list:['正常','锁定'],
@@ -268,7 +280,7 @@ tableShow: function(){
     })
     return;
   }
-  var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
+  var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user,isnull(wenjian,'') as wenjian from baitaoquanxian_renyun WHERE B = '" + that.data.gongsi + "' "
   wx.cloud.callFunction({
     name: 'sqlServer_117',
     data:{
@@ -276,6 +288,7 @@ tableShow: function(){
     },
     success(res){
       var list=res.result.recordset
+      console.log("tableShow",list)
       that.setData({
         list
       })
@@ -492,6 +505,434 @@ delete:function(e){
   }
 },
 
+baochi: function() {
+  this.tableShow();  // 直接调用 tableShow 刷新列表
+},
+
+// 文件名输入监听
+onFileNameInput: function(e) {
+  this.setData({
+    fileName: e.detail.value
+  });
+},
+showUploadModalFunc: function(e) {
+  var recordId = e.currentTarget.dataset.id || 0;
+  var recordName = e.currentTarget.dataset.name || '';
+  
+  this.setData({
+    showUploadModal: true,
+    selectedFiles: [],
+    currentRecordId: recordId,
+    currentRecordName: recordName,
+    fileName: '',
+    uploading: false,
+    uploadProgress: 0
+  });
+},
+// 选择文档
+chooseFile: function() {
+  var that = this;
+  wx.chooseMessageFile({
+    count: 9,
+    type: 'file',
+    extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
+    success: function(res) {
+      var files = res.tempFiles.map(file => ({
+        path: file.path,
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }));
+      that.setData({ selectedFiles: files });
+    }
+  });
+},
+
+// 选择图片
+chooseImage: function() {
+  var that = this;
+  wx.chooseMedia({
+    count: 9,
+    mediaType: ['image'],
+    sourceType: ['album', 'camera'],
+    success: function(res) {
+      var files = res.tempFiles.map((file, index) => ({
+        path: file.tempFilePath,
+        name: `简历照片_${index + 1}.jpg`,
+        size: file.size,
+        type: 'image'
+      }));
+      that.setData({ selectedFiles: files });
+    }
+  });
+},
+uploadFile: function() {
+  var that = this;
+  
+  if (that.data.selectedFiles.length === 0) {
+    wx.showToast({ title: '请选择文件', icon: 'none' });
+    return;
+  }
+  
+  if (!that.data.currentRecordId) {
+    wx.showToast({ title: '请先选择一条记录', icon: 'none' });
+    return;
+  }
+  
+  wx.showModal({
+    title: '确认上传',
+    content: `确定为 "${that.data.currentRecordName}" 上传 ${that.data.selectedFiles.length} 个文件吗？`,
+    success: function(res) {
+      if (res.confirm) {
+        that.startUpload();
+      }
+    }
+  });
+},
+
+startUpload: function() {
+  var that = this;
+  var uploadedFiles = [];
+  var totalFiles = that.data.selectedFiles.length;
+  var completedCount = 0;
+  
+  that.setData({ uploading: true, uploadProgress: 0 });
+  
+  var recordId = that.data.currentRecordId;
+  var recordName = that.data.currentRecordName || '未知人员';
+  var userFileName = that.data.fileName || '';
+  
+  function uploadNextFile(index) {
+    if (index >= totalFiles) {
+      that.handleUploadComplete(uploadedFiles);
+      return;
+    }
+    
+    var file = that.data.selectedFiles[index];
+    var fileExtension = file.name.split('.').pop().toLowerCase();
+    
+    // 构建文件名
+    var finalFileName = '';
+    if (userFileName && userFileName.trim() !== '') {
+      var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
+      if (baseName.includes('.')) baseName = baseName.split('.').slice(0, -1).join('.');
+      finalFileName = totalFiles === 1 
+        ? `${baseName}.${fileExtension}` 
+        : `${baseName}_${index + 1}.${fileExtension}`;
+    } else {
+      var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
+      finalFileName = totalFiles === 1 
+        ? `简历_${safeRecordName}.${fileExtension}` 
+        : `简历_${safeRecordName}_${index + 1}.${fileExtension}`;
+    }
+    
+    that.setData({ uploadProgress: Math.round((index / totalFiles) * 100) });
+    
+    wx.uploadFile({
+      url: 'https://yhocn.cn:9097/file/upload',
+      filePath: file.path,
+      name: 'file',
+      formData: {
+        name: finalFileName,
+        path: '/fenquan/',
+        kongjian: '3',
+        fileType: fileExtension,
+        recordId: recordId,
+        recordName: recordName,
+        userFileName: userFileName
+      },
+      header: { 'Content-Type': 'multipart/form-data' },
+      success: function(uploadRes) {
+        completedCount++;
+        try {
+          var resData = JSON.parse(uploadRes.data);
+          if (resData.code === 200 || resData.success) {
+            var fileUrl = "http://yhocn.cn:9088/fenquan/" + finalFileName;
+            uploadedFiles.push({
+              name: finalFileName,
+              url: fileUrl,
+              originalName: file.name,
+              userFileName: userFileName,
+              size: file.size,
+              type: fileExtension
+            });
+          }
+        } catch (e) {
+          console.error('解析响应失败:', e);
+        }
+        setTimeout(() => uploadNextFile(index + 1), 500);
+      },
+      fail: function(err) {
+        completedCount++;
+        console.error('上传失败:', err);
+        setTimeout(() => uploadNextFile(index + 1), 1000);
+      }
+    });
+  }
+  
+  uploadNextFile(0);
+},
+
+handleUploadComplete: function(uploadedFiles) {
+  var that = this;
+  
+  if (uploadedFiles.length > 0) {
+    that.saveFilesToDatabase(uploadedFiles);
+  }
+  
+  that.setData({ uploading: false, uploadProgress: 100 });
+  
+  setTimeout(() => {
+    that.hideUploadModal();
+    wx.showToast({
+      title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
+      icon: 'success',
+      duration: 3000
+    });
+    that.baochi(); // 刷新列表
+  }, 1000);
+},
+
+
+saveFilesToDatabase: function(files) {
+  var that = this;
+  
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data: {
+      query: "select wenjian from baitaoquanxian_renyun where id = " + that.data.currentRecordId
+    },
+    success: res => {
+      var existingFiles = '';
+      if (res.result.recordset && res.result.recordset.length > 0) {
+        existingFiles = res.result.recordset[0]?.wenjian || '';
+      }
+      
+      // 处理现有文件
+      var existingArray = [];
+      if (existingFiles) {
+        if (existingFiles.includes(',')) {
+          existingArray = existingFiles.split(',').map(f => f.trim()).filter(f => f);
+        } else {
+          existingArray = [existingFiles.trim()];
+        }
+      }
+      
+      // 新文件URL
+      var newFileUrls = files.map(file => file.url);
+      
+      // 合并去重
+      var allFileUrls = [...new Set([...existingArray, ...newFileUrls])];
+      var fileUrlsString = allFileUrls.join(',');
+      
+      // 更新数据库
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "update baitaoquanxian_renyun set wenjian = '" + fileUrlsString.replace(/'/g, "''") + "' where id = " + that.data.currentRecordId
+        },
+        success: () => {
+          console.log('文件记录更新成功');
+          that.tableShow(); // 刷新列表
+        },
+        fail: err => {
+          console.error('更新文件记录失败:', err);
+          wx.showToast({
+            title: '更新文件记录失败',
+            icon: 'none'
+          });
+        }
+      });
+    },
+    fail: err => {
+      console.error('查询现有文件失败:', err);
+      wx.showToast({
+        title: '查询失败',
+        icon: 'none'
+      });
+    }
+  });
+},
+viewFiles: function(e) {
+  var that = this;
+  var recordId = e.currentTarget.dataset.id;
+  var recordName = e.currentTarget.dataset.name || '';
+  
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data: {
+      query: "select wenjian from baitaoquanxian_renyun where id = " + recordId
+    },
+    success: res => {
+      if (res.result.recordset && res.result.recordset.length > 0) {
+        var record = res.result.recordset[0];
+        var files = record.wenjian || '';
+        // 处理文件列表，确保是数组格式
+        var fileList = [];
+        if (files) {
+          if (files.includes(',')) {
+            fileList = files.split(',').map(f => f.trim()).filter(f => f);
+          } else {
+            fileList = [files.trim()];
+          }
+        }
+        
+        that.setData({
+          showFileViewModal: true,
+          currentFileList: fileList,
+          currentFileName: recordName,  // 使用传入的姓名
+          currentRecordId: recordId
+        });
+      } else {
+        wx.showToast({
+          title: '未找到文件记录',
+          icon: 'none'
+        });
+      }
+    },
+    fail: err => {
+      console.error('查询文件失败:', err);
+      wx.showToast({
+        title: '查询失败',
+        icon: 'none'
+      });
+    }
+  });
+},
+
+deleteFile: function(e) {
+  var that = this;
+  var fileUrl = e.currentTarget.dataset.url;
+  var recordId = e.currentTarget.dataset.id;
+  var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1).split('.')[0];
+  
+  wx.showModal({
+    title: '确认删除',
+    content: '确定要删除这个文件吗？',
+    success: function(res) {
+      if (res.confirm) {
+        wx.request({
+          url: 'https://yhocn.cn:9097/file/delete',
+          data: {
+            order_number: fileName,
+            path: '/fenquan/'
+          },
+          success: function(res) {
+            if (res.data.code === 200 || res.data.success) {
+              that.removeFileFromDatabase(fileUrl, recordId);
+            }
+          }
+        });
+      }
+    }
+  });
+},
+
+removeFileFromDatabase: function(fileUrl, recordId) {
+  var that = this;
+  
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data: { 
+      query: "select wenjian from baitaoquanxian_renyun where id = " + recordId 
+    },
+    success: res => {
+      if (!res.result.recordset || res.result.recordset.length === 0) {
+        return;
+      }
+      
+      var currentFiles = res.result.recordset[0]?.wenjian || '';
+      var fileArray = [];
+      if (currentFiles) {
+        if (currentFiles.includes(',')) {
+          fileArray = currentFiles.split(',').map(f => f.trim()).filter(f => f);
+        } else {
+          fileArray = [currentFiles.trim()];
+        }
+      }
+      
+      // 移除要删除的文件
+      var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
+      var newFiles = newFileArray.join(',');
+      
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: { 
+          query: "update baitaoquanxian_renyun set wenjian = '" + newFiles.replace(/'/g, "''") + "' where id = " + recordId 
+        },
+        success: () => {
+          that.tableShow(); // 刷新列表
+          
+          // 重新加载文件列表
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data: {
+              query: "select wenjian from baitaoquanxian_renyun where id = " + recordId
+            },
+            success: res => {
+              if (res.result.recordset && res.result.recordset.length > 0) {
+                var record = res.result.recordset[0];
+                var files = record.wenjian || '';
+                var fileList = [];
+                if (files) {
+                  if (files.includes(',')) {
+                    fileList = files.split(',').map(f => f.trim()).filter(f => f);
+                  } else {
+                    fileList = [files.trim()];
+                  }
+                }
+                
+                that.setData({
+                  currentFileList: fileList
+                });
+              }
+            }
+          });
+        },
+        fail: err => {
+          console.error('更新文件记录失败:', err);
+          wx.showToast({
+            title: '删除失败',
+            icon: 'none'
+          });
+        }
+      });
+    }
+  });
+},
+previewFile: function(e) {
+  var fileUrl = e.currentTarget.dataset.url;
+  var fileExtension = fileUrl.split('.').pop().toLowerCase();
+  var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+  
+  if (imageExtensions.includes(fileExtension)) {
+    wx.previewImage({ urls: [fileUrl], current: fileUrl });
+  } else {
+    wx.setClipboardData({
+      data: fileUrl,
+      success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
+    });
+  }
+},
+hideUploadModal: function() {
+  this.setData({
+    showUploadModal: false,
+    uploading: false,
+    uploadProgress: 0,
+    selectedFiles: [],
+    fileName: ''
+  });
+},
+
+hideFileViewModal: function() {
+  this.setData({
+    showFileViewModal: false,
+    currentFileList: [],
+    currentFileName: '',
+    currentRecordId: 0
+  });
+},
+
 onReady: function () {
   wx.showLoading({
     title: '加载中',
@@ -527,7 +968,7 @@ sel_show:function(){
 sel:function(e){
   var _this = this
   var name = e.detail.value.input_detname
-  var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user from baitaoquanxian_renyun WHERE B = '" + _this.data.gongsi + "' and C like '%" + name + "%'"
+  var sql="select id,isnull(B,'') as B,isnull(C,'') as C,isnull(D,'') as D,isnull(E,'') as E,isnull(zhuangtai,'') as zhuangtai,isnull(email,'') as email,isnull(phone,'') as phone,isnull(bianhao,'') as bianhao,isnull(bumen,'') as bumen,isnull(renyuan_id,'') as renyuan_id,case when isnull(wechart_user,'') = '' then '未绑定' else '已绑定' end as wechart_user ,isnull(wenjian,'') as wenjian from baitaoquanxian_renyun WHERE B = '" + _this.data.gongsi + "' and C like '%" + name + "%'"
   console.log(sql)
   wx.cloud.callFunction({
     name: 'sqlServer_117',
@@ -536,6 +977,7 @@ sel:function(e){
     },
     success(res){
       var list=res.result.recordset
+      console.log("sel",list)
       _this.setData({
         list
       })

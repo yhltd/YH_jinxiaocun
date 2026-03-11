@@ -77,7 +77,8 @@ Page({
            })
            res.result[i].qrcode = imgData
             if(res.result[i].mark1 != null){
-              res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+              // res.result[i].mark1 = "data:image/jpeg;base64," + res.result[i].mark1.replace(/[\r\n]/g, '')
+              res.result[i].mark1 = res.result[i].mark1
             }
           }
           console.log(res.result)
@@ -107,7 +108,8 @@ Page({
            })
            res.result.recordset[i].qrcode = imgData
             if(res.result.recordset[i].mark1 != null){
-              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+              // res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+              res.result.recordset[i].mark1 = res.result.recordset[i].mark1
             }
           }
           console.log(res.result)
