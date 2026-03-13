@@ -81,17 +81,31 @@ Page({
       wx.redirectTo({
         url: '../PaiChan/PaiChan?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 3) {
+    } else if (event.detail == 4) {
       wx.redirectTo({
         url: '../HuiZong/HuiZong?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 4) {
+    } else if (event.detail == 3) {
       wx.redirectTo({
         url: '../paichan_grzx/paichan_grzx?userInfo='+JSON.stringify(_this.data.userInfo)
       })
     }
   },
 
+  gotoUserStep: function() {
+    var _this = this;
+  
+    // 方式2：如果不需要在小程序内打开，可以使用复制链接的方式
+    wx.setClipboardData({
+      data: 'http://yhocn.cn/chanpin7_shipin/excel_7product/7product/userstep/index.html',
+      success: function() {
+        wx.showToast({
+          title: '链接已复制',
+          icon: 'success'
+        });
+      }
+    });
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成

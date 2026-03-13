@@ -79,7 +79,18 @@
     <text>{{userInfo.phone}}</text>
   </view>
 </view>
+<view class="line"></view>
+<view class='item' >
+  <view class="title">
+
+  使用说明</view>
+  <view class="detail2">
+    <text  bindtap="gotoUserStep">获取说明</text>
+  </view>
 </view>
+</view>
+
+
 
 <!-- <view class="hr"></view> -->
 

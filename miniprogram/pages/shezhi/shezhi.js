@@ -769,7 +769,20 @@ detectImageType: function(base64Data) {
     return 'image/jpeg';
   }
 },
+gotoUserStep: function() {
+  var _this = this;
 
+  // 方式2：如果不需要在小程序内打开，可以使用复制链接的方式
+  wx.setClipboardData({
+    data: 'http://yhocn.cn/chanpin7_shipin/excel_7product/7product/userstep/index.html',
+    success: function() {
+      wx.showToast({
+        title: '链接已复制',
+        icon: 'success'
+      });
+    }
+  });
+},
 // 图片大小检查
 checkImageSize: function(base64Image, callback) {
   const maxSize = 800000; // 800KB限制

@@ -36,11 +36,11 @@ Page({
       wx.redirectTo({
         url: '../PaiChan/PaiChan?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 3) {
+    } else if (event.detail == 4) {
       wx.redirectTo({
         url: '../HuiZong/HuiZong?userInfo='+JSON.stringify(_this.data.userInfo)
       })
-    } else if (event.detail == 4) {
+    } else if (event.detail == 3) {
       wx.redirectTo({
         url: '../paichan_grzx/paichan_grzx?userInfo='+JSON.stringify(_this.data.userInfo)
       })
