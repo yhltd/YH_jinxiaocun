@@ -48,10 +48,7 @@
 
 
 <view class='item' >
-  <image class="item-image" style="width: 25px;
-    height: 25px;
-    margin-top: 5px;
-    margin-left: 15px;" bindtap="gotoUserStep" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/xiangqing.jpg'></image>
+  <image class="item-image" style="width: 25px;height: 25px;margin-top: 5px;margin-left: 15px;" bindtap="gotoUserStep" src='cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/xiangqing.jpg'></image>
   <view class="title" bindtap="gotoUserStep">使用说明</view>
   <!-- <view class="detail2">
     <text>></text>
