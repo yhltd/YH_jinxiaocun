@@ -107,7 +107,6 @@ Page({
           _this.setData({
             isdisshan: 1
           });
-
         }
         //查询没权限
         if (department_list1[i].sel == "否") {
@@ -365,7 +364,13 @@ Page({
         monring1.setMinutes(monring1.getMinutes() + 15);
         noon1.setMinutes(noon1.getMinutes() + 15);
         night1.setMinutes(night1.getMinutes() + 15);
-        if (monring1 > monring2 || noon1 > noon2 || night1 > night2) {
+        console.log("monring1",monring1)
+        console.log("monring2",monring2)
+        console.log("noon1",noon1)
+        console.log("noon2",noon2)
+        console.log("night1",night1)
+        console.log("night2",night2)
+        if (monring1 >= monring2 || noon1 >= noon2 || night1 >= night2) {
           wx.showToast({
             title: '结束时间必须大于开始时间！',
             icon: 'none',

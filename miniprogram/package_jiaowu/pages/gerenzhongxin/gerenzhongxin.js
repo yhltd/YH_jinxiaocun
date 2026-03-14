@@ -65,7 +65,7 @@ Page({
       data: 'http://yhocn.cn/chanpin7_shipin/excel_7product/7product/userstep/index.html',
       success: function() {
         wx.showToast({
-          title: '链接已复制',
+          title: '链接已复制，请到浏览器粘贴搜索查看',
           icon: 'success'
         });
       }
