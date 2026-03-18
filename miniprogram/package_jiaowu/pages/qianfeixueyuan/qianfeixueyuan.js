@@ -106,7 +106,16 @@ Page({
 
     if(app.globalData.shujuku==0){
 
-      var sql = "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+user+"' and realname=student.realname then paid+money else 0 end) from payment ) mall ,ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+user+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost,(select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull((select SUM(case when Company='"+user+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour,Allhour,Type FROM student where RealName LIKE '%" + _this.data.xsxm + "%' and ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+user+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) > 0"
+      var sql = "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee," +
+              "(select SUM(case when Company ='" + user + "' and realname=student.realname then paid+money else 0 end) from payment ) mall ," +
+              "ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='" + user + "' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost," +
+              "(select SUM(case when Company='" + user + "' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall," +
+              "ifnull(Allhour,0) - ifnull((select SUM(case when Company='" + user + "' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour," +
+              "Allhour,Type " +
+              "FROM student " +
+              "WHERE student.Company = '" + user + "' " +  // 添加公司条件
+              "AND RealName LIKE '%" + _this.data.xsxm + "%' " +
+              "AND ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='" + user + "' and realname=student.realname then paid+money else 0 end) from payment ),0),0) > 0"
     // var sql = "select * from student where Nocost is not null and Nocost>0 and RealName like '%" + _this.data.xsxm + "%' and Company='"+user+"'"
     wx.cloud.callFunction({
       name: 'sql_jiaowu',
@@ -176,9 +185,11 @@ Page({
           FROM xueshengguanlixitong_excel.dbo.keshi_detail 
           GROUP BY student_name, course
       ) k ON s.RealName = k.student_name AND s.Course = k.course
-      WHERE s.RealName LIKE '%${_this.data.xsxm}%' 
+      WHERE s.Company = '${user}' 
+        AND s.RealName LIKE '%${_this.data.xsxm}%' 
         AND (ISNULL(s.Fee, 0) - ISNULL(p.total_paid, 0)) > 0
-      `;
+    `;
+
 
 console.log("🔍 执行的SQL:", sql);
 console.log("🔍 查询参数 - user:", user, "xsxm:", _this.data.xsxm);

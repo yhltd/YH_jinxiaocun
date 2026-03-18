@@ -167,14 +167,27 @@ Page({
   tableShow: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
+    let company = _this.data.userInfo.Company;
 
     if(app.globalData.shujuku==0){
 
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee,(select SUM(case when Company ='"+_this.data.userInfo.Company+"' and realname=student.realname then paid+money else 0 end) from payment ) mall ,ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='"+_this.data.userInfo.Company+"' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost,(select SUM(case when Company='"+_this.data.userInfo.Company+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall,ifnull(Allhour,0) - ifnull((select SUM(case when Company='"+_this.data.userInfo.Company+"' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour,Allhour,Type,wenjian FROM student where RealName LIKE '%" + e[0] + "%' AND Teacher LIKE '%" + e[1] + "%' AND Course LIKE '%" + e[2] + "%' AND rgdate >= '" + e[3] + "' AND rgdate <= '" + e[4] + "'"
-        },
+          sql: "select ID,RealName,Sex,rgdate,Course,Teacher,Classnum,phone,Fee," +
+             "(select SUM(case when Company ='" + company + "' and realname=student.realname then paid+money else 0 end) from payment ) mall ," +
+             "ifnull(ifnull(Fee,0) -ifnull((select SUM(case when Company ='" + company + "' and realname=student.realname then paid+money else 0 end) from payment ),0),0) as Nocost," +
+             "(select SUM(case when Company='" + company + "' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ) nall," +
+             "ifnull(Allhour,0) - ifnull((select SUM(case when Company='" + company + "' and student_name=student.realname and course=student.Course then keshi else 0 end ) from keshi_detail ),0) as Nohour," +
+             "Allhour,Type,wenjian " +
+             "FROM student " +
+             "WHERE student.Company = '" + company + "' " +  
+             "AND RealName LIKE '%" + e[0] + "%' " +
+             "AND Teacher LIKE '%" + e[1] + "%' " +
+             "AND Course LIKE '%" + e[2] + "%' " +
+             "AND rgdate >= '" + e[3] + "' " +
+             "AND rgdate <= '" + e[4] + "'"
+      },
         success: res => {
           console.log(res.result)
           var list = res.result
@@ -202,45 +215,46 @@ Page({
 
     }else if(app.globalData.shujuku == 1){
       var sql = `
-SELECT 
-    s.ID,
-    s.RealName,
-    s.Sex,
-    s.rgdate,
-    s.Course,
-    s.Teacher,
-    s.Classnum,
-    s.phone,
-    s.Fee,
-    ISNULL(p.total_paid, 0) as mall,
-    ISNULL(s.Fee, 0) - ISNULL(p.total_paid, 0) as Nocost,
-    ISNULL(k.used_keshi, 0) as nall,
-    ISNULL(s.Allhour, 0) - ISNULL(k.used_keshi, 0) as Nohour,
-    s.Allhour,
-    s.Type,
-    s.wenjian
-FROM xueshengguanlixitong_excel.dbo.student s
-LEFT JOIN (
-    SELECT 
-        realname,
-        SUM(CASE WHEN Company = '${_this.data.userInfo.Company}' THEN paid + money ELSE 0 END) as total_paid
-    FROM xueshengguanlixitong_excel.dbo.payment 
-    GROUP BY realname
-) p ON s.RealName = p.realname
-LEFT JOIN (
-    SELECT 
-        student_name,
-        course,
-        SUM(CASE WHEN Company = '${_this.data.userInfo.Company}' THEN keshi ELSE 0 END) as used_keshi
-    FROM xueshengguanlixitong_excel.dbo.keshi_detail 
-    GROUP BY student_name, course
-) k ON s.RealName = k.student_name AND s.Course = k.course
-WHERE s.RealName LIKE '%${e[0]}%' 
-    AND s.Teacher LIKE '%${e[1]}%' 
-    AND s.Course LIKE '%${e[2]}%' 
-    AND s.rgdate >= '${e[3]}' 
-    AND s.rgdate <= '${e[4]}'
-`;
+      SELECT 
+          s.ID,
+          s.RealName,
+          s.Sex,
+          s.rgdate,
+          s.Course,
+          s.Teacher,
+          s.Classnum,
+          s.phone,
+          s.Fee,
+          ISNULL(p.total_paid, 0) as mall,
+          ISNULL(s.Fee, 0) - ISNULL(p.total_paid, 0) as Nocost,
+          ISNULL(k.used_keshi, 0) as nall,
+          ISNULL(s.Allhour, 0) - ISNULL(k.used_keshi, 0) as Nohour,
+          s.Allhour,
+          s.Type,
+          s.wenjian
+      FROM xueshengguanlixitong_excel.dbo.student s
+      LEFT JOIN (
+          SELECT 
+              realname,
+              SUM(CASE WHEN Company = '${company}' THEN paid + money ELSE 0 END) as total_paid
+          FROM xueshengguanlixitong_excel.dbo.payment 
+          GROUP BY realname
+      ) p ON s.RealName = p.realname
+      LEFT JOIN (
+          SELECT 
+              student_name,
+              course,
+              SUM(CASE WHEN Company = '${company}' THEN keshi ELSE 0 END) as used_keshi
+          FROM xueshengguanlixitong_excel.dbo.keshi_detail 
+          GROUP BY student_name, course
+      ) k ON s.RealName = k.student_name AND s.Course = k.course
+      WHERE s.Company = '${company}' 
+          AND s.RealName LIKE '%${e[0]}%' 
+          AND s.Teacher LIKE '%${e[1]}%' 
+          AND s.Course LIKE '%${e[2]}%' 
+          AND s.rgdate >= '${e[3]}' 
+          AND s.rgdate <= '${e[4]}'
+      `;
 
       wx.cloud.callFunction({
         name: 'sqlServer_117',

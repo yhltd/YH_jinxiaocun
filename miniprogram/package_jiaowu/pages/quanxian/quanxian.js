@@ -237,7 +237,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "select ID,RealName from teacher"
+          sql: "select ID,ISNULL(RealName, '') as RealName from teacher where Company = '" + userInfo.Company + "'"
         },
         success: res => {
           console.log(res.result)
@@ -318,7 +318,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select ID,RealName from xueshengguanlixitong_excel.dbo.teacher"
+          query: "select ID,ISNULL(RealName, '') as RealName from xueshengguanlixitong_excel.dbo.teacher where Company = '" + userInfo.Company + "'"
         },
         success: res => {
           console.log(res.result.recordset)

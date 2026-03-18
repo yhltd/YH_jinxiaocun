@@ -79,79 +79,79 @@ Page({
         hid : true,
         lianjie: "../../packageA/pages/1gerensuodeshui/gerensuodeshui"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gzt1.png",
         text: "工资条",
         index: 12,
         hid : true,
         lianjie: "../../packageA/pages/1gongzitiao/gongzitiao"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/srtx1.png",
         text: "生日提醒",
         index: 13,
         hid : true,
         lianjie: "../../packageA/pages/1shengri_tixing/shengri_tixing"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rsgrzx.png",
         text: "个人中心",
         index: 14,
         hid : true,
         lianjie: "../../packageA/pages/gerenzhongxin/gerenzhongxin"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gzap1.png",
         text: "工作安排日期",
         index: 15,
         hid : true,
         lianjie: "../../packageA/pages/1gongzuoshijian/gongzuoshijian"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qd1.png",
         text: "签到",
         index: 16,
         hid : true,
         lianjie: "../../packageA/pages/1qiandao/qiandao"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/qjsp1.png",
         text: "请假审批",
         index: 17,
         hid : true,
         lianjie: "../../packageA/pages/1qingjiashenpi/qingjiashenpi"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/dongtaimingxi.png",
         text: "动态工资明细",
         index: 18,
         hid : true,
         lianjie: "../../packageA/pages/1dongtaigzmingxi/dongtaigzmingxi"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jlgl.png",
         text: "简历管理",
         index: 19,
         hid : true,
         lianjie: "../../packageA/pages/1jianliguanli/jianliguanli"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/jlsp1.png",
         text: "简历审批",
         index: 20,
         hid : true,
         lianjie: "../../packageA/pages/1jianlishenpi/jianlishenpi"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/msgl1.png",
         text: "面试管理",
         index: 20,
         hid : true,
         lianjie: "../../packageA/pages/1mianshiguanli/mianshiguanli"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lzsp1.png",
         text: "离职审批",
         index: 21,
         hid : true,
         lianjie: "../../packageA/pages/1lizhishenpi/lizhishenpi"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/lzsq1.png",
         text: "离职申请",
         index: 21,
         hid : true,
         lianjie: "../../packageA/pages/1lizhishenqing/lizhishenqing"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/gongzitiao.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/tjt1.png",
         text: "统计图",
         index: 21,
         hid : true,

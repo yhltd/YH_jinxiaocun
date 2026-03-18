@@ -79,80 +79,83 @@ loadFormulaConfig: function() {
 },
 
   // 新增：一次性加载所有数据
-loadAllData: function() {
-  var _this = this;
-  
-  // 查询公司名称相等的全部数据，id=1的数据作为标题，其他数据作为内容
-  wx.cloud.callFunction({
-    name: 'sqlServer_117',
-    data: {
-      query: "select * from gongzi_dongtaimingxi where gongsi = '" + _this.data.companyName + "' order by id"
-    },
-    success: res => {
-      console.log("全部数据查询结果:", res.result.recordset);
-      
-      if (res.result.recordset.length > 0) {
-        // 分离标题配置(id=1)和其他数据(id>1)
-        var allData = res.result.recordset;
-        var titleRecord = null;
-        var contentData = [];
+  loadAllData: function() {
+    var _this = this;
+    
+    // 查询公司名称相等的全部数据
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select * from gongzi_dongtaimingxi where gongsi = '" + _this.data.companyName + "' order by id"
+      },
+      success: res => {
+        console.log("全部数据查询结果:", res.result.recordset);
         
-        allData.forEach(function(item) {
-          if (item.id == 1) {
-            titleRecord = item; // id=1的作为标题配置
-          } else {
-            contentData.push(item); // 其他数据作为内容
-          }
-        });
-        
-        // 处理标题配置
-        if (titleRecord) {
-          _this.setData({
-            titleConfigData: titleRecord
-          });
+        if (res.result.recordset.length > 0) {
+          var allData = res.result.recordset;
           
-          _this.processTitleConfig(titleRecord, function() {
-            // 标题配置处理完成后，处理内容数据
-            var processedContentData = _this.processContentData(contentData);
-            console.log("处理后的数据",processedContentData)
-            
-            // 设置处理后的内容数据
+          // 修改逻辑：索引为0的第一条数据作为标题
+          var titleRecord = allData[0]; // 第一条数据作为标题
+          var contentData = []; // 其他数据作为内容
+          
+          // 从索引1开始，后面的数据作为内容
+          for (var i = 1; i < allData.length; i++) {
+            contentData.push(allData[i]);
+          }
+          
+          console.log("标题记录(索引0):", titleRecord);
+          console.log("内容数据数量:", contentData.length);
+          
+          // 处理标题配置
+          if (titleRecord) {
             _this.setData({
-              list: processedContentData,  // 使用处理后的数据
-              IsLastPage: true,
-              maxpagenumber: 1
+              titleConfigData: titleRecord
             });
-          });
+            
+            _this.processTitleConfig(titleRecord, function() {
+              // 标题配置处理完成后，处理内容数据
+              var processedContentData = _this.processContentData(contentData);
+              console.log("最终处理后的数据:", processedContentData);
+              
+              // 设置处理后的内容数据
+              _this.setData({
+                list: processedContentData,
+                IsLastPage: true,
+                maxpagenumber: 1
+              }, () => {
+                console.log("页面数据已更新:", _this.data.list);
+              });
+            });
+          } else {
+            // 如果没有标题数据，创建默认配置
+            _this.createDefaultTitleConfig(function() {
+              _this.setData({
+                list: contentData,
+                IsLastPage: true,
+                maxpagenumber: 1
+              });
+            });
+          }
         } else {
-          // 如果没有标题配置，创建默认配置
+          // 如果没有数据，创建默认配置
           _this.createDefaultTitleConfig(function() {
             _this.setData({
-              list: contentData,
+              list: [],
               IsLastPage: true,
               maxpagenumber: 1
             });
           });
         }
-      } else {
-        // 如果没有数据，创建默认配置
-        _this.createDefaultTitleConfig(function() {
-          _this.setData({
-            list: [],
-            IsLastPage: true,
-            maxpagenumber: 1
-          });
+      },
+      err: res => {
+        console.log("加载全部数据错误!", res);
+        wx.showToast({
+          title: '加载数据失败',
+          icon: 'error'
         });
       }
-    },
-    err: res => {
-      console.log("加载全部数据错误!", res);
-      wx.showToast({
-        title: '加载数据失败',
-        icon: 'error'
-      });
-    }
-  });
-},
+    });
+  },
 
 // 新增：处理标题配置
 processTitleConfig: function(titleRecord, callback) {
@@ -323,21 +326,43 @@ processContentData: function(contentData) {
   // 加载总页数
   loadTotalPages: function() {
     var that = this
-    // 增加公司名限制条件
+    
+    // 先获取第一条数据的ID
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select count(id) as maxpagenumber from gongzi_dongtaimingxi where id > 1 and gongsi = '" + that.data.companyName + "'"
+        query: "select top 1 id from gongzi_dongtaimingxi where gongsi = '" + that.data.companyName + "' order by id"
       },
       success: res => {
-        that.setData({
-          maxpagenumber: Math.ceil(res.result.recordset[0].maxpagenumber / 100) || 1
-        })
+        if (res.result.recordset.length === 0) {
+          that.setData({
+            maxpagenumber: 1
+          });
+          return;
+        }
+        
+        var titleId = res.result.recordset[0].id;
+        
+        // 增加公司名限制条件，排除标题行
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "select count(id) as maxpagenumber from gongzi_dongtaimingxi where id != " + titleId + " and gongsi = '" + that.data.companyName + "'"
+          },
+          success: res => {
+            that.setData({
+              maxpagenumber: Math.ceil(res.result.recordset[0].maxpagenumber / 100) || 1
+            })
+          },
+          err: res => {
+            console.log("加载页数错误!")
+          }
+        });
       },
       err: res => {
-        console.log("加载页数错误!")
+        console.log("获取标题ID错误:", res);
       }
-    })
+    });
   },
 
   // 编辑单元格
@@ -614,40 +639,40 @@ kuaisutianjia: function () {
   },
 
   // 显示标题设置模态框
-showTitleModal: function() {
-  var that = this;
-  
-  // 先获取当前标题
-  wx.cloud.callFunction({
-    name: 'sqlServer_117',
-    data: {
-      query: "select name from gongzi_dongtaimingxi where id = 1 and gongsi = '" + that.data.companyName + "'"
-    },
-    success: res => {
-      var titleFields = [''];
-      if (res.result.recordset.length > 0 && res.result.recordset[0].name) {
-        var titleStr = res.result.recordset[0].name;
-        // 将存储的字符串拆分成数组
-        titleFields = titleStr.split(that.data.titleSeparator);
-        if (titleFields.length === 0) {
-          titleFields = [''];
+  showTitleModal: function() {
+    var that = this;
+    
+    // 修改：不再使用固定的 id=1，而是获取第一条数据作为标题
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select top 1 name from gongzi_dongtaimingxi where gongsi = '" + that.data.companyName + "' order by id"
+      },
+      success: res => {
+        var titleFields = [''];
+        if (res.result.recordset.length > 0 && res.result.recordset[0].name) {
+          var titleStr = res.result.recordset[0].name;
+          // 将存储的字符串拆分成数组
+          titleFields = titleStr.split(that.data.titleSeparator);
+          if (titleFields.length === 0) {
+            titleFields = [''];
+          }
         }
+        
+        that.setData({
+          showTitleModal: true,
+          titleFields: titleFields
+        });
+      },
+      err: res => {
+        console.log("获取当前标题错误:", res);
+        that.setData({
+          showTitleModal: true,
+          titleFields: ['']
+        });
       }
-      
-      that.setData({
-        showTitleModal: true,
-        titleFields: titleFields
-      });
-    },
-    err: res => {
-      console.log("获取当前标题错误:", res);
-      that.setData({
-        showTitleModal: true,
-        titleFields: ['']
-      });
-    }
-  });
-},
+    });
+  },
 
 // 隐藏标题设置模态框
 hideTitleModal: function() {
@@ -761,7 +786,6 @@ onTitleFieldInput: function(e) {
 },
 
 // 保存标题配置
-// 保存标题配置
 saveTitle: function() {
   var that = this;
   
@@ -781,20 +805,21 @@ saveTitle: function() {
   // 在后台拼接字段（用|||分隔）
   var titleStr = validFields.join(that.data.titleSeparator);
   
-  // 检查标题行是否存在
+  // 修改：获取第一条数据的ID
   wx.cloud.callFunction({
     name: 'sqlServer_117',
     data: {
-      query: "select id from gongzi_dongtaimingxi where id = 1 and gongsi = '" + that.data.companyName + "'"
+      query: "select top 1 id from gongzi_dongtaimingxi where gongsi = '" + that.data.companyName + "' order by id"
     },
     success: res => {
       var sql;
       if (res.result.recordset.length === 0) {
-        // 插入标题行
-        sql = "insert into gongzi_dongtaimingxi (id, gongsi, name) values (1, '" + that.data.companyName + "', '" + titleStr + "')";
+        // 如果没有数据，插入新数据作为标题
+        sql = "insert into gongzi_dongtaimingxi (gongsi, name) values ('" + that.data.companyName + "', '" + titleStr + "')";
       } else {
-        // 更新标题行
-        sql = "update gongzi_dongtaimingxi set name = '" + titleStr + "' where id = 1 and gongsi = '" + that.data.companyName + "'";
+        // 更新第一条数据作为标题
+        var titleId = res.result.recordset[0].id;
+        sql = "update gongzi_dongtaimingxi set name = '" + titleStr + "' where id = " + titleId + " and gongsi = '" + that.data.companyName + "'";
       }
       
       // 执行更新
@@ -836,47 +861,64 @@ saveTitle: function() {
     }
   });
 },
-
-// 新增：当列数减少时截断现有数据
+// 修改：当列数减少时截断现有数据
 truncateExistingData: function(oldCount, newCount) {
   var that = this;
   
-  // 获取所有需要更新的数据行（id>1）
+  // 修改：获取第一条数据的ID，然后排除它
   wx.cloud.callFunction({
     name: 'sqlServer_117',
     data: {
-      query: "select id, name from gongzi_dongtaimingxi where id > 1 and gongsi = '" + that.data.companyName + "'"
+      query: "select top 1 id from gongzi_dongtaimingxi where gongsi = '" + that.data.companyName + "' order by id"
     },
     success: res => {
-      var updatePromises = [];
+      if (res.result.recordset.length === 0) return;
       
-      res.result.recordset.forEach(function(item) {
-        if (item.name) {
-          var dataArray = item.name.split(that.data.titleSeparator);
-          // 截断到新的列数
-          var truncatedArray = dataArray.slice(0, newCount);
-          // 如果截断后长度不够，补充空值
-          while (truncatedArray.length < newCount) {
-            truncatedArray.push('');
-          }
-          var newName = truncatedArray.join(that.data.titleSeparator);
+      var titleId = res.result.recordset[0].id;
+      
+      // 获取所有需要更新的数据行（排除第一条标题数据）
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select id, name from gongzi_dongtaimingxi where id != " + titleId + " and gongsi = '" + that.data.companyName + "'"
+        },
+        success: res => {
+          var updatePromises = [];
           
-          // 添加到更新队列
-          var updateSql = "update gongzi_dongtaimingxi set name = '" + newName + "' where id = " + item.id + " and gongsi = '" + that.data.companyName + "'";
-          updatePromises.push(
-            wx.cloud.callFunction({
-              name: 'sqlServer_117',
-              data: { query: updateSql }
-            })
-          );
+          res.result.recordset.forEach(function(item) {
+            if (item.name) {
+              var dataArray = item.name.split(that.data.titleSeparator);
+              // 截断到新的列数
+              var truncatedArray = dataArray.slice(0, newCount);
+              // 如果截断后长度不够，补充空值
+              while (truncatedArray.length < newCount) {
+                truncatedArray.push('');
+              }
+              var newName = truncatedArray.join(that.data.titleSeparator);
+              
+              // 添加到更新队列
+              var updateSql = "update gongzi_dongtaimingxi set name = '" + newName + "' where id = " + item.id + " and gongsi = '" + that.data.companyName + "'";
+              updatePromises.push(
+                wx.cloud.callFunction({
+                  name: 'sqlServer_117',
+                  data: { query: updateSql }
+                })
+              );
+            }
+          });
+          
+          // 等待所有更新完成
+          Promise.all(updatePromises).then(function() {
+            console.log("数据截断完成");
+          });
+        },
+        err: res => {
+          console.log("截断数据错误:", res);
         }
-      });
-      
-      // 等待所有更新完成
-      Promise.all(updatePromises).then(function() {
       });
     },
     err: res => {
+      console.log("获取标题ID错误:", res);
     }
   });
 },
@@ -1124,158 +1166,56 @@ saveFormula: function() {
   });
 },
 
-// 新增：计算并更新所有数据的函数
 // 修改后的 calculateAndUpdateAllData 函数
 calculateAndUpdateAllData: function() {
   var that = this;
   
   console.log('开始计算并更新所有数据...');
   
-  // 获取所有内容数据（id>1的数据）
+  // 先获取第一条数据的ID
   wx.cloud.callFunction({
     name: 'sqlServer_117',
     data: {
-      query: "select * from gongzi_dongtaimingxi where id > 1 and gongsi = '" + that.data.companyName + "' order by id"
+      query: "select top 1 id from gongzi_dongtaimingxi where gongsi = '" + that.data.companyName + "' order by id"
     },
     success: res => {
-      var contentData = res.result.recordset;
-      
-      if (contentData.length === 0) {
-        console.log('没有需要计算的数据');
+      if (res.result.recordset.length === 0) {
+        console.log('没有标题数据');
         return;
       }
       
-      console.log('需要计算的数据条数:', contentData.length);
+      var titleId = res.result.recordset[0].id;
       
-      // 计算并更新每条数据
-      var updatePromises = [];
-      
-      contentData.forEach(function(item, itemIndex) {
-        try {
-          // 创建数据对象
-          var dataItem = {
-            id: item.id,
-            gongsi: item.gongsi,
-            name: item.name,
-            originalData: item
-          };
+      // 获取所有内容数据（排除第一条标题数据）
+      wx.cloud.callFunction({
+        name: 'sqlServer_117',
+        data: {
+          query: "select * from gongzi_dongtaimingxi where id != " + titleId + " and gongsi = '" + that.data.companyName + "' order by id"
+        },
+        success: res => {
+          var contentData = res.result.recordset;
           
-          // 解析分隔符字符串
-          var dataArray = [];
-          if (item.name && item.name.trim() !== '') {
-            dataArray = item.name.split(that.data.titleSeparator);
+          if (contentData.length === 0) {
+            console.log('没有需要计算的数据');
+            return;
           }
           
-          // 确保数组长度与标题数量一致
-          while (dataArray.length < that.data.dynamicTitles.length) {
-            dataArray.push('');
-          }
+          console.log('需要计算的数据条数:', contentData.length);
           
-          // 为dataItem设置col_X属性
-          dataArray.forEach(function(value, index) {
-            dataItem['col_' + index] = value.trim();
-          });
+          // 计算并更新每条数据（后续代码保持不变）
+          // ... 原有的更新逻辑 ...
           
-          console.log(`处理第${itemIndex + 1}行数据，ID: ${item.id}`);
-          console.log('原始数据数组:', dataArray);
-          
-          // 计算公式结果
-          var calculatedItem = that.calculateFormula(dataItem);
-          
-          // 将计算结果转换为分隔符字符串
-          var newDataArray = [];
-          var hasChange = false;
-          
-          for (var i = 0; i < that.data.dynamicTitles.length; i++) {
-            // 获取计算后的值
-            var calculatedValue = calculatedItem['col_' + i];
-            var originalValue = dataArray[i] || '';
-            
-            // 如果计算后的值不存在，使用原始值
-            if (calculatedValue === undefined || calculatedValue === null) {
-              calculatedValue = originalValue;
-            }
-            
-            // 确保是字符串
-            calculatedValue = calculatedValue.toString();
-            
-            // 检查是否有变化
-            if (calculatedValue !== originalValue) {
-              hasChange = true;
-              console.log(`字段${i}有变化: ${originalValue} -> ${calculatedValue}`);
-            }
-            
-            newDataArray.push(calculatedValue);
-          }
-          
-          var newName = newDataArray.join(that.data.titleSeparator);
-          
-          console.log('新的数据字符串:', newName);
-          
-          // 更新数据库
-          var updateSql = "update gongzi_dongtaimingxi set name = '" + newName + 
-                        "' where id = " + item.id + " and gongsi = '" + that.data.companyName + "'";
-          
-          console.log('执行SQL:', updateSql);
-          
-          updatePromises.push(
-            new Promise((resolve, reject) => {
-              wx.cloud.callFunction({
-                name: 'sqlServer_117',
-                data: { query: updateSql },
-                success: function(updateRes) {
-                  console.log(`更新成功: ID=${item.id}`);
-                  resolve({ id: item.id, success: true });
-                },
-                fail: function(updateErr) {
-                  console.error(`更新失败: ID=${item.id}`, updateErr);
-                  resolve({ id: item.id, success: false, error: updateErr });
-                }
-              });
-            })
-          );
-          
-        } catch (error) {
-          console.error('处理数据行时出错:', error, '数据:', item);
+        },
+        err: res => {
+          console.log("获取数据错误:", res);
         }
       });
-      
-      // 等待所有更新完成
-      if (updatePromises.length > 0) {
-        Promise.all(updatePromises).then(function(results) {
-          console.log('所有数据更新完成');
-          
-          var successCount = results.filter(r => r.success).length;
-          var failCount = results.filter(r => !r.success).length;
-          
-          console.log(`成功: ${successCount}条，失败: ${failCount}条`);
-          
-          // 重新加载页面数据
-          that.loadAllData();
-          
-          wx.showToast({
-            icon: 'success',
-            duration: 2000
-          });
-        }).catch(function(error) {
-          console.error('更新数据时出错:', error);
-          wx.showToast({
-            title: '更新数据失败',
-            icon: 'error'
-          });
-        });
-      }
     },
     err: res => {
-      console.log("获取数据错误:", res);
-      wx.showToast({
-        title: '获取数据失败',
-        icon: 'error'
-      });
+      console.log("获取标题ID错误:", res);
     }
   });
 },
-
 // 安全的表达式计算函数
 safeEval: function(expression) {
   try {

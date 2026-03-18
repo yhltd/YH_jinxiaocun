@@ -145,42 +145,150 @@ Page({
       backgroundColor: '#764ba2',
     });
     
-    // 先检查全局数据是否准备好
-    if (app.globalData.dynamicTitles && app.globalData.dynamicTitles.length > 0) {
-      console.log('从全局数据获取动态标题:', app.globalData.dynamicTitles.length);
-      console.log('从全局数据获取列表数据:', app.globalData.listData ? app.globalData.listData.length : 0);
+    // 直接从数据库加载标题配置和数据
+    that.loadTitleAndDataFromDb();
+  },
+  /**
+ * 从数据库加载标题配置和数据
+ */
+loadTitleAndDataFromDb: function() {
+  var that = this;
+  
+  wx.showLoading({
+    title: '加载数据中...',
+    mask: true
+  });
+  
+  // 查询公司名称相等的全部数据
+  wx.cloud.callFunction({
+    name: 'sqlServer_117',
+    data: {
+      query: "select * from gongzi_dongtaimingxi where gongsi = '" + that.data.companyName + "' order by id"
+    },
+    success: res => {
+      wx.hideLoading();
+      console.log("全部数据查询结果:", res.result.recordset);
+      
+      if (res.result.recordset.length > 0) {
+        var allData = res.result.recordset;
+        
+        // 第一条数据作为标题
+        var titleRecord = allData[0];
+        var contentData = [];
+        
+        // 从索引1开始，后面的数据作为内容
+        for (var i = 1; i < allData.length; i++) {
+          contentData.push(allData[i]);
+        }
+        
+        console.log("标题记录(索引0):", titleRecord);
+        console.log("内容数据数量:", contentData.length);
+        
+        // 解析标题
+        var dynamicTitles = [];
+        if (titleRecord && titleRecord.name) {
+          var titleArray = titleRecord.name.split('|||');
+          titleArray.forEach((title, index) => {
+            if (title.trim() !== '') {
+              dynamicTitles.push({
+                text: title.trim(),
+                columnIndex: index,
+                type: "text",
+                isupd: true
+              });
+            }
+          });
+        }
+        
+        // 如果没有标题，使用默认字段
+        if (dynamicTitles.length === 0) {
+          for (var j = 0; j < 5; j++) {
+            dynamicTitles.push({
+              text: '字段' + (j + 1),
+              columnIndex: j,
+              type: "text",
+              isupd: true
+            });
+          }
+        }
+        
+        // 处理内容数据
+        var processedData = [];
+        contentData.forEach(function(item) {
+          var dataItem = {
+            id: item.id,
+            gongsi: item.gongsi,
+            name: item.name
+          };
+          
+          if (item.name && item.name.trim() !== '') {
+            var dataArray = item.name.split('|||');
+            dataArray.forEach(function(value, index) {
+              dataItem['col_' + index] = value.trim() || '';
+            });
+          }
+          
+          processedData.push(dataItem);
+        });
+        
+        that.setData({
+          dynamicTitles: dynamicTitles,
+          list: processedData
+        }, function() {
+          console.log('数据加载完成，开始加载图表配置');
+          // 数据设置完成后加载图表配置
+          that.loadChartConfigs();
+        });
+        
+      } else {
+        // 没有数据，使用默认标题
+        var defaultTitles = [];
+        for (var i = 0; i < 5; i++) {
+          defaultTitles.push({
+            text: '字段' + (i + 1),
+            columnIndex: i,
+            type: "text",
+            isupd: true
+          });
+        }
+        
+        that.setData({
+          dynamicTitles: defaultTitles,
+          list: []
+        }, function() {
+          console.log('使用默认标题，加载图表配置');
+          that.loadChartConfigs();
+        });
+      }
+    },
+    err: res => {
+      wx.hideLoading();
+      console.log("加载全部数据错误!", res);
+      wx.showToast({
+        title: '加载数据失败',
+        icon: 'error'
+      });
+      
+      // 出错时使用默认标题
+      var defaultTitles = [];
+      for (var i = 0; i < 5; i++) {
+        defaultTitles.push({
+          text: '字段' + (i + 1),
+          columnIndex: i,
+          type: "text",
+          isupd: true
+        });
+      }
       
       that.setData({
-        dynamicTitles: app.globalData.dynamicTitles,
-        list: app.globalData.listData || []
+        dynamicTitles: defaultTitles,
+        list: []
       }, function() {
-        // 数据设置完成后加载图表配置
-        console.log('本地数据设置完成，开始加载图表配置');
         that.loadChartConfigs();
       });
-    } else {
-      console.log('全局数据未准备好，显示提示');
-      wx.showToast({
-        title: '数据加载中...',
-        icon: 'loading',
-        duration: 2000
-      });
-      
-      // 如果没有数据，返回上一页
-      setTimeout(() => {
-        if (that.data.dynamicTitles.length === 0) {
-          wx.showToast({
-            title: '数据加载失败，请返回重试',
-            icon: 'none'
-          });
-          setTimeout(() => {
-            wx.navigateBack();
-          }, 1500);
-        }
-      }, 3000);
     }
-  },
-
+  });
+},
   /**
  * 动态调整canvas大小
  */
@@ -224,6 +332,9 @@ stopPropagation: function(e) {
   /**
  * 加载图表配置 - 仅用于初始加载
  */
+/**
+ * 加载图表配置
+ */
 loadChartConfigs: function() {
   var that = this;
   
@@ -247,6 +358,7 @@ loadChartConfigs: function() {
           try {
             config.config = JSON.parse(config.config_data);
           } catch (e) {
+            console.error('JSON解析错误:', e);
             config.config = {};
           }
         }
@@ -256,14 +368,19 @@ loadChartConfigs: function() {
         chartConfigs: configs
       });
       
-      console.log('初始加载图表配置完成，数量:', configs.length);
+      console.log('加载图表配置完成，数量:', configs.length);
       
       // 如果有配置，显示第一个图表
       if (configs.length > 0) {
-        // 延迟一下，确保页面渲染完成
         setTimeout(() => {
           that.showChart(0);
         }, 500);
+      } else {
+        wx.hideLoading();
+        wx.showToast({
+          title: '暂无图表配置',
+          icon: 'none'
+        });
       }
     },
     err: res => {
@@ -276,7 +393,6 @@ loadChartConfigs: function() {
     }
   });
 },
-
   /**
    * 显示图表配置模态框
    */
@@ -637,7 +753,6 @@ showChart: function(e) {
     index = parseInt(e.currentTarget.dataset.index);
     console.log('从dataset获取的索引:', index);
   } else if (typeof e === 'number') {
-    // 如果是直接传递的索引（从代码中调用，如初始加载）
     index = e;
     console.log('直接传递的索引:', index);
   } else {
@@ -662,110 +777,82 @@ showChart: function(e) {
     mask: true
   });
   
-  // 从数据库获取最新的图表配置
-  wx.cloud.callFunction({
-    name: 'sqlServer_117',
-    data: {
-      query: "select * from gongzi_tongjitu where gongsi = '" + that.data.companyName + "' order by id"
-    },
-    success: res => {
-      wx.hideLoading();
-      
-      var configs = res.result.recordset || [];
-      
-      console.log('从数据库获取的配置数量:', configs.length);
-      
-      if (configs.length === 0) {
-        wx.showToast({
-          title: '没有图表配置',
-          icon: 'none'
-        });
-        return;
+  // 检查配置列表
+  if (!that.data.chartConfigs || that.data.chartConfigs.length === 0) {
+    wx.hideLoading();
+    wx.showToast({
+      title: '没有图表配置',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  // 检查索引是否有效
+  if (isNaN(index) || index < 0 || index >= that.data.chartConfigs.length) {
+    console.warn('索引无效，调整为0。原索引:', index, '配置数量:', that.data.chartConfigs.length);
+    index = 0;
+  }
+  
+  var config = that.data.chartConfigs[index];
+  
+  // 检查config是否存在
+  if (!config) {
+    console.error('config 是 undefined!');
+    wx.hideLoading();
+    wx.showToast({
+      title: '配置获取失败',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  // 确保config有config属性
+  if (!config.config) {
+    config.config = {};
+    if (config.config_data) {
+      try {
+        config.config = JSON.parse(config.config_data);
+      } catch (e) {
+        console.error('JSON解析错误:', e);
       }
-      
-      // 检查索引是否有效
-      if (isNaN(index) || index < 0 || index >= configs.length) {
-        console.warn('索引无效，调整为0。原索引:', index, '配置数量:', configs.length);
-        index = 0;
-      }
-      
-      var config = configs[index];
-      
-      // 检查config是否存在
-      if (!config) {
-        console.error('config 是 undefined!');
-        wx.showToast({
-          title: '配置获取失败',
-          icon: 'none'
-        });
-        return;
-      }
-      
-      // 解析配置字段
-      if (config.config_data) {
-        try {
-          config.config = JSON.parse(config.config_data);
-        } catch (e) {
-          console.error('JSON解析错误:', e);
-          config.config = {};
-        }
-      } else {
-        config.config = {};
-      }
-      
-      // 检查配置是否有效
-      if (!config.config || Object.keys(config.config).length === 0) {
-        console.error('图表配置为空或无效');
-        wx.showToast({
-          title: '图表配置无效',
-          icon: 'none'
-        });
-        return;
-      }
-      
-      // 更新所有配置的解析结果
-      configs.forEach(item => {
-        if (item && item.config_data) {
-          try {
-            item.config = JSON.parse(item.config_data);
-          } catch (e) {
-            item.config = {};
-          }
-        }
-      });
-      
-      // 生成图表数据
-      var chartData = that.generateChartData(config.config);
-
-      that.adjustCanvasSize(config.config);
-      
-      console.log('生成的图表数据:', chartData);
-      
-      // 更新数据
-      that.setData({
-        chartConfigs: configs,
-        currentChart: index,
-        chartData: chartData
-      }, function() {
-        // 绘制图表
-        that.drawChartByType(config.config.type, chartData, config.config);
-        
-        console.log('图表显示完成');
-        wx.showToast({
-          title: '图表已加载',
-          icon: 'success',
-          duration: 1000
-        });
-      });
-    },
-    err: res => {
-      wx.hideLoading();
-      console.log("从数据库获取配置错误:", res);
-      wx.showToast({
-        title: '加载失败',
-        icon: 'error'
-      });
     }
+  }
+  
+  // 检查配置是否有效
+  if (!config.config || Object.keys(config.config).length === 0) {
+    console.error('图表配置为空或无效');
+    wx.hideLoading();
+    wx.showToast({
+      title: '图表配置无效',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  // 生成图表数据
+  var chartData = that.generateChartData(config.config);
+  
+  // 调整canvas大小
+  that.adjustCanvasSize(config.config);
+  
+  console.log('生成的图表数据:', chartData);
+  
+  // 更新数据
+  that.setData({
+    currentChart: index,
+    chartData: chartData
+  }, function() {
+    wx.hideLoading();
+    
+    // 绘制图表
+    that.drawChartByType(config.config.type, chartData, config.config);
+    
+    console.log('图表显示完成');
+    wx.showToast({
+      title: '图表已加载',
+      icon: 'success',
+      duration: 1000
+    });
   });
 },
  /**
@@ -1348,7 +1435,7 @@ getSafeConfig: function(configs, index) {
       var fieldName = dynamicTitles[fieldIndex] ? dynamicTitles[fieldIndex].text : '字段' + (fieldIndex + 1);
       var series = {
         name: fieldName,
-        type: chartType,  // 使用验证后的类型
+        type: chartType,
         data: []
       };
       
