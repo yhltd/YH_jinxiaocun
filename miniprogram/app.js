@@ -16,6 +16,8 @@ App({
     adminis: "",
     file_path_linshi:'',
     userInfo: null,
+    mark4:null,
+    dbSpace:null,
     header: {
       'Cookie': ''
 

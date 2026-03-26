@@ -151,6 +151,635 @@ Page({
     row_num: "",
   },
 
+  // ========== 新增：空间检查方法 ==========
+  /**
+   * 检查空间是否充足
+   * @param {string} companyName 公司名
+   * @param {number} fileSizeKB 要上传的文件大小(KB)
+   * @returns {Promise} 返回检查结果
+   */
+  checkTotalSpace: function(companyName, fileSizeKB) {
+    return new Promise((resolve, reject) => {
+      // 从 app.globalData 获取空间信息
+      var dbSizeKB = app.globalData?.dbSpace || 0;
+      var limitKB = app.globalData?.mark4 || 0;
+      
+      if (!limitKB || limitKB <= 0) {
+        console.warn('未获取到空间限制，跳过空间检查');
+        resolve({
+          canUpload: true,
+          usagePercent: 0,
+          totalUsedKB: dbSizeKB,
+          limitKB: limitKB
+        });
+        return;
+      }
+      
+      // 构建动态路径：/paichan/ + 公司名
+      var path = "/paichan/" + companyName + "/";
+      
+      // 获取文件夹大小
+      wx.request({
+        url: "https://yhocn.cn:9097/file/getFolderSize",
+        method: 'GET',
+        data: { path: path },
+        success: (folderRes) => {
+          var folderSizeKB = 0;
+          
+          if (folderRes.data && folderRes.data.code === 200) {
+            folderSizeKB = folderRes.data.data.sizeBytes / 1024;
+            console.log("文件夹大小:", folderSizeKB.toFixed(2), "KB");
+          } else if (folderRes.data && folderRes.data.code === 500 && folderRes.data.msg === "文件夹不存在") {
+            folderSizeKB = 0;
+            console.log("文件夹不存在，大小设为 0 KB");
+          } else {
+            console.warn("获取文件夹大小失败:", folderRes.data?.msg || "未知错误");
+            folderSizeKB = 0;
+          }
+          
+          var totalUsedKB = dbSizeKB + folderSizeKB;
+          limitKB = parseFloat(limitKB);
+          
+          var fileSizeKB_num = parseFloat(fileSizeKB) || 0;
+          var estimatedTotalKB = totalUsedKB + fileSizeKB_num;
+          
+          var usagePercent = (totalUsedKB / limitKB) * 100;
+          var estimatedPercent = (estimatedTotalKB / limitKB) * 100;
+          
+          console.log("数据库大小:", dbSizeKB, "KB");
+          console.log("文件夹大小:", folderSizeKB.toFixed(2), "KB");
+          console.log("总使用:", totalUsedKB.toFixed(2), "KB", "(", usagePercent.toFixed(2), "%)");
+          console.log("文件大小:", fileSizeKB_num.toFixed(2), "KB");
+          console.log("预计使用:", estimatedTotalKB.toFixed(2), "KB", "(", estimatedPercent.toFixed(2), "%)");
+          console.log("限制:", limitKB, "KB", "(", (limitKB / 1024 / 1024).toFixed(2), "GB)");
+          
+          var canUpload = true;
+          var message = "";
+          
+          if (totalUsedKB >= limitKB * 1.1) {
+            canUpload = false;
+            message = "空间使用已超110%（" + usagePercent.toFixed(2) + "%），无法上传！";
+          } else if (estimatedTotalKB >= limitKB * 1.1) {
+            canUpload = false;
+            message = "上传后空间使用率将超过110%（" + estimatedPercent.toFixed(2) + "%），无法上传！";
+          } else if (totalUsedKB >= limitKB * 0.9) {
+            message = "空间使用已超90%（" + usagePercent.toFixed(2) + "%），请注意清理！";
+            canUpload = true;
+          } else {
+            canUpload = true;
+          }
+          
+          resolve({
+            canUpload: canUpload,
+            message: message,
+            usagePercent: usagePercent,
+            estimatedPercent: estimatedPercent,
+            totalUsedKB: totalUsedKB,
+            limitKB: limitKB
+          });
+        },
+        fail: (err) => {
+          console.error("获取文件夹大小失败:", err);
+          resolve({
+            canUpload: true,
+            message: "空间检查失败，请稍后确认空间使用情况",
+            usagePercent: 0,
+            totalUsedKB: 0,
+            limitKB: limitKB
+          });
+        }
+      });
+    });
+  },
+
+  // ========== 修改：显示上传模态框 ==========
+  showUploadModalFunc: function(e) {
+    var recordId = e.currentTarget.dataset.id || 0;
+    var recordName = e.currentTarget.dataset.name || '';
+    
+    this.setData({
+      showUploadModal: true,
+      selectedFiles: [],
+      currentRecordId: recordId,
+      currentRecordName: recordName,
+      fileName: '',
+      uploading: false,
+      uploadProgress: 0
+    });
+  },
+
+  // 文件名输入监听
+  onFileNameInput: function(e) {
+    this.setData({
+      fileName: e.detail.value
+    });
+  },
+
+  // 选择文档
+  chooseFile: function() {
+    var that = this;
+    wx.chooseMessageFile({
+      count: 9,
+      type: 'file',
+      extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
+      success: function(res) {
+        var files = res.tempFiles.map(file => ({
+          path: file.path,
+          name: file.name,
+          size: file.size,
+          type: file.type
+        }));
+        that.setData({ selectedFiles: files });
+      }
+    });
+  },
+
+  // 选择图片
+  chooseImage: function() {
+    var that = this;
+    wx.chooseMedia({
+      count: 9,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: function(res) {
+        var files = res.tempFiles.map((file, index) => ({
+          path: file.tempFilePath,
+          name: `图片_${index + 1}.jpg`,
+          size: file.size,
+          type: 'image'
+        }));
+        that.setData({ selectedFiles: files });
+      }
+    });
+  },
+
+  // ========== 修改：上传文件（带空间检查和500MB限制） ==========
+  uploadFile: function() {
+    var that = this;
+    
+    if (that.data.selectedFiles.length === 0) {
+      wx.showToast({ title: '请选择文件', icon: 'none' });
+      return;
+    }
+    
+    if (!that.data.currentRecordId) {
+      wx.showToast({ title: '请先选择一条记录', icon: 'none' });
+      return;
+    }
+    
+    // 先检查每个文件大小是否超过500MB
+    const maxSizeMB = 500;
+    const oversizedFiles = [];
+    let totalSizeKB = 0;
+    
+    for (let i = 0; i < that.data.selectedFiles.length; i++) {
+      const file = that.data.selectedFiles[i];
+      const fileSizeMB = file.size / 1024 / 1024;
+      totalSizeKB += file.size / 1024;
+      
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        oversizedFiles.push(file.name + " (" + fileSizeMB.toFixed(2) + "MB)");
+      }
+    }
+    
+    if (oversizedFiles.length > 0) {
+      wx.showToast({
+        title: `文件超过${maxSizeMB}MB限制`,
+        icon: 'none',
+        duration: 3000
+      });
+      return;
+    }
+    
+    // 获取公司名
+    const companyName = app.globalData?.gongsi || '';
+    
+    if (!companyName) {
+      wx.showToast({ title: '公司名称不存在', icon: 'none' });
+      return;
+    }
+    
+    wx.showLoading({
+      title: '检查空间...',
+      mask: true
+    });
+    
+    that.setData({ uploading: true });
+    
+    // 先检查空间
+    that.checkTotalSpace(companyName, totalSizeKB).then((spaceInfo) => {
+      wx.hideLoading();
+      
+      if (!spaceInfo.canUpload) {
+        wx.showToast({
+          title: spaceInfo.message || '空间不足，无法上传',
+          icon: 'none',
+          duration: 3000
+        });
+        that.setData({ uploading: false });
+        return;
+      }
+      
+      const totalSizeMB = totalSizeKB / 1024;
+      const confirmMsg = `确定为 "${that.data.currentRecordName}" 上传 ${that.data.selectedFiles.length} 个文件吗？\n文件总大小：${totalSizeMB.toFixed(2)}MB\n当前空间使用率：${spaceInfo.usagePercent.toFixed(2)}%\n预计上传后使用率：${spaceInfo.estimatedPercent.toFixed(2)}%`;
+      
+      wx.showModal({
+        title: '确认上传',
+        content: confirmMsg,
+        success: function(res) {
+          if (res.confirm) {
+            that.startUpload(companyName);
+          } else {
+            that.setData({ uploading: false });
+          }
+        }
+      });
+    }).catch((error) => {
+      wx.hideLoading();
+      console.error('空间检查失败:', error);
+      wx.showModal({
+        title: '提示',
+        content: '空间检查失败，是否继续上传？',
+        success: (modalRes) => {
+          if (modalRes.confirm) {
+            const companyName = app.globalData?.gongsi || '';
+            that.startUpload(companyName);
+          } else {
+            that.setData({ uploading: false });
+          }
+        }
+      });
+    });
+  },
+
+  // ========== 修改：开始上传（带动态路径） ==========
+  startUpload: function(companyName) {
+    var that = this;
+    var uploadedFiles = [];
+    var totalFiles = that.data.selectedFiles.length;
+    
+    that.setData({ uploading: true, uploadProgress: 0 });
+    
+    var recordId = that.data.currentRecordId;
+    var recordName = that.data.currentRecordName || '未知';
+    var userFileName = that.data.fileName || '';
+    
+    // 构建动态路径：/paichan/ + 公司名 + /
+    const dynamicPath = "/paichan/" + companyName + "/";
+    
+    function uploadNextFile(index) {
+      if (index >= totalFiles) {
+        that.handleUploadComplete(uploadedFiles);
+        return;
+      }
+      
+      var file = that.data.selectedFiles[index];
+      var fileExtension = file.name.split('.').pop().toLowerCase();
+      
+      // 构建文件名
+      var timestamp = new Date().getTime();
+      var finalFileName = '';
+      if (userFileName && userFileName.trim() !== '') {
+        var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
+        finalFileName = totalFiles === 1 
+          ? `${baseName}_${timestamp}.${fileExtension}` 
+          : `${baseName}_${index + 1}_${timestamp}.${fileExtension}`;
+      } else {
+        var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
+        finalFileName = totalFiles === 1 
+          ? `${safeRecordName}_${timestamp}.${fileExtension}` 
+          : `${safeRecordName}_${index + 1}_${timestamp}.${fileExtension}`;
+      }
+      
+      that.setData({ uploadProgress: Math.round((index / totalFiles) * 100) });
+      
+      wx.uploadFile({
+        url: 'https://yhocn.cn:9097/file/upload',
+        filePath: file.path,
+        name: 'file',
+        formData: {
+          name: finalFileName,
+          path: dynamicPath,
+          kongjian: '3',
+          fileType: fileExtension,
+          recordId: recordId,
+          recordName: recordName,
+          fileSize: file.size.toString()
+        },
+        header: { 'Content-Type': 'multipart/form-data' },
+        timeout: 600000,
+        success: function(uploadRes) {
+          try {
+            var resData = JSON.parse(uploadRes.data);
+            if (resData.code === 200 || resData.success) {
+              var fileUrl = "http://yhocn.cn:9088/paichan/" + companyName + "/" + finalFileName;
+              uploadedFiles.push({
+                name: finalFileName,
+                url: fileUrl,
+                originalName: file.name,
+                size: file.size,
+                type: fileExtension
+              });
+            }
+          } catch (e) {
+            console.error('解析响应失败:', e);
+          }
+          setTimeout(() => uploadNextFile(index + 1), 500);
+        },
+        fail: function(err) {
+          console.error('上传失败:', err);
+          setTimeout(() => uploadNextFile(index + 1), 1000);
+        }
+      });
+    }
+    
+    uploadNextFile(0);
+  },
+
+  // 上传完成处理
+  handleUploadComplete: function(uploadedFiles) {
+    var that = this;
+    
+    that.setData({ uploading: false, uploadProgress: 100 });
+    
+    if (uploadedFiles.length > 0) {
+      that.saveFilesToDatabase(uploadedFiles);
+    }
+    
+    setTimeout(() => {
+      that.hideUploadModal();
+      wx.showToast({
+        title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
+        icon: 'success',
+        duration: 3000
+      });
+      // 刷新列表
+      var e = ['', '', ''];
+      that.tableShow(e);
+    }, 1000);
+  },
+
+  // 保存文件到数据库
+  saveFilesToDatabase: function(files) {
+    var that = this;
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select wenjian from order_info where id = " + that.data.currentRecordId
+      },
+      success: res => {
+        var existingFiles = '';
+        if (res.result.recordset && res.result.recordset.length > 0) {
+          existingFiles = res.result.recordset[0]?.wenjian || '';
+        }
+        
+        // 处理现有文件
+        var existingArray = [];
+        if (existingFiles) {
+          if (existingFiles.includes(',')) {
+            existingArray = existingFiles.split(',').map(f => f.trim()).filter(f => f);
+          } else {
+            existingArray = [existingFiles.trim()];
+          }
+        }
+        
+        // 新文件URL
+        var newFileUrls = files.map(file => file.url);
+        
+        // 合并去重
+        var allFileUrls = [...new Set([...existingArray, ...newFileUrls])];
+        var fileUrlsString = allFileUrls.join(',');
+        
+        // 更新数据库
+        wx.cloud.callFunction({
+          name: 'sqlServer_PC',
+          data: {
+            query: "update order_info set wenjian = '" + fileUrlsString.replace(/'/g, "''") + "' where id = " + that.data.currentRecordId
+          },
+          success: () => {
+            console.log('文件记录更新成功');
+            var e = ['', '', ''];
+            that.tableShow(e);
+          },
+          fail: err => {
+            console.error('更新文件记录失败:', err);
+            wx.showToast({
+              title: '更新文件记录失败',
+              icon: 'none'
+            });
+          }
+        });
+      },
+      fail: err => {
+        console.error('查询现有文件失败:', err);
+      }
+    });
+  },
+
+  // ========== 修改：查看文件 ==========
+  viewFiles: function(e) {
+    var that = this;
+    var recordId = e.currentTarget.dataset.id;
+    var recordName = e.currentTarget.dataset.name || '';
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: {
+        query: "select wenjian from order_info where id = " + recordId
+      },
+      success: res => {
+        if (res.result.recordset && res.result.recordset.length > 0) {
+          var record = res.result.recordset[0];
+          var files = record.wenjian || '';
+          // 处理文件列表
+          var fileList = [];
+          if (files) {
+            if (files.includes(',')) {
+              fileList = files.split(',').map(f => f.trim()).filter(f => f);
+            } else {
+              fileList = [files.trim()];
+            }
+          }
+          
+          that.setData({
+            showFileViewModal: true,
+            currentFileList: fileList,
+            currentFileName: recordName,
+            currentRecordId: recordId
+          });
+        }
+      },
+      fail: err => {
+        console.error('查询文件失败:', err);
+        wx.showToast({
+          title: '查询失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  // ========== 修改：删除文件（带动态路径） ==========
+  deleteFile: function(e) {
+    var that = this;
+    var fileUrl = e.currentTarget.dataset.url;
+    var recordId = e.currentTarget.dataset.id;
+    var companyName = app.globalData?.gongsi || '';
+    
+    // 从URL中提取文件名
+    var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1).split('.')[0];
+    
+    if (!companyName) {
+      wx.showToast({
+        title: '公司名称不存在',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这个文件吗？删除后空间将被释放。',
+      success: function(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '删除中...',
+            mask: true
+          });
+          
+          // 构建动态路径
+          const dynamicPath = "/paichan/" + companyName + "/";
+          
+          wx.request({
+            url: 'https://yhocn.cn:9097/file/delete',
+            method: 'POST',
+            data: {
+              order_number: fileName,
+              path: dynamicPath
+            },
+            success: function(res) {
+              if (res.data.code === 200 || res.data.success) {
+                that.removeFileFromDatabase(fileUrl, recordId);
+              } else {
+                wx.hideLoading();
+                wx.showToast({
+                  title: '删除失败',
+                  icon: 'none'
+                });
+              }
+            },
+            fail: function(err) {
+              wx.hideLoading();
+              console.error('删除文件失败:', err);
+              wx.showToast({
+                title: '删除失败',
+                icon: 'none'
+              });
+            }
+          });
+        }
+      }
+    });
+  },
+
+  // 从数据库移除文件记录
+  removeFileFromDatabase: function(fileUrl, recordId) {
+    var that = this;
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: { 
+        query: "select wenjian from order_info where id = " + recordId 
+      },
+      success: res => {
+        if (!res.result.recordset || res.result.recordset.length === 0) {
+          wx.hideLoading();
+          return;
+        }
+        
+        var currentFiles = res.result.recordset[0]?.wenjian || '';
+        var fileArray = [];
+        if (currentFiles) {
+          if (currentFiles.includes(',')) {
+            fileArray = currentFiles.split(',').map(f => f.trim()).filter(f => f);
+          } else {
+            fileArray = [currentFiles.trim()];
+          }
+        }
+        
+        // 移除要删除的文件
+        var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
+        var newFiles = newFileArray.join(',');
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_PC',
+          data: { 
+            query: "update order_info set wenjian = '" + newFiles.replace(/'/g, "''") + "' where id = " + recordId 
+          },
+          success: () => {
+            wx.hideLoading();
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success'
+            });
+            var e = ['', '', ''];
+            that.tableShow(e);
+            
+            // 重新加载文件列表
+            that.viewFiles({ currentTarget: { dataset: { id: recordId, name: that.data.currentFileName } } });
+          },
+          fail: err => {
+            wx.hideLoading();
+            console.error('更新文件记录失败:', err);
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            });
+          }
+        });
+      }
+    });
+  },
+
+  // 预览文件
+  previewFile: function(e) {
+    var fileUrl = e.currentTarget.dataset.url;
+    var fileExtension = fileUrl.split('.').pop().toLowerCase();
+    var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    
+    if (imageExtensions.includes(fileExtension)) {
+      wx.previewImage({ urls: [fileUrl], current: fileUrl });
+    } else {
+      wx.setClipboardData({
+        data: fileUrl,
+        success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
+      });
+    }
+  },
+
+  // 隐藏上传模态框
+  hideUploadModal: function() {
+    this.setData({
+      showUploadModal: false,
+      uploading: false,
+      uploadProgress: 0,
+      selectedFiles: [],
+      fileName: ''
+    });
+  },
+
+  // 隐藏文件查看模态框
+  hideFileViewModal: function() {
+    this.setData({
+      showFileViewModal: false,
+      currentFileList: [],
+      currentFileName: '',
+      currentRecordId: 0
+    });
+  },
+
+  // ========== 以下为原有代码，保持不变 ==========
   /**
    * 生命周期函数--监听页面加载
    */
@@ -391,126 +1020,6 @@ Page({
     _this.wlShow()
     _this.loadProcessData()
   },
-  // add1: function () {
-  //   var _this = this
-  //   let user = app.globalData.gongsi;
-  //   var x = 0
-  //   for (var i = 0; i < (_this.data.list2.length); i++) {
-  //     if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
-  //       x = x + 1
-  //     }
-  //   }
-  //   if (x > 0) {
-  //     if (_this.data.ddh != "" && _this.data.cpbm != "" && _this.data.cpmc != "" && _this.data.xdrq != "" && _this.data.xdsl != "") {
-  //       wx.cloud.callFunction({
-  //         name: 'sqlServer_PC',
-  //         data: {
-  //           query: "select count(order_id) as nameCount from order_info where company='" + user + "' and order_id='" + _this.data.ddh + "'"
-  //         },
-  //         success: res => {
-  //           if (res.result.recordsets[0][0].nameCount == 0) {
-  //             wx.cloud.callFunction({
-  //               name: 'sqlServer_PC',
-  //               data: {
-  //                 query: "insert into order_info(order_id,code,product_name,norms, set_date,set_num,company) output inserted.ID values('" + _this.data.ddh + "','" + _this.data.cpbm + "','" + _this.data.cpmc + "','" + _this.data.gg + "','" + _this.data.xdrq + "','" + _this.data.xdsl + "','" + user + "')"
-  //               },
-  //               success: res => {
-  //                 var id = res.result.recordset[0].ID
-  //                 _this.setData({
-  //                   product_name: "",
-  //                   order_id: "",
-  //                   ddh: "",
-  //                   cpbm: "",
-  //                   cpmc: "",
-  //                   gg: "",
-  //                   xdrq: "",
-  //                   xdsl: "",
-  //                   sfcd: "",
-  //                 })
-  //                 var y = 0
-  //                 var sql = "insert into order_bom(order_id,bom_id,use_num) values"
-  //                 for (var i = 0; i < (_this.data.list2.length); i++) {
-  //                   if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
-  //                     sql = sql + "('" + id + "','" + _this.data.list2[i].id + "','" + _this.data.list2[i].count + "'),"
-  //                     y = y + 1
-  //                   }
-  //                 }
-  //                 if (y > 0) {
-  //                   sql = sql.substr(0, sql.length - 1)
-  //                   wx.cloud.callFunction({
-  //                     name: 'sqlServer_PC',
-  //                     data: {
-  //                       query: sql
-  //                     },
-  //                     success: res => {
-  //                       wx.showToast({
-  //                         title: '添加成功！',
-  //                         icon: 'none',
-  //                         duration: 3000
-  //                       })
-  //                     },
-  //                     err: res => {
-  //                       console.log("错误!")
-  //                     },
-  //                     fail: res => {
-  //                       wx.showToast({
-  //                         title: '请求失败！',
-  //                         icon: 'none',
-  //                         duration: 3000
-  //                       })
-  //                       console.log("请求失败！")
-  //                     }
-  //                   })
-  //                 }
-  //                 _this.qxShow()
-  //                 var e = ['', '', '']
-  //                 _this.tableShow(e)
-  //               },
-  //               err: res => {
-  //                 console.log("错误!")
-  //               },
-  //               fail: res => {
-  //                 wx.showToast({
-  //                   title: '请求失败！',
-  //                   icon: 'none',
-  //                   duration: 3000
-  //                 })
-  //                 console.log("请求失败！")
-  //               }
-  //             })
-  //           } else {
-  //             wx.showToast({
-  //               title: '该单号已存在！',
-  //               icon: 'none'
-  //             })
-  //           }
-  //         },
-  //         err: res => {
-  //           console.log("错误!")
-  //         },
-  //         fail: res => {
-  //           wx.showToast({
-  //             title: '请求失败！',
-  //             icon: 'none',
-  //             duration: 3000
-  //           })
-  //           console.log("请求失败！")
-  //         }
-  //       })
-  //     } else {
-  //       wx.showToast({
-  //         title: '物料编码、物料名称、类别不能为空！',
-  //         icon: 'none',
-  //         duration: 3000
-  //       })
-  //     }
-  //   } else {
-  //     wx.showToast({
-  //       title: '表格中物料的数量不能为空！',
-  //       icon: 'none'
-  //     })
-  //   }
-  // },
   //---新0203
   add1: function () {
     var _this = this
@@ -751,49 +1260,6 @@ Page({
       })
     }
   },
-  // del1: function () {
-  //   var _this = this
-  //   wx.cloud.callFunction({
-  //     name: 'sqlServer_PC',
-  //     data: {
-  //       query: "delete from order_info where id='" + _this.data.id + "';delete from order_bom where order_id='" + _this.data.id + "'"
-  //     },
-  //     success: res => {
-  //       _this.setData({
-  //         product_name: "",
-  //         order_id: "",
-  //         ddh: "",
-  //         cpbm: "",
-  //         cpmc: "",
-  //         gg: "",
-  //         xdrq: "",
-  //         xdsl: "",
-  //         sfcd: "",
-  //       })
-  //       _this.qxShow()
-  //       var e = ['', '', '']
-  //       _this.tableShow(e)
-  //       wx.showToast({
-  //         title: '删除成功！',
-  //         icon: 'none'
-  //       })
-  //       wx.hideLoading({
-
-  //       })
-  //     },
-  //     err: res => {
-  //       console.log("错误!")
-  //     },
-  //     fail: res => {
-  //       wx.showToast({
-  //         title: '请求失败！',
-  //         icon: 'none',
-  //         duration: 3000
-  //       })
-  //       console.log("请求失败！")
-  //     }
-  //   })
-  // },
   //----新0203
   del1: function () {
     var _this = this
@@ -935,33 +1401,6 @@ Page({
       xgShow: true
     })
   },
-  // xgWuLiao: function () {
-  //   var _this = this
-  //   wx.cloud.callFunction({
-  //     name: 'sqlServer_PC',
-  //     data: {
-  //       query: "select b.id,i.code,i.name,i.norms,b.use_num as count from bom_info as i ,order_bom as b where b.bom_id=i.id and order_id='" + _this.data.id + "'"
-  //     },
-  //     success: res => {
-  //       var list = res.result.recordset
-  //       _this.setData({
-  //         list2: list,
-  //         wlxgShow: true
-  //       })
-  //     },
-  //     err: res => {
-  //       console.log("错误!")
-  //     },
-  //     fail: res => {
-  //       wx.showToast({
-  //         title: '请求失败！',
-  //         icon: 'none',
-  //         duration: 3000
-  //       })
-  //       console.log("请求失败！")
-  //     }
-  //   })
-  // },
   //----新0203
   xgWuLiao: function () {
     var _this = this
@@ -1039,69 +1478,6 @@ Page({
       })
     }
   },
-  // upd2: function () {
-  //   var _this = this
-  //   var x = 0
-  //   var sql = ""
-  //   let user = app.globalData.gongsi;
-  //   for (var i = 0; i < _this.data.list2.length; i++) {
-  //     if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
-  //       sql = sql + "update order_bom set use_num='" + _this.data.list2[i].count + "' where id='" + _this.data.list2[i].id + "'"
-  //     } else {
-  //       x = x + 1
-  //     }
-  //   }
-  //   if (x > 0) {
-  //     wx.showToast({
-  //       title: '物料数量不能修改为空！',
-  //       icon: 'none',
-  //       duration: 3000
-  //     })
-  //   } else {
-  //     wx.cloud.callFunction({
-  //       name: 'sqlServer_PC',
-  //       data: {
-  //         query: sql
-  //       },
-  //       success: res => {
-  //         _this.setData({
-  //           order_id: "",
-  //           ddh: "",
-  //           cpbm: "",
-  //           cpmc: "",
-  //           gg: "",
-  //           xdrq: "",
-  //           xdsl: "",
-  //         })
-  //         _this.qxShow()
-  //         _this.setData({
-  //           handle: true
-  //         })
-  //         var e = ['', '', '']
-  //         _this.tableShow(e)
-  //         wx.showToast({
-  //           title: '修改成功！',
-  //           icon: 'none',
-  //           duration: 3000
-  //         })
-  //         wx.hideLoading({
-
-  //         })
-  //       },
-  //       err: res => {
-  //         console.log("错误!")
-  //       },
-  //       fail: res => {
-  //         wx.showToast({
-  //           title: '请求失败！',
-  //           icon: 'none',
-  //           duration: 3000
-  //         })
-  //         console.log("请求失败！")
-  //       }
-  //     })
-  //   }
-  // },
   upd2: function () {
     var _this = this
     var x = 0
@@ -1175,34 +1551,6 @@ Page({
       })
     }
   },
-  // add2: function () {
-  //   var _this = this
-  //   let user = app.globalData.gongsi;
-  //   wx.cloud.callFunction({
-  //     name: 'sqlServer_PC',
-  //     data: {
-  //       query: "select id,code,name,norms,'' as [count] from bom_info where company = '" + user + "' and id not in (select bom_id from order_bom where order_id = '" + _this.data.id + "' )"
-  //     },
-  //     success: res => {
-  //       var list = res.result.recordset
-  //       _this.setData({
-  //         list2: list,
-  //         wltjShow: true
-  //       })
-  //     },
-  //     err: res => {
-  //       console.log("错误!")
-  //     },
-  //     fail: res => {
-  //       wx.showToast({
-  //         title: '请求失败！',
-  //         icon: 'none',
-  //         duration: 3000
-  //       })
-  //       console.log("请求失败！")
-  //     }
-  //   })
-  // },
   //---新0203
   add2: function () {
     var _this = this
@@ -1246,49 +1594,6 @@ Page({
     })
   },
 
-  // wltj: function () {
-  //   var _this = this
-  //   let user = app.globalData.gongsi;
-  //   var y = 0
-  //   var sql = "insert into order_bom(order_id,bom_id,use_num) values"
-  //   for (var i = 0; i < (_this.data.list2.length); i++) {
-  //     if (_this.data.list2[i].count != "" && _this.data.list2[i].count != 0) {
-  //       sql = sql + "('" + _this.data.id + "','" + _this.data.list2[i].id + "','" + _this.data.list2[i].count + "'),"
-  //       y = y + 1
-  //     }
-  //   }
-  //   if (y > 0) {
-  //     sql = sql.substr(0, sql.length - 1)
-  //     wx.cloud.callFunction({
-  //       name: 'sqlServer_PC',
-  //       data: {
-  //         query: sql
-  //       },
-  //       success: res => {
-  //         _this.setData({
-  //           wltjShow: false,
-  //         })
-  //         _this.xgWuLiao()
-  //         wx.showToast({
-  //           title: '添加成功！',
-  //           icon: 'none',
-  //           duration: 3000
-  //         })
-  //       },
-  //       err: res => {
-  //         console.log("错误!")
-  //       },
-  //       fail: res => {
-  //         wx.showToast({
-  //           title: '请求失败！',
-  //           icon: 'none',
-  //           duration: 3000
-  //         })
-  //         console.log("请求失败！")
-  //       }
-  //     })
-  //   }
-  // },
   //----新0203
   wltj: function () {
     var _this = this
@@ -1430,36 +1735,6 @@ Page({
     })
   },
 //----新0202
-// 在合适的位置添加以下方法
-// loadProcessData: function() {
-//   var _this = this
-//   let user = app.globalData.gongsi;
-  
-//   // 从模块单位表中获取工序数据
-//   wx.cloud.callFunction({
-//     name: 'sqlServer_PC',
-//     data: {
-//       query: "select name as process_name, num as efficiency, '' as estimated_time from module_info where company='" + user + "'"
-//     },
-//     success: res => {
-//       var list = res.result.recordset
-//       _this.setData({
-//         list3: list
-//       })
-//     },
-//     err: res => {
-//       console.log("错误!")
-//     },
-//     fail: res => {
-//       wx.showToast({
-//         title: '请求失败！',
-//         icon: 'none',
-//         duration: 3000
-//       })
-//       console.log("请求失败！")
-//     }
-//   })
-// },
 loadProcessData: function() {
   var _this = this
   let user = app.globalData.gongsi;
@@ -1490,418 +1765,6 @@ loadProcessData: function() {
   })
 },
 
-// 文件名输入监听
-onFileNameInput: function(e) {
-  this.setData({
-    fileName: e.detail.value
-  });
-},
-
-// 显示上传模态框
-showUploadModalFunc: function(e) {
-  var recordId = e.currentTarget.dataset.id || 0;
-  var recordName = e.currentTarget.dataset.name || '';
-  
-  this.setData({
-    showUploadModal: true,
-    selectedFiles: [],
-    currentRecordId: recordId,
-    currentRecordName: recordName,
-    fileName: '',
-    uploading: false,
-    uploadProgress: 0
-  });
-},
-
-// 选择文档
-chooseFile: function() {
-  var that = this;
-  wx.chooseMessageFile({
-    count: 9,
-    type: 'file',
-    extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
-    success: function(res) {
-      var files = res.tempFiles.map(file => ({
-        path: file.path,
-        name: file.name,
-        size: file.size,
-        type: file.type
-      }));
-      that.setData({ selectedFiles: files });
-    }
-  });
-},
-
-// 选择图片
-chooseImage: function() {
-  var that = this;
-  wx.chooseMedia({
-    count: 9,
-    mediaType: ['image'],
-    sourceType: ['album', 'camera'],
-    success: function(res) {
-      var files = res.tempFiles.map((file, index) => ({
-        path: file.tempFilePath,
-        name: `图片_${index + 1}.jpg`,
-        size: file.size,
-        type: 'image'
-      }));
-      that.setData({ selectedFiles: files });
-    }
-  });
-},
-
-// 上传文件
-uploadFile: function() {
-  var that = this;
-  
-  if (that.data.selectedFiles.length === 0) {
-    wx.showToast({ title: '请选择文件', icon: 'none' });
-    return;
-  }
-  
-  if (!that.data.currentRecordId) {
-    wx.showToast({ title: '请先选择一条记录', icon: 'none' });
-    return;
-  }
-  
-  wx.showModal({
-    title: '确认上传',
-    content: `确定为 "${that.data.currentRecordName}" 上传 ${that.data.selectedFiles.length} 个文件吗？`,
-    success: function(res) {
-      if (res.confirm) {
-        that.startUpload();
-      }
-    }
-  });
-},
-
-// 开始上传
-startUpload: function() {
-  var that = this;
-  var uploadedFiles = [];
-  var totalFiles = that.data.selectedFiles.length;
-  
-  that.setData({ uploading: true, uploadProgress: 0 });
-  
-  var recordId = that.data.currentRecordId;
-  var recordName = that.data.currentRecordName || '未知';
-  var userFileName = that.data.fileName || '';
-  
-  function uploadNextFile(index) {
-    if (index >= totalFiles) {
-      that.handleUploadComplete(uploadedFiles);
-      return;
-    }
-    
-    var file = that.data.selectedFiles[index];
-    var fileExtension = file.name.split('.').pop().toLowerCase();
-    
-    // 构建文件名
-    var timestamp = new Date().getTime();
-    var finalFileName = '';
-    if (userFileName && userFileName.trim() !== '') {
-      var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
-      finalFileName = totalFiles === 1 
-        ? `${baseName}_${timestamp}.${fileExtension}` 
-        : `${baseName}_${index + 1}_${timestamp}.${fileExtension}`;
-    } else {
-      var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
-      finalFileName = totalFiles === 1 
-        ? `${safeRecordName}_${timestamp}.${fileExtension}` 
-        : `${safeRecordName}_${index + 1}_${timestamp}.${fileExtension}`;
-    }
-    
-    that.setData({ uploadProgress: Math.round((index / totalFiles) * 100) });
-    
-    wx.uploadFile({
-      url: 'https://yhocn.cn:9097/file/upload',
-      filePath: file.path,
-      name: 'file',
-      formData: {
-        name: finalFileName,
-        path: '/paichan/',
-        kongjian: '3',
-        fileType: fileExtension,
-        recordId: recordId,
-        recordName: recordName
-      },
-      header: { 'Content-Type': 'multipart/form-data' },
-      success: function(uploadRes) {
-        try {
-          var resData = JSON.parse(uploadRes.data);
-          if (resData.code === 200 || resData.success) {
-            var fileUrl = "http://yhocn.cn:9088/paichan/" + finalFileName;
-            uploadedFiles.push({
-              name: finalFileName,
-              url: fileUrl,
-              originalName: file.name,
-              size: file.size,
-              type: fileExtension
-            });
-          }
-        } catch (e) {
-          console.error('解析响应失败:', e);
-        }
-        setTimeout(() => uploadNextFile(index + 1), 500);
-      },
-      fail: function(err) {
-        console.error('上传失败:', err);
-        setTimeout(() => uploadNextFile(index + 1), 1000);
-      }
-    });
-  }
-  
-  uploadNextFile(0);
-},
-
-// 上传完成处理
-handleUploadComplete: function(uploadedFiles) {
-  var that = this;
-  
-  if (uploadedFiles.length > 0) {
-    that.saveFilesToDatabase(uploadedFiles);
-  }
-  
-  that.setData({ uploading: false, uploadProgress: 100 });
-  
-  setTimeout(() => {
-    that.hideUploadModal();
-    wx.showToast({
-      title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
-      icon: 'success',
-      duration: 3000
-    });
-    // 刷新列表
-    var e = ['', '', ''];
-    that.tableShow(e);
-  }, 1000);
-},
-
-// 保存文件到数据库
-saveFilesToDatabase: function(files) {
-  var that = this;
-  
-  wx.cloud.callFunction({
-    name: 'sqlServer_PC',
-    data: {
-      query: "select wenjian from order_info where id = " + that.data.currentRecordId
-    },
-    success: res => {
-      var existingFiles = '';
-      if (res.result.recordset && res.result.recordset.length > 0) {
-        existingFiles = res.result.recordset[0]?.wenjian || '';
-      }
-      
-      // 处理现有文件
-      var existingArray = [];
-      if (existingFiles) {
-        if (existingFiles.includes(',')) {
-          existingArray = existingFiles.split(',').map(f => f.trim()).filter(f => f);
-        } else {
-          existingArray = [existingFiles.trim()];
-        }
-      }
-      
-      // 新文件URL
-      var newFileUrls = files.map(file => file.url);
-      
-      // 合并去重
-      var allFileUrls = [...new Set([...existingArray, ...newFileUrls])];
-      var fileUrlsString = allFileUrls.join(',');
-      
-      // 更新数据库
-      wx.cloud.callFunction({
-        name: 'sqlServer_PC',
-        data: {
-          query: "update order_info set wenjian = '" + fileUrlsString.replace(/'/g, "''") + "' where id = " + that.data.currentRecordId
-        },
-        success: () => {
-          console.log('文件记录更新成功');
-          var e = ['', '', ''];
-          that.tableShow(e);
-        },
-        fail: err => {
-          console.error('更新文件记录失败:', err);
-          wx.showToast({
-            title: '更新文件记录失败',
-            icon: 'none'
-          });
-        }
-      });
-    },
-    fail: err => {
-      console.error('查询现有文件失败:', err);
-    }
-  });
-},
-
-// 查看文件
-viewFiles: function(e) {
-  var that = this;
-  var recordId = e.currentTarget.dataset.id;
-  var recordName = e.currentTarget.dataset.name || '';
-  
-  wx.cloud.callFunction({
-    name: 'sqlServer_PC',
-    data: {
-      query: "select wenjian from order_info where id = " + recordId
-    },
-    success: res => {
-      if (res.result.recordset && res.result.recordset.length > 0) {
-        var record = res.result.recordset[0];
-        var files = record.wenjian || '';
-        // 处理文件列表
-        var fileList = [];
-        if (files) {
-          if (files.includes(',')) {
-            fileList = files.split(',').map(f => f.trim()).filter(f => f);
-          } else {
-            fileList = [files.trim()];
-          }
-        }
-        
-        that.setData({
-          showFileViewModal: true,
-          currentFileList: fileList,
-          currentFileName: recordName,
-          currentRecordId: recordId
-        });
-      }
-    },
-    fail: err => {
-      console.error('查询文件失败:', err);
-      wx.showToast({
-        title: '查询失败',
-        icon: 'none'
-      });
-    }
-  });
-},
-
-// 删除文件
-deleteFile: function(e) {
-  var that = this;
-  var fileUrl = e.currentTarget.dataset.url;
-  var recordId = e.currentTarget.dataset.id;
-  var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1).split('.')[0];
-  
-  wx.showModal({
-    title: '确认删除',
-    content: '确定要删除这个文件吗？',
-    success: function(res) {
-      if (res.confirm) {
-        wx.request({
-          url: 'https://yhocn.cn:9097/file/delete',
-          data: {
-            order_number: fileName,
-            path: '/paichan/'
-          },
-          success: function(res) {
-            if (res.data.code === 200 || res.data.success) {
-              that.removeFileFromDatabase(fileUrl, recordId);
-            }
-          },
-          fail: function(err) {
-            wx.showToast({
-              title: '文件服务器删除失败',
-              icon: 'none'
-            });
-          }
-        });
-      }
-    }
-  });
-},
-
-// 从数据库移除文件记录
-removeFileFromDatabase: function(fileUrl, recordId) {
-  var that = this;
-  
-  wx.cloud.callFunction({
-    name: 'sqlServer_PC',
-    data: { 
-      query: "select wenjian from order_info where id = " + recordId 
-    },
-    success: res => {
-      if (!res.result.recordset || res.result.recordset.length === 0) {
-        return;
-      }
-      
-      var currentFiles = res.result.recordset[0]?.wenjian || '';
-      var fileArray = [];
-      if (currentFiles) {
-        if (currentFiles.includes(',')) {
-          fileArray = currentFiles.split(',').map(f => f.trim()).filter(f => f);
-        } else {
-          fileArray = [currentFiles.trim()];
-        }
-      }
-      
-      // 移除要删除的文件
-      var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
-      var newFiles = newFileArray.join(',');
-      
-      wx.cloud.callFunction({
-        name: 'sqlServer_PC',
-        data: { 
-          query: "update order_info set wenjian = '" + newFiles.replace(/'/g, "''") + "' where id = " + recordId 
-        },
-        success: () => {
-          var e = ['', '', ''];
-          that.tableShow(e);
-          
-          // 重新加载文件列表
-          that.viewFiles({ currentTarget: { dataset: { id: recordId, name: that.data.currentFileName } } });
-        },
-        fail: err => {
-          console.error('更新文件记录失败:', err);
-          wx.showToast({
-            title: '删除失败',
-            icon: 'none'
-          });
-        }
-      });
-    }
-  });
-},
-
-// 预览文件
-previewFile: function(e) {
-  var fileUrl = e.currentTarget.dataset.url;
-  var fileExtension = fileUrl.split('.').pop().toLowerCase();
-  var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
-  
-  if (imageExtensions.includes(fileExtension)) {
-    wx.previewImage({ urls: [fileUrl], current: fileUrl });
-  } else {
-    wx.setClipboardData({
-      data: fileUrl,
-      success: () => wx.showToast({ title: '链接已复制', icon: 'success' })
-    });
-  }
-},
-
-// 隐藏上传模态框
-hideUploadModal: function() {
-  this.setData({
-    showUploadModal: false,
-    uploading: false,
-    uploadProgress: 0,
-    selectedFiles: [],
-    fileName: ''
-  });
-},
-
-// 隐藏文件查看模态框
-hideFileViewModal: function() {
-  this.setData({
-    showFileViewModal: false,
-    currentFileList: [],
-    currentFileName: '',
-    currentRecordId: 0
-  });
-},
 // 添加工序点击事件
 clickViewProcess: function(e) {
   var _this = this

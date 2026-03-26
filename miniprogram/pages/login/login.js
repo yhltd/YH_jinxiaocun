@@ -2,7 +2,1154 @@
 // const requestUrl = require('../../config').requestUrl
 const app = getApp();
 
+//==================数据库空间获取============
 
+/**
+ * 查询分权系统数据库表空间大小
+ */
+function getDatabaseSpace(companyName, callback) {
+  console.log('开始查询数据库空间，公司:', companyName);
+  
+  // 定义表和公司字段的映射关系
+  const tables = {
+    "baitaoquanxian": "公司",
+    "baitaoquanxian_copy1": "quanxian",
+    "baitaoquanxian_copy2": "公司",
+    "baitaoquanxian_department": "company",
+    "baitaoquanxian_gongsi": "B",
+    "baitaoquanxian_jisuan": "company",
+    "baitaoquanxian_renyun": "B"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  // 遍历所有表
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    // 先检查表是否存在
+    const checkTableSql = `
+      SELECT COUNT(*) as cnt 
+      FROM sysobjects 
+      WHERE xtype='U' AND name='${tableName}'
+    `;
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: { query: checkTableSql },
+      success: checkRes => {
+        const tableExists = checkRes.result?.recordset?.[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`表 ${tableName} 不存在，跳过`);
+          results.push({
+            tableName: tableName,
+            companyRowCount: 0,
+            totalSpaceKB: 0,
+            companySpaceKB: 0
+          });
+          completedQueries++;
+          if (completedQueries === totalTables) {
+            calculateTotalSpace(results, callback);
+          }
+          return;
+        }
+        
+        // 查询该公司的数据行数（使用模糊匹配）
+        // const countSql = `SELECT COUNT(*) as rowCount FROM ${tableName} WHERE ${companyColumn} = '${companyName}'`;
+        const countSql = `SELECT id FROM ${tableName} WHERE ${companyColumn} = '${companyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: { query: countSql },
+          success: countRes => {
+            console.log("执行语句",countSql)
+            console.log("返回的数据",countRes)
+            const rowCount = countRes.result?.recordset?.length || 0;
+            console.log(`表 ${tableName} 中公司 ${companyName} 的数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              // 使用 sp_spaceused 获取表总大小
+              const spaceSql = `EXEC sp_spaceused '${tableName}'`;
+              
+              wx.cloud.callFunction({
+                name: 'sqlServer_117',
+                data: { query: spaceSql },
+                success: spaceRes => {
+                  const spaceData = spaceRes.result?.recordset?.[0];
+                  if (spaceData) {
+                    // 解析 sp_spaceused 返回的数据
+                    const totalSizeKB = parseSizeToKB(spaceData.data);
+                    const totalRows = parseInt(spaceData.rows.replace(/,/g, '')) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({
+                      tableName: tableName,
+                      companyRowCount: rowCount,
+                      totalRows: totalRows,
+                      totalSpaceKB: totalSizeKB,
+                      companySpaceKB: companySpaceKB,
+                      ratio: ratio
+                    });
+                    console.log(`表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({
+                      tableName: tableName,
+                      companyRowCount: rowCount,
+                      totalSpaceKB: 0,
+                      companySpaceKB: 0
+                    });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) {
+                    calculateTotalSpace(results, callback);
+                  }
+                },
+                fail: err => {
+                  console.error(`查询表 ${tableName} 空间失败:`, err);
+                  results.push({
+                    tableName: tableName,
+                    companyRowCount: rowCount,
+                    totalSpaceKB: 0,
+                    companySpaceKB: 0
+                  });
+                  completedQueries++;
+                  if (completedQueries === totalTables) {
+                    calculateTotalSpace(results, callback);
+                  }
+                }
+              });
+            } else {
+              results.push({
+                tableName: tableName,
+                companyRowCount: 0,
+                totalSpaceKB: 0,
+                companySpaceKB: 0
+              });
+              completedQueries++;
+              if (completedQueries === totalTables) {
+                calculateTotalSpace(results, callback);
+              }
+            }
+          },
+          fail: err => {
+            console.error(`查询表 ${tableName} 行数失败:`, err);
+            results.push({
+              tableName: tableName,
+              companyRowCount: 0,
+              totalSpaceKB: 0,
+              companySpaceKB: 0
+            });
+            completedQueries++;
+            if (completedQueries === totalTables) {
+              calculateTotalSpace(results, callback);
+            }
+          }
+        });
+      },
+      fail: err => {
+        console.error(`检查表 ${tableName} 是否存在失败:`, err);
+        results.push({
+          tableName: tableName,
+          companyRowCount: 0,
+          totalSpaceKB: 0,
+          companySpaceKB: 0
+        });
+        completedQueries++;
+        if (completedQueries === totalTables) {
+          calculateTotalSpace(results, callback);
+        }
+      }
+    });
+  }
+}
+
+/**
+ * 计算总空间并回调
+ */
+function calculateTotalSpace(results, callback) {
+  let totalSpaceKB = 0;
+  const tableDetails = [];
+  
+  results.forEach(item => {
+    totalSpaceKB += (item.companySpaceKB || 0);
+    if (item.companyRowCount > 0) {
+      tableDetails.push({
+        tableName: item.tableName,
+        spaceKB: (item.companySpaceKB || 0).toFixed(2),
+        spaceMB: ((item.companySpaceKB || 0) / 1024).toFixed(2),
+        rowCount: item.companyRowCount,
+        ratio: ((item.ratio || 0) * 100).toFixed(2) + '%'
+      });
+    }
+  });
+  
+  const result = {
+    totalSpaceKB: totalSpaceKB,
+    totalSpaceMB: (totalSpaceKB / 1024).toFixed(2),
+    totalSpaceGB: (totalSpaceKB / (1024 * 1024)).toFixed(2),
+    tableDetails: tableDetails
+  };
+  
+  console.log('数据库空间统计结果:', result);
+  
+  if (callback) {
+    callback(result);
+  }
+}
+
+/**
+ * 获取门店系统数据库空间大小
+ * @param {string} companyName 公司名称
+ * @param {function} callback 回调函数
+ */
+function getMendianDatabaseSpace(companyName, callback) {
+  console.log('开始查询门店系统数据库空间（MySQL），公司:', companyName);
+  
+  // 🆕 处理公司名称（如果需要）
+  let processedCompanyName = companyName;
+  
+  // 定义门店系统的表和公司字段的映射关系
+  const tables = {
+    "customer": "gongsi",
+    "day_trading": "gongsi",
+    "member_info": "company",
+    "member_jibie": "company",
+    "order_table": "company",
+    "orders": "company",
+    "orders_details": "company",
+    "product": "company",
+    "users": "company"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  // 遍历所有表
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    // 🆕 MySQL 检查表是否存在
+    const checkTableSql = `
+      SELECT COUNT(*) as cnt 
+      FROM information_schema.tables 
+      WHERE table_schema = DATABASE() 
+      AND table_name = '${tableName}'
+    `;
+    
+    // 门店系统使用 sqlserver_xinyongka 云函数（MySQL）
+    wx.cloud.callFunction({
+      name: 'sqlserver_xinyongka',
+      data: { sql: checkTableSql },
+      success: checkRes => {
+        // 🆕 MySQL 返回的数据结构
+        const resultData = checkRes.result?.recordset || checkRes.result;
+        const tableExists = resultData && resultData[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`门店系统表 ${tableName} 不存在，跳过`);
+          results.push({
+            tableName: tableName,
+            companyRowCount: 0,
+            totalSpaceKB: 0,
+            companySpaceKB: 0
+          });
+          completedQueries++;
+          if (completedQueries === totalTables) {
+            calculateMendianTotalSpace(results, callback);
+          }
+          return;
+        }
+        
+        // 🆕 MySQL 查询该公司的数据行数
+        const countSql = `SELECT COUNT(*) as rowCount FROM ${tableName} WHERE ${companyColumn} = '${processedCompanyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sqlserver_xinyongka',
+          data: { sql: countSql },
+          success: countRes => {
+            console.log(`门店系统执行语句: ${countSql}`);
+            const resultData = countRes.result?.recordset || countRes.result;
+            const rowCount = resultData?.[0]?.rowCount || 0;
+            console.log(`门店系统表 ${tableName} 中公司 ${processedCompanyName} 的数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              // 🆕 MySQL 获取表总大小
+              const spaceSql = `
+                SELECT 
+                  table_name AS TableName,
+                  table_rows AS RowCounts,
+                  ROUND(((data_length + index_length) / 1024), 2) AS TotalSpaceKB
+                FROM information_schema.tables 
+                WHERE table_schema = DATABASE() 
+                AND table_name = '${tableName}'
+              `;
+              
+              wx.cloud.callFunction({
+                name: 'sqlserver_xinyongka',
+                data: { sql: spaceSql },
+                success: spaceRes => {
+                  const resultData = spaceRes.result?.recordset || spaceRes.result;
+                  const spaceData = resultData?.[0];
+                  if (spaceData) {
+                    const totalSizeKB = parseFloat(spaceData.TotalSpaceKB) || 0;
+                    const totalRows = parseInt(spaceData.RowCounts) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({
+                      tableName: tableName,
+                      companyRowCount: rowCount,
+                      totalRows: totalRows,
+                      totalSpaceKB: totalSizeKB,
+                      companySpaceKB: companySpaceKB,
+                      ratio: ratio
+                    });
+                    console.log(`门店系统表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({
+                      tableName: tableName,
+                      companyRowCount: rowCount,
+                      totalSpaceKB: 0,
+                      companySpaceKB: 0
+                    });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) {
+                    calculateMendianTotalSpace(results, callback);
+                  }
+                },
+                fail: err => {
+                  console.error(`门店系统查询表 ${tableName} 空间失败:`, err);
+                  results.push({
+                    tableName: tableName,
+                    companyRowCount: rowCount,
+                    totalSpaceKB: 0,
+                    companySpaceKB: 0
+                  });
+                  completedQueries++;
+                  if (completedQueries === totalTables) {
+                    calculateMendianTotalSpace(results, callback);
+                  }
+                }
+              });
+            } else {
+              results.push({
+                tableName: tableName,
+                companyRowCount: 0,
+                totalSpaceKB: 0,
+                companySpaceKB: 0
+              });
+              completedQueries++;
+              if (completedQueries === totalTables) {
+                calculateMendianTotalSpace(results, callback);
+              }
+            }
+          },
+          fail: err => {
+            console.error(`门店系统查询表 ${tableName} 行数失败:`, err);
+            results.push({
+              tableName: tableName,
+              companyRowCount: 0,
+              totalSpaceKB: 0,
+              companySpaceKB: 0
+            });
+            completedQueries++;
+            if (completedQueries === totalTables) {
+              calculateMendianTotalSpace(results, callback);
+            }
+          }
+        });
+      },
+      fail: err => {
+        console.error(`门店系统检查表 ${tableName} 是否存在失败:`, err);
+        results.push({
+          tableName: tableName,
+          companyRowCount: 0,
+          totalSpaceKB: 0,
+          companySpaceKB: 0
+        });
+        completedQueries++;
+        if (completedQueries === totalTables) {
+          calculateMendianTotalSpace(results, callback);
+        }
+      }
+    });
+  }
+}
+
+/**
+ * 解析大小字符串为 KB（门店系统专用）
+ */
+function parseMendianSizeToKB(sizeStr) {
+  if (!sizeStr) return 0;
+  
+  sizeStr = sizeStr.trim();
+  // "8 KB" 是空表的最小空间，按0处理
+  if ("8 KB" === sizeStr) return 0;
+  
+  const parts = sizeStr.split(' ');
+  if (parts.length === 2) {
+    const value = parseFloat(parts[0]);
+    const unit = parts[1].toUpperCase();
+    
+    switch (unit) {
+      case 'KB': return value;
+      case 'MB': return value * 1024;
+      case 'GB': return value * 1024 * 1024;
+      case 'TB': return value * 1024 * 1024 * 1024;
+      default: return value;
+    }
+  }
+  return 0;
+}
+
+/**
+ * 计算门店系统总空间并回调
+ */
+function calculateMendianTotalSpace(results, callback) {
+  let totalSpaceKB = 0;
+  const tableDetails = [];
+  
+  results.forEach(item => {
+    totalSpaceKB += (item.companySpaceKB || 0);
+    if (item.companyRowCount > 0) {
+      tableDetails.push({
+        tableName: item.tableName,
+        spaceKB: (item.companySpaceKB || 0).toFixed(2),
+        spaceMB: ((item.companySpaceKB || 0) / 1024).toFixed(2),
+        rowCount: item.companyRowCount,
+        ratio: ((item.ratio || 0) * 100).toFixed(2) + '%'
+      });
+    }
+  });
+  
+  const result = {
+    totalSpaceKB: totalSpaceKB,
+    totalSpaceMB: (totalSpaceKB / 1024).toFixed(2),
+    totalSpaceGB: (totalSpaceKB / (1024 * 1024)).toFixed(2),
+    tableDetails: tableDetails
+  };
+  
+  console.log('门店系统数据库空间统计结果:', result);
+  
+  if (callback) {
+    callback(result);
+  }
+}
+
+
+// ==================== 教务系统空间查询 ====================
+function getJiaowuDatabaseSpace(companyName, callback) {
+  console.log('开始查询教务系统数据库空间（MySQL），公司:', companyName);
+  
+  // 🆕 处理公司名称
+  let processedCompanyName = companyName;
+  // 如果公司名有 _hr 后缀，去掉（根据实际情况调整）
+  if (companyName && companyName.endsWith('_hr')) {
+    processedCompanyName = companyName.substring(0, companyName.length - 3);
+    console.log(`原始公司名: ${companyName}, 处理后公司名: ${processedCompanyName}`);
+  }
+  
+  const tables = {
+    "course": "company",
+    "income": "Company",
+    "kaoqin": "company",
+    "keshi_detail": "Company",
+    "payment": "Company",
+    "power": "company",
+    "shezhi": "Company",
+    "student": "Company",
+    "teacher": "Company",
+    "teacherinfo": "company"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    // 🆕 MySQL 检查表是否存在
+    const checkTableSql = `
+      SELECT COUNT(*) as cnt 
+      FROM information_schema.tables 
+      WHERE table_schema = DATABASE() 
+      AND table_name = '${tableName}'
+    `;
+    
+    wx.cloud.callFunction({
+      name: 'sql_jiaowu',
+      data: { sql: checkTableSql },
+      success: checkRes => {
+        // 🆕 MySQL 返回的是数组，recordset 或直接 result
+        const resultData = checkRes.result?.recordset || checkRes.result;
+        const tableExists = resultData && resultData[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`教务系统表 ${tableName} 不存在，跳过`);
+          results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+          completedQueries++;
+          if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          return;
+        }
+        
+        // 🆕 MySQL 查询行数
+        const countSql = `SELECT COUNT(*) as rowCount FROM ${tableName} WHERE ${companyColumn} = '${processedCompanyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sql_jiaowu',
+          data: { sql: countSql },
+          success: countRes => {
+            const resultData = countRes.result?.recordset || countRes.result;
+            const rowCount = resultData?.[0]?.rowCount || 0;
+            console.log(`教务系统表 ${tableName} 中公司数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              // 🆕 MySQL 获取表大小
+              const spaceSql = `
+                SELECT 
+                  table_name AS TableName,
+                  table_rows AS RowCounts,
+                  ROUND(((data_length + index_length) / 1024), 2) AS TotalSpaceKB
+                FROM information_schema.tables 
+                WHERE table_schema = DATABASE() 
+                AND table_name = '${tableName}'
+              `;
+              
+              wx.cloud.callFunction({
+                name: 'sql_jiaowu',
+                data: { sql: spaceSql },
+                success: spaceRes => {
+                  const resultData = spaceRes.result?.recordset || spaceRes.result;
+                  const spaceData = resultData?.[0];
+                  if (spaceData) {
+                    const totalSizeKB = parseFloat(spaceData.TotalSpaceKB) || 0;
+                    const totalRows = parseInt(spaceData.RowCounts) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({ 
+                      tableName, 
+                      companyRowCount: rowCount, 
+                      totalRows, 
+                      totalSpaceKB: totalSizeKB, 
+                      companySpaceKB, 
+                      ratio 
+                    });
+                    console.log(`教务系统表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                },
+                fail: err => {
+                  console.error(`教务系统查询表 ${tableName} 空间失败:`, err);
+                  results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                }
+              });
+            } else {
+              results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+              completedQueries++;
+              if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+            }
+          },
+          fail: err => {
+            console.error(`教务系统查询表 ${tableName} 行数失败:`, err);
+            results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+            completedQueries++;
+            if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          }
+        });
+      },
+      fail: err => {
+        console.error(`教务系统检查表 ${tableName} 是否存在失败:`, err);
+        results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+        completedQueries++;
+        if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+      }
+    });
+  }
+}
+
+// ==================== 排产系统空间查询 ====================
+function getPaichanDatabaseSpace(companyName, callback) {
+  console.log('开始查询排产系统数据库空间，公司:', companyName);
+  
+  const tables = {
+    "bom_info": "company",
+    "department": "company",
+    "holiday_config": "company",
+    "module_type": "company",
+    "order_check": "company",
+    "order_info": "company",
+    "paibanbiao_info": "remarks1",
+    "paibanbiao_renyuan": "company",
+    "paibanbiao_detail": "company",
+    "shengchanxian": "gongsi",
+    "time_config": "company",
+    "user_info": "company",
+    "work_detail": "company"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    const checkTableSql = `SELECT COUNT(*) as cnt FROM sysobjects WHERE xtype='U' AND name='${tableName}'`;
+    
+    // 🆕 排产系统使用 sqlServer_PC 云函数
+    wx.cloud.callFunction({
+      name: 'sqlServer_PC',
+      data: { query: checkTableSql },
+      success: checkRes => {
+        const tableExists = checkRes.result?.recordset?.[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`排产系统表 ${tableName} 不存在，跳过`);
+          results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+          completedQueries++;
+          if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          return;
+        }
+        
+        const countSql = `SELECT id FROM ${tableName} WHERE ${companyColumn} = '${companyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_PC',
+          data: { query: countSql },
+          success: countRes => {
+            const rowCount = countRes.result?.recordset?.length || 0;
+            console.log(`排产系统表 ${tableName} 中公司数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              const spaceSql = `EXEC sp_spaceused '${tableName}'`;
+              
+              wx.cloud.callFunction({
+                name: 'sqlServer_PC',
+                data: { query: spaceSql },
+                success: spaceRes => {
+                  const spaceData = spaceRes.result?.recordset?.[0];
+                  if (spaceData) {
+                    const totalSizeKB = parseSizeToKB(spaceData.data);
+                    const totalRows = parseInt(spaceData.rows.replace(/,/g, '')) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({ tableName, companyRowCount: rowCount, totalRows, totalSpaceKB: totalSizeKB, companySpaceKB, ratio });
+                    console.log(`排产系统表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                },
+                fail: err => {
+                  console.error(`排产系统查询表 ${tableName} 空间失败:`, err);
+                  results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                }
+              });
+            } else {
+              results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+              completedQueries++;
+              if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+            }
+          },
+          fail: err => {
+            console.error(`排产系统查询表 ${tableName} 行数失败:`, err);
+            results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+            completedQueries++;
+            if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          }
+        });
+      },
+      fail: err => {
+        console.error(`排产系统检查表 ${tableName} 是否存在失败:`, err);
+        results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+        completedQueries++;
+        if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+      }
+    });
+  }
+}
+
+// ==================== 财务系统空间查询 ====================
+function getCaiwuDatabaseSpace(companyName, callback) {
+  console.log('开始查询财务系统数据库空间，公司:', companyName);
+  
+  const tables = {
+    "Account": "company",
+    "Accounting": "company",
+    "Department": "company",
+    "FinancingExpenditure": "company",
+    "FinancingIncome": "company",
+    "gongzimingxi": "company",
+    "InvestmentExpenditure": "company",
+    "InvestmentIncome": "company",
+    "Invoice": "company",
+    "InvoicePeizhi": "company",
+    "KehuPeizhi": "company",
+    "ManagementExpenditure": "company",
+    "ManagementIncome": "company",
+    "shuilvPeizhi": "company",
+    "SimpleAccounting": "company",
+    "SimpleData": "company",
+    "VoucherSummary": "company",
+    "VoucherWord": "company",
+    "waibiPeizhi": "company",
+    "ysyfpeizhi": "company"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    const checkTableSql = `SELECT COUNT(*) as cnt FROM sysobjects WHERE xtype='U' AND name='${tableName}'`;
+    
+    // 🆕 财务系统使用 sqlServer_cw 云函数
+    wx.cloud.callFunction({
+      name: 'sqlServer_cw',
+      data: { query: checkTableSql },
+      success: checkRes => {
+        const tableExists = checkRes.result?.recordset?.[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`财务系统表 ${tableName} 不存在，跳过`);
+          results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+          completedQueries++;
+          if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          return;
+        }
+        
+        const countSql = `SELECT id FROM ${tableName} WHERE ${companyColumn} = '${companyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_cw',
+          data: { query: countSql },
+          success: countRes => {
+            const rowCount = countRes.result?.recordset?.length || 0;
+            console.log(`财务系统表 ${tableName} 中公司数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              const spaceSql = `EXEC sp_spaceused '${tableName}'`;
+              
+              wx.cloud.callFunction({
+                name: 'sqlServer_cw',
+                data: { query: spaceSql },
+                success: spaceRes => {
+                  const spaceData = spaceRes.result?.recordset?.[0];
+                  if (spaceData) {
+                    const totalSizeKB = parseSizeToKB(spaceData.data);
+                    const totalRows = parseInt(spaceData.rows.replace(/,/g, '')) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({ tableName, companyRowCount: rowCount, totalRows, totalSpaceKB: totalSizeKB, companySpaceKB, ratio });
+                    console.log(`财务系统表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                },
+                fail: err => {
+                  console.error(`财务系统查询表 ${tableName} 空间失败:`, err);
+                  results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                }
+              });
+            } else {
+              results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+              completedQueries++;
+              if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+            }
+          },
+          fail: err => {
+            console.error(`财务系统查询表 ${tableName} 行数失败:`, err);
+            results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+            completedQueries++;
+            if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          }
+        });
+      },
+      fail: err => {
+        console.error(`财务系统检查表 ${tableName} 是否存在失败:`, err);
+        results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+        completedQueries++;
+        if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+      }
+    });
+  }
+}
+
+// ==================== 进销存系统空间查询 ====================
+function getJinxiaocunDatabaseSpace(companyName, callback) {
+  console.log('开始查询进销存系统数据库空间（MySQL），公司:', companyName);
+  
+  // 🆕 处理公司名称
+  let processedCompanyName = companyName;
+  // 如果公司名有特殊后缀，在这里处理
+  // if (companyName && companyName.endsWith('_jxc')) {
+  //   processedCompanyName = companyName.substring(0, companyName.length - 4);
+  // }
+  
+  const tables = {
+    "yh_jinxiaocun_cangku": "gongsi",
+    "yh_jinxiaocun_chuhuofang": "gongsi",
+    "yh_jinxiaocun_jichuziliao": "gs_name",
+    "yh_jinxiaocun_jinhuofang": "gongsi",
+    "yh_jinxiaocun_mingxi": "gs_name",
+    "yh_jinxiaocun_qichushu": "gs_name",
+    "yh_jinxiaocun_tuihuomingxi": "gs_name",
+    "yh_jinxiaocun_user": "gongsi",
+    "yh_jinxiaocun_zhengli": "gs_name"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    // 🆕 MySQL 检查表是否存在
+    const checkTableSql = `
+      SELECT COUNT(*) as cnt 
+      FROM information_schema.tables 
+      WHERE table_schema = DATABASE() 
+      AND table_name = '${tableName}'
+    `;
+    
+    // 进销存系统使用 sqlConnection 云函数（MySQL）
+    wx.cloud.callFunction({
+      name: 'sqlConnection',
+      data: { sql: checkTableSql },
+      success: checkRes => {
+        // 🆕 MySQL 返回的数据结构
+        const resultData = checkRes.result?.recordset || checkRes.result;
+        const tableExists = resultData && resultData[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`进销存系统表 ${tableName} 不存在，跳过`);
+          results.push({ 
+            tableName, 
+            companyRowCount: 0, 
+            totalSpaceKB: 0, 
+            companySpaceKB: 0 
+          });
+          completedQueries++;
+          if (completedQueries === totalTables) calculateJinxiaocunTotalSpace(results, callback);
+          return;
+        }
+        
+        // 🆕 MySQL 查询该公司的数据行数
+        const countSql = `SELECT COUNT(*) as rowCount FROM ${tableName} WHERE ${companyColumn} = '${processedCompanyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sqlConnection',
+          data: { sql: countSql },
+          success: countRes => {
+            const resultData = countRes.result?.recordset || countRes.result;
+            const rowCount = resultData?.[0]?.rowCount || 0;
+            console.log(`进销存系统表 ${tableName} 中公司数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              // 🆕 MySQL 获取表总大小
+              const spaceSql = `
+                SELECT 
+                  table_name AS TableName,
+                  table_rows AS RowCounts,
+                  ROUND(((data_length + index_length) / 1024), 2) AS TotalSpaceKB
+                FROM information_schema.tables 
+                WHERE table_schema = DATABASE() 
+                AND table_name = '${tableName}'
+              `;
+              
+              wx.cloud.callFunction({
+                name: 'sqlConnection',
+                data: { sql: spaceSql },
+                success: spaceRes => {
+                  const resultData = spaceRes.result?.recordset || spaceRes.result;
+                  const spaceData = resultData?.[0];
+                  if (spaceData) {
+                    const totalSizeKB = parseFloat(spaceData.TotalSpaceKB) || 0;
+                    const totalRows = parseInt(spaceData.RowCounts) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({ 
+                      tableName, 
+                      companyRowCount: rowCount, 
+                      totalRows, 
+                      totalSpaceKB: totalSizeKB, 
+                      companySpaceKB, 
+                      ratio 
+                    });
+                    console.log(`进销存系统表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({ 
+                      tableName, 
+                      companyRowCount: rowCount, 
+                      totalSpaceKB: 0, 
+                      companySpaceKB: 0 
+                    });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateJinxiaocunTotalSpace(results, callback);
+                },
+                fail: err => {
+                  console.error(`进销存系统查询表 ${tableName} 空间失败:`, err);
+                  results.push({ 
+                    tableName, 
+                    companyRowCount: rowCount, 
+                    totalSpaceKB: 0, 
+                    companySpaceKB: 0 
+                  });
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateJinxiaocunTotalSpace(results, callback);
+                }
+              });
+            } else {
+              results.push({ 
+                tableName, 
+                companyRowCount: 0, 
+                totalSpaceKB: 0, 
+                companySpaceKB: 0 
+              });
+              completedQueries++;
+              if (completedQueries === totalTables) calculateJinxiaocunTotalSpace(results, callback);
+            }
+          },
+          fail: err => {
+            console.error(`进销存系统查询表 ${tableName} 行数失败:`, err);
+            results.push({ 
+              tableName, 
+              companyRowCount: 0, 
+              totalSpaceKB: 0, 
+              companySpaceKB: 0 
+            });
+            completedQueries++;
+            if (completedQueries === totalTables) calculateJinxiaocunTotalSpace(results, callback);
+          }
+        });
+      },
+      fail: err => {
+        console.error(`进销存系统检查表 ${tableName} 是否存在失败:`, err);
+        results.push({ 
+          tableName, 
+          companyRowCount: 0, 
+          totalSpaceKB: 0, 
+          companySpaceKB: 0 
+        });
+        completedQueries++;
+        if (completedQueries === totalTables) calculateJinxiaocunTotalSpace(results, callback);
+      }
+    });
+  }
+}
+/**
+ * 计算进销存系统总空间并回调
+ */
+function calculateJinxiaocunTotalSpace(results, callback) {
+  let totalSpaceKB = 0;
+  const tableDetails = [];
+  
+  results.forEach(item => {
+    totalSpaceKB += (item.companySpaceKB || 0);
+    if (item.companyRowCount > 0) {
+      tableDetails.push({
+        tableName: item.tableName,
+        spaceKB: (item.companySpaceKB || 0).toFixed(2),
+        spaceMB: ((item.companySpaceKB || 0) / 1024).toFixed(2),
+        rowCount: item.companyRowCount,
+        ratio: ((item.ratio || 0) * 100).toFixed(2) + '%'
+      });
+    }
+  });
+  
+  const result = {
+    totalSpaceKB: totalSpaceKB,
+    totalSpaceMB: (totalSpaceKB / 1024).toFixed(2),
+    totalSpaceGB: (totalSpaceKB / (1024 * 1024)).toFixed(2),
+    tableDetails: tableDetails
+  };
+  
+  console.log('进销存系统数据库空间统计结果:', result);
+  
+  if (callback) {
+    callback(result);
+  }
+}
+
+// ==================== 人事系统空间查询 ====================
+function getRenshiDatabaseSpace(companyName, callback) {
+  console.log('开始查询人事系统数据库空间，公司:', companyName);
+
+  if (companyName && companyName.endsWith('_hr')) {
+    companyName = companyName.substring(0, companyName.length - 3);
+  }
+  
+  const tables = {
+    "gongzi_dongtaimingxi": "gongsi",
+    "gongzi_gongzimingxi": "BD",
+    "gongzi_jianliguanli": "gongsi",
+    "gongzi_kaoqinjilu": "AO",
+    "gongzi_kaoqinmingxi": "K",
+    "gongzi_lizhishenpi": "gongsi",
+    "gongzi_shenpi": "gongsi",
+    "gongzi_shezhi": "gongsi",
+    "gongzi_renyuan": "L",
+    "gongzi_qingjiashenpi": "gongsi"
+  };
+  
+  const results = [];
+  let completedQueries = 0;
+  const totalTables = Object.keys(tables).length;
+  
+  for (const [tableName, companyColumn] of Object.entries(tables)) {
+    const checkTableSql = `SELECT COUNT(*) as cnt FROM sysobjects WHERE xtype='U' AND name='${tableName}'`;
+    
+    // 🆕 人事系统使用 sqlServer_117 云函数
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: { query: checkTableSql },
+      success: checkRes => {
+        const tableExists = checkRes.result?.recordset?.[0]?.cnt === 1;
+        
+        if (!tableExists) {
+          console.log(`人事系统表 ${tableName} 不存在，跳过`);
+          results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+          completedQueries++;
+          if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          return;
+        }
+        
+        const countSql = `SELECT id FROM ${tableName} WHERE ${companyColumn} = '${companyName}'`;
+        
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: { query: countSql },
+          success: countRes => {
+            const rowCount = countRes.result?.recordset?.length || 0;
+            console.log(`人事系统表 ${tableName} 中公司数据行数: ${rowCount}`);
+            
+            if (rowCount > 0) {
+              const spaceSql = `EXEC sp_spaceused '${tableName}'`;
+              
+              wx.cloud.callFunction({
+                name: 'sqlServer_117',
+                data: { query: spaceSql },
+                success: spaceRes => {
+                  const spaceData = spaceRes.result?.recordset?.[0];
+                  if (spaceData) {
+                    const totalSizeKB = parseSizeToKB(spaceData.data);
+                    const totalRows = parseInt(spaceData.rows.replace(/,/g, '')) || 1;
+                    const ratio = Math.min(rowCount / totalRows, 1);
+                    const companySpaceKB = totalSizeKB * ratio;
+                    
+                    results.push({ tableName, companyRowCount: rowCount, totalRows, totalSpaceKB: totalSizeKB, companySpaceKB, ratio });
+                    console.log(`人事系统表 ${tableName} 空间统计完成，公司占用: ${companySpaceKB.toFixed(2)} KB`);
+                  } else {
+                    results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  }
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                },
+                fail: err => {
+                  console.error(`人事系统查询表 ${tableName} 空间失败:`, err);
+                  results.push({ tableName, companyRowCount: rowCount, totalSpaceKB: 0, companySpaceKB: 0 });
+                  completedQueries++;
+                  if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+                }
+              });
+            } else {
+              results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+              completedQueries++;
+              if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+            }
+          },
+          fail: err => {
+            console.error(`人事系统查询表 ${tableName} 行数失败:`, err);
+            results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+            completedQueries++;
+            if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+          }
+        });
+      },
+      fail: err => {
+        console.error(`人事系统检查表 ${tableName} 是否存在失败:`, err);
+        results.push({ tableName, companyRowCount: 0, totalSpaceKB: 0, companySpaceKB: 0 });
+        completedQueries++;
+        if (completedQueries === totalTables) calculateSystemTotalSpace(results, callback);
+      }
+    });
+  }
+}
+
+// ==================== 通用解析和计算函数 ====================
+/**
+ * 解析大小字符串为 KB
+ */
+function parseSizeToKB(sizeStr) {
+  if (!sizeStr) return 0;
+  sizeStr = sizeStr.trim();
+  if ("8 KB" === sizeStr) return 0;
+  
+  const parts = sizeStr.split(' ');
+  if (parts.length === 2) {
+    const value = parseFloat(parts[0]);
+    const unit = parts[1].toUpperCase();
+    switch (unit) {
+      case 'KB': return value;
+      case 'MB': return value * 1024;
+      case 'GB': return value * 1024 * 1024;
+      case 'TB': return value * 1024 * 1024 * 1024;
+      default: return value;
+    }
+  }
+  return 0;
+}
+
+/**
+ * 计算系统总空间并回调
+ */
+function calculateSystemTotalSpace(results, callback) {
+  let totalSpaceKB = 0;
+  const tableDetails = [];
+  
+  results.forEach(item => {
+    totalSpaceKB += (item.companySpaceKB || 0);
+    if (item.companyRowCount > 0) {
+      tableDetails.push({
+        tableName: item.tableName,
+        spaceKB: (item.companySpaceKB || 0).toFixed(2),
+        spaceMB: ((item.companySpaceKB || 0) / 1024).toFixed(2),
+        rowCount: item.companyRowCount,
+        ratio: ((item.ratio || 0) * 100).toFixed(2) + '%'
+      });
+    }
+  });
+  
+  const result = {
+    totalSpaceKB: totalSpaceKB,
+    totalSpaceMB: (totalSpaceKB / 1024).toFixed(2),
+    totalSpaceGB: (totalSpaceKB / (1024 * 1024)).toFixed(2),
+    tableDetails: tableDetails
+  };
+  
+  console.log('数据库空间统计结果:', result);
+  
+  if (callback) {
+    callback(result);
+  }
+}
+
+//==================数据库空间获取============
 var login = function(that,info) {
   var lock = that.data.lock;
   if(!lock){
@@ -1195,7 +2342,7 @@ var login = function(that,info) {
 function getCompanyTime(that,info,sort_name){
   var date = new Date()
   var nowTime = date.getFullYear()+"/"+(parseInt(date.getMonth())+1)+"/"+date.getDate()
-  var sql = "select CASE WHEN endtime < '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE WHEN mark2<'"+nowTime+"' THEN 1 ELSE 0 END as mark2,mark1,isnull(mark3,'') as mark3 from control_soft_time where soft_name ='"+sort_name+"'"
+  var sql = "select CASE WHEN endtime < '"+nowTime+"' THEN 1 ELSE 0 END as endtime,CASE WHEN mark2<'"+nowTime+"' THEN 1 ELSE 0 END as mark2,mark1,isnull(mark3,'') as mark3,isnull(mark5,'') as mark5,isnull(mark4,'') as mark4 from control_soft_time where soft_name ='"+sort_name+"'"
 
   if(sort_name=='财务' || sort_name=='排产' || sort_name=='人事' || sort_name=='进销存' || sort_name=='分权' || sort_name=='门店' || sort_name=='教务'){
     sql += " and name = '"+that.data.gongsi+"'"
@@ -1210,6 +2357,11 @@ function getCompanyTime(that,info,sort_name){
       var list = res.result.recordset
       var result = ""
       console.log(list)
+
+      if(list[0].mark5 == null || !list[0].mark5.includes("小程序")){
+        result = "您没有当前使用端权限，请联系我公司续费或者购买系统"
+    }
+
       if(list[0].endtime == 1){
         result = "工具到期，请联系我公司续费"
       }else if(list[0].mark2 == 1){
@@ -1226,6 +2378,126 @@ function getCompanyTime(that,info,sort_name){
           userNum: list[0].mark3
         })
       }
+
+      if (list[0].mark4 != null && list[0].mark4 != undefined) {
+        let mark4Value = list[0].mark4.trim();
+        if (mark4Value != "") {
+          // 直接保存字符串值（已经是KB单位）
+          const app = getApp();
+          app.globalData.mark4 = mark4Value;
+          console.log("mark4已保存到globalData:", mark4Value);
+        }
+      }
+
+       // 🆕 如果是分权系统，查询数据库空间大小
+       if (sort_name == '分权') {
+        console.log('检测到分权系统登录，开始查询数据库空间...');
+        
+        // 查询数据库空间
+        getDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          
+          // 保存到 globalData
+          const app = getApp();
+          app.globalData.dbSpace = spaceResult.totalSpaceKB;
+          console.log('分权使用大小:', spaceResult.totalSpaceKB);
+          
+          // 继续登录流程
+          if (result == "") {
+            login(that, info);
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: result,
+              showCancel: false,
+            });
+          }
+        });
+        return; // 等待空间查询完成后再登录
+      }else if (sort_name == '门店') {
+        console.log('检测到门店系统登录，开始查询数据库空间...');
+        getMendianDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.mendianDbSpace = spaceResult.totalSpaceKB;
+          console.log('门店系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") {
+            login(that, info);
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: result,
+              showCancel: false,
+            });
+          }
+        });
+        return;
+      }
+    
+      if (sort_name == '分权') {
+        getFenquanDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.fenquanDbSpace = spaceResult.totalSpaceKB;
+          console.log('分权系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      } else if (sort_name == '门店') {
+        getMendianDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.mendianDbSpace = spaceResult.totalSpaceKB;
+          console.log('门店系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      } else if (sort_name == '教务') {
+        getJiaowuDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.jiaowuDbSpace = spaceResult.totalSpaceKB;
+          console.log('教务系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      } else if (sort_name == '排产') {
+        getPaichanDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.paichanDbSpace = spaceResult.totalSpaceKB;
+          console.log('排产系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      } else if (sort_name == '财务') {
+        getCaiwuDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.caiwuDbSpace = spaceResult.totalSpaceKB;
+          console.log('财务系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      } else if (sort_name == '进销存') {
+        getJinxiaocunDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.jinxiaocunDbSpace = spaceResult.totalSpaceKB;
+          console.log('进销存系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      } else if (sort_name == '人事') {
+        getRenshiDatabaseSpace(that.data.gongsi, function(spaceResult) {
+          const app = getApp();
+          app.globalData.renshiDbSpace = spaceResult.totalSpaceKB;
+          console.log('人事系统使用大小:', spaceResult.totalSpaceKB);
+          if (result == "") login(that, info);
+          else showModal(result);
+        });
+        return;
+      }
+
+    
       console.log(list[0].mark3)
       if(result==""){
         login(that,info)

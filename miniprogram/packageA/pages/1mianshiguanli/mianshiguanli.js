@@ -110,6 +110,562 @@ Page({
     edit_new: ''
   },
 
+  // ========== 新增：空间检查方法 ==========
+  /**
+   * 检查空间是否充足
+   * @param {string} companyName 公司名
+   * @param {number} fileSizeKB 要上传的文件大小(KB)
+   * @returns {Promise} 返回检查结果
+   */
+  checkTotalSpace: function(companyName, fileSizeKB) {
+    return new Promise((resolve, reject) => {
+      // 从 app.globalData 获取空间信息
+      var dbSizeKB = app.globalData?.dbSpace || 0;
+      var limitKB = app.globalData?.mark4 || 0;
+      
+      if (!limitKB || limitKB <= 0) {
+        console.warn('未获取到空间限制，跳过空间检查');
+        resolve({
+          canUpload: true,
+          usagePercent: 0,
+          totalUsedKB: dbSizeKB,
+          limitKB: limitKB
+        });
+        return;
+      }
+      
+      // 构建动态路径：/renshi/ + 公司名
+      var path = "/renshi/" + companyName + "/";
+      
+      // 获取文件夹大小
+      wx.request({
+        url: "https://yhocn.cn:9097/file/getFolderSize",
+        method: 'GET',
+        data: { path: path },
+        success: (folderRes) => {
+          var folderSizeKB = 0;
+          
+          if (folderRes.data && folderRes.data.code === 200) {
+            folderSizeKB = folderRes.data.data.sizeBytes / 1024;
+            console.log("文件夹大小:", folderSizeKB.toFixed(2), "KB");
+          } else if (folderRes.data && folderRes.data.code === 500 && folderRes.data.msg === "文件夹不存在") {
+            folderSizeKB = 0;
+            console.log("文件夹不存在，大小设为 0 KB");
+          } else {
+            console.warn("获取文件夹大小失败:", folderRes.data?.msg || "未知错误");
+            folderSizeKB = 0;
+          }
+          
+          var totalUsedKB = dbSizeKB + folderSizeKB;
+          limitKB = parseFloat(limitKB);
+          
+          var fileSizeKB_num = parseFloat(fileSizeKB) || 0;
+          var estimatedTotalKB = totalUsedKB + fileSizeKB_num;
+          
+          var usagePercent = (totalUsedKB / limitKB) * 100;
+          var estimatedPercent = (estimatedTotalKB / limitKB) * 100;
+          
+          console.log("数据库大小:", dbSizeKB, "KB");
+          console.log("文件夹大小:", folderSizeKB.toFixed(2), "KB");
+          console.log("总使用:", totalUsedKB.toFixed(2), "KB", "(", usagePercent.toFixed(2), "%)");
+          console.log("文件大小:", fileSizeKB_num.toFixed(2), "KB");
+          console.log("预计使用:", estimatedTotalKB.toFixed(2), "KB", "(", estimatedPercent.toFixed(2), "%)");
+          console.log("限制:", limitKB, "KB", "(", (limitKB / 1024 / 1024).toFixed(2), "GB)");
+          
+          var canUpload = true;
+          var message = "";
+          
+          if (totalUsedKB >= limitKB * 1.1) {
+            canUpload = false;
+            message = "空间使用已超110%（" + usagePercent.toFixed(2) + "%），无法上传！";
+          } else if (estimatedTotalKB >= limitKB * 1.1) {
+            canUpload = false;
+            message = "上传后空间使用率将超过110%（" + estimatedPercent.toFixed(2) + "%），无法上传！";
+          } else if (totalUsedKB >= limitKB * 0.9) {
+            message = "空间使用已超90%（" + usagePercent.toFixed(2) + "%），请注意清理！";
+            canUpload = true;
+          } else {
+            canUpload = true;
+          }
+          
+          resolve({
+            canUpload: canUpload,
+            message: message,
+            usagePercent: usagePercent,
+            estimatedPercent: estimatedPercent,
+            totalUsedKB: totalUsedKB,
+            limitKB: limitKB
+          });
+        },
+        fail: (err) => {
+          console.error("获取文件夹大小失败:", err);
+          resolve({
+            canUpload: true,
+            message: "空间检查失败，请稍后确认空间使用情况",
+            usagePercent: 0,
+            totalUsedKB: 0,
+            limitKB: limitKB
+          });
+        }
+      });
+    });
+  },
+
+  // ========== 修改：上传文件（带空间检查和500MB限制） ==========
+  uploadFile: function() {
+    var that = this;
+    
+    // 验证
+    if (that.data.selectedFiles.length === 0) {
+      wx.showToast({
+        title: '请选择文件',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    if (!that.data.currentRecordId) {
+      wx.showToast({
+        title: '请先选择一条记录',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 先检查每个文件大小是否超过500MB
+    const maxSizeMB = 500;
+    const oversizedFiles = [];
+    let totalSizeKB = 0;
+    
+    for (let i = 0; i < that.data.selectedFiles.length; i++) {
+      const file = that.data.selectedFiles[i];
+      const fileSizeMB = file.size / 1024 / 1024;
+      totalSizeKB += file.size / 1024;
+      
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        oversizedFiles.push(file.name + " (" + fileSizeMB.toFixed(2) + "MB)");
+      }
+    }
+    
+    if (oversizedFiles.length > 0) {
+      wx.showToast({
+        title: `文件超过${maxSizeMB}MB限制`,
+        icon: 'none',
+        duration: 3000
+      });
+      return;
+    }
+    
+    // 获取公司名
+    const companyName = that.data.companyName || '';
+    
+    if (!companyName) {
+      wx.showToast({ title: '公司名称不存在', icon: 'none' });
+      return;
+    }
+    
+    wx.showLoading({
+      title: '检查空间...',
+      mask: true
+    });
+    
+    that.setData({ uploading: true });
+    
+    // 先检查空间
+    that.checkTotalSpace(companyName, totalSizeKB).then((spaceInfo) => {
+      wx.hideLoading();
+      
+      if (!spaceInfo.canUpload) {
+        wx.showToast({
+          title: spaceInfo.message || '空间不足，无法上传',
+          icon: 'none',
+          duration: 3000
+        });
+        that.setData({ uploading: false });
+        return;
+      }
+      
+      const totalSizeMB = totalSizeKB / 1024;
+      const confirmMsg = `确定要为 "${that.data.currentRecordName}" 上传 ${that.data.selectedFiles.length} 个文件吗？\n文件总大小：${totalSizeMB.toFixed(2)}MB\n当前空间使用率：${spaceInfo.usagePercent.toFixed(2)}%\n预计上传后使用率：${spaceInfo.estimatedPercent.toFixed(2)}%`;
+      
+      wx.showModal({
+        title: '确认上传',
+        content: confirmMsg,
+        success: function(res) {
+          if (res.confirm) {
+            that.startUpload(companyName);
+          } else {
+            that.setData({ uploading: false });
+          }
+        }
+      });
+    }).catch((error) => {
+      wx.hideLoading();
+      console.error('空间检查失败:', error);
+      wx.showModal({
+        title: '提示',
+        content: '空间检查失败，是否继续上传？',
+        success: (modalRes) => {
+          if (modalRes.confirm) {
+            const companyName = that.data.companyName || '';
+            that.startUpload(companyName);
+          } else {
+            that.setData({ uploading: false });
+          }
+        }
+      });
+    });
+  },
+
+  // ========== 修改：开始上传（带动态路径） ==========
+  startUpload: function(companyName) {
+    var that = this;
+    var uploadedFiles = [];
+    var totalFiles = that.data.selectedFiles.length;
+    var completedCount = 0;
+    
+    that.setData({
+      uploading: true,
+      uploadProgress: 0
+    });
+    
+    // 获取记录信息和用户输入的文件名
+    var recordId = that.data.currentRecordId;
+    var recordName = that.data.currentRecordName || '未知人员';
+    var userFileName = that.data.fileName || ''; // 获取用户输入的文件名
+    
+    // 构建动态路径：/renshi/ + 公司名 + /
+    const dynamicPath = "/renshi/" + companyName + "/";
+    
+    // 按顺序上传每个文件
+    function uploadNextFile(index) {
+      if (index >= totalFiles) {
+        // 所有文件上传完成
+        that.handleUploadComplete(uploadedFiles);
+        return;
+      }
+      
+      var file = that.data.selectedFiles[index];
+      var fileExtension = file.name.split('.').pop().toLowerCase();
+      
+      // 构建最终文件名：基于用户输入的文件名
+      var finalFileName = '';
+      
+      if (userFileName && userFileName.trim() !== '') {
+        // 清理文件名中的非法字符
+        var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
+        
+        // 如果文件名已经包含扩展名，去掉它
+        if (baseName.includes('.')) {
+          baseName = baseName.split('.').slice(0, -1).join('.');
+        }
+        
+        // 多文件上传时添加序号后缀
+        if (totalFiles === 1) {
+          finalFileName = `${baseName}.${fileExtension}`;
+        } else {
+          finalFileName = `${baseName}_${index + 1}.${fileExtension}`;
+        }
+      } else {
+        // 如果用户没有输入文件名，使用默认命名
+        var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
+        if (totalFiles === 1) {
+          finalFileName = `面试文件_${safeRecordName}.${fileExtension}`;
+        } else {
+          finalFileName = `面试文件_${safeRecordName}_${index + 1}.${fileExtension}`;
+        }
+      }
+      
+      // 更新上传进度
+      var progress = Math.round((index / totalFiles) * 100);
+      that.setData({
+        uploadProgress: progress
+      });
+      
+      console.log(`开始上传第 ${index + 1} 个文件:`, finalFileName);
+      
+      // 使用动态路径上传
+      wx.uploadFile({
+        url: 'https://yhocn.cn:9097/file/upload',
+        filePath: file.path,
+        name: 'file',
+        formData: {
+          name: finalFileName,
+          path: dynamicPath,
+          kongjian: '3',
+          fileType: fileExtension,
+          recordId: recordId,
+          recordName: recordName,
+          userFileName: userFileName,
+          originalName: file.name,
+          index: index + 1,
+          total: totalFiles,
+          timestamp: Date.now(),
+          fileSize: file.size.toString()
+        },
+        header: {
+          'Content-Type': 'multipart/form-data'
+        },
+        timeout: 600000,
+        success: function(uploadRes) {
+          completedCount++;
+          
+          try {
+            var resData = JSON.parse(uploadRes.data);
+            console.log(`第 ${index + 1} 个文件上传响应:`, resData);
+            
+            if (resData.code === 200 || resData.success) {
+              // 构建文件URL - 使用动态路径
+              var fileUrl = "http://yhocn.cn:9088/renshi/" + companyName + "/" + finalFileName;
+              uploadedFiles.push({
+                name: finalFileName,
+                url: fileUrl,
+                originalName: file.name,
+                userFileName: userFileName,
+                size: file.size,
+                type: fileExtension
+              });
+              
+              wx.showToast({
+                title: `(${completedCount}/${totalFiles}) 上传成功`,
+                icon: 'none',
+                duration: 1000
+              });
+              
+              // 继续上传下一个文件
+              setTimeout(() => uploadNextFile(index + 1), 500);
+            } else {
+              wx.showToast({
+                title: `第 ${index + 1} 个文件失败`,
+                icon: 'none',
+                duration: 2000
+              });
+              setTimeout(() => uploadNextFile(index + 1), 1000);
+            }
+          } catch (e) {
+            console.error('解析响应失败:', e, uploadRes.data);
+            // 即使解析失败也继续上传
+            setTimeout(() => uploadNextFile(index + 1), 1000);
+          }
+        },
+        fail: function(err) {
+          completedCount++;
+          console.error(`第 ${index + 1} 个文件上传失败:`, err);
+          
+          // 根据错误类型给出更具体的提示
+          var errorMsg = '上传失败';
+          if (err.errMsg && err.errMsg.includes('timeout')) {
+            errorMsg = '上传超时，文件可能过大或网络不稳定';
+          } else if (err.errMsg && err.errMsg.includes('fail')) {
+            errorMsg = '网络错误，请检查网络连接';
+          }
+          
+          wx.showToast({
+            title: `第 ${index + 1} 个文件${errorMsg}`,
+            icon: 'none',
+            duration: 2000
+          });
+          
+          setTimeout(() => uploadNextFile(index + 1), 1000);
+        }
+      });
+    }
+    
+    // 开始上传第一个文件
+    uploadNextFile(0);
+  },
+
+  // 处理上传完成
+  handleUploadComplete: function(uploadedFiles) {
+    var that = this;
+    
+    if (uploadedFiles.length > 0) {
+      // 保存文件信息到数据库
+      that.saveFilesToDatabase(uploadedFiles);
+    }
+    
+    that.setData({
+      uploading: false,
+      uploadProgress: 100
+    });
+    
+    setTimeout(() => {
+      that.hideUploadModal();
+      
+      wx.showToast({
+        title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
+        icon: 'success',
+        duration: 3000
+      });
+      
+      // 刷新页面数据
+      that.baochi();
+    }, 1000);
+  },
+
+  // 保存文件信息到数据库
+  saveFilesToDatabase: function(files) {
+    var that = this;
+    
+    if (!files || files.length === 0) return;
+    
+    // 查询现有文件
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select wenjian from gongzi_jianliguanli where id = " + that.data.currentRecordId
+      },
+      success: res => {
+        var existingFiles = '';
+        if (res.result.recordset.length > 0) {
+          existingFiles = res.result.recordset[0].wenjian || '';
+        }
+        
+        // 构建新的文件URL列表
+        var newFileUrls = files.map(file => file.url);
+        var allFileUrls = [];
+        
+        if (existingFiles && existingFiles.trim() !== '') {
+          var existingArray = existingFiles.split(',').map(file => file.trim());
+          allFileUrls = existingArray.concat(newFileUrls);
+        } else {
+          allFileUrls = newFileUrls;
+        }
+        
+        var fileUrlsString = allFileUrls.join(',');
+        
+        // 更新数据库
+        wx.cloud.callFunction({
+          name: 'sqlServer_117',
+          data: {
+            query: "update gongzi_jianliguanli set wenjian = '" + fileUrlsString + "' where id = " + that.data.currentRecordId
+          },
+          success: res => {
+            console.log('文件信息保存到数据库成功:', res);
+          },
+          err: res => {
+            console.log('数据库保存失败:', res);
+          }
+        });
+      },
+      err: res => {
+        console.log('查询现有文件失败:', res);
+      }
+    });
+  },
+
+  // ========== 修改：删除服务器上的文件（带动态路径） ==========
+  deleteFileFromServer: function(fileUrl, recordId) {
+    var that = this;
+    var companyName = that.data.companyName || '';
+    
+    // 从URL中提取文件名
+    var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+    var cleanFileName = fileName.split('.')[0]; // 移除扩展名
+    
+    if (!companyName) {
+      wx.showToast({
+        title: '公司名称不存在',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    console.log('删除文件:', fileName, '清理后:', cleanFileName);
+    
+    wx.showLoading({
+      title: '删除中...',
+      mask: true
+    });
+    
+    // 构建动态路径
+    const dynamicPath = "/renshi/" + companyName + "/";
+    
+    wx.request({
+      url: 'https://yhocn.cn:9097/file/delete',
+      method: 'POST',
+      data: {
+        order_number: cleanFileName,
+        path: dynamicPath
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        console.log('删除响应:', res.data);
+        
+        if (res.data.code === 200 || res.data.success) {
+          // 从数据库移除文件记录
+          that.removeFileFromDatabase(fileUrl, recordId);
+          
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success',
+            duration: 2000
+          });
+        } else {
+          wx.showToast({
+            title: '删除失败: ' + (res.data.msg || '未知错误'),
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail: function(err) {
+        wx.hideLoading();
+        console.error('删除请求失败:', err);
+        wx.showToast({
+          title: '删除请求失败',
+          icon: 'none',
+          duration: 2000
+        });
+      }
+    });
+  },
+
+  // 从数据库移除文件记录
+  removeFileFromDatabase: function(fileUrl, recordId) {
+    var that = this;
+    
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select wenjian from gongzi_jianliguanli where id = " + recordId
+      },
+      success: res => {
+        if (res.result.recordset.length > 0) {
+          var currentFiles = res.result.recordset[0].wenjian || '';
+          var fileArray = currentFiles.split(',');
+          
+          // 移除被删除的文件
+          var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
+          var newFiles = newFileArray.join(',');
+          
+          // 更新数据库
+          wx.cloud.callFunction({
+            name: 'sqlServer_117',
+            data: {
+              query: "update gongzi_jianliguanli set wenjian = '" + newFiles + "' where id = " + recordId
+            },
+            success: res => {
+              console.log('数据库更新成功');
+              // 刷新数据
+              that.baochi();
+            },
+            err: res => {
+              console.log('数据库更新失败:', res);
+            }
+          });
+        }
+      },
+      err: res => {
+        console.log('查询文件列表失败:', res);
+      }
+    });
+  },
+
+  // ========== 以下为原有代码，保持不变 ==========
   click_delete: function (e) {
     var _this = this;
     
@@ -255,7 +811,7 @@ Page({
     wx.cloud.callFunction({
       name: 'sqlServer_117',
       data: {
-        query: "select top 100 id, touliren, xueli, mubiaogangwei, tijiaoshijian, wenjian, beizhu, zhuangtai from gongzi_jianliguanli where gongsi = '"+_this.data.companyName+"' and zhuangtai = '通过' order by id desc"
+        query: "select top 100 id, touliren, xueli, mubiaogangwei, tijiaoshijian, wenjian, beizhu, mianshipizhu from gongzi_jianliguanli where gongsi = '"+_this.data.companyName+"' and zhuangtai = '通过' order by id desc"
       },
       success: res => {
         console.log("进入成功")
@@ -760,7 +1316,7 @@ Page({
     var list = _this.data.list;
     var title = _this.data.title1; // 使用7个字段的配置
     var cloudList = {
-      name : '简历管理表',
+      name : '面试管理表',
       items : [],
       header : []
     }
@@ -834,225 +1390,128 @@ Page({
   },
 
   viewFiles: function(e) {
-  var that = this;
-  var recordId = e.currentTarget.dataset.id;
-  var recordName = e.currentTarget.dataset.name || '';
-  
-  console.log('查看文件，记录ID:', recordId, '姓名:', recordName);
-  
-  // 查询当前记录的文件信息
-  wx.cloud.callFunction({
-    name: 'sqlServer_117',
-    data: {
-      query: "select wenjian, touliren from gongzi_jianliguanli where id = " + recordId
-    },
-    success: res => {
-      console.log('查询文件结果:', res);
-      
-      var fileList = [];
-      if (res.result.recordset.length > 0) {
-        var record = res.result.recordset[0];
-        var files = record.wenjian || '';
-        var name = record.touliren || recordName;
-        
-        // 如果是逗号分隔的多个文件
-        if (files && files.trim() !== '') {
-          if (files.includes(',')) {
-            fileList = files.split(',').map(file => file.trim());
-          } else {
-            fileList = [files];
-          }
-        }
-        
-        that.setData({
-          showFileViewModal: true,
-          currentFileList: fileList,
-          currentFileName: name,
-          currentRecordId: recordId
-        });
-      }
-    },
-    err: res => {
-      console.log("查询文件失败:", res);
-      wx.showToast({
-        title: '查询文件失败',
-        icon: 'none'
-      });
-    }
-  });
-},
-
- // 预览文件（新增）
- previewFile: function(e) {
-  var fileUrl = e.currentTarget.dataset.url;
-  console.log('预览文件:', fileUrl);
-  
-  if (!fileUrl) {
-    wx.showToast({
-      title: '文件地址无效',
-      icon: 'none'
-    });
-    return;
-  }
-  
-  // 判断文件类型
-  var fileExtension = fileUrl.split('.').pop().toLowerCase();
-  var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
-  
-  if (imageExtensions.includes(fileExtension)) {
-    // 图片文件，使用预览
-    wx.previewImage({
-      urls: [fileUrl],
-      current: fileUrl,
-      success: function() {
-        console.log('图片预览成功');
+    var that = this;
+    var recordId = e.currentTarget.dataset.id;
+    var recordName = e.currentTarget.dataset.name || '';
+    
+    console.log('查看文件，记录ID:', recordId, '姓名:', recordName);
+    
+    // 查询当前记录的文件信息
+    wx.cloud.callFunction({
+      name: 'sqlServer_117',
+      data: {
+        query: "select wenjian, touliren from gongzi_jianliguanli where id = " + recordId
       },
-      fail: function(err) {
-        console.error('图片预览失败:', err);
+      success: res => {
+        console.log('查询文件结果:', res);
+        
+        var fileList = [];
+        if (res.result.recordset.length > 0) {
+          var record = res.result.recordset[0];
+          var files = record.wenjian || '';
+          var name = record.touliren || recordName;
+          
+          // 如果是逗号分隔的多个文件
+          if (files && files.trim() !== '') {
+            if (files.includes(',')) {
+              fileList = files.split(',').map(file => file.trim());
+            } else {
+              fileList = [files];
+            }
+          }
+          
+          that.setData({
+            showFileViewModal: true,
+            currentFileList: fileList,
+            currentFileName: name,
+            currentRecordId: recordId
+          });
+        }
+      },
+      err: res => {
+        console.log("查询文件失败:", res);
         wx.showToast({
-          title: '预览失败',
+          title: '查询文件失败',
           icon: 'none'
         });
       }
     });
-  } else if (fileExtension === 'pdf') {
-    // PDF文件，尝试在浏览器中打开
-    wx.showModal({
-      title: '打开PDF',
-      content: 'PDF文件需要在浏览器中打开，是否复制链接？',
-      success: function(res) {
-        if (res.confirm) {
-          wx.setClipboardData({
-            data: fileUrl,
-            success: function() {
-              wx.showToast({
-                title: '链接已复制，请在浏览器中打开',
-                icon: 'success'
-              });
-            }
-          });
-        }
-      }
-    });
-  } else {
-    // 其他文件类型，复制链接
-    wx.setClipboardData({
-      data: fileUrl,
-      success: function() {
-        wx.showToast({
-          title: '链接已复制',
-          icon: 'success'
-        });
-      }
-    });
-  }
-},
-
-// 选择文件
-chooseFile: function() {
-  var that = this;
-  
-  wx.chooseMessageFile({
-    count: 9,
-    type: 'file',
-    extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
-    success: function(res) {
-      var files = res.tempFiles.map(file => {
-        return {
-          path: file.path,
-          name: file.name,
-          size: file.size,
-          type: file.type
-        };
-      });
-      
-      that.setData({
-        selectedFiles: files
-      });
-      
-      wx.showToast({
-        title: `已选择 ${files.length} 个文件`,
-        icon: 'none',
-        duration: 1500
-      });
-    },
-    fail: function(err) {
-      console.error('选择文件失败:', err);
-      wx.showToast({
-        title: '选择文件失败',
-        icon: 'none'
-      });
-    }
-  });
-},
-
-// 选择图片
-chooseImage: function() {
-  var that = this;
-  
-  wx.chooseMedia({
-    count: 9,
-    mediaType: ['image'],
-    sourceType: ['album', 'camera'],
-    success: function(res) {
-      var files = res.tempFiles.map((file, index) => {
-        // 获取文件扩展名
-        var fileExtension = 'jpg';
-        if (file.tempFilePath) {
-          var match = file.tempFilePath.match(/\.([^\.]+)$/);
-          if (match) {
-            fileExtension = match[1].toLowerCase();
-          }
-        }
-        
-        return {
-          path: file.tempFilePath,
-          name: `简历照片_${index + 1}.${fileExtension}`,
-          size: file.size,
-          type: 'image'
-        };
-      });
-      
-      that.setData({
-        selectedFiles: files
-      });
-      
-      wx.showToast({
-        title: `已选择 ${files.length} 张图片`,
-        icon: 'none',
-        duration: 1500
-      });
-    },
-    fail: function(err) {
-      console.error('选择图片失败:', err);
-      wx.showToast({
-        title: '选择图片失败',
-        icon: 'none'
-      });
-    }
-  });
-},
-
-  // 隐藏文件上传弹窗
-  hideUploadModal: function() {
-    this.setData({
-      showUploadModal: false,
-      uploading: false,
-      uploadProgress: 0,
-      selectedFiles: [],
-      fileName: '', // 清空文件名称
-      fileDescription: ''
-    });
   },
 
-  // 选择文件（简化版，基于您的模式）
+  // 预览文件（新增）
+  previewFile: function(e) {
+    var fileUrl = e.currentTarget.dataset.url;
+    console.log('预览文件:', fileUrl);
+    
+    if (!fileUrl) {
+      wx.showToast({
+        title: '文件地址无效',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 判断文件类型
+    var fileExtension = fileUrl.split('.').pop().toLowerCase();
+    var imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    
+    if (imageExtensions.includes(fileExtension)) {
+      // 图片文件，使用预览
+      wx.previewImage({
+        urls: [fileUrl],
+        current: fileUrl,
+        success: function() {
+          console.log('图片预览成功');
+        },
+        fail: function(err) {
+          console.error('图片预览失败:', err);
+          wx.showToast({
+            title: '预览失败',
+            icon: 'none'
+          });
+        }
+      });
+    } else if (fileExtension === 'pdf') {
+      // PDF文件，尝试在浏览器中打开
+      wx.showModal({
+        title: '打开PDF',
+        content: 'PDF文件需要在浏览器中打开，是否复制链接？',
+        success: function(res) {
+          if (res.confirm) {
+            wx.setClipboardData({
+              data: fileUrl,
+              success: function() {
+                wx.showToast({
+                  title: '链接已复制，请在浏览器中打开',
+                  icon: 'success'
+                });
+              }
+            });
+          }
+        }
+      });
+    } else {
+      // 其他文件类型，复制链接
+      wx.setClipboardData({
+        data: fileUrl,
+        success: function() {
+          wx.showToast({
+            title: '链接已复制',
+            icon: 'success'
+          });
+        }
+      });
+    }
+  },
+
+  // 选择文件
   chooseFile: function() {
     var that = this;
     
     wx.chooseMessageFile({
-      count: 9, // 最多选择9个文件
+      count: 9,
       type: 'file',
-      extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx'],
+      extension: ['jpg', 'png', 'jpeg', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
       success: function(res) {
         var files = res.tempFiles.map(file => {
           return {
@@ -1069,7 +1528,8 @@ chooseImage: function() {
         
         wx.showToast({
           title: `已选择 ${files.length} 个文件`,
-          icon: 'none'
+          icon: 'none',
+          duration: 1500
         });
       },
       fail: function(err) {
@@ -1082,7 +1542,7 @@ chooseImage: function() {
     });
   },
 
-  // 选择图片（基于您的 imgload 函数模式）
+  // 选择图片
   chooseImage: function() {
     var that = this;
     
@@ -1092,9 +1552,18 @@ chooseImage: function() {
       sourceType: ['album', 'camera'],
       success: function(res) {
         var files = res.tempFiles.map((file, index) => {
+          // 获取文件扩展名
+          var fileExtension = 'jpg';
+          if (file.tempFilePath) {
+            var match = file.tempFilePath.match(/\.([^\.]+)$/);
+            if (match) {
+              fileExtension = match[1].toLowerCase();
+            }
+          }
+          
           return {
             path: file.tempFilePath,
-            name: `image_${Date.now()}_${index + 1}.jpg`,
+            name: `面试文件_${index + 1}.${fileExtension}`,
             size: file.size,
             type: 'image'
           };
@@ -1106,7 +1575,8 @@ chooseImage: function() {
         
         wx.showToast({
           title: `已选择 ${files.length} 张图片`,
-          icon: 'none'
+          icon: 'none',
+          duration: 1500
         });
       },
       fail: function(err) {
@@ -1116,6 +1586,18 @@ chooseImage: function() {
           icon: 'none'
         });
       }
+    });
+  },
+
+  // 隐藏文件上传弹窗
+  hideUploadModal: function() {
+    this.setData({
+      showUploadModal: false,
+      uploading: false,
+      uploadProgress: 0,
+      selectedFiles: [],
+      fileName: '', // 清空文件名称
+      fileDescription: ''
     });
   },
 
@@ -1130,264 +1612,6 @@ chooseImage: function() {
   onOrderNumberInput: function(e) {
     this.setData({
       orderNumber: e.detail.value
-    });
-  },
-
-  // 上传文件（基于您的 add1 函数模式）
-  uploadFile: function() {
-    var that = this;
-    
-    // 验证
-    if (that.data.selectedFiles.length === 0) {
-      wx.showToast({
-        title: '请选择文件',
-        icon: 'none'
-      });
-      return;
-    }
-    
-    if (!that.data.currentRecordId) {
-      wx.showToast({
-        title: '请先选择一条简历记录',
-        icon: 'none'
-      });
-      return;
-    }
-    
-    wx.showModal({
-      title: '确认上传',
-      content: `确定要为 "${that.data.currentRecordName}" 上传 ${that.data.selectedFiles.length} 个简历文件吗？`,
-      success: function(res) {
-        if (res.confirm) {
-          that.startUpload();
-        }
-      }
-    });
-  },
-
-  // 开始上传（修改为简历管理场景）
-  startUpload: function() {
-    var that = this;
-    var uploadedFiles = [];
-    var totalFiles = that.data.selectedFiles.length;
-    var completedCount = 0;
-    
-    that.setData({
-      uploading: true,
-      uploadProgress: 0
-    });
-    
-    // 获取记录信息和用户输入的文件名
-    var recordId = that.data.currentRecordId;
-    var recordName = that.data.currentRecordName || '未知人员';
-    var userFileName = that.data.fileName || ''; // 获取用户输入的文件名
-    
-    // 按顺序上传每个文件
-    function uploadNextFile(index) {
-      if (index >= totalFiles) {
-        // 所有文件上传完成
-        that.handleUploadComplete(uploadedFiles);
-        return;
-      }
-      
-      var file = that.data.selectedFiles[index];
-      var fileExtension = file.name.split('.').pop().toLowerCase();
-      
-      // 构建最终文件名：基于用户输入的文件名
-      var finalFileName = '';
-      
-      if (userFileName && userFileName.trim() !== '') {
-        // 清理文件名中的非法字符
-        var baseName = userFileName.trim().replace(/[\\/:*?"<>|]/g, '_');
-        
-        // 如果文件名已经包含扩展名，去掉它
-        if (baseName.includes('.')) {
-          baseName = baseName.split('.').slice(0, -1).join('.');
-        }
-        
-        // 多文件上传时添加序号后缀
-        if (totalFiles === 1) {
-          finalFileName = `${baseName}.${fileExtension}`;
-        } else {
-          finalFileName = `${baseName}_${index + 1}.${fileExtension}`;
-        }
-      } else {
-        // 如果用户没有输入文件名，使用默认命名
-        var safeRecordName = recordName.replace(/[\\/:*?"<>|]/g, '_').substring(0, 10);
-        if (totalFiles === 1) {
-          finalFileName = `简历_${safeRecordName}.${fileExtension}`;
-        } else {
-          finalFileName = `简历_${safeRecordName}_${index + 1}.${fileExtension}`;
-        }
-      }
-      
-      // 更新上传进度
-      var progress = Math.round((index / totalFiles) * 100);
-      that.setData({
-        uploadProgress: progress
-      });
-      
-      console.log(`开始上传第 ${index + 1} 个文件:`, finalFileName);
-      
-      // 直接使用 wx.uploadFile 上传
-      wx.uploadFile({
-        url: 'https://yhocn.cn:9097/file/upload',
-        filePath: file.path,
-        name: 'file',
-        formData: {
-          name: finalFileName,
-          path: '/人事系统/简历文件/',
-          kongjian: '3',
-          fileType: fileExtension,
-          recordId: recordId,
-          recordName: recordName,
-          userFileName: userFileName, // 保存用户输入的文件名
-          originalName: file.name,
-          index: index + 1,
-          total: totalFiles,
-          timestamp: Date.now()
-        },
-        header: {
-          'Content-Type': 'multipart/form-data'
-        },
-        success: function(uploadRes) {
-          completedCount++;
-          
-          try {
-            var resData = JSON.parse(uploadRes.data);
-            console.log(`第 ${index + 1} 个文件上传响应:`, resData);
-            
-            if (resData.code === 200 || resData.success) {
-              // 构建文件URL
-              var fileUrl = "http://yhocn.cn:9088/人事系统/简历文件/" + finalFileName;
-              uploadedFiles.push({
-                name: finalFileName,
-                url: fileUrl,
-                originalName: file.name,
-                userFileName: userFileName,
-                size: file.size,
-                type: fileExtension
-              });
-              
-              wx.showToast({
-                title: `(${completedCount}/${totalFiles}) 上传成功`,
-                icon: 'none',
-                duration: 1000
-              });
-              
-              // 继续上传下一个文件
-              setTimeout(() => uploadNextFile(index + 1), 500);
-            } else {
-              wx.showToast({
-                title: `第 ${index + 1} 个文件失败`,
-                icon: 'none',
-                duration: 2000
-              });
-              setTimeout(() => uploadNextFile(index + 1), 1000);
-            }
-          } catch (e) {
-            console.error('解析响应失败:', e, uploadRes.data);
-            // 即使解析失败也继续上传
-            setTimeout(() => uploadNextFile(index + 1), 1000);
-          }
-        },
-        fail: function(err) {
-          completedCount++;
-          console.error(`第 ${index + 1} 个文件上传失败:`, err);
-          
-          wx.showToast({
-            title: `第 ${index + 1} 个文件上传失败`,
-            icon: 'none',
-            duration: 2000
-          });
-          
-          setTimeout(() => uploadNextFile(index + 1), 1000);
-        }
-      });
-    }
-    
-    // 开始上传第一个文件
-    uploadNextFile(0);
-  },
-
-  
-
-  // 处理上传完成
-  handleUploadComplete: function(uploadedFiles) {
-    var that = this;
-    
-    if (uploadedFiles.length > 0) {
-      // 保存文件信息到数据库
-      that.saveFilesToDatabase(uploadedFiles);
-    }
-    
-    that.setData({
-      uploading: false,
-      uploadProgress: 100
-    });
-    
-    setTimeout(() => {
-      that.hideUploadModal();
-      
-      wx.showToast({
-        title: `上传完成，成功 ${uploadedFiles.length} 个文件`,
-        icon: 'success',
-        duration: 3000
-      });
-      
-      // 刷新页面数据
-      that.baochi();
-    }, 1000);
-  },
-
-  // 保存文件信息到数据库
-  saveFilesToDatabase: function(files) {
-    var that = this;
-    
-    if (!files || files.length === 0) return;
-    
-    // 查询现有文件
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "select wenjian from gongzi_jianliguanli where id = " + that.data.currentRecordId
-      },
-      success: res => {
-        var existingFiles = '';
-        if (res.result.recordset.length > 0) {
-          existingFiles = res.result.recordset[0].wenjian || '';
-        }
-        
-        // 构建新的文件URL列表
-        var newFileUrls = files.map(file => file.url);
-        var allFileUrls = [];
-        
-        if (existingFiles && existingFiles.trim() !== '') {
-          var existingArray = existingFiles.split(',').map(file => file.trim());
-          allFileUrls = existingArray.concat(newFileUrls);
-        } else {
-          allFileUrls = newFileUrls;
-        }
-        
-        var fileUrlsString = allFileUrls.join(',');
-        
-        // 更新数据库
-        wx.cloud.callFunction({
-          name: 'sqlServer_117',
-          data: {
-            query: "update gongzi_jianliguanli set wenjian = '" + fileUrlsString + "' where id = " + that.data.currentRecordId
-          },
-          success: res => {
-            console.log('文件信息保存到数据库成功:', res);
-          },
-          err: res => {
-            console.log('数据库保存失败:', res);
-          }
-        });
-      },
-      err: res => {
-        console.log('查询现有文件失败:', res);
-      }
     });
   },
 
@@ -1408,105 +1632,6 @@ chooseImage: function() {
     });
   },
 
-  // 删除服务器上的文件
-  deleteFileFromServer: function(fileUrl, recordId) {
-    var that = this;
-    
-    // 从URL中提取文件名
-    var fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
-    var cleanFileName = fileName.split('.')[0]; // 移除扩展名
-    
-    console.log('删除文件:', fileName, '清理后:', cleanFileName);
-    
-    wx.showLoading({
-      title: '删除中...',
-      mask: true
-    });
-    
-    // 直接调用删除接口（基于您的模式）
-    wx.request({
-      url: 'https://yhocn.cn:9097/file/delete',
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        order_number: cleanFileName,
-        path: '/人事系统/简历文件/'
-      },
-      success: function(res) {
-        wx.hideLoading();
-        console.log('删除响应:', res.data);
-        
-        if (res.data.code === 200 || res.data.success) {
-          // 从数据库移除文件记录
-          that.removeFileFromDatabase(fileUrl, recordId);
-          
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success',
-            duration: 2000
-          });
-        } else {
-          wx.showToast({
-            title: '删除失败: ' + (res.data.msg || '未知错误'),
-            icon: 'none',
-            duration: 2000
-          });
-        }
-      },
-      fail: function(err) {
-        wx.hideLoading();
-        console.error('删除请求失败:', err);
-        wx.showToast({
-          title: '删除请求失败',
-          icon: 'none',
-          duration: 2000
-        });
-      }
-    });
-  },
-
-  // 从数据库移除文件记录
-  removeFileFromDatabase: function(fileUrl, recordId) {
-    var that = this;
-    
-    wx.cloud.callFunction({
-      name: 'sqlServer_117',
-      data: {
-        query: "select wenjian from gongzi_jianliguanli where id = " + recordId
-      },
-      success: res => {
-        if (res.result.recordset.length > 0) {
-          var currentFiles = res.result.recordset[0].wenjian || '';
-          var fileArray = currentFiles.split(',');
-          
-          // 移除被删除的文件
-          var newFileArray = fileArray.filter(file => file.trim() !== fileUrl.trim());
-          var newFiles = newFileArray.join(',');
-          
-          // 更新数据库
-          wx.cloud.callFunction({
-            name: 'sqlServer_117',
-            data: {
-              query: "update gongzi_jianliguanli set wenjian = '" + newFiles + "' where id = " + recordId
-            },
-            success: res => {
-              console.log('数据库更新成功');
-              // 刷新数据
-              that.baochi();
-            },
-            err: res => {
-              console.log('数据库更新失败:', res);
-            }
-          });
-        }
-      },
-      err: res => {
-        console.log('查询文件列表失败:', res);
-      }
-    });
-  },
   // 隐藏文件查看弹窗（新增）
   hideFileViewModal: function() {
     this.setData({

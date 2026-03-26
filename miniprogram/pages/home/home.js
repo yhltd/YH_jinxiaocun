@@ -91,7 +91,7 @@ Page({
         hid : true,
         lianjie: "../../packageA/pages/1shengri_tixing/shengri_tixing"
       },{
-        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rsgrzx.png",
+        url: "cloud://yhltd-hsxl2.7968-yhltd-hsxl2-1259412419/images/rsgrzx2.png",
         text: "个人中心",
         index: 14,
         hid : true,
