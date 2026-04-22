@@ -237,10 +237,10 @@ Page({
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "select ID,ISNULL(RealName, '') as RealName from teacher where Company = '" + userInfo.Company + "'"
+          sql: "select ID,IFNULL(RealName, '') as RealName from teacher where Company = '" + userInfo.Company + "'"
         },
         success: res => {
-          console.log(res.result)
+          console.log("返回数据11：",res.result)
           var name_list = res.result
           var name=[]
           for (var i = 0; i < name_list.length; i++) {

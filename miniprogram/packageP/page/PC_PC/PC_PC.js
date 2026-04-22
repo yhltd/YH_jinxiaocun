@@ -4339,10 +4339,114 @@ addItem: function() {
 },
 
 // 保存新项目的独立函数
+// saveNewItem: function() {
+//   const _this = this;
+//   const newItem = this.data.newItem;
+//   const order = this.data.orderList[newItem.orderIndex];
+  
+//   // 获取当前最大row_num
+//   const getMaxRowNumSQL = `SELECT ISNULL(MAX(row_num), 0) as max_row_num 
+//                            FROM work_detail 
+//                            WHERE company = '${app.globalData.gongsi}'`;
+  
+//   wx.showLoading({ title: '保存中...' });
+  
+//   // 先获取最大行号
+//   wx.cloud.callFunction({
+//     name: 'sqlServer_PC',
+//     data: {
+//       query: getMaxRowNumSQL
+//     },
+//     success: maxRes => {
+//       let maxRowNum = 0;
+//       if (maxRes.result && maxRes.result.recordset && maxRes.result.recordset.length > 0) {
+//         maxRowNum = maxRes.result.recordset[0].max_row_num || 0;
+//       }
+      
+//       const rowNum = maxRowNum + 1;
+      
+//       const workDetail = {
+//         order_id: order.id,
+//         work_num: parseInt(newItem.work_num),
+//         work_start_date: newItem.work_start_date + ':00',
+//         type: newItem.typeIndex === 1 ? 'urgent' : 'normal',
+//         is_insert: newItem.insertIndex,
+//         jiezhishijian: _this.data.deadlineDate ? _this.data.deadlineDate + ':00' : null,
+//         row_num: rowNum,
+//         company: app.globalData.gongsi
+//       };
+
+//       const insertSQL = `INSERT INTO work_detail 
+//                          (order_id, work_num, work_start_date, type, is_insert, jiezhishijian, row_num, company)
+//                          VALUES 
+//                          (${workDetail.order_id}, ${workDetail.work_num}, 
+//                           '${workDetail.work_start_date}', '${workDetail.type}', 
+//                           ${workDetail.is_insert}, ${workDetail.jiezhishijian ? `'${workDetail.jiezhishijian}'` : 'NULL'}, 
+//                           ${workDetail.row_num}, '${workDetail.company}');
+//                          SELECT SCOPE_IDENTITY() as new_id;`;
+
+//       wx.cloud.callFunction({
+//         name: 'sqlServer_PC',
+//         data: {
+//           query: insertSQL
+//         },
+//         success: res => {
+//           wx.hideLoading();
+//           console.log('新增结果:', res);
+//           wx.showToast({
+//             title: '新增成功',
+//             icon: 'success'
+//           });
+//           _this.closeAddDialog();
+          
+//           // 重新加载数据
+//           setTimeout(() => {
+//             _this.getList();
+//             // 重新计算排产（包含插单调整逻辑）
+//             _this.calculatePaichan();
+//           }, 500);
+//         },
+//         fail: err => {
+//           wx.hideLoading();
+//           console.error('新增失败:', err);
+//           wx.showToast({
+//             title: '新增失败',
+//             icon: 'none'
+//           });
+//         }
+//       });
+//     },
+//     fail: err => {
+//       wx.hideLoading();
+//       console.error('获取最大行号失败:', err);
+//       wx.showToast({
+//         title: '获取行号失败',
+//         icon: 'none'
+//       });
+//     }
+//   });
+// },
 saveNewItem: function() {
   const _this = this;
   const newItem = this.data.newItem;
   const order = this.data.orderList[newItem.orderIndex];
+  
+  // 添加数据验证
+  if (!order || !order.id) {
+    wx.showToast({
+      title: '订单数据错误',
+      icon: 'none'
+    });
+    return;
+  }
+  
+  if (!newItem.work_num || isNaN(newItem.work_num)) {
+    wx.showToast({
+      title: '请输入有效的工序号',
+      icon: 'none'
+    });
+    return;
+  }
   
   // 获取当前最大row_num
   const getMaxRowNumSQL = `SELECT ISNULL(MAX(row_num), 0) as max_row_num 
@@ -4358,6 +4462,8 @@ saveNewItem: function() {
       query: getMaxRowNumSQL
     },
     success: maxRes => {
+      console.log('最大行号查询结果:', maxRes);
+      
       let maxRowNum = 0;
       if (maxRes.result && maxRes.result.recordset && maxRes.result.recordset.length > 0) {
         maxRowNum = maxRes.result.recordset[0].max_row_num || 0;
@@ -4365,26 +4471,44 @@ saveNewItem: function() {
       
       const rowNum = maxRowNum + 1;
       
+      // 处理日期时间（关键修改）
+      let workStartDate = newItem.work_start_date;
+      // 如果日期不包含时间，添加默认时间
+      if (workStartDate && workStartDate.indexOf(':') === -1) {
+        workStartDate = workStartDate + ' 00:00:00';
+      }
+      
+      let deadlineDateTime = null;
+      if (_this.data.deadlineDate) {
+        deadlineDateTime = _this.data.deadlineDate;
+        if (deadlineDateTime && deadlineDateTime.indexOf(':') === -1) {
+          deadlineDateTime = deadlineDateTime + ' 00:00:00';
+        }
+      }
+      
       const workDetail = {
         order_id: order.id,
         work_num: parseInt(newItem.work_num),
-        work_start_date: newItem.work_start_date + ':00',
+        work_start_date: workStartDate,
         type: newItem.typeIndex === 1 ? 'urgent' : 'normal',
-        is_insert: newItem.insertIndex,
-        jiezhishijian: _this.data.deadlineDate ? _this.data.deadlineDate + ':00' : null,
+        is_insert: newItem.insertIndex === 1 ? 1 : 0,  // 确保是数字
+        jiezhishijian: deadlineDateTime,
         row_num: rowNum,
         company: app.globalData.gongsi
       };
-
+      
+      // 构建INSERT语句，添加详细日志
       const insertSQL = `INSERT INTO work_detail 
                          (order_id, work_num, work_start_date, type, is_insert, jiezhishijian, row_num, company)
                          VALUES 
                          (${workDetail.order_id}, ${workDetail.work_num}, 
                           '${workDetail.work_start_date}', '${workDetail.type}', 
                           ${workDetail.is_insert}, ${workDetail.jiezhishijian ? `'${workDetail.jiezhishijian}'` : 'NULL'}, 
-                          ${workDetail.row_num}, '${workDetail.company}');
-                         SELECT SCOPE_IDENTITY() as new_id;`;
-
+                          ${workDetail.row_num}, '${workDetail.company}')`;
+      
+      // 打印完整的SQL语句，便于调试
+      console.log('执行的SQL:', insertSQL);
+      
       wx.cloud.callFunction({
         name: 'sqlServer_PC',
         data: {
@@ -4393,25 +4517,33 @@ saveNewItem: function() {
         success: res => {
           wx.hideLoading();
           console.log('新增结果:', res);
-          wx.showToast({
-            title: '新增成功',
-            icon: 'success'
-          });
-          _this.closeAddDialog();
           
-          // 重新加载数据
-          setTimeout(() => {
-            _this.getList();
-            // 重新计算排产（包含插单调整逻辑）
-            _this.calculatePaichan();
-          }, 500);
+          if (res.result && res.result.rowsAffected && res.result.rowsAffected[0] > 0) {
+            wx.showToast({
+              title: '新增成功',
+              icon: 'success'
+            });
+            _this.closeAddDialog();
+            
+            // 重新加载数据
+            setTimeout(() => {
+              _this.getList();
+              _this.calculatePaichan();
+            }, 500);
+          } else {
+            wx.showToast({
+              title: '新增失败，请检查数据',
+              icon: 'none'
+            });
+          }
         },
         fail: err => {
           wx.hideLoading();
-          console.error('新增失败:', err);
+          console.error('新增失败详细错误:', err);
           wx.showToast({
-            title: '新增失败',
-            icon: 'none'
+            title: '新增失败: ' + (err.errMsg || '未知错误'),
+            icon: 'none',
+            duration: 3000
           });
         }
       });

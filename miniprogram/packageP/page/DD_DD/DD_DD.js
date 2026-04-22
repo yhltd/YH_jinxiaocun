@@ -1079,7 +1079,7 @@ Page({
                       
                       // 这里需要先查询module_info表获取id
                       // 由于云函数限制，我们可以分批处理
-                      processSql = processSql + "('" + id + "',(select top 1 parent_id from module_info where name='" + processName + "' and company='" + user + "'),'" + estimatedTime + "'),"
+                      processSql = processSql + "('" + id + "',(select top 1 id from module_info where name='" + processName + "' and company='" + user + "'),'" + estimatedTime + "'),"
                       z = z + 1
                     }
                   }
@@ -1743,7 +1743,7 @@ loadProcessData: function() {
   wx.cloud.callFunction({
     name: 'sqlServer_PC',
     data: {
-      query: "select name as process_name, num as efficiency, parent_id as module_id, '' as estimated_time from module_info where company='" + user + "'"
+      query: "select name as process_name, num as efficiency, id as module_id, '' as estimated_time from module_info where company='" + user + "'"
     },
     success: res => {
       var list = res.result.recordset

@@ -1321,7 +1321,7 @@ Page({
     wx.cloud.callFunction({
       name: "sqlServer_117",
       data: {
-        query: "select top 100 * from gongzi_kaoqinjilu where name like'%%' and AO like '%%' order by year,moth"
+        query: "select top 100 * from gongzi_kaoqinjilu where AO = '" + that.data.companyName + "' and name like'%%' and AO like '%%' order by year,moth"
       },
       success: res => {
         console.log("姓名查询成功！", res.result)

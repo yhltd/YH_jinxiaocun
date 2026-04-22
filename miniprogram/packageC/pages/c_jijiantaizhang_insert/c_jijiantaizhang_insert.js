@@ -299,7 +299,7 @@ calculationTimer: null,
 
   getAccountingItems : function(){
     var _this = this;
-    var sql = "select accounting from SimpleAccounting where company = '"+_this.data.userInfo.company+"'"
+    var sql = "select accounting from AccountingPeizhi where company = '"+_this.data.userInfo.company+"'"
 
     wx.cloud.callFunction({
       name : 'sqlServer_cw',

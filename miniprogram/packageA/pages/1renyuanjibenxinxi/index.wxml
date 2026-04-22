@@ -62,80 +62,80 @@
           <view class="cell_label centerclass">{{idx+1}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.B}}</view>
+          <view class="cell_label centerclass">{{item.B ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.C}}</view>
+          <view class="cell_label centerclass">{{item.C ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.D}}</view>
+          <view class="cell_label centerclass">{{item.D ||''}}</view>
         </view>
         <view class='td' style="width:300rpx">
-          <view class="cell_label centerclass">{{item.E}}</view>
+          <view class="cell_label centerclass">{{item.E ||''}}</view>
         </view>
 
         <view class='td'>
-          <view class="cell_label centerclass">{{item.F}}</view>
+          <view class="cell_label centerclass">{{item.F ||''}}</view>
         </view>
         <view class='td' style="width:300rpx">
-          <view class="cell_label centerclass">{{item.G}}</view>
+          <view class="cell_label centerclass">{{item.G ||''}}</view>
         </view>
         <view class='td' >
-          <view class="cell_label centerclass">{{item.H}}</view>
+          <view class="cell_label centerclass">{{item.H ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.K}}</view>
+          <view class="cell_label centerclass">{{item.K ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.M}}</view>
+          <view class="cell_label centerclass">{{item.M ||''}}</view>
         </view>
         <view class='td' style="width:300rpx">
-          <view class="cell_label centerclass">{{item.N}}</view>
+          <view class="cell_label centerclass">{{item.N ||''}}</view>
         </view>
         <view class='td' style="width:300rpx">
-          <view class="cell_label centerclass">{{item.O}}</view>
+          <view class="cell_label centerclass">{{item.O ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.P}}</view>
+          <view class="cell_label centerclass">{{item.P ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.Q}}</view>
+          <view class="cell_label centerclass">{{item.Q ||''}}</view>
         </view>
         <view class='td' >
-          <view class="cell_label centerclass">{{item.R}}</view>
+          <view class="cell_label centerclass">{{item.R ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.S}}</view>
+          <view class="cell_label centerclass">{{item.S ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.AC}}</view>
+          <view class="cell_label centerclass">{{item.AC ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.T}}</view>
+          <view class="cell_label centerclass">{{item.T ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.U}}</view>
+          <view class="cell_label centerclass">{{item.U ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.V}}</view>
+          <view class="cell_label centerclass">{{item.V ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.W}}</view>
+          <view class="cell_label centerclass">{{item.W ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.X}}</view>
+          <view class="cell_label centerclass">{{item.X ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.Y}}</view>
+          <view class="cell_label centerclass">{{item.Y ||''}}</view>
         </view>
         <view class='td' >
-          <view class="cell_label centerclass">{{item.Z}}</view>
+          <view class="cell_label centerclass">{{item.Z ||''}}</view>
         </view>
         <view class='td' >
-          <view class="cell_label centerclass">{{item.AA}}</view>
+          <view class="cell_label centerclass">{{item.AA ||''}}</view>
         </view>
         <view class='td'>
-          <view class="cell_label centerclass">{{item.AB}}</view>
+          <view class="cell_label centerclass">{{item.AB ||''}}</view>
         </view>
       </view>
     </block>

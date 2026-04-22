@@ -457,11 +457,11 @@ add1:function(){
     wx.cloud.callFunction({
       name: 'sqlServer_PC',
       data: {
-        query: "select distinct department_name as name from paibanbiao_renyuan where company='" + user + "'"
+        query: "select distinct department_name as name from department where company='" + user + "'"
       },
       success: res => {
         var list = res.result.recordset
-        console.log(list)
+        console.log("返回数据11",res)
         _this.setData({
           listBUMEN: list
         })

@@ -693,7 +693,8 @@ Page({
 
     if (e.detail.value.value.length == 0) { //如果输入为空则保持原来的值
       that.setData({
-        edit_new: that.data.edit_old
+        // edit_new: that.data.edit_old
+        edit_new: ""
       })
     } else if (e.detail.value.value.length != 0) {
       that.setData({

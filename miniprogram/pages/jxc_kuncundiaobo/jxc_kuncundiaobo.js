@@ -39,7 +39,7 @@ Page({
     sjkj: "",
     ddh: "",
     wareHouse:'',
-    warehouseOptions: ['A仓库', 'B仓库', '广州仓库', '深圳仓库'],
+    warehouseOptions: [''],
     shangpin_list: [],
   },
   bindDateChange: function(e) {
@@ -194,6 +194,7 @@ Page({
           console.log("失败", res)
         }
       });
+      this.getWarehouseList_Mysql();
 
     }else if(app.globalData.shujuku == 1){
 
@@ -215,12 +216,96 @@ Page({
           console.log("失败", res)
         }
       });
+      this.getWarehouseList_MSSQL();
           
     }
     
 
 
   },
+
+  /**
+ * 获取仓库列表 - MySQL数据库
+ */
+getWarehouseList_Mysql: function() {
+  var that = this;
+  var gongsi = app.globalData.gongsi;
+  console.log('公司',gongsi)
+  
+  wx.cloud.callFunction({
+    name: "sqlConnection",
+    data: {
+      sql: "SELECT cangku FROM yh_jinxiaocun_cangku WHERE gongsi = '" + gongsi + "' "
+    },
+    success(res) {
+      console.log("仓库列表查询成功(MySQL):", res.result);
+      var warehouseOptions = [''];
+      
+      if (res.result && res.result.length > 0) {
+        for (var i = 0; i < res.result.length; i++) {
+          // 使用仓库名称作为显示值
+          warehouseOptions.push(res.result[i].cangku);
+        }
+      } else {
+        // 如果没有数据，使用默认选项
+        warehouseOptions = ['', 'A仓库', 'B仓库', '广州仓库', '深圳仓库'];
+      }
+      
+      that.setData({
+        warehouseOptions: warehouseOptions
+      });
+      console.log("仓库选项列表:", warehouseOptions);
+    },
+    fail(res) {
+      console.log("仓库列表查询失败(MySQL):", res);
+      // 失败时使用默认数据
+      that.setData({
+        warehouseOptions: ['', 'A仓库', 'B仓库', '广州仓库', '深圳仓库']
+      });
+    }
+  });
+},
+
+/**
+ * 获取仓库列表 - SQL Server数据库
+ */
+getWarehouseList_MSSQL: function() {
+  var that = this;
+  var gongsi = app.globalData.gongsi;
+  
+  wx.cloud.callFunction({
+    name: "sqlServer_117",
+    data: {
+      query: "SELECT cangku FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_cangku_mssql WHERE gongsi = '" + gongsi + "'"
+    },
+    success(res) {
+      console.log("仓库列表查询成功(MSSQL):", res.result);
+      var warehouseOptions = [''];
+      
+      if (res.result && res.result.recordset && res.result.recordset.length > 0) {
+        for (var i = 0; i < res.result.recordset.length; i++) {
+          // 使用仓库名称作为显示值
+          warehouseOptions.push(res.result.recordset[i].cangku);
+        }
+      } else {
+        // 如果没有数据，使用默认选项
+        warehouseOptions = ['', 'A仓库', 'B仓库'];
+      }
+      
+      that.setData({
+        warehouseOptions: warehouseOptions
+      });
+      console.log("仓库选项列表:", warehouseOptions);
+    },
+    fail(res) {
+      console.log("仓库列表查询失败(MSSQL):", res);
+      // 失败时使用默认数据
+      that.setData({
+        warehouseOptions: ['', 'A仓库', 'B仓库', '广州仓库', '深圳仓库']
+      });
+    }
+  });
+},
 
   srJg: function(e) {
     sl = ""

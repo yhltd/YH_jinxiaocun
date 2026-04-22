@@ -99,13 +99,14 @@ Page({
   tableShow: function (e) {
     var _this = this
     let user = app.globalData.gongsi;
+    console.log("公司名称11",_this.data.userInfo.Company)
 
     if(app.globalData.shujuku==0){
 
       wx.cloud.callFunction({
         name: 'sql_jiaowu',
         data: {
-          sql: "select * from course where teacher like '%" + e[0] + "%' and course like '%" + e[1] + "%'"
+          sql: "select * from course where company = '" + _this.data.userInfo.Company + "' and  teacher like '%" + e[0] + "%' and course like '%" + e[1] + "%'"
         },
         success: res => {
           console.log(res.result)
@@ -139,7 +140,7 @@ Page({
       wx.cloud.callFunction({
         name: 'sqlServer_117',
         data: {
-          query: "select * from xueshengguanlixitong_excel.dbo.course where teacher like '%" + e[0] + "%' and course like '%" + e[1] + "%'"
+          query: "select * from xueshengguanlixitong_excel.dbo.course where company = '" + _this.data.userInfo.Company + "' and teacher like '%" + e[0] + "%' and course like '%" + e[1] + "%'"
         },
         success: res => {
           console.log(res.result.recordset)
@@ -271,7 +272,7 @@ Page({
           sql: "select * from shezhi where Company = '" + userInfo.Company + "'"
         },
         success: res => {
-          console.log(res.result)
+          console.log("返回数据11",res.result)
           var list = res.result
           var kecheng = []
           for(var i=0; i<list.length; i++){
@@ -535,7 +536,7 @@ Page({
         wx.cloud.callFunction({
           name: 'sql_jiaowu',
           data: {
-            sql: "insert into course(teacher,course,riqi,xingqi) values('" + _this.data.js + "','" + _this.data.kc + "','" + _this.data.rq + "','" + _this.data.xq + "')"
+            sql: "insert into course(teacher,course,riqi,xingqi,company) values('" + _this.data.js + "','" + _this.data.kc + "','" + _this.data.rq + "','" + _this.data.xq + "','" +_this.data.userInfo.Company+ "')"
           },
           success: res => {
             _this.setData({
@@ -569,7 +570,7 @@ Page({
         wx.cloud.callFunction({
           name: 'sqlServer_117',
           data: {
-            query: "insert into xueshengguanlixitong_excel.dbo.course(teacher,course,riqi,xingqi) values('" + _this.data.js + "','" + _this.data.kc + "','" + _this.data.rq + "','" + _this.data.xq + "')"
+            query: "insert into xueshengguanlixitong_excel.dbo.course(teacher,course,riqi,xingqi,company) values('" + _this.data.js + "','" + _this.data.kc + "','" + _this.data.rq + "','" + _this.data.xq + "','" +_this.data.userInfo.Company+ "')"
           },
           success: res => {
             _this.setData({
