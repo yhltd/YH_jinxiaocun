@@ -443,15 +443,15 @@ Page({
     if(_this.data.fun!='qichu' ){
       for (var i = 0; i < cpsl.length; i++) {
         if (cpsl[i] != null && cpsl[i] != "") {
-          if(type != "1"){
-            if(cpsl[i] > szZhi[i].allSL){
-              wx.showToast({
-                title: '商品出库数量大于总数量',
-                icon : 'none'
-              })
-              return;
-            }
-          }
+          // if(type != "1"){
+          //   if(cpsl[i] > szZhi[i].allSL){
+          //     wx.showToast({
+          //       title: '商品出库数量大于总数量',
+          //       icon : 'none'
+          //     })
+          //     return;
+          //   }
+          // }
           sl[sli] = cpsl[i]
           jg[sli] = cpjg[i]
           ck[sli] = cangku[i]

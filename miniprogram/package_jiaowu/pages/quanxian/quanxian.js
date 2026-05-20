@@ -800,6 +800,59 @@ Page({
     _this.qxShow()
   },
 
+  getExcel : function(){
+    var _this = this;
+    wx.showLoading({
+      title: '打开Excel中',
+      mask : 'true'
+    })
+    var list = _this.data.list;
+    var title = _this.data.title;
+
+    var cloudList = {
+      name : '权限管理',
+      items : [],
+      header : []
+    }
+
+    for(let i=0;i<title.length;i++){
+      cloudList.header.push({
+        item:title[i].text,
+        type:title[i].type,
+        width:parseInt(title[i].width.split("r")[0])/10,
+        columnName:title[i].columnName
+      })
+    }
+    cloudList.items = list
+
+    wx.cloud.callFunction({
+      name:'getExcel',
+      data:{
+        list : cloudList
+      },
+      success: function(res){
+        wx.cloud.downloadFile({
+          fileID : res.result.fileID,
+          success : res=> {
+            wx.hideLoading();
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu : 'true',
+              fileType : 'xlsx',
+              success : res=> {
+                console.log("打开Excel")
+              }
+            })
+          }
+        })
+      },
+      fail : res=> {
+        wx.hideLoading();
+        console.log(res)
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

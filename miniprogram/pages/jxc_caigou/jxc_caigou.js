@@ -619,7 +619,7 @@ tjjg: function(e) {
             var ddh = that.data.ddh;
             var cangku = that.data.cangku;
             var isRuku = that.data.isRuku; // 获取是否入库选项
-            var mxtype = isRuku === '是' ? '采购' : '退货'; // 根据选择确定类型
+            var mxtype = isRuku === '是' ? '采购' : '采购'; // 根据选择确定类型
             var rukuField = isRuku === '是' ? '已入库' : ''; // 设置ruku字段值
             console.log("是否入库:", isRuku, "类型:", mxtype);
             

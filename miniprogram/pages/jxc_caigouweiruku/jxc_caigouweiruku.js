@@ -144,21 +144,36 @@ Page({
           query: "SELECT * FROM (SELECT m.id as tuihuo_id, m.*, '' as checkbox, CONVERT(VARCHAR(10), m.shijian, 120) as time, CONVERT(VARCHAR(19), m.shijian, 120) as time2, j.mark1 as mark1, ROW_NUMBER() OVER (ORDER BY m.shijian DESC) as RowNum FROM yh_jinxiaocun_excel.dbo.yh_jinxiaocun_tuihuomingxi_mssql m LEFT JOIN yh_jinxiaocun_excel.dbo.yh_jinxiaocun_jichuziliao_mssql j ON m.cpname = j.name WHERE m.gs_name = '" + gongsi + "' AND m.shijian >= '" + start_date + "' AND m.shijian <= '" + stop_date + "' AND m.orderid LIKE '%" + order_number + "%' AND m.mxtype = '采购' AND (m.ruku = '' OR m.ruku IS NULL)) as t WHERE RowNum BETWEEN " + (page * 5 + 1) + " AND " + (page * 5 + 5) + ""
         },
         success(res) {
-          for(var i=0;i<res.result.recordset.length;i++){
-            if(res.result.recordset[i].mark1 != null){
-              res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+          // ⭐⭐⭐ 新增：前端去重逻辑 ⭐⭐⭐
+          const uniqueMap = new Map();
+          const uniqueData = [];
+          
+          for(var i=0; i<res.result.recordset.length; i++){
+            const key = res.result.recordset[i].tuihuo_id; // 用主键去重
+            
+            if(!uniqueMap.has(key)) {
+              uniqueMap.set(key, true);
+              
+              if(res.result.recordset[i].mark1 != null){
+                res.result.recordset[i].mark1 = "data:image/jpeg;base64," + res.result.recordset[i].mark1.replace(/[\r\n]/g, '')
+              }
+              uniqueData.push(res.result.recordset[i]);
             }
           }
-          console.log("查询数据成功", res.result.recordset)
+          
+          console.log("去重前:", res.result.recordset.length, "条");
+          console.log("去重后:", uniqueData.length, "条");
+          console.log("查询数据成功", uniqueData)
+          
           _this.setData({
-            szzhi: res.result.recordset,
+            szzhi: uniqueData,  // ⭐ 改这里
           })
           console.log(_this.data.szzhi)
         },
         fail(res) {
           console.log("查询数据失败", res)
         }
-      });
+      });      
     }
   },
   
